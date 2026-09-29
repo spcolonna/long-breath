@@ -160,12 +160,6 @@ abstract class AppLocalizations {
   /// **'Mazo: {count}'**
   String deckCount(int count);
 
-  /// No description provided for @mapTitle.
-  ///
-  /// In es, this message translates to:
-  /// **'La cueva del dragón'**
-  String get mapTitle;
-
   /// No description provided for @fountain.
   ///
   /// In es, this message translates to:
@@ -283,13 +277,13 @@ abstract class AppLocalizations {
   /// No description provided for @runWon.
   ///
   /// In es, this message translates to:
-  /// **'Ascendiste la cueva'**
+  /// **'Llegaste a la cumbre'**
   String get runWon;
 
   /// No description provided for @runLost.
   ///
   /// In es, this message translates to:
-  /// **'Caíste en la cueva'**
+  /// **'Caíste en la montaña'**
   String get runLost;
 
   /// No description provided for @tryAgain.

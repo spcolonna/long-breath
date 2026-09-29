@@ -43,14 +43,17 @@ class LongBreathApp extends ConsumerWidget {
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
         routerConfig: _router,
+        builder: backdrop,
         supportedLocales: locales,
         localizationsDelegates: delegates,
       ),
       loading: () => MaterialApp(
+        builder: backdrop,
         theme: buildTheme(),
         home: const Scaffold(body: Center(child: CircularProgressIndicator())),
       ),
       error: (e, _) => MaterialApp(
+        builder: backdrop,
         theme: buildTheme(),
         home: Scaffold(body: Center(child: Text('Error cargando datos: $e'))),
       ),

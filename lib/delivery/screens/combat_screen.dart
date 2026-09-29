@@ -66,7 +66,7 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
           final f = data.forms.firstWhere((f) => f.id == formId);
           _queue.add(_Fx(f.hanzi, f.pinyin, Palette.lacquer, big: true));
         case FormsResetByEnemy():
-          _queue.add(const _Fx('套路 ✕', 'Formas interrumpidas', Palette.paperDim));
+          _queue.add(const _Fx('套路 ✕', 'Formas interrumpidas', Palette.textDim));
         case EnemyPhaseChanged():
           HapticFeedback.heavyImpact();
           _queue.add(const _Fx('龙', 'El dragón despierta', Palette.gold, big: true));
@@ -211,7 +211,7 @@ class _EnemyPanel extends StatelessWidget {
                     ),
                     Text(t.turn(s.turn),
                         style: const TextStyle(
-                            fontSize: 11, color: Palette.paperDim)),
+                            fontSize: 11, color: Palette.textDim)),
                   ],
                 ),
               ),
@@ -226,7 +226,7 @@ class _EnemyPanel extends StatelessWidget {
             label: t.structure,
             value: e.structure,
             max: e.maxStructure,
-            color: e.staggered ? Palette.paperDim : Palette.structure,
+            color: e.staggered ? Palette.textDim : Palette.structure,
             height: 10,
           ),
           if (e.guard > 0 || e.staggered)
@@ -276,13 +276,13 @@ class _EnemyFigure extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Palette.inkSoft,
+          color: Palette.surface,
           border: Border.all(
-              color: def.rank == EnemyRank.boss ? Palette.gold : Palette.inkLine,
+              color: def.rank == EnemyRank.boss ? Palette.gold : Palette.line,
               width: 2),
         ),
         child: Text(_glyphs[def.id] ?? '？',
-            style: const TextStyle(fontSize: 28, color: Palette.paper)),
+            style: const TextStyle(fontSize: 28, color: Palette.text)),
       ),
     );
   }
@@ -315,7 +315,7 @@ class _IntentPanel extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Palette.inkSoft,
+        color: Palette.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
             color: iv.skipped ? Palette.gold : Palette.lacquer.withValues(alpha: 0.6)),
@@ -327,10 +327,10 @@ class _IntentPanel extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: (iv.skipped ? Palette.paperDim : Palette.lacquer)
+              color: (iv.skipped ? Palette.textDim : Palette.lacquer)
                   .withValues(alpha: 0.25),
             ),
-            child: Icon(icon, size: 28, color: Palette.paper),
+            child: Icon(icon, size: 28, color: Palette.text),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -346,7 +346,7 @@ class _IntentPanel extends StatelessWidget {
                 Text(iv.skipped ? t.losesAction : detail,
                     style: TextStyle(
                         fontSize: 13,
-                        color: iv.skipped ? Palette.gold : Palette.paperDim)),
+                        color: iv.skipped ? Palette.gold : Palette.textDim)),
                 if (i.interrupt)
                   const Text('Interrumpe tus formas si no lo desviás',
                       style: TextStyle(fontSize: 11, color: Palette.lacquer)),
@@ -419,10 +419,10 @@ class _PlayerPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: p.guard > 0
                       ? Palette.sky.withValues(alpha: 0.25)
-                      : Palette.inkSoft,
+                      : Palette.surface,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                      color: p.guard > 0 ? Palette.sky : Palette.inkLine),
+                      color: p.guard > 0 ? Palette.sky : Palette.line),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -458,20 +458,20 @@ class _StanceChip extends StatelessWidget {
       margin: const EdgeInsets.only(right: 4),
       padding: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
-        color: active ? Palette.lacquer : Palette.inkSoft,
+        color: active ? Palette.lacquer : Palette.surface,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: active ? Palette.gold : Palette.inkLine),
+        border: Border.all(color: active ? Palette.gold : Palette.line),
       ),
       child: Column(
         children: [
           Text(hanzi,
               style: TextStyle(
                   fontSize: 15,
-                  color: active ? Palette.paper : Palette.paperDim)),
+                  color: active ? Palette.onColor : Palette.textDim)),
           Text(name,
               style: TextStyle(
                   fontSize: 10,
-                  color: active ? Palette.paper : Palette.paperDim)),
+                  color: active ? Palette.onColor : Palette.textDim)),
         ],
       ),
     );
@@ -546,16 +546,16 @@ class _FormStep extends StatelessWidget {
       margin: const EdgeInsets.only(right: 3),
       padding: const EdgeInsets.symmetric(vertical: 3),
       decoration: BoxDecoration(
-        color: done ? Palette.gold.withValues(alpha: 0.8) : Palette.inkSoft,
+        color: done ? Palette.gold.withValues(alpha: 0.8) : Palette.surface,
         borderRadius: BorderRadius.circular(6),
         border: Border.all(
-            color: next ? Palette.gold : Palette.inkLine, width: next ? 2 : 1),
+            color: next ? Palette.gold : Palette.line, width: next ? 2 : 1),
       ),
       alignment: Alignment.center,
       child: FittedBox(
         child: Text(label,
             style: TextStyle(
-                fontSize: 11, color: done ? Palette.ink : Palette.paperDim)),
+                fontSize: 11, color: done ? Palette.onColor : Palette.textDim)),
       ),
     );
   }
@@ -599,7 +599,7 @@ class _PreviewPanel extends ConsumerWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: Palette.inkSoft,
+          color: Palette.surface,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -621,7 +621,7 @@ class _PreviewPanel extends ConsumerWidget {
                       for (final f in p.interruptsForms) '⚠ interrumpe ${formName(f)}',
                     ].join(' · '),
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 11, color: Palette.paperDim),
+                    style: const TextStyle(fontSize: 11, color: Palette.textDim),
                   ),
                 ],
               ),
@@ -797,7 +797,7 @@ class _ActionBar extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: Palette.inkSoft,
+      backgroundColor: Palette.surface,
       builder: (ctx) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -945,7 +945,7 @@ class _FxBanner extends StatelessWidget {
         return Opacity(
           opacity: opacity.clamp(0, 1),
           child: Container(
-            color: Colors.black.withValues(alpha: 0.35 * opacity),
+            color: Palette.surface.withValues(alpha: 0.55 * opacity),
             alignment: const Alignment(0, -0.2),
             child: Transform.scale(
               scale: scale,
@@ -957,11 +957,11 @@ class _FxBanner extends StatelessWidget {
                         fontSize: fx.big ? 72 : 40,
                         fontWeight: FontWeight.bold,
                         color: fx.color,
-                        shadows: const [Shadow(blurRadius: 12)],
+                        shadows: const [Shadow(color: Colors.white, blurRadius: 16)],
                       )),
                   if (fx.subtitle != null)
                     Text(fx.subtitle!,
-                        style: const TextStyle(fontSize: 18, color: Palette.paper)),
+                        style: const TextStyle(fontSize: 18, color: Palette.text)),
                 ],
               ),
             ),
@@ -982,7 +982,7 @@ class _EndOverlay extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     return Positioned.fill(
       child: Container(
-        color: Colors.black.withValues(alpha: 0.7),
+        color: Palette.surface.withValues(alpha: 0.88),
         alignment: Alignment.center,
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -46,9 +46,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get mapTitle => 'La cueva del dragón';
-
-  @override
   String get fountain => 'Fuente de meditación';
 
   @override
@@ -113,10 +110,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get continueLabel => 'Continuar';
 
   @override
-  String get runWon => 'Ascendiste la cueva';
+  String get runWon => 'Llegaste a la cumbre';
 
   @override
-  String get runLost => 'Caíste en la cueva';
+  String get runLost => 'Caíste en la montaña';
 
   @override
   String get tryAgain => 'Empezar de nuevo';

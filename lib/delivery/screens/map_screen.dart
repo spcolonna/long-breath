@@ -28,8 +28,8 @@ class MapScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Palette.ink,
-        title: Text(t.mapTitle, style: const TextStyle(fontSize: 18)),
+        title: Text('${data.balance.stage.hanzi}  ${data.balance.stage.name}',
+            style: const TextStyle(fontSize: 18)),
         actions: [
           IconButton(
             tooltip: t.abandon,
@@ -173,11 +173,19 @@ class _NodeButton extends StatelessWidget {
             EnemyRank.elite => '僧',
             EnemyRank.boss => '龙',
           };
+    // Cada tipo de nodo tiene su color, así el mapa se lee de un vistazo.
+    final accent = enemy == null
+        ? Palette.sky
+        : switch (enemy.rank) {
+            EnemyRank.common => Palette.jade,
+            EnemyRank.elite => Palette.structure,
+            EnemyRank.boss => Palette.lacquer,
+          };
     final color = available
         ? Palette.gold
         : visited
-            ? Palette.paperDim
-            : Palette.inkLine;
+            ? Palette.textDim
+            : accent;
     return GestureDetector(
       onTap: available ? onTap : null,
       child: SizedBox(
@@ -193,26 +201,35 @@ class _NodeButton extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: available
-                    ? Palette.lacquer
-                    : (visited ? Palette.inkSoft : Palette.ink),
+                    ? accent
+                    : (visited ? Palette.bgAlt : Palette.surface),
                 border: Border.all(color: color, width: available ? 3 : 1.5),
                 boxShadow: available
                     ? [BoxShadow(color: Palette.gold.withValues(alpha: 0.5), blurRadius: 12)]
                     : null,
               ),
               child: visited
-                  ? const Icon(Icons.check, color: Palette.paperDim)
+                  ? const Icon(Icons.check, color: Palette.textDim)
                   : Text(glyph,
                       style: TextStyle(
                           fontSize: 22,
-                          color: available ? Palette.paper : Palette.paperDim)),
+                          color: available ? Palette.onColor : accent)),
             ),
             const SizedBox(height: 2),
-            Text(
-              enemy?.name ?? 'Fuente',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 9, color: color),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              decoration: BoxDecoration(
+                color: Palette.surface.withValues(alpha: 0.9),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                enemy?.name ?? 'Fuente',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 9,
+                    color: available ? Palette.text : Palette.textDim),
+              ),
             ),
           ],
         ),
@@ -234,7 +251,7 @@ class _PathPainter extends CustomPainter {
       for (final next in n.next) {
         final walked = run.visited.contains(n.id) && run.visited.contains(next);
         final paint = Paint()
-          ..color = walked ? Palette.gold : Palette.inkLine
+          ..color = walked ? Palette.gold : Palette.line
           ..strokeWidth = walked ? 3 : 2;
         canvas.drawLine(pos[n.id]! + const Offset(0, -12),
             pos[next]! + const Offset(0, -12), paint);

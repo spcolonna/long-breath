@@ -27,14 +27,14 @@ class StatBar extends StatelessWidget {
         SizedBox(
           width: 74,
           child: Text(label,
-              style: const TextStyle(fontSize: 12, color: Palette.paperDim)),
+              style: const TextStyle(fontSize: 12, color: Palette.textDim)),
         ),
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(height / 2),
             child: Stack(
               children: [
-                Container(height: height, color: Palette.inkLine),
+                Container(height: height, color: Palette.line),
                 TweenAnimationBuilder<double>(
                   tween: Tween(end: ratio),
                   duration: const Duration(milliseconds: 350),

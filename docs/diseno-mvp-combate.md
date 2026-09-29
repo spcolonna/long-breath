@@ -6,7 +6,7 @@ Sep 29, 2026 · @Sebastian Pérez
 
 El MVP valida una sola pregunta: **¿el combate con cartas, posturas y formas es satisfactorio, desafiante y depende más de las decisiones que del azar?** Todo lo demás (árbol, edad real, Legado, historia) queda fuera hasta que el combate funcione.
 
-El juego es un roguelike de cartas para móvil (iOS y Android, en Flutter). El protagonista, un estudiante de kung fu, cae en la cueva del dragón y debe ascender combatiendo. El vocabulario marcial es tradicional: posturas (步型 bùxíng), técnicas y formas (套路 tàolù) con su nombre en pinyin y caracteres.
+El juego es un roguelike de cartas para móvil (iOS y Android, en Flutter). El protagonista, un estudiante de kung fu, debe ascender la Montaña de las Mil Nubes (千云山) combatiendo. El vocabulario marcial es tradicional: posturas (步型 bùxíng), técnicas y formas (套路 tàolù) con su nombre en pinyin y caracteres.
 
 **Nombre:** Long Breath. *Lóng* (龙) significa dragón en chino y *long breath* es respiración larga en inglés: une el dragón, la meditación y el Aliento del combate. La marca es global; cada región puede sumar un subtítulo localizado.
 
@@ -187,7 +187,7 @@ Cada enemigo enseña o pone a prueba una mecánica, y su regla especial obliga a
 
 ## Estructura de la run del MVP
 
-La run se juega de abajo hacia arriba, como el ascenso por la cueva: 6 nodos, una elección de camino y una fuente antes de la élite.
+La run se juega de abajo hacia arriba, como el ascenso por la montaña: 6 nodos, una elección de camino y una fuente antes de la élite.
 
 &#91;embedded content: mapa de la run del MVP · 7 nodos, 1 bifurcación\]
 

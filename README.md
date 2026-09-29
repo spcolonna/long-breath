@@ -1,6 +1,6 @@
 # Long Breath 龙
 
-Roguelike de cartas de kung fu para móvil (Flutter, iOS y Android). El protagonista cae en la cueva del dragón y asciende combatiendo con posturas (步型), técnicas y formas (套路).
+Roguelike de cartas de kung fu para móvil (Flutter, iOS y Android). El protagonista asciende la Montaña de las Mil Nubes (千云山) combatiendo con posturas (步型), técnicas y formas (套路).
 
 Este repositorio contiene el **MVP de combate**. El diseño completo está en [docs/diseno-mvp-combate.md](docs/diseno-mvp-combate.md).
 

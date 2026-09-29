@@ -49,7 +49,7 @@ void showDeckSheet(BuildContext context, List<CombatCard> deck) {
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: Palette.inkSoft,
+    backgroundColor: Palette.surface,
     builder: (_) => SizedBox(
       height: MediaQuery.of(context).size.height * 0.75,
       child: DeckGrid(cards: deck),

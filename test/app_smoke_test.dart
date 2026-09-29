@@ -17,7 +17,7 @@ void main() {
 
     await tester.tap(find.text('Nueva run'));
     await tester.pumpAndSettle();
-    expect(find.text('La cueva del dragón'), findsOneWidget);
+    expect(find.text('千云山  Montaña de las Mil Nubes'), findsOneWidget);
 
     await tester.tap(find.text('Eco de Murciélago'));
     await tester.pumpAndSettle();

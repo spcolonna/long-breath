@@ -34,7 +34,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
     if (_mode != _Mode.choose) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Palette.ink,
+          backgroundColor: Colors.transparent,
           title: Text(_mode == _Mode.remove
               ? t.fountainRemove
               : t.fountainUpgrade(data.balance.fountainUpgrade)),
@@ -75,7 +75,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
               Text(t.fountain, style: const TextStyle(fontSize: 24)),
               const SizedBox(height: 8),
               Text('${t.life}: ${run.hp}/${run.maxHp}',
-                  style: const TextStyle(color: Palette.paperDim)),
+                  style: const TextStyle(color: Palette.textDim)),
               const Spacer(),
               option(Icons.favorite, t.fountainHeal(data.balance.fountainHeal), () {
                 ctl.heal();

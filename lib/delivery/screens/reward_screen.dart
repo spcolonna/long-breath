@@ -42,7 +42,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
               const SizedBox(height: 6),
               Text(t.rewardHint,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Palette.paperDim)),
+                  style: const TextStyle(color: Palette.textDim)),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

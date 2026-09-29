@@ -28,6 +28,20 @@ enum NodeType {
   static NodeType parse(String s) => NodeType.values.byName(s);
 }
 
+class StageDef {
+  const StageDef({required this.name, required this.hanzi, required this.pinyin});
+
+  final String name;
+  final String hanzi;
+  final String pinyin;
+
+  factory StageDef.fromJson(Map<String, dynamic> j) => StageDef(
+        name: j['name'] as String,
+        hanzi: j['hanzi'] as String,
+        pinyin: j['pinyin'] as String,
+      );
+}
+
 class MapNodeDef {
   const MapNodeDef({
     required this.id,
@@ -65,6 +79,7 @@ class GameBalance {
     required this.fountainHeal,
     required this.fountainUpgrade,
     required this.runStart,
+    required this.stage,
     required this.runNodes,
   });
 
@@ -82,6 +97,9 @@ class GameBalance {
   final int fountainHeal;
   final int fountainUpgrade;
   final String runStart;
+
+  /// Etapa que recorre la run (nombre visible en el mapa).
+  final StageDef stage;
   final List<MapNodeDef> runNodes;
 
   factory GameBalance.fromJson(Map<String, dynamic> j) {
@@ -111,6 +129,7 @@ class GameBalance {
       fountainHeal: fountain['heal'] as int,
       fountainUpgrade: fountain['upgrade'] as int,
       runStart: run['start'] as String,
+      stage: StageDef.fromJson(run['stage'] as Map<String, dynamic>),
       runNodes: [
         for (final n in run['nodes'] as List)
           MapNodeDef.fromJson(n as Map<String, dynamic>),

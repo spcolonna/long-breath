@@ -30,7 +30,7 @@ class ResultScreen extends ConsumerWidget {
               Text(won ? t.runWon : t.runLost, style: const TextStyle(fontSize: 24)),
               const SizedBox(height: 8),
               Text('${run.visited.length} / 6 · ${t.deckCount(run.deck.length)}',
-                  style: const TextStyle(color: Palette.paperDim)),
+                  style: const TextStyle(color: Palette.textDim)),
               const Spacer(),
               SizedBox(
                 width: double.infinity,

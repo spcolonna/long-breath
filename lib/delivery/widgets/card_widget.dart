@@ -49,10 +49,10 @@ class CardWidget extends StatelessWidget {
     final structure = p?.structure ?? def.structure;
     final guard = p?.guard ?? (def.guard > 0 ? def.guard + upgrades : 0);
 
-    Color border = Palette.inkLine;
+    Color border = Palette.line;
     double borderW = 1.5;
     List<BoxShadow> shadows = const [
-      BoxShadow(color: Colors.black54, blurRadius: 6, offset: Offset(0, 3)),
+      BoxShadow(color: Color(0x33000000), blurRadius: 6, offset: Offset(0, 3)),
     ];
     if (advancesForm) {
       border = Palette.gold;
@@ -66,7 +66,7 @@ class CardWidget extends StatelessWidget {
       borderW = 3;
     }
     if (selected) {
-      border = Palette.paper;
+      border = Palette.lacquer;
       borderW = 3;
     }
 
@@ -77,14 +77,14 @@ class CardWidget extends StatelessWidget {
         width: width,
         height: h,
         decoration: BoxDecoration(
-          color: Palette.inkSoft,
+          color: Palette.surface,
           borderRadius: BorderRadius.circular(10 * s),
           border: Border.all(color: border, width: borderW),
           boxShadow: shadows,
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [color.withValues(alpha: 0.28), Palette.inkSoft],
+            colors: [color.withValues(alpha: 0.22), Palette.surface],
           ),
         ),
         padding: EdgeInsets.all(5 * s),
@@ -115,7 +115,7 @@ class CardWidget extends StatelessWidget {
                       child: Text(def.hanzi,
                           style: TextStyle(
                               fontSize: 24 * s,
-                              color: Palette.paper,
+                              color: Palette.text,
                               fontWeight: FontWeight.w500)),
                     ),
                   ),
@@ -146,7 +146,7 @@ class CardWidget extends StatelessWidget {
                         if (upgrades > 0) '+$upgrades',
                       ].join(' · '),
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 8 * s, color: Palette.paperDim),
+                      style: TextStyle(fontSize: 8 * s, color: Palette.textDim),
                     ),
                   ),
               ],

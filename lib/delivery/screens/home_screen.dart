@@ -47,9 +47,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   style: TextStyle(
                       fontSize: 28, letterSpacing: 8, fontWeight: FontWeight.w300)),
               const Text('长息',
-                  style: TextStyle(fontSize: 16, color: Palette.paperDim)),
+                  style: TextStyle(fontSize: 16, color: Palette.textDim)),
               const Spacer(flex: 2),
-              Text(t.ageTitle, style: const TextStyle(color: Palette.paperDim)),
+              Text(t.ageTitle, style: const TextStyle(color: Palette.textDim)),
               const SizedBox(height: 8),
               SegmentedButton<Age>(
                 segments: [
@@ -61,7 +61,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               const SizedBox(height: 6),
               Text(t.ageSummary(stats.draw, stats.breath, stats.retain),
-                  style: const TextStyle(fontSize: 12, color: Palette.paperDim)),
+                  style: const TextStyle(fontSize: 12, color: Palette.textDim)),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,

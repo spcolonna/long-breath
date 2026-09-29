@@ -16,6 +16,7 @@
   "rewards": { "choices": 3, "pools": ["reward", "tiger"] },
   "fountain": { "heal": 15, "upgrade": 3 },
   "run": {
+    "stage": { "name": "Montaña de las Mil Nubes", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "start": "n1",
     "nodes": [
       { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2"] },
