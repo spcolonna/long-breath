@@ -311,6 +311,13 @@ void main() {
       expect(s.formProgress[xhq], 1);
     });
 
+    test('reiniciar en el paso 1 no se marca como interrupción', () {
+      var s = setup(['gongbu_chongquan', 'gongbu_chongquan', ...filler]);
+      s = play(s, 'gongbu_chongquan').state;
+      final p = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
+      expect(p.interruptsForms, isNot(contains(xhq)));
+    });
+
     test('Interrumpir del Monje reinicia las formas si no se desvía', () {
       var s = setup(['gongbu_chongquan', ...filler], enemy: 'monk');
       s = s.copyWith(enemy: s.enemy.copyWith(patternIndex: 1));
@@ -373,3 +380,4 @@ void main() {
     });
   });
 }
+

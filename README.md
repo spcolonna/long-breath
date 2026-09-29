@@ -22,3 +22,11 @@ flutter test                                   # tests
 dart run tool/simulate.dart --n 2000           # simulador de balance
 flutter run                                    # app
 ```
+
+## Estado del MVP
+
+- Motor de combate completo con tests (`test/domain`).
+- Run de 7 nodos con recompensas, fuente de meditación y guardado local.
+- Interfaz vertical: intención, posturas, formas, mano en abanico con vista previa de valores finales, retener, Dīngbù y Respirar.
+- Simulador con tres bots. Los resultados y las palancas de balance están en [docs/balance.md](docs/balance.md).
+- Interpretaciones de reglas ambiguas: [docs/reglas-implementadas.md](docs/reglas-implementadas.md).

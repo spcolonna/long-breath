@@ -261,7 +261,8 @@ class CombatEngine {
       final p = s.formProgress[f.id]!;
       if (f.steps[p] == def.id) {
         (p + 1 == f.steps.length ? completes : advances).add(f.id);
-      } else if (p > 0 && def.type.isAttack) {
+      } else if (def.type.isAttack && p > (f.steps.first == def.id ? 1 : 0)) {
+        // Solo avisa si se pierde progreso (reiniciar en el paso 1 desde 1 no).
         interrupts.add(f.id);
       }
     }
