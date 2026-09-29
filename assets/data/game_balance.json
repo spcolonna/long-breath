@@ -1,0 +1,30 @@
+{
+  "player": {
+    "hp": 50,
+    "structure": 10,
+    "startStance": "mabu",
+    "breathesPerCombat": 1
+  },
+  "ages": {
+    "young": { "name": "Joven", "draw": 6, "breath": 4, "retain": 0 },
+    "adult": { "name": "Adulto", "draw": 5, "breath": 3, "retain": 1 },
+    "elder": { "name": "Anciano", "draw": 4, "breath": 3, "retain": 3 }
+  },
+  "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
+  "playerBreak": { "breathPenalty": 2 },
+  "enemyBreak": { "damageMultiplier": 2 },
+  "rewards": { "choices": 3, "pools": ["reward", "tiger"] },
+  "fountain": { "heal": 15, "upgrade": 3 },
+  "run": {
+    "start": "n1",
+    "nodes": [
+      { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2"] },
+      { "id": "n2", "type": "combat", "enemy": "disciple", "next": ["n3a", "n3b"] },
+      { "id": "n3a", "type": "combat", "enemy": "golem", "next": ["n4"] },
+      { "id": "n3b", "type": "combat", "enemy": "salamander", "next": ["n4"] },
+      { "id": "n4", "type": "fountain", "next": ["n5"] },
+      { "id": "n5", "type": "combat", "enemy": "monk", "next": ["n6"] },
+      { "id": "n6", "type": "combat", "enemy": "dragon", "next": [] }
+    ]
+  }
+}

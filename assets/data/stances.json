@@ -1,0 +1,14 @@
+{
+  "stances": [
+    { "id": "mabu", "pinyin": "Mǎbù", "hanzi": "马步", "es": "caballo",
+      "damageBonus": { "fist": 2, "palm": 2 }, "costModifier": { "kick": 1 },
+      "incomingStructureMultiplier": 0.5 },
+    { "id": "gongbu", "pinyin": "Gōngbù", "hanzi": "弓步", "es": "arco",
+      "damageBonus": { "fist": 3 }, "structureBonus": { "fist": 1 },
+      "incomingStructureBonus": 2 },
+    { "id": "xubu", "pinyin": "Xūbù", "hanzi": "虚步", "es": "vacía",
+      "damageBonus": { "kick": 2 }, "costModifier": { "kick": -1 },
+      "guardModifier": -2, "deflectBreathBonus": 1 }
+  ],
+  "transition": { "id": "dingbu", "pinyin": "Dīngbù", "hanzi": "丁步", "es": "transición", "cost": 1, "usesPerTurn": 1 }
+}

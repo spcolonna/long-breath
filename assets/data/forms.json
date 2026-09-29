@@ -1,0 +1,10 @@
+{
+  "forms": [
+    { "id": "xiao_hong_quan", "pinyin": "Xiǎo Hóng Quán", "hanzi": "小洪拳", "es": "Pequeño Puño Rojo",
+      "steps": ["gongbu_chongquan", "tan_tui", "mabu_jiada", "xubu_liangzhang"],
+      "effect": { "damage": 10, "structure": 5, "draw": 2 } },
+    { "id": "da_hong_quan", "pinyin": "Dà Hóng Quán", "hanzi": "大洪拳", "es": "Gran Puño Rojo",
+      "steps": ["mabu_chongquan", "gongbu_tuizhang", "deng_tui", "xubu_liangzhang", "gongbu_chongquan"],
+      "effect": { "damage": 18, "structure": 8, "guard": 8, "height": "mid" } }
+  ]
+}
