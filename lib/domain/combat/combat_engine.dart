@@ -1,0 +1,783 @@
+import 'dart:math' as math;
+
+import '../model/card_def.dart';
+import '../model/enemy_def.dart';
+import '../model/enums.dart';
+import '../model/form_def.dart';
+import '../model/game_data.dart';
+import '../rng.dart';
+import 'combat_action.dart';
+import 'combat_event.dart';
+import 'combat_state.dart';
+
+class CombatResult {
+  const CombatResult(this.state, this.events);
+  final CombatState state;
+  final List<CombatEvent> events;
+}
+
+/// Valores finales de una carta en el estado actual (lo que muestra la UI).
+class CardPreview {
+  const CardPreview({
+    required this.cost,
+    required this.playable,
+    required this.damage,
+    required this.structure,
+    required this.guard,
+    required this.height,
+    required this.stanceAfter,
+    required this.advancesForms,
+    required this.completesForms,
+    required this.interruptsForms,
+    this.reason,
+  });
+
+  final int cost;
+  final bool playable;
+  final String? reason;
+
+  /// Daño y daño a Estructura que recibe el enemigo (con todos los modificadores).
+  final int damage;
+  final int structure;
+  final int guard;
+  final Height? height;
+  final Stance stanceAfter;
+  final List<String> advancesForms;
+  final List<String> completesForms;
+  final List<String> interruptsForms;
+}
+
+/// Intención del enemigo con los valores finales ya aplicados.
+class IntentView {
+  const IntentView({
+    required this.intent,
+    required this.damage,
+    required this.structure,
+    required this.skipped,
+    required this.countdown,
+    required this.punishIfSameStance,
+  });
+
+  final IntentDef intent;
+  final int damage;
+  final int structure;
+
+  /// El enemigo está Desequilibrado y pierde esta acción.
+  final bool skipped;
+
+  /// Acciones que faltan para el ataque con cuenta regresiva (0 = este turno).
+  final int? countdown;
+
+  /// Discípulo: si terminás el turno en esta postura, el ataque se potencia.
+  final bool punishIfSameStance;
+}
+
+/// Motor de combate: reductor puro (estado + acción → estado + eventos).
+class CombatEngine {
+  CombatEngine(this.data);
+
+  final GameData data;
+
+  // ---------------------------------------------------------------- inicio
+
+  CombatResult start({
+    required List<CombatCard> deck,
+    required String enemyId,
+    required Age age,
+    required int playerHp,
+    required int seed,
+    bool shuffle = true,
+  }) {
+    final b = data.balance;
+    final ageStats = b.ages[age]!;
+    final enemy = data.enemy(enemyId);
+    final (shuffled, rng) =
+        shuffle ? Rng.seeded(seed).shuffle(deck) : (deck, Rng.seeded(seed));
+    final d = _Draft(
+      turn: 0,
+      phase: CombatPhase.playerTurn,
+      handSize: ageStats.draw,
+      breathPerTurn: ageStats.breath,
+      retainMax: ageStats.retain,
+      hp: playerHp,
+      maxHp: b.playerHp,
+      structure: b.playerStructure,
+      maxStructure: b.playerStructure,
+      guard: 0,
+      guardHeight: null,
+      stance: b.startStance,
+      breath: 0,
+      enemy: _EnemyDraft(
+        id: enemy.id,
+        hp: enemy.hp,
+        maxHp: enemy.hp,
+        structure: enemy.structure,
+        maxStructure: enemy.structure,
+      ),
+      drawPile: [...shuffled],
+      hand: [],
+      discard: [],
+      exhausted: [],
+      breathesLeft: b.breathesPerCombat,
+      formProgress: {for (final f in data.forms) f.id: 0},
+      rng: rng,
+    );
+    final events = <CombatEvent>[];
+    _startPlayerTurn(d, events);
+    return CombatResult(d.freeze(), events);
+  }
+
+  // --------------------------------------------------------------- reductor
+
+  CombatResult reduce(CombatState state, CombatAction action) {
+    final error = validate(state, action);
+    if (error != null) throw StateError(error);
+    final d = _Draft.of(state);
+    final events = <CombatEvent>[];
+    switch (action) {
+      case PlayCard(:final uid):
+        _playCard(d, uid, events);
+      case Dingbu(:final stance):
+        d.breath -= data.transition.cost;
+        d.dingbuUsed = true;
+        d.stance = stance;
+        events.add(StanceChanged(stance));
+      case Breathe():
+        final n = d.hand.length;
+        d.discard.addAll(d.hand);
+        d.hand.clear();
+        d.breathesLeft--;
+        _draw(d, n, events);
+      case EndTurn(:final retain):
+        _endTurn(d, retain.toSet(), events);
+      case ChooseDiscard(:final uid):
+        final card = d.hand.firstWhere((c) => c.uid == uid);
+        d.hand.remove(card);
+        d.discard.add(card);
+        d.pendingDiscard--;
+        if (d.pendingDiscard == 0) d.phase = CombatPhase.playerTurn;
+    }
+    return CombatResult(d.freeze(), events);
+  }
+
+  /// Devuelve el motivo por el que la acción no es válida, o null.
+  String? validate(CombatState s, CombatAction action) {
+    if (s.isOver) return 'El combate terminó';
+    if (s.phase == CombatPhase.discarding && action is! ChooseDiscard) {
+      return 'Elegí una carta para descartar';
+    }
+    switch (action) {
+      case PlayCard(:final uid):
+        final c = s.handCard(uid);
+        if (c == null) return 'La carta no está en la mano';
+        final def = data.card(c.cardId);
+        if (def.firstTurnOnly && s.turn != 1) return 'Solo en el primer turno';
+        if (costOf(s, def) > s.player.breath) return 'Aliento insuficiente';
+      case Dingbu(:final stance):
+        if (s.dingbuUsed) return 'Dīngbù ya se usó este turno';
+        if (s.player.breath < data.transition.cost) return 'Aliento insuficiente';
+        if (stance == s.player.stance) return 'Ya estás en esa postura';
+      case Breathe():
+        if (s.breathesLeft <= 0) return 'Ya respiraste en este combate';
+      case EndTurn(:final retain):
+        if (retain.length > s.retainMax) return 'Retenés demasiadas cartas';
+        if (retain.any((u) => s.handCard(u) == null)) return 'Carta inválida';
+      case ChooseDiscard(:final uid):
+        if (s.phase != CombatPhase.discarding) return 'No hay que descartar';
+        if (s.handCard(uid) == null) return 'La carta no está en la mano';
+    }
+    return null;
+  }
+
+  /// Acciones legales (para bots). EndTurn se ofrece sin retener.
+  List<CombatAction> legalActions(CombatState s) {
+    if (s.isOver) return const [];
+    if (s.phase == CombatPhase.discarding) {
+      return [for (final c in s.hand) ChooseDiscard(c.uid)];
+    }
+    final out = <CombatAction>[];
+    final seen = <String>{};
+    for (final c in s.hand) {
+      if (!seen.add('${c.cardId}/${c.upgrades}')) continue;
+      final a = PlayCard(c.uid);
+      if (validate(s, a) == null) out.add(a);
+    }
+    for (final st in Stance.values) {
+      final a = Dingbu(st);
+      if (validate(s, a) == null) out.add(a);
+    }
+    if (s.breathesLeft > 0 && s.hand.isNotEmpty) out.add(const Breathe());
+    out.add(const EndTurn());
+    return out;
+  }
+
+  // ------------------------------------------------------------- cálculos
+
+  int costOf(CombatState s, CardDef def) => _cost(def, s.player.stance);
+
+  int _cost(CardDef def, Stance stance) =>
+      math.max(0, def.cost + (data.stance(stance).costModifier[def.type] ?? 0));
+
+  /// Daño y Estructura de la carta antes de los modificadores del enemigo.
+  (int, int) _cardHit(CardDef def, int upgrades, Stance stance, bool staggered,
+      int turnStructureBonus) {
+    if (def.damage == 0 && def.structure == 0) return (0, 0);
+    final st = data.stance(stance);
+    var dmg = def.damage + (def.guard == 0 ? upgrades : 0);
+    var str = def.structure;
+    if (def.type.isAttack) {
+      dmg += st.damageBonus[def.type] ?? 0;
+      str += st.structureBonus[def.type] ?? 0;
+    }
+    if (staggered) dmg += def.bonusDamageIfStaggered;
+    final ssb = def.stanceStructureBonus;
+    if (ssb != null && ssb.$1 == stance) str += ssb.$2;
+    str += turnStructureBonus;
+    return (dmg, str);
+  }
+
+  int _guardOf(CardDef def, int upgrades, Stance stance) {
+    if (def.guard == 0) return 0;
+    return math.max(0, def.guard + upgrades + data.stance(stance).guardModifier);
+  }
+
+  /// Daño efectivo sobre el enemigo: ×2 desequilibrado, ½ inamovible.
+  int _enemyDamageTaken(EnemyDef def, bool staggered, int dmg) {
+    if (staggered) return dmg * data.balance.enemyBreakDamageMultiplier;
+    if (def.immovable) return dmg ~/ 2;
+    return dmg;
+  }
+
+  CardPreview preview(CombatState s, int uid) {
+    final c = s.handCard(uid)!;
+    final def = data.card(c.cardId);
+    final stanceAfter = def.stance ?? s.player.stance;
+    final enemyDef = data.enemy(s.enemy.id);
+    final (dmg, str) = _cardHit(def, c.upgrades, stanceAfter, s.enemy.staggered,
+        s.turnStructureBonus);
+    final dealt = _enemyDamageTaken(enemyDef, s.enemy.staggered, dmg);
+    final advances = <String>[], completes = <String>[], interrupts = <String>[];
+    for (final f in data.forms) {
+      final p = s.formProgress[f.id]!;
+      if (f.steps[p] == def.id) {
+        (p + 1 == f.steps.length ? completes : advances).add(f.id);
+      } else if (p > 0 && def.type.isAttack) {
+        interrupts.add(f.id);
+      }
+    }
+    return CardPreview(
+      cost: costOf(s, def),
+      playable: validate(s, PlayCard(uid)) == null,
+      reason: validate(s, PlayCard(uid)),
+      damage: dealt,
+      structure: s.enemy.staggered ? 0 : str,
+      guard: _guardOf(def, c.upgrades, stanceAfter),
+      height: def.height,
+      stanceAfter: stanceAfter,
+      advancesForms: advances,
+      completesForms: completes,
+      interruptsForms: interrupts,
+    );
+  }
+
+  IntentDef currentIntent(EnemyCombat e) =>
+      data.enemy(e.id).phases[e.phaseIndex].pattern[e.patternIndex];
+
+  IntentView intentView(CombatState s) {
+    final e = s.enemy;
+    final def = data.enemy(e.id);
+    final intent = currentIntent(e);
+    final punish = s.punishPending ? 1 : 0;
+    final pattern = def.phases[e.phaseIndex].pattern;
+    final cdIndex = pattern.indexWhere((i) => i.countdown);
+    int? countdown;
+    if (cdIndex >= 0) {
+      countdown = (cdIndex - e.patternIndex) % pattern.length;
+    }
+    final isAttack = intent.kind == IntentKind.attack;
+    return IntentView(
+      intent: intent,
+      damage: isAttack
+          ? intent.damage + e.chargeBonus + punish * def.sameStancePunishDamage
+          : 0,
+      structure: isAttack
+          ? intent.structure + punish * def.sameStancePunishStructure
+          : 0,
+      skipped: e.skipNextAction,
+      countdown: countdown,
+      punishIfSameStance: def.sameStancePunishDamage > 0 &&
+          s.lastTurnEndStance != null &&
+          s.lastTurnEndStance == s.player.stance,
+    );
+  }
+
+  // --------------------------------------------------------------- jugar
+
+  void _playCard(_Draft d, int uid, List<CombatEvent> events) {
+    final card = d.hand.firstWhere((c) => c.uid == uid);
+    final def = data.card(card.cardId);
+    d.breath -= _cost(def, d.stance);
+    d.hand.remove(card);
+    events.add(CardPlayed(def.id));
+
+    // Primero te mueve, después aplica el efecto.
+    if (def.stance != null && def.stance != d.stance) {
+      d.stance = def.stance!;
+      events.add(StanceChanged(d.stance));
+    }
+
+    final g = _guardOf(def, card.upgrades, d.stance);
+    if (def.type == CardType.defense) {
+      d.guard += g;
+      d.guardHeight = def.height;
+      d.deflectBonusDamage += def.onDeflectDamage;
+      d.deflectBonusStructure += def.onDeflectStructure;
+      events.add(GuardGained(g, def.height));
+    }
+
+    final (dmg, str) = _cardHit(def, card.upgrades, d.stance,
+        d.enemy.staggered, d.turnStructureBonus);
+    if (dmg > 0 || str > 0) _hitEnemy(d, dmg, str, events);
+
+    if (def.clearGuard) {
+      d.guard = 0;
+      d.guardHeight = null;
+    }
+    d.breath += def.gainBreath;
+    d.turnStructureBonus += def.turnStructureBonus;
+
+    (def.exhaust ? d.exhausted : d.discard).add(card);
+    if (def.draw > 0) _draw(d, def.draw, events);
+
+    if (!d.isOver) _advanceForms(d, def, events);
+  }
+
+  void _advanceForms(_Draft d, CardDef def, List<CombatEvent> events) {
+    for (final f in data.forms) {
+      final p = d.formProgress[f.id]!;
+      if (f.steps[p] == def.id) {
+        if (p + 1 == f.steps.length) {
+          d.formProgress[f.id] = 0;
+          d.formsCompleted[f.id] = (d.formsCompleted[f.id] ?? 0) + 1;
+          events.add(FormCompleted(f.id));
+          _applyForm(d, f.effect, events);
+          if (d.isOver) return;
+        } else {
+          d.formProgress[f.id] = p + 1;
+          events.add(FormAdvanced(f.id, p + 1));
+        }
+      } else if (def.type.isAttack) {
+        final restart = f.steps.first == def.id ? 1 : 0;
+        if (p > 0) events.add(FormInterrupted(f.id));
+        d.formProgress[f.id] = restart;
+        if (restart == 1) events.add(FormAdvanced(f.id, 1));
+      }
+    }
+  }
+
+  void _applyForm(_Draft d, FormEffect fx, List<CombatEvent> events) {
+    if (fx.damage > 0 || fx.structure > 0) {
+      _hitEnemy(d, fx.damage, fx.structure + d.turnStructureBonus, events);
+    }
+    if (fx.guard > 0) {
+      d.guard += fx.guard;
+      d.guardHeight = fx.height ?? d.guardHeight;
+      events.add(GuardGained(fx.guard, fx.height));
+    }
+    if (fx.draw > 0) _draw(d, fx.draw, events);
+  }
+
+  void _hitEnemy(_Draft d, int dmg, int str, List<CombatEvent> events) {
+    final e = d.enemy;
+    final def = data.enemy(e.id);
+    var taken = _enemyDamageTaken(def, e.staggered, dmg);
+    final absorbed = math.min(e.guard, taken);
+    e.guard -= absorbed;
+    taken -= absorbed;
+    e.hp = math.max(0, e.hp - taken);
+    final strTaken = e.staggered ? 0 : math.min(str, e.structure);
+    e.structure -= strTaken;
+    events.add(EnemyDamaged(taken, strTaken, absorbed: absorbed));
+    if (e.hp == 0) {
+      d.phase = CombatPhase.won;
+      events.add(const Victory());
+      return;
+    }
+    if (!e.staggered && e.structure == 0) _breakEnemy(d, events);
+    _checkEnemyPhase(d, events);
+  }
+
+  void _breakEnemy(_Draft d, List<CombatEvent> events) {
+    final e = d.enemy;
+    e.staggered = true;
+    e.skipNextAction = true;
+    e.staggerEndsTurn = d.turn + 1;
+    events.add(const EnemyBroken());
+  }
+
+  void _checkEnemyPhase(_Draft d, List<CombatEvent> events) {
+    final e = d.enemy;
+    final phases = data.enemy(e.id).phases;
+    for (var i = e.phaseIndex + 1; i < phases.length; i++) {
+      final t = phases[i].hpThreshold;
+      if (t != null && e.hp <= e.maxHp * t) {
+        e.phaseIndex = i;
+        e.patternIndex = 0;
+        events.add(EnemyPhaseChanged(i));
+      }
+    }
+  }
+
+  // ------------------------------------------------------------- turnos
+
+  void _endTurn(_Draft d, Set<int> retain, List<CombatEvent> events) {
+    final kept = d.hand.where((c) => retain.contains(c.uid)).toList();
+    d.discard.addAll(d.hand.where((c) => !retain.contains(c.uid)));
+    d.hand
+      ..clear()
+      ..addAll(kept);
+
+    final enemyDef = data.enemy(d.enemy.id);
+    if (enemyDef.sameStancePunishDamage > 0 &&
+        d.lastTurnEndStance != null &&
+        d.lastTurnEndStance == d.stance) {
+      d.punishPending = true;
+    }
+    d.lastTurnEndStance = d.stance;
+    d.turnStructureBonus = 0;
+
+    final e = d.enemy;
+    if (e.staggered && e.staggerEndsTurn <= d.turn) {
+      e.staggered = false;
+      e.structure = e.maxStructure;
+      events.add(const EnemyRecovered());
+    }
+
+    _enemyAct(d, events);
+    if (d.isOver) return;
+    _startPlayerTurn(d, events);
+  }
+
+  void _enemyAct(_Draft d, List<CombatEvent> events) {
+    final e = d.enemy;
+    final def = data.enemy(e.id);
+    e.guard = 0;
+    final phaseBefore = e.phaseIndex;
+    if (e.skipNextAction) {
+      e.skipNextAction = false;
+      events.add(const EnemyActionSkipped());
+    } else {
+      final intent = currentIntent(e.freeze());
+      switch (intent.kind) {
+        case IntentKind.attack:
+          _enemyAttack(d, def, intent, events);
+        case IntentKind.guard:
+          e.guard = intent.value;
+          events.add(EnemyGuarded(intent.value));
+        case IntentKind.charge:
+          e.chargeBonus += intent.value;
+          events.add(EnemyCharged(intent.value));
+        case IntentKind.discard:
+          d.pendingDiscard += intent.count;
+      }
+    }
+    if (d.isOver) return;
+    // Si cambió de fase durante su acción, la nueva fase arranca en el paso 0.
+    if (e.phaseIndex != phaseBefore) return;
+    final pattern = def.phases[e.phaseIndex].pattern;
+    e.patternIndex = (e.patternIndex + 1) % pattern.length;
+  }
+
+  void _enemyAttack(
+      _Draft d, EnemyDef def, IntentDef intent, List<CombatEvent> events) {
+    final e = d.enemy;
+    var damage = intent.damage + e.chargeBonus;
+    var structure = intent.structure;
+    e.chargeBonus = 0;
+    if (d.punishPending) {
+      damage += def.sameStancePunishDamage;
+      structure += def.sameStancePunishStructure;
+      d.punishPending = false;
+    }
+    final stance = data.stance(d.stance);
+    final match = d.guard > 0 && d.guardHeight == intent.height;
+    // La Guardia no se consume: en un ataque doble se aplica a cada golpe,
+    // así que si desvía uno los desvía todos. El desvío premia una vez por acción.
+    if (match && d.guard >= damage) {
+      d.deflects++;
+      events.add(const Deflected());
+      d.nextTurnBreathMod +=
+          data.balance.deflectBreathBonus + stance.deflectBreathBonus;
+      _hitEnemy(
+          d,
+          d.deflectBonusDamage,
+          data.balance.deflectEnemyStructureLoss + d.deflectBonusStructure,
+          events);
+      return;
+    }
+    final absorb = d.guard == 0 ? 0 : (match ? d.guard : d.guard ~/ 2);
+    final blocked = d.guard > 0;
+    for (var hit = 0; hit < intent.hits; hit++) {
+      final taken = math.max(0, damage - absorb);
+      var s = blocked ? structure ~/ 2 : structure;
+      s = (s * stance.incomingStructureMultiplier).floor();
+      if (s > 0) s += stance.incomingStructureBonus;
+      d.hp = math.max(0, d.hp - taken);
+      d.structure = math.max(0, d.structure - s);
+      events.add(PlayerHit(taken, s, blocked: blocked));
+      if (d.hp == 0) {
+        d.phase = CombatPhase.lost;
+        events.add(const Defeat());
+        return;
+      }
+      if (d.structure == 0) {
+        d.nextTurnBreathMod -= data.balance.playerBreakBreathPenalty;
+        d.structure = d.maxStructure;
+        events.add(const PlayerBroken());
+      }
+    }
+    if (intent.interrupt) {
+      d.formProgress.updateAll((_, _) => 0);
+      events.add(const FormsResetByEnemy());
+    }
+  }
+
+  void _startPlayerTurn(_Draft d, List<CombatEvent> events) {
+    d.turn++;
+    d.guard = 0;
+    d.guardHeight = null;
+    d.deflectBonusDamage = 0;
+    d.deflectBonusStructure = 0;
+    d.dingbuUsed = false;
+    d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
+    d.nextTurnBreathMod = 0;
+    events.add(TurnStarted(d.turn, d.breath));
+    _draw(d, d.handSize - d.hand.length, events);
+    if (d.pendingDiscard > 0 && d.hand.isNotEmpty) {
+      d.pendingDiscard = math.min(d.pendingDiscard, d.hand.length);
+      d.phase = CombatPhase.discarding;
+      events.add(DiscardRequired(d.pendingDiscard));
+    } else {
+      d.pendingDiscard = 0;
+    }
+  }
+
+  void _draw(_Draft d, int n, List<CombatEvent> events) {
+    var drawn = 0;
+    for (var i = 0; i < n; i++) {
+      if (d.drawPile.isEmpty) {
+        if (d.discard.isEmpty) break;
+        final (shuffled, rng) = d.rng.shuffle(d.discard);
+        d.rng = rng;
+        d.drawPile.addAll(shuffled);
+        d.discard.clear();
+        events.add(const DeckShuffled());
+      }
+      d.hand.add(d.drawPile.removeAt(0));
+      drawn++;
+    }
+    if (drawn > 0) events.add(CardsDrawn(drawn));
+  }
+}
+
+// ------------------------------------------------------------------ drafts
+
+class _EnemyDraft {
+  _EnemyDraft({
+    required this.id,
+    required this.hp,
+    required this.maxHp,
+    required this.structure,
+    required this.maxStructure,
+    this.guard = 0,
+    this.phaseIndex = 0,
+    this.patternIndex = 0,
+    this.staggered = false,
+    this.staggerEndsTurn = 0,
+    this.skipNextAction = false,
+    this.chargeBonus = 0,
+  });
+
+  factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
+        id: e.id,
+        hp: e.hp,
+        maxHp: e.maxHp,
+        structure: e.structure,
+        maxStructure: e.maxStructure,
+        guard: e.guard,
+        phaseIndex: e.phaseIndex,
+        patternIndex: e.patternIndex,
+        staggered: e.staggered,
+        staggerEndsTurn: e.staggerEndsTurn,
+        skipNextAction: e.skipNextAction,
+        chargeBonus: e.chargeBonus,
+      );
+
+  final String id;
+  int hp;
+  final int maxHp;
+  int structure;
+  final int maxStructure;
+  int guard;
+  int phaseIndex;
+  int patternIndex;
+  bool staggered;
+  int staggerEndsTurn;
+  bool skipNextAction;
+  int chargeBonus;
+
+  EnemyCombat freeze() => EnemyCombat(
+        id: id,
+        hp: hp,
+        maxHp: maxHp,
+        structure: structure,
+        maxStructure: maxStructure,
+        guard: guard,
+        phaseIndex: phaseIndex,
+        patternIndex: patternIndex,
+        staggered: staggered,
+        staggerEndsTurn: staggerEndsTurn,
+        skipNextAction: skipNextAction,
+        chargeBonus: chargeBonus,
+      );
+}
+
+class _Draft {
+  _Draft({
+    required this.turn,
+    required this.phase,
+    required this.handSize,
+    required this.breathPerTurn,
+    required this.retainMax,
+    required this.hp,
+    required this.maxHp,
+    required this.structure,
+    required this.maxStructure,
+    required this.guard,
+    required this.guardHeight,
+    required this.stance,
+    required this.breath,
+    required this.enemy,
+    required this.drawPile,
+    required this.hand,
+    required this.discard,
+    required this.exhausted,
+    required this.breathesLeft,
+    required this.formProgress,
+    required this.rng,
+    this.nextTurnBreathMod = 0,
+    this.dingbuUsed = false,
+    this.turnStructureBonus = 0,
+    this.deflectBonusDamage = 0,
+    this.deflectBonusStructure = 0,
+    this.lastTurnEndStance,
+    this.punishPending = false,
+    this.pendingDiscard = 0,
+    Map<String, int>? formsCompleted,
+    this.deflects = 0,
+  }) : formsCompleted = formsCompleted ?? {};
+
+  factory _Draft.of(CombatState s) => _Draft(
+        turn: s.turn,
+        phase: s.phase,
+        handSize: s.handSize,
+        breathPerTurn: s.breathPerTurn,
+        retainMax: s.retainMax,
+        hp: s.player.hp,
+        maxHp: s.player.maxHp,
+        structure: s.player.structure,
+        maxStructure: s.player.maxStructure,
+        guard: s.player.guard,
+        guardHeight: s.player.guardHeight,
+        stance: s.player.stance,
+        breath: s.player.breath,
+        enemy: _EnemyDraft.of(s.enemy),
+        drawPile: [...s.drawPile],
+        hand: [...s.hand],
+        discard: [...s.discard],
+        exhausted: [...s.exhausted],
+        breathesLeft: s.breathesLeft,
+        formProgress: {...s.formProgress},
+        rng: s.rng,
+        nextTurnBreathMod: s.nextTurnBreathMod,
+        dingbuUsed: s.dingbuUsed,
+        turnStructureBonus: s.turnStructureBonus,
+        deflectBonusDamage: s.deflectBonusDamage,
+        deflectBonusStructure: s.deflectBonusStructure,
+        lastTurnEndStance: s.lastTurnEndStance,
+        punishPending: s.punishPending,
+        pendingDiscard: s.pendingDiscard,
+        formsCompleted: {...s.formsCompleted},
+        deflects: s.deflects,
+      );
+
+  int turn;
+  CombatPhase phase;
+  final int handSize;
+  final int breathPerTurn;
+  final int retainMax;
+  int hp;
+  final int maxHp;
+  int structure;
+  final int maxStructure;
+  int guard;
+  Height? guardHeight;
+  Stance stance;
+  int breath;
+  final _EnemyDraft enemy;
+  final List<CombatCard> drawPile;
+  final List<CombatCard> hand;
+  final List<CombatCard> discard;
+  final List<CombatCard> exhausted;
+  int breathesLeft;
+  final Map<String, int> formProgress;
+  Rng rng;
+  int nextTurnBreathMod;
+  bool dingbuUsed;
+  int turnStructureBonus;
+  int deflectBonusDamage;
+  int deflectBonusStructure;
+  Stance? lastTurnEndStance;
+  bool punishPending;
+  int pendingDiscard;
+  final Map<String, int> formsCompleted;
+  int deflects;
+
+  bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
+
+  CombatState freeze() => CombatState(
+        turn: turn,
+        phase: phase,
+        handSize: handSize,
+        breathPerTurn: breathPerTurn,
+        retainMax: retainMax,
+        player: PlayerCombat(
+          hp: hp,
+          maxHp: maxHp,
+          structure: structure,
+          maxStructure: maxStructure,
+          guard: guard,
+          guardHeight: guardHeight,
+          stance: stance,
+          breath: breath,
+        ),
+        enemy: enemy.freeze(),
+        drawPile: List.unmodifiable(drawPile),
+        hand: List.unmodifiable(hand),
+        discard: List.unmodifiable(discard),
+        exhausted: List.unmodifiable(exhausted),
+        nextTurnBreathMod: nextTurnBreathMod,
+        dingbuUsed: dingbuUsed,
+        breathesLeft: breathesLeft,
+        turnStructureBonus: turnStructureBonus,
+        deflectBonusDamage: deflectBonusDamage,
+        deflectBonusStructure: deflectBonusStructure,
+        lastTurnEndStance: lastTurnEndStance,
+        punishPending: punishPending,
+        formProgress: Map.unmodifiable(formProgress),
+        pendingDiscard: pendingDiscard,
+        formsCompleted: Map.unmodifiable(formsCompleted),
+        deflects: deflects,
+        rng: rng,
+      );
+}
