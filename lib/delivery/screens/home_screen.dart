@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
+import '../audio/game_audio.dart';
 import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
@@ -30,6 +31,12 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    ref.read(audioProvider).music(Music.menu);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final saved = ref.watch(savedRunProvider).value;
@@ -51,6 +58,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
           child: Column(
             children: [
+              const Align(alignment: Alignment.centerRight, child: _AudioToggles()),
               const FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Row(
@@ -132,6 +140,44 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Interruptores de efectos y música; se recuerdan entre sesiones.
+class _AudioToggles extends ConsumerStatefulWidget {
+  const _AudioToggles();
+
+  @override
+  ConsumerState<_AudioToggles> createState() => _AudioTogglesState();
+}
+
+class _AudioTogglesState extends ConsumerState<_AudioToggles> {
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final audio = ref.watch(audioProvider);
+    Widget toggle(bool on, IconData onIcon, IconData offIcon, String tip,
+            Future<void> Function(bool) set) =>
+        IconButton(
+          tooltip: tip,
+          visualDensity: VisualDensity.compact,
+          color: on ? Palette.text : Palette.textDim,
+          icon: Icon(on ? onIcon : offIcon, size: 22),
+          onPressed: () async {
+            await set(!on);
+            if (!on) audio.play(Sfx.uiButton);
+            setState(() {});
+          },
+        );
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        toggle(audio.sfxOn, Icons.volume_up_rounded, Icons.volume_off_rounded,
+            t.soundEffects, audio.setSfxOn),
+        toggle(audio.musicOn, Icons.music_note_rounded, Icons.music_off_rounded,
+            t.music, audio.setMusicOn),
+      ],
     );
   }
 }

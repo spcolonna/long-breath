@@ -10,6 +10,7 @@ import '../../domain/model/game_balance.dart';
 import '../../domain/model/game_data.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
+import '../audio/game_audio.dart';
 import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
@@ -21,6 +22,8 @@ class MapScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Idempotente: si ya suena, sigue sin cortarse.
+    ref.read(audioProvider).music(Music.menu);
     final t = AppLocalizations.of(context);
     final run = ref.watch(runControllerProvider);
     if (run == null) return const SizedBox();
@@ -86,7 +89,10 @@ class MapScreen extends ConsumerWidget {
                             data: data,
                             visited: run.visited.contains(n.id),
                             available: available.contains(n.id),
-                            onTap: () => _enter(context, ref, n),
+                            onTap: () {
+                              ref.read(audioProvider).play(Sfx.mapNode);
+                              _enter(context, ref, n);
+                            },
                           ),
                         ),
                     ],

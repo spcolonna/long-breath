@@ -7,11 +7,13 @@ environment:
   sdk: ^3.11.4
 
 dependencies:
+  audio_session: ^0.2.4
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: ^3.3.2
+  flutter_soloud: ^4.1.7
   go_router: ^17.5.0
   intl: ^0.20.2
   shared_preferences: ^2.5.5
@@ -28,6 +30,8 @@ flutter:
     - assets/data/
     - assets/l10n/content/
     - assets/art/enemies/
+    - assets/audio/sfx/
+    - assets/audio/music/
     - assets/art/stages/qianyunshan/
     # hero.png es la fuente de tool/recolor_hero.py; el juego usa las variantes.
     - assets/art/player/hero_novice.png

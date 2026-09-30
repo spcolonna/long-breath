@@ -6,6 +6,7 @@ import '../domain/model/game_data.dart';
 import '../domain/run/run_engine.dart';
 import '../infrastructure/asset_game_data_loader.dart';
 import '../infrastructure/content_text_loader.dart';
+import 'audio/game_audio.dart';
 import 'content_text.dart';
 import '../infrastructure/run_storage.dart';
 import '../infrastructure/tutorial_storage.dart';
@@ -40,3 +41,6 @@ final tutorialStorageProvider = Provider<TutorialStorage>((ref) => TutorialStora
 
 final tutorialDoneProvider =
     FutureProvider<bool>((ref) => ref.watch(tutorialStorageProvider).isDone());
+
+/// En `main` se reemplaza por el motor real; en tests queda en silencio.
+final audioProvider = Provider<GameAudio>((ref) => SilentAudio());

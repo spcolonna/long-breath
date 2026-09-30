@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/model/enums.dart';
 import '../../l10n/app_localizations.dart';
+import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
@@ -106,6 +107,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                           onTap: () {
                             if (_sworn) return;
                             HapticFeedback.selectionClick();
+                            ref.read(audioProvider).play(Sfx.cardSelect);
                             setState(() => _picked = s);
                           },
                         ),
@@ -137,6 +139,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                       : () {
                           if (_sworn) return;
                           HapticFeedback.heavyImpact();
+                          ref.read(audioProvider).play(Sfx.shrineOath);
                           setState(() {
                             _sworn = true;
                             _burst++;

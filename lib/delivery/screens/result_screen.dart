@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
+import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
@@ -34,6 +35,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   void _onTick() {
     if (_burst == 0 && _c.value >= _landAt) {
       HapticFeedback.heavyImpact();
+      final audio = ref.read(audioProvider)..play(Sfx.runResult);
+      if (ref.read(runControllerProvider)?.phase == RunPhase.victory) {
+        audio.jingle(Music.runWon);
+      }
       setState(() => _burst++);
     }
   }

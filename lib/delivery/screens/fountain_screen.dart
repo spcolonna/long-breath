@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
@@ -152,6 +153,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                 () {
                   if (_healedFrom != null) return;
                   HapticFeedback.mediumImpact();
+                  ref.read(audioProvider).play(Sfx.fountainHeal);
                   setState(() {
                     _healedFrom = run.hp;
                     _burst++;

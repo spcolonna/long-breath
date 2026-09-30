@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
@@ -42,6 +43,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
         return;
       }
       HapticFeedback.mediumImpact();
+      ref.read(audioProvider).play(Sfx.rewardTake);
       setState(() {
         _taking = true;
         _burst++;
@@ -75,10 +77,12 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                   for (final (i, id) in run.rewardOptions.indexed)
                     _Reveal(
                       delayMs: 150 + 140 * i,
+                      onFlip: () => ref.read(audioProvider).play(Sfx.rewardFlip),
                       child: GestureDetector(
                         onTap: () {
                           if (_taking) return;
                           HapticFeedback.selectionClick();
+                          ref.read(audioProvider).play(Sfx.cardSelect);
                           setState(() => _picked = id);
                         },
                         child: Stack(
@@ -156,9 +160,10 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
 
 /// La carta se da vuelta y sube desde abajo al entrar en pantalla.
 class _Reveal extends StatefulWidget {
-  const _Reveal({required this.delayMs, required this.child});
+  const _Reveal({required this.delayMs, required this.onFlip, required this.child});
 
   final int delayMs;
+  final VoidCallback onFlip;
   final Widget child;
 
   @override
@@ -170,7 +175,17 @@ class _RevealState extends State<_Reveal> with SingleTickerProviderStateMixin {
   late final _c = AnimationController(
     vsync: this,
     duration: Duration(milliseconds: _flip + widget.delayMs),
-  )..forward();
+  )
+    ..addListener(_onTick)
+    ..forward();
+  bool _flipped = false;
+
+  void _onTick() {
+    if (!_flipped && _c.value > widget.delayMs / (_flip + widget.delayMs)) {
+      _flipped = true;
+      widget.onFlip();
+    }
+  }
 
   @override
   void dispose() {
