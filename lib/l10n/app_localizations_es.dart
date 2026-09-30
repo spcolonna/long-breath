@@ -360,4 +360,91 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get partOfForm => 'Parte de una forma';
+
+  @override
+  String get tutStart => 'Empezar entrenamiento';
+
+  @override
+  String get tutSkipToRun => 'Ya sé jugar: nueva run';
+
+  @override
+  String get tutReplay => 'Repetir entrenamiento';
+
+  @override
+  String get tutSkip => 'Saltear';
+
+  @override
+  String get tutNext => 'Siguiente';
+
+  @override
+  String get tutMaster => 'Maestro';
+
+  @override
+  String get tutGo => '¡Vamos!';
+
+  @override
+  String get tutClimb => 'Empezar la subida';
+
+  @override
+  String get tutHome => 'Volver al inicio';
+
+  @override
+  String get tutWelcome =>
+      'Bienvenido al patio de la escuela del Dragón Dormido. Antes de subir la montaña vas a practicar con el muñeco de madera. Yo te guío.';
+
+  @override
+  String get tutIntent =>
+      'Este globo es lo que el muñeco va a hacer en su turno: un golpe ALTO (flecha arriba) de 4 de daño y 2 a tu Estructura (E). El enemigo siempre avisa antes de actuar.';
+
+  @override
+  String get tutEnemy =>
+      'Su Vida (roja) y su Estructura (violeta). Llevá la Vida a 0 para ganar. Si le vaciás la Estructura, queda Desequilibrado: pierde su acción y recibe el doble de daño.';
+
+  @override
+  String get tutPlayer =>
+      'Este sos vos: tu Vida, tu Estructura, tu postura actual (Caballo) y tu Guardia, el escudo de la derecha.';
+
+  @override
+  String get tutHand =>
+      'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde.';
+
+  @override
+  String get tutPlayFist =>
+      'Tocá Puño en arco una vez para ver qué hace y otra vez para jugarla.';
+
+  @override
+  String get tutStance =>
+      'La carta te llevó a la postura Arco antes de pegar, y en Arco los puños hacen +3. Cada postura tiene ventajas y costos.';
+
+  @override
+  String get tutDefend =>
+      'Ahora defendete. El muñeco va a pegar ALTO y Mostrar la palma da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.';
+
+  @override
+  String get tutKick =>
+      'Quedaste en postura Vacía, donde las patadas cuestan 1 menos: Patada de latigazo ahora es gratis. Jugala.';
+
+  @override
+  String get tutForms =>
+      'Puño en arco y Patada de latigazo son los dos primeros pasos del Pequeño Puño Rojo. Si completás una forma en orden, se desata un golpe grande. Las defensas no la interrumpen.';
+
+  @override
+  String get tutEndTurn =>
+      'Tu Guardia está lista. Terminá el turno y mirá qué pasa.';
+
+  @override
+  String get tutDeflect =>
+      '¡Desvío! No recibiste daño, el muñeco perdió Estructura y quedó Desequilibrado: pierde su acción y recibe el doble. Además, el desvío te da Aliento extra para este turno.';
+
+  @override
+  String get tutActions =>
+      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.';
+
+  @override
+  String get tutFree =>
+      'Ahora rematalo vos. Mientras esté Desequilibrado, cada golpe cuenta doble.';
+
+  @override
+  String get tutDone =>
+      '¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.';
 }

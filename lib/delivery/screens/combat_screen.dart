@@ -19,6 +19,8 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../tutorial/tutorial_anchor.dart';
+import '../tutorial/tutorial_overlay.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/enemy_sprite.dart';
 import '../widgets/hero_sprite.dart';
@@ -133,7 +135,7 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                   child: _Arena(
                     stageId: data.balance.stage.id,
                     turn: s.turn,
-                    style: ref.watch(runControllerProvider)?.style,
+                    style: view.tutorial ? null : ref.watch(runControllerProvider)?.style,
                     strikeKey: _hitKey,
                     hurtKey: _hurtKey,
                     // Hoy hay un solo enemigo; la arena ya acepta varios.
@@ -150,11 +152,17 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                     ],
                   ),
                 ),
-                _PlayerStrip(s: s, delta: _playerDelta, deltaKey: _deltaKey),
-                _FormsPanel(s: s, data: data),
-                _PreviewPanel(view: view, data: data, engine: engine),
-                _HandArea(view: view, data: data, engine: engine),
-                _ActionBar(view: view, engine: engine, data: data),
+                TutorialAnchor(
+                  id: 'player',
+                  child: _PlayerStrip(s: s, delta: _playerDelta, deltaKey: _deltaKey),
+                ),
+                TutorialAnchor(id: 'forms', child: _FormsPanel(s: s, data: data)),
+                TutorialAnchor(
+                    id: 'preview', child: _PreviewPanel(view: view, data: data, engine: engine)),
+                TutorialAnchor(
+                    id: 'hand', child: _HandArea(view: view, data: data, engine: engine)),
+                TutorialAnchor(
+                    id: 'actions', child: _ActionBar(view: view, engine: engine, data: data)),
               ],
             ),
             if (_current != null)
@@ -163,7 +171,11 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                   child: _FxBanner(key: ValueKey(_fxKey), fx: _current!),
                 ),
               ),
-            if (s.isOver) _EndOverlay(won: s.phase == CombatPhase.won),
+            if (s.isOver && !(view.tutorial && s.phase == CombatPhase.won))
+              _EndOverlay(won: s.phase == CombatPhase.won, tutorial: view.tutorial),
+            // Con key: los banners de arriba entran y salen sin reiniciar la guía.
+            if (view.tutorial)
+              const Positioned.fill(key: ValueKey('tutorial'), child: TutorialOverlay()),
           ],
         ),
       ),
@@ -302,7 +314,7 @@ class _EnemyStage extends ConsumerWidget {
     return Column(
       children: [
         const SizedBox(height: 26),
-        _IntentBubble(iv: slot.intent),
+        TutorialAnchor(id: 'intent', child: _IntentBubble(iv: slot.intent)),
         Expanded(
           child: LayoutBuilder(
             builder: (context, box) {
@@ -329,55 +341,63 @@ class _EnemyStage extends ConsumerWidget {
             },
           ),
         ),
-        // Placa de nombre.
-        GestureDetector(
-          onTap: () => showDialog<void>(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: Text(text.enemy(def.id)),
-              content: Text(text.enemyRule(def.id)),
-            ),
-          ),
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(12, 4, 8, 4),
-            decoration: BoxDecoration(
-              color: accent,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [BoxShadow(color: accent.withValues(alpha: 0.4), blurRadius: 8)],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(text.enemy(def.id),
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: Palette.onColor)),
-                ),
-                if (def.rank != EnemyRank.common)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6),
-                    child: Text(
-                        def.rank == EnemyRank.elite ? t.rankElite : t.rankBoss,
-                        style: const TextStyle(fontSize: 11, color: Palette.onColor)),
+        TutorialAnchor(
+          id: 'enemyInfo',
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Placa de nombre.
+              GestureDetector(
+                onTap: () => showDialog<void>(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text(text.enemy(def.id)),
+                    content: Text(text.enemyRule(def.id)),
                   ),
-                const SizedBox(width: 4),
-                const Icon(Icons.info_outline, size: 16, color: Palette.onColor),
-              ],
-            ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(12, 4, 8, 4),
+                  decoration: BoxDecoration(
+                    color: accent,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [BoxShadow(color: accent.withValues(alpha: 0.4), blurRadius: 8)],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(text.enemy(def.id),
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: Palette.onColor)),
+                      ),
+                      if (def.rank != EnemyRank.common)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Text(
+                              def.rank == EnemyRank.elite ? t.rankElite : t.rankBoss,
+                              style: const TextStyle(fontSize: 11, color: Palette.onColor)),
+                        ),
+                      const SizedBox(width: 4),
+                      const Icon(Icons.info_outline, size: 16, color: Palette.onColor),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              _MiniBar(value: e.hp, max: e.maxHp, color: Palette.lacquer, icon: Icons.favorite),
+              const SizedBox(height: 3),
+              _MiniBar(
+                value: e.structure,
+                max: e.maxStructure,
+                color: e.staggered ? Palette.textDim : Palette.structure,
+                icon: Icons.hexagon_outlined,
+                height: 8,
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: 6),
-        _MiniBar(value: e.hp, max: e.maxHp, color: Palette.lacquer, icon: Icons.favorite),
-        const SizedBox(height: 3),
-        _MiniBar(
-          value: e.structure,
-          max: e.maxStructure,
-          color: e.staggered ? Palette.textDim : Palette.structure,
-          icon: Icons.hexagon_outlined,
-          height: 8,
         ),
         if (e.guard > 0 || e.staggered)
           Padding(
@@ -608,40 +628,43 @@ class _PlayerStrip extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              for (final st in Stance.values)
-                Expanded(
-                  child: _StanceChip(
-                      name: text.stance(st),
-                      hanzi: _stanceHanzi[st]!,
-                      active: st == p.stance),
+          TutorialAnchor(
+            id: 'stances',
+            child: Row(
+              children: [
+                for (final st in Stance.values)
+                  Expanded(
+                    child: _StanceChip(
+                        name: text.stance(st),
+                        hanzi: _stanceHanzi[st]!,
+                        active: st == p.stance),
+                  ),
+                const SizedBox(width: 2),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+                  decoration: BoxDecoration(
+                    color: p.guard > 0 ? Palette.sky : Palette.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: p.guard > 0 ? Palette.sky : Palette.line),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.shield,
+                          size: 16, color: p.guard > 0 ? Palette.onColor : Palette.sky),
+                      const SizedBox(width: 4),
+                      Text('${p.guard}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: p.guard > 0 ? Palette.onColor : Palette.text)),
+                      if (p.guardHeight != null)
+                        Icon(heightIcon(p.guardHeight), size: 14, color: Palette.onColor),
+                    ],
+                  ),
                 ),
-              const SizedBox(width: 2),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-                decoration: BoxDecoration(
-                  color: p.guard > 0 ? Palette.sky : Palette.surface,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: p.guard > 0 ? Palette.sky : Palette.line),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.shield,
-                        size: 16, color: p.guard > 0 ? Palette.onColor : Palette.sky),
-                    const SizedBox(width: 4),
-                    Text('${p.guard}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: p.guard > 0 ? Palette.onColor : Palette.text)),
-                    if (p.guardHeight != null)
-                      Icon(heightIcon(p.guardHeight), size: 14, color: Palette.onColor),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -909,25 +932,28 @@ class _HandArea extends ConsumerWidget {
       curve: Curves.easeOut,
       left: left,
       top: 16 + lift,
-      child: GestureDetector(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          ref.read(combatControllerProvider.notifier).tapCard(c.uid);
-        },
-        child: Transform.rotate(
-          angle: selected ? 0 : angle,
-          child: CardWidget(
-            def: def,
-            upgrades: c.upgrades,
-            preview: p,
-            width: w,
-            selected: selected,
-            advancesForm: advances,
-            interruptsForm: p.interruptsForms.isNotEmpty,
-            playable: view.retaining ||
-                s.phase == CombatPhase.discarding ||
-                p.playable,
-            marked: view.retain.contains(c.uid),
+      child: TutorialAnchor(
+        id: 'card:${c.cardId}',
+          child: GestureDetector(
+          onTap: () {
+            HapticFeedback.selectionClick();
+            ref.read(combatControllerProvider.notifier).tapCard(c.uid);
+          },
+          child: Transform.rotate(
+            angle: selected ? 0 : angle,
+            child: CardWidget(
+              def: def,
+              upgrades: c.upgrades,
+              preview: p,
+              width: w,
+              selected: selected,
+              advancesForm: advances,
+              interruptsForm: p.interruptsForms.isNotEmpty,
+              playable: view.retaining ||
+                  s.phase == CombatPhase.discarding ||
+                  p.playable,
+              marked: view.retain.contains(c.uid),
+            ),
           ),
         ),
       ),
@@ -1000,9 +1026,12 @@ class _ActionBar extends ConsumerWidget {
           const SizedBox(width: 6),
           Expanded(
             flex: 2,
-            child: FilledButton(
-              onPressed: busy ? null : ctl.endTurnPressed,
-              child: Text(t.endTurn, maxLines: 1),
+            child: TutorialAnchor(
+              id: 'endTurn',
+              child: FilledButton(
+                onPressed: busy ? null : ctl.endTurnPressed,
+                child: Text(t.endTurn, maxLines: 1),
+              ),
             ),
           ),
         ],
@@ -1098,7 +1127,8 @@ class _Chip extends StatelessWidget {
         margin: const EdgeInsets.only(right: 6),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.2),
+          // Opaco: se lee también sobre el arte del fondo.
+          color: Color.alphaBlend(color.withValues(alpha: 0.2), Palette.surface),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: color),
         ),
@@ -1107,7 +1137,13 @@ class _Chip extends StatelessWidget {
           children: [
             Icon(icon, size: 13, color: color),
             const SizedBox(width: 4),
-            Text(text, style: TextStyle(fontSize: 11, color: color)),
+            // En columnas angostas (enemigo) el texto se corta en vez de desbordar.
+            Flexible(
+              child: Text(text,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 11, color: color)),
+            ),
           ],
         ),
       );
@@ -1190,9 +1226,10 @@ class _FxBanner extends StatelessWidget {
 }
 
 class _EndOverlay extends ConsumerWidget {
-  const _EndOverlay({required this.won});
+  const _EndOverlay({required this.won, this.tutorial = false});
 
   final bool won;
+  final bool tutorial;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -1215,6 +1252,7 @@ class _EndOverlay extends ConsumerWidget {
             FilledButton(
               onPressed: () {
                 ref.read(combatControllerProvider.notifier).finish();
+                if (tutorial) return context.go('/');
                 final run = ref.read(runControllerProvider)!;
                 context.go(switch (run.phase) {
                   RunPhase.reward => '/reward',

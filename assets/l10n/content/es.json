@@ -45,6 +45,10 @@
     "hu_xiao": "Rugido del tigre"
   },
   "enemies": {
+    "dummy": {
+      "name": "Muñeco de madera",
+      "rule": "El muñeco de entrenamiento de la escuela (木人桩). No tiene reglas especiales: golpea alto, medio y bajo, en ese orden."
+    },
     "bat": {
       "name": "Eco de Murciélago",
       "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección."
