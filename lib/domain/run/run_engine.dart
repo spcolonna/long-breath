@@ -16,10 +16,10 @@ class RunEngine {
   MapNodeDef node(String id) =>
       data.balance.runNodes.firstWhere((n) => n.id == id);
 
-  RunState newRun({required Age age, required int seed}) {
+  RunState newRun({required Style style, required int seed}) {
     final starter = data.starterDeck;
     return RunState(
-      age: age,
+      style: style,
       hp: data.balance.playerHp,
       maxHp: data.balance.playerHp,
       deck: [

@@ -124,28 +124,38 @@ class CardWidget extends ConsumerWidget {
                                   fontWeight: FontWeight.w700)),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(text.card(def.id),
-                              textAlign: TextAlign.center,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 12 * s,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.1,
-                                  color: Palette.text)),
-                          SizedBox(height: 2 * s),
-                          Text(def.pinyin,
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 8 * s,
-                                  fontStyle: FontStyle.italic,
-                                  color: Palette.textDim)),
-                        ],
+                      // Con manos grandes la carta se achica: el texto se reduce
+                      // en vez de desbordar.
+                      LayoutBuilder(
+                        builder: (context, box) => FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: SizedBox(
+                            width: box.maxWidth,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(text.card(def.id),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12 * s,
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.1,
+                                        color: Palette.text)),
+                                SizedBox(height: 2 * s),
+                                Text(def.pinyin,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 8 * s,
+                                        fontStyle: FontStyle.italic,
+                                        color: Palette.textDim)),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

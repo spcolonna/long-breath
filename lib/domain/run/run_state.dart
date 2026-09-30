@@ -7,7 +7,7 @@ enum RunPhase { map, combat, reward, fountain, victory, defeat }
 /// Estado inmutable de una run (serializable para el guardado local).
 class RunState {
   const RunState({
-    required this.age,
+    required this.style,
     required this.hp,
     required this.maxHp,
     required this.deck,
@@ -19,7 +19,7 @@ class RunState {
     required this.rng,
   });
 
-  final Age age;
+  final Style style;
   final int hp;
   final int maxHp;
   final List<CombatCard> deck;
@@ -43,7 +43,7 @@ class RunState {
     Rng? rng,
   }) =>
       RunState(
-        age: age,
+        style: style,
         hp: hp ?? this.hp,
         maxHp: maxHp,
         deck: deck ?? this.deck,
@@ -56,7 +56,7 @@ class RunState {
       );
 
   Map<String, dynamic> toJson() => {
-        'age': age.name,
+        'style': style.name,
         'hp': hp,
         'maxHp': maxHp,
         'deck': [for (final c in deck) c.toJson()],
@@ -69,7 +69,7 @@ class RunState {
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
-        age: Age.parse(j['age'] as String),
+        style: Style.parse((j['style'] ?? j['age']) as String),
         hp: j['hp'] as int,
         maxHp: j['maxHp'] as int,
         deck: [

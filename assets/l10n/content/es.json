@@ -2,10 +2,15 @@
   "stages": {
     "qianyunshan": "Montaña de las Mil Nubes"
   },
-  "ages": {
-    "young": "Joven",
-    "adult": "Adulto",
-    "elder": "Anciano"
+  "styles": {
+    "tiger": "Tigre",
+    "snake": "Serpiente",
+    "crane": "Grulla"
+  },
+  "styleMottos": {
+    "tiger": "Golpea primero, golpea fuerte.",
+    "snake": "Fluye y muerde en el hueco.",
+    "crane": "Espera. El momento llega."
   },
   "stances": {
     "mabu": "Caballo",

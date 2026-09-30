@@ -37,7 +37,7 @@ class ResultScreen extends ConsumerWidget {
                 height: 52,
                 child: FilledButton(
                   onPressed: () {
-                    ref.read(runControllerProvider.notifier).newRun(run.age);
+                    ref.read(runControllerProvider.notifier).newRun(run.style);
                     context.go('/map');
                   },
                   child: Text(t.tryAgain),

@@ -93,6 +93,13 @@ Color typeColor(CardType t) => switch (t) {
     };
 
 /// Color de acento según el rango del enemigo (mapa, aura y placa de nombre).
+/// Color del camino: tiñe la ropa del héroe, su aura y el selector.
+Color styleColor(Style s) => switch (s) {
+      Style.tiger => Palette.lacquer,
+      Style.snake => Palette.structure,
+      Style.crane => Palette.sky,
+    };
+
 Color rankColor(EnemyRank r) => switch (r) {
       EnemyRank.common => Palette.jade,
       EnemyRank.elite => Palette.structure,

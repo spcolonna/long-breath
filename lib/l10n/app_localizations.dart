@@ -112,17 +112,17 @@ abstract class AppLocalizations {
   /// **'Continuar run'**
   String get continueRun;
 
-  /// No description provided for @ageTitle.
+  /// No description provided for @styleTitle.
   ///
   /// In es, this message translates to:
-  /// **'Edad (prueba)'**
-  String get ageTitle;
+  /// **'Elegí tu camino'**
+  String get styleTitle;
 
-  /// No description provided for @ageSummary.
+  /// No description provided for @styleSummary.
   ///
   /// In es, this message translates to:
   /// **'Robás {draw} · Aliento {breath} · Retenés {retain}'**
-  String ageSummary(int draw, int breath, int retain);
+  String styleSummary(int draw, int breath, int retain);
 
   /// No description provided for @life.
   ///

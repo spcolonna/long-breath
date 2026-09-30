@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +10,7 @@ import '../../l10n/app_localizations.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/hero_sprite.dart';
 
 String routeFor(RunState r) => switch (r.phase) {
       RunPhase.map => '/map',
@@ -25,42 +28,82 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  Age _age = Age.adult;
+  Style _style = Style.snake;
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final data = ref.watch(dataProvider);
     final saved = ref.watch(savedRunProvider).value;
-    final stats = data.balance.ages[_age]!;
+    final stats = data.balance.styles[_style]!;
+    final text = ref.watch(textProvider);
+    final accent = styleColor(_style);
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
           child: Column(
             children: [
-              const Spacer(flex: 2),
-              const Text('龙',
-                  style: TextStyle(fontSize: 120, color: Palette.lacquer, height: 1)),
-              const SizedBox(height: 8),
-              const Text('LONG BREATH',
-                  style: TextStyle(
-                      fontSize: 28, letterSpacing: 8, fontWeight: FontWeight.w300)),
-              const Text('长息',
-                  style: TextStyle(fontSize: 16, color: Palette.textDim)),
-              const Spacer(flex: 2),
-              Text(t.ageTitle, style: const TextStyle(color: Palette.textDim)),
-              const SizedBox(height: 8),
-              SegmentedButton<Age>(
-                segments: [
-                  for (final a in Age.values)
-                    ButtonSegment(value: a, label: Text(ref.watch(textProvider).age(a))),
-                ],
-                selected: {_age},
-                onSelectionChanged: (s) => setState(() => _age = s.first),
+              const FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text('龙 ',
+                        style: TextStyle(fontSize: 30, color: Palette.lacquer, height: 1)),
+                    Text('LONG BREATH',
+                        style: TextStyle(
+                            fontSize: 22, letterSpacing: 6, fontWeight: FontWeight.w300)),
+                    Text('  长息', style: TextStyle(fontSize: 13, color: Palette.textDim)),
+                  ],
+                ),
               ),
-              const SizedBox(height: 6),
-              Text(t.ageSummary(stats.draw, stats.breath, stats.retain),
+              // El héroe cambia de ropa y de aura según el camino elegido.
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, box) => AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 450),
+                    transitionBuilder: (child, anim) => FadeTransition(
+                      opacity: anim,
+                      child: ScaleTransition(
+                          scale: Tween(begin: 0.94, end: 1.0).animate(anim), child: child),
+                    ),
+                    child: HeroSprite(
+                      key: ValueKey(_style),
+                      style: _style,
+                      height: math.min(box.maxHeight, box.maxWidth * 1.3),
+                      glyph: stats.hanzi,
+                    ),
+                  ),
+                ),
+              ),
+              Text(t.styleTitle, style: const TextStyle(color: Palette.textDim)),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  for (final a in Style.values)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: _StyleTile(
+                          name: text.style(a),
+                          hanzi: data.balance.styles[a]!.hanzi,
+                          color: styleColor(a),
+                          selected: a == _style,
+                          onTap: () => setState(() => _style = a),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(text.styleMotto(_style),
+                  style: TextStyle(
+                      fontSize: 15, fontStyle: FontStyle.italic, color: accent)),
+              const SizedBox(height: 2),
+              Text(t.styleSummary(stats.draw, stats.breath, stats.retain),
                   style: const TextStyle(fontSize: 12, color: Palette.textDim)),
               const SizedBox(height: 24),
               SizedBox(
@@ -68,7 +111,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: 52,
                 child: FilledButton(
                   onPressed: () {
-                    ref.read(runControllerProvider.notifier).newRun(_age);
+                    ref.read(runControllerProvider.notifier).newRun(_style);
                     context.go('/map');
                   },
                   child: Text(t.newRun, style: const TextStyle(fontSize: 17)),
@@ -101,9 +144,55 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ],
-              const Spacer(),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StyleTile extends StatelessWidget {
+  const _StyleTile({
+    required this.name,
+    required this.hanzi,
+    required this.color,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String name;
+  final String hanzi;
+  final Color color;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? color : Palette.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: selected ? color : Palette.line, width: 1.5),
+          boxShadow: selected
+              ? [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 10)]
+              : null,
+        ),
+        child: Column(
+          children: [
+            Text(name,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: selected ? Palette.onColor : Palette.text)),
+            Text(hanzi,
+                style: TextStyle(
+                    fontSize: 13, color: selected ? Palette.onColor : color)),
+          ],
         ),
       ),
     );

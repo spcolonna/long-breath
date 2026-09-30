@@ -59,7 +59,7 @@ class CombatController extends Notifier<CombatView?> {
     final r = engine.start(
       deck: run.deck,
       enemyId: enemy,
-      age: run.age,
+      style: run.style,
       playerHp: run.hp,
       seed: seed,
     );

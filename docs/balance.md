@@ -13,7 +13,7 @@ Los combates aislados se juegan con el mazo inicial y la Vida completa.
 | Monje sin Rostro | 100% / 4.6 | 100% / 3.0 | 0 pp |
 | Eco del Dragón | 81% / 6.9 | 100% / 4.3 | 19 pp |
 
-Runs completas: aleatorio 47%, codicioso ~34%, planificador 99%. Joven: 97–100% para todos los bots. Anciano: aleatorio 37%, planificador 95%.
+Runs completas: aleatorio 47%, codicioso ~34%, planificador 99%. Tigre (antes Joven): 97–100% para todos los bots. Grulla (antes Anciano): aleatorio 37%, planificador 95%.
 
 ## Lectura frente a los criterios de éxito
 

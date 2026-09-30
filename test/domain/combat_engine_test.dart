@@ -14,7 +14,7 @@ final engine = CombatEngine(data);
 CombatState setup(
   List<String> ids, {
   String enemy = 'salamander',
-  Age age = Age.adult,
+  Style style = Style.snake,
   int hp = 50,
 }) =>
     engine
@@ -24,7 +24,7 @@ CombatState setup(
               CombatCard(uid: i, cardId: ids[i]),
           ],
           enemyId: enemy,
-          age: age,
+          style: style,
           playerHp: hp,
           seed: 1,
           shuffle: false,
@@ -256,7 +256,7 @@ void main() {
                 CombatCard(uid: i, cardId: id),
             ],
             enemyId: 'bat',
-            age: Age.adult,
+            style: Style.snake,
             playerHp: 50,
             seed: seed,
           )
@@ -274,7 +274,7 @@ void main() {
         'an_zhang', //
         'xubu_liangzhang', 'tui_zhang', 'tui_zhang', 'tui_zhang', 'tui_zhang',
         'tui_zhang', 'tui_zhang', 'tui_zhang',
-      ], enemy: 'golem', age: Age.young);
+      ], enemy: 'golem', style: Style.tiger);
       s = play(s, 'gongbu_chongquan').state;
       s = play(s, 'tan_tui').state;
       s = play(s, 'mabu_jiada').state;

@@ -11,18 +11,28 @@ void main() {
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
 
+    // Héroe y enemigo respiran en bucle: no se puede esperar a que se asiente.
+    Future<void> settle() async {
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pump(const Duration(seconds: 1));
+    }
+
     await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
-    await tester.pumpAndSettle();
+    await settle();
     expect(find.text('Nueva run'), findsOneWidget);
 
+    expect(find.text('Serpiente'), findsOneWidget);
+
+    await tester.tap(find.text('Tigre'));
+    await settle();
+    expect(find.text('Golpea primero, golpea fuerte.'), findsOneWidget);
+
     await tester.tap(find.text('Nueva run'));
-    await tester.pumpAndSettle();
+    await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
 
     await tester.tap(find.text('Eco de Murciélago'));
-    // La arena anima al enemigo en bucle: no se puede esperar a que se asiente.
-    await tester.pump(const Duration(seconds: 1));
-    await tester.pump(const Duration(seconds: 1));
+    await settle();
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
     expect(find.text('Eco de Murciélago'), findsOneWidget);

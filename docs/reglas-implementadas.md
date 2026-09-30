@@ -40,6 +40,6 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Eco del Dragón:** al cruzar el 50% de Vida cambia de fase en el acto y el ciclo empieza desde el paso 0. La intención muestra cuántas acciones faltan para el Aliento del Dragón.
 
 ## Mano
-- Robás hasta completar el tamaño de mano de tu edad. Las cartas robadas por efectos pueden superar ese tamaño.
+- Robás hasta completar el tamaño de mano de tu camino. Las cartas robadas por efectos pueden superar ese tamaño.
 - Retener se elige al terminar el turno (acción `EndTurn(retain: [...])`).
 - Bàoquán Lǐ solo se puede jugar en el turno 1. Si la robás más tarde, queda muerta.

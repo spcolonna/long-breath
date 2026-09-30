@@ -5,10 +5,10 @@
     "startStance": "mabu",
     "breathesPerCombat": 1
   },
-  "ages": {
-    "young": { "draw": 6, "breath": 4, "retain": 0 },
-    "adult": { "draw": 5, "breath": 3, "retain": 1 },
-    "elder": { "draw": 4, "breath": 3, "retain": 3 }
+  "styles": {
+    "tiger": { "hanzi": "虎", "pinyin": "Hǔ", "draw": 6, "breath": 4, "retain": 0 },
+    "snake": { "hanzi": "蛇", "pinyin": "Shé", "draw": 5, "breath": 3, "retain": 1 },
+    "crane": { "hanzi": "鹤", "pinyin": "Hè", "draw": 4, "breath": 3, "retain": 3 }
   },
   "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
   "playerBreak": { "breathPenalty": 2 },

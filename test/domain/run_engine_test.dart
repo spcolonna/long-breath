@@ -8,7 +8,7 @@ void main() {
   final run = RunEngine(loadGameDataFromDir());
 
   test('camino completo con bifurcación, recompensa y fuente', () {
-    var r = run.newRun(age: Age.adult, seed: 3);
+    var r = run.newRun(style: Style.snake, seed: 3);
     expect(r.deck.length, 12);
     expect(run.available(r), ['n1']);
     r = run.enter(r, 'n1');
@@ -33,7 +33,7 @@ void main() {
   });
 
   test('fuente: mejorar y eliminar', () {
-    var r = run.newRun(age: Age.adult, seed: 1)
+    var r = run.newRun(style: Style.snake, seed: 1)
         .copyWith(phase: RunPhase.fountain);
     final up = run.fountainUpgrade(r, 0);
     expect(up.deck.first.upgrades, 3);
@@ -42,14 +42,14 @@ void main() {
   });
 
   test('derrota termina la run; victoria en el guardián', () {
-    var r = run.enter(run.newRun(age: Age.adult, seed: 1), 'n1');
+    var r = run.enter(run.newRun(style: Style.snake, seed: 1), 'n1');
     expect(run.finishCombat(r, won: false, hp: 0).phase, RunPhase.defeat);
     r = r.copyWith(currentNode: 'n6');
     expect(run.finishCombat(r, won: true, hp: 5).phase, RunPhase.victory);
   });
 
   test('serialización ida y vuelta', () {
-    final r = run.enter(run.newRun(age: Age.elder, seed: 9), 'n1');
+    final r = run.enter(run.newRun(style: Style.crane, seed: 9), 'n1');
     final back = RunState.fromJson(r.toJson());
     expect(back.toJson(), r.toJson());
   });

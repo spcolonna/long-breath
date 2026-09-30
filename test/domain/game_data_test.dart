@@ -34,6 +34,6 @@ void main() {
       expect(ids.containsAll(n.next), isTrue);
       if (n.enemy != null) expect(data.enemies.containsKey(n.enemy), isTrue);
     }
-    expect(data.balance.ages[Age.elder]!.retain, 3);
+    expect(data.balance.styles[Style.crane]!.retain, 3);
   });
 }
