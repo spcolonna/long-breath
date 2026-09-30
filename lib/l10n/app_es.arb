@@ -3,9 +3,9 @@
   "appTitle": "Long Breath",
   "newRun": "Nueva run",
   "continueRun": "Continuar run",
-  "ageTitle": "Edad (prueba)",
-  "ageSummary": "Robás {draw} · Aliento {breath} · Retenés {retain}",
-  "@ageSummary": {
+  "styleTitle": "Elegí tu camino",
+  "styleSummary": "Robás {draw} · Aliento {breath} · Retenés {retain}",
+  "@styleSummary": {
     "placeholders": {
       "draw": {
         "type": "int"

@@ -1,17 +1,24 @@
 import 'enums.dart';
 
-class AgeStats {
-  const AgeStats({
+/// Estilo animal elegido al empezar la run: cambia cómo se juega la mano.
+class StyleStats {
+  const StyleStats({
+    required this.hanzi,
+    required this.pinyin,
     required this.draw,
     required this.breath,
     required this.retain,
   });
 
+  final String hanzi;
+  final String pinyin;
   final int draw;
   final int breath;
   final int retain;
 
-  factory AgeStats.fromJson(Map<String, dynamic> j) => AgeStats(
+  factory StyleStats.fromJson(Map<String, dynamic> j) => StyleStats(
+        hanzi: j['hanzi'] as String,
+        pinyin: j['pinyin'] as String,
         draw: j['draw'] as int,
         breath: j['breath'] as int,
         retain: j['retain'] as int,
@@ -66,7 +73,7 @@ class GameBalance {
     required this.playerStructure,
     required this.startStance,
     required this.breathesPerCombat,
-    required this.ages,
+    required this.styles,
     required this.deflectEnemyStructureLoss,
     required this.deflectBreathBonus,
     required this.playerBreakBreathPenalty,
@@ -84,7 +91,7 @@ class GameBalance {
   final int playerStructure;
   final Stance startStance;
   final int breathesPerCombat;
-  final Map<Age, AgeStats> ages;
+  final Map<Style, StyleStats> styles;
   final int deflectEnemyStructureLoss;
   final int deflectBreathBonus;
   final int playerBreakBreathPenalty;
@@ -101,7 +108,7 @@ class GameBalance {
 
   factory GameBalance.fromJson(Map<String, dynamic> j) {
     final player = j['player'] as Map<String, dynamic>;
-    final ages = j['ages'] as Map<String, dynamic>;
+    final styles = j['styles'] as Map<String, dynamic>;
     final deflect = j['deflect'] as Map<String, dynamic>;
     final rewards = j['rewards'] as Map<String, dynamic>;
     final fountain = j['fountain'] as Map<String, dynamic>;
@@ -111,9 +118,9 @@ class GameBalance {
       playerStructure: player['structure'] as int,
       startStance: Stance.parse(player['startStance'] as String)!,
       breathesPerCombat: player['breathesPerCombat'] as int,
-      ages: {
-        for (final e in ages.entries)
-          Age.parse(e.key): AgeStats.fromJson(e.value as Map<String, dynamic>),
+      styles: {
+        for (final e in styles.entries)
+          Style.parse(e.key): StyleStats.fromJson(e.value as Map<String, dynamic>),
       },
       deflectEnemyStructureLoss: deflect['enemyStructureLoss'] as int,
       deflectBreathBonus: deflect['breathBonus'] as int,

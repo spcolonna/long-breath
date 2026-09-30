@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 // Simulador de balance sin interfaz.
 //
-//   dart run tool/simulate.dart --n 500 --age adult --runs 200
+//   dart run tool/simulate.dart --n 500 --style snake --runs 200
 //
 // Juega combates aislados (mazo inicial, Vida completa) contra cada enemigo y
 // runs completas, con tres bots: aleatorio, codicioso y planificador.
@@ -37,9 +37,9 @@ class CombatStats {
 }
 
 (CombatState, int) playCombat(CombatEngine engine, Bot bot,
-    List<CombatCard> deck, String enemy, Age age, int hp, int seed) {
+    List<CombatCard> deck, String enemy, Style style, int hp, int seed) {
   var s = engine
-      .start(deck: deck, enemyId: enemy, age: age, playerHp: hp, seed: seed)
+      .start(deck: deck, enemyId: enemy, style: style, playerHp: hp, seed: seed)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 2000) {
@@ -56,7 +56,7 @@ void main(List<String> args) {
 
   final n = int.parse(opt('n', '300'));
   final runs = int.parse(opt('runs', '200'));
-  final age = Age.parse(opt('age', 'adult'));
+  final style = Style.parse(opt('style', 'snake'));
   final baseSeed = int.parse(opt('seed', '1'));
 
   final data = loadGameDataFromDir();
@@ -67,7 +67,7 @@ void main(List<String> args) {
   ];
 
   print('Long Breath — simulador de balance');
-  print('edad: ${age.name}, combates por enemigo: $n, runs: $runs\n');
+  print('estilo: ${style.name}, combates por enemigo: $n, runs: $runs\n');
 
   final winRates = <String, Map<String, double>>{};
   for (final enemy in data.enemies.keys) {
@@ -77,7 +77,7 @@ void main(List<String> args) {
       final st = CombatStats();
       for (var i = 0; i < n; i++) {
         final bot = make(baseSeed * 7919 + i);
-        final (s, turns) = playCombat(engine, bot, starter, enemy, age,
+        final (s, turns) = playCombat(engine, bot, starter, enemy, style,
             data.balance.playerHp, baseSeed * 104729 + i);
         st.played++;
         if (s.phase == CombatPhase.won) {
@@ -101,7 +101,7 @@ void main(List<String> args) {
     var won = 0, reachedBoss = 0, deathDepth = 0;
     for (var i = 0; i < runs; i++) {
       final bot = make(baseSeed * 31 + i);
-      var r = runEngine.newRun(age: age, seed: baseSeed * 7 + i);
+      var r = runEngine.newRun(style: style, seed: baseSeed * 7 + i);
       while (r.phase != RunPhase.victory && r.phase != RunPhase.defeat) {
         switch (r.phase) {
           case RunPhase.map:
@@ -115,7 +115,7 @@ void main(List<String> args) {
               reachedBoss++;
             }
             final (s, _) =
-                playCombat(engine, bot, r.deck, enemy, age, r.hp, seed);
+                playCombat(engine, bot, r.deck, enemy, style, r.hp, seed);
             r = runEngine.finishCombat(r,
                 won: s.phase == CombatPhase.won, hp: s.player.hp);
           case RunPhase.reward:

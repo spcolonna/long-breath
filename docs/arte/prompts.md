@@ -59,6 +59,18 @@ morning sky in light blue fading to warm cream at the bottom, open empty center 
 character standing on the terrace, low detail in the middle. [ESTILO]
 ```
 
+### Héroe
+
+**Fuente:** `assets/art/player/hero.png`, 2:3 y transparente, de espaldas mirando hacia el enemigo. Ropa bermellón para que el recoloreo funcione. Después de cambiarla hay que correr `python3 tool/recolor_hero.py`, que genera `hero_tiger.png`, `hero_snake.png` y `hero_crane.png`.
+
+```
+Game player character, full body, three-quarter back view facing into the scene toward an
+opponent, centered, transparent background: the hero, a kung fu disciple of the Long Breath
+school, in a layered robe of vermilion and warm cream with gold trim and a gold sash, a small
+red dragon emblem on the back, confident relaxed guard, breath visible as a thin golden swirl
+around the hands. [ESTILO]
+```
+
 ## 1. Pantalla de inicio
 
 **Destino:** `assets/art/ui/home_bg.png`, vertical 9:19.5, con espacio libre en el centro para el logo.

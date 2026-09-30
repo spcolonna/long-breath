@@ -4,7 +4,7 @@ Sep 29, 2026 · @Sebastian Pérez
 
 ## Resumen y objetivo del MVP
 
-El MVP valida una sola pregunta: **¿el combate con cartas, posturas y formas es satisfactorio, desafiante y depende más de las decisiones que del azar?** Todo lo demás (árbol, edad real, Legado, historia) queda fuera hasta que el combate funcione.
+El MVP valida una sola pregunta: **¿el combate con cartas, posturas y formas es satisfactorio, desafiante y depende más de las decisiones que del azar?** Todo lo demás (árbol, cultivo del aliento, Legado, historia) queda fuera hasta que el combate funcione.
 
 El juego es un roguelike de cartas para móvil (iOS y Android, en Flutter). El protagonista, un estudiante de kung fu, debe ascender la Montaña de las Mil Nubes (千云山) combatiendo. El vocabulario marcial es tradicional: posturas (步型 bùxíng), técnicas y formas (套路 tàolù) con su nombre en pinyin y caracteres.
 
@@ -19,15 +19,15 @@ El juego es un roguelike de cartas para móvil (iOS y Android, en Flutter). El p
 - 1 estilo animal: Tigre (Hǔ Quán), como cartas de recompensa.
 - 6 enemigos: 4 comunes, 1 élite y 1 guardián.
 - Una run corta de 7 nodos con una bifurcación y una fuente de meditación.
-- Selector de edad (Joven, Adulto, Anciano) como herramienta de prueba.
+- Elección de camino al empezar la run: Tigre, Serpiente o Grulla.
 
-**Queda fuera:** árbol de habilidades, Sabiduría, envejecimiento por muerte, Legado, prólogo en el templo, narrativa, Firebase y monetización.
+**Queda fuera:** árbol de habilidades, cultivo del aliento, Legado, prólogo en el templo, narrativa, Firebase y monetización.
 
 ## Reglas de combate
 
 El combate es por turnos, uno contra uno, y el enemigo siempre anuncia su próxima acción. El azar decide qué cartas tenés; la resolución de cada jugada es siempre determinista.
 
-### Valores base del jugador (Adulto)
+### Valores base del jugador (camino de la Serpiente)
 
 | Valor | Base | Nota |
 | --- | --- | --- |
@@ -168,7 +168,7 @@ El Tigre es el estilo de la fuerza y su identidad mecánica es romper Estructura
 
 El Tigre combina con mǎbù y con el desequilibrio: romper la Estructura con garras y rematar con Pī Quán o una forma.
 
-**Fuera del MVP:** Grulla, Leopardo y Serpiente. El Dragón queda sellado por la historia.
+**Fuera del MVP:** las cartas propias de la Serpiente y la Grulla, y el Leopardo. En el MVP las cartas del Tigre aparecen como recompensa en cualquier camino. El Dragón queda sellado por la historia.
 
 ## Enemigos
 
@@ -197,15 +197,19 @@ En la bifurcación, el jugador elige entre un enemigo que premia romper Estructu
 
 Elegís una sola opción: curar 15 de Vida, eliminar 1 carta del mazo, o mejorar 1 carta (+3 a su daño o a su Guardia). Si perdés, la run termina y empieza de nuevo desde el primer nodo con el mazo inicial.
 
-### Selector de edad (solo para pruebas)
+### Caminos (estilos animales)
 
-En el MVP la edad no cambia al morir. Se elige al empezar la run para comparar cómo se siente cada etapa.
+Reemplazan al sistema de edad: cambian cómo se juega la mano sin necesitar un personaje distinto por etapa. Se elige al empezar la run.
 
-| Edad | Cartas robadas | Aliento | Retener |
-| --- | --- | --- | --- |
-| Joven | 6 | 4 | 0 |
-| Adulto | 5 | 3 | 1 |
-| Anciano | 4 | 3 | 3 |
+| Camino | Color | Cartas robadas | Aliento | Retener | Lectura |
+| --- | --- | --- | --- | --- | --- |
+| Tigre 虎 Hǔ | Bermellón | 6 | 4 | 0 | Agresivo, todo o nada |
+| Serpiente 蛇 Shé | Violeta | 5 | 3 | 1 | Fluido, equilibrado |
+| Grulla 鹤 Hè | Cobalto | 4 | 3 | 3 | Paciente, planifica |
+
+- **Visual:** un solo arte del héroe (`assets/art/player/hero.png`). `tool/recolor_hero.py` genera una variante por camino tiñendo solo la tela bermellón; el aura y el carácter del animal se dibujan por código.
+- **Juego completo:** cada camino será una rama del árbol con sus propias cartas.
+- **Cultivo del aliento (fuera del MVP):** progresión entre partidas por reinos (境界). Cada reino abre espacios del árbol y alguna mejora chica; morir hace perder parte del aliento acumulado, pero nunca se baja de reino. Visualmente solo crece el aura.
 
 ## Pantalla de combate
 
@@ -238,7 +242,7 @@ El MVP se hace en Flutter para iOS y Android, con widgets y animaciones nativas,
 
 ### Datos externalizados
 
-Todo el balance vive en archivos, no en código: `game_balance.json` (valores base, edades, recompensas), `cards.json`, `stances.json`, `forms.json` y `enemies.json`. Cambiar un número no requiere recompilar la lógica.
+Todo el balance vive en archivos, no en código: `game_balance.json` (valores base, caminos, recompensas), `cards.json`, `stances.json`, `forms.json` y `enemies.json`. Cambiar un número no requiere recompilar la lógica.
 
 ```
 lib/

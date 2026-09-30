@@ -18,10 +18,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get continueRun => 'Continuar run';
 
   @override
-  String get ageTitle => 'Edad (prueba)';
+  String get styleTitle => 'Elegí tu camino';
 
   @override
-  String ageSummary(int draw, int breath, int retain) {
+  String styleSummary(int draw, int breath, int retain) {
     return 'Robás $draw · Aliento $breath · Retenés $retain';
   }
 

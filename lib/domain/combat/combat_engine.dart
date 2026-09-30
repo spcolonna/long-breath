@@ -97,22 +97,22 @@ class CombatEngine {
   CombatResult start({
     required List<CombatCard> deck,
     required String enemyId,
-    required Age age,
+    required Style style,
     required int playerHp,
     required int seed,
     bool shuffle = true,
   }) {
     final b = data.balance;
-    final ageStats = b.ages[age]!;
+    final styleStats = b.styles[style]!;
     final enemy = data.enemy(enemyId);
     final (shuffled, rng) =
         shuffle ? Rng.seeded(seed).shuffle(deck) : (deck, Rng.seeded(seed));
     final d = _Draft(
       turn: 0,
       phase: CombatPhase.playerTurn,
-      handSize: ageStats.draw,
-      breathPerTurn: ageStats.breath,
-      retainMax: ageStats.retain,
+      handSize: styleStats.draw,
+      breathPerTurn: styleStats.breath,
+      retainMax: styleStats.retain,
       hp: playerHp,
       maxHp: b.playerHp,
       structure: b.playerStructure,

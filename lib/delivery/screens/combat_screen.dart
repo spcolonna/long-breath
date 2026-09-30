@@ -21,6 +21,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/enemy_sprite.dart';
+import '../widgets/hero_sprite.dart';
 import '../widgets/stat_bar.dart';
 
 class CombatScreen extends ConsumerStatefulWidget {
@@ -43,14 +44,14 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
   _Fx? _current;
   int _fxKey = 0;
   int _enemyDelta = 0, _playerDelta = 0, _deltaKey = 0;
-  int _hitKey = 0, _attackKey = 0;
+  int _hitKey = 0, _attackKey = 0, _hurtKey = 0;
 
   void _onEvents(List<CombatEvent> events) {
     final data = ref.read(dataProvider);
     final text = ref.read(textProvider);
     final t = AppLocalizations.of(context);
     var enemy = 0, player = 0;
-    var hit = false, attacked = false;
+    var hit = false, attacked = false, hurt = false;
     for (final e in events) {
       switch (e) {
         case EnemyDamaged(:final damage):
@@ -59,6 +60,7 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
         case PlayerHit(:final damage):
           player += damage;
           attacked = true;
+          hurt = true;
         case Deflected():
           attacked = true;
           HapticFeedback.mediumImpact();
@@ -90,6 +92,7 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
       }
       if (hit) _hitKey++;
       if (attacked) _attackKey++;
+      if (hurt) _hurtKey++;
     });
     _pump();
   }
@@ -130,6 +133,9 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                   child: _Arena(
                     stageId: data.balance.stage.id,
                     turn: s.turn,
+                    style: ref.watch(runControllerProvider)?.style ?? Style.snake,
+                    strikeKey: _hitKey,
+                    hurtKey: _hurtKey,
                     // Hoy hay un solo enemigo; la arena ya acepta varios.
                     slots: [
                       _EnemySlot(
@@ -187,12 +193,23 @@ class _EnemySlot {
   final int attackKey;
 }
 
-/// Escenario del combate: fondo de la etapa, suelo y los enemigos al frente.
+/// Escenario del combate: fondo de la etapa, suelo, los enemigos al frente y
+/// el héroe de espaldas en primer plano.
 class _Arena extends StatelessWidget {
-  const _Arena({required this.stageId, required this.turn, required this.slots});
+  const _Arena({
+    required this.stageId,
+    required this.turn,
+    required this.style,
+    required this.strikeKey,
+    required this.hurtKey,
+    required this.slots,
+  });
 
   final String stageId;
   final int turn;
+  final Style style;
+  final int strikeKey;
+  final int hurtKey;
   final List<_EnemySlot> slots;
 
   @override
@@ -209,46 +226,63 @@ class _Arena extends StatelessWidget {
     );
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.asset(
-            'assets/art/stages/$stageId/combat_bg.png',
-            fit: BoxFit.cover,
-            errorBuilder: (_, _, _) => fallback,
-          ),
-          // Suelo.
-          Align(
-            alignment: const Alignment(0, 0.62),
-            child: FractionallySizedBox(
-              widthFactor: 0.75,
-              child: Container(
-                height: 34,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.elliptical(200, 34)),
-                  gradient: RadialGradient(colors: [
-                    Palette.text.withValues(alpha: 0.22),
-                    Palette.text.withValues(alpha: 0),
-                  ]),
+      child: LayoutBuilder(builder: (context, box) {
+        final heroH = math.min(box.maxHeight * 0.62, box.maxWidth * 0.54);
+        final heroW = heroH * 2 / 3;
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/art/stages/$stageId/combat_bg.png',
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => fallback,
+            ),
+            // Suelo.
+            Align(
+              alignment: const Alignment(0, 0.62),
+              child: FractionallySizedBox(
+                widthFactor: 0.75,
+                child: Container(
+                  height: 34,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.elliptical(200, 34)),
+                    gradient: RadialGradient(colors: [
+                      Palette.text.withValues(alpha: 0.22),
+                      Palette.text.withValues(alpha: 0),
+                    ]),
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: 12,
-            top: 8,
-            child: _Chip(
-                icon: Icons.hourglass_bottom, text: t.turn(turn), color: Palette.text),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [for (final slot in slots) Expanded(child: _EnemyStage(slot: slot))],
+            Positioned(
+              left: 12,
+              top: 8,
+              child: _Chip(
+                  icon: Icons.hourglass_bottom, text: t.turn(turn), color: Palette.text),
             ),
-          ),
-        ],
-      ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(heroW * 0.8, 8, 16, 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [for (final slot in slots) Expanded(child: _EnemyStage(slot: slot))],
+              ),
+            ),
+            // Héroe de espaldas, cortado por el borde inferior.
+            Positioned(
+              left: -heroW * 0.12,
+              bottom: -heroH * 0.12,
+              child: IgnorePointer(
+                child: HeroSprite(
+                  style: style,
+                  height: heroH,
+                  strikeKey: strikeKey,
+                  hurtKey: hurtKey,
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

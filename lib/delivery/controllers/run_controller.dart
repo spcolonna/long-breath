@@ -19,8 +19,8 @@ class RunController extends Notifier<RunState?> {
 
   void resume(RunState r) => state = r;
 
-  void newRun(Age age) =>
-      _set(_engine.newRun(age: age, seed: DateTime.now().microsecondsSinceEpoch));
+  void newRun(Style style) =>
+      _set(_engine.newRun(style: style, seed: DateTime.now().microsecondsSinceEpoch));
 
   void abandon() => _set(null);
 

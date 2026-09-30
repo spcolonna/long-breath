@@ -33,8 +33,10 @@ void main() {
               if (i.labelKey != null && !text.has('intents', i.labelKey!))
                 'intents.${i.labelKey}',
         ],
-        for (final a in Age.values)
-          if (!text.has('ages', a.name)) 'ages.${a.name}',
+        for (final a in Style.values) ...[
+          if (!text.has('styles', a.name)) 'styles.${a.name}',
+          if (!text.has('styleMottos', a.name)) 'styleMottos.${a.name}',
+        ],
         if (!text.has('stages', data.balance.stage.id))
           'stages.${data.balance.stage.id}',
       ];

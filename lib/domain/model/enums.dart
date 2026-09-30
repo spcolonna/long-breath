@@ -26,12 +26,14 @@ enum Stance {
   static Stance? parse(String? s) => s == null ? null : Stance.values.byName(s);
 }
 
-enum Age {
-  young,
-  adult,
-  elder;
+enum Style {
+  tiger,
+  snake,
+  crane;
 
-  static Age parse(String s) => Age.values.byName(s);
+  /// Acepta los nombres viejos (young/adult/elder) de runs guardadas.
+  static Style parse(String s) => Style.values.byName(
+      const {'young': 'tiger', 'adult': 'snake', 'elder': 'crane'}[s] ?? s);
 }
 
 enum EnemyRank {

@@ -30,5 +30,6 @@ class ContentText {
   String enemyRule(String id) => _get('enemies', id, 'rule');
   String intent(String key) => _get('intents', key);
   String stage(String id) => _get('stages', id);
-  String age(Age a) => _get('ages', a.name);
+  String style(Style a) => _get('styles', a.name);
+  String styleMotto(Style a) => _get('styleMottos', a.name);
 }
