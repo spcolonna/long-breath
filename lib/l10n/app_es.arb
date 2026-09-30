@@ -331,5 +331,7 @@
       }
     }
   },
-  "fightStart": "¡En guardia!"
+  "fightStart": "¡En guardia!",
+  "soundEffects": "Efectos de sonido",
+  "music": "Música"
 }

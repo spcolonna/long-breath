@@ -867,6 +867,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'¡En guardia!'**
   String get fightStart;
+
+  /// No description provided for @soundEffects.
+  ///
+  /// In es, this message translates to:
+  /// **'Efectos de sonido'**
+  String get soundEffects;
+
+  /// No description provided for @music.
+  ///
+  /// In es, this message translates to:
+  /// **'Música'**
+  String get music;
 }
 
 class _AppLocalizationsDelegate

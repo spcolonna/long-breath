@@ -9,10 +9,11 @@ Lista de efectos y música para Long Breath, con el momento exacto del juego en 
 | Tipo | Formato | Destino |
 |---|---|---|
 | Efecto | WAV 44,1 kHz, 16 bit, **mono**, sin silencio al inicio, pico a −1 dB | `assets/audio/sfx/<id>.wav` |
-| Música | M4A (AAC 192 kbps), estéreo, **loop sin corte** | `assets/audio/music/<id>.m4a` |
-| Jingle | M4A, estéreo, sin loop | `assets/audio/music/<id>.m4a` |
+| Música | OGG Vorbis (calidad ~6), estéreo, **loop sin corte** | `assets/audio/music/<id>.ogg` |
+| Jingle | OGG Vorbis, estéreo, sin loop | `assets/audio/music/<id>.ogg` |
 
-- OGG no sirve: iOS no lo reproduce.
+- El juego acepta `.wav`, `.ogg`, `.mp3` y `.flac`; M4A/AAC no. Para música conviene OGG: el MP3 agrega un silencio mínimo que se nota en el loop.
+- No hace falta tocar código: se agrega el archivo con el nombre exacto y suena. Lo que falta, no suena.
 - Los efectos que se repiten mucho llevan **variantes** (`hit_light_1`, `hit_light_2`, `hit_light_3`) para que no suenen a máquina; el juego elige una al azar y le cambia apenas el tono.
 - Duración: efectos entre 0,1 y 1,2 s salvo que se indique otra cosa.
 
@@ -119,4 +120,22 @@ Prompts para Suno/Udio. Todo instrumental, sin voz.
 
 - **Volúmenes relativos:** golpes y sellos 100 %, cartas y UI 50 %, voces de enemigos 70 %, música 35 % (baja a 20 % durante el cartel de victoria o derrota, cuando entra el jingle).
 - **Sincronía:** cada efecto suena en el mismo instante que su háptica y su animación (el impacto a los 330 ms del embiste del enemigo, el sello al caer).
-- **Ajustes:** sonido y música con interruptores separados; se respeta el modo silencio del iPhone.
+- **Ajustes:** sonido y música con interruptores separados (arriba a la derecha en el inicio); se respeta el modo silencio del iPhone.
+
+## Dónde conseguirlos
+
+- **Generarlos con IA** (lo más rápido para que suenen propios):
+  - Efectos: [ElevenLabs Sound Effects](https://elevenlabs.io/sound-effects) (texto a efecto, pegar los prompts de arriba) o [Stable Audio](https://stableaudio.com).
+  - Música: [Suno](https://suno.com) o [Udio](https://www.udio.com), en modo instrumental. En planes pagos permiten uso comercial; revisar la licencia del plan antes de publicar.
+- **Bibliotecas gratis:**
+  - [Kenney](https://kenney.nl/assets?q=audio) (CC0, sin atribución): UI, impactos, cartas. Ideal para `card_*`, `ui_button`, `map_node`.
+  - [Freesound](https://freesound.org) (filtrar por licencia CC0): gongs, tambores chinos, bloque de madera, guzheng sueltos.
+  - [Sonniss GDC Bundle](https://sonniss.com/gameaudiogdc) (gratis, uso comercial sin atribución): cientos de GB de golpes y whooshes profesionales.
+- **Packs pagos baratos:** [itch.io](https://itch.io/game-assets/tag-sound-effects) y el Unity Asset Store (sirven fuera de Unity) tienen packs de "martial arts" / "asian percussion" / "card game UI" por 5–30 USD.
+- **Para convertir y recortar:** [Audacity](https://www.audacityteam.org) (gratis): recortar el silencio inicial, normalizar a −1 dB, exportar WAV mono u OGG.
+
+## Integración (ya hecha)
+
+- Motor: `flutter_soloud` (baja latencia, varias voces, loops sin corte). Para compilar en iOS/Android hace falta **CMake** (`brew install cmake`).
+- Catálogo: `lib/delivery/audio/game_audio.dart` (enums `Sfx` y `Music` con id, variantes y volumen). Implementación en `lib/infrastructure/soloud_audio.dart`.
+- Al arrancar se imprime en la consola cuántos efectos y pistas encontró (`audio: N efectos y M pistas encontradas`).

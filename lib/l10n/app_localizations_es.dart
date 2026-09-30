@@ -472,4 +472,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fightStart => '¡En guardia!';
+
+  @override
+  String get soundEffects => 'Efectos de sonido';
+
+  @override
+  String get music => 'Música';
 }
