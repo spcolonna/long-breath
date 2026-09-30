@@ -92,11 +92,14 @@ class MapScreen extends ConsumerWidget {
 
   void _enter(BuildContext context, WidgetRef ref, MapNodeDef n) {
     ref.read(runControllerProvider.notifier).enter(n.id);
-    if (n.type == NodeType.combat) {
-      ref.read(combatControllerProvider.notifier).start();
-      context.go('/combat');
-    } else {
-      context.go('/fountain');
+    switch (n.type) {
+      case NodeType.combat:
+        ref.read(combatControllerProvider.notifier).start();
+        context.go('/combat');
+      case NodeType.fountain:
+        context.go('/fountain');
+      case NodeType.shrine:
+        context.go('/shrine');
     }
   }
 
@@ -169,15 +172,18 @@ class _NodeButton extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
     final enemy = node.enemy == null ? null : data.enemy(node.enemy!);
+    final shrine = node.type == NodeType.shrine;
     final icon = enemy == null
-        ? Icons.water_drop
+        ? (shrine ? Icons.temple_buddhist : Icons.water_drop)
         : switch (enemy.rank) {
             EnemyRank.common => Icons.sports_martial_arts,
             EnemyRank.elite => Icons.whatshot,
             EnemyRank.boss => Icons.military_tech,
           };
     // Cada tipo de nodo tiene su color, así el mapa se lee de un vistazo.
-    final accent = enemy == null ? Palette.sky : rankColor(enemy.rank);
+    final accent = enemy == null
+        ? (shrine ? Palette.gold : Palette.sky)
+        : rankColor(enemy.rank);
     final color = available
         ? Palette.gold
         : visited
@@ -218,7 +224,9 @@ class _NodeButton extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                enemy == null ? t.fountainNode : text.enemy(enemy.id),
+                enemy == null
+                    ? (shrine ? t.shrineNode : t.fountainNode)
+                    : text.enemy(enemy.id),
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,

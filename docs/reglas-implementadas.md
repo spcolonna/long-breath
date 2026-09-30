@@ -3,7 +3,13 @@
 El documento de diseño deja algunos puntos abiertos. Estas son las decisiones que toma el motor (`lib/domain/combat/combat_engine.dart`). Cada una se puede cambiar.
 
 ## Mapa de la run
-Murciélago → Discípulo → bifurcación [Gólem | Salamandra] → Fuente → Monje sin Rostro → Eco del Dragón (7 nodos y 6 pasos). Está definido en `assets/data/game_balance.json`.
+Murciélago → Discípulo → Santuario → bifurcación [Gólem | Salamandra] → Fuente → Monje sin Rostro → Eco del Dragón (8 nodos y 7 pasos). Está definido en `assets/data/game_balance.json`.
+
+## Santuario y caminos
+- La run empieza sin camino (`style: null`) con las estadísticas de `novice`.
+- Al entrar al santuario se barajan los 3 caminos con el RNG de la run y se ofrecen los primeros `paths.choices` (2). Es reproducible con la misma semilla.
+- Hay que tomar uno (no se saltea) y queda fijo hasta el final de la run.
+- Las runs guardadas antes de este cambio conservan el camino que tenían.
 
 ## Daño del jugador
 1. Base de la carta + mejora de la fuente (a la Guardia si la carta tiene Guardia; si no, al daño).

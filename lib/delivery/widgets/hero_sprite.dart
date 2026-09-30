@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import '../../domain/model/enums.dart';
 import '../theme.dart';
 
-String heroAsset(Style s) => 'assets/art/player/hero_${s.name}.png';
+String heroAsset(Style? s) => 'assets/art/player/hero_${s?.name ?? 'novice'}.png';
 
-/// El héroe de espaldas, con la ropa y el aura de su camino.
+/// El héroe de espaldas, con la ropa y el aura de su camino (o de lino crudo
+/// si todavía es novicio).
 ///
 /// Respira en reposo, avanza al golpear ([strikeKey]) y se sacude con un
 /// destello rojo al recibir daño ([hurtKey]).
@@ -21,7 +22,7 @@ class HeroSprite extends StatefulWidget {
     this.glyph,
   });
 
-  final Style style;
+  final Style? style;
   final double height;
   final int strikeKey;
   final int hurtKey;

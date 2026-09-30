@@ -10,15 +10,17 @@ Manual del juego tal como está hoy (MVP). La primera parte cuenta el mundo; la 
 
 *Lóng* (龙) es dragón en chino; *long breath* es respiración larga en inglés. El juego une las dos cosas: el dragón que espera en la cumbre y el aliento (气 qì) que sostiene cada golpe. En la escuela se dice que quien controla la respiración controla el combate.
 
-## La escuela del Aliento Largo
+## La escuela del Dragón Dormido
 
-Sos discípulo de una escuela de kung fu que entrena al pie de la **Montaña de las Mil Nubes** (千云山 Qiān Yún Shān). La prueba final de todo alumno es subirla sola, combatiendo, hasta la cumbre.
+Sos discípulo de la **escuela del Dragón Dormido** (卧龙门 Wòlóng Mén), que entrena al pie de la **Montaña de las Mil Nubes** (千云山 Qiān Yún Shān). La escuela toma su nombre de la leyenda de la montaña: en la cumbre duerme un dragón, y su respiración es la que forma las nubes. La prueba final de todo alumno es subirla solo, combatiendo, hasta la cumbre.
 
 El emblema de la escuela, un dragón rojo, va bordado en la espalda de cada discípulo.
 
 ## Los tres caminos
 
-Antes de subir, cada alumno elige un **camino**, uno de los estilos animales del Wǔ Xíng Quán (五形拳), los cinco animales de Shaolín. El camino no cambia quién sos; cambia cómo peleás, y la escuela lo marca en la ropa:
+Nadie elige su camino en la escuela. Los novicios suben con la túnica de lino crudo, sin teñir, y a mitad de la ladera, pasado el Discípulo Perdido, llegan al **Santuario de los animales**. Ahí los espíritus del Wǔ Xíng Quán (五形拳, los cinco animales de Shaolín) se muestran al novicio, pero nunca todos: **solo dos se presentan**, y el novicio sigue a uno de ellos. Los maestros dicen que no elegís el camino; el camino te elige a vos y vos solo aceptás.
+
+El camino no cambia quién sos; cambia cómo peleás. Desde ese momento la túnica toma el color del animal:
 
 | Camino | Color de la túnica | Lema | Cómo pelea |
 |---|---|---|---|
@@ -30,7 +32,7 @@ Existen otros dos animales, el Leopardo y el Dragón. El Dragón está sellado: 
 
 ## La montaña
 
-La subida se hace por tramos: la ladera de bambú, una bifurcación entre rocas, una fuente de meditación, un templo en el acantilado y, arriba de todo, la cumbre sobre un mar de nubes.
+La subida se hace por tramos: la ladera de bambú, el santuario de los animales, una bifurcación entre rocas, una fuente de meditación, un templo en el acantilado y, arriba de todo, la cumbre sobre un mar de nubes.
 
 En el camino aparecen:
 
@@ -57,14 +59,16 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 
 ## Una partida (run)
 
-1. **Inicio:** elegís tu camino (Tigre, Serpiente o Grulla) y tocás **Nueva run**. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
-2. **Mapa:** 7 nodos de abajo hacia arriba. Tocás el siguiente nodo para avanzar.
+1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
+2. **Mapa:** 8 nodos de abajo hacia arriba. Tocás el siguiente nodo para avanzar.
 
-   Murciélago → Discípulo → **bifurcación** (Gólem o Salamandra) → Fuente → Monje sin Rostro → Eco del Dragón
+   Murciélago → Discípulo → **Santuario** → **bifurcación** (Gólem o Salamandra) → Fuente → Monje sin Rostro → Eco del Dragón
 
-3. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
-4. **Fuente de meditación:** elegís una opción entre curar 15 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
-5. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
+3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
+
+4. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
+5. **Fuente de meditación:** elegís una opción entre curar 15 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
+6. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
 
 La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí, completa.
 
@@ -72,6 +76,7 @@ La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí
 
 | Camino | Robás por turno | Aliento por turno | Retenés |
 |---|---|---|---|
+| Novicio (hasta el santuario) | 5 | 3 | 0 |
 | Tigre | 6 | 4 | 0 |
 | Serpiente | 5 | 3 | 1 |
 | Grulla | 4 | 3 | 3 |
@@ -79,6 +84,8 @@ La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí
 - **Tigre:** más cartas y más Aliento, pero todo lo que no uses se pierde. Ideal para aprender.
 - **Serpiente:** el punto medio.
 - **Grulla:** pocas cartas por turno, pero puede guardar hasta 3 para armar formas y respuestas exactas. Es el más difícil.
+
+Como el santuario ofrece solo dos, no siempre vas a poder jugar tu camino favorito: parte de la gracia es adaptarse al que te toca.
 
 ## Valores del jugador
 

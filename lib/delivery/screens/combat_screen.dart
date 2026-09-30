@@ -133,7 +133,7 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                   child: _Arena(
                     stageId: data.balance.stage.id,
                     turn: s.turn,
-                    style: ref.watch(runControllerProvider)?.style ?? Style.snake,
+                    style: ref.watch(runControllerProvider)?.style,
                     strikeKey: _hitKey,
                     hurtKey: _hurtKey,
                     // Hoy hay un solo enemigo; la arena ya acepta varios.
@@ -207,7 +207,7 @@ class _Arena extends StatelessWidget {
 
   final String stageId;
   final int turn;
-  final Style style;
+  final Style? style;
   final int strikeKey;
   final int hurtKey;
   final List<_EnemySlot> slots;

@@ -30,6 +30,7 @@ flutter:
     - assets/art/enemies/
     - assets/art/stages/qianyunshan/
     # hero.png es la fuente de tool/recolor_hero.py; el juego usa las variantes.
+    - assets/art/player/hero_novice.png
     - assets/art/player/hero_tiger.png
     - assets/art/player/hero_snake.png
     - assets/art/player/hero_crane.png

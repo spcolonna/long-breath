@@ -50,22 +50,28 @@ under a colored aura. [ESTILO]
 
 ### Fondo de arena de combate
 
-**Destino:** `assets/art/stages/qianyunshan/combat_bg.png`, vertical (1206×1400 aprox.). Ocupa la mitad superior de la pantalla, detrás del enemigo.
+**Destino:** `assets/art/stages/qianyunshan/combat_bg.png`, vertical 6:7 (1200×1400). Ocupa la mitad superior de la pantalla y se recorta para cubrirla, así que lo importante va en el centro. El enemigo se para en el centro-derecha, a unos 3/4 de la altura; el héroe tapa la esquina inferior izquierda.
 
 ```
-Mobile game battle arena background, vertical: a flat stone terrace on a green mountain ledge,
-bamboo and pine at the sides, layers of soft pastel clouds and distant peaks behind, bright
-morning sky in light blue fading to warm cream at the bottom, open empty center for a
-character standing on the terrace, low detail in the middle. [ESTILO]
+Mobile game battle background, vertical 6:7, no characters: a wide flat stone terrace on a
+mountain ledge high above a sea of clouds. The terrace floor fills the lower third, a soft oval
+of worn pale flagstones where two fighters will stand. A weathered vermilion wooden gate
+(paifang) half visible at the left edge, a twisted pine and a few jade bamboo stalks at the
+right edge. Behind, layered pastel mountain peaks fading into mist, a tiny temple on a far peak,
+bright morning sky in pale blue fading to warm cream near the horizon. Center and lower center
+empty and low-detail, soft focus in the distance, clear depth. No people, no animals, no
+text. [ESTILO]
 ```
+
+No hace falta video: el juego ya anima encima (héroe, enemigo, números). Si más adelante se quiere movimiento en el fondo, conviene separar las nubes en una capa PNG aparte y desplazarlas por código, que pesa mucho menos que un video en loop.
 
 ### Héroe
 
-**Fuente:** `assets/art/player/hero.png`, 2:3 y transparente, de espaldas mirando hacia el enemigo. Ropa bermellón para que el recoloreo funcione. Después de cambiarla hay que correr `python3 tool/recolor_hero.py`, que genera `hero_tiger.png`, `hero_snake.png` y `hero_crane.png`.
+**Fuente:** `assets/art/player/hero.png`, 2:3 y transparente, de espaldas mirando hacia el enemigo. Ropa bermellón para que el recoloreo funcione. Después de cambiarla hay que correr `python3 tool/recolor_hero.py`, que genera `hero_novice.png` (lino crudo, antes del santuario), `hero_tiger.png`, `hero_snake.png` y `hero_crane.png`.
 
 ```
 Game player character, full body, three-quarter back view facing into the scene toward an
-opponent, centered, transparent background: the hero, a kung fu disciple of the Long Breath
+opponent, centered, transparent background: the hero, a kung fu disciple of the Sleeping Dragon
 school, in a layered robe of vermilion and warm cream with gold trim and a gold sash, a small
 red dragon emblem on the back, confident relaxed guard, breath visible as a thin golden swirl
 around the hands. [ESTILO]

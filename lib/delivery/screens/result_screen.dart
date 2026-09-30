@@ -29,7 +29,7 @@ class ResultScreen extends ConsumerWidget {
                       fontSize: 120, color: won ? Palette.gold : Palette.lacquer)),
               Text(won ? t.runWon : t.runLost, style: const TextStyle(fontSize: 24)),
               const SizedBox(height: 8),
-              Text('${run.visited.length} / 6 · ${t.deckCount(run.deck.length)}',
+              Text('${run.visited.length} / 7 · ${t.deckCount(run.deck.length)}',
                   style: const TextStyle(color: Palette.textDim)),
               const Spacer(),
               SizedBox(
@@ -37,7 +37,7 @@ class ResultScreen extends ConsumerWidget {
                 height: 52,
                 child: FilledButton(
                   onPressed: () {
-                    ref.read(runControllerProvider.notifier).newRun(run.style);
+                    ref.read(runControllerProvider.notifier).newRun();
                     context.go('/map');
                   },
                   child: Text(t.tryAgain),

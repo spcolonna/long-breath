@@ -37,7 +37,7 @@ class CombatStats {
 }
 
 (CombatState, int) playCombat(CombatEngine engine, Bot bot,
-    List<CombatCard> deck, String enemy, Style style, int hp, int seed) {
+    List<CombatCard> deck, String enemy, Style? style, int hp, int seed) {
   var s = engine
       .start(deck: deck, enemyId: enemy, style: style, playerHp: hp, seed: seed)
       .state;
@@ -95,13 +95,13 @@ void main(List<String> args) {
     print('diferencia planificador − aleatorio: ${gap.toStringAsFixed(1)} pp\n');
   }
 
-  print('== Runs completas (7 nodos)');
+  print('== Runs completas (novicio hasta el santuario, después --style si sale)');
   print('bot            victoria  llega al guardián  nodo medio de derrota');
   for (final MapEntry(key: name, value: make) in bots.entries) {
     var won = 0, reachedBoss = 0, deathDepth = 0;
     for (var i = 0; i < runs; i++) {
       final bot = make(baseSeed * 31 + i);
-      var r = runEngine.newRun(style: style, seed: baseSeed * 7 + i);
+      var r = runEngine.newRun(seed: baseSeed * 7 + i);
       while (r.phase != RunPhase.victory && r.phase != RunPhase.defeat) {
         switch (r.phase) {
           case RunPhase.map:
@@ -115,13 +115,17 @@ void main(List<String> args) {
               reachedBoss++;
             }
             final (s, _) =
-                playCombat(engine, bot, r.deck, enemy, style, r.hp, seed);
+                playCombat(engine, bot, r.deck, enemy, r.style, r.hp, seed);
             r = runEngine.finishCombat(r,
                 won: s.phase == CombatPhase.won, hp: s.player.hp);
           case RunPhase.reward:
             r = runEngine.chooseReward(r, bot.pickReward(runEngine, r));
           case RunPhase.fountain:
             r = bot.useFountain(runEngine, r);
+          case RunPhase.shrine:
+            // Toma el camino pedido si el santuario lo ofrece.
+            r = runEngine.choosePath(r,
+                r.pathOptions.contains(style) ? style : r.pathOptions.first);
           case RunPhase.victory || RunPhase.defeat:
             break;
         }

@@ -118,6 +118,36 @@ abstract class AppLocalizations {
   /// **'Elegí tu camino'**
   String get styleTitle;
 
+  /// No description provided for @homeTagline.
+  ///
+  /// In es, this message translates to:
+  /// **'Subís como novicio. El camino se elige en la montaña.'**
+  String get homeTagline;
+
+  /// No description provided for @shrineNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Santuario'**
+  String get shrineNode;
+
+  /// No description provided for @shrineTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Santuario de los animales'**
+  String get shrineTitle;
+
+  /// No description provided for @shrineHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Dos espíritus te esperan. El camino que tomes tiñe tu túnica y cambia cómo peleás, hasta el final de la subida.'**
+  String get shrineHint;
+
+  /// No description provided for @shrineConfirm.
+  ///
+  /// In es, this message translates to:
+  /// **'Tomar este camino'**
+  String get shrineConfirm;
+
   /// No description provided for @styleSummary.
   ///
   /// In es, this message translates to:
