@@ -17,11 +17,15 @@ void main() {
 
     await tester.tap(find.text('Nueva run'));
     await tester.pumpAndSettle();
-    expect(find.text('千云山  Montaña de las Mil Nubes'), findsOneWidget);
+    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
 
     await tester.tap(find.text('Eco de Murciélago'));
-    await tester.pumpAndSettle();
+    // La arena anima al enemigo en bucle: no se puede esperar a que se asiente.
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
+    expect(find.text('Eco de Murciélago'), findsOneWidget);
+    expect(find.text('Puño en arco'), findsWidgets);
   });
 }

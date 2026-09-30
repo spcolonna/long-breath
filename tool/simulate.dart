@@ -71,7 +71,7 @@ void main(List<String> args) {
 
   final winRates = <String, Map<String, double>>{};
   for (final enemy in data.enemies.keys) {
-    print('== ${data.enemy(enemy).name} (${data.enemy(enemy).rank.name})');
+    print('== $enemy (${data.enemy(enemy).rank.name})');
     print('bot            victoria  turnos  formas  desvíos  vida perdida');
     for (final MapEntry(key: name, value: make) in bots.entries) {
       final st = CombatStats();

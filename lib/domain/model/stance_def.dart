@@ -5,7 +5,6 @@ class StanceDef {
     required this.id,
     required this.pinyin,
     required this.hanzi,
-    required this.es,
     this.damageBonus = const {},
     this.structureBonus = const {},
     this.costModifier = const {},
@@ -18,7 +17,6 @@ class StanceDef {
   final Stance id;
   final String pinyin;
   final String hanzi;
-  final String es;
   final Map<CardType, int> damageBonus;
   final Map<CardType, int> structureBonus;
   final Map<CardType, int> costModifier;
@@ -36,7 +34,6 @@ class StanceDef {
         id: Stance.parse(j['id'] as String)!,
         pinyin: j['pinyin'] as String,
         hanzi: j['hanzi'] as String,
-        es: j['es'] as String,
         damageBonus: _typeMap(j['damageBonus']),
         structureBonus: _typeMap(j['structureBonus']),
         costModifier: _typeMap(j['costModifier']),

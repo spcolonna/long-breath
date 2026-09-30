@@ -30,6 +30,35 @@ backgrounds, no photorealism, no text, no watermark.
 
 ---
 
+## 0. Prioridad MVP (lo que el juego ya sabe usar)
+
+Son las dos imágenes que el código ya busca. Si no existen, se usa una silueta dibujada y un degradado.
+
+### Enemigo genérico
+
+**Destino:** `assets/art/enemies/placeholder.png`, PNG cuadrado (1024×1024) con fondo transparente.
+
+Se usa para todos los enemigos hasta que cada uno tenga su imagen (`assets/art/enemies/<id>.png`). El juego le agrega un aura del color del rango (jade común, violeta élite, bermellón jefe), por eso la figura usa colores neutros.
+
+```
+Game enemy character, full body, facing the viewer in a fighting stance, centered, transparent
+background: a rival kung fu martial artist in a simple layered robe of soft jade and off-white
+with a sash, hair tied up, calm but threatening expression, hands raised in guard, slight
+low-angle heroic perspective, clean readable silhouette at small size, neutral colors that work
+under a colored aura. [ESTILO]
+```
+
+### Fondo de arena de combate
+
+**Destino:** `assets/art/stages/qianyunshan/combat_bg.png`, vertical (1206×1400 aprox.). Ocupa la mitad superior de la pantalla, detrás del enemigo.
+
+```
+Mobile game battle arena background, vertical: a flat stone terrace on a green mountain ledge,
+bamboo and pine at the sides, layers of soft pastel clouds and distant peaks behind, bright
+morning sky in light blue fading to warm cream at the bottom, open empty center for a
+character standing on the terrace, low detail in the middle. [ESTILO]
+```
+
 ## 1. Pantalla de inicio
 
 **Destino:** `assets/art/ui/home_bg.png`, vertical 9:19.5, con espacio libre en el centro para el logo.

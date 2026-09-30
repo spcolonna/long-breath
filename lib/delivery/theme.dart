@@ -77,26 +77,11 @@ Widget backdrop(BuildContext context, Widget? child) =>
       ),
     );
 
-String heightLabel(Height? h) => switch (h) {
-      Height.high => 'alto',
-      Height.mid => 'medio',
-      Height.low => 'bajo',
-      null => '—',
-    };
-
 IconData heightIcon(Height? h) => switch (h) {
       Height.high => Icons.north,
       Height.mid => Icons.east,
       Height.low => Icons.south,
       null => Icons.remove,
-    };
-
-String typeLabel(CardType t) => switch (t) {
-      CardType.fist => 'Puño',
-      CardType.palm => 'Palma',
-      CardType.kick => 'Patada',
-      CardType.defense => 'Defensa',
-      CardType.technique => 'Técnica',
     };
 
 Color typeColor(CardType t) => switch (t) {
@@ -105,4 +90,11 @@ Color typeColor(CardType t) => switch (t) {
       CardType.kick => Palette.gold,
       CardType.defense => Palette.sky,
       CardType.technique => Palette.jade,
+    };
+
+/// Color de acento según el rango del enemigo (mapa, aura y placa de nombre).
+Color rankColor(EnemyRank r) => switch (r) {
+      EnemyRank.common => Palette.jade,
+      EnemyRank.elite => Palette.structure,
+      EnemyRank.boss => Palette.lacquer,
     };

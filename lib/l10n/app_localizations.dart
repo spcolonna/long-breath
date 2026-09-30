@@ -208,12 +208,6 @@ abstract class AppLocalizations {
   /// **'Saltear'**
   String get skip;
 
-  /// No description provided for @dingbu.
-  ///
-  /// In es, this message translates to:
-  /// **'Dīngbù'**
-  String get dingbu;
-
   /// No description provided for @breathe.
   ///
   /// In es, this message translates to:
@@ -339,6 +333,336 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Abandonar run'**
   String get abandon;
+
+  /// No description provided for @typeFist.
+  ///
+  /// In es, this message translates to:
+  /// **'Puño'**
+  String get typeFist;
+
+  /// No description provided for @typePalm.
+  ///
+  /// In es, this message translates to:
+  /// **'Palma'**
+  String get typePalm;
+
+  /// No description provided for @typeKick.
+  ///
+  /// In es, this message translates to:
+  /// **'Patada'**
+  String get typeKick;
+
+  /// No description provided for @typeDefense.
+  ///
+  /// In es, this message translates to:
+  /// **'Defensa'**
+  String get typeDefense;
+
+  /// No description provided for @typeTechnique.
+  ///
+  /// In es, this message translates to:
+  /// **'Técnica'**
+  String get typeTechnique;
+
+  /// No description provided for @heightHigh.
+  ///
+  /// In es, this message translates to:
+  /// **'alto'**
+  String get heightHigh;
+
+  /// No description provided for @heightMid.
+  ///
+  /// In es, this message translates to:
+  /// **'medio'**
+  String get heightMid;
+
+  /// No description provided for @heightLow.
+  ///
+  /// In es, this message translates to:
+  /// **'bajo'**
+  String get heightLow;
+
+  /// No description provided for @rankElite.
+  ///
+  /// In es, this message translates to:
+  /// **'Élite'**
+  String get rankElite;
+
+  /// No description provided for @rankBoss.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardián'**
+  String get rankBoss;
+
+  /// No description provided for @fountainNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Fuente'**
+  String get fountainNode;
+
+  /// No description provided for @intentAttack.
+  ///
+  /// In es, this message translates to:
+  /// **'Ataque {height}'**
+  String intentAttack(String height);
+
+  /// No description provided for @intentNamedAttack.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} ({height})'**
+  String intentNamedAttack(String name, String height);
+
+  /// No description provided for @intentCharge.
+  ///
+  /// In es, this message translates to:
+  /// **'Carga'**
+  String get intentCharge;
+
+  /// No description provided for @intentChargeDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Próximo ataque +{n}'**
+  String intentChargeDetail(int n);
+
+  /// No description provided for @intentDiscard.
+  ///
+  /// In es, this message translates to:
+  /// **'Descarte'**
+  String get intentDiscard;
+
+  /// No description provided for @intentDiscardDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Descartás {n}'**
+  String intentDiscardDetail(int n);
+
+  /// No description provided for @intentInterrupt.
+  ///
+  /// In es, this message translates to:
+  /// **'Interrumpe tus formas si no lo desviás'**
+  String get intentInterrupt;
+
+  /// No description provided for @intentSameStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Si terminás en esta postura: +4 daño, +2 E'**
+  String get intentSameStance;
+
+  /// No description provided for @countdown.
+  ///
+  /// In es, this message translates to:
+  /// **'turnos'**
+  String get countdown;
+
+  /// No description provided for @staggeredDouble.
+  ///
+  /// In es, this message translates to:
+  /// **'Desequilibrado · daño ×2'**
+  String get staggeredDouble;
+
+  /// No description provided for @previewDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} daño'**
+  String previewDamage(int n);
+
+  /// No description provided for @previewStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} E'**
+  String previewStructure(int n);
+
+  /// No description provided for @previewCompletes.
+  ///
+  /// In es, this message translates to:
+  /// **'¡completa {name}!'**
+  String previewCompletes(String name);
+
+  /// No description provided for @previewAdvances.
+  ///
+  /// In es, this message translates to:
+  /// **'avanza {name}'**
+  String previewAdvances(String name);
+
+  /// No description provided for @previewInterrupts.
+  ///
+  /// In es, this message translates to:
+  /// **'⚠ interrumpe {name}'**
+  String previewInterrupts(String name);
+
+  /// No description provided for @stanceHintMabu.
+  ///
+  /// In es, this message translates to:
+  /// **'Puños y palmas +2 · E recibida ½ · patadas +1 costo'**
+  String get stanceHintMabu;
+
+  /// No description provided for @stanceHintGongbu.
+  ///
+  /// In es, this message translates to:
+  /// **'Puños +3 daño y +1 E · recibís +2 E'**
+  String get stanceHintGongbu;
+
+  /// No description provided for @stanceHintXubu.
+  ///
+  /// In es, this message translates to:
+  /// **'Patadas −1 costo y +2 · desvío +1 Aliento · defensas −2'**
+  String get stanceHintXubu;
+
+  /// No description provided for @changeStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar postura · 1 {breath}'**
+  String changeStance(String breath);
+
+  /// No description provided for @formsInterrupted.
+  ///
+  /// In es, this message translates to:
+  /// **'Formas interrumpidas'**
+  String get formsInterrupted;
+
+  /// No description provided for @enemyPhase2.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Segunda fase!'**
+  String get enemyPhase2;
+
+  /// No description provided for @formCompleted.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Forma completa!'**
+  String get formCompleted;
+
+  /// No description provided for @effStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Pasás a {name}'**
+  String effStance(String name);
+
+  /// No description provided for @effDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {n}'**
+  String effDraw(int n);
+
+  /// No description provided for @effBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Aliento'**
+  String effBreath(int n);
+
+  /// No description provided for @effBonusStaggered.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} si el enemigo está Desequilibrado'**
+  String effBonusStaggered(int n);
+
+  /// No description provided for @effDeflectDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'Si desviás, {n} de daño'**
+  String effDeflectDamage(int n);
+
+  /// No description provided for @effDeflectStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Si desviás, el enemigo pierde {n} E extra'**
+  String effDeflectStructure(int n);
+
+  /// No description provided for @effStanceStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'En {name}, +{n} E'**
+  String effStanceStructure(String name, int n);
+
+  /// No description provided for @effClearGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'Perdés toda tu Guardia'**
+  String get effClearGuard;
+
+  /// No description provided for @effTurnStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Este turno, todo daño a Estructura +{n}'**
+  String effTurnStructure(int n);
+
+  /// No description provided for @effFirstTurn.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo en el primer turno'**
+  String get effFirstTurn;
+
+  /// No description provided for @effExhaust.
+  ///
+  /// In es, this message translates to:
+  /// **'Agotar'**
+  String get effExhaust;
+
+  /// No description provided for @invalidCombatOver.
+  ///
+  /// In es, this message translates to:
+  /// **'El combate terminó'**
+  String get invalidCombatOver;
+
+  /// No description provided for @invalidMustDiscard.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí una carta para descartar'**
+  String get invalidMustDiscard;
+
+  /// No description provided for @invalidNotInHand.
+  ///
+  /// In es, this message translates to:
+  /// **'La carta no está en la mano'**
+  String get invalidNotInHand;
+
+  /// No description provided for @invalidFirstTurnOnly.
+  ///
+  /// In es, this message translates to:
+  /// **'Solo en el primer turno'**
+  String get invalidFirstTurnOnly;
+
+  /// No description provided for @invalidNoBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Aliento insuficiente'**
+  String get invalidNoBreath;
+
+  /// No description provided for @invalidDingbuUsed.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya cambiaste de postura este turno'**
+  String get invalidDingbuUsed;
+
+  /// No description provided for @invalidSameStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya estás en esa postura'**
+  String get invalidSameStance;
+
+  /// No description provided for @invalidBreatheUsed.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya respiraste en este combate'**
+  String get invalidBreatheUsed;
+
+  /// No description provided for @invalidRetainTooMany.
+  ///
+  /// In es, this message translates to:
+  /// **'Retenés demasiadas cartas'**
+  String get invalidRetainTooMany;
+
+  /// No description provided for @invalidNoDiscard.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay que descartar'**
+  String get invalidNoDiscard;
+
+  /// No description provided for @partOfForm.
+  ///
+  /// In es, this message translates to:
+  /// **'Parte de una forma'**
+  String get partOfForm;
 }
 
 class _AppLocalizationsDelegate

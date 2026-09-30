@@ -16,6 +16,20 @@ class CombatResult {
   final List<CombatEvent> events;
 }
 
+/// Motivo por el que una acción no es válida (la interfaz lo traduce).
+enum Invalid {
+  combatOver,
+  mustDiscard,
+  notInHand,
+  firstTurnOnly,
+  noBreath,
+  dingbuUsed,
+  sameStance,
+  breatheUsed,
+  retainTooMany,
+  noDiscard,
+}
+
 /// Valores finales de una carta en el estado actual (lo que muestra la UI).
 class CardPreview {
   const CardPreview({
@@ -34,7 +48,7 @@ class CardPreview {
 
   final int cost;
   final bool playable;
-  final String? reason;
+  final Invalid? reason;
 
   /// Daño y daño a Estructura que recibe el enemigo (con todos los modificadores).
   final int damage;
@@ -131,7 +145,7 @@ class CombatEngine {
 
   CombatResult reduce(CombatState state, CombatAction action) {
     final error = validate(state, action);
-    if (error != null) throw StateError(error);
+    if (error != null) throw StateError(error.name);
     final d = _Draft.of(state);
     final events = <CombatEvent>[];
     switch (action) {
@@ -161,30 +175,30 @@ class CombatEngine {
   }
 
   /// Devuelve el motivo por el que la acción no es válida, o null.
-  String? validate(CombatState s, CombatAction action) {
-    if (s.isOver) return 'El combate terminó';
+  Invalid? validate(CombatState s, CombatAction action) {
+    if (s.isOver) return Invalid.combatOver;
     if (s.phase == CombatPhase.discarding && action is! ChooseDiscard) {
-      return 'Elegí una carta para descartar';
+      return Invalid.mustDiscard;
     }
     switch (action) {
       case PlayCard(:final uid):
         final c = s.handCard(uid);
-        if (c == null) return 'La carta no está en la mano';
+        if (c == null) return Invalid.notInHand;
         final def = data.card(c.cardId);
-        if (def.firstTurnOnly && s.turn != 1) return 'Solo en el primer turno';
-        if (costOf(s, def) > s.player.breath) return 'Aliento insuficiente';
+        if (def.firstTurnOnly && s.turn != 1) return Invalid.firstTurnOnly;
+        if (costOf(s, def) > s.player.breath) return Invalid.noBreath;
       case Dingbu(:final stance):
-        if (s.dingbuUsed) return 'Dīngbù ya se usó este turno';
-        if (s.player.breath < data.transition.cost) return 'Aliento insuficiente';
-        if (stance == s.player.stance) return 'Ya estás en esa postura';
+        if (s.dingbuUsed) return Invalid.dingbuUsed;
+        if (s.player.breath < data.transition.cost) return Invalid.noBreath;
+        if (stance == s.player.stance) return Invalid.sameStance;
       case Breathe():
-        if (s.breathesLeft <= 0) return 'Ya respiraste en este combate';
+        if (s.breathesLeft <= 0) return Invalid.breatheUsed;
       case EndTurn(:final retain):
-        if (retain.length > s.retainMax) return 'Retenés demasiadas cartas';
-        if (retain.any((u) => s.handCard(u) == null)) return 'Carta inválida';
+        if (retain.length > s.retainMax) return Invalid.retainTooMany;
+        if (retain.any((u) => s.handCard(u) == null)) return Invalid.notInHand;
       case ChooseDiscard(:final uid):
-        if (s.phase != CombatPhase.discarding) return 'No hay que descartar';
-        if (s.handCard(uid) == null) return 'La carta no está en la mano';
+        if (s.phase != CombatPhase.discarding) return Invalid.noDiscard;
+        if (s.handCard(uid) == null) return Invalid.notInHand;
     }
     return null;
   }

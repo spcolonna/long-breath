@@ -30,3 +30,9 @@ flutter run                                    # app
 - Interfaz vertical: intención, posturas, formas, mano en abanico con vista previa de valores finales, retener, Dīngbù y Respirar.
 - Simulador con tres bots. Los resultados y las palancas de balance están en [docs/balance.md](docs/balance.md).
 - Interpretaciones de reglas ambiguas: [docs/reglas-implementadas.md](docs/reglas-implementadas.md).
+
+## Idiomas
+
+- Textos de interfaz: `lib/l10n/app_<idioma>.arb` (Flutter gen-l10n).
+- Textos del contenido (cartas, posturas, formas, enemigos, etapas): `assets/l10n/content/<idioma>.json`, indexados por id. Los JSON de `assets/data/` solo tienen mecánica, hanzi y pinyin.
+- Se usa el idioma del dispositivo; si no existe, español. Para sumar un idioma: copiar ambos archivos de `es` y traducirlos (el test `test/content_text_test.dart` avisa si falta alguna clave).

@@ -13,7 +13,7 @@ enum IntentKind {
 class IntentDef {
   const IntentDef({
     required this.kind,
-    this.label,
+    this.labelKey,
     this.height,
     this.damage = 0,
     this.structure = 0,
@@ -25,7 +25,8 @@ class IntentDef {
   });
 
   final IntentKind kind;
-  final String? label;
+  /// Clave del texto de la intención (content/{idioma}.json → intents).
+  final String? labelKey;
   final Height? height;
   final int damage;
   final int structure;
@@ -43,7 +44,7 @@ class IntentDef {
 
   factory IntentDef.fromJson(Map<String, dynamic> j) => IntentDef(
         kind: IntentKind.parse(j['kind'] as String),
-        label: j['label'] as String?,
+        labelKey: j['labelKey'] as String?,
         height: Height.parse(j['height'] as String?),
         damage: j['damage'] as int? ?? 0,
         structure: j['structure'] as int? ?? 0,
@@ -75,12 +76,10 @@ class EnemyPhase {
 class EnemyDef {
   const EnemyDef({
     required this.id,
-    required this.name,
     required this.rank,
     required this.hp,
     required this.structure,
     required this.phases,
-    this.rule = '',
     this.hanzi,
     this.pinyin,
     this.immovable = false,
@@ -89,12 +88,10 @@ class EnemyDef {
   });
 
   final String id;
-  final String name;
   final EnemyRank rank;
   final int hp;
   final int structure;
   final List<EnemyPhase> phases;
-  final String rule;
   final String? hanzi;
   final String? pinyin;
   final bool immovable;
@@ -105,7 +102,6 @@ class EnemyDef {
     final ssp = j['sameStancePunish'] as Map<String, dynamic>?;
     return EnemyDef(
       id: j['id'] as String,
-      name: j['name'] as String,
       rank: EnemyRank.parse(j['rank'] as String),
       hp: j['hp'] as int,
       structure: j['structure'] as int,
@@ -113,7 +109,6 @@ class EnemyDef {
         for (final p in j['phases'] as List)
           EnemyPhase.fromJson(p as Map<String, dynamic>),
       ],
-      rule: j['rule'] as String? ?? '',
       hanzi: j['hanzi'] as String?,
       pinyin: j['pinyin'] as String?,
       immovable: j['immovable'] as bool? ?? false,

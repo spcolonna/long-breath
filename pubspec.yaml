@@ -26,3 +26,6 @@ flutter:
   generate: true
   assets:
     - assets/data/
+    - assets/l10n/content/
+    - assets/art/enemies/
+    - assets/art/stages/qianyunshan/

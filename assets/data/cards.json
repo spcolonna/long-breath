@@ -1,26 +1,26 @@
 {
   "cards": [
-    { "id": "gongbu_chongquan", "pinyin": "Gōngbù Chōngquán", "hanzi": "弓步冲拳", "es": "puño en arco", "type": "fist", "cost": 1, "stance": "gongbu", "damage": 6, "structure": 1, "pool": "starter", "copies": 3 },
-    { "id": "mabu_chongquan", "pinyin": "Mǎbù Chōngquán", "hanzi": "马步冲拳", "es": "puño en caballo", "type": "fist", "cost": 1, "stance": "mabu", "damage": 5, "structure": 2, "pool": "starter", "copies": 1 },
-    { "id": "tan_tui", "pinyin": "Tán Tuǐ", "hanzi": "弹腿", "es": "patada de latigazo", "type": "kick", "cost": 1, "damage": 5, "structure": 1, "pool": "starter", "copies": 2 },
-    { "id": "tui_zhang", "pinyin": "Tuī Zhǎng", "hanzi": "推掌", "es": "empuje de palma", "type": "palm", "cost": 1, "damage": 2, "structure": 4, "pool": "starter", "copies": 1 },
-    { "id": "mabu_jiada", "pinyin": "Mǎbù Jiàdǎ", "hanzi": "马步架打", "es": "bloquear y golpear", "type": "defense", "cost": 2, "stance": "mabu", "guard": 6, "height": "high", "damage": 4, "pool": "starter", "copies": 1 },
-    { "id": "xubu_liangzhang", "pinyin": "Xūbù Liàngzhǎng", "hanzi": "虚步亮掌", "es": "mostrar la palma", "type": "defense", "cost": 1, "stance": "xubu", "guard": 7, "height": "high", "draw": 1, "pool": "starter", "copies": 1 },
-    { "id": "ge_dang", "pinyin": "Gé Dǎng", "hanzi": "格挡", "es": "bloqueo", "type": "defense", "cost": 1, "guard": 7, "height": "mid", "pool": "starter", "copies": 2 },
-    { "id": "an_zhang", "pinyin": "Àn Zhǎng", "hanzi": "按掌", "es": "palma que presiona", "type": "defense", "cost": 1, "guard": 6, "height": "low", "pool": "starter", "copies": 1 },
+    { "id": "gongbu_chongquan", "pinyin": "Gōngbù Chōngquán", "hanzi": "弓步冲拳", "type": "fist", "cost": 1, "stance": "gongbu", "damage": 6, "structure": 1, "pool": "starter", "copies": 3 },
+    { "id": "mabu_chongquan", "pinyin": "Mǎbù Chōngquán", "hanzi": "马步冲拳", "type": "fist", "cost": 1, "stance": "mabu", "damage": 5, "structure": 2, "pool": "starter", "copies": 1 },
+    { "id": "tan_tui", "pinyin": "Tán Tuǐ", "hanzi": "弹腿", "type": "kick", "cost": 1, "damage": 5, "structure": 1, "pool": "starter", "copies": 2 },
+    { "id": "tui_zhang", "pinyin": "Tuī Zhǎng", "hanzi": "推掌", "type": "palm", "cost": 1, "damage": 2, "structure": 4, "pool": "starter", "copies": 1 },
+    { "id": "mabu_jiada", "pinyin": "Mǎbù Jiàdǎ", "hanzi": "马步架打", "type": "defense", "cost": 2, "stance": "mabu", "guard": 6, "height": "high", "damage": 4, "pool": "starter", "copies": 1 },
+    { "id": "xubu_liangzhang", "pinyin": "Xūbù Liàngzhǎng", "hanzi": "虚步亮掌", "type": "defense", "cost": 1, "stance": "xubu", "guard": 7, "height": "high", "draw": 1, "pool": "starter", "copies": 1 },
+    { "id": "ge_dang", "pinyin": "Gé Dǎng", "hanzi": "格挡", "type": "defense", "cost": 1, "guard": 7, "height": "mid", "pool": "starter", "copies": 2 },
+    { "id": "an_zhang", "pinyin": "Àn Zhǎng", "hanzi": "按掌", "type": "defense", "cost": 1, "guard": 6, "height": "low", "pool": "starter", "copies": 1 },
 
-    { "id": "deng_tui", "pinyin": "Dēng Tuǐ", "hanzi": "蹬腿", "es": "patada de talón", "type": "kick", "cost": 2, "damage": 8, "structure": 3, "pool": "reward" },
-    { "id": "ce_chuai", "pinyin": "Cè Chuài", "hanzi": "侧踹", "es": "patada lateral", "type": "kick", "cost": 2, "damage": 5, "structure": 6, "pool": "reward" },
-    { "id": "gongbu_tuizhang", "pinyin": "Gōngbù Tuīzhǎng", "hanzi": "弓步推掌", "es": "empuje en arco", "type": "palm", "cost": 1, "stance": "gongbu", "damage": 3, "structure": 5, "pool": "reward" },
-    { "id": "pi_quan", "pinyin": "Pī Quán", "hanzi": "劈拳", "es": "puño que corta", "type": "fist", "cost": 1, "damage": 6, "bonusDamageIfStaggered": 6, "pool": "reward" },
-    { "id": "shang_jia", "pinyin": "Shàng Jià", "hanzi": "上架", "es": "bloqueo alto", "type": "defense", "cost": 1, "guard": 9, "height": "high", "pool": "reward" },
-    { "id": "ti_xi", "pinyin": "Tí Xī", "hanzi": "提膝", "es": "rodilla arriba", "type": "defense", "cost": 1, "guard": 6, "height": "low", "onDeflectDamage": 4, "pool": "reward" },
-    { "id": "tiao_xi", "pinyin": "Tiáo Xī", "hanzi": "调息", "es": "regular la respiración", "type": "technique", "cost": 0, "gainBreath": 1, "draw": 1, "exhaust": true, "pool": "reward" },
-    { "id": "baoquan_li", "pinyin": "Bàoquán Lǐ", "hanzi": "抱拳礼", "es": "saludo", "type": "technique", "cost": 0, "draw": 2, "firstTurnOnly": true, "exhaust": true, "pool": "reward" },
+    { "id": "deng_tui", "pinyin": "Dēng Tuǐ", "hanzi": "蹬腿", "type": "kick", "cost": 2, "damage": 8, "structure": 3, "pool": "reward" },
+    { "id": "ce_chuai", "pinyin": "Cè Chuài", "hanzi": "侧踹", "type": "kick", "cost": 2, "damage": 5, "structure": 6, "pool": "reward" },
+    { "id": "gongbu_tuizhang", "pinyin": "Gōngbù Tuīzhǎng", "hanzi": "弓步推掌", "type": "palm", "cost": 1, "stance": "gongbu", "damage": 3, "structure": 5, "pool": "reward" },
+    { "id": "pi_quan", "pinyin": "Pī Quán", "hanzi": "劈拳", "type": "fist", "cost": 1, "damage": 6, "bonusDamageIfStaggered": 6, "pool": "reward" },
+    { "id": "shang_jia", "pinyin": "Shàng Jià", "hanzi": "上架", "type": "defense", "cost": 1, "guard": 9, "height": "high", "pool": "reward" },
+    { "id": "ti_xi", "pinyin": "Tí Xī", "hanzi": "提膝", "type": "defense", "cost": 1, "guard": 6, "height": "low", "onDeflectDamage": 4, "pool": "reward" },
+    { "id": "tiao_xi", "pinyin": "Tiáo Xī", "hanzi": "调息", "type": "technique", "cost": 0, "gainBreath": 1, "draw": 1, "exhaust": true, "pool": "reward" },
+    { "id": "baoquan_li", "pinyin": "Bàoquán Lǐ", "hanzi": "抱拳礼", "type": "technique", "cost": 0, "draw": 2, "firstTurnOnly": true, "exhaust": true, "pool": "reward" },
 
-    { "id": "hu_zhao", "pinyin": "Hǔ Zhǎo", "hanzi": "虎爪", "es": "garra de tigre", "type": "palm", "cost": 1, "damage": 3, "structure": 4, "stanceStructureBonus": { "stance": "mabu", "value": 2 }, "pool": "tiger" },
-    { "id": "hu_pu", "pinyin": "Hǔ Pū", "hanzi": "虎扑", "es": "salto del tigre", "type": "palm", "cost": 2, "stance": "gongbu", "damage": 10, "structure": 3, "clearGuard": true, "pool": "tiger" },
-    { "id": "hu_bao_tou", "pinyin": "Hǔ Bào Tóu", "hanzi": "虎抱头", "es": "el tigre se cubre", "type": "defense", "cost": 1, "guard": 7, "height": "high", "onDeflectStructure": 3, "pool": "tiger" },
-    { "id": "hu_xiao", "pinyin": "Hǔ Xiào", "hanzi": "虎啸", "es": "rugido del tigre", "type": "technique", "cost": 1, "turnStructureBonus": 2, "exhaust": true, "pool": "tiger" }
+    { "id": "hu_zhao", "pinyin": "Hǔ Zhǎo", "hanzi": "虎爪", "type": "palm", "cost": 1, "damage": 3, "structure": 4, "stanceStructureBonus": { "stance": "mabu", "value": 2 }, "pool": "tiger" },
+    { "id": "hu_pu", "pinyin": "Hǔ Pū", "hanzi": "虎扑", "type": "palm", "cost": 2, "stance": "gongbu", "damage": 10, "structure": 3, "clearGuard": true, "pool": "tiger" },
+    { "id": "hu_bao_tou", "pinyin": "Hǔ Bào Tóu", "hanzi": "虎抱头", "type": "defense", "cost": 1, "guard": 7, "height": "high", "onDeflectStructure": 3, "pool": "tiger" },
+    { "id": "hu_xiao", "pinyin": "Hǔ Xiào", "hanzi": "虎啸", "type": "technique", "cost": 1, "turnStructureBonus": 2, "exhaust": true, "pool": "tiger" }
   ]
 }

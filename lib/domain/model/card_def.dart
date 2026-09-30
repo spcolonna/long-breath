@@ -6,7 +6,6 @@ class CardDef {
     required this.id,
     required this.pinyin,
     required this.hanzi,
-    required this.es,
     required this.type,
     required this.cost,
     this.stance,
@@ -31,7 +30,6 @@ class CardDef {
   final String id;
   final String pinyin;
   final String hanzi;
-  final String es;
   final CardType type;
   final int cost;
   final Stance? stance;
@@ -58,7 +56,6 @@ class CardDef {
       id: j['id'] as String,
       pinyin: j['pinyin'] as String,
       hanzi: j['hanzi'] as String,
-      es: j['es'] as String,
       type: CardType.parse(j['type'] as String),
       cost: j['cost'] as int,
       stance: Stance.parse(j['stance'] as String?),

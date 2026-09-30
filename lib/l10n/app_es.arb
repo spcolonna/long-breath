@@ -5,31 +5,66 @@
   "continueRun": "Continuar run",
   "ageTitle": "Edad (prueba)",
   "ageSummary": "Robás {draw} · Aliento {breath} · Retenés {retain}",
-  "@ageSummary": { "placeholders": { "draw": {"type": "int"}, "breath": {"type": "int"}, "retain": {"type": "int"} } },
+  "@ageSummary": {
+    "placeholders": {
+      "draw": {
+        "type": "int"
+      },
+      "breath": {
+        "type": "int"
+      },
+      "retain": {
+        "type": "int"
+      }
+    }
+  },
   "life": "Vida",
   "structure": "Estructura",
   "guard": "Guardia",
   "breath": "Aliento",
   "deck": "Mazo",
   "deckCount": "Mazo: {count}",
-  "@deckCount": { "placeholders": { "count": {"type": "int"} } },
+  "@deckCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "fountain": "Fuente de meditación",
   "fountainHeal": "Curar {amount} de Vida",
-  "@fountainHeal": { "placeholders": { "amount": {"type": "int"} } },
+  "@fountainHeal": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
   "fountainRemove": "Eliminar 1 carta del mazo",
   "fountainUpgrade": "Mejorar 1 carta (+{amount})",
-  "@fountainUpgrade": { "placeholders": { "amount": {"type": "int"} } },
+  "@fountainUpgrade": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
   "chooseCard": "Elegí una carta",
   "rewardTitle": "Recompensa",
   "rewardHint": "Elegí 1 carta o salteá. Un mazo chico es más predecible.",
   "skip": "Saltear",
-  "dingbu": "Dīngbù",
   "breathe": "Respirar",
   "endTurn": "Terminar turno",
   "confirm": "Confirmar",
   "cancel": "Cancelar",
   "retainHint": "Tocá hasta {count} carta(s) para retener",
-  "@retainHint": { "placeholders": { "count": {"type": "int"} } },
+  "@retainHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "discardHint": "Chillido: elegí 1 carta para descartar",
   "tapAgain": "Tocá de nuevo para jugar",
   "victory": "Victoria",
@@ -45,6 +80,199 @@
   "broken": "¡Desequilibrio!",
   "playerBroken": "Estructura rota",
   "turn": "Turno {n}",
-  "@turn": { "placeholders": { "n": {"type": "int"} } },
-  "abandon": "Abandonar run"
+  "@turn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "abandon": "Abandonar run",
+  "typeFist": "Puño",
+  "typePalm": "Palma",
+  "typeKick": "Patada",
+  "typeDefense": "Defensa",
+  "typeTechnique": "Técnica",
+  "heightHigh": "alto",
+  "heightMid": "medio",
+  "heightLow": "bajo",
+  "rankElite": "Élite",
+  "rankBoss": "Guardián",
+  "fountainNode": "Fuente",
+  "intentAttack": "Ataque {height}",
+  "@intentAttack": {
+    "placeholders": {
+      "height": {
+        "type": "String"
+      }
+    }
+  },
+  "intentNamedAttack": "{name} ({height})",
+  "@intentNamedAttack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      }
+    }
+  },
+  "intentCharge": "Carga",
+  "intentChargeDetail": "Próximo ataque +{n}",
+  "@intentChargeDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "intentDiscard": "Descarte",
+  "intentDiscardDetail": "Descartás {n}",
+  "@intentDiscardDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "intentInterrupt": "Interrumpe tus formas si no lo desviás",
+  "intentSameStance": "Si terminás en esta postura: +4 daño, +2 E",
+  "countdown": "turnos",
+  "staggeredDouble": "Desequilibrado · daño ×2",
+  "previewDamage": "{n} daño",
+  "@previewDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "previewStructure": "{n} E",
+  "@previewStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "previewCompletes": "¡completa {name}!",
+  "@previewCompletes": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "previewAdvances": "avanza {name}",
+  "@previewAdvances": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "previewInterrupts": "⚠ interrumpe {name}",
+  "@previewInterrupts": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stanceHintMabu": "Puños y palmas +2 · E recibida ½ · patadas +1 costo",
+  "stanceHintGongbu": "Puños +3 daño y +1 E · recibís +2 E",
+  "stanceHintXubu": "Patadas −1 costo y +2 · desvío +1 Aliento · defensas −2",
+  "changeStance": "Cambiar postura · 1 {breath}",
+  "@changeStance": {
+    "placeholders": {
+      "breath": {
+        "type": "String"
+      }
+    }
+  },
+  "formsInterrupted": "Formas interrumpidas",
+  "enemyPhase2": "¡Segunda fase!",
+  "formCompleted": "¡Forma completa!",
+  "effStance": "Pasás a {name}",
+  "@effStance": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "effDraw": "Robás {n}",
+  "@effDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effBreath": "+{n} Aliento",
+  "@effBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effBonusStaggered": "+{n} si el enemigo está Desequilibrado",
+  "@effBonusStaggered": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effDeflectDamage": "Si desviás, {n} de daño",
+  "@effDeflectDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effDeflectStructure": "Si desviás, el enemigo pierde {n} E extra",
+  "@effDeflectStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effStanceStructure": "En {name}, +{n} E",
+  "@effStanceStructure": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effClearGuard": "Perdés toda tu Guardia",
+  "effTurnStructure": "Este turno, todo daño a Estructura +{n}",
+  "@effTurnStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effFirstTurn": "Solo en el primer turno",
+  "effExhaust": "Agotar",
+  "invalidCombatOver": "El combate terminó",
+  "invalidMustDiscard": "Elegí una carta para descartar",
+  "invalidNotInHand": "La carta no está en la mano",
+  "invalidFirstTurnOnly": "Solo en el primer turno",
+  "invalidNoBreath": "Aliento insuficiente",
+  "invalidDingbuUsed": "Ya cambiaste de postura este turno",
+  "invalidSameStance": "Ya estás en esa postura",
+  "invalidBreatheUsed": "Ya respiraste en este combate",
+  "invalidRetainTooMany": "Retenés demasiadas cartas",
+  "invalidNoDiscard": "No hay que descartar",
+  "partOfForm": "Parte de una forma"
 }

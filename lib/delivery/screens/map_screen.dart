@@ -28,7 +28,8 @@ class MapScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${data.balance.stage.hanzi}  ${data.balance.stage.name}',
+        title: Text(
+            '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
             style: const TextStyle(fontSize: 18)),
         actions: [
           IconButton(
@@ -69,7 +70,7 @@ class MapScreen extends ConsumerWidget {
                     ),
                     for (final n in data.balance.runNodes)
                       Positioned(
-                        left: pos[n.id]!.dx - 36,
+                        left: pos[n.id]!.dx - 60,
                         top: pos[n.id]!.dy - 36,
                         child: _NodeButton(
                           node: n,
@@ -148,7 +149,7 @@ class _RunHeader extends StatelessWidget {
   }
 }
 
-class _NodeButton extends StatelessWidget {
+class _NodeButton extends ConsumerWidget {
   const _NodeButton({
     required this.node,
     required this.data,
@@ -164,23 +165,19 @@ class _NodeButton extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final text = ref.watch(textProvider);
     final enemy = node.enemy == null ? null : data.enemy(node.enemy!);
-    final glyph = enemy == null
-        ? '泉'
+    final icon = enemy == null
+        ? Icons.water_drop
         : switch (enemy.rank) {
-            EnemyRank.common => '战',
-            EnemyRank.elite => '僧',
-            EnemyRank.boss => '龙',
+            EnemyRank.common => Icons.sports_martial_arts,
+            EnemyRank.elite => Icons.whatshot,
+            EnemyRank.boss => Icons.military_tech,
           };
     // Cada tipo de nodo tiene su color, así el mapa se lee de un vistazo.
-    final accent = enemy == null
-        ? Palette.sky
-        : switch (enemy.rank) {
-            EnemyRank.common => Palette.jade,
-            EnemyRank.elite => Palette.structure,
-            EnemyRank.boss => Palette.lacquer,
-          };
+    final accent = enemy == null ? Palette.sky : rankColor(enemy.rank);
     final color = available
         ? Palette.gold
         : visited
@@ -189,8 +186,8 @@ class _NodeButton extends StatelessWidget {
     return GestureDetector(
       onTap: available ? onTap : null,
       child: SizedBox(
-        width: 72,
-        height: 72,
+        width: 120,
+        height: 84,
         child: Column(
           children: [
             AnimatedContainer(
@@ -210,10 +207,8 @@ class _NodeButton extends StatelessWidget {
               ),
               child: visited
                   ? const Icon(Icons.check, color: Palette.textDim)
-                  : Text(glyph,
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: available ? Palette.onColor : accent)),
+                  : Icon(icon,
+                      size: 24, color: available ? Palette.onColor : accent),
             ),
             const SizedBox(height: 2),
             Container(
@@ -223,11 +218,13 @@ class _NodeButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                enemy?.name ?? 'Fuente',
-                maxLines: 1,
+                enemy == null ? t.fountainNode : text.enemy(enemy.id),
+                maxLines: 2,
+                textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontSize: 9,
+                    fontSize: 11,
+                    height: 1.1,
                     color: available ? Palette.text : Palette.textDim),
               ),
             ),

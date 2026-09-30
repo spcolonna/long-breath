@@ -54,7 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               SegmentedButton<Age>(
                 segments: [
                   for (final a in Age.values)
-                    ButtonSegment(value: a, label: Text(data.balance.ages[a]!.name)),
+                    ButtonSegment(value: a, label: Text(ref.watch(textProvider).age(a))),
                 ],
                 selected: {_age},
                 onSelectionChanged: (s) => setState(() => _age = s.first),

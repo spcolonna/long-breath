@@ -30,6 +30,7 @@ class LongBreathApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(gameDataProvider);
+    final text = ref.watch(contentTextProvider);
     const locales = [Locale('es')];
     const delegates = [
       AppLocalizations.delegate,
@@ -37,8 +38,10 @@ class LongBreathApp extends ConsumerWidget {
       GlobalWidgetsLocalizations.delegate,
       GlobalCupertinoLocalizations.delegate,
     ];
-    return data.when(
-      data: (_) => MaterialApp.router(
+    final ready = data.hasValue && text.hasValue;
+    final error = data.error ?? text.error;
+    if (ready) {
+      return MaterialApp.router(
         title: 'Long Breath',
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
@@ -46,16 +49,21 @@ class LongBreathApp extends ConsumerWidget {
         builder: backdrop,
         supportedLocales: locales,
         localizationsDelegates: delegates,
-      ),
-      loading: () => MaterialApp(
-        builder: backdrop,
-        theme: buildTheme(),
-        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-      ),
-      error: (e, _) => MaterialApp(
-        builder: backdrop,
-        theme: buildTheme(),
-        home: Scaffold(body: Center(child: Text('Error cargando datos: $e'))),
+        // Idioma del dispositivo si está soportado; si no, español.
+        localeResolutionCallback: (locale, supported) => supported.firstWhere(
+            (l) => l.languageCode == locale?.languageCode,
+            orElse: () => locales.first),
+      );
+    }
+    return MaterialApp(
+      builder: backdrop,
+      theme: buildTheme(),
+      home: Scaffold(
+        body: Center(
+          child: error != null
+              ? Text('Error cargando datos: $error')
+              : const CircularProgressIndicator(),
+        ),
       ),
     );
   }

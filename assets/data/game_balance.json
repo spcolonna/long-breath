@@ -6,9 +6,9 @@
     "breathesPerCombat": 1
   },
   "ages": {
-    "young": { "name": "Joven", "draw": 6, "breath": 4, "retain": 0 },
-    "adult": { "name": "Adulto", "draw": 5, "breath": 3, "retain": 1 },
-    "elder": { "name": "Anciano", "draw": 4, "breath": 3, "retain": 3 }
+    "young": { "draw": 6, "breath": 4, "retain": 0 },
+    "adult": { "draw": 5, "breath": 3, "retain": 1 },
+    "elder": { "draw": 4, "breath": 3, "retain": 3 }
   },
   "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
   "playerBreak": { "breathPenalty": 2 },
@@ -16,7 +16,7 @@
   "rewards": { "choices": 3, "pools": ["reward", "tiger"] },
   "fountain": { "heal": 15, "upgrade": 3 },
   "run": {
-    "stage": { "name": "Montaña de las Mil Nubes", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
+    "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "start": "n1",
     "nodes": [
       { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2"] },

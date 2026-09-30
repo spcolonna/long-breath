@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/combat/combat_engine.dart';
 import '../../domain/model/card_def.dart';
 import '../../domain/model/enums.dart';
+import '../../l10n/app_localizations.dart';
+import '../labels.dart';
+import '../providers.dart';
 import '../theme.dart';
 
-const stanceNames = {
-  Stance.mabu: ('Mǎbù', '马步'),
-  Stance.gongbu: ('Gōngbù', '弓步'),
-  Stance.xubu: ('Xūbù', '虚步'),
-};
-
 /// Carta de juego. Con [preview] muestra los valores finales (bonus aplicados).
-class CardWidget extends StatelessWidget {
+class CardWidget extends ConsumerWidget {
   const CardWidget({
     super.key,
     required this.def,
@@ -39,7 +37,9 @@ class CardWidget extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final text = ref.watch(textProvider);
     final h = width * 1.5;
     final s = width / 88;
     final color = typeColor(def.type);
@@ -98,7 +98,7 @@ class CardWidget extends StatelessWidget {
                     _CostBadge(cost: cost, base: def.cost, scale: s),
                     SizedBox(width: 4 * s),
                     Expanded(
-                      child: Text(typeLabel(def.type),
+                      child: Text(t.typeLabel(def.type),
                           textAlign: TextAlign.right,
                           maxLines: 1,
                           overflow: TextOverflow.clip,
@@ -109,25 +109,47 @@ class CardWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Nombre traducido como título; el hanzi queda de marca de agua.
                 Expanded(
-                  child: Center(
-                    child: FittedBox(
-                      child: Text(def.hanzi,
-                          style: TextStyle(
-                              fontSize: 24 * s,
-                              color: Palette.text,
-                              fontWeight: FontWeight.w500)),
-                    ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Positioned.fill(
+                        child: FittedBox(
+                          child: Text(def.hanzi,
+                              style: TextStyle(
+                                  fontSize: 40 * s,
+                                  height: 1,
+                                  color: color.withValues(alpha: 0.16),
+                                  fontWeight: FontWeight.w700)),
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(text.card(def.id),
+                              textAlign: TextAlign.center,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 12 * s,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.1,
+                                  color: Palette.text)),
+                          SizedBox(height: 2 * s),
+                          Text(def.pinyin,
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 8 * s,
+                                  fontStyle: FontStyle.italic,
+                                  color: Palette.textDim)),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Text(def.pinyin,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 9.5 * s,
-                        fontWeight: FontWeight.w600,
-                        height: 1.1)),
                 SizedBox(height: 3 * s),
                 _Stats(
                   damage: damage,
@@ -141,8 +163,8 @@ class CardWidget extends StatelessWidget {
                     padding: EdgeInsets.only(top: 2 * s),
                     child: Text(
                       [
-                        if (def.stance != null) '→ ${stanceNames[def.stance]!.$1}',
-                        if (def.exhaust) 'Agotar',
+                        if (def.stance != null) '→ ${text.stance(def.stance!)}',
+                        if (def.exhaust) t.effExhaust,
                         if (upgrades > 0) '+$upgrades',
                       ].join(' · '),
                       textAlign: TextAlign.center,
@@ -232,26 +254,4 @@ class _Stats extends StatelessWidget {
                   fontSize: 11 * scale, fontWeight: FontWeight.bold, color: c)),
         ],
       );
-}
-
-/// Texto corto con el efecto especial de la carta (lo que no se ve en íconos).
-String cardEffectText(CardDef d) {
-  final parts = <String>[
-    if (d.stance != null) 'Pasás a ${stanceNames[d.stance]!.$1}',
-    if (d.draw > 0) 'Robás ${d.draw}',
-    if (d.gainBreath > 0) '+${d.gainBreath} Aliento',
-    if (d.bonusDamageIfStaggered > 0)
-      '+${d.bonusDamageIfStaggered} si el enemigo está Desequilibrado',
-    if (d.onDeflectDamage > 0) 'Si desviás, ${d.onDeflectDamage} de daño',
-    if (d.onDeflectStructure > 0)
-      'Si desviás, el enemigo pierde ${d.onDeflectStructure} E extra',
-    if (d.stanceStructureBonus != null)
-      'En ${stanceNames[d.stanceStructureBonus!.$1]!.$1}, +${d.stanceStructureBonus!.$2} E',
-    if (d.clearGuard) 'Perdés toda tu Guardia',
-    if (d.turnStructureBonus > 0)
-      'Este turno, todo daño a Estructura +${d.turnStructureBonus}',
-    if (d.firstTurnOnly) 'Solo en el primer turno',
-    if (d.exhaust) 'Agotar',
-  ];
-  return parts.join('. ');
 }

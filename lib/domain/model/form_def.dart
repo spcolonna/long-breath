@@ -30,7 +30,6 @@ class FormDef {
     required this.id,
     required this.pinyin,
     required this.hanzi,
-    required this.es,
     required this.steps,
     required this.effect,
   });
@@ -38,7 +37,6 @@ class FormDef {
   final String id;
   final String pinyin;
   final String hanzi;
-  final String es;
   final List<String> steps;
   final FormEffect effect;
 
@@ -46,7 +44,6 @@ class FormDef {
         id: j['id'] as String,
         pinyin: j['pinyin'] as String,
         hanzi: j['hanzi'] as String,
-        es: j['es'] as String,
         steps: (j['steps'] as List).cast<String>(),
         effect: FormEffect.fromJson(j['effect'] as Map<String, dynamic>),
       );

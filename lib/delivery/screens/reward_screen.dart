@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../controllers/run_controller.dart';
+import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/card_widget.dart';
@@ -64,9 +65,9 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                 child: picked == null
                     ? null
                     : Text(
-                        '${picked.pinyin} ${picked.hanzi} · ${picked.es}\n'
-                        '${cardEffectText(picked)}'
-                        '${data.forms.any((f) => f.steps.contains(picked.id)) ? '\nParte de una forma' : ''}',
+                        '${ref.watch(textProvider).card(picked.id)} · ${picked.pinyin} ${picked.hanzi}\n'
+                        '${t.cardEffect(picked, ref.watch(textProvider))}'
+                        '${data.forms.any((f) => f.steps.contains(picked.id)) ? '\n${t.partOfForm}' : ''}',
                         textAlign: TextAlign.center,
                       ),
               ),

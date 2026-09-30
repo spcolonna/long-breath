@@ -1,0 +1,76 @@
+{
+  "stages": {
+    "qianyunshan": "Montaña de las Mil Nubes"
+  },
+  "ages": {
+    "young": "Joven",
+    "adult": "Adulto",
+    "elder": "Anciano"
+  },
+  "stances": {
+    "mabu": "Caballo",
+    "gongbu": "Arco",
+    "xubu": "Vacía",
+    "dingbu": "Paso en T"
+  },
+  "forms": {
+    "xiao_hong_quan": "Pequeño Puño Rojo",
+    "da_hong_quan": "Gran Puño Rojo"
+  },
+  "cards": {
+    "gongbu_chongquan": "Puño en arco",
+    "mabu_chongquan": "Puño en caballo",
+    "tan_tui": "Patada de latigazo",
+    "tui_zhang": "Empuje de palma",
+    "mabu_jiada": "Bloquear y golpear",
+    "xubu_liangzhang": "Mostrar la palma",
+    "ge_dang": "Bloqueo",
+    "an_zhang": "Palma que presiona",
+    "deng_tui": "Patada de talón",
+    "ce_chuai": "Patada lateral",
+    "gongbu_tuizhang": "Empuje en arco",
+    "pi_quan": "Puño que corta",
+    "shang_jia": "Bloqueo alto",
+    "ti_xi": "Rodilla arriba",
+    "tiao_xi": "Regular la respiración",
+    "baoquan_li": "Saludo",
+    "hu_zhao": "Garra de tigre",
+    "hu_pu": "Salto del tigre",
+    "hu_bao_tou": "El tigre se cubre",
+    "hu_xiao": "Rugido del tigre"
+  },
+  "enemies": {
+    "bat": {
+      "name": "Eco de Murciélago",
+      "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección."
+    },
+    "salamander": {
+      "name": "Salamandra de la Grieta",
+      "rule": "Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes."
+    },
+    "golem": {
+      "name": "Gólem de Estalactita",
+      "rule": "Inamovible: recibe la mitad del daño salvo que esté Desequilibrado."
+    },
+    "disciple": {
+      "name": "Discípulo Perdido",
+      "rule": "Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +4 de daño y +2 a Estructura."
+    },
+    "monk": {
+      "name": "Monje sin Rostro",
+      "rule": "Interrumpir: si no lo desviás, tus formas en progreso vuelven a 0."
+    },
+    "dragon": {
+      "name": "Eco del Dragón",
+      "rule": "Fase 2 al 50% de Vida. Aliento del Dragón: medio 25 (E8). Se evita desviándolo o dejándolo Desequilibrado antes."
+    }
+  },
+  "intents": {
+    "dragon_breath": "Aliento del Dragón",
+    "sweep": "Barrido",
+    "charge": "Carga",
+    "screech": "Chillido",
+    "interrupt": "Interrumpir",
+    "burrow": "Se entierra"
+  }
+}

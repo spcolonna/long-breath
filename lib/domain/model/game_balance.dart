@@ -2,19 +2,16 @@ import 'enums.dart';
 
 class AgeStats {
   const AgeStats({
-    required this.name,
     required this.draw,
     required this.breath,
     required this.retain,
   });
 
-  final String name;
   final int draw;
   final int breath;
   final int retain;
 
   factory AgeStats.fromJson(Map<String, dynamic> j) => AgeStats(
-        name: j['name'] as String,
         draw: j['draw'] as int,
         breath: j['breath'] as int,
         retain: j['retain'] as int,
@@ -29,14 +26,14 @@ enum NodeType {
 }
 
 class StageDef {
-  const StageDef({required this.name, required this.hanzi, required this.pinyin});
+  const StageDef({required this.id, required this.hanzi, required this.pinyin});
 
-  final String name;
+  final String id;
   final String hanzi;
   final String pinyin;
 
   factory StageDef.fromJson(Map<String, dynamic> j) => StageDef(
-        name: j['name'] as String,
+        id: j['id'] as String,
         hanzi: j['hanzi'] as String,
         pinyin: j['pinyin'] as String,
       );

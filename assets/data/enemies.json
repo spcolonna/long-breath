@@ -1,44 +1,38 @@
 {
   "enemies": [
-    { "id": "bat", "name": "Eco de Murciélago", "rank": "common", "hp": 18, "structure": 6,
-      "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección.",
+    { "id": "bat", "rank": "common", "hp": 18, "structure": 6,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "high", "damage": 3, "hits": 2, "structure": 1 },
         { "kind": "attack", "height": "high", "damage": 6, "structure": 2 },
-        { "kind": "discard", "label": "Chillido", "count": 1 }
+        { "kind": "discard", "labelKey": "screech", "count": 1 }
       ] } ] },
-    { "id": "salamander", "name": "Salamandra de la Grieta", "rank": "common", "hp": 24, "structure": 8,
-      "rule": "Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes.",
+    { "id": "salamander", "rank": "common", "hp": 24, "structure": 8,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "low", "damage": 7, "structure": 2 },
-        { "kind": "guard", "label": "Se entierra", "value": 8 },
+        { "kind": "guard", "labelKey": "burrow", "value": 8 },
         { "kind": "attack", "height": "low", "damage": 9, "structure": 3 }
       ] } ] },
-    { "id": "golem", "name": "Gólem de Estalactita", "rank": "common", "hp": 30, "structure": 12,
+    { "id": "golem", "rank": "common", "hp": 30, "structure": 12,
       "immovable": true,
-      "rule": "Inamovible: recibe la mitad del daño salvo que esté Desequilibrado.",
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 10, "structure": 4 },
-        { "kind": "charge", "label": "Carga", "value": 5 },
+        { "kind": "charge", "labelKey": "charge", "value": 5 },
         { "kind": "attack", "height": "mid", "damage": 10, "structure": 4 }
       ] } ] },
-    { "id": "disciple", "name": "Discípulo Perdido", "rank": "common", "hp": 32, "structure": 10,
+    { "id": "disciple", "rank": "common", "hp": 32, "structure": 10,
       "sameStancePunish": { "damage": 4, "structure": 2 },
-      "rule": "Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +4 de daño y +2 a Estructura.",
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "high", "damage": 6, "structure": 2 },
         { "kind": "attack", "height": "mid", "damage": 8, "structure": 2 },
-        { "kind": "attack", "label": "Barrido", "height": "low", "damage": 6, "structure": 4 }
+        { "kind": "attack", "labelKey": "sweep", "height": "low", "damage": 6, "structure": 4 }
       ] } ] },
-    { "id": "monk", "name": "Monje sin Rostro", "rank": "elite", "hp": 55, "structure": 15,
-      "rule": "Interrumpir: si no lo desviás, tus formas en progreso vuelven a 0.",
+    { "id": "monk", "rank": "elite", "hp": 55, "structure": 15,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 9, "structure": 3 },
-        { "kind": "attack", "label": "Interrumpir", "height": "high", "damage": 5, "structure": 0, "interrupt": true },
+        { "kind": "attack", "labelKey": "interrupt", "height": "high", "damage": 5, "structure": 0, "interrupt": true },
         { "kind": "attack", "height": "low", "damage": 12, "structure": 4 }
       ] } ] },
-    { "id": "dragon", "name": "Eco del Dragón", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 90, "structure": 20,
-      "rule": "Fase 2 al 50% de Vida. Aliento del Dragón: medio 25 (E8). Se evita desviándolo o dejándolo Desequilibrado antes.",
+    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 90, "structure": 20,
       "phases": [
         { "pattern": [
           { "kind": "attack", "height": "high", "damage": 8, "structure": 2 },
@@ -48,7 +42,7 @@
         { "hpThreshold": 0.5, "pattern": [
           { "kind": "attack", "height": "high", "damage": 10, "structure": 3 },
           { "kind": "attack", "height": "low", "damage": 10, "structure": 3 },
-          { "kind": "attack", "label": "Aliento del Dragón", "height": "mid", "damage": 25, "structure": 8, "countdown": true }
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 25, "structure": 8, "countdown": true }
         ] }
       ] }
   ]
