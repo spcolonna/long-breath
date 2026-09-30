@@ -21,6 +21,8 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../tutorial/illustrations.dart';
+import '../tutorial/lessons.dart';
 import '../tutorial/tutorial_anchor.dart';
 import '../tutorial/tutorial_overlay.dart';
 import '../widgets/card_widget.dart';
@@ -29,11 +31,24 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/stat_bar.dart';
 
-class CombatScreen extends ConsumerStatefulWidget {
+class CombatScreen extends ConsumerWidget {
   const CombatScreen({super.key});
 
   @override
-  ConsumerState<CombatScreen> createState() => _CombatScreenState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Cada combate (o lección reiniciada) arranca con la pantalla de cero.
+    final instance = ref.watch(
+      combatControllerProvider.select((v) => v?.instance),
+    );
+    return _CombatBody(key: ValueKey(instance));
+  }
+}
+
+class _CombatBody extends ConsumerStatefulWidget {
+  const _CombatBody({super.key});
+
+  @override
+  ConsumerState<_CombatBody> createState() => _CombatScreenState();
 }
 
 class _Fx {
@@ -46,7 +61,15 @@ class _Fx {
 
 /// Número o texto que salta sobre un personaje.
 class _Pop {
-  _Pop(this.id, this.text, this.color, {this.size = 30, this.icon, this.dx = 0, this.dy = 0});
+  _Pop(
+    this.id,
+    this.text,
+    this.color, {
+    this.size = 30,
+    this.icon,
+    this.dx = 0,
+    this.dy = 0,
+  });
   final int id;
   final String text;
   final Color color;
@@ -95,7 +118,7 @@ class _ArenaFx {
   final List<_Pop> heroPops;
 }
 
-class _CombatScreenState extends ConsumerState<CombatScreen> {
+class _CombatScreenState extends ConsumerState<_CombatBody> {
   final _queue = <_Fx>[];
   _Fx? _current;
   int _fxKey = 0;
@@ -118,7 +141,11 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
   bool _endShown = false;
 
   int _hitKey = 0, _attackKey = 0, _pulseKey = 0, _sparkKey = 0, _burstKey = 0;
-  int _strikeKey = 0, _hurtKey = 0, _guardKey = 0, _deflectKey = 0, _turnKey = 0;
+  int _strikeKey = 0,
+      _hurtKey = 0,
+      _guardKey = 0,
+      _deflectKey = 0,
+      _turnKey = 0;
   int _shakeKey = 0, _flashKey = 0, _formBurstKey = 0, _popId = 0;
   double _shakeStrength = 8;
   bool _heavy = false, _dying = false, _victory = false, _defeated = false;
@@ -134,13 +161,15 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
     final live = ref.read(combatControllerProvider);
     if (live == null) return;
     final rank = ref.read(dataProvider).enemy(live.state.enemy.id).rank;
-    _audio.music(live.tutorial
-        ? Music.training
-        : switch (rank) {
-            EnemyRank.boss => Music.boss,
-            EnemyRank.elite => Music.elite,
-            _ => Music.combat,
-          });
+    _audio.music(
+      live.tutorial
+          ? Music.training
+          : switch (rank) {
+              EnemyRank.boss => Music.boss,
+              EnemyRank.elite => Music.elite,
+              _ => Music.combat,
+            },
+    );
     _after(120, () => _audio.play(Sfx.enemyDrop));
     _after(300, () => _audio.play(Sfx.fightStart));
     _dealSounds(450, live.state.hand.length);
@@ -162,15 +191,31 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
   }
 
   void _after(int ms, VoidCallback f) {
-    _timers.add(Timer(Duration(milliseconds: ms), () {
-      if (mounted) f();
-    }));
+    _timers.add(
+      Timer(Duration(milliseconds: ms), () {
+        if (mounted) f();
+      }),
+    );
   }
 
-  void _pop(List<_Pop> into, String text, Color color,
-      {double size = 30, IconData? icon, double dx = 0, double dy = 0}) {
-    final p = _Pop(_popId++, text, color,
-        size: size, icon: icon, dx: dx + (_rnd.nextDouble() - 0.5) * 24, dy: dy);
+  void _pop(
+    List<_Pop> into,
+    String text,
+    Color color, {
+    double size = 30,
+    IconData? icon,
+    double dx = 0,
+    double dy = 0,
+  }) {
+    final p = _Pop(
+      _popId++,
+      text,
+      color,
+      size: size,
+      icon: icon,
+      dx: dx + (_rnd.nextDouble() - 0.5) * 24,
+      dy: dy,
+    );
     into.add(p);
     _after(1100, () => setState(() => into.remove(p)));
   }
@@ -184,13 +229,15 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
     // La arena arranca mostrando el estado anterior y se pone al día en el impacto.
     _shown ??= prev;
     final ev = next.events;
-    final enemyTurn = ev.any((e) =>
-        e is TurnStarted ||
-        e is PlayerHit ||
-        e is Deflected ||
-        e is EnemyActionSkipped ||
-        e is EnemyGuarded ||
-        e is EnemyCharged);
+    final enemyTurn = ev.any(
+      (e) =>
+          e is TurnStarted ||
+          e is PlayerHit ||
+          e is Deflected ||
+          e is EnemyActionSkipped ||
+          e is EnemyGuarded ||
+          e is EnemyCharged,
+    );
     if (enemyTurn) return _enemyTurn(prev, next);
     if (!ev.any((e) => e is CardPlayed)) {
       for (final e in ev) {
@@ -244,12 +291,26 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
           _pop(_enemyPops, '−$dmg', Palette.lacquer, size: dmg >= 10 ? 42 : 34);
         }
         if (str > 0) {
-          _pop(_enemyPops, '−$str', Palette.structure,
-              size: 20, icon: Icons.hexagon_outlined, dx: 38, dy: 30);
+          _pop(
+            _enemyPops,
+            '−$str',
+            Palette.structure,
+            size: 20,
+            icon: Icons.hexagon_outlined,
+            dx: 38,
+            dy: 30,
+          );
         }
         if (absorbed > 0) {
-          _pop(_enemyPops, dmg == 0 ? t.blocked : '−$absorbed', Palette.sky,
-              size: 18, icon: Icons.shield, dx: -40, dy: 26);
+          _pop(
+            _enemyPops,
+            dmg == 0 ? t.blocked : '−$absorbed',
+            Palette.sky,
+            size: 18,
+            icon: Icons.shield,
+            dx: -40,
+            dy: 26,
+          );
         }
         if (_heavy) _shake(broken ? 14 : 9);
       }
@@ -260,11 +321,13 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
     });
     if (hits.isNotEmpty) {
       _heavy ? HapticFeedback.heavyImpact() : HapticFeedback.mediumImpact();
-      _audio.play(_heavy
-          ? Sfx.hitHeavy
-          : dmg == 0
-              ? Sfx.block
-              : Sfx.hitLight);
+      _audio.play(
+        _heavy
+            ? Sfx.hitHeavy
+            : dmg == 0
+            ? Sfx.block
+            : Sfx.hitLight,
+      );
     } else if (guard > 0) {
       HapticFeedback.lightImpact();
     }
@@ -280,7 +343,10 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
       _busy = true;
       _hideHand = true;
       _playedUid = null;
-      _keep = {for (final c in prev.state.hand) if (nowUids.contains(c.uid)) c.uid};
+      _keep = {
+        for (final c in prev.state.hand)
+          if (nowUids.contains(c.uid)) c.uid,
+      };
     });
 
     // 1. La mano se descarta. 2. El enemigo actúa. 3. Se reparte la mano nueva.
@@ -303,16 +369,36 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                 _hurtKey++;
                 if (damage > 0) {
                   _flashKey++;
-                  _pop(_heroPops, '−$damage', Palette.lacquer, size: damage >= 10 ? 42 : 34);
+                  _pop(
+                    _heroPops,
+                    '−$damage',
+                    Palette.lacquer,
+                    size: damage >= 10 ? 42 : 34,
+                  );
                 } else if (blocked) {
-                  _pop(_heroPops, t.blocked, Palette.sky, size: 22, icon: Icons.shield);
+                  _pop(
+                    _heroPops,
+                    t.blocked,
+                    Palette.sky,
+                    size: 22,
+                    icon: Icons.shield,
+                  );
                 }
                 if (structure > 0) {
-                  _pop(_heroPops, '−$structure', Palette.structure,
-                      size: 20, icon: Icons.hexagon_outlined, dx: 44, dy: 30);
+                  _pop(
+                    _heroPops,
+                    '−$structure',
+                    Palette.structure,
+                    size: 20,
+                    icon: Icons.hexagon_outlined,
+                    dx: 44,
+                    dy: 30,
+                  );
                 }
                 _shake(damage == 0 ? 4 : math.min(16, 6 + damage * 0.6));
-                damage >= 8 ? HapticFeedback.heavyImpact() : HapticFeedback.mediumImpact();
+                damage >= 8
+                    ? HapticFeedback.heavyImpact()
+                    : HapticFeedback.mediumImpact();
                 _audio.play(damage > 0 ? Sfx.playerHurt : Sfx.block);
               case Deflected():
                 _audio.play(Sfx.deflect);
@@ -335,11 +421,23 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
               case EnemyGuarded(:final amount):
                 _audio.play(Sfx.enemyGuard);
                 _pulseKey++;
-                _pop(_enemyPops, '+$amount', Palette.sky, size: 26, icon: Icons.shield);
+                _pop(
+                  _enemyPops,
+                  '+$amount',
+                  Palette.sky,
+                  size: 26,
+                  icon: Icons.shield,
+                );
               case EnemyCharged(:final amount):
                 _audio.play(Sfx.enemyCharge);
                 _pulseKey++;
-                _pop(_enemyPops, '+$amount', Palette.gold, size: 26, icon: Icons.bolt);
+                _pop(
+                  _enemyPops,
+                  '+$amount',
+                  Palette.gold,
+                  size: 26,
+                  icon: Icons.bolt,
+                );
               case EnemyActionSkipped():
                 _audio.play(Sfx.enemySkip);
                 _pop(_enemyPops, t.losesAction, Palette.gold, size: 18);
@@ -366,7 +464,10 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
       _audio.play(Sfx.turnStart);
     });
     _dealSounds(at + 320, next.state.hand.length);
-    _after(at + 70 * next.state.hand.length + 320, () => setState(() => _busy = false));
+    _after(
+      at + 70 * next.state.hand.length + 320,
+      () => setState(() => _busy = false),
+    );
   }
 
   void _win() {
@@ -431,8 +532,14 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
           _audio.play(Sfx.formComplete);
           _formBurstKey++;
           final f = data.forms.firstWhere((f) => f.id == formId);
-          _queue.add(_Fx(text.form(f.id), '${f.hanzi} · ${f.pinyin}', Palette.lacquer,
-              big: true));
+          _queue.add(
+            _Fx(
+              text.form(f.id),
+              '${f.hanzi} · ${f.pinyin}',
+              Palette.lacquer,
+              big: true,
+            ),
+          );
         case FormsResetByEnemy():
           _audio.play(Sfx.formBroken);
           _queue.add(_Fx(t.formsInterrupted, null, Palette.textDim));
@@ -463,7 +570,9 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
   @override
   Widget build(BuildContext context) {
     ref.listen(combatControllerProvider, (prev, next) {
-      if (prev != null && next != null && next.seq != prev.seq) _present(prev, next);
+      if (prev != null && next != null && next.seq != prev.seq) {
+        _present(prev, next);
+      }
     });
     final live = ref.watch(combatControllerProvider);
     if (live == null) {
@@ -474,7 +583,10 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
     final shown = _shown ?? live;
     final s = shown.state;
     final hand = _hideHand
-        ? [for (final c in live.state.hand) if (_keep.contains(c.uid)) c]
+        ? [
+            for (final c in live.state.hand)
+              if (_keep.contains(c.uid)) c,
+          ]
         : live.state.hand;
     final fx = _ArenaFx(
       hitKey: _hitKey,
@@ -501,7 +613,9 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
           child: _Arena(
             stageId: data.balance.stage.id,
             turn: s.turn,
-            style: live.tutorial ? null : ref.watch(runControllerProvider)?.style,
+            style: live.tutorial
+                ? null
+                : ref.watch(runControllerProvider)?.style,
             fx: fx,
             heroKey: _heroKey,
             introTitle: ref.watch(textProvider).enemy(s.enemy.id),
@@ -516,14 +630,22 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
             ],
           ),
         ),
-        TutorialAnchor(id: 'player', child: _PlayerStrip(s: s)),
-        TutorialAnchor(id: 'forms', child: _FormsPanel(s: s, data: data)),
+        TutorialAnchor(
+          id: 'player',
+          child: _PlayerStrip(s: s),
+        ),
+        TutorialAnchor(
+          id: 'forms',
+          child: _FormsPanel(s: s, data: data),
+        ),
         IgnorePointer(
           ignoring: _busy,
           child: Column(
             children: [
               TutorialAnchor(
-                  id: 'preview', child: _PreviewPanel(view: live, data: data, engine: engine)),
+                id: 'preview',
+                child: _PreviewPanel(view: live, data: data, engine: engine),
+              ),
               TutorialAnchor(
                 id: 'hand',
                 child: _HandArea(
@@ -537,8 +659,14 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
                 ),
               ),
               TutorialAnchor(
-                  id: 'actions',
-                  child: _ActionBar(view: live, engine: engine, data: data, locked: _busy)),
+                id: 'actions',
+                child: _ActionBar(
+                  view: live,
+                  engine: engine,
+                  data: data,
+                  locked: _busy,
+                ),
+              ),
             ],
           ),
         ),
@@ -555,12 +683,21 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
               tween: Tween(end: _defeated ? 0.2 : 1),
               duration: const Duration(milliseconds: 1400),
               curve: Curves.easeOut,
-              child: Shake(trigger: _shakeKey, strength: _shakeStrength, child: column),
+              child: Shake(
+                trigger: _shakeKey,
+                strength: _shakeStrength,
+                child: column,
+              ),
               builder: (_, sat, child) => sat >= 1
                   ? child!
-                  : ColorFiltered(colorFilter: ColorFilter.matrix(saturationMatrix(sat)), child: child),
+                  : ColorFiltered(
+                      colorFilter: ColorFilter.matrix(saturationMatrix(sat)),
+                      child: child,
+                    ),
             ),
-            Positioned.fill(child: ScreenFlash(trigger: _flashKey, color: Palette.lacquer)),
+            Positioned.fill(
+              child: ScreenFlash(trigger: _flashKey, color: Palette.lacquer),
+            ),
             Positioned.fill(
               child: InkBurst(
                 trigger: _formBurstKey,
@@ -579,7 +716,7 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
             if (_endShown)
               _EndOverlay(
                 won: won,
-                tutorial: live.tutorial,
+                lessonId: live.lessonId,
                 turns: live.state.turn,
                 hp: live.state.player.hp,
                 maxHp: live.state.player.maxHp,
@@ -588,7 +725,17 @@ class _CombatScreenState extends ConsumerState<CombatScreen> {
               ),
             // Con key: los banners de arriba entran y salen sin reiniciar la guía.
             if (live.tutorial)
-              const Positioned.fill(key: ValueKey('tutorial'), child: TutorialOverlay()),
+              const Positioned.fill(
+                key: ValueKey('tutorial'),
+                child: TutorialOverlay(),
+              ),
+            // Encima de la guía: siempre se puede pausar y salir.
+            if (!_endShown)
+              Positioned(
+                top: 4,
+                right: 8,
+                child: _PauseButton(lessonId: live.lessonId),
+              ),
           ],
         ),
       ),
@@ -649,101 +796,123 @@ class _Arena extends StatelessWidget {
     );
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
-      child: LayoutBuilder(builder: (context, box) {
-        final heroH = math.min(box.maxHeight * 0.62, box.maxWidth * 0.54);
-        final heroW = heroH * 2 / 3;
-        final heroLeft = -heroW * 0.12;
-        final heroBottom = -heroH * 0.12;
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              'assets/art/stages/$stageId/combat_bg.png',
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => fallback,
-            ),
-            // Suelo.
-            Align(
-              alignment: const Alignment(0, 0.62),
-              child: FractionallySizedBox(
-                widthFactor: 0.75,
-                child: Container(
-                  height: 34,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.elliptical(200, 34)),
-                    gradient: RadialGradient(colors: [
-                      Palette.text.withValues(alpha: 0.22),
-                      Palette.text.withValues(alpha: 0),
-                    ]),
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final heroH = math.min(box.maxHeight * 0.62, box.maxWidth * 0.54);
+          final heroW = heroH * 2 / 3;
+          final heroLeft = -heroW * 0.12;
+          final heroBottom = -heroH * 0.12;
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/art/stages/$stageId/combat_bg.png',
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => fallback,
+              ),
+              // Suelo.
+              Align(
+                alignment: const Alignment(0, 0.62),
+                child: FractionallySizedBox(
+                  widthFactor: 0.75,
+                  child: Container(
+                    height: 34,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.elliptical(200, 34),
+                      ),
+                      gradient: RadialGradient(
+                        colors: [
+                          Palette.text.withValues(alpha: 0.22),
+                          Palette.text.withValues(alpha: 0),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 12,
-              top: 8,
-              child: Bounce(
-                trigger: turn,
-                child: _Chip(
-                    icon: Icons.hourglass_bottom, text: t.turn(turn), color: Palette.text),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(heroW * 0.8, 8, 16, 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  for (final slot in slots) Expanded(child: _EnemyStage(slot: slot, fx: fx)),
-                ],
-              ),
-            ),
-            // Héroe de espaldas, cortado por el borde inferior.
-            Positioned(
-              left: heroLeft,
-              bottom: heroBottom,
-              child: IgnorePointer(
-                child: HeroSprite(
-                  key: heroKey,
-                  style: style,
-                  height: heroH,
-                  strikeKey: fx.strikeKey,
-                  hurtKey: fx.hurtKey,
-                  guardKey: fx.guardKey,
-                  victory: fx.victory,
-                  defeated: fx.defeated,
+              Positioned(
+                left: 12,
+                top: 8,
+                child: TutorialAnchor(
+                  id: 'turn',
+                  child: Bounce(
+                    trigger: turn,
+                    child: _Chip(
+                      icon: Icons.hourglass_bottom,
+                      text: t.turn(turn),
+                      color: Palette.text,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            // Desvío: destello de jade sobre el héroe.
-            Positioned(
-              left: heroLeft,
-              bottom: heroBottom + heroH * 0.25,
-              width: heroW,
-              height: heroH * 0.6,
-              child: InkBurst(
-                trigger: fx.deflectKey,
-                colors: const [Palette.jade, Palette.sky, Colors.white],
-                count: 18,
-                radius: heroW * 0.6,
+              Padding(
+                padding: EdgeInsets.fromLTRB(heroW * 0.8, 8, 16, 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (final slot in slots)
+                      Expanded(
+                        child: _EnemyStage(slot: slot, fx: fx),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            // Números sobre el héroe.
-            Positioned(
-              left: heroLeft + heroW * 0.62,
-              bottom: heroBottom + heroH * 0.62,
-              child: IgnorePointer(child: _PopStack(pops: fx.heroPops)),
-            ),
-            Positioned.fill(
-              child: IgnorePointer(
-                child: fx.turnKey == 0
-                    ? _Ribbon(title: introTitle, subtitle: t.fightStart, delayMs: 250)
-                    : _Ribbon(
-                        key: ValueKey(fx.turnKey), title: t.yourTurn, subtitle: t.turn(turn)),
+              // Héroe de espaldas, cortado por el borde inferior.
+              Positioned(
+                left: heroLeft,
+                bottom: heroBottom,
+                child: IgnorePointer(
+                  child: HeroSprite(
+                    key: heroKey,
+                    style: style,
+                    height: heroH,
+                    strikeKey: fx.strikeKey,
+                    hurtKey: fx.hurtKey,
+                    guardKey: fx.guardKey,
+                    victory: fx.victory,
+                    defeated: fx.defeated,
+                  ),
+                ),
               ),
-            ),
-          ],
-        );
-      }),
+              // Desvío: destello de jade sobre el héroe.
+              Positioned(
+                left: heroLeft,
+                bottom: heroBottom + heroH * 0.25,
+                width: heroW,
+                height: heroH * 0.6,
+                child: InkBurst(
+                  trigger: fx.deflectKey,
+                  colors: const [Palette.jade, Palette.sky, Colors.white],
+                  count: 18,
+                  radius: heroW * 0.6,
+                ),
+              ),
+              // Números sobre el héroe.
+              Positioned(
+                left: heroLeft + heroW * 0.62,
+                bottom: heroBottom + heroH * 0.62,
+                child: IgnorePointer(child: _PopStack(pops: fx.heroPops)),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: fx.turnKey == 0
+                      ? _Ribbon(
+                          title: introTitle,
+                          subtitle: t.fightStart,
+                          delayMs: 250,
+                        )
+                      : _Ribbon(
+                          key: ValueKey(fx.turnKey),
+                          title: t.yourTurn,
+                          subtitle: t.turn(turn),
+                        ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -770,7 +939,12 @@ class _PopStack extends StatelessWidget {
               Transform.translate(
                 key: ValueKey(p.id),
                 offset: Offset(p.dx, p.dy),
-                child: PopText(text: p.text, color: p.color, size: p.size, icon: p.icon),
+                child: PopText(
+                  text: p.text,
+                  color: p.color,
+                  size: p.size,
+                  icon: p.icon,
+                ),
               ),
           ],
         ),
@@ -781,7 +955,12 @@ class _PopStack extends StatelessWidget {
 
 /// Cartel que cruza la arena: presentación del enemigo o "Tu turno".
 class _Ribbon extends StatefulWidget {
-  const _Ribbon({super.key, required this.title, required this.subtitle, this.delayMs = 0});
+  const _Ribbon({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    this.delayMs = 0,
+  });
 
   final String title;
   final String subtitle;
@@ -793,8 +972,9 @@ class _Ribbon extends StatefulWidget {
 
 class _RibbonState extends State<_Ribbon> with SingleTickerProviderStateMixin {
   late final _c = AnimationController(
-      vsync: this, duration: Duration(milliseconds: 1250 + widget.delayMs))
-    ..forward();
+    vsync: this,
+    duration: Duration(milliseconds: 1250 + widget.delayMs),
+  )..forward();
 
   @override
   void dispose() {
@@ -813,7 +993,9 @@ class _RibbonState extends State<_Ribbon> with SingleTickerProviderStateMixin {
         final v = (raw - start) / (1 - start);
         final w = MediaQuery.sizeOf(context).width;
         final inT = Curves.easeOutCubic.transform(math.min(1, v / 0.22));
-        final outT = v < 0.8 ? 0.0 : Curves.easeInCubic.transform((v - 0.8) / 0.2);
+        final outT = v < 0.8
+            ? 0.0
+            : Curves.easeInCubic.transform((v - 0.8) / 0.2);
         final dx = -w * (1 - inT) + w * outT;
         return Align(
           alignment: const Alignment(0, -0.05),
@@ -823,22 +1005,35 @@ class _RibbonState extends State<_Ribbon> with SingleTickerProviderStateMixin {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Palette.surface.withValues(alpha: 0),
-                  Palette.surface.withValues(alpha: 0.94),
-                  Palette.surface.withValues(alpha: 0.94),
-                  Palette.surface.withValues(alpha: 0),
-                ], stops: const [0, 0.2, 0.8, 1]),
+                gradient: LinearGradient(
+                  colors: [
+                    Palette.surface.withValues(alpha: 0),
+                    Palette.surface.withValues(alpha: 0.94),
+                    Palette.surface.withValues(alpha: 0.94),
+                    Palette.surface.withValues(alpha: 0),
+                  ],
+                  stops: const [0, 0.2, 0.8, 1],
+                ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(widget.title,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.w800, color: Palette.lacquer)),
-                  Text(widget.subtitle,
-                      style: const TextStyle(fontSize: 12, color: Palette.textDim)),
+                  Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w800,
+                      color: Palette.lacquer,
+                    ),
+                  ),
+                  Text(
+                    widget.subtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Palette.textDim,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -871,10 +1066,15 @@ class _EnemyStage extends ConsumerWidget {
             duration: const Duration(milliseconds: 280),
             switchInCurve: Curves.easeOutBack,
             transitionBuilder: (child, a) => ScaleTransition(
-                scale: a, child: FadeTransition(opacity: a, child: child)),
+              scale: a,
+              child: FadeTransition(opacity: a, child: child),
+            ),
             child: fx.dying
                 ? const SizedBox(key: ValueKey('none'), height: 50)
-                : _IntentBubble(key: ValueKey('${e.patternIndex}-${e.phaseIndex}'), iv: slot.intent),
+                : _IntentBubble(
+                    key: ValueKey('${e.patternIndex}-${e.phaseIndex}'),
+                    iv: slot.intent,
+                  ),
           ),
         ),
         Expanded(
@@ -911,7 +1111,12 @@ class _EnemyStage extends ConsumerWidget {
                   Positioned.fill(
                     child: InkBurst(
                       trigger: fx.burstKey,
-                      colors: [accent, Palette.gold, Palette.lacquer, Colors.white],
+                      colors: [
+                        accent,
+                        Palette.gold,
+                        Palette.lacquer,
+                        Colors.white,
+                      ],
                       count: 40,
                       radius: size * 0.9,
                       duration: const Duration(milliseconds: 1100),
@@ -945,34 +1150,60 @@ class _EnemyStage extends ConsumerWidget {
                   decoration: BoxDecoration(
                     color: accent,
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [BoxShadow(color: accent.withValues(alpha: 0.4), blurRadius: 8)],
+                    boxShadow: [
+                      BoxShadow(
+                        color: accent.withValues(alpha: 0.4),
+                        blurRadius: 8,
+                      ),
+                    ],
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Flexible(
-                        child: Text(text.enemy(def.id),
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w700,
-                                color: Palette.onColor)),
+                        child: Text(
+                          text.enemy(def.id),
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: Palette.onColor,
+                          ),
+                        ),
                       ),
                       if (def.rank != EnemyRank.common)
                         Padding(
                           padding: const EdgeInsets.only(left: 6),
                           child: Text(
-                              def.rank == EnemyRank.elite ? t.rankElite : t.rankBoss,
-                              style: const TextStyle(fontSize: 11, color: Palette.onColor)),
+                            def.rank == EnemyRank.elite
+                                ? t.rankElite
+                                : t.rankBoss,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Palette.onColor,
+                            ),
+                          ),
                         ),
                       const SizedBox(width: 4),
-                      const Icon(Icons.info_outline, size: 16, color: Palette.onColor),
+                      const TutorialAnchor(
+                        id: 'enemyRule',
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 16,
+                          color: Palette.onColor,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 6),
-              _MiniBar(value: e.hp, max: e.maxHp, color: Palette.lacquer, icon: Icons.favorite),
+              _MiniBar(
+                value: e.hp,
+                max: e.maxHp,
+                color: Palette.lacquer,
+                icon: Icons.favorite,
+              ),
               const SizedBox(height: 3),
               _MiniBar(
                 value: e.structure,
@@ -997,10 +1228,17 @@ class _EnemyStage extends ConsumerWidget {
                         Bounce(
                           trigger: e.guard,
                           child: _Chip(
-                              icon: Icons.shield, text: '${t.guard} ${e.guard}', color: Palette.sky),
+                            icon: Icons.shield,
+                            text: '${t.guard} ${e.guard}',
+                            color: Palette.sky,
+                          ),
                         ),
                       if (e.staggered)
-                        _Chip(icon: Icons.blur_on, text: t.staggeredDouble, color: Palette.gold),
+                        _Chip(
+                          icon: Icons.blur_on,
+                          text: t.staggeredDouble,
+                          color: Palette.gold,
+                        ),
                     ],
                   ),
                 )
@@ -1021,9 +1259,12 @@ class _Entrance extends StatefulWidget {
   State<_Entrance> createState() => _EntranceState();
 }
 
-class _EntranceState extends State<_Entrance> with SingleTickerProviderStateMixin {
-  late final _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 700))
-    ..forward();
+class _EntranceState extends State<_Entrance>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 700),
+  )..forward();
 
   @override
   void dispose() {
@@ -1083,12 +1324,15 @@ class _MiniBar extends StatelessWidget {
         ),
         SizedBox(
           width: 46,
-          child: Text('$value/$max',
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  fontFeatures: [FontFeature.tabularFigures()])),
+          child: Text(
+            '$value/$max',
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              fontFeatures: [FontFeature.tabularFigures()],
+            ),
+          ),
         ),
       ],
     );
@@ -1109,16 +1353,27 @@ class _IntentBubble extends ConsumerWidget {
     final named = i.labelKey == null ? null : text.intent(i.labelKey!);
     final (IconData icon, String title, String detail) = switch (i.kind) {
       IntentKind.attack => (
-          heightIcon(i.height),
-          named == null
-              ? t.intentAttack(t.heightLabel(i.height))
-              : t.intentNamedAttack(named, t.heightLabel(i.height)),
-          '${iv.damage}${i.hits > 1 ? '×${i.hits}' : ''} · E ${iv.structure}',
-        ),
-      IntentKind.guard => (Icons.shield, named ?? t.guard, '${t.guard} ${i.value}'),
-      IntentKind.charge => (Icons.bolt, named ?? t.intentCharge, t.intentChargeDetail(i.value)),
-      IntentKind.discard =>
-        (Icons.graphic_eq, named ?? t.intentDiscard, t.intentDiscardDetail(i.count)),
+        heightIcon(i.height),
+        named == null
+            ? t.intentAttack(t.heightLabel(i.height))
+            : t.intentNamedAttack(named, t.heightLabel(i.height)),
+        '${iv.damage}${i.hits > 1 ? '×${i.hits}' : ''} · E ${iv.structure}',
+      ),
+      IntentKind.guard => (
+        Icons.shield,
+        named ?? t.guard,
+        '${t.guard} ${i.value}',
+      ),
+      IntentKind.charge => (
+        Icons.bolt,
+        named ?? t.intentCharge,
+        t.intentChargeDetail(i.value),
+      ),
+      IntentKind.discard => (
+        Icons.graphic_eq,
+        named ?? t.intentDiscard,
+        t.intentDiscardDetail(i.count),
+      ),
     };
     final color = iv.skipped ? Palette.textDim : Palette.lacquer;
     return Column(
@@ -1129,9 +1384,16 @@ class _IntentBubble extends ConsumerWidget {
           decoration: BoxDecoration(
             color: Palette.surface,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: iv.skipped ? Palette.gold : color, width: 2),
+            border: Border.all(
+              color: iv.skipped ? Palette.gold : color,
+              width: 2,
+            ),
             boxShadow: const [
-              BoxShadow(color: Color(0x22000000), blurRadius: 6, offset: Offset(0, 2)),
+              BoxShadow(
+                color: Color(0x22000000),
+                blurRadius: 6,
+                offset: Offset(0, 2),
+              ),
             ],
           ),
           child: Row(
@@ -1149,23 +1411,41 @@ class _IntentBubble extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            decoration: iv.skipped ? TextDecoration.lineThrough : null)),
-                    Text(iv.skipped ? t.losesAction : detail,
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: iv.skipped ? Palette.gold : Palette.lacquer)),
+                    Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        decoration: iv.skipped
+                            ? TextDecoration.lineThrough
+                            : null,
+                      ),
+                    ),
+                    Text(
+                      iv.skipped ? t.losesAction : detail,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: iv.skipped ? Palette.gold : Palette.lacquer,
+                      ),
+                    ),
                     if (i.interrupt)
-                      Text(t.intentInterrupt,
-                          style: const TextStyle(fontSize: 10, color: Palette.textDim)),
+                      Text(
+                        t.intentInterrupt,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Palette.textDim,
+                        ),
+                      ),
                     if (iv.punishIfSameStance)
-                      Text(t.intentSameStance,
-                          style: const TextStyle(fontSize: 10, color: Palette.textDim)),
+                      Text(
+                        t.intentSameStance,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Palette.textDim,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -1173,11 +1453,18 @@ class _IntentBubble extends ConsumerWidget {
                 const SizedBox(width: 8),
                 Column(
                   children: [
-                    Text('${iv.countdown}',
-                        style: const TextStyle(
-                            fontSize: 20, color: Palette.gold, fontWeight: FontWeight.bold)),
-                    Text(t.countdown,
-                        style: const TextStyle(fontSize: 9, color: Palette.gold)),
+                    Text(
+                      '${iv.countdown}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Palette.gold,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      t.countdown,
+                      style: const TextStyle(fontSize: 9, color: Palette.gold),
+                    ),
                   ],
                 ),
               ],
@@ -1185,7 +1472,10 @@ class _IntentBubble extends ConsumerWidget {
           ),
         ),
         // Cola del globo.
-        CustomPaint(size: const Size(16, 8), painter: _TailPainter(iv.skipped ? Palette.gold : color)),
+        CustomPaint(
+          size: const Size(16, 8),
+          painter: _TailPainter(iv.skipped ? Palette.gold : color),
+        ),
       ],
     );
   }
@@ -1199,12 +1489,13 @@ class _TailPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawPath(
-        Path()
-          ..moveTo(0, 0)
-          ..lineTo(size.width, 0)
-          ..lineTo(size.width / 2, size.height)
-          ..close(),
-        Paint()..color = color);
+      Path()
+        ..moveTo(0, 0)
+        ..lineTo(size.width, 0)
+        ..lineTo(size.width / 2, size.height)
+        ..close(),
+      Paint()..color = color,
+    );
   }
 
   @override
@@ -1227,7 +1518,12 @@ class _PlayerStrip extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 2),
       child: Column(
         children: [
-          StatBar(label: t.life, value: p.hp, max: p.maxHp, color: Palette.jade),
+          StatBar(
+            label: t.life,
+            value: p.hp,
+            max: p.maxHp,
+            color: Palette.jade,
+          ),
           const SizedBox(height: 3),
           StatBar(
             label: t.structure,
@@ -1247,38 +1543,59 @@ class _PlayerStrip extends ConsumerWidget {
                       trigger: st == p.stance,
                       scale: 1.1,
                       child: _StanceChip(
-                          name: text.stance(st),
-                          hanzi: _stanceHanzi[st]!,
-                          active: st == p.stance),
+                        name: text.stance(st),
+                        hanzi: _stanceHanzi[st]!,
+                        active: st == p.stance,
+                      ),
                     ),
                   ),
                 const SizedBox(width: 2),
                 Bounce(
                   trigger: p.guard,
                   scale: 1.25,
-                  child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-                  decoration: BoxDecoration(
-                    color: p.guard > 0 ? Palette.sky : Palette.surface,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: p.guard > 0 ? Palette.sky : Palette.line),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.shield,
-                          size: 16, color: p.guard > 0 ? Palette.onColor : Palette.sky),
-                      const SizedBox(width: 4),
-                      Text('${p.guard}',
-                          style: TextStyle(
+                  child: TutorialAnchor(
+                    id: 'guard',
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 7,
+                      ),
+                      decoration: BoxDecoration(
+                        color: p.guard > 0 ? Palette.sky : Palette.surface,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: p.guard > 0 ? Palette.sky : Palette.line,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.shield,
+                            size: 16,
+                            color: p.guard > 0 ? Palette.onColor : Palette.sky,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${p.guard}',
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: p.guard > 0 ? Palette.onColor : Palette.text)),
-                      if (p.guardHeight != null)
-                        Icon(heightIcon(p.guardHeight), size: 14, color: Palette.onColor),
-                    ],
+                              color: p.guard > 0
+                                  ? Palette.onColor
+                                  : Palette.text,
+                            ),
+                          ),
+                          if (p.guardHeight != null)
+                            Icon(
+                              heightIcon(p.guardHeight),
+                              size: 14,
+                              color: Palette.onColor,
+                            ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
                 ),
               ],
             ),
@@ -1289,10 +1606,18 @@ class _PlayerStrip extends ConsumerWidget {
   }
 }
 
-const _stanceHanzi = {Stance.mabu: '马步', Stance.gongbu: '弓步', Stance.xubu: '虚步'};
+const _stanceHanzi = {
+  Stance.mabu: '马步',
+  Stance.gongbu: '弓步',
+  Stance.xubu: '虚步',
+};
 
 class _StanceChip extends StatelessWidget {
-  const _StanceChip({required this.name, required this.hanzi, required this.active});
+  const _StanceChip({
+    required this.name,
+    required this.hanzi,
+    required this.active,
+  });
 
   final String name;
   final String hanzi;
@@ -1312,8 +1637,14 @@ class _StanceChip extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(name,
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: fg)),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: fg,
+            ),
+          ),
           Text(hanzi, style: TextStyle(fontSize: 9, color: fg)),
         ],
       ),
@@ -1352,15 +1683,23 @@ class _FormsPanel extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(text.form(f.id),
-                            maxLines: 2,
-                            style: const TextStyle(
-                                fontSize: 10,
-                                height: 1.1,
-                                fontWeight: FontWeight.w700,
-                                color: Palette.gold)),
-                        Text(f.hanzi,
-                            style: const TextStyle(fontSize: 9, color: Palette.textDim)),
+                        Text(
+                          text.form(f.id),
+                          maxLines: 2,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            height: 1.1,
+                            fontWeight: FontWeight.w700,
+                            color: Palette.gold,
+                          ),
+                        ),
+                        Text(
+                          f.hanzi,
+                          style: const TextStyle(
+                            fontSize: 9,
+                            color: Palette.textDim,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -1386,7 +1725,11 @@ class _FormsPanel extends ConsumerWidget {
 }
 
 class _FormStep extends StatelessWidget {
-  const _FormStep({required this.label, required this.done, required this.next});
+  const _FormStep({
+    required this.label,
+    required this.done,
+    required this.next,
+  });
 
   final String label;
   final bool done;
@@ -1403,18 +1746,23 @@ class _FormStep extends StatelessWidget {
         color: done ? Palette.gold : Palette.surface,
         borderRadius: BorderRadius.circular(6),
         border: Border.all(
-            color: next ? Palette.gold : Palette.line, width: next ? 2 : 1),
+          color: next ? Palette.gold : Palette.line,
+          width: next ? 2 : 1,
+        ),
       ),
       alignment: Alignment.center,
-      child: Text(label,
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontSize: 8.5,
-              height: 1.05,
-              fontWeight: FontWeight.w600,
-              color: done ? Palette.onColor : Palette.textDim)),
+      child: Text(
+        label,
+        textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontSize: 8.5,
+          height: 1.05,
+          fontWeight: FontWeight.w600,
+          color: done ? Palette.onColor : Palette.textDim,
+        ),
+      ),
     );
   }
 }
@@ -1422,7 +1770,11 @@ class _FormStep extends StatelessWidget {
 // -------------------------------------------------------------------- mano
 
 class _PreviewPanel extends ConsumerWidget {
-  const _PreviewPanel({required this.view, required this.data, required this.engine});
+  const _PreviewPanel({
+    required this.view,
+    required this.data,
+    required this.engine,
+  });
 
   final CombatView view;
   final GameData data;
@@ -1440,7 +1792,9 @@ class _PreviewPanel extends ConsumerWidget {
       return _hint(banner, Palette.gold);
     }
     final uid = view.selected;
-    if (uid == null || s.handCard(uid) == null) return const SizedBox(height: 44);
+    if (uid == null || s.handCard(uid) == null) {
+      return const SizedBox(height: 44);
+    }
     final c = s.handCard(uid)!;
     final def = data.card(c.cardId);
     final p = engine.preview(s, uid);
@@ -1468,27 +1822,42 @@ class _PreviewPanel extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${text.card(def.id)} · ${def.pinyin}',
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w600)),
+                  Text(
+                    '${text.card(def.id)} · ${def.pinyin}',
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   Text(
                     [
                       ...parts,
-                      for (final f in p.completesForms) t.previewCompletes(formName(f)),
-                      for (final f in p.advancesForms) t.previewAdvances(formName(f)),
-                      for (final f in p.interruptsForms) t.previewInterrupts(formName(f)),
+                      for (final f in p.completesForms)
+                        t.previewCompletes(formName(f)),
+                      for (final f in p.advancesForms)
+                        t.previewAdvances(formName(f)),
+                      for (final f in p.interruptsForms)
+                        t.previewInterrupts(formName(f)),
                     ].join(' · '),
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 11, color: Palette.textDim),
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Palette.textDim,
+                    ),
                   ),
                 ],
               ),
             ),
-            Text(p.playable ? t.tapAgain : (p.reason == null ? '' : t.invalidLabel(p.reason!)),
-                style: TextStyle(
-                    fontSize: 10,
-                    color: p.playable ? Palette.gold : Palette.lacquer)),
+            Text(
+              p.playable
+                  ? t.tapAgain
+                  : (p.reason == null ? '' : t.invalidLabel(p.reason!)),
+              style: TextStyle(
+                fontSize: 10,
+                color: p.playable ? Palette.gold : Palette.lacquer,
+              ),
+            ),
           ],
         ),
       ),
@@ -1496,10 +1865,10 @@ class _PreviewPanel extends ConsumerWidget {
   }
 
   Widget _hint(String text, Color color) => Container(
-        height: 44,
-        alignment: Alignment.center,
-        child: Text(text, style: TextStyle(color: color, fontSize: 13)),
-      );
+    height: 44,
+    alignment: Alignment.center,
+    child: Text(text, style: TextStyle(color: color, fontSize: 13)),
+  );
 }
 
 class _HandArea extends ConsumerStatefulWidget {
@@ -1556,7 +1925,8 @@ class _Fan {
   double get _mid => (n - 1) / 2;
   double left(int i) => left0 + step * i;
   double angle(int i) => n <= 1 ? 0.0 : (i - _mid) * 0.05;
-  double top(int i, bool isSelected) => 16 + (isSelected ? -22.0 : (i - _mid).abs() * 3);
+  double top(int i, bool isSelected) =>
+      16 + (isSelected ? -22.0 : (i - _mid).abs() * 3);
 }
 
 class _HandAreaState extends ConsumerState<_HandArea> {
@@ -1576,14 +1946,16 @@ class _HandAreaState extends ConsumerState<_HandArea> {
     for (final (i, c) in old.hand.indexed) {
       if (now.contains(c.uid)) continue;
       final played = c.uid == widget.playedUid;
-      _leaving.add(_Leaving(
-        _leaveId++,
-        c,
-        Offset(fan.left(i), fan.top(i, played)),
-        played ? 0 : fan.angle(i),
-        fan.w,
-        played ? _targetFor(c, fan.w) : null,
-      ));
+      _leaving.add(
+        _Leaving(
+          _leaveId++,
+          c,
+          Offset(fan.left(i), fan.top(i, played)),
+          played ? 0 : fan.angle(i),
+          fan.w,
+          played ? _targetFor(c, fan.w) : null,
+        ),
+      );
     }
   }
 
@@ -1594,7 +1966,9 @@ class _HandAreaState extends ConsumerState<_HandArea> {
     final key = toHero ? widget.heroKey : widget.enemyKey;
     final target = key.currentContext?.findRenderObject();
     final me = context.findRenderObject();
-    if (target is! RenderBox || me is! RenderBox || !target.attached) return null;
+    if (target is! RenderBox || me is! RenderBox || !target.attached) {
+      return null;
+    }
     final center = target.localToGlobal(target.size.center(Offset.zero));
     return me.globalToLocal(center) - Offset(w / 2, w * 0.75);
   }
@@ -1602,34 +1976,52 @@ class _HandAreaState extends ConsumerState<_HandArea> {
   @override
   Widget build(BuildContext context) {
     final hand = widget.hand;
-    final fresh = [for (final c in hand) if (!_known.contains(c.uid)) c.uid];
+    final fresh = [
+      for (final c in hand)
+        if (!_known.contains(c.uid)) c.uid,
+    ];
     // Primer reparto del combate: espera a que entre el enemigo.
     final base = _known.isEmpty && _width == 0 ? 450 : 0;
-    return LayoutBuilder(builder: (context, box) {
-      _width = box.maxWidth;
-      final fan = _Fan(hand.length, box.maxWidth);
-      return SizedBox(
-        height: 92 * 1.5 + 28, // fija: la arena no salta al cambiar la mano
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            for (var i = 0; i < hand.length; i++)
-              _positioned(context, i, fan, hand[i],
-                  fresh.contains(hand[i].uid) ? base + 75 * fresh.indexOf(hand[i].uid) : null),
-            for (final l in _leaving)
-              _LeaveCard(
-                key: ValueKey('leave${l.id}'),
-                leaving: l,
-                def: widget.data.card(l.card.cardId),
-                onDone: () => setState(() => _leaving.remove(l)),
-              ),
-          ],
-        ),
-      );
-    });
+    return LayoutBuilder(
+      builder: (context, box) {
+        _width = box.maxWidth;
+        final fan = _Fan(hand.length, box.maxWidth);
+        return SizedBox(
+          height: 92 * 1.5 + 28, // fija: la arena no salta al cambiar la mano
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              for (var i = 0; i < hand.length; i++)
+                _positioned(
+                  context,
+                  i,
+                  fan,
+                  hand[i],
+                  fresh.contains(hand[i].uid)
+                      ? base + 75 * fresh.indexOf(hand[i].uid)
+                      : null,
+                ),
+              for (final l in _leaving)
+                _LeaveCard(
+                  key: ValueKey('leave${l.id}'),
+                  leaving: l,
+                  def: widget.data.card(l.card.cardId),
+                  onDone: () => setState(() => _leaving.remove(l)),
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
-  Widget _positioned(BuildContext context, int i, _Fan fan, CombatCard c, int? dealDelay) {
+  Widget _positioned(
+    BuildContext context,
+    int i,
+    _Fan fan,
+    CombatCard c,
+    int? dealDelay,
+  ) {
     final view = widget.view;
     final s = view.state;
     final def = widget.data.card(c.cardId);
@@ -1698,7 +2090,11 @@ class _HandAreaState extends ConsumerState<_HandArea> {
 /// Entrada de una carta repartida: sale del mazo (abajo a la izquierda) y se
 /// acomoda con un pequeño rebote. Sin [delayMs] aparece sin animar.
 class _DealIn extends StatefulWidget {
-  const _DealIn({required this.delayMs, required this.from, required this.child});
+  const _DealIn({
+    required this.delayMs,
+    required this.from,
+    required this.child,
+  });
 
   final int? delayMs;
   final Offset from;
@@ -1745,8 +2141,12 @@ class _DealInState extends State<_DealIn> with SingleTickerProviderStateMixin {
 }
 
 class _LeaveCard extends StatefulWidget {
-  const _LeaveCard(
-      {super.key, required this.leaving, required this.def, required this.onDone});
+  const _LeaveCard({
+    super.key,
+    required this.leaving,
+    required this.def,
+    required this.onDone,
+  });
 
   final _Leaving leaving;
   final CardDef def;
@@ -1756,15 +2156,19 @@ class _LeaveCard extends StatefulWidget {
   State<_LeaveCard> createState() => _LeaveCardState();
 }
 
-class _LeaveCardState extends State<_LeaveCard> with SingleTickerProviderStateMixin {
-  late final _c = AnimationController(
-    vsync: this,
-    duration: Duration(milliseconds: widget.leaving.target == null ? 320 : 260),
-  )
-    ..addStatusListener((s) {
-      if (s == AnimationStatus.completed) widget.onDone();
-    })
-    ..forward();
+class _LeaveCardState extends State<_LeaveCard>
+    with SingleTickerProviderStateMixin {
+  late final _c =
+      AnimationController(
+          vsync: this,
+          duration: Duration(
+            milliseconds: widget.leaving.target == null ? 320 : 260,
+          ),
+        )
+        ..addStatusListener((s) {
+          if (s == AnimationStatus.completed) widget.onDone();
+        })
+        ..forward();
 
   @override
   void dispose() {
@@ -1814,17 +2218,31 @@ class _LeaveCardState extends State<_LeaveCard> with SingleTickerProviderStateMi
           borderRadius: BorderRadius.circular(12),
           boxShadow: l.target == null
               ? const []
-              : [BoxShadow(color: color.withValues(alpha: 0.7), blurRadius: 22, spreadRadius: 2)],
+              : [
+                  BoxShadow(
+                    color: color.withValues(alpha: 0.7),
+                    blurRadius: 22,
+                    spreadRadius: 2,
+                  ),
+                ],
         ),
-        child: CardWidget(def: widget.def, upgrades: l.card.upgrades, width: l.width),
+        child: CardWidget(
+          def: widget.def,
+          upgrades: l.card.upgrades,
+          width: l.width,
+        ),
       ),
     );
   }
 }
 
 class _ActionBar extends ConsumerWidget {
-  const _ActionBar(
-      {required this.view, required this.engine, required this.data, this.locked = false});
+  const _ActionBar({
+    required this.view,
+    required this.engine,
+    required this.data,
+    this.locked = false,
+  });
 
   final CombatView view;
   final CombatEngine engine;
@@ -1848,13 +2266,17 @@ class _ActionBar extends ConsumerWidget {
           children: [
             Expanded(
               child: OutlinedButton(
-                  onPressed: ctl.cancelRetain, child: Text(t.cancel)),
+                onPressed: ctl.cancelRetain,
+                child: Text(t.cancel),
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: FilledButton(
                 onPressed: ctl.confirmRetain,
-                child: Text('${t.confirm} (${view.retain.length}/${s.retainMax})'),
+                child: Text(
+                  '${t.confirm} (${view.retain.length}/${s.retainMax})',
+                ),
               ),
             ),
           ],
@@ -1862,30 +2284,45 @@ class _ActionBar extends ConsumerWidget {
       );
     }
 
-    final canDingbu = !busy &&
-        !s.dingbuUsed &&
-        s.player.breath >= data.transition.cost;
+    final canDingbu =
+        !busy && !s.dingbuUsed && s.player.breath >= data.transition.cost;
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
       child: Row(
         children: [
-          _BreathPips(breath: s.player.breath, perTurn: s.breathPerTurn),
+          TutorialAnchor(
+            id: 'breath',
+            child: _BreathPips(
+              breath: s.player.breath,
+              perTurn: s.breathPerTurn,
+            ),
+          ),
           const SizedBox(width: 8),
           Expanded(
-            child: OutlinedButton(
-              onPressed: canDingbu ? () => _pickStance(context, ref, ctl, s) : null,
-              style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 4)),
-              child: FittedBox(child: Text(text.dingbu(), maxLines: 1)),
+            child: TutorialAnchor(
+              id: 'dingbu',
+              child: OutlinedButton(
+                onPressed: canDingbu
+                    ? () => _pickStance(context, ref, ctl, s)
+                    : null,
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                ),
+                child: FittedBox(child: Text(text.dingbu(), maxLines: 1)),
+              ),
             ),
           ),
           const SizedBox(width: 6),
           Expanded(
-            child: OutlinedButton(
-              onPressed: !busy && s.breathesLeft > 0 ? ctl.breathe : null,
-              style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 4)),
-              child: Text(t.breathe, maxLines: 1),
+            child: TutorialAnchor(
+              id: 'breathe',
+              child: OutlinedButton(
+                onPressed: !busy && s.breathesLeft > 0 ? ctl.breathe : null,
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                ),
+                child: Text(t.breathe, maxLines: 1),
+              ),
             ),
           ),
           const SizedBox(width: 6),
@@ -1905,7 +2342,11 @@ class _ActionBar extends ConsumerWidget {
   }
 
   void _pickStance(
-      BuildContext context, WidgetRef ref, CombatController ctl, CombatState s) {
+    BuildContext context,
+    WidgetRef ref,
+    CombatController ctl,
+    CombatState s,
+  ) {
     final t = AppLocalizations.of(context);
     final text = ref.read(textProvider);
     showModalBottomSheet<void>(
@@ -1917,16 +2358,26 @@ class _ActionBar extends ConsumerWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text('${text.dingbu()} 丁步 · ${t.changeStance(t.breath)}',
-                  style: const TextStyle(fontSize: 16)),
+              child: Text(
+                '${text.dingbu()} 丁步 · ${t.changeStance(t.breath)}',
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
             for (final st in Stance.values)
-              if (st != s.player.stance)
+              if (st != s.player.stance &&
+                  (TutorialOverlay.stanceGate.value ?? st) == st)
                 ListTile(
-                  leading: Text(_stanceHanzi[st]!,
-                      style: const TextStyle(fontSize: 16, color: Palette.textDim)),
-                  title: Text(text.stance(st),
-                      style: const TextStyle(fontWeight: FontWeight.w700)),
+                  leading: Text(
+                    _stanceHanzi[st]!,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Palette.textDim,
+                    ),
+                  ),
+                  title: Text(
+                    text.stance(st),
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
                   subtitle: Text(t.stanceHint(st)),
                   onTap: () {
                     Navigator.pop(ctx);
@@ -1977,8 +2428,10 @@ class _BreathPips extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 2),
-        Text('${AppLocalizations.of(context).breath} $breath',
-            style: const TextStyle(fontSize: 10, color: Palette.sky)),
+        Text(
+          '${AppLocalizations.of(context).breath} $breath',
+          style: const TextStyle(fontSize: 10, color: Palette.sky),
+        ),
       ],
     );
   }
@@ -1995,29 +2448,31 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        margin: const EdgeInsets.only(right: 6),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        decoration: BoxDecoration(
-          // Opaco: se lee también sobre el arte del fondo.
-          color: Color.alphaBlend(color.withValues(alpha: 0.2), Palette.surface),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: color),
+    margin: const EdgeInsets.only(right: 6),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+    decoration: BoxDecoration(
+      // Opaco: se lee también sobre el arte del fondo.
+      color: Color.alphaBlend(color.withValues(alpha: 0.2), Palette.surface),
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: color),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 13, color: color),
+        const SizedBox(width: 4),
+        // En columnas angostas (enemigo) el texto se corta en vez de desbordar.
+        Flexible(
+          child: Text(
+            text,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 11, color: color),
+          ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 13, color: color),
-            const SizedBox(width: 4),
-            // En columnas angostas (enemigo) el texto se corta en vez de desbordar.
-            Flexible(
-              child: Text(text,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 11, color: color)),
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 }
 
 /// Cartel de un efecto importante: una franja de color entra barriendo, el
@@ -2035,15 +2490,24 @@ class _FxBanner extends StatelessWidget {
       duration: Duration(milliseconds: fx.big ? 1400 : 950),
       builder: (_, v, _) {
         final inT = Curves.easeOutCubic.transform(math.min(1, v / 0.18));
-        final outT = v < 0.82 ? 0.0 : Curves.easeInCubic.transform((v - 0.82) / 0.18);
+        final outT = v < 0.82
+            ? 0.0
+            : Curves.easeInCubic.transform((v - 0.82) / 0.18);
         final pop = v < 0.1
             ? 0.6
-            : 0.6 + 0.4 * Curves.easeOutBack.transform(math.min(1, (v - 0.1) / 0.2));
+            : 0.6 +
+                  0.4 *
+                      Curves.easeOutBack.transform(
+                        math.min(1, (v - 0.1) / 0.2),
+                      );
         return Stack(
           children: [
             Positioned.fill(
               child: ColoredBox(
-                  color: Palette.surface.withValues(alpha: 0.35 * inT * (1 - outT))),
+                color: Palette.surface.withValues(
+                  alpha: 0.35 * inT * (1 - outT),
+                ),
+              ),
             ),
             Align(
               alignment: const Alignment(0, -0.2),
@@ -2056,14 +2520,20 @@ class _FxBanner extends StatelessWidget {
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(vertical: fx.big ? 18 : 12),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        fx.color.withValues(alpha: 0),
-                        fx.color.withValues(alpha: 0.95),
-                        fx.color.withValues(alpha: 0.95),
-                        fx.color.withValues(alpha: 0),
-                      ], stops: const [0, 0.15, 0.85, 1]),
+                      gradient: LinearGradient(
+                        colors: [
+                          fx.color.withValues(alpha: 0),
+                          fx.color.withValues(alpha: 0.95),
+                          fx.color.withValues(alpha: 0.95),
+                          fx.color.withValues(alpha: 0),
+                        ],
+                        stops: const [0, 0.15, 0.85, 1],
+                      ),
                       boxShadow: [
-                        BoxShadow(color: fx.color.withValues(alpha: 0.35), blurRadius: 24),
+                        BoxShadow(
+                          color: fx.color.withValues(alpha: 0.35),
+                          blurRadius: 24,
+                        ),
                       ],
                     ),
                     child: Transform.scale(
@@ -2071,19 +2541,29 @@ class _FxBanner extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(fx.title,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: fx.big ? 44 : 34,
-                                fontWeight: FontWeight.w900,
-                                color: Palette.onColor,
-                                shadows: [
-                                  Shadow(color: fx.color.withValues(alpha: 0.9), blurRadius: 10),
-                                ],
-                              )),
+                          Text(
+                            fx.title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: fx.big ? 44 : 34,
+                              fontWeight: FontWeight.w900,
+                              color: Palette.onColor,
+                              shadows: [
+                                Shadow(
+                                  color: fx.color.withValues(alpha: 0.9),
+                                  blurRadius: 10,
+                                ),
+                              ],
+                            ),
+                          ),
                           if (fx.subtitle != null)
-                            Text(fx.subtitle!,
-                                style: const TextStyle(fontSize: 16, color: Palette.onColor)),
+                            Text(
+                              fx.subtitle!,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Palette.onColor,
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -2103,7 +2583,7 @@ class _FxBanner extends StatelessWidget {
 class _EndOverlay extends ConsumerStatefulWidget {
   const _EndOverlay({
     required this.won,
-    required this.tutorial,
+    required this.lessonId,
     required this.turns,
     required this.hp,
     required this.maxHp,
@@ -2112,7 +2592,9 @@ class _EndOverlay extends ConsumerStatefulWidget {
   });
 
   final bool won;
-  final bool tutorial;
+
+  /// En una lección: botones para seguir, reintentar o volver a la lista.
+  final String? lessonId;
   final int turns;
   final int hp;
   final int maxHp;
@@ -2123,22 +2605,41 @@ class _EndOverlay extends ConsumerStatefulWidget {
   ConsumerState<_EndOverlay> createState() => _EndOverlayState();
 }
 
-class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderStateMixin {
-  late final _c = AnimationController(
-      vsync: this, duration: Duration(milliseconds: widget.won ? 1700 : 2100))
-    ..addListener(_onTick)
-    ..forward();
-  late final _loop = AnimationController(vsync: this, duration: const Duration(seconds: 12))
-    ..repeat();
+class _EndOverlayState extends ConsumerState<_EndOverlay>
+    with TickerProviderStateMixin {
+  late final _c =
+      AnimationController(
+          vsync: this,
+          duration: Duration(milliseconds: widget.won ? 1700 : 2100),
+        )
+        ..addListener(_onTick)
+        ..forward();
+  late final _loop = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 12),
+  )..repeat();
   static const _sealAt = 0.52;
   bool _sealed = false;
   int _sealKey = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final id = widget.lessonId;
+    if (id != null && widget.won) {
+      ref.read(tutorialStorageProvider).markDone(id).then((_) {
+        if (mounted) ref.invalidate(lessonsDoneProvider);
+      });
+    }
+  }
 
   void _onTick() {
     if (!_sealed && _c.value >= _sealAt) {
       _sealed = true;
       HapticFeedback.heavyImpact();
-      ref.read(audioProvider).play(widget.won ? Sfx.victoryStamp : Sfx.defeatStamp);
+      ref
+          .read(audioProvider)
+          .play(widget.won ? Sfx.victoryStamp : Sfx.defeatStamp);
       if (widget.won) ref.read(audioProvider).play(Sfx.endRays);
       setState(() => _sealKey++);
     }
@@ -2159,8 +2660,29 @@ class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderSta
     final t = AppLocalizations.of(context);
     final won = widget.won;
     final accent = won ? Palette.gold : Palette.lacquer;
-    final seal = won ? Palette.lacquer : Color.lerp(Palette.lacquer, Palette.textDim, 0.55)!;
-    final showButton = !(widget.tutorial && won);
+    final seal = won
+        ? Palette.lacquer
+        : Color.lerp(Palette.lacquer, Palette.textDim, 0.55)!;
+    final lesson = widget.lessonId == null
+        ? null
+        : lessonById(widget.lessonId!);
+    final next = lesson == null ? null : nextLesson(lesson.id);
+    final String summaryText = switch ((lesson, won)) {
+      (null, true) => t.endSummaryWon(widget.turns, widget.hp, widget.maxHp),
+      (null, false) => t.endSummaryLost(widget.enemyName, widget.enemyHp),
+      (final l?, true) => l.done!(t),
+      (_?, false) => t.lessonLostHint,
+    };
+    final (String label, VoidCallback onPressed) = switch ((lesson, won)) {
+      (null, _) => (t.continueLabel, _continue),
+      (_?, true) when next != null => (
+        t.lessonNext,
+        () => _openLesson(next.id),
+      ),
+      (_?, true) => (t.lessonBackToList, _toLessons),
+      (final l?, false) => (t.lessonRetry, () => _openLesson(l.id)),
+    };
+    final secondary = lesson != null && !(won && next == null);
     return Positioned.fill(
       child: AnimatedBuilder(
         animation: Listenable.merge([_c, _loop]),
@@ -2185,14 +2707,18 @@ class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderSta
                       angle: _loop.value * math.pi * 2,
                       child: Transform.scale(
                         scale: 0.4 + 0.6 * _span(0.1, 0.5, Curves.easeOutCubic),
-                        child: CustomPaint(size: const Size(520, 520), painter: _RaysPainter()),
+                        child: CustomPaint(
+                          size: const Size(520, 520),
+                          painter: _RaysPainter(),
+                        ),
                       ),
                     ),
                   ),
                 if (won)
                   Positioned.fill(
                     child: CustomPaint(
-                        painter: _PetalsPainter(t: _loop.value, fade: summary)),
+                      painter: _PetalsPainter(t: _loop.value, fade: summary),
+                    ),
                   ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -2206,19 +2732,29 @@ class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderSta
                           Opacity(
                             opacity: title,
                             child: Transform.scale(
-                              scale: 2.6 - 1.6 * title + 0.06 * math.sin(math.pi * settle),
-                              child: Text(won ? t.victory : t.defeat,
-                                  style: TextStyle(
-                                    fontSize: 54,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 1,
-                                    color: accent,
-                                    shadows: [
-                                      const Shadow(color: Colors.white, blurRadius: 12),
-                                      Shadow(
-                                          color: accent.withValues(alpha: 0.5), blurRadius: 24),
-                                    ],
-                                  )),
+                              scale:
+                                  2.6 -
+                                  1.6 * title +
+                                  0.06 * math.sin(math.pi * settle),
+                              child: Text(
+                                won ? t.victory : t.defeat,
+                                style: TextStyle(
+                                  fontSize: 54,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1,
+                                  color: accent,
+                                  shadows: [
+                                    const Shadow(
+                                      color: Colors.white,
+                                      blurRadius: 12,
+                                    ),
+                                    Shadow(
+                                      color: accent.withValues(alpha: 0.5),
+                                      blurRadius: 24,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           // Sello de tinta roja, como el de un pergamino.
@@ -2238,18 +2774,26 @@ class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderSta
                                     decoration: BoxDecoration(
                                       color: seal,
                                       borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(color: Palette.onColor, width: 2),
+                                      border: Border.all(
+                                        color: Palette.onColor,
+                                        width: 2,
+                                      ),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: seal.withValues(alpha: 0.4), blurRadius: 10),
+                                          color: seal.withValues(alpha: 0.4),
+                                          blurRadius: 10,
+                                        ),
                                       ],
                                     ),
-                                    child: Text(won ? '胜' : '败',
-                                        style: const TextStyle(
-                                            fontSize: 32,
-                                            height: 1,
-                                            color: Palette.onColor,
-                                            fontWeight: FontWeight.w700)),
+                                    child: Text(
+                                      won ? '胜' : '败',
+                                      style: const TextStyle(
+                                        fontSize: 32,
+                                        height: 1,
+                                        color: Palette.onColor,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -2275,32 +2819,51 @@ class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderSta
                       child: Transform.translate(
                         offset: Offset(0, 16 * (1 - summary)),
                         child: Text(
-                          won
-                              ? t.endSummaryWon(widget.turns, widget.hp, widget.maxHp)
-                              : t.endSummaryLost(widget.enemyName, widget.enemyHp),
+                          summaryText,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 15, color: Palette.textDim),
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Palette.textDim,
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 28),
-                    if (showButton)
+                    Opacity(
+                      opacity: button.clamp(0, 1),
+                      child: Transform.scale(
+                        scale: 0.8 + 0.2 * button,
+                        child: IgnorePointer(
+                          ignoring: button < 0.5,
+                          child: SizedBox(
+                            width: 220,
+                            height: 52,
+                            child: FilledButton(
+                              onPressed: onPressed,
+                              style: FilledButton.styleFrom(
+                                backgroundColor: won
+                                    ? Palette.gold
+                                    : Palette.lacquer,
+                              ),
+                              child: Text(
+                                label,
+                                style: const TextStyle(fontSize: 17),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (secondary)
                       Opacity(
                         opacity: button.clamp(0, 1),
-                        child: Transform.scale(
-                          scale: 0.8 + 0.2 * button,
-                          child: IgnorePointer(
-                            ignoring: button < 0.5,
-                            child: SizedBox(
-                              width: 220,
-                              height: 52,
-                              child: FilledButton(
-                                onPressed: _continue,
-                                style: FilledButton.styleFrom(
-                                    backgroundColor: won ? Palette.gold : Palette.lacquer),
-                                child: Text(t.continueLabel,
-                                    style: const TextStyle(fontSize: 17)),
-                              ),
+                        child: IgnorePointer(
+                          ignoring: button < 0.5,
+                          child: TextButton(
+                            onPressed: _toLessons,
+                            child: Text(
+                              t.lessonBackToList,
+                              style: const TextStyle(color: Palette.textDim),
                             ),
                           ),
                         ),
@@ -2315,11 +2878,30 @@ class _EndOverlayState extends ConsumerState<_EndOverlay> with TickerProviderSta
     );
   }
 
+  /// Abre una lección: las de combate reinician esta pantalla, la de la
+  /// subida es otra pantalla.
+  void _openLesson(String id) {
+    HapticFeedback.selectionClick();
+    ref.read(audioProvider).play(Sfx.uiButton);
+    final ctl = ref.read(combatControllerProvider.notifier)..finish();
+    if (lessonById(id).isCombat) {
+      ctl.startLesson(id);
+    } else {
+      context.go('/lessons/climb');
+    }
+  }
+
+  void _toLessons() {
+    HapticFeedback.selectionClick();
+    ref.read(audioProvider).play(Sfx.uiButton);
+    ref.read(combatControllerProvider.notifier).finish();
+    context.go('/lessons');
+  }
+
   void _continue() {
     HapticFeedback.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
     ref.read(combatControllerProvider.notifier).finish();
-    if (widget.tutorial) return context.go('/');
     final run = ref.read(runControllerProvider)!;
     context.go(switch (run.phase) {
       RunPhase.reward => '/reward',
@@ -2335,10 +2917,12 @@ class _RaysPainter extends CustomPainter {
     final c = size.center(Offset.zero);
     final r = size.width / 2;
     final paint = Paint()
-      ..shader = RadialGradient(colors: [
-        Palette.gold.withValues(alpha: 0.26),
-        Palette.gold.withValues(alpha: 0),
-      ]).createShader(Rect.fromCircle(center: c, radius: r));
+      ..shader = RadialGradient(
+        colors: [
+          Palette.gold.withValues(alpha: 0.26),
+          Palette.gold.withValues(alpha: 0),
+        ],
+      ).createShader(Rect.fromCircle(center: c, radius: r));
     const n = 14;
     for (var i = 0; i < n; i++) {
       final a = i * 2 * math.pi / n;
@@ -2388,4 +2972,131 @@ class _PetalsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_PetalsPainter old) => old.t != t || old.fade != fade;
+}
+
+/// Pausa: seguir, repasar las reglas o salir (la subida queda guardada).
+class _PauseButton extends ConsumerWidget {
+  const _PauseButton({required this.lessonId});
+
+  final String? lessonId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    return Material(
+      color: Palette.surface.withValues(alpha: 0.92),
+      shape: const CircleBorder(side: BorderSide(color: Palette.line)),
+      child: IconButton(
+        tooltip: t.pauseTitle,
+        visualDensity: VisualDensity.compact,
+        icon: const Icon(Icons.pause_rounded, color: Palette.text),
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          ref.read(audioProvider).play(Sfx.uiButton);
+          _open(context, ref);
+        },
+      ),
+    );
+  }
+
+  void _open(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final ctl = ref.read(combatControllerProvider.notifier);
+    final lesson = lessonId;
+    // El combate queda como está: el próximo que empiece lo reemplaza, y así
+    // la pantalla no se vacía mientras se desvanece.
+    void leave(String route) {
+      Navigator.pop(context);
+      ref.invalidate(savedRunProvider);
+      context.go(route);
+    }
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Palette.surface,
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                t.pauseTitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                height: 50,
+                child: FilledButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: Text(
+                    t.pauseResume,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              OutlinedButton.icon(
+                onPressed: () => showModalBottomSheet<void>(
+                  context: ctx,
+                  isScrollControlled: true,
+                  backgroundColor: Palette.surface,
+                  builder: (_) => DraggableScrollableSheet(
+                    expand: false,
+                    initialChildSize: 0.85,
+                    maxChildSize: 0.95,
+                    builder: (_, scroll) => PrimaryScrollController(
+                      controller: scroll,
+                      child: const HowToPlay(),
+                    ),
+                  ),
+                ),
+                icon: const Icon(Icons.menu_book_rounded),
+                label: Text(t.pauseHowTo),
+              ),
+              const SizedBox(height: 8),
+              if (lesson == null) ...[
+                OutlinedButton.icon(
+                  onPressed: () => leave('/'),
+                  icon: const Icon(Icons.home_rounded),
+                  label: Text(t.pauseToMenu),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 6, 8, 0),
+                  child: Text(
+                    t.pauseToMenuHint,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Palette.textDim,
+                    ),
+                  ),
+                ),
+              ] else ...[
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    ctl.startLesson(lesson);
+                  },
+                  icon: const Icon(Icons.replay_rounded),
+                  label: Text(t.pauseRestartLesson),
+                ),
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: () => leave('/lessons'),
+                  icon: const Icon(Icons.school_rounded),
+                  label: Text(t.pauseExitLesson),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

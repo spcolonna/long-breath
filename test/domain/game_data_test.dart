@@ -23,7 +23,7 @@ void main() {
         expect(data.cards.containsKey(step), isTrue, reason: step);
       }
     }
-    expect(data.enemies.length, 7); // 6 de la run + el muñeco del tutorial
+    expect(data.enemies.length, 12); // 6 de la run + 6 muñecos de práctica
     expect(data.enemy('dragon').phases.length, 2);
   });
 

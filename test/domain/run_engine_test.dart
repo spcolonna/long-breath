@@ -75,4 +75,18 @@ void main() {
     final chosen = run.choosePath(shrine, shrine.pathOptions.first);
     expect(RunState.fromJson(chosen.toJson()).style, chosen.style);
   });
+
+  test('retomar un combate a medias vuelve al mapa antes de ese nodo', () {
+    final first = run.enter(run.newRun(seed: 3), 'n1');
+    final back = run.retreat(first);
+    expect(back.phase, RunPhase.map);
+    expect(back.currentNode, isNull);
+    expect(back.visited, isEmpty);
+    expect(run.available(back), ['n1']);
+
+    final second = run.enter(back.copyWith(currentNode: 'n1', visited: ['n1']), 'n2');
+    final back2 = run.retreat(second);
+    expect(back2.currentNode, 'n1');
+    expect(run.available(back2), ['n2']);
+  });
 }

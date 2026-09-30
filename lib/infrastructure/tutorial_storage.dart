@@ -1,12 +1,23 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Recuerda si el jugador ya hizo el entrenamiento.
+/// Recuerda qué lecciones del tutorial completó el jugador.
 class TutorialStorage {
-  static const _key = 'long_breath.tutorialDone';
+  static const _key = 'long_breath.lessonsDone';
 
-  Future<bool> isDone() async =>
-      (await SharedPreferences.getInstance()).getBool(_key) ?? false;
+  /// El entrenamiento viejo, de un solo combate, equivale a la primera lección.
+  static const _legacyKey = 'long_breath.tutorialDone';
 
-  Future<void> markDone() async =>
-      (await SharedPreferences.getInstance()).setBool(_key, true);
+  Future<Set<String>> lessonsDone() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      ...?prefs.getStringList(_key),
+      if (prefs.getBool(_legacyKey) ?? false) 'strike',
+    };
+  }
+
+  Future<void> markDone(String lessonId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final done = await lessonsDone();
+    await prefs.setStringList(_key, {...done, lessonId}.toList());
+  }
 }

@@ -25,6 +25,7 @@ class IntentDef {
   });
 
   final IntentKind kind;
+
   /// Clave del texto de la intención (content/{idioma}.json → intents).
   final String? labelKey;
   final Height? height;
@@ -43,17 +44,17 @@ class IntentDef {
   final bool countdown;
 
   factory IntentDef.fromJson(Map<String, dynamic> j) => IntentDef(
-        kind: IntentKind.parse(j['kind'] as String),
-        labelKey: j['labelKey'] as String?,
-        height: Height.parse(j['height'] as String?),
-        damage: j['damage'] as int? ?? 0,
-        structure: j['structure'] as int? ?? 0,
-        hits: j['hits'] as int? ?? 1,
-        value: j['value'] as int? ?? 0,
-        count: j['count'] as int? ?? 0,
-        interrupt: j['interrupt'] as bool? ?? false,
-        countdown: j['countdown'] as bool? ?? false,
-      );
+    kind: IntentKind.parse(j['kind'] as String),
+    labelKey: j['labelKey'] as String?,
+    height: Height.parse(j['height'] as String?),
+    damage: j['damage'] as int? ?? 0,
+    structure: j['structure'] as int? ?? 0,
+    hits: j['hits'] as int? ?? 1,
+    value: j['value'] as int? ?? 0,
+    count: j['count'] as int? ?? 0,
+    interrupt: j['interrupt'] as bool? ?? false,
+    countdown: j['countdown'] as bool? ?? false,
+  );
 }
 
 class EnemyPhase {
@@ -65,12 +66,12 @@ class EnemyPhase {
   final double? hpThreshold;
 
   factory EnemyPhase.fromJson(Map<String, dynamic> j) => EnemyPhase(
-        pattern: [
-          for (final i in j['pattern'] as List)
-            IntentDef.fromJson(i as Map<String, dynamic>),
-        ],
-        hpThreshold: (j['hpThreshold'] as num?)?.toDouble(),
-      );
+    pattern: [
+      for (final i in j['pattern'] as List)
+        IntentDef.fromJson(i as Map<String, dynamic>),
+    ],
+    hpThreshold: (j['hpThreshold'] as num?)?.toDouble(),
+  );
 }
 
 class EnemyDef {
@@ -82,10 +83,11 @@ class EnemyDef {
     required this.phases,
     this.hanzi,
     this.pinyin,
+    String? art,
     this.immovable = false,
     this.sameStancePunishDamage = 0,
     this.sameStancePunishStructure = 0,
-  });
+  }) : _art = art;
 
   final String id;
   final EnemyRank rank;
@@ -95,6 +97,10 @@ class EnemyDef {
   final String? hanzi;
   final String? pinyin;
   final bool immovable;
+
+  /// Imagen de `assets/art/enemies/`; los muñecos de práctica comparten una.
+  String get art => _art ?? id;
+  final String? _art;
   final int sameStancePunishDamage;
   final int sameStancePunishStructure;
 
@@ -111,6 +117,7 @@ class EnemyDef {
       ],
       hanzi: j['hanzi'] as String?,
       pinyin: j['pinyin'] as String?,
+      art: j['art'] as String?,
       immovable: j['immovable'] as bool? ?? false,
       sameStancePunishDamage: ssp?['damage'] as int? ?? 0,
       sameStancePunishStructure: ssp?['structure'] as int? ?? 0,

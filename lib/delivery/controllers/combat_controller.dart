@@ -5,7 +5,7 @@ import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
-import '../../domain/tutorial.dart';
+import '../tutorial/lessons.dart';
 import '../providers.dart';
 import 'run_controller.dart';
 
@@ -18,7 +18,8 @@ class CombatView {
     this.selected,
     this.retaining = false,
     this.retain = const {},
-    this.tutorial = false,
+    this.lessonId,
+    this.instance = 0,
   });
 
   final CombatState state;
@@ -30,8 +31,13 @@ class CombatView {
   final bool retaining;
   final Set<int> retain;
 
-  /// Combate de entrenamiento: no pertenece a ninguna run.
-  final bool tutorial;
+  /// Lección del tutorial en curso: el combate no pertenece a ninguna run.
+  final String? lessonId;
+  bool get tutorial => lessonId != null;
+
+  /// Distinto en cada combate nuevo (o lección reiniciada): la pantalla se
+  /// arma de cero en vez de arrastrar animaciones del anterior.
+  final int instance;
 
   CombatView copyWith({
     CombatState? state,
@@ -40,16 +46,16 @@ class CombatView {
     int? Function()? selected,
     bool? retaining,
     Set<int>? retain,
-  }) =>
-      CombatView(
-        state: state ?? this.state,
-        events: events ?? this.events,
-        seq: seq ?? this.seq,
-        selected: selected == null ? this.selected : selected(),
-        retaining: retaining ?? this.retaining,
-        retain: retain ?? this.retain,
-        tutorial: tutorial,
-      );
+  }) => CombatView(
+    state: state ?? this.state,
+    events: events ?? this.events,
+    seq: seq ?? this.seq,
+    selected: selected == null ? this.selected : selected(),
+    retaining: retaining ?? this.retaining,
+    retain: retain ?? this.retain,
+    lessonId: lessonId,
+    instance: instance,
+  );
 }
 
 class CombatController extends Notifier<CombatView?> {
@@ -57,6 +63,8 @@ class CombatController extends Notifier<CombatView?> {
   CombatView? build() => null;
 
   CombatEngine get engine => ref.read(combatEngineProvider);
+
+  static int _instances = 0;
 
   void start() {
     final runCtl = ref.read(runControllerProvider.notifier);
@@ -69,22 +77,35 @@ class CombatController extends Notifier<CombatView?> {
       playerHp: run.hp,
       seed: seed,
     );
-    state = CombatView(state: r.state, events: r.events, seq: 1);
+    state = CombatView(
+      state: r.state,
+      events: r.events,
+      seq: 1,
+      instance: ++_instances,
+    );
   }
 
-  /// Combate contra el muñeco de madera, con el mazo en orden fijo.
-  void startTutorial() {
+  /// Lección contra un muñeco de madera, con el mazo en orden fijo.
+  void startLesson(String lessonId) {
+    final setup = lessonById(lessonId).setup!;
     final r = engine.start(
       deck: [
-        for (final (i, id) in tutorialDeck.indexed) CombatCard(uid: i, cardId: id),
+        for (final (i, id) in setup.deck.indexed)
+          CombatCard(uid: i, cardId: id),
       ],
-      enemyId: tutorialEnemy,
+      enemyId: setup.enemyId,
       style: null,
       playerHp: ref.read(dataProvider).balance.playerHp,
       seed: 1,
       shuffle: false,
     );
-    state = CombatView(state: r.state, events: r.events, seq: 1, tutorial: true);
+    state = CombatView(
+      state: r.state,
+      events: r.events,
+      seq: 1,
+      lessonId: lessonId,
+      instance: ++_instances,
+    );
   }
 
   void _dispatch(CombatAction action) {
@@ -92,7 +113,12 @@ class CombatController extends Notifier<CombatView?> {
     if (engine.validate(v.state, action) != null) return;
     final r = engine.reduce(v.state, action);
     state = CombatView(
-        state: r.state, events: r.events, seq: v.seq + 1, tutorial: v.tutorial);
+      state: r.state,
+      events: r.events,
+      seq: v.seq + 1,
+      lessonId: v.lessonId,
+      instance: v.instance,
+    );
   }
 
   void tapCard(int uid) {
@@ -143,10 +169,9 @@ class CombatController extends Notifier<CombatView?> {
       state = null;
       return;
     }
-    ref.read(runControllerProvider.notifier).finishCombat(
-          won: s.phase == CombatPhase.won,
-          hp: s.player.hp,
-        );
+    ref
+        .read(runControllerProvider.notifier)
+        .finishCombat(won: s.phase == CombatPhase.won, hp: s.player.hp);
     state = null;
   }
 }

@@ -72,6 +72,26 @@
     "dragon": {
       "name": "Eco del Dragón",
       "rule": "Fase 2 al 50% de Vida. Aliento del Dragón: medio 25 (E8). Se evita desviándolo o dejándolo Desequilibrado antes."
+    },
+    "dummy_basic": {
+      "name": "Muñeco de madera",
+      "rule": "Muñeco de la primera lección. Siempre pega MEDIO, 5 de daño."
+    },
+    "dummy_heights": {
+      "name": "Muñeco de madera",
+      "rule": "Muñeco para practicar defensas: pega ALTO, después MEDIO, después BAJO, y vuelve a empezar."
+    },
+    "dummy_light": {
+      "name": "Muñeco de madera",
+      "rule": "Muñeco para practicar posturas: pega suave y MEDIO todos los turnos."
+    },
+    "dummy_guard": {
+      "name": "Muñeco de madera",
+      "rule": "Muñeco con poca Estructura: se cubre, después carga fuerza y después pega MEDIO."
+    },
+    "dummy_forms": {
+      "name": "Muñeco de madera",
+      "rule": "Muñeco para practicar formas: pega suave y MEDIO todos los turnos."
     }
   },
   "intents": {
