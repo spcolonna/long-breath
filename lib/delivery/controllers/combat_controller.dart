@@ -5,6 +5,7 @@ import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
+import '../../domain/tutorial.dart';
 import '../providers.dart';
 import 'run_controller.dart';
 
@@ -17,6 +18,7 @@ class CombatView {
     this.selected,
     this.retaining = false,
     this.retain = const {},
+    this.tutorial = false,
   });
 
   final CombatState state;
@@ -27,6 +29,9 @@ class CombatView {
   final int? selected;
   final bool retaining;
   final Set<int> retain;
+
+  /// Combate de entrenamiento: no pertenece a ninguna run.
+  final bool tutorial;
 
   CombatView copyWith({
     CombatState? state,
@@ -43,6 +48,7 @@ class CombatView {
         selected: selected == null ? this.selected : selected(),
         retaining: retaining ?? this.retaining,
         retain: retain ?? this.retain,
+        tutorial: tutorial,
       );
 }
 
@@ -66,11 +72,27 @@ class CombatController extends Notifier<CombatView?> {
     state = CombatView(state: r.state, events: r.events, seq: 1);
   }
 
+  /// Combate contra el muñeco de madera, con el mazo en orden fijo.
+  void startTutorial() {
+    final r = engine.start(
+      deck: [
+        for (final (i, id) in tutorialDeck.indexed) CombatCard(uid: i, cardId: id),
+      ],
+      enemyId: tutorialEnemy,
+      style: null,
+      playerHp: ref.read(dataProvider).balance.playerHp,
+      seed: 1,
+      shuffle: false,
+    );
+    state = CombatView(state: r.state, events: r.events, seq: 1, tutorial: true);
+  }
+
   void _dispatch(CombatAction action) {
     final v = state!;
     if (engine.validate(v.state, action) != null) return;
     final r = engine.reduce(v.state, action);
-    state = CombatView(state: r.state, events: r.events, seq: v.seq + 1);
+    state = CombatView(
+        state: r.state, events: r.events, seq: v.seq + 1, tutorial: v.tutorial);
   }
 
   void tapCard(int uid) {
@@ -117,6 +139,10 @@ class CombatController extends Notifier<CombatView?> {
   /// Vuelca el resultado del combate en la run.
   void finish() {
     final s = state!.state;
+    if (state!.tutorial) {
+      state = null;
+      return;
+    }
     ref.read(runControllerProvider.notifier).finishCombat(
           won: s.phase == CombatPhase.won,
           hp: s.player.hp,

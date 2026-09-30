@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
+import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
@@ -33,6 +34,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final t = AppLocalizations.of(context);
     final saved = ref.watch(savedRunProvider).value;
     final stats = ref.watch(dataProvider).balance.novice;
+    final trained = ref.watch(tutorialDoneProvider).value ?? true;
+    void newRun() {
+      ref.read(runControllerProvider.notifier).newRun();
+      context.go('/map');
+    }
+
+    void train() {
+      ref.read(combatControllerProvider.notifier).startTutorial();
+      context.go('/combat');
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -73,15 +85,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Text(t.styleSummary(stats.draw, stats.breath, stats.retain),
                   style: const TextStyle(fontSize: 12, color: Palette.textDim)),
               const SizedBox(height: 24),
+              // La primera vez se propone el entrenamiento antes que la run.
               SizedBox(
                 width: double.infinity,
                 height: 52,
                 child: FilledButton(
-                  onPressed: () {
-                    ref.read(runControllerProvider.notifier).newRun();
-                    context.go('/map');
-                  },
-                  child: Text(t.newRun, style: const TextStyle(fontSize: 17)),
+                  onPressed: trained ? newRun : train,
+                  child: Text(trained ? t.newRun : t.tutStart,
+                      style: const TextStyle(fontSize: 17)),
                 ),
               ),
               if (saved != null &&
@@ -111,6 +122,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ],
+              const SizedBox(height: 4),
+              TextButton(
+                onPressed: trained ? train : newRun,
+                child: Text(trained ? t.tutReplay : t.tutSkipToRun,
+                    style: const TextStyle(color: Palette.textDim)),
+              ),
             ],
           ),
         ),

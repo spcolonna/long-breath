@@ -25,11 +25,12 @@ void main() {
 
     await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
     await settle();
-    expect(find.text('Nueva run'), findsOneWidget);
+    // La primera vez se propone el entrenamiento.
+    expect(find.text('Empezar entrenamiento'), findsOneWidget);
     // Se empieza como novicio: el camino no se elige en el inicio.
     expect(find.text('Tigre'), findsNothing);
 
-    await tester.tap(find.text('Nueva run'));
+    await tester.tap(find.text('Ya sé jugar: nueva run'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
 

@@ -693,6 +693,150 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Parte de una forma'**
   String get partOfForm;
+
+  /// No description provided for @tutStart.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezar entrenamiento'**
+  String get tutStart;
+
+  /// No description provided for @tutSkipToRun.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya sé jugar: nueva run'**
+  String get tutSkipToRun;
+
+  /// No description provided for @tutReplay.
+  ///
+  /// In es, this message translates to:
+  /// **'Repetir entrenamiento'**
+  String get tutReplay;
+
+  /// No description provided for @tutSkip.
+  ///
+  /// In es, this message translates to:
+  /// **'Saltear'**
+  String get tutSkip;
+
+  /// No description provided for @tutNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Siguiente'**
+  String get tutNext;
+
+  /// No description provided for @tutMaster.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestro'**
+  String get tutMaster;
+
+  /// No description provided for @tutGo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Vamos!'**
+  String get tutGo;
+
+  /// No description provided for @tutClimb.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezar la subida'**
+  String get tutClimb;
+
+  /// No description provided for @tutHome.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver al inicio'**
+  String get tutHome;
+
+  /// No description provided for @tutWelcome.
+  ///
+  /// In es, this message translates to:
+  /// **'Bienvenido al patio de la escuela del Dragón Dormido. Antes de subir la montaña vas a practicar con el muñeco de madera. Yo te guío.'**
+  String get tutWelcome;
+
+  /// No description provided for @tutIntent.
+  ///
+  /// In es, this message translates to:
+  /// **'Este globo es lo que el muñeco va a hacer en su turno: un golpe ALTO (flecha arriba) de 4 de daño y 2 a tu Estructura (E). El enemigo siempre avisa antes de actuar.'**
+  String get tutIntent;
+
+  /// No description provided for @tutEnemy.
+  ///
+  /// In es, this message translates to:
+  /// **'Su Vida (roja) y su Estructura (violeta). Llevá la Vida a 0 para ganar. Si le vaciás la Estructura, queda Desequilibrado: pierde su acción y recibe el doble de daño.'**
+  String get tutEnemy;
+
+  /// No description provided for @tutPlayer.
+  ///
+  /// In es, this message translates to:
+  /// **'Este sos vos: tu Vida, tu Estructura, tu postura actual (Caballo) y tu Guardia, el escudo de la derecha.'**
+  String get tutPlayer;
+
+  /// No description provided for @tutHand.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde.'**
+  String get tutHand;
+
+  /// No description provided for @tutPlayFist.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá Puño en arco una vez para ver qué hace y otra vez para jugarla.'**
+  String get tutPlayFist;
+
+  /// No description provided for @tutStance.
+  ///
+  /// In es, this message translates to:
+  /// **'La carta te llevó a la postura Arco antes de pegar, y en Arco los puños hacen +3. Cada postura tiene ventajas y costos.'**
+  String get tutStance;
+
+  /// No description provided for @tutDefend.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora defendete. El muñeco va a pegar ALTO y Mostrar la palma da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.'**
+  String get tutDefend;
+
+  /// No description provided for @tutKick.
+  ///
+  /// In es, this message translates to:
+  /// **'Quedaste en postura Vacía, donde las patadas cuestan 1 menos: Patada de latigazo ahora es gratis. Jugala.'**
+  String get tutKick;
+
+  /// No description provided for @tutForms.
+  ///
+  /// In es, this message translates to:
+  /// **'Puño en arco y Patada de latigazo son los dos primeros pasos del Pequeño Puño Rojo. Si completás una forma en orden, se desata un golpe grande. Las defensas no la interrumpen.'**
+  String get tutForms;
+
+  /// No description provided for @tutEndTurn.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu Guardia está lista. Terminá el turno y mirá qué pasa.'**
+  String get tutEndTurn;
+
+  /// No description provided for @tutDeflect.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Desvío! No recibiste daño, el muñeco perdió Estructura y quedó Desequilibrado: pierde su acción y recibe el doble. Además, el desvío te da Aliento extra para este turno.'**
+  String get tutDeflect;
+
+  /// No description provided for @tutActions.
+  ///
+  /// In es, this message translates to:
+  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.'**
+  String get tutActions;
+
+  /// No description provided for @tutFree.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora rematalo vos. Mientras esté Desequilibrado, cada golpe cuenta doble.'**
+  String get tutFree;
+
+  /// No description provided for @tutDone.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.'**
+  String get tutDone;
 }
 
 class _AppLocalizationsDelegate

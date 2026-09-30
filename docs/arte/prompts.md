@@ -65,6 +65,19 @@ text. [ESTILO]
 
 No hace falta video: el juego ya anima encima (héroe, enemigo, números). Si más adelante se quiere movimiento en el fondo, conviene separar las nubes en una capa PNG aparte y desplazarlas por código, que pesa mucho menos que un video en loop.
 
+### Muñeco de madera (tutorial)
+
+**Destino:** `assets/art/enemies/dummy.png`, cuadrado (1024×1024) y transparente. Mientras no exista, el tutorial usa el enemigo genérico.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+traditional kung fu wooden training dummy (mu ren zhuang), a thick polished wooden trunk
+with three wooden arms and one bent wooden leg sticking out, mounted on a low wooden frame,
+warm honey-colored wood with darker grain, a faded red cloth sash tied around its "waist",
+a few paper talismans with brush marks, slightly worn from years of practice, friendly and
+iconic silhouette at small size. [ESTILO]
+```
+
 ### Héroe
 
 **Fuente:** `assets/art/player/hero.png`, 2:3 y transparente, de espaldas mirando hacia el enemigo. Ropa bermellón para que el recoloreo funcione. Después de cambiarla hay que correr `python3 tool/recolor_hero.py`, que genera `hero_novice.png` (lino crudo, antes del santuario), `hero_tiger.png`, `hero_snake.png` y `hero_crane.png`.

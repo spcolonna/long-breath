@@ -8,6 +8,7 @@ import '../infrastructure/asset_game_data_loader.dart';
 import '../infrastructure/content_text_loader.dart';
 import 'content_text.dart';
 import '../infrastructure/run_storage.dart';
+import '../infrastructure/tutorial_storage.dart';
 
 final gameDataProvider =
     FutureProvider<GameData>((ref) => loadGameDataFromAssets());
@@ -34,3 +35,8 @@ final runStorageProvider = Provider<RunStorage>((ref) => RunStorage());
 
 final savedRunProvider =
     FutureProvider((ref) => ref.watch(runStorageProvider).load());
+
+final tutorialStorageProvider = Provider<TutorialStorage>((ref) => TutorialStorage());
+
+final tutorialDoneProvider =
+    FutureProvider<bool>((ref) => ref.watch(tutorialStorageProvider).isDone());

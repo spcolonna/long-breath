@@ -34,7 +34,7 @@ Existen otros dos animales, el Leopardo y el Dragón. El Dragón está sellado: 
 
 La subida se hace por tramos: la ladera de bambú, el santuario de los animales, una bifurcación entre rocas, una fuente de meditación, un templo en el acantilado y, arriba de todo, la cumbre sobre un mar de nubes.
 
-En el camino aparecen:
+Antes de subir, los novicios practican en el patio con el **muñeco de madera** (木人桩), el mismo que se usa en las escuelas de Wing Chun y de Hung Gar. En el camino aparecen:
 
 - **Eco de Murciélago:** un espíritu hecho de ecos. Su chillido aturde y te hace soltar lo que tenés en la mano.
 - **Discípulo Perdido:** un alumno que no llegó arriba y quedó atrapado en la montaña. Castiga a quien se queda quieto en la misma postura.
@@ -56,6 +56,18 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 ---
 
 # Parte 2 · Mecánicas de juego
+
+## Entrenamiento (tutorial)
+
+La primera vez que abrís el juego, el botón principal es **Empezar entrenamiento**: un combate guiado en el patio de la escuela contra el **muñeco de madera** (木人桩 Mù Rén Zhuāng). El maestro resalta cada parte de la pantalla y, cuando pide una jugada, solo deja tocar lo que corresponde:
+
+1. Qué es el globo de intención del enemigo, su Vida y su Estructura, tus barras, tu mano y el Aliento.
+2. Jugar **Puño en arco**: un toque para ver la vista previa y otro para jugarla. La carta te mueve a postura Arco.
+3. Defenderte con **Mostrar la palma** (Guardia alta contra un ataque alto) y jugar **Patada de latigazo** gratis en postura Vacía, que además avanza el Pequeño Puño Rojo.
+4. Terminar el turno: desviás el golpe y el muñeco queda **Desequilibrado**.
+5. Rematarlo libremente con el daño doble. Al ganar, el maestro resume cómo sigue la montaña y ofrece **Empezar la subida**.
+
+Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamiento** en el inicio; si ya sabés jugar, **Ya sé jugar: nueva run** lo omite.
 
 ## Una partida (run)
 

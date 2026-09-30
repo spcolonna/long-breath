@@ -1,5 +1,11 @@
 {
   "enemies": [
+    { "id": "dummy", "rank": "common", "hp": 40, "structure": 6,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "high", "damage": 4, "structure": 2 },
+        { "kind": "attack", "height": "mid", "damage": 5, "structure": 2 },
+        { "kind": "attack", "height": "low", "damage": 4, "structure": 2 }
+      ] } ] },
     { "id": "bat", "rank": "common", "hp": 18, "structure": 6,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "high", "damage": 3, "hits": 2, "structure": 1 },
