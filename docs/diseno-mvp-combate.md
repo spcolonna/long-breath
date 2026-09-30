@@ -93,14 +93,14 @@ Cada carta tiene: id, nombre en pinyin, caracteres, traducción al español, tip
 
 | Carta | Tipo | Costo | Efecto base | Copias |
 | --- | --- | --- | --- | --- |
-| Gōngbù Chōngquán 弓步冲拳 (puño en arco) | Puño | 1 | Pasás a gōngbù. 6 de daño, 1 a Estructura | 3 |
-| Mǎbù Chōngquán 马步冲拳 (puño en caballo) | Puño | 1 | Pasás a mǎbù. 5 de daño, 2 a Estructura | 1 |
-| Tán Tuǐ 弹腿 (patada de latigazo) | Patada | 1 | 5 de daño, 1 a Estructura | 2 |
-| Tuī Zhǎng 推掌 (empuje de palma) | Palma | 1 | 2 de daño, 4 a Estructura | 1 |
-| Mǎbù Jiàdǎ 马步架打 (bloquear y golpear) | Defensa | 2 | Pasás a mǎbù. Guardia 6 alta y 4 de daño | 1 |
-| Xūbù Liàngzhǎng 虚步亮掌 (mostrar la palma) | Defensa | 1 | Pasás a xūbù. Guardia 7 alta (5 efectiva en xūbù) y robás 1 | 1 |
+| Gōngbù Chōngquán 弓步冲拳 (puñetazo a fondo) | Puño | 1 | Pasás a gōngbù. 6 de daño, 1 a Estructura | 3 |
+| Mǎbù Chōngquán 马步冲拳 (puñetazo firme) | Puño | 1 | Pasás a mǎbù. 5 de daño, 2 a Estructura | 1 |
+| Tán Tuǐ 弹腿 (patada látigo) | Patada | 1 | 5 de daño, 1 a Estructura | 2 |
+| Tuī Zhǎng 推掌 (empujón de palma) | Palma | 1 | 2 de daño, 4 a Estructura | 1 |
+| Mǎbù Jiàdǎ 马步架打 (bloqueo y contragolpe) | Defensa | 2 | Pasás a mǎbù. Guardia 6 alta y 4 de daño | 1 |
+| Xūbù Liàngzhǎng 虚步亮掌 (paso atrás) | Defensa | 1 | Pasás a xūbù. Guardia 7 alta (5 efectiva en xūbù) y robás 1 | 1 |
 | Gé Dǎng 格挡 (bloqueo) | Defensa | 1 | Guardia 7 media | 2 |
-| Àn Zhǎng 按掌 (palma que presiona) | Defensa | 1 | Guardia 6 baja | 1 |
+| Àn Zhǎng 按掌 (bloqueo bajo) | Defensa | 1 | Guardia 6 baja | 1 |
 
 ### Cartas de recompensa generales (8)
 
@@ -108,12 +108,12 @@ Cada carta tiene: id, nombre en pinyin, caracteres, traducción al español, tip
 | --- | --- | --- | --- |
 | Dēng Tuǐ 蹬腿 (patada de talón) | Patada | 2 | 8 de daño, 3 a Estructura |
 | Cè Chuài 侧踹 (patada lateral) | Patada | 2 | 5 de daño, 6 a Estructura |
-| Gōngbù Tuīzhǎng 弓步推掌 (empuje en arco) | Palma | 1 | Pasás a gōngbù. 3 de daño, 5 a Estructura |
-| Pī Quán 劈拳 (puño que corta) | Puño | 1 | 6 de daño. +6 si el enemigo está Desequilibrado |
+| Gōngbù Tuīzhǎng 弓步推掌 (empujón a fondo) | Palma | 1 | Pasás a gōngbù. 3 de daño, 5 a Estructura |
+| Pī Quán 劈拳 (puño martillo) | Puño | 1 | 6 de daño. +6 si el enemigo está Desequilibrado |
 | Shàng Jià 上架 (bloqueo alto) | Defensa | 1 | Guardia 9 alta |
-| Tí Xī 提膝 (rodilla arriba) | Defensa | 1 | Guardia 6 baja. Si desviás, 4 de daño |
-| Tiáo Xī 调息 (regular la respiración) | Técnica | 0 | +1 Aliento y robás 1. Agotar |
-| Bàoquán Lǐ 抱拳礼 (saludo) | Técnica | 0 | Solo en el primer turno. Robás 2. Agotar |
+| Tí Xī 提膝 (rodilla escudo) | Defensa | 1 | Guardia 6 baja. Si desviás, 4 de daño |
+| Tiáo Xī 调息 (recuperar el aliento) | Técnica | 0 | +1 Aliento y robás 1. Agotar |
+| Bàoquán Lǐ 抱拳礼 (saludo marcial) | Técnica | 0 | Solo en el primer turno. Robás 2. Agotar |
 
 **Recompensas:** tras cada combate elegís 1 de 3 cartas al azar del grupo de recompensa, o salteás. Saltear es válido: un mazo chico es más predecible.
 
@@ -163,7 +163,7 @@ El Tigre es el estilo de la fuerza y su identidad mecánica es romper Estructura
 | --- | --- | --- | --- |
 | Hǔ Zhǎo 虎爪 (garra de tigre) | Palma | 1 | 3 de daño, 4 a Estructura. En mǎbù, +2 a Estructura |
 | Hǔ Pū 虎扑 (salto del tigre) | Palma | 2 | Pasás a gōngbù. 10 de daño, 3 a Estructura. Perdés toda tu Guardia |
-| Hǔ Bào Tóu 虎抱头 (el tigre se cubre) | Defensa | 1 | Guardia 7 alta. Si desviás, el enemigo pierde 3 de Estructura extra |
+| Hǔ Bào Tóu 虎抱头 (guardia del tigre) | Defensa | 1 | Guardia 7 alta. Si desviás, el enemigo pierde 3 de Estructura extra |
 | Hǔ Xiào 虎啸 (rugido del tigre) | Técnica | 1 | Este turno, todo daño a Estructura +2. Agotar |
 
 El Tigre combina con mǎbù y con el desequilibrio: romper la Estructura con garras y rematar con Pī Quán o una forma.

@@ -16,7 +16,11 @@ class TutorialAnchor extends StatefulWidget {
     for (final key in (_keys[id] ?? const <GlobalKey>[]).reversed) {
       final box = key.currentContext?.findRenderObject();
       if (box is! RenderBox || !box.attached || !box.hasSize) continue;
-      return box.localToGlobal(Offset.zero, ancestor: ancestor) & box.size;
+      // Con la transformación completa: la carta seleccionada está agrandada.
+      return MatrixUtils.transformRect(
+        box.getTransformTo(ancestor),
+        Offset.zero & box.size,
+      );
     }
     return null;
   }

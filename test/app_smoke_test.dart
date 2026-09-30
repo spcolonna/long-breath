@@ -40,7 +40,7 @@ void main() {
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
     expect(find.text('Eco de Murciélago'), findsWidgets);
-    expect(find.text('Puño en arco'), findsWidgets);
+    expect(find.text('Puñetazo a fondo'), findsWidgets);
 
     // Pausa → volver al menú: la subida queda guardada y se retoma del mapa.
     await tester.tap(find.byTooltip('Pausa'));

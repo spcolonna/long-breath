@@ -61,8 +61,7 @@ import 'app_localizations_es.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,8 +69,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -83,16 +81,17 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('es')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('es')
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -781,7 +780,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutPlayFist.
   ///
   /// In es, this message translates to:
-  /// **'Tocá Puño en arco una vez para ver qué hace y otra vez para jugarla.'**
+  /// **'Tocá Puñetazo a fondo una vez para ver qué hace y otra vez para jugarla.'**
   String get tutPlayFist;
 
   /// No description provided for @tutStance.
@@ -793,19 +792,19 @@ abstract class AppLocalizations {
   /// No description provided for @tutDefend.
   ///
   /// In es, this message translates to:
-  /// **'Ahora defendete. El muñeco va a pegar ALTO y Mostrar la palma da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.'**
+  /// **'Ahora defendete. El muñeco va a pegar ALTO y Paso atrás da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.'**
   String get tutDefend;
 
   /// No description provided for @tutKick.
   ///
   /// In es, this message translates to:
-  /// **'Quedaste en postura Vacía, donde las patadas cuestan 1 menos: Patada de latigazo ahora es gratis. Jugala.'**
+  /// **'Quedaste en postura Vacía, donde las patadas cuestan 1 menos: Patada látigo ahora es gratis. Jugala.'**
   String get tutKick;
 
   /// No description provided for @tutForms.
   ///
   /// In es, this message translates to:
-  /// **'Puño en arco y Patada de latigazo son los dos primeros pasos del Pequeño Puño Rojo. Si completás una forma en orden, se desata un golpe grande. Las defensas no la interrumpen.'**
+  /// **'Puñetazo a fondo y Patada látigo son los dos primeros pasos del Pequeño Puño Rojo. Si completás una forma en orden, se desata un golpe grande. Las defensas no la interrumpen.'**
   String get tutForms;
 
   /// No description provided for @tutEndTurn.
@@ -1423,7 +1422,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStrike7.
   ///
   /// In es, this message translates to:
-  /// **'Tocá Puño en caballo UNA sola vez.'**
+  /// **'Tocá Puñetazo firme UNA sola vez.'**
   String get lesStrike7;
 
   /// No description provided for @lesStrike8.
@@ -1441,19 +1440,19 @@ abstract class AppLocalizations {
   /// No description provided for @lesStrike10.
   ///
   /// In es, this message translates to:
-  /// **'Ahora Empuje de palma: hace poco daño pero le saca mucha Estructura. Tocala dos veces.'**
+  /// **'Ahora Empujón de palma: hace poco daño pero le saca mucha Estructura. Tocala dos veces.'**
   String get lesStrike10;
 
   /// No description provided for @lesStrike11.
   ///
   /// In es, this message translates to:
-  /// **'Te queda 1 de Aliento: jugá el otro Puño en caballo.'**
+  /// **'Te queda 1 de Aliento: jugá el otro Puñetazo firme.'**
   String get lesStrike11;
 
   /// No description provided for @lesStrike12.
   ///
   /// In es, this message translates to:
-  /// **'Te quedaste sin Aliento. Las cartas que no podés pagar se ven apagadas: Patada de latigazo cuesta 2 en postura Caballo. Las que no jugaste se descartan al terminar el turno.'**
+  /// **'Te quedaste sin Aliento. Las cartas que no podés pagar se ven apagadas: Patada látigo cuesta 2 en postura Caballo. Las que no jugaste se descartan al terminar el turno.'**
   String get lesStrike12;
 
   /// No description provided for @lesStrike13.
@@ -1513,7 +1512,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesDefend5.
   ///
   /// In es, this message translates to:
-  /// **'Con el Aliento que te queda, pegale: Puño en caballo.'**
+  /// **'Con el Aliento que te queda, pegale: Puñetazo firme.'**
   String get lesDefend5;
 
   /// No description provided for @lesDefend6.
@@ -1543,7 +1542,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesDefend10.
   ///
   /// In es, this message translates to:
-  /// **'Jugá Palma que presiona igual, para ver qué pasa con la altura equivocada.'**
+  /// **'Jugá Bloqueo bajo igual, para ver qué pasa con la altura equivocada.'**
   String get lesDefend10;
 
   /// No description provided for @lesDefend11.
@@ -1567,7 +1566,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesDefend14.
   ///
   /// In es, this message translates to:
-  /// **'Ahora viene BAJO (↓) y tenés Palma que presiona. Defendete bien y rematalo.'**
+  /// **'Ahora viene BAJO (↓) y tenés Bloqueo bajo. Defendete bien y rematalo.'**
   String get lesDefend14;
 
   /// No description provided for @lesStances1.
@@ -1579,13 +1578,13 @@ abstract class AppLocalizations {
   /// No description provided for @lesStances2.
   ///
   /// In es, this message translates to:
-  /// **'Tocá Puño en arco una vez y mirá la vista previa.'**
+  /// **'Tocá Puñetazo a fondo una vez y mirá la vista previa.'**
   String get lesStances2;
 
   /// No description provided for @lesStances3.
   ///
   /// In es, this message translates to:
-  /// **'La carta dice 6 de daño, pero la vista previa dice 9: primero te lleva a postura Arco, y en Arco los puños pegan +3. Las cartas con nombre de postura te cambian ANTES de pegar. Jugala.'**
+  /// **'La carta dice 6 de daño, pero la vista previa dice 9: primero te lleva a postura Arco, y en Arco los puños pegan +3. Las cartas que abajo dicen → y una postura te cambian ANTES de pegar. Jugala.'**
   String get lesStances3;
 
   /// No description provided for @lesStances4.
@@ -1603,7 +1602,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStances6.
   ///
   /// In es, this message translates to:
-  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada de latigazo ahora cuesta 0 y hace 7. Jugala.'**
+  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.'**
   String get lesStances6;
 
   /// No description provided for @lesStances7.
@@ -1627,7 +1626,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStructure2.
   ///
   /// In es, this message translates to:
-  /// **'Empuje de palma casi no hace daño, pero saca 4 de Estructura. Jugalo.'**
+  /// **'Empujón de palma casi no hace daño, pero saca 4 de Estructura. Jugalo.'**
   String get lesStructure2;
 
   /// No description provided for @lesStructure3.
@@ -1645,7 +1644,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStructure5.
   ///
   /// In es, this message translates to:
-  /// **'Aprovechá: Puño en caballo. En la vista previa el daño ya sale doble.'**
+  /// **'Aprovechá: Puñetazo firme. En la vista previa el daño ya sale doble.'**
   String get lesStructure5;
 
   /// No description provided for @lesStructure6.
@@ -1681,19 +1680,19 @@ abstract class AppLocalizations {
   /// No description provided for @lesForms1.
   ///
   /// In es, this message translates to:
-  /// **'Una forma (套路) es una secuencia fija de cartas. Si las jugás en orden, al completar el último paso se suma un golpe extra. Esta es el Pequeño Puño Rojo: Puño en arco → Patada de latigazo → Bloquear y golpear → Mostrar la palma.'**
+  /// **'Una forma (套路) es una secuencia fija de cartas. Si las jugás en orden, al completar el último paso se suma un golpe extra. Esta es el Pequeño Puño Rojo: Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás.'**
   String get lesForms1;
 
   /// No description provided for @lesForms2.
   ///
   /// In es, this message translates to:
-  /// **'Primer paso: Puño en arco.'**
+  /// **'Primer paso: Puñetazo a fondo.'**
   String get lesForms2;
 
   /// No description provided for @lesForms3.
   ///
   /// In es, this message translates to:
-  /// **'Segundo paso: Patada de latigazo.'**
+  /// **'Segundo paso: Patada látigo.'**
   String get lesForms3;
 
   /// No description provided for @lesForms4.
@@ -1705,7 +1704,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesForms5.
   ///
   /// In es, this message translates to:
-  /// **'Tocá Empuje de palma UNA vez, sin jugarla.'**
+  /// **'Tocá Empujón de palma UNA vez, sin jugarla.'**
   String get lesForms5;
 
   /// No description provided for @lesForms6.
@@ -1723,19 +1722,19 @@ abstract class AppLocalizations {
   /// No description provided for @lesForms8.
   ///
   /// In es, this message translates to:
-  /// **'Tercer paso: Bloquear y golpear, una defensa que además pega.'**
+  /// **'Tercer paso: Bloqueo y contragolpe, una defensa que además pega.'**
   String get lesForms8;
 
   /// No description provided for @lesForms9.
   ///
   /// In es, this message translates to:
-  /// **'Falta Mostrar la palma y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.'**
+  /// **'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.'**
   String get lesForms9;
 
   /// No description provided for @lesForms10.
   ///
   /// In es, this message translates to:
-  /// **'¡Ahí está! Último paso: Mostrar la palma.'**
+  /// **'¡Ahí está! Último paso: Paso atrás.'**
   String get lesForms10;
 
   /// No description provided for @lesForms11.
@@ -1823,8 +1822,7 @@ abstract class AppLocalizations {
   String get lesClimbSlide6;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -1833,24 +1831,24 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['es'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'es':
-      return AppLocalizationsEs();
+    case 'es': return AppLocalizationsEs();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

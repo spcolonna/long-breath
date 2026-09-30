@@ -1898,13 +1898,24 @@ class _HandArea extends ConsumerStatefulWidget {
 
 /// Carta que sale de la mano: vuela a su blanco o cae al descarte.
 class _Leaving {
-  _Leaving(this.id, this.card, this.pos, this.angle, this.width, this.target);
+  _Leaving(
+    this.id,
+    this.card,
+    this.pos,
+    this.angle,
+    this.width,
+    this.target, {
+    this.scale = 1,
+  });
   final int id;
   final CombatCard card;
   final Offset pos;
   final double angle;
   final double width;
   final Offset? target;
+
+  /// Escala con la que arranca (la jugada sale agrandada).
+  final double scale;
 }
 
 /// Posición de cada carta en el abanico.
@@ -1926,7 +1937,13 @@ class _Fan {
   double left(int i) => left0 + step * i;
   double angle(int i) => n <= 1 ? 0.0 : (i - _mid) * 0.05;
   double top(int i, bool isSelected) =>
-      16 + (isSelected ? -22.0 : (i - _mid).abs() * 3);
+      16 + (isSelected ? -10.0 : (i - _mid).abs() * 3);
+
+  /// Aumento de la carta seleccionada.
+  static const zoom = 1.5;
+
+  /// Desde dónde crece la carta [i]: los extremos, hacia adentro.
+  double growX(int i) => n <= 1 ? 0.0 : ((i - _mid) / _mid).clamp(-1.0, 1.0);
 }
 
 class _HandAreaState extends ConsumerState<_HandArea> {
@@ -1950,10 +1967,17 @@ class _HandAreaState extends ConsumerState<_HandArea> {
         _Leaving(
           _leaveId++,
           c,
-          Offset(fan.left(i), fan.top(i, played)),
+          // La jugada estaba agrandada desde abajo: se arranca con su mismo
+          // centro visual, escalando desde el centro.
+          Offset(fan.left(i), fan.top(i, played)) +
+              (played
+                  ? Offset(-fan.growX(i) * fan.w / 2, -fan.w * 0.75) *
+                        (_Fan.zoom - 1)
+                  : Offset.zero),
           played ? 0 : fan.angle(i),
           fan.w,
           played ? _targetFor(c, fan.w) : null,
+          scale: played ? _Fan.zoom : 1,
         ),
       );
     }
@@ -1991,7 +2015,13 @@ class _HandAreaState extends ConsumerState<_HandArea> {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              for (var i = 0; i < hand.length; i++)
+              // La seleccionada va última para quedar por encima de las demás.
+              for (final i in [
+                for (var i = 0; i < hand.length; i++)
+                  if (hand[i].uid != widget.view.selected) i,
+                for (var i = 0; i < hand.length; i++)
+                  if (hand[i].uid == widget.view.selected) i,
+              ])
                 _positioned(
                   context,
                   i,
@@ -2036,36 +2066,39 @@ class _HandAreaState extends ConsumerState<_HandArea> {
       curve: Curves.easeOutBack,
       left: left,
       top: fan.top(i, selected),
-      child: TutorialAnchor(
-        id: 'card:${c.cardId}',
-        child: GestureDetector(
-          onTap: () {
-            if (selected && !free && !p.playable) {
-              // Segundo toque sobre una carta que no se puede jugar: "no".
-              HapticFeedback.heavyImpact();
-              ref.read(audioProvider).play(Sfx.cardDeny);
-              setState(() {
-                _denyUid = c.uid;
-                _denyKey++;
-              });
-            } else {
-              HapticFeedback.selectionClick();
-              ref.read(audioProvider).play(Sfx.cardSelect);
-            }
-            ref.read(combatControllerProvider.notifier).tapCard(c.uid);
-          },
-          child: _DealIn(
-            delayMs: dealDelay,
-            from: Offset(-left - fan.w, 90),
-            child: Shake(
-              trigger: _denyUid == c.uid ? _denyKey : 0,
-              strength: 7,
-              child: AnimatedScale(
-                scale: selected ? 1.07 : 1,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeOutBack,
-                child: Transform.rotate(
-                  angle: selected ? 0 : fan.angle(i),
+      child: _DealIn(
+        delayMs: dealDelay,
+        from: Offset(-left - fan.w, 90),
+        child: Shake(
+          trigger: _denyUid == c.uid ? _denyKey : 0,
+          strength: 7,
+          // Seleccionada crece desde abajo para leerla bien; en los bordes
+          // crece hacia adentro para no salirse de la pantalla.
+          child: AnimatedScale(
+            scale: selected ? _Fan.zoom : 1,
+            alignment: Alignment(fan.growX(i), 1),
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutBack,
+            child: Transform.rotate(
+              angle: selected ? 0 : fan.angle(i),
+              child: TutorialAnchor(
+                id: 'card:${c.cardId}',
+                child: GestureDetector(
+                  onTap: () {
+                    if (selected && !free && !p.playable) {
+                      // Segundo toque sobre una carta que no se puede jugar: "no".
+                      HapticFeedback.heavyImpact();
+                      ref.read(audioProvider).play(Sfx.cardDeny);
+                      setState(() {
+                        _denyUid = c.uid;
+                        _denyKey++;
+                      });
+                    } else {
+                      HapticFeedback.selectionClick();
+                      ref.read(audioProvider).play(Sfx.cardSelect);
+                    }
+                    ref.read(combatControllerProvider.notifier).tapCard(c.uid);
+                  },
                   child: CardWidget(
                     def: def,
                     upgrades: c.upgrades,
@@ -2190,13 +2223,13 @@ class _LeaveCardState extends State<_LeaveCard>
           final k = Curves.easeInCubic.transform(t);
           pos = Offset.lerp(l.pos, l.target!, k)!;
           angle = l.angle + 0.6 * k;
-          scale = 1 - 0.55 * k;
+          scale = l.scale - (l.scale - 0.45) * k;
           opacity = t < 0.8 ? 1 : (1 - t) / 0.2;
         } else {
           final k = Curves.easeIn.transform(t);
           pos = l.pos + Offset(50 * k, 150 * k);
           angle = l.angle + 0.5 * k;
-          scale = 1 - 0.2 * k;
+          scale = l.scale - (l.scale - 0.8) * k;
           opacity = 1 - k;
         }
         return Positioned(
