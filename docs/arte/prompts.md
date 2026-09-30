@@ -36,7 +36,7 @@ Son las dos imágenes que el código ya busca. Si no existen, se usa una silueta
 
 ### Enemigo genérico
 
-**Destino:** `assets/art/enemies/placeholder.png`, PNG cuadrado (1024×1024) con fondo transparente.
+**Destino:** `assets/art/enemies/placeholder.png`, vertical 2:3 (1024×1536) con fondo transparente.
 
 Se usa para todos los enemigos hasta que cada uno tenga su imagen (`assets/art/enemies/<id>.png`). El juego le agrega un aura del color del rango (jade común, violeta élite, bermellón jefe), por eso la figura usa colores neutros.
 
@@ -67,7 +67,7 @@ No hace falta video: el juego ya anima encima (héroe, enemigo, números). Si m�
 
 ### Muñeco de madera (tutorial)
 
-**Destino:** `assets/art/enemies/dummy.png`, cuadrado (1024×1024) y transparente. Mientras no exista, el tutorial usa el enemigo genérico.
+**Destino:** `assets/art/enemies/dummy.png`, 2:3 y transparente. Ya integrado.
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: a
@@ -139,20 +139,118 @@ character, lower half soft and low-contrast so cards remain readable. [ESTILO]
 
 ## 3. Enemigos
 
-**Destino:** `assets/art/enemies/<id>.png`, cuadrado y transparente, figura completa. Cada enemigo tiene un color dominante que coincide con su nodo en el mapa.
+**Destino:** `assets/art/enemies/<id>.png`, vertical 2:3 (1024×1536) con fondo transparente, figura completa y centrada, con los pies cerca del borde inferior (igual que el muñeco y el placeholder). El juego toma cada archivo solo, sin tocar código; mientras falte, usa `placeholder.png`.
 
-| id | Nombre | Prompt (parte variable) |
-|---|---|---|
-| `bat` | Eco de Murciélago | `a mischievous spirit bat made of echoing sound rings, jade and mint wings, big expressive eyes, mid-screech pose` |
-| `disciple` | Discípulo Perdido | `a young rival martial artist in a torn jade training robe, determined but lost expression, fighting stance` |
-| `golem` | Gólem de Estalactita | `a sturdy golem of pale crystal stone with turquoise veins, immovable wide stance, moss on shoulders` |
-| `salamander` | Salamandra de la Grieta | `a nimble fire salamander with coral and gold scales, flickering tail flame, crouched to leap` |
-| `monk` | Monje sin Rostro | `an elite monk with a smooth blank porcelain mask, violet and gold robes, prayer beads, serene menace` |
-| `dragon` | Eco del Dragón | `a colossal translucent dragon spirit formed of golden breath and clouds, vermilion eyes, coiling, awe-inspiring but colorful` |
+El juego ya les agrega un aura del color del rango (jade común, violeta élite, bermellón jefe), así que no hace falta pintarla.
+
+Cada prompt ya trae el bloque de estilo al final: se copia entero.
+
+### Eco de Murciélago (`bat`, común)
+
+Ataca dos veces y chilla para hacerte descartar.
 
 ```
-Game enemy character portrait, full body, centered, transparent background: [PARTE VARIABLE].
-Readable silhouette at small size. [ESTILO]
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+mischievous mountain spirit bat the size of a child, wings spread wide, the wing membranes
+made of rippling jade and mint sound rings like echoes on water, big round golden eyes,
+small fangs, mouth open mid-screech with visible curved sound waves, hovering above the
+ground with its feet tucked, playful but annoying, clear wide silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Salamandra de la Grieta (`salamander`, común)
+
+Guardia que absorbe daño; se rompe con palmas y empujes.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+nimble fire salamander standing on its hind legs like a fighter, coral and gold scales, a
+flickering orange flame on the tip of its tail, a thick glowing armor plate on its chest
+and forearms like a natural shield, low crouch ready to leap, sly grin, sparks around its
+feet, compact readable silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Gólem de Estalactita (`golem`, común)
+
+Inamovible: hay que desequilibrarlo.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+heavy mountain golem built from pale stacked crystal stone with glowing turquoise veins,
+very wide immovable horse stance, huge fists resting low, moss and tiny white flowers on its
+shoulders, a calm ancient face carved in the rock, a faint crack on its chest where it can be
+broken, massive blocky silhouette that fills the frame.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Discípulo Perdido (`disciple`, común)
+
+Castiga repetir la misma postura.
+
+```
+Game enemy character, full body, facing the viewer in a fighting stance, centered,
+transparent background: a young rival kung fu disciple who got lost on the mountain, torn
+and patched jade training robe, messy tied-up hair with a loose headband, bandaged hands
+raised in guard, determined but stubborn expression, one foot forward ready to copy your
+moves, human proportions similar to the hero, clean silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Monje sin Rostro (`monk`, élite)
+
+Interrumpe tus formas si no lo desviás.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: an
+elite wandering monk wearing a smooth blank white porcelain mask with no features, flowing
+violet and gold layered robes, long prayer beads wrapped around one raised open palm, the
+other hand hidden in the sleeve, a thin gold halo ring floating behind the head, perfectly
+still and serene menace, tall elegant silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Eco del Dragón (`dragon`, jefe)
+
+Jefe final; en fase 2 lanza el Aliento del Dragón.
+
+```
+Game boss character, facing the viewer, centered, transparent background: a colossal
+translucent dragon spirit formed of swirling golden breath and white clouds, head and
+front claws coming toward the viewer, the long body coiling up and behind in an S shape,
+vermilion glowing eyes, flowing jade whiskers and mane, small pearls of light around it,
+awe-inspiring and majestic but colorful and bright, fills the frame, iconic silhouette.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
 ```
 
 ## 4. Cartas

@@ -38,7 +38,7 @@ void main() {
     await settle();
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
-    expect(find.text('Eco de Murciélago'), findsOneWidget);
+    expect(find.text('Eco de Murciélago'), findsWidgets);
     expect(find.text('Puño en arco'), findsWidgets);
 
     // Saltamos al santuario: ofrece 2 caminos y el elegido queda en la run.

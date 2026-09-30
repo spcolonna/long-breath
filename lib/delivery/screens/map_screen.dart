@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,8 +32,9 @@ class MapScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
-            style: const TextStyle(fontSize: 18)),
+          '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
+          style: const TextStyle(fontSize: 18),
+        ),
         actions: [
           IconButton(
             tooltip: t.abandon,
@@ -48,41 +52,47 @@ class MapScreen extends ConsumerWidget {
           children: [
             _RunHeader(run: run),
             Expanded(
-              child: LayoutBuilder(builder: (context, box) {
-                final pos = <String, Offset>{};
-                final rowH = box.maxHeight / rows.length;
-                for (var r = 0; r < rows.length; r++) {
-                  final row = rows[r];
-                  for (var i = 0; i < row.length; i++) {
-                    // La run se juega de abajo hacia arriba.
-                    pos[row[i].id] = Offset(
-                      box.maxWidth * (i + 1) / (row.length + 1),
-                      box.maxHeight - rowH * (r + 0.5),
-                    );
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  final pos = <String, Offset>{};
+                  final rowH = box.maxHeight / rows.length;
+                  for (var r = 0; r < rows.length; r++) {
+                    final row = rows[r];
+                    for (var i = 0; i < row.length; i++) {
+                      // La run se juega de abajo hacia arriba.
+                      pos[row[i].id] = Offset(
+                        box.maxWidth * (i + 1) / (row.length + 1),
+                        box.maxHeight - rowH * (r + 0.5),
+                      );
+                    }
                   }
-                }
-                return Stack(
-                  children: [
-                    Positioned.fill(
-                      child: CustomPaint(
-                        painter: _PathPainter(data.balance.runNodes, pos, run),
-                      ),
-                    ),
-                    for (final n in data.balance.runNodes)
-                      Positioned(
-                        left: pos[n.id]!.dx - 60,
-                        top: pos[n.id]!.dy - 36,
-                        child: _NodeButton(
-                          node: n,
-                          data: data,
-                          visited: run.visited.contains(n.id),
-                          available: available.contains(n.id),
-                          onTap: () => _enter(context, ref, n),
+                  return Stack(
+                    children: [
+                      Positioned.fill(
+                        child: CustomPaint(
+                          painter: _PathPainter(
+                            data.balance.runNodes,
+                            pos,
+                            run,
+                          ),
                         ),
                       ),
-                  ],
-                );
-              }),
+                      for (final n in data.balance.runNodes)
+                        Positioned(
+                          left: pos[n.id]!.dx - 60,
+                          top: pos[n.id]!.dy - 36,
+                          child: _NodeButton(
+                            node: n,
+                            data: data,
+                            visited: run.visited.contains(n.id),
+                            available: available.contains(n.id),
+                            onTap: () => _enter(context, ref, n),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -120,7 +130,10 @@ class MapScreen extends ConsumerWidget {
     final maxD = depth.values.fold(0, (a, b) => a > b ? a : b);
     return [
       for (var d = 0; d <= maxD; d++)
-        [for (final n in b.runNodes) if (depth[n.id] == d) n],
+        [
+          for (final n in b.runNodes)
+            if (depth[n.id] == d) n,
+        ],
     ];
   }
 }
@@ -187,34 +200,51 @@ class _NodeButton extends ConsumerWidget {
     final color = available
         ? Palette.gold
         : visited
-            ? Palette.textDim
-            : accent;
+        ? Palette.textDim
+        : accent;
     return GestureDetector(
-      onTap: available ? onTap : null,
+      onTap: available
+          ? () {
+              HapticFeedback.mediumImpact();
+              onTap();
+            }
+          : null,
       child: SizedBox(
         width: 120,
         height: 84,
         child: Column(
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: 48,
-              height: 48,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: available
-                    ? accent
-                    : (visited ? Palette.bgAlt : Palette.surface),
-                border: Border.all(color: color, width: available ? 3 : 1.5),
-                boxShadow: available
-                    ? [BoxShadow(color: Palette.gold.withValues(alpha: 0.5), blurRadius: 12)]
-                    : null,
+            _PulseRing(
+              active: available,
+              color: accent,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: available
+                      ? accent
+                      : (visited ? Palette.bgAlt : Palette.surface),
+                  border: Border.all(color: color, width: available ? 3 : 1.5),
+                  boxShadow: available
+                      ? [
+                          BoxShadow(
+                            color: Palette.gold.withValues(alpha: 0.5),
+                            blurRadius: 12,
+                          ),
+                        ]
+                      : null,
+                ),
+                child: visited
+                    ? const Icon(Icons.check, color: Palette.textDim)
+                    : Icon(
+                        icon,
+                        size: 24,
+                        color: available ? Palette.onColor : accent,
+                      ),
               ),
-              child: visited
-                  ? const Icon(Icons.check, color: Palette.textDim)
-                  : Icon(icon,
-                      size: 24, color: available ? Palette.onColor : accent),
             ),
             const SizedBox(height: 2),
             Container(
@@ -231,14 +261,98 @@ class _NodeButton extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontSize: 11,
-                    height: 1.1,
-                    color: available ? Palette.text : Palette.textDim),
+                  fontSize: 11,
+                  height: 1.1,
+                  color: available ? Palette.text : Palette.textDim,
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Los nodos a los que se puede ir laten y sueltan un anillo, para que el
+/// siguiente paso se vea sin buscarlo.
+class _PulseRing extends StatefulWidget {
+  const _PulseRing({
+    required this.active,
+    required this.color,
+    required this.child,
+  });
+
+  final bool active;
+  final Color color;
+  final Widget child;
+
+  @override
+  State<_PulseRing> createState() => _PulseRingState();
+}
+
+class _PulseRingState extends State<_PulseRing>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c;
+
+  @override
+  void initState() {
+    super.initState();
+    _c = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1600),
+    );
+    if (widget.active) _c.repeat();
+  }
+
+  @override
+  void didUpdateWidget(_PulseRing old) {
+    super.didUpdateWidget(old);
+    if (widget.active && !_c.isAnimating) _c.repeat();
+    if (!widget.active && _c.isAnimating) _c.stop();
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.active) return widget.child;
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (_, child) {
+        final t = _c.value;
+        final beat = 1 + 0.06 * math.sin(math.pi * math.min(1, t * 2.5));
+        return Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            // El anillo no ocupa lugar: se expande por fuera del nodo.
+            Positioned.fill(
+              child: OverflowBox(
+                maxWidth: 80,
+                maxHeight: 80,
+                child: Container(
+                  width: 48 + 30 * t,
+                  height: 48 + 30 * t,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: widget.color.withValues(alpha: 0.7 * (1 - t)),
+                      width: 3 * (1 - t) + 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Transform.scale(scale: beat, child: child),
+          ],
+        );
+      },
+      child: widget.child,
     );
   }
 }
@@ -258,8 +372,11 @@ class _PathPainter extends CustomPainter {
         final paint = Paint()
           ..color = walked ? Palette.gold : Palette.line
           ..strokeWidth = walked ? 3 : 2;
-        canvas.drawLine(pos[n.id]! + const Offset(0, -12),
-            pos[next]! + const Offset(0, -12), paint);
+        canvas.drawLine(
+          pos[n.id]! + const Offset(0, -12),
+          pos[next]! + const Offset(0, -12),
+          paint,
+        );
       }
     }
   }

@@ -35,7 +35,7 @@ void main() {
     await tester.tap(find.text('Empezar entrenamiento'));
     await settle();
 
-    expect(find.text('Muñeco de madera'), findsOneWidget);
+    expect(find.text('Muñeco de madera'), findsWidgets);
     expect(find.textContaining('Bienvenido al patio'), findsOneWidget);
     for (var i = 0; i < 5; i++) {
       await next();
@@ -64,6 +64,8 @@ void main() {
 
     await play('Puño en arco');
     await play('Patada de latigazo');
+    // La guía espera a que termine la celebración de la victoria.
+    await settle(2);
     expect(find.textContaining('¡Bien hecho!'), findsOneWidget);
 
     await tester.tap(find.text('Empezar la subida'));

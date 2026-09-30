@@ -837,6 +837,36 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.'**
   String get tutDone;
+
+  /// No description provided for @blocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Bloqueado'**
+  String get blocked;
+
+  /// No description provided for @yourTurn.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu turno'**
+  String get yourTurn;
+
+  /// No description provided for @endSummaryWon.
+  ///
+  /// In es, this message translates to:
+  /// **'{turns, plural, =1{En 1 turno} other{En {turns} turnos}} · Vida {hp}/{maxHp}'**
+  String endSummaryWon(int turns, int hp, int maxHp);
+
+  /// No description provided for @endSummaryLost.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} resistió con {hp} de Vida'**
+  String endSummaryLost(String name, int hp);
+
+  /// No description provided for @fightStart.
+  ///
+  /// In es, this message translates to:
+  /// **'¡En guardia!'**
+  String get fightStart;
 }
 
 class _AppLocalizationsDelegate

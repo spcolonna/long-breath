@@ -447,4 +447,29 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get tutDone =>
       '¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.';
+
+  @override
+  String get blocked => 'Bloqueado';
+
+  @override
+  String get yourTurn => 'Tu turno';
+
+  @override
+  String endSummaryWon(int turns, int hp, int maxHp) {
+    String _temp0 = intl.Intl.pluralLogic(
+      turns,
+      locale: localeName,
+      other: 'En $turns turnos',
+      one: 'En 1 turno',
+    );
+    return '$_temp0 · Vida $hp/$maxHp';
+  }
+
+  @override
+  String endSummaryLost(String name, int hp) {
+    return '$name resistió con $hp de Vida';
+  }
+
+  @override
+  String get fightStart => '¡En guardia!';
 }

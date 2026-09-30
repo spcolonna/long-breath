@@ -303,5 +303,33 @@
   "tutDeflect": "¡Desvío! No recibiste daño, el muñeco perdió Estructura y quedó Desequilibrado: pierde su acción y recibe el doble. Además, el desvío te da Aliento extra para este turno.",
   "tutActions": "Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.",
   "tutFree": "Ahora rematalo vos. Mientras esté Desequilibrado, cada golpe cuenta doble.",
-  "tutDone": "¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar."
+  "tutDone": "¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.",
+  "blocked": "Bloqueado",
+  "yourTurn": "Tu turno",
+  "endSummaryWon": "{turns, plural, =1{En 1 turno} other{En {turns} turnos}} · Vida {hp}/{maxHp}",
+  "@endSummaryWon": {
+    "placeholders": {
+      "turns": {
+        "type": "int"
+      },
+      "hp": {
+        "type": "int"
+      },
+      "maxHp": {
+        "type": "int"
+      }
+    }
+  },
+  "endSummaryLost": "{name} resistió con {hp} de Vida",
+  "@endSummaryLost": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "hp": {
+        "type": "int"
+      }
+    }
+  },
+  "fightStart": "¡En guardia!"
 }
