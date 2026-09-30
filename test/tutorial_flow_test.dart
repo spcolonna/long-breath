@@ -52,22 +52,22 @@ void main() {
     for (var i = 0; i < 6; i++) {
       await next();
     }
-    expect(find.textContaining('Tocá Puño en caballo UNA'), findsOneWidget);
+    expect(find.textContaining('Tocá Puñetazo firme UNA'), findsOneWidget);
 
     // Solo se puede tocar la zona resaltada.
     await tester.tap(find.text('Terminar turno'));
     await settle();
-    expect(find.textContaining('Tocá Puño en caballo UNA'), findsOneWidget);
+    expect(find.textContaining('Tocá Puñetazo firme UNA'), findsOneWidget);
 
-    await select('Puño en caballo');
+    await select('Puñetazo firme');
     expect(find.textContaining('Esta es la vista previa'), findsOneWidget);
-    await tester.tap(find.text('Puño en caballo').last);
+    await tester.tap(find.text('Puñetazo firme').last);
     await settle(3);
     expect(find.textContaining('Le sacaste 7 de Vida'), findsOneWidget);
     await next();
-    await play('Empuje de palma');
-    expect(find.textContaining('jugá el otro Puño'), findsOneWidget);
-    await play('Puño en caballo');
+    await play('Empujón de palma');
+    expect(find.textContaining('jugá el otro Puñetazo'), findsOneWidget);
+    await play('Puñetazo firme');
     expect(find.textContaining('Te quedaste sin Aliento'), findsOneWidget);
     await next();
     expect(find.textContaining('mirá este globo'), findsOneWidget);
@@ -80,8 +80,8 @@ void main() {
     await next();
     await next('¡Vamos!');
 
-    await play('Puño en caballo');
-    await play('Puño en caballo');
+    await play('Puñetazo firme');
+    await play('Puñetazo firme');
     await settle(3);
     expect(find.text('Siguiente lección'), findsOneWidget);
     expect(find.textContaining('Aprendiste a leer una carta'), findsOneWidget);

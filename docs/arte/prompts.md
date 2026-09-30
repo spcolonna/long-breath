@@ -416,7 +416,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 **Ilustración por carta.** Una por carta, cuadrada, mostrando el movimiento. El color de la estela es el del tipo de la carta.
 
-#### Puño en arco 弓步冲拳
+#### Puñetazo a fondo 弓步冲拳
 
 **Destino:** `assets/art/cards/gongbu_chongquan.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -430,7 +430,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Puño en caballo 马步冲拳
+#### Puñetazo firme 马步冲拳
 
 **Destino:** `assets/art/cards/mabu_chongquan.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -444,7 +444,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Patada de latigazo 弹腿
+#### Patada látigo 弹腿
 
 **Destino:** `assets/art/cards/tan_tui.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -458,7 +458,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Empuje de palma 推掌
+#### Empujón de palma 推掌
 
 **Destino:** `assets/art/cards/tui_zhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -472,7 +472,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Bloquear y golpear 马步架打
+#### Bloqueo y contragolpe 马步架打
 
 **Destino:** `assets/art/cards/mabu_jiada.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -486,7 +486,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Mostrar la palma 虚步亮掌
+#### Paso atrás 虚步亮掌
 
 **Destino:** `assets/art/cards/xubu_liangzhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -514,7 +514,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Palma que presiona 按掌
+#### Bloqueo bajo 按掌
 
 **Destino:** `assets/art/cards/an_zhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -556,7 +556,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Empuje en arco 弓步推掌
+#### Empujón a fondo 弓步推掌
 
 **Destino:** `assets/art/cards/gongbu_tuizhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -570,7 +570,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Puño que corta 劈拳
+#### Puño martillo 劈拳
 
 **Destino:** `assets/art/cards/pi_quan.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -598,7 +598,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Rodilla arriba 提膝
+#### Rodilla escudo 提膝
 
 **Destino:** `assets/art/cards/ti_xi.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -612,7 +612,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Regular la respiración 调息
+#### Recuperar el aliento 调息
 
 **Destino:** `assets/art/cards/tiao_xi.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -626,7 +626,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Saludo 抱拳礼
+#### Saludo marcial 抱拳礼
 
 **Destino:** `assets/art/cards/baoquan_li.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -668,7 +668,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### El tigre se cubre 虎抱头
+#### Guardia del tigre 虎抱头
 
 **Destino:** `assets/art/cards/hu_bao_tou.png`, cuadrada (1024×1024), fondo transparente.
 

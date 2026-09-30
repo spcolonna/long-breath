@@ -62,8 +62,8 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 La primera vez que abrís el juego, el botón principal es **Empezar entrenamiento**: un combate guiado en el patio de la escuela contra el **muñeco de madera** (木人桩 Mù Rén Zhuāng). El maestro resalta cada parte de la pantalla y, cuando pide una jugada, solo deja tocar lo que corresponde:
 
 1. Qué es el globo de intención del enemigo, su Vida y su Estructura, tus barras, tu mano y el Aliento.
-2. Jugar **Puño en arco**: un toque para ver la vista previa y otro para jugarla. La carta te mueve a postura Arco.
-3. Defenderte con **Mostrar la palma** (Guardia alta contra un ataque alto) y jugar **Patada de latigazo** gratis en postura Vacía, que además avanza el Pequeño Puño Rojo.
+2. Jugar **Puñetazo a fondo**: un toque para ver la vista previa y otro para jugarla. La carta te mueve a postura Arco.
+3. Defenderte con **Paso atrás** (Guardia alta contra un ataque alto) y jugar **Patada látigo** gratis en postura Vacía, que además avanza el Pequeño Puño Rojo.
 4. Terminar el turno: desviás el golpe y el muñeco queda **Desequilibrado**.
 5. Rematarlo libremente con el daño doble. Al ganar, el maestro resume cómo sigue la montaña y ofrece **Empezar la subida**.
 
@@ -137,9 +137,9 @@ Un toque en una carta la selecciona y muestra la vista previa con los números f
 
 Hay cinco tipos: **Puño**, **Palma**, **Patada**, **Defensa** y **Técnica**. Cada carta muestra el nombre traducido, el nombre chino como marca de agua y el pinyin.
 
-- Una carta con postura en el nombre (por ejemplo *Puño en arco*) **primero te mueve** a esa postura y después aplica su efecto, ya con el bonus de la postura nueva.
+- Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero te mueve** a esa postura y después aplica su efecto, ya con el bonus de la postura nueva.
 - **Agotar:** la carta desaparece por el resto del combate al jugarla.
-- **Saludo** (Bàoquán Lǐ) solo se puede jugar en el primer turno.
+- **Saludo marcial** (Bàoquán Lǐ) solo se puede jugar en el primer turno.
 
 ## Posturas
 
@@ -181,10 +181,10 @@ Una forma es una secuencia fija de cartas. Si la completás en orden, se desata 
 
 | Forma | Pasos | Al completarla |
 |---|---|---|
-| **Pequeño Puño Rojo** 小洪拳 | Puño en arco → Patada de latigazo → Bloquear y golpear → Mostrar la palma | 10 de daño, 5 a Estructura, robás 2 |
-| **Gran Puño Rojo** 大洪拳 | Puño en caballo → Empuje en arco → Patada de talón → Mostrar la palma → Puño en arco | 18 de daño, 8 a Estructura, Guardia 8 media |
+| **Pequeño Puño Rojo** 小洪拳 | Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás | 10 de daño, 5 a Estructura, robás 2 |
+| **Gran Puño Rojo** 大洪拳 | Puñetazo firme → Empujón a fondo → Patada de talón → Paso atrás → Puñetazo a fondo | 18 de daño, 8 a Estructura, Guardia 8 media |
 
-El Gran Puño Rojo necesita dos cartas de recompensa: *Empuje en arco* y *Patada de talón*.
+El Gran Puño Rojo necesita dos cartas de recompensa: *Empujón a fondo* y *Patada de talón*.
 
 ## Enemigos
 
