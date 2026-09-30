@@ -25,12 +25,13 @@ void main() {
 
     await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
     await settle();
-    // La primera vez se propone el entrenamiento.
-    expect(find.text('Empezar entrenamiento'), findsOneWidget);
+    // Menú principal: aprender (marcado la primera vez) o subir.
+    expect(find.text('Aprender a jugar'), findsOneWidget);
+    expect(find.text('Empezá acá'), findsOneWidget);
     // Se empieza como novicio: el camino no se elige en el inicio.
     expect(find.text('Tigre'), findsNothing);
 
-    await tester.tap(find.text('Ya sé jugar: nueva run'));
+    await tester.tap(find.text('La subida'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
 
@@ -40,6 +41,19 @@ void main() {
     expect(find.text('Turno 1'), findsOneWidget);
     expect(find.text('Eco de Murciélago'), findsWidgets);
     expect(find.text('Puño en arco'), findsWidgets);
+
+    // Pausa → volver al menú: la subida queda guardada y se retoma del mapa.
+    await tester.tap(find.byTooltip('Pausa'));
+    await settle();
+    await tester.tap(find.text('Volver al menú'));
+    await settle();
+    expect(find.text('Continuar run'), findsOneWidget);
+    await tester.tap(find.text('Continuar run'));
+    await settle();
+    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
+    await tester.tap(find.text('Eco de Murciélago'));
+    await settle();
+    expect(find.text('Turno 1'), findsOneWidget);
 
     // Saltamos al santuario: ofrece 2 caminos y el elegido queda en la run.
     final context = tester.element(find.byType(CombatScreen));

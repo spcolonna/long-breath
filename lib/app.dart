@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'delivery/providers.dart';
+import 'delivery/screens/climb_lesson_screen.dart';
 import 'delivery/screens/combat_screen.dart';
 import 'delivery/screens/fountain_screen.dart';
 import 'delivery/screens/home_screen.dart';
+import 'delivery/screens/lessons_screen.dart';
 import 'delivery/screens/map_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
@@ -50,6 +52,8 @@ GoRoute _route(String path, Widget screen) => GoRoute(
 final _router = GoRouter(
   routes: [
     _route('/', const HomeScreen()),
+    _route('/lessons', const LessonsScreen()),
+    _route('/lessons/climb', const ClimbLessonScreen()),
     _route('/map', const MapScreen()),
     _route('/combat', const CombatScreen()),
     _route('/reward', const RewardScreen()),

@@ -879,6 +879,948 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Música'**
   String get music;
+
+  /// No description provided for @menuLearn.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprender a jugar'**
+  String get menuLearn;
+
+  /// No description provided for @menuLearnProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'{done} de {total} lecciones'**
+  String menuLearnProgress(int done, int total);
+
+  /// No description provided for @menuStartHere.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezá acá'**
+  String get menuStartHere;
+
+  /// No description provided for @menuClimb.
+  ///
+  /// In es, this message translates to:
+  /// **'La subida'**
+  String get menuClimb;
+
+  /// No description provided for @menuClimbSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Montaña de las Mil Nubes'**
+  String get menuClimbSubtitle;
+
+  /// No description provided for @menuReplaceRunTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Empezar una subida nueva?'**
+  String get menuReplaceRunTitle;
+
+  /// No description provided for @menuReplaceRunBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Tenés una subida guardada. Si empezás otra, se pierde.'**
+  String get menuReplaceRunBody;
+
+  /// No description provided for @menuReplaceRunOk.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezar de nuevo'**
+  String get menuReplaceRunOk;
+
+  /// No description provided for @cancelAction.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancelAction;
+
+  /// No description provided for @lessonsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprender a jugar'**
+  String get lessonsTitle;
+
+  /// No description provided for @lessonsIntro.
+  ///
+  /// In es, this message translates to:
+  /// **'Lecciones cortas con el maestro. Cada una se habilita al terminar la anterior y podés repetirlas cuando quieras.'**
+  String get lessonsIntro;
+
+  /// No description provided for @lessonLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Completá la lección anterior'**
+  String get lessonLocked;
+
+  /// No description provided for @lessonMinutes.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} min'**
+  String lessonMinutes(int n);
+
+  /// No description provided for @lessonNumber.
+  ///
+  /// In es, this message translates to:
+  /// **'Lección {n}'**
+  String lessonNumber(int n);
+
+  /// No description provided for @lessonDoneTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Lección completa'**
+  String get lessonDoneTitle;
+
+  /// No description provided for @lessonNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Siguiente lección'**
+  String get lessonNext;
+
+  /// No description provided for @lessonBackToList.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver a las lecciones'**
+  String get lessonBackToList;
+
+  /// No description provided for @lessonRetry.
+  ///
+  /// In es, this message translates to:
+  /// **'Reintentar'**
+  String get lessonRetry;
+
+  /// No description provided for @lessonLostHint.
+  ///
+  /// In es, this message translates to:
+  /// **'No pasa nada: es práctica. Probá de nuevo.'**
+  String get lessonLostHint;
+
+  /// No description provided for @lessonAllDone.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Terminaste el entrenamiento! Ya podés subir la montaña.'**
+  String get lessonAllDone;
+
+  /// No description provided for @lesStrikeTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu primer golpe'**
+  String get lesStrikeTitle;
+
+  /// No description provided for @lesStrikeBlurb.
+  ///
+  /// In es, this message translates to:
+  /// **'La pantalla, las cartas, el Aliento y cómo atacar.'**
+  String get lesStrikeBlurb;
+
+  /// No description provided for @lesStrikeDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprendiste a leer una carta, a usar tu Aliento y a atacar.'**
+  String get lesStrikeDone;
+
+  /// No description provided for @lesDefendTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El rival avisa'**
+  String get lesDefendTitle;
+
+  /// No description provided for @lesDefendBlurb.
+  ///
+  /// In es, this message translates to:
+  /// **'Leer el globo del rival, la Guardia, las alturas y el desvío.'**
+  String get lesDefendBlurb;
+
+  /// No description provided for @lesDefendDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprendiste a leer al rival y a defenderte a la altura justa.'**
+  String get lesDefendDone;
+
+  /// No description provided for @lesStancesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Posturas'**
+  String get lesStancesTitle;
+
+  /// No description provided for @lesStancesBlurb.
+  ///
+  /// In es, this message translates to:
+  /// **'Caballo, Arco y Vacía, y el Paso en T.'**
+  String get lesStancesBlurb;
+
+  /// No description provided for @lesStancesDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprendiste a usar las posturas a tu favor.'**
+  String get lesStancesDone;
+
+  /// No description provided for @lesStructureTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Estructura'**
+  String get lesStructureTitle;
+
+  /// No description provided for @lesStructureBlurb.
+  ///
+  /// In es, this message translates to:
+  /// **'Desequilibrar al rival y cuidar tu propio equilibrio.'**
+  String get lesStructureBlurb;
+
+  /// No description provided for @lesStructureDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprendiste a desequilibrar al rival para pegarle el doble.'**
+  String get lesStructureDone;
+
+  /// No description provided for @lesFormsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Formas'**
+  String get lesFormsTitle;
+
+  /// No description provided for @lesFormsBlurb.
+  ///
+  /// In es, this message translates to:
+  /// **'Encadenar pasos para un golpe extra, y Respirar.'**
+  String get lesFormsBlurb;
+
+  /// No description provided for @lesFormsDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprendiste a completar una forma y a usar Respirar.'**
+  String get lesFormsDone;
+
+  /// No description provided for @lesClimbTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'La subida'**
+  String get lesClimbTitle;
+
+  /// No description provided for @lesClimbBlurb.
+  ///
+  /// In es, this message translates to:
+  /// **'El mapa, las recompensas, la fuente y los caminos.'**
+  String get lesClimbBlurb;
+
+  /// No description provided for @pauseTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Pausa'**
+  String get pauseTitle;
+
+  /// No description provided for @pauseResume.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir peleando'**
+  String get pauseResume;
+
+  /// No description provided for @pauseHowTo.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo se juega'**
+  String get pauseHowTo;
+
+  /// No description provided for @pauseToMenu.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver al menú'**
+  String get pauseToMenu;
+
+  /// No description provided for @pauseToMenuHint.
+  ///
+  /// In es, this message translates to:
+  /// **'La subida queda guardada: con \"Continuar\" volvés al mapa, antes de este combate.'**
+  String get pauseToMenuHint;
+
+  /// No description provided for @pauseRestartLesson.
+  ///
+  /// In es, this message translates to:
+  /// **'Reiniciar lección'**
+  String get pauseRestartLesson;
+
+  /// No description provided for @pauseExitLesson.
+  ///
+  /// In es, this message translates to:
+  /// **'Salir a las lecciones'**
+  String get pauseExitLesson;
+
+  /// No description provided for @mapHome.
+  ///
+  /// In es, this message translates to:
+  /// **'Menú principal'**
+  String get mapHome;
+
+  /// No description provided for @mapMore.
+  ///
+  /// In es, this message translates to:
+  /// **'Más opciones'**
+  String get mapMore;
+
+  /// No description provided for @abandonConfirmTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Abandonar la subida?'**
+  String get abandonConfirmTitle;
+
+  /// No description provided for @abandonConfirmBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se pierde todo el progreso de esta subida.'**
+  String get abandonConfirmBody;
+
+  /// No description provided for @illCardTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo se lee una carta'**
+  String get illCardTitle;
+
+  /// No description provided for @illCost.
+  ///
+  /// In es, this message translates to:
+  /// **'Costo en Aliento'**
+  String get illCost;
+
+  /// No description provided for @illType.
+  ///
+  /// In es, this message translates to:
+  /// **'Tipo'**
+  String get illType;
+
+  /// No description provided for @illName.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre'**
+  String get illName;
+
+  /// No description provided for @illStatsDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'daño a la Vida'**
+  String get illStatsDamage;
+
+  /// No description provided for @illStatsStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'daño a la Estructura'**
+  String get illStatsStructure;
+
+  /// No description provided for @nodeCombat.
+  ///
+  /// In es, this message translates to:
+  /// **'Combate'**
+  String get nodeCombat;
+
+  /// No description provided for @illStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Postura a la que te lleva'**
+  String get illStance;
+
+  /// No description provided for @illGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardia y su altura'**
+  String get illGuard;
+
+  /// No description provided for @illIntentTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El globo del rival'**
+  String get illIntentTitle;
+
+  /// No description provided for @illIntentAttack.
+  ///
+  /// In es, this message translates to:
+  /// **'Ataque: la flecha es la altura, el número el daño y E el daño a tu Estructura.'**
+  String get illIntentAttack;
+
+  /// No description provided for @illIntentGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'Se cubre: gana Guardia contra tus próximos golpes.'**
+  String get illIntentGuard;
+
+  /// No description provided for @illIntentCharge.
+  ///
+  /// In es, this message translates to:
+  /// **'Carga: junta fuerza, su próximo golpe pega más.'**
+  String get illIntentCharge;
+
+  /// No description provided for @illIntentDiscard.
+  ///
+  /// In es, this message translates to:
+  /// **'Chillido: te hace descartar cartas.'**
+  String get illIntentDiscard;
+
+  /// No description provided for @illHeightsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Alturas'**
+  String get illHeightsTitle;
+
+  /// No description provided for @illHeightsSame.
+  ///
+  /// In es, this message translates to:
+  /// **'Misma altura: la Guardia absorbe todo. Si alcanza, desviás el golpe (化).'**
+  String get illHeightsSame;
+
+  /// No description provided for @illHeightsOther.
+  ///
+  /// In es, this message translates to:
+  /// **'Otra altura: la Guardia absorbe solo la mitad.'**
+  String get illHeightsOther;
+
+  /// No description provided for @illHigh.
+  ///
+  /// In es, this message translates to:
+  /// **'Alto'**
+  String get illHigh;
+
+  /// No description provided for @illMid.
+  ///
+  /// In es, this message translates to:
+  /// **'Medio'**
+  String get illMid;
+
+  /// No description provided for @illLow.
+  ///
+  /// In es, this message translates to:
+  /// **'Bajo'**
+  String get illLow;
+
+  /// No description provided for @illStancesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Posturas'**
+  String get illStancesTitle;
+
+  /// No description provided for @illStanceMabuPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Puños y palmas +2. Recibís la mitad de daño a la Estructura.'**
+  String get illStanceMabuPro;
+
+  /// No description provided for @illStanceMabuCon.
+  ///
+  /// In es, this message translates to:
+  /// **'Las patadas cuestan 1 más.'**
+  String get illStanceMabuCon;
+
+  /// No description provided for @illStanceGongbuPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Puños +3 de daño y +1 de Estructura.'**
+  String get illStanceGongbuPro;
+
+  /// No description provided for @illStanceGongbuCon.
+  ///
+  /// In es, this message translates to:
+  /// **'Recibís 2 más de daño a la Estructura.'**
+  String get illStanceGongbuCon;
+
+  /// No description provided for @illStanceXubuPro.
+  ///
+  /// In es, this message translates to:
+  /// **'Patadas: cuestan 1 menos y pegan +2. Desviar da +1 Aliento extra.'**
+  String get illStanceXubuPro;
+
+  /// No description provided for @illStanceXubuCon.
+  ///
+  /// In es, this message translates to:
+  /// **'Las defensas dan 2 menos de Guardia.'**
+  String get illStanceXubuCon;
+
+  /// No description provided for @illTurnTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Orden de un turno'**
+  String get illTurnTitle;
+
+  /// No description provided for @illTurn1.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu Guardia vuelve a 0, robás cartas y recuperás el Aliento.'**
+  String get illTurn1;
+
+  /// No description provided for @illTurn2.
+  ///
+  /// In es, this message translates to:
+  /// **'Jugás cartas: tocá una para ver qué hace y otra vez para jugarla.'**
+  String get illTurn2;
+
+  /// No description provided for @illTurn3.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminás el turno: las cartas que quedan se descartan.'**
+  String get illTurn3;
+
+  /// No description provided for @illTurn4.
+  ///
+  /// In es, this message translates to:
+  /// **'El rival hace lo que anunció en su globo y anuncia lo próximo.'**
+  String get illTurn4;
+
+  /// No description provided for @illBrokenTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Desequilibrado'**
+  String get illBrokenTitle;
+
+  /// No description provided for @illBroken.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la Estructura del rival llega a 0, pierde su próxima acción y recibe el doble de daño hasta el final de tu próximo turno. Si te pasa a vos, empezás el turno siguiente con 2 de Aliento menos.'**
+  String get illBroken;
+
+  /// No description provided for @illFormsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Formas'**
+  String get illFormsTitle;
+
+  /// No description provided for @illForms.
+  ///
+  /// In es, this message translates to:
+  /// **'Secuencias fijas de cartas. Si las jugás en orden, el último paso suma un golpe extra. Un ataque fuera de orden la interrumpe; las defensas y técnicas no.'**
+  String get illForms;
+
+  /// No description provided for @lesStrike1.
+  ///
+  /// In es, this message translates to:
+  /// **'Bienvenido. Esto es un combate por turnos: vos sos el de la izquierda y el muñeco de madera es tu rival. En tu turno jugás cartas; después el rival hace lo suyo. Te voy a explicar todo, paso a paso.'**
+  String get lesStrike1;
+
+  /// No description provided for @lesStrike2.
+  ///
+  /// In es, this message translates to:
+  /// **'Esto sos vos. La barra verde es tu Vida: si llega a 0, perdés. La violeta es tu Estructura, tu equilibrio: más adelante vas a ver para qué sirve.'**
+  String get lesStrike2;
+
+  /// No description provided for @lesStrike3.
+  ///
+  /// In es, this message translates to:
+  /// **'Este es el rival: su nombre, su Vida (roja) y su Estructura (violeta). Para ganar, llevá su Vida a 0.'**
+  String get lesStrike3;
+
+  /// No description provided for @lesStrike4.
+  ///
+  /// In es, this message translates to:
+  /// **'Estas son tus cartas: tu mano. Cada turno robás 5 cartas nuevas de tu mazo.'**
+  String get lesStrike4;
+
+  /// No description provided for @lesStrike5.
+  ///
+  /// In es, this message translates to:
+  /// **'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te lleva a esa postura antes de actuar.'**
+  String get lesStrike5;
+
+  /// No description provided for @lesStrike6.
+  ///
+  /// In es, this message translates to:
+  /// **'Estos puntos son tu Aliento, la energía del turno. Tenés 3 y cada carta cuesta lo que dice su círculo. Lo que no gastes se pierde al terminar el turno.'**
+  String get lesStrike6;
+
+  /// No description provided for @lesStrike7.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá Puño en caballo UNA sola vez.'**
+  String get lesStrike7;
+
+  /// No description provided for @lesStrike8.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta es la vista previa: muestra exactamente lo que va a pasar, con todos los bonus ya sumados. Para jugar la carta, tocala otra vez.'**
+  String get lesStrike8;
+
+  /// No description provided for @lesStrike9.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Golpe! Le sacaste 7 de Vida (5 de la carta + 2 por estar en postura Caballo) y 2 de Estructura. Mirá cómo bajaron sus barras. Tu Aliento bajó de 3 a 2.'**
+  String get lesStrike9;
+
+  /// No description provided for @lesStrike10.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora Empuje de palma: hace poco daño pero le saca mucha Estructura. Tocala dos veces.'**
+  String get lesStrike10;
+
+  /// No description provided for @lesStrike11.
+  ///
+  /// In es, this message translates to:
+  /// **'Te queda 1 de Aliento: jugá el otro Puño en caballo.'**
+  String get lesStrike11;
+
+  /// No description provided for @lesStrike12.
+  ///
+  /// In es, this message translates to:
+  /// **'Te quedaste sin Aliento. Las cartas que no podés pagar se ven apagadas: Patada de latigazo cuesta 2 en postura Caballo. Las que no jugaste se descartan al terminar el turno.'**
+  String get lesStrike12;
+
+  /// No description provided for @lesStrike13.
+  ///
+  /// In es, this message translates to:
+  /// **'Antes de terminar, mirá este globo: es lo que el rival va a hacer en su turno. La flecha → es la altura (MEDIA), 5 es el daño a tu Vida y E 2 el daño a tu Estructura. El rival siempre avisa antes de actuar.'**
+  String get lesStrike13;
+
+  /// No description provided for @lesStrike14.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no tenés defensas, así que te va a pegar. Tocá Terminar turno y mirá.'**
+  String get lesStrike14;
+
+  /// No description provided for @lesStrike15.
+  ///
+  /// In es, this message translates to:
+  /// **'Te pegó: el número rojo fue el daño a tu Vida, 5. Tu Estructura bajó solo 1 porque en Caballo recibís la mitad. En la próxima lección aprendés a defenderte.'**
+  String get lesStrike15;
+
+  /// No description provided for @lesStrike16.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezó tu turno 2: robaste 5 cartas nuevas y tu Aliento volvió a 3. Así empieza cada turno.'**
+  String get lesStrike16;
+
+  /// No description provided for @lesStrike17.
+  ///
+  /// In es, this message translates to:
+  /// **'Al muñeco le quedan 10 de Vida. Rematalo vos: elegí las cartas que quieras.'**
+  String get lesStrike17;
+
+  /// No description provided for @lesDefend1.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo más importante del juego: leer el globo del rival. La flecha es la ALTURA del golpe: ↑ alto, → medio, ↓ bajo. El número es el daño y E el daño a tu Estructura.'**
+  String get lesDefend1;
+
+  /// No description provided for @lesDefend2.
+  ///
+  /// In es, this message translates to:
+  /// **'Las cartas de Defensa te dan Guardia: un escudo que absorbe el golpe del rival. Cada defensa protege una ALTURA. El muñeco va a pegar ALTO, y Bloqueo alto protege arriba con 9 de Guardia.'**
+  String get lesDefend2;
+
+  /// No description provided for @lesDefend3.
+  ///
+  /// In es, this message translates to:
+  /// **'Jugala: dos toques.'**
+  String get lesDefend3;
+
+  /// No description provided for @lesDefend4.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta es tu Guardia: 9, alta. Si el golpe llega a la misma altura y tu Guardia alcanza para cubrirlo, lo DESVIÁS (化): no recibís nada, el rival pierde 3 de Estructura y ganás 1 de Aliento para tu próximo turno.'**
+  String get lesDefend4;
+
+  /// No description provided for @lesDefend5.
+  ///
+  /// In es, this message translates to:
+  /// **'Con el Aliento que te queda, pegale: Puño en caballo.'**
+  String get lesDefend5;
+
+  /// No description provided for @lesDefend6.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminá el turno y mirá.'**
+  String get lesDefend6;
+
+  /// No description provided for @lesDefend7.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Desvío! No recibiste daño y su Estructura bajó 3. Esto es pelear bien: mirar el globo y responder a la altura justa.'**
+  String get lesDefend7;
+
+  /// No description provided for @lesDefend8.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu Guardia volvió a 0: dura solo el turno del rival, así que hay que defenderse cada turno. Y fijate que tenés 4 de Aliento: +1 por el desvío.'**
+  String get lesDefend8;
+
+  /// No description provided for @lesDefend9.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora viene MEDIO (→) con 6 de daño, y la única defensa que tenés es BAJA.'**
+  String get lesDefend9;
+
+  /// No description provided for @lesDefend10.
+  ///
+  /// In es, this message translates to:
+  /// **'Jugá Palma que presiona igual, para ver qué pasa con la altura equivocada.'**
+  String get lesDefend10;
+
+  /// No description provided for @lesDefend11.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminá el turno.'**
+  String get lesDefend11;
+
+  /// No description provided for @lesDefend12.
+  ///
+  /// In es, this message translates to:
+  /// **'Altura equivocada: la Guardia absorbió solo la mitad y recibiste 3 de daño. La altura importa tanto como el número.'**
+  String get lesDefend12;
+
+  /// No description provided for @lesDefend13.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada rival tiene una regla propia. Tocá el nombre del rival cuando quieras leerla.'**
+  String get lesDefend13;
+
+  /// No description provided for @lesDefend14.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora viene BAJO (↓) y tenés Palma que presiona. Defendete bien y rematalo.'**
+  String get lesDefend14;
+
+  /// No description provided for @lesStances1.
+  ///
+  /// In es, this message translates to:
+  /// **'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Cada una cambia cuánto pegan y cuánto cuestan tus cartas. Ahora estás en Caballo.'**
+  String get lesStances1;
+
+  /// No description provided for @lesStances2.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá Puño en arco una vez y mirá la vista previa.'**
+  String get lesStances2;
+
+  /// No description provided for @lesStances3.
+  ///
+  /// In es, this message translates to:
+  /// **'La carta dice 6 de daño, pero la vista previa dice 9: primero te lleva a postura Arco, y en Arco los puños pegan +3. Las cartas con nombre de postura te cambian ANTES de pegar. Jugala.'**
+  String get lesStances3;
+
+  /// No description provided for @lesStances4.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora estás en Arco. Pegás fuerte con los puños, pero ojo: en Arco recibís 2 más de daño a tu Estructura.'**
+  String get lesStances4;
+
+  /// No description provided for @lesStances5.
+  ///
+  /// In es, this message translates to:
+  /// **'Paso en T te cambia a la postura que quieras por 1 de Aliento, una vez por turno. Tocalo y elegí Vacía.'**
+  String get lesStances5;
+
+  /// No description provided for @lesStances6.
+  ///
+  /// In es, this message translates to:
+  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada de latigazo ahora cuesta 0 y hace 7. Jugala.'**
+  String get lesStances6;
+
+  /// No description provided for @lesStances7.
+  ///
+  /// In es, this message translates to:
+  /// **'Este es el resumen de las tres posturas. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".'**
+  String get lesStances7;
+
+  /// No description provided for @lesStances8.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminá el combate como quieras. Probá elegir la postura según las cartas que tengas.'**
+  String get lesStances8;
+
+  /// No description provided for @lesStructure1.
+  ///
+  /// In es, this message translates to:
+  /// **'Este muñeco tiene poca Estructura: 8. Cada ataque tiene dos números: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si la Estructura del rival llega a 0, queda DESEQUILIBRADO.'**
+  String get lesStructure1;
+
+  /// No description provided for @lesStructure2.
+  ///
+  /// In es, this message translates to:
+  /// **'Empuje de palma casi no hace daño, pero saca 4 de Estructura. Jugalo.'**
+  String get lesStructure2;
+
+  /// No description provided for @lesStructure3.
+  ///
+  /// In es, this message translates to:
+  /// **'Otra vez: le quedan 4.'**
+  String get lesStructure3;
+
+  /// No description provided for @lesStructure4.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Desequilibrado! Mirá las estrellas. Pierde la acción que había anunciado y recibe el DOBLE de daño hasta el final de tu próximo turno.'**
+  String get lesStructure4;
+
+  /// No description provided for @lesStructure5.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprovechá: Puño en caballo. En la vista previa el daño ya sale doble.'**
+  String get lesStructure5;
+
+  /// No description provided for @lesStructure6.
+  ///
+  /// In es, this message translates to:
+  /// **'Su globo decía que se iba a cubrir (la Guardia del rival absorbe el daño a la Vida de tus golpes, pero no la Estructura). Ahora está apagado: esa acción la pierde.'**
+  String get lesStructure6;
+
+  /// No description provided for @lesStructure7.
+  ///
+  /// In es, this message translates to:
+  /// **'Vos también tenés Estructura. Si el rival te la vacía, empezás tu próximo turno con 2 de Aliento menos. Defenderte bien la protege.'**
+  String get lesStructure7;
+
+  /// No description provided for @lesStructure8.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminá el turno.'**
+  String get lesStructure8;
+
+  /// No description provided for @lesStructure9.
+  ///
+  /// In es, this message translates to:
+  /// **'Perdió su acción. Ahora anuncia Carga (el ícono del rayo): en su turno no te ataca, junta fuerza y su próximo golpe hará 4 más. Cuando veas una carga, preparate.'**
+  String get lesStructure9;
+
+  /// No description provided for @lesStructure10.
+  ///
+  /// In es, this message translates to:
+  /// **'Sigue desequilibrado todo este turno: tus golpes cuentan doble. Terminalo.'**
+  String get lesStructure10;
+
+  /// No description provided for @lesForms1.
+  ///
+  /// In es, this message translates to:
+  /// **'Una forma (套路) es una secuencia fija de cartas. Si las jugás en orden, al completar el último paso se suma un golpe extra. Esta es el Pequeño Puño Rojo: Puño en arco → Patada de latigazo → Bloquear y golpear → Mostrar la palma.'**
+  String get lesForms1;
+
+  /// No description provided for @lesForms2.
+  ///
+  /// In es, this message translates to:
+  /// **'Primer paso: Puño en arco.'**
+  String get lesForms2;
+
+  /// No description provided for @lesForms3.
+  ///
+  /// In es, this message translates to:
+  /// **'Segundo paso: Patada de latigazo.'**
+  String get lesForms3;
+
+  /// No description provided for @lesForms4.
+  ///
+  /// In es, this message translates to:
+  /// **'Dos pasos marcados. El progreso no se pierde al terminar el turno: la forma te espera.'**
+  String get lesForms4;
+
+  /// No description provided for @lesForms5.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá Empuje de palma UNA vez, sin jugarla.'**
+  String get lesForms5;
+
+  /// No description provided for @lesForms6.
+  ///
+  /// In es, this message translates to:
+  /// **'Mirá el triángulo de aviso: un ataque (puño, palma o patada) que no es el próximo paso INTERRUMPE la forma y hay que empezar de nuevo. Las defensas y las técnicas nunca la interrumpen.'**
+  String get lesForms6;
+
+  /// No description provided for @lesForms7.
+  ///
+  /// In es, this message translates to:
+  /// **'El tercer paso cuesta 2 y te queda 1 de Aliento. Terminá el turno: la forma te espera.'**
+  String get lesForms7;
+
+  /// No description provided for @lesForms8.
+  ///
+  /// In es, this message translates to:
+  /// **'Tercer paso: Bloquear y golpear, una defensa que además pega.'**
+  String get lesForms8;
+
+  /// No description provided for @lesForms9.
+  ///
+  /// In es, this message translates to:
+  /// **'Falta Mostrar la palma y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.'**
+  String get lesForms9;
+
+  /// No description provided for @lesForms10.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Ahí está! Último paso: Mostrar la palma.'**
+  String get lesForms10;
+
+  /// No description provided for @lesForms11.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Forma completa! Además del efecto de la carta: 10 de daño, 5 de Estructura y robás 2 cartas.'**
+  String get lesForms11;
+
+  /// No description provided for @lesForms12.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminá el combate.'**
+  String get lesForms12;
+
+  /// No description provided for @lesClimbSlide1Title.
+  ///
+  /// In es, this message translates to:
+  /// **'La montaña'**
+  String get lesClimbSlide1Title;
+
+  /// No description provided for @lesClimbSlide1.
+  ///
+  /// In es, this message translates to:
+  /// **'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre en dos, decidís vos.'**
+  String get lesClimbSlide1;
+
+  /// No description provided for @lesClimbSlide2Title.
+  ///
+  /// In es, this message translates to:
+  /// **'Los lugares del mapa'**
+  String get lesClimbSlide2Title;
+
+  /// No description provided for @lesClimbSlide2.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente y el santuario.'**
+  String get lesClimbSlide2;
+
+  /// No description provided for @lesClimbSlide3Title.
+  ///
+  /// In es, this message translates to:
+  /// **'Después de cada combate'**
+  String get lesClimbSlide3Title;
+
+  /// No description provided for @lesClimbSlide3.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegís 1 de 3 cartas para sumar a tu mazo, o ninguna. Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
+  String get lesClimbSlide3;
+
+  /// No description provided for @lesClimbSlide4Title.
+  ///
+  /// In es, this message translates to:
+  /// **'Vida y Estructura'**
+  String get lesClimbSlide4Title;
+
+  /// No description provided for @lesClimbSlide4.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu Vida NO se recupera sola entre combates: cuidala. En la fuente podés curarte, mejorar una carta o sacar una del mazo. La Estructura sí vuelve completa en cada combate.'**
+  String get lesClimbSlide4;
+
+  /// No description provided for @lesClimbSlide5Title.
+  ///
+  /// In es, this message translates to:
+  /// **'El santuario'**
+  String get lesClimbSlide5Title;
+
+  /// No description provided for @lesClimbSlide5.
+  ///
+  /// In es, this message translates to:
+  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente.'**
+  String get lesClimbSlide5;
+
+  /// No description provided for @lesClimbSlide6Title.
+  ///
+  /// In es, this message translates to:
+  /// **'¡A subir!'**
+  String get lesClimbSlide6Title;
+
+  /// No description provided for @lesClimbSlide6.
+  ///
+  /// In es, this message translates to:
+  /// **'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!'**
+  String get lesClimbSlide6;
 }
 
 class _AppLocalizationsDelegate

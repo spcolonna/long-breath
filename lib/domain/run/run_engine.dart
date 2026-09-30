@@ -43,6 +43,19 @@ class RunEngine {
     return current == null ? [data.balance.runStart] : node(current).next;
   }
 
+  /// Un combate a medias (se cerró la app o el jugador salió) se retoma
+  /// desde el mapa, como si todavía no se hubiera entrado a ese nodo.
+  RunState retreat(RunState r) {
+    if (r.phase != RunPhase.combat) return r;
+    final visited = r.visited.sublist(0, r.visited.length - 1);
+    return r.copyWith(
+      phase: RunPhase.map,
+      visited: visited,
+      currentNode: visited.isEmpty ? null : visited.last,
+      clearCurrentNode: visited.isEmpty,
+    );
+  }
+
   RunState enter(RunState r, String nodeId) {
     if (!available(r).contains(nodeId)) {
       throw StateError('Nodo no disponible: $nodeId');

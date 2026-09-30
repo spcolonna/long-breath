@@ -38,15 +38,36 @@ class MapScreen extends ConsumerWidget {
           '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
           style: const TextStyle(fontSize: 18),
         ),
+        // Volver al menú no borra nada: la subida queda guardada.
+        leading: IconButton(
+          tooltip: t.mapHome,
+          icon: const Icon(Icons.home_rounded),
+          onPressed: () {
+            ref.invalidate(savedRunProvider);
+            context.go('/');
+          },
+        ),
         actions: [
-          IconButton(
-            tooltip: t.abandon,
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              ref.read(runControllerProvider.notifier).abandon();
-              ref.invalidate(savedRunProvider);
-              context.go('/');
-            },
+          PopupMenuButton<String>(
+            tooltip: t.mapMore,
+            icon: const Icon(Icons.more_vert_rounded),
+            onSelected: (_) => _confirmAbandon(context, ref),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                value: 'abandon',
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.flag_rounded,
+                      color: Palette.lacquer,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(t.abandon),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -142,6 +163,32 @@ class MapScreen extends ConsumerWidget {
         ],
     ];
   }
+}
+
+Future<void> _confirmAbandon(BuildContext context, WidgetRef ref) async {
+  final t = AppLocalizations.of(context);
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text(t.abandonConfirmTitle),
+      content: Text(t.abandonConfirmBody),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, false),
+          child: Text(t.cancelAction),
+        ),
+        FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: Palette.lacquer),
+          onPressed: () => Navigator.pop(ctx, true),
+          child: Text(t.abandon),
+        ),
+      ],
+    ),
+  );
+  if (ok != true || !context.mounted) return;
+  ref.read(runControllerProvider.notifier).abandon();
+  ref.invalidate(savedRunProvider);
+  context.go('/');
 }
 
 class _RunHeader extends StatelessWidget {

@@ -10,7 +10,6 @@ import 'package:long_breath/domain/combat/combat_state.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
-import 'package:long_breath/domain/tutorial.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/domain/sim/bots.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
@@ -71,7 +70,7 @@ void main(List<String> args) {
   print('estilo: ${style.name}, combates por enemigo: $n, runs: $runs\n');
 
   final winRates = <String, Map<String, double>>{};
-  for (final enemy in data.enemies.keys.where((e) => e != tutorialEnemy)) {
+  for (final enemy in data.enemies.keys.where((e) => !e.startsWith('dummy'))) {
     print('== $enemy (${data.enemy(enemy).rank.name})');
     print('bot            victoria  turnos  formas  desvíos  vida perdida');
     for (final MapEntry(key: name, value: make) in bots.entries) {

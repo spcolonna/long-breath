@@ -5,73 +5,92 @@ import 'package:long_breath/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('el entrenamiento guía hasta ganar y queda marcado', (tester) async {
+  late WidgetTester tester;
+
+  Future<void> settle([int seconds = 2]) async {
+    for (var i = 0; i < seconds; i++) {
+      await tester.pump(const Duration(seconds: 1));
+    }
+  }
+
+  Future<void> next([String label = 'Siguiente']) async {
+    await tester.tap(find.text(label));
+    await settle();
+  }
+
+  // Un toque selecciona la carta y otro la juega.
+  Future<void> select(String name) async {
+    await tester.tap(find.text(name).last);
+    await tester.pump(const Duration(milliseconds: 400));
+  }
+
+  Future<void> play(String name) async {
+    await select(name);
+    await tester.tap(find.text(name).last);
+    await settle(3);
+  }
+
+  Future<void> open() async {
     SharedPreferences.setMockInitialValues({});
     tester.view.physicalSize = const Size(1206, 2622);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
-
-    Future<void> settle([int seconds = 2]) async {
-      for (var i = 0; i < seconds; i++) {
-        await tester.pump(const Duration(seconds: 1));
-      }
-    }
-
-    Future<void> next([String label = 'Siguiente']) async {
-      await tester.tap(find.text(label));
-      await settle();
-    }
-
-    // Juega la carta: un toque la selecciona y otro la juega.
-    Future<void> play(String name) async {
-      await tester.tap(find.text(name).last);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(find.text(name).last);
-      await settle(3);
-    }
-
     await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
     await settle();
-    await tester.tap(find.text('Empezar entrenamiento'));
+    await tester.tap(find.text('Aprender a jugar'));
     await settle();
+  }
 
-    expect(find.text('Muñeco de madera'), findsWidgets);
-    expect(find.textContaining('Bienvenido al patio'), findsOneWidget);
-    for (var i = 0; i < 5; i++) {
+  testWidgets('la lección 1 guía paso a paso hasta ganar y habilita la 2', (t) async {
+    tester = t;
+    await open();
+    // La 2 está bloqueada hasta completar la 1.
+    expect(find.text('Completá la lección anterior'), findsNWidgets(5));
+    await tester.tap(find.text('Tu primer golpe'));
+    await settle();
+    expect(find.textContaining('Bienvenido. Esto es un combate'), findsOneWidget);
+    for (var i = 0; i < 6; i++) {
       await next();
     }
-    expect(find.textContaining('Tocá Puño en arco'), findsOneWidget);
+    expect(find.textContaining('Tocá Puño en caballo UNA'), findsOneWidget);
 
-    // Mientras espera una jugada, lo que está fuera del foco no responde.
-    await tester.tap(find.text('Terminar turno'), warnIfMissed: false);
+    // Solo se puede tocar la zona resaltada.
+    await tester.tap(find.text('Terminar turno'));
     await settle();
-    expect(find.text('Turno 1'), findsOneWidget);
+    expect(find.textContaining('Tocá Puño en caballo UNA'), findsOneWidget);
 
-    await play('Puño en arco');
-    expect(find.textContaining('postura Arco'), findsOneWidget);
+    await select('Puño en caballo');
+    expect(find.textContaining('Esta es la vista previa'), findsOneWidget);
+    await tester.tap(find.text('Puño en caballo').last);
+    await settle(3);
+    expect(find.textContaining('Le sacaste 7 de Vida'), findsOneWidget);
     await next();
-    await play('Mostrar la palma');
-    await play('Patada de latigazo');
-    expect(find.textContaining('Pequeño Puño Rojo'), findsWidgets);
+    await play('Empuje de palma');
+    expect(find.textContaining('jugá el otro Puño'), findsOneWidget);
+    await play('Puño en caballo');
+    expect(find.textContaining('Te quedaste sin Aliento'), findsOneWidget);
+    await next();
+    expect(find.textContaining('mirá este globo'), findsOneWidget);
     await next();
     await tester.tap(find.text('Terminar turno'));
     await settle(4);
-    expect(find.textContaining('¡Desvío! No recibiste daño'), findsOneWidget);
+    expect(find.textContaining('Te pegó'), findsOneWidget);
     await next();
-    expect(find.textContaining('Paso en T te cambia'), findsOneWidget);
+    expect(find.textContaining('Empezó tu turno 2'), findsOneWidget);
     await next();
     await next('¡Vamos!');
 
-    await play('Puño en arco');
-    await play('Patada de latigazo');
-    // La guía espera a que termine la celebración de la victoria.
-    await settle(2);
-    expect(find.textContaining('¡Bien hecho!'), findsOneWidget);
-
-    await tester.tap(find.text('Empezar la subida'));
-    await settle();
-    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
+    await play('Puño en caballo');
+    await play('Puño en caballo');
+    await settle(3);
+    expect(find.text('Siguiente lección'), findsOneWidget);
+    expect(find.textContaining('Aprendiste a leer una carta'), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getBool('long_breath.tutorialDone'), isTrue);
+    expect(prefs.getStringList('long_breath.lessonsDone'), contains('strike'));
+
+    await tester.tap(find.text('Volver a las lecciones'));
+    await settle();
+    expect(find.text('Leer el globo del rival, la Guardia, las alturas y el desvío.'),
+        findsOneWidget);
   });
 }

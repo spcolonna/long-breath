@@ -1,39 +1,53 @@
-import '../../l10n/app_localizations.dart';
+import '../../domain/model/enums.dart';
 
-/// Un paso del entrenamiento. Si espera una jugada ([waitCard] o [waitTurn]),
-/// solo se puede tocar la zona resaltada; si no, se avanza con el botón.
+/// Dibujos que el maestro puede mostrar dentro de su globo.
+enum Illustration { card, intent, heights, stances, turn, broken, forms }
+
+/// Un paso de una lección. Si espera una jugada (`wait*`), solo se puede tocar
+/// la zona resaltada; si no, se avanza con el botón.
 class TutorialStep {
-  const TutorialStep(this.text, {this.anchor, this.waitCard, this.waitTurn, this.delayMs = 0});
+  const TutorialStep(
+    this.text, {
+    this.anchor,
+    this.waitCard,
+    this.waitSelect,
+    this.waitTurn,
+    this.waitStance,
+    this.waitBreathe = false,
+    this.delayMs = 0,
+    this.illustration,
+  });
 
   final String text;
 
-  /// Zona resaltada ([TutorialAnchor.id]); con `+` se resaltan varias juntas.
-  /// Null centra el globo sin foco.
+  /// Zona resaltada ([TutorialAnchor.id]); con `+` se resaltan varias juntas y
+  /// solo la primera recibe toques. Null centra el globo sin foco.
   final String? anchor;
+
+  /// Avanza al jugar esta carta.
   final String? waitCard;
+
+  /// Avanza al tocar esta carta una vez (queda seleccionada, sin jugarse).
+  final String? waitSelect;
+
+  /// Avanza al llegar a este turno.
   final int? waitTurn;
+
+  /// Avanza al cambiar a esta postura con Paso en T.
+  final Stance? waitStance;
+
+  /// Avanza al usar Respirar.
+  final bool waitBreathe;
 
   /// Espera antes de mostrarse, para que se vean las animaciones del combate.
   final int delayMs;
 
-  bool get waits => waitCard != null || waitTurn != null;
-}
+  final Illustration? illustration;
 
-List<TutorialStep> tutorialSteps(AppLocalizations t) => [
-      TutorialStep(t.tutWelcome),
-      TutorialStep(t.tutIntent, anchor: 'intent'),
-      TutorialStep(t.tutEnemy, anchor: 'enemyInfo'),
-      TutorialStep(t.tutPlayer, anchor: 'player'),
-      TutorialStep(t.tutHand, anchor: 'hand'),
-      TutorialStep(t.tutPlayFist,
-          anchor: 'card:gongbu_chongquan+preview', waitCard: 'gongbu_chongquan'),
-      TutorialStep(t.tutStance, anchor: 'stances', delayMs: 700),
-      TutorialStep(t.tutDefend,
-          anchor: 'card:xubu_liangzhang+preview', waitCard: 'xubu_liangzhang'),
-      TutorialStep(t.tutKick, anchor: 'card:tan_tui+preview', waitCard: 'tan_tui', delayMs: 500),
-      TutorialStep(t.tutForms, anchor: 'forms', delayMs: 700),
-      TutorialStep(t.tutEndTurn, anchor: 'endTurn', waitTurn: 2),
-      TutorialStep(t.tutDeflect, anchor: 'enemyInfo', delayMs: 2100),
-      TutorialStep(t.tutActions, anchor: 'actions'),
-      TutorialStep(t.tutFree),
-    ];
+  bool get waits =>
+      waitCard != null ||
+      waitSelect != null ||
+      waitTurn != null ||
+      waitStance != null ||
+      waitBreathe;
+}

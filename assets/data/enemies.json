@@ -6,6 +6,30 @@
         { "kind": "attack", "height": "mid", "damage": 5, "structure": 2 },
         { "kind": "attack", "height": "low", "damage": 4, "structure": 2 }
       ] } ] },
+    { "id": "dummy_basic", "art": "dummy", "rank": "common", "hp": 28, "structure": 30,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 5, "structure": 2 }
+      ] } ] },
+    { "id": "dummy_heights", "art": "dummy", "rank": "common", "hp": 20, "structure": 12,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "high", "damage": 4, "structure": 2 },
+        { "kind": "attack", "height": "mid", "damage": 6, "structure": 2 },
+        { "kind": "attack", "height": "low", "damage": 4, "structure": 2 }
+      ] } ] },
+    { "id": "dummy_light", "art": "dummy", "rank": "common", "hp": 26, "structure": 40,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 3, "structure": 1 }
+      ] } ] },
+    { "id": "dummy_guard", "art": "dummy", "rank": "common", "hp": 36, "structure": 8,
+      "phases": [ { "pattern": [
+        { "kind": "guard", "value": 8 },
+        { "kind": "charge", "value": 4 },
+        { "kind": "attack", "height": "mid", "damage": 5, "structure": 3 }
+      ] } ] },
+    { "id": "dummy_forms", "art": "dummy", "rank": "common", "hp": 34, "structure": 40,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 3, "structure": 1 }
+      ] } ] },
     { "id": "bat", "rank": "common", "hp": 18, "structure": 6,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "high", "damage": 3, "hits": 2, "structure": 1 },
