@@ -1,6 +1,6 @@
 import 'enums.dart';
 
-/// Estilo animal elegido al empezar la run: cambia cómo se juega la mano.
+/// Cómo se juega la mano: el del novicio o el del camino animal elegido.
 class StyleStats {
   const StyleStats({
     required this.hanzi,
@@ -27,7 +27,10 @@ class StyleStats {
 
 enum NodeType {
   combat,
-  fountain;
+  fountain,
+
+  /// Santuario de los animales: se elige el camino.
+  shrine;
 
   static NodeType parse(String s) => NodeType.values.byName(s);
 }
@@ -73,7 +76,9 @@ class GameBalance {
     required this.playerStructure,
     required this.startStance,
     required this.breathesPerCombat,
+    required this.novice,
     required this.styles,
+    required this.pathChoices,
     required this.deflectEnemyStructureLoss,
     required this.deflectBreathBonus,
     required this.playerBreakBreathPenalty,
@@ -91,7 +96,11 @@ class GameBalance {
   final int playerStructure;
   final Stance startStance;
   final int breathesPerCombat;
+  final StyleStats novice;
   final Map<Style, StyleStats> styles;
+
+  /// Cuántos caminos (al azar) ofrece el santuario.
+  final int pathChoices;
   final int deflectEnemyStructureLoss;
   final int deflectBreathBonus;
   final int playerBreakBreathPenalty;
@@ -106,6 +115,9 @@ class GameBalance {
   final StageDef stage;
   final List<MapNodeDef> runNodes;
 
+  /// Estadísticas del camino, o las del novicio si todavía no eligió.
+  StyleStats statsOf(Style? s) => s == null ? novice : styles[s]!;
+
   factory GameBalance.fromJson(Map<String, dynamic> j) {
     final player = j['player'] as Map<String, dynamic>;
     final styles = j['styles'] as Map<String, dynamic>;
@@ -118,10 +130,12 @@ class GameBalance {
       playerStructure: player['structure'] as int,
       startStance: Stance.parse(player['startStance'] as String)!,
       breathesPerCombat: player['breathesPerCombat'] as int,
+      novice: StyleStats.fromJson(j['novice'] as Map<String, dynamic>),
       styles: {
         for (final e in styles.entries)
           Style.parse(e.key): StyleStats.fromJson(e.value as Map<String, dynamic>),
       },
+      pathChoices: (j['paths'] as Map<String, dynamic>)['choices'] as int,
       deflectEnemyStructureLoss: deflect['enemyStructureLoss'] as int,
       deflectBreathBonus: deflect['breathBonus'] as int,
       playerBreakBreathPenalty:

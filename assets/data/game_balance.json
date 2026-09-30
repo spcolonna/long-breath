@@ -5,6 +5,7 @@
     "startStance": "mabu",
     "breathesPerCombat": 1
   },
+  "novice": { "hanzi": "徒", "pinyin": "Tú", "draw": 5, "breath": 3, "retain": 0 },
   "styles": {
     "tiger": { "hanzi": "虎", "pinyin": "Hǔ", "draw": 6, "breath": 4, "retain": 0 },
     "snake": { "hanzi": "蛇", "pinyin": "Shé", "draw": 5, "breath": 3, "retain": 1 },
@@ -13,6 +14,7 @@
   "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
   "playerBreak": { "breathPenalty": 2 },
   "enemyBreak": { "damageMultiplier": 2 },
+  "paths": { "choices": 2 },
   "rewards": { "choices": 3, "pools": ["reward", "tiger"] },
   "fountain": { "heal": 15, "upgrade": 3 },
   "run": {
@@ -20,7 +22,8 @@
     "start": "n1",
     "nodes": [
       { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2"] },
-      { "id": "n2", "type": "combat", "enemy": "disciple", "next": ["n3a", "n3b"] },
+      { "id": "n2", "type": "combat", "enemy": "disciple", "next": ["ns"] },
+      { "id": "ns", "type": "shrine", "next": ["n3a", "n3b"] },
       { "id": "n3a", "type": "combat", "enemy": "golem", "next": ["n4"] },
       { "id": "n3b", "type": "combat", "enemy": "salamander", "next": ["n4"] },
       { "id": "n4", "type": "fountain", "next": ["n5"] },

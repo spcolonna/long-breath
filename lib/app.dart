@@ -10,6 +10,7 @@ import 'delivery/screens/home_screen.dart';
 import 'delivery/screens/map_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
+import 'delivery/screens/shrine_screen.dart';
 import 'delivery/theme.dart';
 import 'l10n/app_localizations.dart';
 
@@ -20,6 +21,7 @@ final _router = GoRouter(
     GoRoute(path: '/combat', builder: (_, _) => const CombatScreen()),
     GoRoute(path: '/reward', builder: (_, _) => const RewardScreen()),
     GoRoute(path: '/fountain', builder: (_, _) => const FountainScreen()),
+    GoRoute(path: '/shrine', builder: (_, _) => const ShrineScreen()),
     GoRoute(path: '/result', builder: (_, _) => const ResultScreen()),
   ],
 );

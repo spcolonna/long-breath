@@ -19,8 +19,8 @@ class RunController extends Notifier<RunState?> {
 
   void resume(RunState r) => state = r;
 
-  void newRun(Style style) =>
-      _set(_engine.newRun(style: style, seed: DateTime.now().microsecondsSinceEpoch));
+  void newRun() =>
+      _set(_engine.newRun(seed: DateTime.now().microsecondsSinceEpoch));
 
   void abandon() => _set(null);
 
@@ -38,6 +38,8 @@ class RunController extends Notifier<RunState?> {
 
   void chooseReward(String? cardId) =>
       _set(_engine.chooseReward(state!, cardId));
+
+  void choosePath(Style style) => _set(_engine.choosePath(state!, style));
 
   void heal() => _set(_engine.fountainHeal(state!));
 

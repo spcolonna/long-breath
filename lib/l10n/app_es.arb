@@ -4,6 +4,11 @@
   "newRun": "Nueva run",
   "continueRun": "Continuar run",
   "styleTitle": "Elegí tu camino",
+  "homeTagline": "Subís como novicio. El camino se elige en la montaña.",
+  "shrineNode": "Santuario",
+  "shrineTitle": "Santuario de los animales",
+  "shrineHint": "Dos espíritus te esperan. El camino que tomes tiñe tu túnica y cambia cómo peleás, hasta el final de la subida.",
+  "shrineConfirm": "Tomar este camino",
   "styleSummary": "Robás {draw} · Aliento {breath} · Retenés {retain}",
   "@styleSummary": {
     "placeholders": {

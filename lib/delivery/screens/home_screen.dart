@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/model/enums.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../controllers/run_controller.dart';
@@ -17,6 +16,7 @@ String routeFor(RunState r) => switch (r.phase) {
       RunPhase.combat => '/map',
       RunPhase.reward => '/reward',
       RunPhase.fountain => '/fountain',
+      RunPhase.shrine => '/shrine',
       RunPhase.victory || RunPhase.defeat => '/result',
     };
 
@@ -28,16 +28,11 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  Style _style = Style.snake;
-
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    final data = ref.watch(dataProvider);
     final saved = ref.watch(savedRunProvider).value;
-    final stats = data.balance.styles[_style]!;
-    final text = ref.watch(textProvider);
-    final accent = styleColor(_style);
+    final stats = ref.watch(dataProvider).balance.novice;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -60,48 +55,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ],
                 ),
               ),
-              // El héroe cambia de ropa y de aura según el camino elegido.
+              // El héroe empieza de lino crudo: el camino se elige en la montaña.
               Expanded(
                 child: LayoutBuilder(
-                  builder: (context, box) => AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 450),
-                    transitionBuilder: (child, anim) => FadeTransition(
-                      opacity: anim,
-                      child: ScaleTransition(
-                          scale: Tween(begin: 0.94, end: 1.0).animate(anim), child: child),
-                    ),
-                    child: HeroSprite(
-                      key: ValueKey(_style),
-                      style: _style,
-                      height: math.min(box.maxHeight, box.maxWidth * 1.3),
-                      glyph: stats.hanzi,
-                    ),
+                  builder: (context, box) => HeroSprite(
+                    style: null,
+                    height: math.min(box.maxHeight, box.maxWidth * 1.3),
+                    glyph: stats.hanzi,
                   ),
                 ),
               ),
-              Text(t.styleTitle, style: const TextStyle(color: Palette.textDim)),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  for (final a in Style.values)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: _StyleTile(
-                          name: text.style(a),
-                          hanzi: data.balance.styles[a]!.hanzi,
-                          color: styleColor(a),
-                          selected: a == _style,
-                          onTap: () => setState(() => _style = a),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(text.styleMotto(_style),
-                  style: TextStyle(
-                      fontSize: 15, fontStyle: FontStyle.italic, color: accent)),
+              Text(t.homeTagline,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 15, fontStyle: FontStyle.italic, color: Palette.text)),
               const SizedBox(height: 2),
               Text(t.styleSummary(stats.draw, stats.breath, stats.retain),
                   style: const TextStyle(fontSize: 12, color: Palette.textDim)),
@@ -111,7 +78,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: 52,
                 child: FilledButton(
                   onPressed: () {
-                    ref.read(runControllerProvider.notifier).newRun(_style);
+                    ref.read(runControllerProvider.notifier).newRun();
                     context.go('/map');
                   },
                   child: Text(t.newRun, style: const TextStyle(fontSize: 17)),
@@ -146,53 +113,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _StyleTile extends StatelessWidget {
-  const _StyleTile({
-    required this.name,
-    required this.hanzi,
-    required this.color,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String name;
-  final String hanzi;
-  final Color color;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-          color: selected ? color : Palette.surface,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: selected ? color : Palette.line, width: 1.5),
-          boxShadow: selected
-              ? [BoxShadow(color: color.withValues(alpha: 0.35), blurRadius: 10)]
-              : null,
-        ),
-        child: Column(
-          children: [
-            Text(name,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: selected ? Palette.onColor : Palette.text)),
-            Text(hanzi,
-                style: TextStyle(
-                    fontSize: 13, color: selected ? Palette.onColor : color)),
-          ],
         ),
       ),
     );

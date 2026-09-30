@@ -18,8 +18,8 @@ El juego es un roguelike de cartas para móvil (iOS y Android, en Flutter). El p
 - 2 formas: Xiǎo Hóng Quán y Dà Hóng Quán.
 - 1 estilo animal: Tigre (Hǔ Quán), como cartas de recompensa.
 - 6 enemigos: 4 comunes, 1 élite y 1 guardián.
-- Una run corta de 7 nodos con una bifurcación y una fuente de meditación.
-- Elección de camino al empezar la run: Tigre, Serpiente o Grulla.
+- Una run corta de 8 nodos con un santuario, una bifurcación y una fuente de meditación.
+- Se empieza como novicio; en el santuario se elige entre 2 de los 3 caminos (Tigre, Serpiente o Grulla), sorteados.
 
 **Queda fuera:** árbol de habilidades, cultivo del aliento, Legado, prólogo en el templo, narrativa, Firebase y monetización.
 
@@ -27,7 +27,7 @@ El juego es un roguelike de cartas para móvil (iOS y Android, en Flutter). El p
 
 El combate es por turnos, uno contra uno, y el enemigo siempre anuncia su próxima acción. El azar decide qué cartas tenés; la resolución de cada jugada es siempre determinista.
 
-### Valores base del jugador (camino de la Serpiente)
+### Valores base del jugador (novicio)
 
 | Valor | Base | Nota |
 | --- | --- | --- |
@@ -187,7 +187,7 @@ Cada enemigo enseña o pone a prueba una mecánica, y su regla especial obliga a
 
 ## Estructura de la run del MVP
 
-La run se juega de abajo hacia arriba, como el ascenso por la montaña: 6 nodos, una elección de camino y una fuente antes de la élite.
+La run se juega de abajo hacia arriba, como el ascenso por la montaña: 8 nodos: dos combates como novicio, el santuario de los animales, una bifurcación y una fuente antes de la élite.
 
 &#91;embedded content: mapa de la run del MVP · 7 nodos, 1 bifurcación\]
 
@@ -199,7 +199,7 @@ Elegís una sola opción: curar 15 de Vida, eliminar 1 carta del mazo, o mejorar
 
 ### Caminos (estilos animales)
 
-Reemplazan al sistema de edad: cambian cómo se juega la mano sin necesitar un personaje distinto por etapa. Se elige al empezar la run.
+Reemplazan al sistema de edad: cambian cómo se juega la mano sin necesitar un personaje distinto por etapa. No se eligen al empezar: el jugador sube como **novicio** (5 cartas, 3 de Aliento, sin retener, túnica sin teñir) y, después del Discípulo, el **santuario** sortea 2 de los 3 caminos y el jugador toma uno para el resto de la run. Cuántos se ofrecen está en `paths.choices` de `game_balance.json`.
 
 | Camino | Color | Cartas robadas | Aliento | Retener | Lectura |
 | --- | --- | --- | --- | --- | --- |
@@ -207,7 +207,7 @@ Reemplazan al sistema de edad: cambian cómo se juega la mano sin necesitar un p
 | Serpiente 蛇 Shé | Violeta | 5 | 3 | 1 | Fluido, equilibrado |
 | Grulla 鹤 Hè | Cobalto | 4 | 3 | 3 | Paciente, planifica |
 
-- **Visual:** un solo arte del héroe (`assets/art/player/hero.png`). `tool/recolor_hero.py` genera una variante por camino tiñendo solo la tela bermellón; el aura y el carácter del animal se dibujan por código.
+- **Visual:** un solo arte del héroe (`assets/art/player/hero.png`). `tool/recolor_hero.py` genera la variante del novicio (lino crudo) y una por camino tiñendo solo la tela bermellón; el aura y el carácter del animal se dibujan por código.
 - **Juego completo:** cada camino será una rama del árbol con sus propias cartas.
 - **Cultivo del aliento (fuera del MVP):** progresión entre partidas por reinos (境界). Cada reino abre espacios del árbol y alguna mejora chica; morir hace perder parte del aliento acumulado, pero nunca se baja de reino. Visualmente solo crece el aura.
 

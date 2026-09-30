@@ -2,7 +2,7 @@ import '../combat/combat_state.dart';
 import '../model/enums.dart';
 import '../rng.dart';
 
-enum RunPhase { map, combat, reward, fountain, victory, defeat }
+enum RunPhase { map, combat, reward, fountain, shrine, victory, defeat }
 
 /// Estado inmutable de una run (serializable para el guardado local).
 class RunState {
@@ -16,10 +16,12 @@ class RunState {
     required this.currentNode,
     required this.visited,
     required this.rewardOptions,
+    this.pathOptions = const [],
     required this.rng,
   });
 
-  final Style style;
+  /// Camino animal; null mientras sea novicio (antes del santuario).
+  final Style? style;
   final int hp;
   final int maxHp;
   final List<CombatCard> deck;
@@ -30,9 +32,13 @@ class RunState {
   final String? currentNode;
   final List<String> visited;
   final List<String> rewardOptions;
+
+  /// Caminos que ofrece el santuario (solo en la fase shrine).
+  final List<Style> pathOptions;
   final Rng rng;
 
   RunState copyWith({
+    Style? style,
     int? hp,
     List<CombatCard>? deck,
     int? nextUid,
@@ -40,10 +46,11 @@ class RunState {
     String? currentNode,
     List<String>? visited,
     List<String>? rewardOptions,
+    List<Style>? pathOptions,
     Rng? rng,
   }) =>
       RunState(
-        style: style,
+        style: style ?? this.style,
         hp: hp ?? this.hp,
         maxHp: maxHp,
         deck: deck ?? this.deck,
@@ -52,11 +59,12 @@ class RunState {
         currentNode: currentNode ?? this.currentNode,
         visited: visited ?? this.visited,
         rewardOptions: rewardOptions ?? this.rewardOptions,
+        pathOptions: pathOptions ?? this.pathOptions,
         rng: rng ?? this.rng,
       );
 
   Map<String, dynamic> toJson() => {
-        'style': style.name,
+        'style': style?.name,
         'hp': hp,
         'maxHp': maxHp,
         'deck': [for (final c in deck) c.toJson()],
@@ -65,11 +73,15 @@ class RunState {
         'currentNode': currentNode,
         'visited': visited,
         'rewardOptions': rewardOptions,
+        'pathOptions': [for (final s in pathOptions) s.name],
         'rng': rng.state,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
-        style: Style.parse((j['style'] ?? j['age']) as String),
+        style: switch (j['style'] ?? j['age']) {
+          final String s => Style.parse(s),
+          _ => null,
+        },
         hp: j['hp'] as int,
         maxHp: j['maxHp'] as int,
         deck: [
@@ -81,6 +93,9 @@ class RunState {
         currentNode: j['currentNode'] as String?,
         visited: (j['visited'] as List).cast<String>(),
         rewardOptions: (j['rewardOptions'] as List).cast<String>(),
+        pathOptions: [
+          for (final s in (j['pathOptions'] as List?) ?? const []) Style.parse(s as String),
+        ],
         rng: Rng(j['rng'] as int),
       );
 }

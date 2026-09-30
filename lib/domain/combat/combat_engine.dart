@@ -97,13 +97,13 @@ class CombatEngine {
   CombatResult start({
     required List<CombatCard> deck,
     required String enemyId,
-    required Style style,
+    required Style? style,
     required int playerHp,
     required int seed,
     bool shuffle = true,
   }) {
     final b = data.balance;
-    final styleStats = b.styles[style]!;
+    final styleStats = b.statsOf(style);
     final enemy = data.enemy(enemyId);
     final (shuffled, rng) =
         shuffle ? Rng.seeded(seed).shuffle(deck) : (deck, Rng.seeded(seed));

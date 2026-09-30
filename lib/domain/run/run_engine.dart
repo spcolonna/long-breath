@@ -7,7 +7,7 @@ import '../model/game_data.dart';
 import '../rng.dart';
 import 'run_state.dart';
 
-/// Reglas de la run: mapa, recompensas y fuente de meditación.
+/// Reglas de la run: mapa, recompensas, santuario y fuente de meditación.
 class RunEngine {
   RunEngine(this.data);
 
@@ -16,10 +16,11 @@ class RunEngine {
   MapNodeDef node(String id) =>
       data.balance.runNodes.firstWhere((n) => n.id == id);
 
-  RunState newRun({required Style style, required int seed}) {
+  /// La run empieza como novicio; el camino se elige en el santuario.
+  RunState newRun({required int seed}) {
     final starter = data.starterDeck;
     return RunState(
-      style: style,
+      style: null,
       hp: data.balance.playerHp,
       maxHp: data.balance.playerHp,
       deck: [
@@ -47,11 +48,30 @@ class RunEngine {
       throw StateError('Nodo no disponible: $nodeId');
     }
     final n = node(nodeId);
-    return r.copyWith(
+    final entered = r.copyWith(
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
-      phase: n.type == NodeType.combat ? RunPhase.combat : RunPhase.fountain,
+      phase: switch (n.type) {
+        NodeType.combat => RunPhase.combat,
+        NodeType.fountain => RunPhase.fountain,
+        NodeType.shrine => RunPhase.shrine,
+      },
     );
+    if (n.type != NodeType.shrine) return entered;
+    final (shuffled, rng) = entered.rng.shuffle(Style.values);
+    return entered.copyWith(
+      pathOptions: shuffled.take(data.balance.pathChoices).toList(),
+      rng: rng,
+    );
+  }
+
+  /// Tomar uno de los caminos que ofrece el santuario.
+  RunState choosePath(RunState r, Style style) {
+    if (r.phase != RunPhase.shrine) throw StateError('No estás en el santuario');
+    if (!r.pathOptions.contains(style)) {
+      throw StateError('Camino no ofrecido: ${style.name}');
+    }
+    return r.copyWith(style: style, pathOptions: const [], phase: RunPhase.map);
   }
 
   /// Semilla del combate del nodo actual (derivada de la run, reproducible).

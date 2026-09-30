@@ -21,6 +21,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get styleTitle => 'Elegí tu camino';
 
   @override
+  String get homeTagline =>
+      'Subís como novicio. El camino se elige en la montaña.';
+
+  @override
+  String get shrineNode => 'Santuario';
+
+  @override
+  String get shrineTitle => 'Santuario de los animales';
+
+  @override
+  String get shrineHint =>
+      'Dos espíritus te esperan. El camino que tomes tiñe tu túnica y cambia cómo peleás, hasta el final de la subida.';
+
+  @override
+  String get shrineConfirm => 'Tomar este camino';
+
+  @override
   String styleSummary(int draw, int breath, int retain) {
     return 'Robás $draw · Aliento $breath · Retenés $retain';
   }
