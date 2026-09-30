@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
+import 'juice.dart';
 
 /// Barra horizontal con valor actual / máximo.
 class StatBar extends StatelessWidget {
@@ -29,24 +30,7 @@ class StatBar extends StatelessWidget {
           child: Text(label,
               style: const TextStyle(fontSize: 12, color: Palette.textDim)),
         ),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(height / 2),
-            child: Stack(
-              children: [
-                Container(height: height, color: Palette.line),
-                TweenAnimationBuilder<double>(
-                  tween: Tween(end: ratio),
-                  duration: const Duration(milliseconds: 350),
-                  builder: (_, v, _) => FractionallySizedBox(
-                    widthFactor: v,
-                    child: Container(height: height, color: color),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        Expanded(child: TrailBar(ratio: ratio, color: color, height: height)),
         SizedBox(
           width: 56,
           child: Text('$value/$max',

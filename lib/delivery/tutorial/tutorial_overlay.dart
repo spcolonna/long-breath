@@ -31,6 +31,10 @@ class _TutorialOverlayState extends ConsumerState<TutorialOverlay>
   Timer? _delay;
   Rect? _hole;
 
+  /// Al ganar, el globo espera a que termine la celebración.
+  bool _wonReady = false;
+  Timer? _wonTimer;
+
   /// Solo la primera zona del paso recibe toques (la carta, no su vista previa).
   Rect? _tapHole;
 
@@ -47,6 +51,7 @@ class _TutorialOverlayState extends ConsumerState<TutorialOverlay>
   void dispose() {
     _ticker.dispose();
     _delay?.cancel();
+    _wonTimer?.cancel();
     super.dispose();
   }
 
@@ -117,9 +122,14 @@ class _TutorialOverlayState extends ConsumerState<TutorialOverlay>
 
     final s = view.state;
     if (s.phase == CombatPhase.won) {
+      _wonTimer ??= Timer(const Duration(milliseconds: 2600), () {
+        if (mounted) setState(() => _wonReady = true);
+      });
+      if (!_wonReady) return const SizedBox();
       return _Layer(
         hole: null,
         blockAll: true,
+        bottom: true,
         bubble: _Bubble(
           text: t.tutDone,
           actions: [
@@ -173,10 +183,18 @@ class _TutorialOverlayState extends ConsumerState<TutorialOverlay>
 
 /// Velo con un hueco sobre la zona explicada y el globo del maestro al lado.
 class _Layer extends StatelessWidget {
-  const _Layer(
-      {required this.hole, this.tapHole, required this.blockAll, required this.bubble});
+  const _Layer({
+    required this.hole,
+    this.tapHole,
+    required this.blockAll,
+    required this.bubble,
+    this.bottom = false,
+  });
 
   final Rect? hole;
+
+  /// Sin foco, el globo va abajo en vez de al centro (deja ver la victoria).
+  final bool bottom;
   final Rect? tapHole;
   final bool blockAll;
   final Widget bubble;
@@ -191,11 +209,15 @@ class _Layer extends StatelessWidget {
           Positioned.fill(
             child: _Blocker(hole: blockAll ? null : tapHole?.inflate(6)),
           ),
-          Positioned.fill(
-            child: IgnorePointer(child: CustomPaint(painter: _VeilPainter(h))),
-          ),
+          if (!bottom)
+            Positioned.fill(
+              child: IgnorePointer(child: CustomPaint(painter: _VeilPainter(h))),
+            ),
           if (h == null)
-            Center(child: Padding(padding: const EdgeInsets.all(16), child: bubble))
+            Align(
+              alignment: bottom ? const Alignment(0, 0.92) : Alignment.center,
+              child: Padding(padding: const EdgeInsets.all(16), child: bubble),
+            )
           else
             Positioned(
               left: 12,

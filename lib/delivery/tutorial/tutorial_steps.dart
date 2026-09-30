@@ -33,7 +33,7 @@ List<TutorialStep> tutorialSteps(AppLocalizations t) => [
       TutorialStep(t.tutKick, anchor: 'card:tan_tui+preview', waitCard: 'tan_tui', delayMs: 500),
       TutorialStep(t.tutForms, anchor: 'forms', delayMs: 700),
       TutorialStep(t.tutEndTurn, anchor: 'endTurn', waitTurn: 2),
-      TutorialStep(t.tutDeflect, anchor: 'enemyInfo', delayMs: 1800),
+      TutorialStep(t.tutDeflect, anchor: 'enemyInfo', delayMs: 2100),
       TutorialStep(t.tutActions, anchor: 'actions'),
       TutorialStep(t.tutFree),
     ];

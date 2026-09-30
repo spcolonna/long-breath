@@ -9,8 +9,9 @@ import '../theme.dart';
 ///
 /// Busca `assets/art/enemies/<id>.png`, después el placeholder común y, si no
 /// hay imágenes, dibuja una silueta. El aura del color del rango distingue a
-/// los enemigos aunque compartan imagen. Reacciona a golpes ([hitKey]),
-/// ataques ([attackKey]) y al Desequilibrio.
+/// los enemigos aunque compartan imagen. Reacciona a golpes ([hitKey]), a sus
+/// propios ataques ([attackKey]: amague y embestida), a guardias o cargas
+/// ([pulseKey]), al Desequilibrio y a la derrota ([dying]).
 class EnemySprite extends StatefulWidget {
   const EnemySprite({
     super.key,
@@ -18,6 +19,9 @@ class EnemySprite extends StatefulWidget {
     required this.staggered,
     required this.hitKey,
     required this.attackKey,
+    this.pulseKey = 0,
+    this.heavyHit = false,
+    this.dying = false,
     this.size = 200,
   });
 
@@ -25,7 +29,15 @@ class EnemySprite extends StatefulWidget {
   final bool staggered;
   final int hitKey;
   final int attackKey;
+  final int pulseKey;
+
+  /// El último golpe fue fuerte: más retroceso.
+  final bool heavyHit;
+  final bool dying;
   final double size;
+
+  /// Desde que empieza el ataque hasta que el golpe llega al héroe.
+  static const impactDelay = Duration(milliseconds: 330);
 
   @override
   State<EnemySprite> createState() => _EnemySpriteState();
@@ -36,15 +48,21 @@ class _EnemySpriteState extends State<EnemySprite> with TickerProviderStateMixin
       vsync: this, duration: const Duration(milliseconds: 2400))
     ..repeat(reverse: true);
   late final _hit = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 420));
+      vsync: this, duration: const Duration(milliseconds: 480));
   late final _attack = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 450));
+      vsync: this, duration: const Duration(milliseconds: 620));
+  late final _pulse = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 500));
+  late final _death = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1100));
 
   @override
   void didUpdateWidget(EnemySprite old) {
     super.didUpdateWidget(old);
     if (widget.hitKey != old.hitKey) _hit.forward(from: 0);
     if (widget.attackKey != old.attackKey) _attack.forward(from: 0);
+    if (widget.pulseKey != old.pulseKey) _pulse.forward(from: 0);
+    if (widget.dying && !old.dying) _death.forward(from: 0);
   }
 
   @override
@@ -52,7 +70,25 @@ class _EnemySpriteState extends State<EnemySprite> with TickerProviderStateMixin
     _idle.dispose();
     _hit.dispose();
     _attack.dispose();
+    _pulse.dispose();
+    _death.dispose();
     super.dispose();
+  }
+
+  /// Amague hacia atrás, embestida rápida hacia el jugador y regreso.
+  (double dy, double scale) _attackPose(double t) {
+    if (t == 0 || t == 1) return (0, 0);
+    if (t < 0.4) {
+      final k = Curves.easeOut.transform(t / 0.4);
+      return (-10 * k, -0.05 * k);
+    }
+    if (t < 0.53) {
+      final k = Curves.easeIn.transform((t - 0.4) / 0.13);
+      return (-10 + 40 * k, -0.05 + 0.25 * k);
+    }
+    if (t < 0.62) return (30, 0.2);
+    final k = Curves.easeOutCubic.transform((t - 0.62) / 0.38);
+    return (30 * (1 - k), 0.2 * (1 - k));
   }
 
   @override
@@ -61,13 +97,26 @@ class _EnemySpriteState extends State<EnemySprite> with TickerProviderStateMixin
     final accent = rankColor(widget.def.rank);
     final figure = _Figure(def: widget.def, size: size, accent: accent);
     return AnimatedBuilder(
-      animation: Listenable.merge([_idle, _hit, _attack]),
+      animation: Listenable.merge([_idle, _hit, _attack, _pulse, _death]),
       builder: (context, child) {
+        final idle = Curves.easeInOut.transform(_idle.value);
         final h = _hit.value;
-        final a = math.sin(math.pi * _attack.value);
-        final shake = _hit.isAnimating ? math.sin(h * math.pi * 7) * 10 * (1 - h) : 0.0;
-        final flash = _hit.isAnimating ? (1 - h) * 0.75 : 0.0;
-        final breathe = 1 + 0.02 * Curves.easeInOut.transform(_idle.value);
+        final hitting = _hit.isAnimating;
+        // Hit-stop: los primeros cuadros quedan congelados en blanco y aplastados.
+        const stop = 0.16;
+        final after = h < stop ? 0.0 : (h - stop) / (1 - stop);
+        final shake = hitting && h >= stop
+            ? math.sin(after * math.pi * 6) * (widget.heavyHit ? 14 : 9) * (1 - after)
+            : 0.0;
+        final knock = hitting ? (h < stop ? 1.0 : 1 - Curves.easeOut.transform(after)) : 0.0;
+        final flash = hitting ? (h < stop ? 0.9 : 0.9 * (1 - after)) : 0.0;
+        final squash = hitting ? 0.06 * knock : 0.0;
+        final (atkDy, atkScale) = _attackPose(_attack.value);
+        final pulse = math.sin(math.pi * _pulse.value);
+        final d = _death.value;
+        final dying = widget.dying;
+        final wobble = widget.staggered ? -0.08 + 0.05 * math.sin(_idle.value * math.pi * 2) : 0.0;
+        final breathe = 1 + 0.02 * idle;
         return SizedBox(
           width: size,
           height: size,
@@ -76,33 +125,41 @@ class _EnemySpriteState extends State<EnemySprite> with TickerProviderStateMixin
             clipBehavior: Clip.none,
             children: [
               // Aura del rango.
-              Container(
-                width: size * 0.95,
-                height: size * 0.95,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(colors: [
-                    accent.withValues(alpha: 0.35 + 0.1 * _idle.value),
-                    accent.withValues(alpha: 0),
-                  ]),
+              Opacity(
+                opacity: dying ? (1 - d).clamp(0, 1) : 1,
+                child: Container(
+                  width: size * (0.95 + 0.15 * pulse),
+                  height: size * (0.95 + 0.15 * pulse),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(colors: [
+                      accent.withValues(alpha: 0.35 + 0.1 * idle + 0.3 * pulse + 0.3 * flash),
+                      accent.withValues(alpha: 0),
+                    ]),
+                  ),
                 ),
               ),
-              Transform.translate(
-                offset: Offset(shake, 18 * a),
-                child: Transform.rotate(
-                  angle: widget.staggered ? -0.08 : 0,
-                  child: Transform.scale(
-                    scale: breathe + 0.14 * a,
-                    alignment: Alignment.bottomCenter,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          Colors.white.withValues(alpha: flash), BlendMode.srcATop),
-                      child: child,
+              Opacity(
+                opacity: dying ? (1 - Curves.easeIn.transform(d)).clamp(0, 1) : 1,
+                child: Transform.translate(
+                  offset: Offset(shake, atkDy - (widget.heavyHit ? 16 : 8) * knock - 26 * d),
+                  child: Transform.rotate(
+                    angle: wobble + (dying ? 0.12 * Curves.easeOut.transform(d) : 0),
+                    child: Transform.scale(
+                      scaleX: breathe + atkScale + 0.08 * pulse + squash + 0.25 * d,
+                      scaleY: breathe + atkScale + 0.08 * pulse - squash + 0.25 * d,
+                      alignment: Alignment.bottomCenter,
+                      child: ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                            Colors.white.withValues(alpha: dying ? math.max(flash, d) : flash),
+                            BlendMode.srcATop),
+                        child: child,
+                      ),
                     ),
                   ),
                 ),
               ),
-              if (widget.staggered)
+              if (widget.staggered && !dying)
                 Positioned(
                   top: size * 0.02,
                   child: _DizzyStars(progress: _idle.value, width: size * 0.4),
