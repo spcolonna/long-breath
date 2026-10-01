@@ -60,17 +60,56 @@ Fuente: programa de examen 2025 de la escuela (Shifu Matías Correa). Son las fo
 
 Las formas del juego son secuencias cortas de 3 a 5 cartas. Cada forma real se adapta como una secuencia inspirada en ella, con su nombre real, el hanzi y la traducción primero.
 
-| Faja | Mano vacía | Armas |
-| --- | --- | --- |
-| Amarillo 1º | Shu ho yi 组合一, Shu ho er 组合二, Wu bu chuen 五步拳 (puño de los cinco pasos) | Rutina de Damo palo |
-| Amarillo 2º | Liu hou chuen, Lian huan quan 连环拳 (puño encadenado), Tong bei quan 通背拳 | Rutina de Damo palo, sable hoja de sauce o espada jian fa 伏虎剑, Yi lu gun 一路棍 (palo, primera ruta) |
-| Verde 1º | Luohan shiba shou 罗汉十八手 (18 manos del Luohan), Candado de piedra, Xiao hong chuen 小洪拳 (pequeño puño rojo) | Sable hoja de sauce o espada, espada jian fa 伏虎剑, Er lu gun 二路棍, lanza Da Mo, San chen gun 三节棍 (palo de tres secciones) |
-| Verde 2º | Er lu da hong chuen 大洪拳二路, **Tigre** | Palo loco (y nociones de bu dao y guan dao / da dao) |
-| Azul 1º | Puño de 7 estrellas 七星拳, Ma ho tuei (12 ejercicios) | Espada de Damo (一), bu dao Da Mo (y nociones de cadena) |
-| Azul 2º | Er tang jia, **Serpiente** | Palo de Da Mo 阴手棍, sable Da Mo, cadena de Da Mo |
-| Rojo 1º | Ma ho tuei completo | Palo de Mei Hua, látigo de Da Mo |
-| Rojo 2º | Da hong chuen 大洪拳 (gran puño rojo), Di tang chuen (puño de suelo), **Mono** 猴拳 | Da dao de Da Mo 春秋大刀 |
-| Negro | **Borracho** 醉拳 | Espada de Da Mo (二), bastón de Da Mo Chang |
+Nombre en español primero, después chino y pinyin, y entre paréntesis cómo figura en el programa. "Por confirmar" marca la escritura china que se dedujo porque el programa no la trae.
+
+**Mano vacía**
+
+| Faja | Español | 中文 · pinyin | Programa | Estado |
+| --- | --- | --- | --- | --- |
+| Amarillo 1º | Combinación 1 | 组合一 · Zǔhé yī | Shu ho yi | |
+| Amarillo 1º | Combinación 2 | 组合二 · Zǔhé èr | Shu ho er | |
+| Amarillo 1º | Puño de los cinco pasos | 五步拳 · Wǔbù quán | Wu bu chuen | |
+| Amarillo 2º | Puño de las seis armonías | 六合拳 · Liùhé quán | Liu hou chuen | Por confirmar |
+| Amarillo 2º | Puño encadenado | 连环拳 · Liánhuán quán | Lian huan quan | |
+| Amarillo 2º | Puño que atraviesa la espalda | 通背拳 · Tōngbèi quán | Tong bei quan | |
+| Verde 1º | Las 18 manos del Luohan | 罗汉十八手 · Luóhàn shíbā shǒu | Luohan shiba shou | |
+| Verde 1º | Pequeño Puño Hong | 小洪拳 · Xiǎo hóng quán | Xiao hong chuen | |
+| Verde 2º | Gran Puño Hong, segunda ruta | 大洪拳二路 · Dà hóng quán èr lù | Er lu da hong chuen | |
+| Verde 2º | Puño del Tigre | 虎拳 · Hǔ quán | Tigre | |
+| Azul 1º | Puño de las siete estrellas | 七星拳 · Qīxīng quán | Puño de 7 estrellas | |
+| Azul 1º y Rojo 1º | Las 12 rutas de patadas de la puerta | 十二路门户腿 · Shí'èr lù ménhù tuǐ | Ma ho tuei (12 ejercicios; completo en Rojo 1º) | |
+| Azul 2º | (pendiente) | — | Er tang jia | Prevista. Se identifica con un video |
+| Azul 2º | Puño de la Serpiente | 蛇拳 · Shé quán | Serpiente | |
+| Rojo 2º | Gran Puño Hong | 大洪拳 · Dà hóng quán | Da hong chuen | |
+| Rojo 2º | Puño de suelo | 地趟拳 · Dìtáng quán | Di tang chuen | |
+| Rojo 2º | Puño del Mono | 猴拳 · Hóu quán | Mono | |
+| Negro | Puño del Borracho | 醉拳 · Zuì quán | Borracho | |
+
+Descartada por ahora: Candado de piedra (Verde 1º).
+
+洪 (Hong) significa "vasto"; "rojo" se escribe 红. La forma del juego que hoy se llama "Pequeño Puño Rojo" es esta. Queda por decidir si se mantiene la traducción popular o se pasa a "Pequeño Puño Hong".
+
+**Armas**
+
+| Faja | Español | 中文 · pinyin | Programa | Estado |
+| --- | --- | --- | --- | --- |
+| Amarillo 1º y 2º | Palo de Damo | 达摩棍 · Dámó gùn | Rutina de Damo palo | |
+| Amarillo 2º y Verde 1º | Sable hoja de sauce | 柳叶刀 · Liǔyè dāo | Sable hoja de sauce | |
+| Amarillo 2º y Verde 1º | Espada que somete al tigre | 伏虎剑 · Fúhǔ jiàn | Espada jian fa | |
+| Amarillo 2º | Palo, primera ruta | 一路棍 · Yī lù gùn | Yi lu gun | |
+| Verde 1º | Palo, segunda ruta | 二路棍 · Èr lù gùn | Er lu gun | |
+| Verde 1º | Lanza de Damo | 达摩枪 · Dámó qiāng | Lanza Da Mo | |
+| Verde 1º | Palo de tres secciones | 三节棍 · Sānjié gùn | San chen gun | |
+| Verde 2º | Palo de fuego (también "palo loco") | 烧火棍 · Shāohuǒ gùn | Palo loco | Por confirmar. "Palo de fuego" apunta al 烧火棍 de Shaolin; "palo loco" apunta a 疯魔棍 Fēngmó gùn, que podría ser otro nombre de la misma forma |
+| Azul 1º | Espada de Damo (1.ª y 2.ª, la 2.ª en Negro) | 达摩剑 · Dámó jiàn | Espada de Damo (一) / (二) | |
+| Azul 1º | Sable de mango largo de Damo | 朴刀 · Pǔdāo | Bu dao Da Mo | |
+| Azul 2º | Palo de la mano yin | 阴手棍 · Yīnshǒu gùn | Palo de Da Mo | |
+| Azul 2º | Sable de Damo | 达摩刀 · Dámó dāo | Sable Da Mo | |
+| Azul 2º | Cadena de Damo (látigo de nueve secciones) | 九节鞭 · Jiǔjié biān | Cadena de Da Mo / jiu yi pien | |
+| Rojo 1º | Palo de la flor de ciruelo | 梅花棍 · Méihuā gùn | Palo de Mei Hua | |
+| Rojo 1º | Látigo de Damo | 达摩鞭 · Dámó biān | Látigo de Da Mo | Por confirmar si es la misma arma que la cadena |
+| Rojo 2º | Gran sable de Primavera y Otoño | 春秋大刀 · Chūnqiū dàdāo | Da dao de Da Mo | |
+| Negro | Bastón de Damo | 达摩杖 · Dámó zhàng | Bastón de Da Mo Chang | Por confirmar ("Chang" podría ser 杖 o 长) |
 
 - **Caminos:** Tigre y Serpiente ya son caminos. **Mono** y **Borracho** son candidatos a caminos nuevos.
 - **Armas:** el programa da casi uno a uno la lista de la idea de armas por nivel (palo, espada, sable, lanza, san chen gun, bu dao, da dao, cadena, látigo, bastón).
