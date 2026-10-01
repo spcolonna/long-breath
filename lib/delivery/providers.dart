@@ -8,6 +8,8 @@ import '../infrastructure/asset_game_data_loader.dart';
 import '../infrastructure/content_text_loader.dart';
 import 'audio/game_audio.dart';
 import 'content_text.dart';
+import '../domain/model/enums.dart';
+import '../infrastructure/progress_storage.dart';
 import '../infrastructure/run_storage.dart';
 import '../infrastructure/tutorial_storage.dart';
 
@@ -48,6 +50,15 @@ final savedRunProvider = FutureProvider(
 
 final tutorialStorageProvider = Provider<TutorialStorage>(
   (ref) => TutorialStorage(),
+);
+
+final progressStorageProvider = Provider<ProgressStorage>(
+  (ref) => ProgressStorage(),
+);
+
+/// Dificultades en las que el jugador ya ganó una subida.
+final winsProvider = FutureProvider<Set<Difficulty>>(
+  (ref) => ref.watch(progressStorageProvider).wins(),
 );
 
 final lessonsDoneProvider = FutureProvider<Set<String>>(

@@ -525,6 +525,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Para maestros: menos Vida y cada error se paga.';
 
   @override
+  String get difficultyLocked => 'Bloqueada';
+
+  @override
+  String get difficultyShifuLocked =>
+      'Se desbloquea al ganar una subida en Difícil.';
+
+  @override
   String difficultyStats(int hp, int heal, int enemy) {
     return 'Vida $hp · Fuente +$heal · Rivales $enemy%';
   }

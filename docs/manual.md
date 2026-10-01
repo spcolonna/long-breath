@@ -95,6 +95,8 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 | Difícil 难 | 50 | +15 | 110% de Vida y daño |
 | Shifu 师 | 45 | +15 | 120% de Vida y daño, 110% de Estructura |
 
+Shifu arranca bloqueada: se ve en blanco con un candado y, al tocarla, avisa que se desbloquea al ganar una subida en Difícil.
+
 ## Tu camino
 
 | Camino | Robás por turno | Aliento por turno | Retenés |

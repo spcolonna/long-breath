@@ -958,6 +958,18 @@ abstract class AppLocalizations {
   /// **'Para maestros: menos Vida y cada error se paga.'**
   String get difficultyShifuDesc;
 
+  /// No description provided for @difficultyLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Bloqueada'**
+  String get difficultyLocked;
+
+  /// No description provided for @difficultyShifuLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Se desbloquea al ganar una subida en Difícil.'**
+  String get difficultyShifuLocked;
+
   /// No description provided for @difficultyStats.
   ///
   /// In es, this message translates to:
