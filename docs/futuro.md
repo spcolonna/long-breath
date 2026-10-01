@@ -36,6 +36,20 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - Grulla: desvíos y contraataques.
 - **Leopardo** como cuarto camino (velocidad: cartas de costo 0 y robar). El Dragón queda sellado por la historia.
 
+### Armas (bīngqì 兵器)
+- **Mejoras que son armas:** palo/bastón (gùn 棍), espada (jiàn 剑), pudao (朴刀) y otras, cada una con **nivel 1, 2 y 3**. Se consiguen y suben en la subida (recompensa, mercader o maestro errante).
+- **Qué cambian:** cada arma le da identidad al mazo. Por ejemplo:
+  - Bastón: alcance y Estructura (barridos bajos, golpes que desequilibran).
+  - Espada: precisión (más daño contra Guardia, desvíos que cortan).
+  - Pudao: golpes pesados y lentos (mucho daño, cuestan más Aliento).
+
+  Pueden ser un talismán especial (uno solo equipado), o sumar cartas propias del arma al pool de recompensas. El nivel sube los números o desbloquea una carta más.
+- **Combina con los caminos:** por ejemplo, la Serpiente con espada o el Tigre con pudao, con bonus si el arma y el camino se llevan bien.
+- **Arte (sí pide assets nuevos):** el héroe tiene que verse con el arma.
+  - Para no multiplicar sprites (camino × arma × nivel), el arma va en una **capa aparte**, anclada a la mano del héroe, que se mueve con las mismas animaciones de código del sprite.
+  - Eso es 1 imagen por arma, más un anclaje por camino.
+  - El nivel se muestra por código (brillo, borla o cinta de color, aura), sin arte extra. Si alguna pose no encaja con la capa, recién ahí se dibuja el sprite completo.
+
 ### Formas
 - **Más formas** en lugar de 2: formas de cada camino y formas largas de 5 o 6 pasos con gran recompensa.
 - **Formas con cadena de postura:** cada paso tiene que jugarse en una postura determinada.
