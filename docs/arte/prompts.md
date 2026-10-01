@@ -500,7 +500,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Bloqueo 格挡
+#### Bloqueo medio 格挡
 
 **Destino:** `assets/art/cards/ge_dang.png`, cuadrada (1024×1024), fondo transparente.
 
