@@ -232,7 +232,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 El juego ya les agrega un aura del color del rango (jade común, violeta élite, bermellón jefe), así que no hace falta pintarla.
 
-### Eco de Murciélago (`bat`, común)
+### Murciélago de Jade (`bat`, común)
 
 Ataca dos veces y chilla para hacerte descartar.
 
@@ -250,7 +250,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Salamandra de la Grieta (`salamander`, común)
+### Salamandra de Brasa (`salamander`, común)
 
 Guardia que absorbe daño; se rompe con palmas y empujes.
 
@@ -268,7 +268,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Gólem de Estalactita (`golem`, común)
+### Gólem de Cuarzo (`golem`, común)
 
 Inamovible: hay que desequilibrarlo.
 
@@ -788,4 +788,4 @@ backgrounds, no photorealism, no text, no watermark.
 
 ## Pendiente
 
-- Algunos nombres de enemigos todavía vienen del ambiente de cueva: "Estalactita", "Grieta" y el eco del murciélago. En los prompts ya los ubiqué en la montaña; queda decidir si también se renombran en `assets/data/enemies.json`.
+- Los nombres de cueva ya se cambiaron por nombres de montaña: Murciélago de Jade, Salamandra de Brasa y Gólem de Cuarzo.

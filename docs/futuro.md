@@ -18,8 +18,6 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - **Calibrar el modelo de tiempo** con partidas reales, y confirmar las dificultades con personas.
 - **Duración acorde al precio (requisito de la versión final).** Hoy una subida se resuelve en unos 12 minutos y el juego completo (3 etapas, prototipo) en alrededor de una hora. Para la versión que se venda, eso no alcanza: la duración total tiene que estar a la altura de lo que cuesta. Antes de lanzar hay que fijar el precio y, con él, la meta de horas (ver sección 3), y verificarla con el simulador y con personas: horas hasta la primera victoria, horas hasta ganar con los tres caminos y horas de rejugabilidad (dificultades, Picos, cultivo).
 - **Arte de enemigos faltante:** `disciple.png`, `monk.png` y `dragon.png` en `assets/art/enemies/`.
-- **Nombres de cueva:** "Salamandra de la Grieta", "Gólem de Estalactita" y "Eco de Murciélago" vienen de la vieja idea de la cueva. Hay que pasarlos a nombres de montaña, épicos o memorables (`assets/l10n/content/es.json`).
-- **Zoom de la carta seleccionada:** hoy es ×1,5 y tapa parte de la vista previa. Evaluar 1,35.
 
 ## 2. Ideas de mecánica
 

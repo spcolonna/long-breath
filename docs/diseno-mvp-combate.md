@@ -176,9 +176,9 @@ Cada enemigo enseña o pone a prueba una mecánica, y su regla especial obliga a
 
 | Enemigo | Rango | Vida | Estructura | Patrón cíclico | Regla especial |
 | --- | --- | --- | --- | --- | --- |
-| Eco de Murciélago | Común | 18 | 6 | Alto 3×2 (E1) → Alto 6 (E2) → Chillido | Chillido: descartás 1 carta a tu elección. En un ataque doble, la Guardia se aplica a cada golpe |
-| Salamandra de la Grieta | Común | 24 | 8 | Bajo 7 (E2) → Se entierra (Guardia 8) → Bajo 9 (E3) | Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes |
-| Gólem de Estalactita | Común | 30 | 12 | Medio 10 (E4) → Carga (su próximo ataque +5) → Medio 10 (E4) | Inamovible: recibe la mitad del daño salvo que esté Desequilibrado |
+| Murciélago de Jade | Común | 18 | 6 | Alto 3×2 (E1) → Alto 6 (E2) → Chillido | Chillido: descartás 1 carta a tu elección. En un ataque doble, la Guardia se aplica a cada golpe |
+| Salamandra de Brasa | Común | 24 | 8 | Bajo 7 (E2) → Se entierra (Guardia 8) → Bajo 9 (E3) | Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes |
+| Gólem de Cuarzo | Común | 30 | 12 | Medio 10 (E4) → Carga (su próximo ataque +5) → Medio 10 (E4) | Inamovible: recibe la mitad del daño salvo que esté Desequilibrado |
 | Discípulo Perdido | Común | 32 | 10 | Alto 6 (E2) → Medio 8 (E2) → Barrido bajo 6 (E4) | Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +4 de daño y +2 a Estructura |
 | Monje sin Rostro | Élite | 55 | 15 | Medio 9 (E3) → Interrumpir: alto 5 → Bajo 12 (E4) | Interrumpir: si no lo desviás, tus formas en progreso vuelven a 0 |
 | Eco del Dragón 龙音 Lóng Yīn | Guardián | 90 | 20 | Fase 1: Alto 8 (E2) → Medio 10 (E3) → Bajo 8 (E4). Fase 2: Alto 10 (E3) → Bajo 10 (E3) → Aliento del Dragón | Fase 2 empieza al 50% de Vida. Aliento del Dragón: medio 25 (E8), con cuenta regresiva visible. Se evita desviándolo o dejándolo Desequilibrado antes |
