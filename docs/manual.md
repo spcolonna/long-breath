@@ -215,7 +215,7 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Gólem de Estalactita | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
 | Salamandra de la Grieta | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
-| Eco del Dragón | Guardián | 150 | 18 | Dos fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes |
+| Eco del Dragón | Guardián | 175 | 18 | Tres fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Al 30% entra en la última fase: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento (medio 24, E8) cada dos acciones, con un barrido bajo doble (2 × 6) entre medio |
 
 En la bifurcación conviene elegir según el mazo: el **Gólem** premia romper Estructura; la **Salamandra**, palmas y empujes.
 

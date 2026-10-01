@@ -382,13 +382,27 @@ void main() {
 
     test('Eco del Dragón: fase 2 al 50% con cuenta regresiva', () {
       var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
-      s = s.copyWith(enemy: s.enemy.copyWith(hp: 50));
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 88));
       final r = play(s, 'gongbu_chongquan');
       s = r.state;
       expect(r.events.whereType<EnemyPhaseChanged>(), hasLength(1));
       expect(s.enemy.phaseIndex, 1);
       expect(engine.intentView(s).countdown, 2);
       s = endTurn(s).state;
+      expect(engine.intentView(s).countdown, 1);
+    });
+
+    test('Eco del Dragón: fase 3 al 30%, le crecen escamas y el Aliento llega antes', () {
+      var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
+      // En fase 2, sin escamas y apenas arriba del 30% (52,5 de 175).
+      s = s.copyWith(
+          enemy: s.enemy.copyWith(hp: 55, phaseIndex: 1, scales: 0));
+      final r = play(s, 'gongbu_chongquan');
+      s = r.state;
+      expect(r.events.whereType<EnemyPhaseChanged>().single.phase, 2);
+      expect(r.events.whereType<ScalesRegrown>().single.scales, 2);
+      expect(s.enemy.scales, 2);
+      // Barrido doble y después el Aliento: una acción de aviso.
       expect(engine.intentView(s).countdown, 1);
     });
 

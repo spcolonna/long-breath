@@ -71,7 +71,7 @@
     },
     "dragon": {
       "name": "Eco del Dragón",
-      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado. Cada vez que lo desequilibrás, pierde una escama para siempre. Fase 2 al 50% de Vida: anuncia el Aliento del Dragón, un golpe MEDIO enorme con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes."
+      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado. Cada vez que lo desequilibrás, pierde una escama para siempre. Fase 2 al 50% de Vida: anuncia el Aliento del Dragón, un golpe MEDIO enorme con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Fase 3 al 30%: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento cada dos acciones, con un barrido BAJO doble entre medio."
     },
     "dummy_basic": {
       "name": "Muñeco de madera",

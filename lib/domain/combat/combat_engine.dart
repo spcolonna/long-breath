@@ -461,6 +461,11 @@ class CombatEngine {
         e.phaseIndex = i;
         e.patternIndex = 0;
         events.add(EnemyPhaseChanged(i));
+        final regrow = phases[i].scales;
+        if (regrow != null && e.scales < regrow) {
+          e.scales = regrow;
+          events.add(ScalesRegrown(regrow));
+        }
       }
     }
   }

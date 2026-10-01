@@ -45,6 +45,7 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Salamandra:** su Guardia dura hasta su siguiente acción.
 - **Escamas (Eco del Dragón, 4):** restan su valor a cada golpe (cartas, formas y desvíos), después de la mitad del Inamovible y antes de la Guardia. No cuentan mientras está Desequilibrado. Al desequilibrarse pierde una escama (evento `ScaleShed`), para todo el combate.
 - **Eco del Dragón:** al cruzar el 50% de Vida cambia de fase en el acto y el ciclo empieza desde el paso 0. La intención muestra cuántas acciones faltan para el Aliento del Dragón.
+- **Fase 3 del Dragón (30%):** las escamas vuelven a 2 si tenía menos (evento `ScalesRegrown`); el ciclo pasa a barrido bajo doble y Aliento. Si un golpe cruza los dos umbrales a la vez, entra directo en la fase 3.
 
 ## Mano
 - Al empezar el turno robás el tamaño de mano completo de tu camino; las cartas retenidas son extra y se suman. Las cartas robadas por efectos también pueden superar ese tamaño.

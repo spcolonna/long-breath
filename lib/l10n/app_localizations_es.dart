@@ -21,8 +21,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get styleTitle => 'Elegí tu camino';
 
   @override
-  String get homeTagline =>
-      'Subís como novicio. El camino se elige en la montaña.';
+  String get homeTagline => 'Subís como novicio. El camino se elige en la montaña.';
 
   @override
   String get shrineNode => 'Santuario';
@@ -31,8 +30,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shrineTitle => 'Santuario de los animales';
 
   @override
-  String get shrineHint =>
-      'Dos espíritus te esperan. El camino que tomes tiñe tu túnica y cambia cómo peleás, hasta el final de la subida.';
+  String get shrineHint => 'Dos espíritus te esperan. El camino que tomes tiñe tu túnica y cambia cómo peleás, hasta el final de la subida.';
 
   @override
   String get shrineConfirm => 'Tomar este camino';
@@ -85,8 +83,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rewardTitle => 'Recompensa';
 
   @override
-  String get rewardHint =>
-      'Elegí 1 carta o salteá. Un mazo chico es más predecible.';
+  String get rewardHint => 'Elegí 1 carta o salteá. Un mazo chico es más predecible.';
 
   @override
   String get skip => 'Saltear';
@@ -260,15 +257,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get stanceHintMabu =>
-      'Puños y palmas +2 · E recibida ½ · patadas +1 costo';
+  String get stanceHintMabu => 'Puños y palmas +2 · E recibida ½ · patadas +1 costo';
 
   @override
   String get stanceHintGongbu => 'Puños +3 daño y +1 E · recibís +2 E';
 
   @override
-  String get stanceHintXubu =>
-      'Patadas −1 costo y +2 · desvío +1 Aliento · defensas −2';
+  String get stanceHintXubu => 'Patadas −1 costo y +2 · desvío +1 Aliento · defensas −2';
 
   @override
   String changeStance(String breath) {
@@ -280,6 +275,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get enemyPhase2 => '¡Segunda fase!';
+
+  @override
+  String get enemyPhase3 => '¡Última fase!';
 
   @override
   String get formCompleted => '¡Forma completa!';
@@ -394,60 +392,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tutHome => 'Volver al inicio';
 
   @override
-  String get tutWelcome =>
-      'Bienvenido al patio de la escuela del Dragón Dormido. Antes de subir la montaña vas a practicar con el muñeco de madera. Yo te guío.';
+  String get tutWelcome => 'Bienvenido al patio de la escuela del Dragón Dormido. Antes de subir la montaña vas a practicar con el muñeco de madera. Yo te guío.';
 
   @override
-  String get tutIntent =>
-      'Este globo es lo que el muñeco va a hacer en su turno: un golpe ALTO (flecha arriba) de 4 de daño y 2 a tu Estructura (E). El enemigo siempre avisa antes de actuar.';
+  String get tutIntent => 'Este globo es lo que el muñeco va a hacer en su turno: un golpe ALTO (flecha arriba) de 4 de daño y 2 a tu Estructura (E). El enemigo siempre avisa antes de actuar.';
 
   @override
-  String get tutEnemy =>
-      'Su Vida (roja) y su Estructura (violeta). Llevá la Vida a 0 para ganar. Si le vaciás la Estructura, queda Desequilibrado: pierde su acción y recibe el doble de daño.';
+  String get tutEnemy => 'Su Vida (roja) y su Estructura (violeta). Llevá la Vida a 0 para ganar. Si le vaciás la Estructura, queda Desequilibrado: pierde su acción y recibe el doble de daño.';
 
   @override
-  String get tutPlayer =>
-      'Este sos vos: tu Vida, tu Estructura, tu postura actual (Caballo) y tu Guardia, el escudo de la derecha.';
+  String get tutPlayer => 'Este sos vos: tu Vida, tu Estructura, tu postura actual (Caballo) y tu Guardia, el escudo de la derecha.';
 
   @override
-  String get tutHand =>
-      'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde.';
+  String get tutHand => 'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde.';
 
   @override
-  String get tutPlayFist =>
-      'Tocá Puñetazo a fondo una vez para ver qué hace y otra vez para jugarla.';
+  String get tutPlayFist => 'Tocá Puñetazo a fondo una vez para ver qué hace y otra vez para jugarla.';
 
   @override
-  String get tutDefend =>
-      'Ahora defendete. El muñeco va a pegar ALTO y Paso atrás da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.';
+  String get tutDefend => 'Ahora defendete. El muñeco va a pegar ALTO y Paso atrás da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.';
 
   @override
-  String get tutKick =>
-      'Quedaste en postura Vacía, donde las patadas cuestan 1 menos: Patada látigo ahora es gratis. Jugala.';
+  String get tutKick => 'Quedaste en postura Vacía, donde las patadas cuestan 1 menos: Patada látigo ahora es gratis. Jugala.';
 
   @override
-  String get tutForms =>
-      'Puñetazo a fondo y Patada látigo son los dos primeros pasos del Pequeño Puño Rojo. Si completás una forma en orden, se desata un golpe grande. Las defensas no la interrumpen.';
+  String get tutForms => 'Puñetazo a fondo y Patada látigo son los dos primeros pasos del Pequeño Puño Rojo. Si completás una forma en orden, se desata un golpe grande. Las defensas no la interrumpen.';
 
   @override
-  String get tutEndTurn =>
-      'Tu Guardia está lista. Terminá el turno y mirá qué pasa.';
+  String get tutEndTurn => 'Tu Guardia está lista. Terminá el turno y mirá qué pasa.';
 
   @override
-  String get tutDeflect =>
-      '¡Desvío! No recibiste daño, el muñeco perdió Estructura y quedó Desequilibrado: pierde su acción y recibe el doble. Además, el desvío te da Aliento extra para este turno.';
+  String get tutDeflect => '¡Desvío! No recibiste daño, el muñeco perdió Estructura y quedó Desequilibrado: pierde su acción y recibe el doble. Además, el desvío te da Aliento extra para este turno.';
 
   @override
-  String get tutActions =>
-      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.';
+  String get tutActions => 'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.';
 
   @override
-  String get tutFree =>
-      'Ahora rematalo vos. Mientras esté Desequilibrado, cada golpe cuenta doble.';
+  String get tutFree => 'Ahora rematalo vos. Mientras esté Desequilibrado, cada golpe cuenta doble.';
 
   @override
-  String get tutDone =>
-      '¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.';
+  String get tutDone => '¡Bien hecho! En la montaña, después de cada combate sumás una carta a tu mazo. La Vida no se recupera sola, solo en la fuente. A mitad de camino, el Santuario te ofrece dos caminos. Y mirá siempre el globo antes de jugar.';
 
   @override
   String get blocked => 'Bloqueado';
@@ -510,26 +494,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get difficultyShifu => 'Shifu';
 
   @override
-  String get difficultyEasyDesc =>
-      'Para conocer la montaña sin apuro. Más Vida y rivales más blandos.';
+  String get difficultyEasyDesc => 'Para conocer la montaña sin apuro. Más Vida y rivales más blandos.';
 
   @override
   String get difficultyNormalDesc => 'La subida tal como fue pensada.';
 
   @override
-  String get difficultyHardDesc =>
-      'Rivales más duros y una fuente que cura menos.';
+  String get difficultyHardDesc => 'Rivales más duros y una fuente que cura menos.';
 
   @override
-  String get difficultyShifuDesc =>
-      'Para maestros: menos Vida y cada error se paga.';
+  String get difficultyShifuDesc => 'Para maestros: menos Vida y cada error se paga.';
 
   @override
   String get difficultyLocked => 'Bloqueada';
 
   @override
-  String get difficultyShifuLocked =>
-      'Se desbloquea al ganar una subida en Difícil.';
+  String get difficultyShifuLocked => 'Se desbloquea al ganar una subida en Difícil.';
 
   @override
   String difficultyStats(int hp, int heal, int enemy) {
@@ -543,6 +523,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get scaleShed => '¡Escama arrancada!';
+
+  @override
+  String get scalesRegrown => '¡Le crecen escamas!';
+
+  @override
+  String scalesNow(int count) {
+    return 'Ahora tiene $count';
+  }
 
   @override
   String scalesLeft(int count) {
@@ -559,8 +547,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuReplaceRunTitle => '¿Empezar una subida nueva?';
 
   @override
-  String get menuReplaceRunBody =>
-      'Tenés una subida guardada. Si empezás otra, se pierde.';
+  String get menuReplaceRunBody => 'Tenés una subida guardada. Si empezás otra, se pierde.';
 
   @override
   String get menuReplaceRunOk => 'Empezar de nuevo';
@@ -572,8 +559,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lessonsTitle => 'Aprender a jugar';
 
   @override
-  String get lessonsIntro =>
-      'Lecciones cortas con el maestro. Cada una se habilita al terminar la anterior y podés repetirlas cuando quieras.';
+  String get lessonsIntro => 'Lecciones cortas con el maestro. Cada una se habilita al terminar la anterior y podés repetirlas cuando quieras.';
 
   @override
   String get lessonLocked => 'Completá la lección anterior';
@@ -604,70 +590,58 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lessonLostHint => 'No pasa nada: es práctica. Probá de nuevo.';
 
   @override
-  String get lessonAllDone =>
-      '¡Terminaste el entrenamiento! Ya podés subir la montaña.';
+  String get lessonAllDone => '¡Terminaste el entrenamiento! Ya podés subir la montaña.';
 
   @override
   String get lesStrikeTitle => 'Tu primer golpe';
 
   @override
-  String get lesStrikeBlurb =>
-      'La pantalla, las cartas, el Aliento y cómo atacar.';
+  String get lesStrikeBlurb => 'La pantalla, las cartas, el Aliento y cómo atacar.';
 
   @override
-  String get lesStrikeDone =>
-      'Aprendiste a leer una carta, a usar tu Aliento y a atacar.';
+  String get lesStrikeDone => 'Aprendiste a leer una carta, a usar tu Aliento y a atacar.';
 
   @override
   String get lesDefendTitle => 'El rival avisa';
 
   @override
-  String get lesDefendBlurb =>
-      'Leer el globo del rival, la Guardia, las alturas y el desvío.';
+  String get lesDefendBlurb => 'Leer el globo del rival, la Guardia, las alturas y el desvío.';
 
   @override
-  String get lesDefendDone =>
-      'Aprendiste a leer al rival y a defenderte a la altura justa.';
+  String get lesDefendDone => 'Aprendiste a leer al rival y a defenderte a la altura justa.';
 
   @override
   String get lesStancesTitle => 'Posturas';
 
   @override
-  String get lesStancesBlurb =>
-      'Caballo, Arco y Vacía: preparar la postura antes de pegar.';
+  String get lesStancesBlurb => 'Caballo, Arco y Vacía: preparar la postura antes de pegar.';
 
   @override
-  String get lesStancesDone =>
-      'Aprendiste a preparar tu postura antes de pegar.';
+  String get lesStancesDone => 'Aprendiste a preparar tu postura antes de pegar.';
 
   @override
   String get lesStructureTitle => 'Estructura';
 
   @override
-  String get lesStructureBlurb =>
-      'Desequilibrar al rival y cuidar tu propio equilibrio.';
+  String get lesStructureBlurb => 'Desequilibrar al rival y cuidar tu propio equilibrio.';
 
   @override
-  String get lesStructureDone =>
-      'Aprendiste a desequilibrar al rival para pegarle el doble.';
+  String get lesStructureDone => 'Aprendiste a desequilibrar al rival para pegarle el doble.';
 
   @override
   String get lesFormsTitle => 'Formas';
 
   @override
-  String get lesFormsBlurb =>
-      'Encadenar pasos para un golpe extra, y Respirar.';
+  String get lesFormsBlurb => 'Encadenar pasos para un golpe extra, y Respirar.';
 
   @override
-  String get lesFormsDone =>
-      'Aprendiste a completar una forma y a usar Respirar.';
+  String get lesFormsDone => 'Aprendiste a completar una forma y a usar Respirar.';
 
   @override
   String get lesClimbTitle => 'La subida';
 
   @override
-  String get lesClimbBlurb =>
-      'El mapa, las recompensas, la fuente y los caminos.';
+  String get lesClimbBlurb => 'El mapa, las recompensas, la fuente y los caminos.';
 
   @override
   String get pauseTitle => 'Pausa';
@@ -682,8 +656,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pauseToMenu => 'Volver al menú';
 
   @override
-  String get pauseToMenuHint =>
-      'La subida queda guardada: con \"Continuar\" volvés al mapa, antes de este combate.';
+  String get pauseToMenuHint => 'La subida queda guardada: con \"Continuar\" volvés al mapa, antes de este combate.';
 
   @override
   String get pauseRestartLesson => 'Reiniciar lección';
@@ -734,16 +707,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get illIntentTitle => 'El globo del rival';
 
   @override
-  String get illIntentAttack =>
-      'Ataque: la flecha es la altura, el número el daño y E el daño a tu Estructura.';
+  String get illIntentAttack => 'Ataque: la flecha es la altura, el número el daño y E el daño a tu Estructura.';
 
   @override
-  String get illIntentGuard =>
-      'Se cubre: gana Guardia contra tus próximos golpes.';
+  String get illIntentGuard => 'Se cubre: gana Guardia contra tus próximos golpes.';
 
   @override
-  String get illIntentCharge =>
-      'Carga: junta fuerza, su próximo golpe pega más.';
+  String get illIntentCharge => 'Carga: junta fuerza, su próximo golpe pega más.';
 
   @override
   String get illIntentDiscard => 'Chillido: te hace descartar cartas.';
@@ -752,12 +722,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get illHeightsTitle => 'Alturas';
 
   @override
-  String get illHeightsSame =>
-      'Misma altura: la Guardia absorbe todo. Si alcanza, desviás el golpe (化).';
+  String get illHeightsSame => 'Misma altura: la Guardia absorbe todo. Si alcanza, desviás el golpe (化).';
 
   @override
-  String get illHeightsOther =>
-      'Otra altura: la Guardia absorbe solo la mitad.';
+  String get illHeightsOther => 'Otra altura: la Guardia absorbe solo la mitad.';
 
   @override
   String get illHigh => 'Alto';
@@ -772,8 +740,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get illStancesTitle => 'Posturas';
 
   @override
-  String get illStanceMabuPro =>
-      'Puños y palmas +2. Recibís la mitad de daño a la Estructura.';
+  String get illStanceMabuPro => 'Puños y palmas +2. Recibís la mitad de daño a la Estructura.';
 
   @override
   String get illStanceMabuCon => 'Las patadas cuestan 1 más.';
@@ -785,8 +752,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get illStanceGongbuCon => 'Recibís 2 más de daño a la Estructura.';
 
   @override
-  String get illStanceXubuPro =>
-      'Patadas: cuestan 1 menos y pegan +2. Desviar da +1 Aliento extra.';
+  String get illStanceXubuPro => 'Patadas: cuestan 1 menos y pegan +2. Desviar da +1 Aliento extra.';
 
   @override
   String get illStanceXubuCon => 'Las defensas dan 2 menos de Guardia.';
@@ -795,236 +761,184 @@ class AppLocalizationsEs extends AppLocalizations {
   String get illTurnTitle => 'Orden de un turno';
 
   @override
-  String get illTurn1 =>
-      'Tu Guardia vuelve a 0, robás cartas y recuperás el Aliento.';
+  String get illTurn1 => 'Tu Guardia vuelve a 0, robás cartas y recuperás el Aliento.';
 
   @override
-  String get illTurn2 =>
-      'Jugás cartas: tocá una para ver qué hace y otra vez para jugarla.';
+  String get illTurn2 => 'Jugás cartas: tocá una para ver qué hace y otra vez para jugarla.';
 
   @override
-  String get illTurn3 =>
-      'Terminás el turno: las cartas que quedan se descartan.';
+  String get illTurn3 => 'Terminás el turno: las cartas que quedan se descartan.';
 
   @override
-  String get illTurn4 =>
-      'El rival hace lo que anunció en su globo y anuncia lo próximo.';
+  String get illTurn4 => 'El rival hace lo que anunció en su globo y anuncia lo próximo.';
 
   @override
   String get illBrokenTitle => 'Desequilibrado';
 
   @override
-  String get illBroken =>
-      'Si la Estructura del rival llega a 0, pierde su próxima acción y recibe el doble de daño hasta el final de tu próximo turno. Si te pasa a vos, empezás el turno siguiente con 2 de Aliento menos.';
+  String get illBroken => 'Si la Estructura del rival llega a 0, pierde su próxima acción y recibe el doble de daño hasta el final de tu próximo turno. Si te pasa a vos, empezás el turno siguiente con 2 de Aliento menos.';
 
   @override
   String get illFormsTitle => 'Formas';
 
   @override
-  String get illForms =>
-      'Secuencias fijas de cartas. Si las jugás en orden, el último paso suma un golpe extra. Un ataque fuera de orden la interrumpe; las defensas y técnicas no.';
+  String get illForms => 'Secuencias fijas de cartas. Si las jugás en orden, el último paso suma un golpe extra. Un ataque fuera de orden la interrumpe; las defensas y técnicas no.';
 
   @override
-  String get lesStrike1 =>
-      'Bienvenido. Esto es un combate por turnos: vos sos el de la izquierda y el muñeco de madera es tu rival. En tu turno jugás cartas; después el rival hace lo suyo. Te voy a explicar todo, paso a paso.';
+  String get lesStrike1 => 'Bienvenido. Esto es un combate por turnos: vos sos el de la izquierda y el muñeco de madera es tu rival. En tu turno jugás cartas; después el rival hace lo suyo. Te voy a explicar todo, paso a paso.';
 
   @override
-  String get lesStrike2 =>
-      'Esto sos vos. La barra verde es tu Vida: si llega a 0, perdés. La violeta es tu Estructura, tu equilibrio: más adelante vas a ver para qué sirve.';
+  String get lesStrike2 => 'Esto sos vos. La barra verde es tu Vida: si llega a 0, perdés. La violeta es tu Estructura, tu equilibrio: más adelante vas a ver para qué sirve.';
 
   @override
-  String get lesStrike3 =>
-      'Este es el rival: su nombre, su Vida (roja) y su Estructura (violeta). Para ganar, llevá su Vida a 0.';
+  String get lesStrike3 => 'Este es el rival: su nombre, su Vida (roja) y su Estructura (violeta). Para ganar, llevá su Vida a 0.';
 
   @override
-  String get lesStrike4 =>
-      'Estas son tus cartas: tu mano. Cada turno robás 5 cartas nuevas de tu mazo.';
+  String get lesStrike4 => 'Estas son tus cartas: tu mano. Cada turno robás 5 cartas nuevas de tu mazo.';
 
   @override
-  String get lesStrike5 =>
-      'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.';
+  String get lesStrike5 => 'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.';
 
   @override
-  String get lesStrike6 =>
-      'Estos puntos son tu Aliento, la energía del turno. Tenés 3 y cada carta cuesta lo que dice su círculo. Lo que no gastes se pierde al terminar el turno.';
+  String get lesStrike6 => 'Estos puntos son tu Aliento, la energía del turno. Tenés 3 y cada carta cuesta lo que dice su círculo. Lo que no gastes se pierde al terminar el turno.';
 
   @override
   String get lesStrike7 => 'Tocá Puñetazo firme UNA sola vez.';
 
   @override
-  String get lesStrike8 =>
-      'Esta es la vista previa: muestra exactamente lo que va a pasar, con todos los bonus ya sumados. Para jugar la carta, tocala otra vez.';
+  String get lesStrike8 => 'Esta es la vista previa: muestra exactamente lo que va a pasar, con todos los bonus ya sumados. Para jugar la carta, tocala otra vez.';
 
   @override
-  String get lesStrike9 =>
-      '¡Golpe! Le sacaste 7 de Vida (5 de la carta + 2 por estar en postura Caballo) y 2 de Estructura. Mirá cómo bajaron sus barras. Tu Aliento bajó de 3 a 2.';
+  String get lesStrike9 => '¡Golpe! Le sacaste 7 de Vida (5 de la carta + 2 por estar en postura Caballo) y 2 de Estructura. Mirá cómo bajaron sus barras. Tu Aliento bajó de 3 a 2.';
 
   @override
-  String get lesStrike10 =>
-      'Ahora Empujón de palma: hace poco daño pero le saca mucha Estructura. Tocala dos veces.';
+  String get lesStrike10 => 'Ahora Empujón de palma: hace poco daño pero le saca mucha Estructura. Tocala dos veces.';
 
   @override
-  String get lesStrike11 =>
-      'Te queda 1 de Aliento: jugá el otro Puñetazo firme.';
+  String get lesStrike11 => 'Te queda 1 de Aliento: jugá el otro Puñetazo firme.';
 
   @override
-  String get lesStrike12 =>
-      'Te quedaste sin Aliento. Las cartas que no podés pagar se ven apagadas: Patada látigo cuesta 2 en postura Caballo. Las que no jugaste se descartan al terminar el turno.';
+  String get lesStrike12 => 'Te quedaste sin Aliento. Las cartas que no podés pagar se ven apagadas: Patada látigo cuesta 2 en postura Caballo. Las que no jugaste se descartan al terminar el turno.';
 
   @override
-  String get lesStrike13 =>
-      'Antes de terminar, mirá este globo: es lo que el rival va a hacer en su turno. La flecha → es la altura (MEDIA), 5 es el daño a tu Vida y E 2 el daño a tu Estructura. El rival siempre avisa antes de actuar.';
+  String get lesStrike13 => 'Antes de terminar, mirá este globo: es lo que el rival va a hacer en su turno. La flecha → es la altura (MEDIA), 5 es el daño a tu Vida y E 2 el daño a tu Estructura. El rival siempre avisa antes de actuar.';
 
   @override
-  String get lesStrike14 =>
-      'Todavía no tenés defensas, así que te va a pegar. Tocá Terminar turno y mirá.';
+  String get lesStrike14 => 'Todavía no tenés defensas, así que te va a pegar. Tocá Terminar turno y mirá.';
 
   @override
-  String get lesStrike15 =>
-      'Te pegó: el número rojo fue el daño a tu Vida, 5. Tu Estructura bajó solo 1 porque en Caballo recibís la mitad. En la próxima lección aprendés a defenderte.';
+  String get lesStrike15 => 'Te pegó: el número rojo fue el daño a tu Vida, 5. Tu Estructura bajó solo 1 porque en Caballo recibís la mitad. En la próxima lección aprendés a defenderte.';
 
   @override
-  String get lesStrike16 =>
-      'Empezó tu turno 2: robaste 5 cartas nuevas y tu Aliento volvió a 3. Así empieza cada turno.';
+  String get lesStrike16 => 'Empezó tu turno 2: robaste 5 cartas nuevas y tu Aliento volvió a 3. Así empieza cada turno.';
 
   @override
-  String get lesStrike17 =>
-      'Al muñeco le quedan 10 de Vida. Rematalo vos: elegí las cartas que quieras.';
+  String get lesStrike17 => 'Al muñeco le quedan 10 de Vida. Rematalo vos: elegí las cartas que quieras.';
 
   @override
-  String get lesDefend1 =>
-      'Lo más importante del juego: leer el globo del rival. La flecha es la ALTURA del golpe: ↑ alto, → medio, ↓ bajo. El número es el daño y E el daño a tu Estructura.';
+  String get lesDefend1 => 'Lo más importante del juego: leer el globo del rival. La flecha es la ALTURA del golpe: ↑ alto, → medio, ↓ bajo. El número es el daño y E el daño a tu Estructura.';
 
   @override
-  String get lesDefend2 =>
-      'Las cartas de Defensa te dan Guardia: un escudo que absorbe el golpe del rival. Cada defensa protege una ALTURA. El muñeco va a pegar ALTO, y Bloqueo alto protege arriba con 9 de Guardia.';
+  String get lesDefend2 => 'Las cartas de Defensa te dan Guardia: un escudo que absorbe el golpe del rival. Cada defensa protege una ALTURA. El muñeco va a pegar ALTO, y Bloqueo alto protege arriba con 9 de Guardia.';
 
   @override
   String get lesDefend3 => 'Jugala: dos toques.';
 
   @override
-  String get lesDefend4 =>
-      'Esta es tu Guardia: 9, alta. Si el golpe llega a la misma altura y tu Guardia alcanza para cubrirlo, lo DESVIÁS (化): no recibís nada, el rival pierde 3 de Estructura y ganás 1 de Aliento para tu próximo turno.';
+  String get lesDefend4 => 'Esta es tu Guardia: 9, alta. Si el golpe llega a la misma altura y tu Guardia alcanza para cubrirlo, lo DESVIÁS (化): no recibís nada, el rival pierde 3 de Estructura y ganás 1 de Aliento para tu próximo turno.';
 
   @override
-  String get lesDefend5 =>
-      'Con el Aliento que te queda, pegale: Puñetazo firme.';
+  String get lesDefend5 => 'Con el Aliento que te queda, pegale: Puñetazo firme.';
 
   @override
   String get lesDefend6 => 'Terminá el turno y mirá.';
 
   @override
-  String get lesDefend7 =>
-      '¡Desvío! No recibiste daño y su Estructura bajó 3. Esto es pelear bien: mirar el globo y responder a la altura justa.';
+  String get lesDefend7 => '¡Desvío! No recibiste daño y su Estructura bajó 3. Esto es pelear bien: mirar el globo y responder a la altura justa.';
 
   @override
-  String get lesDefend8 =>
-      'Tu Guardia volvió a 0: dura solo el turno del rival, así que hay que defenderse cada turno. Y fijate que tenés 4 de Aliento: +1 por el desvío.';
+  String get lesDefend8 => 'Tu Guardia volvió a 0: dura solo el turno del rival, así que hay que defenderse cada turno. Y fijate que tenés 4 de Aliento: +1 por el desvío.';
 
   @override
-  String get lesDefend9 =>
-      'Ahora viene MEDIO (→) con 6 de daño, y la única defensa que tenés es BAJA.';
+  String get lesDefend9 => 'Ahora viene MEDIO (→) con 6 de daño, y la única defensa que tenés es BAJA.';
 
   @override
-  String get lesDefend10 =>
-      'Jugá Bloqueo bajo igual, para ver qué pasa con la altura equivocada.';
+  String get lesDefend10 => 'Jugá Bloqueo bajo igual, para ver qué pasa con la altura equivocada.';
 
   @override
   String get lesDefend11 => 'Terminá el turno.';
 
   @override
-  String get lesDefend12 =>
-      'Altura equivocada: la Guardia absorbió solo la mitad y recibiste 3 de daño. La altura importa tanto como el número.';
+  String get lesDefend12 => 'Altura equivocada: la Guardia absorbió solo la mitad y recibiste 3 de daño. La altura importa tanto como el número.';
 
   @override
-  String get lesDefend13 =>
-      'Cada rival tiene una regla propia. Tocá el nombre del rival cuando quieras leerla.';
+  String get lesDefend13 => 'Cada rival tiene una regla propia. Tocá el nombre del rival cuando quieras leerla.';
 
   @override
-  String get lesDefend14 =>
-      'Ahora viene BAJO (↓) y tenés Bloqueo bajo. Defendete bien y rematalo.';
+  String get lesDefend14 => 'Ahora viene BAJO (↓) y tenés Bloqueo bajo. Defendete bien y rematalo.';
 
   @override
-  String get lesStances1 =>
-      'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Ahora estás en Caballo. La postura en la que ESTÁS cambia cuánto pegan y cuánto cuestan tus cartas.';
+  String get lesStances1 => 'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Ahora estás en Caballo. La postura en la que ESTÁS cambia cuánto pegan y cuánto cuestan tus cartas.';
 
   @override
-  String get lesStances2 =>
-      'Esto da cada postura. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".';
+  String get lesStances2 => 'Esto da cada postura. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".';
 
   @override
-  String get lesStances3 =>
-      'Tocá Puñetazo a fondo una vez y mirá la vista previa.';
+  String get lesStances3 => 'Tocá Puñetazo a fondo una vez y mirá la vista previa.';
 
   @override
-  String get lesStances4 =>
-      'Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.';
+  String get lesStances4 => 'Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.';
 
   @override
-  String get lesStances5 =>
-      'Ahora estás en Arco: los puños pegan +3 y sacan +1 de Estructura. Esa ventaja no la usó la carta que te trajo: la aprovecha la PRÓXIMA.';
+  String get lesStances5 => 'Ahora estás en Arco: los puños pegan +3 y sacan +1 de Estructura. Esa ventaja no la usó la carta que te trajo: la aprovecha la PRÓXIMA.';
 
   @override
-  String get lesStances6 =>
-      'Mirá Puñetazo firme: antes marcaba 7 de daño y 2 de Estructura; ahora, 8 y 3. Los números de tus cartas siempre muestran lo que pegan desde la postura en la que estás. Pega desde Arco y después te deja en Caballo. Jugalo.';
+  String get lesStances6 => 'Mirá Puñetazo firme: antes marcaba 7 de daño y 2 de Estructura; ahora, 8 y 3. Los números de tus cartas siempre muestran lo que pegan desde la postura en la que estás. Pega desde Arco y después te deja en Caballo. Jugalo.';
 
   @override
-  String get lesStances7 =>
-      'Ese es el truco: una carta con → te prepara la siguiente. Antes de jugar, pensá el orden: primero la que te deja en la postura que la otra aprovecha.';
+  String get lesStances7 => 'Ese es el truco: una carta con → te prepara la siguiente. Antes de jugar, pensá el orden: primero la que te deja en la postura que la otra aprovecha.';
 
   @override
-  String get lesStances8 =>
-      'Si ninguna carta te deja en la postura que necesitás, Paso en T te cambia YA, por 1 de Aliento, una vez por turno. Las patadas rinden en Vacía: tocalo y elegí Vacía.';
+  String get lesStances8 => 'Si ninguna carta te deja en la postura que necesitás, Paso en T te cambia YA, por 1 de Aliento, una vez por turno. Las patadas rinden en Vacía: tocalo y elegí Vacía.';
 
   @override
-  String get lesStances9 =>
-      'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.';
+  String get lesStances9 => 'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.';
 
   @override
-  String get lesStances10 =>
-      'Terminá el combate como quieras. Antes de cada carta, mirá en qué postura estás y en cuál te deja.';
+  String get lesStances10 => 'Terminá el combate como quieras. Antes de cada carta, mirá en qué postura estás y en cuál te deja.';
 
   @override
-  String get lesStructure1 =>
-      'Este muñeco tiene poca Estructura: 8. Cada ataque tiene dos números: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si la Estructura del rival llega a 0, queda DESEQUILIBRADO.';
+  String get lesStructure1 => 'Este muñeco tiene poca Estructura: 8. Cada ataque tiene dos números: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si la Estructura del rival llega a 0, queda DESEQUILIBRADO.';
 
   @override
-  String get lesStructure2 =>
-      'Empujón de palma casi no hace daño, pero saca 4 de Estructura. Jugalo.';
+  String get lesStructure2 => 'Empujón de palma casi no hace daño, pero saca 4 de Estructura. Jugalo.';
 
   @override
   String get lesStructure3 => 'Otra vez: le quedan 4.';
 
   @override
-  String get lesStructure4 =>
-      '¡Desequilibrado! Mirá las estrellas. Pierde la acción que había anunciado y recibe el DOBLE de daño hasta el final de tu próximo turno.';
+  String get lesStructure4 => '¡Desequilibrado! Mirá las estrellas. Pierde la acción que había anunciado y recibe el DOBLE de daño hasta el final de tu próximo turno.';
 
   @override
-  String get lesStructure5 =>
-      'Aprovechá: Puñetazo firme. En la vista previa el daño ya sale doble.';
+  String get lesStructure5 => 'Aprovechá: Puñetazo firme. En la vista previa el daño ya sale doble.';
 
   @override
-  String get lesStructure6 =>
-      'Su globo decía que se iba a cubrir (la Guardia del rival absorbe el daño a la Vida de tus golpes, pero no la Estructura). Ahora está apagado: esa acción la pierde.';
+  String get lesStructure6 => 'Su globo decía que se iba a cubrir (la Guardia del rival absorbe el daño a la Vida de tus golpes, pero no la Estructura). Ahora está apagado: esa acción la pierde.';
 
   @override
-  String get lesStructure7 =>
-      'Vos también tenés Estructura. Si el rival te la vacía, empezás tu próximo turno con 2 de Aliento menos. Defenderte bien la protege.';
+  String get lesStructure7 => 'Vos también tenés Estructura. Si el rival te la vacía, empezás tu próximo turno con 2 de Aliento menos. Defenderte bien la protege.';
 
   @override
   String get lesStructure8 => 'Terminá el turno.';
 
   @override
-  String get lesStructure9 =>
-      'Perdió su acción. Ahora anuncia Carga (el ícono del rayo): en su turno no te ataca, junta fuerza y su próximo golpe hará 4 más. Cuando veas una carga, preparate.';
+  String get lesStructure9 => 'Perdió su acción. Ahora anuncia Carga (el ícono del rayo): en su turno no te ataca, junta fuerza y su próximo golpe hará 4 más. Cuando veas una carga, preparate.';
 
   @override
-  String get lesStructure10 =>
-      'Sigue desequilibrado todo este turno: tus golpes cuentan doble. Terminalo.';
+  String get lesStructure10 => 'Sigue desequilibrado todo este turno: tus golpes cuentan doble. Terminalo.';
 
   @override
-  String get lesForms1 =>
-      'Una forma (套路) es una secuencia fija de cartas. Si las jugás en orden, al completar el último paso se suma un golpe extra. Esta es el Pequeño Puño Rojo: Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás.';
+  String get lesForms1 => 'Una forma (套路) es una secuencia fija de cartas. Si las jugás en orden, al completar el último paso se suma un golpe extra. Esta es el Pequeño Puño Rojo: Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás.';
 
   @override
   String get lesForms2 => 'Primer paso: Puñetazo a fondo.';
@@ -1033,34 +947,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lesForms3 => 'Segundo paso: Patada látigo.';
 
   @override
-  String get lesForms4 =>
-      'Dos pasos marcados. El progreso no se pierde al terminar el turno: la forma te espera.';
+  String get lesForms4 => 'Dos pasos marcados. El progreso no se pierde al terminar el turno: la forma te espera.';
 
   @override
   String get lesForms5 => 'Tocá Empujón de palma UNA vez, sin jugarla.';
 
   @override
-  String get lesForms6 =>
-      'Mirá el triángulo de aviso: un ataque (puño, palma o patada) que no es el próximo paso INTERRUMPE la forma y hay que empezar de nuevo. Las defensas y las técnicas nunca la interrumpen.';
+  String get lesForms6 => 'Mirá el triángulo de aviso: un ataque (puño, palma o patada) que no es el próximo paso INTERRUMPE la forma y hay que empezar de nuevo. Las defensas y las técnicas nunca la interrumpen.';
 
   @override
-  String get lesForms7 =>
-      'El tercer paso cuesta 2 y te queda 1 de Aliento. Terminá el turno: la forma te espera.';
+  String get lesForms7 => 'El tercer paso cuesta 2 y te queda 1 de Aliento. Terminá el turno: la forma te espera.';
 
   @override
-  String get lesForms8 =>
-      'Tercer paso: Bloqueo y contragolpe, una defensa que además pega.';
+  String get lesForms8 => 'Tercer paso: Bloqueo y contragolpe, una defensa que además pega.';
 
   @override
-  String get lesForms9 =>
-      'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.';
+  String get lesForms9 => 'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.';
 
   @override
   String get lesForms10 => '¡Ahí está! Último paso: Paso atrás.';
 
   @override
-  String get lesForms11 =>
-      '¡Forma completa! Además del efecto de la carta: 10 de daño, 5 de Estructura y robás 2 cartas.';
+  String get lesForms11 => '¡Forma completa! Además del efecto de la carta: 10 de daño, 5 de Estructura y robás 2 cartas.';
 
   @override
   String get lesForms12 => 'Terminá el combate.';
@@ -1069,41 +977,35 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lesClimbSlide1Title => 'La montaña';
 
   @override
-  String get lesClimbSlide1 =>
-      'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre en dos, decidís vos.';
+  String get lesClimbSlide1 => 'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre en dos, decidís vos.';
 
   @override
   String get lesClimbSlide2Title => 'Los lugares del mapa';
 
   @override
-  String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente y el santuario.';
+  String get lesClimbSlide2 => 'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente y el santuario.';
 
   @override
   String get lesClimbSlide3Title => 'Después de cada combate';
 
   @override
-  String get lesClimbSlide3 =>
-      'Elegís 1 de 3 cartas para sumar a tu mazo, o ninguna. Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
+  String get lesClimbSlide3 => 'Elegís 1 de 3 cartas para sumar a tu mazo, o ninguna. Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
 
   @override
   String get lesClimbSlide4Title => 'Vida y Estructura';
 
   @override
-  String get lesClimbSlide4 =>
-      'Tu Vida NO se recupera sola entre combates: cuidala. En la fuente podés curarte, mejorar una carta o sacar una del mazo. La Estructura sí vuelve completa en cada combate.';
+  String get lesClimbSlide4 => 'Tu Vida NO se recupera sola entre combates: cuidala. En la fuente podés curarte, mejorar una carta o sacar una del mazo. La Estructura sí vuelve completa en cada combate.';
 
   @override
   String get lesClimbSlide5Title => 'El santuario';
 
   @override
-  String get lesClimbSlide5 =>
-      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.';
+  String get lesClimbSlide5 => 'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.';
 
   @override
   String get lesClimbSlide6Title => '¡A subir!';
 
   @override
-  String get lesClimbSlide6 =>
-      'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!';
+  String get lesClimbSlide6 => 'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!';
 }
