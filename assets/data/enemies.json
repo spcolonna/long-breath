@@ -62,7 +62,7 @@
         { "kind": "attack", "labelKey": "interrupt", "height": "high", "damage": 6, "structure": 0, "interrupt": true },
         { "kind": "attack", "height": "low", "damage": 14, "structure": 4 }
       ] } ] },
-    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 154, "structure": 26,
+    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 150, "structure": 18, "scales": 4,
       "phases": [
         { "pattern": [
           { "kind": "attack", "height": "high", "damage": 9, "structure": 2 },

@@ -17,12 +17,14 @@ class RunEngine {
       data.balance.runNodes.firstWhere((n) => n.id == id);
 
   /// La run empieza como novicio; el camino se elige en el santuario.
-  RunState newRun({required int seed}) {
+  RunState newRun({required int seed, Difficulty difficulty = Difficulty.normal}) {
     final starter = data.starterDeck;
+    final hp = data.balance.difficulty(difficulty).playerHp;
     return RunState(
+      difficulty: difficulty,
       style: null,
-      hp: data.balance.playerHp,
-      maxHp: data.balance.playerHp,
+      hp: hp,
+      maxHp: hp,
       deck: [
         for (var i = 0; i < starter.length; i++)
           CombatCard(uid: i, cardId: starter[i]),
@@ -131,10 +133,13 @@ class RunEngine {
     );
   }
 
+  /// Vida que cura la fuente en la dificultad de la run.
+  int healOf(RunState r) => data.balance.difficulty(r.difficulty).fountainHeal;
+
   RunState fountainHeal(RunState r) {
     _checkFountain(r);
     return r.copyWith(
-      hp: math.min(r.maxHp, r.hp + data.balance.fountainHeal),
+      hp: math.min(r.maxHp, r.hp + healOf(r)),
       phase: RunPhase.map,
     );
   }

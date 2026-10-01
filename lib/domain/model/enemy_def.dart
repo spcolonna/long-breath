@@ -87,6 +87,7 @@ class EnemyDef {
     this.immovable = false,
     this.sameStancePunishDamage = 0,
     this.sameStancePunishStructure = 0,
+    this.scales = 0,
   }) : _art = art;
 
   final String id;
@@ -103,6 +104,10 @@ class EnemyDef {
   final String? _art;
   final int sameStancePunishDamage;
   final int sameStancePunishStructure;
+
+  /// Escamas: cada golpe pierde este daño, salvo con el enemigo Desequilibrado.
+  /// Cada vez que se lo desequilibra pierde una escama.
+  final int scales;
 
   factory EnemyDef.fromJson(Map<String, dynamic> j) {
     final ssp = j['sameStancePunish'] as Map<String, dynamic>?;
@@ -121,6 +126,7 @@ class EnemyDef {
       immovable: j['immovable'] as bool? ?? false,
       sameStancePunishDamage: ssp?['damage'] as int? ?? 0,
       sameStancePunishStructure: ssp?['structure'] as int? ?? 0,
+      scales: j['scales'] as int? ?? 0,
     );
   }
 }

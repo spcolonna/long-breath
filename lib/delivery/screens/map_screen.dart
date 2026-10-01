@@ -16,6 +16,8 @@ import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/deck_sheet.dart';
+import '../labels.dart';
+import '../widgets/difficulty_sheet.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -34,9 +36,21 @@ class MapScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
-          style: const TextStyle(fontSize: 18),
+        title: Column(
+          children: [
+            Text(
+              '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            Text(
+              t.difficultyName(run.difficulty),
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: difficultyColor(run.difficulty),
+              ),
+            ),
+          ],
         ),
         // Volver al menú no borra nada: la subida queda guardada.
         leading: IconButton(

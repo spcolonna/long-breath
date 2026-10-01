@@ -89,4 +89,16 @@ void main() {
     expect(back2.currentNode, 'n1');
     expect(run.available(back2), ['n2']);
   });
+
+  test('la dificultad fija la Vida, la fuente y se guarda', () {
+    var r = run.newRun(seed: 1, difficulty: Difficulty.easy);
+    expect(r.hp, 60);
+    expect(r.maxHp, 60);
+    expect(run.healOf(r), 25);
+    r = RunState.fromJson(r.toJson());
+    expect(r.difficulty, Difficulty.easy);
+    // Las runs guardadas antes de las dificultades se leen como Normal.
+    final old = run.newRun(seed: 1).toJson()..remove('difficulty');
+    expect(RunState.fromJson(old).difficulty, Difficulty.normal);
+  });
 }

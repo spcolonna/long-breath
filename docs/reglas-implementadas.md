@@ -43,12 +43,18 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Discípulo:** si tu postura al terminar el turno es la misma que al terminar el anterior, el ataque que ejecuta en ese momento suma +5 de daño y +2 a Estructura. El primer turno no cuenta.
 - **Gólem:** Carga se acumula para su próximo ataque.
 - **Salamandra:** su Guardia dura hasta su siguiente acción.
+- **Escamas (Eco del Dragón, 4):** restan su valor a cada golpe (cartas, formas y desvíos), después de la mitad del Inamovible y antes de la Guardia. No cuentan mientras está Desequilibrado. Al desequilibrarse pierde una escama (evento `ScaleShed`), para todo el combate.
 - **Eco del Dragón:** al cruzar el 50% de Vida cambia de fase en el acto y el ciclo empieza desde el paso 0. La intención muestra cuántas acciones faltan para el Aliento del Dragón.
 
 ## Mano
-- Robás hasta completar el tamaño de mano de tu camino. Las cartas robadas por efectos pueden superar ese tamaño.
+- Al empezar el turno robás el tamaño de mano completo de tu camino; las cartas retenidas son extra y se suman. Las cartas robadas por efectos también pueden superar ese tamaño.
 - Retener se elige al terminar el turno (acción `EndTurn(retain: [...])`).
 - Bàoquán Lǐ (Saludo marcial) roba 2 y se agota; se puede jugar en cualquier turno (antes era solo el turno 1 y quedaba muerta si la robabas tarde).
+
+## Dificultad
+- Se elige al crear la run y se guarda en ella (`RunState.difficulty`; las runs viejas se leen como Normal).
+- Vida inicial y curación de la fuente salen de la dificultad.
+- Al empezar cada combate de la subida se escalan la Vida y la Estructura del enemigo (redondeo al entero más cercano). El daño de cada ataque (con Carga y castigo incluidos) se escala al anunciarlo y al ejecutarlo, así que la intención muestra el número real.
 
 ## Recompensas
 - Se ofrecen 3 cartas al azar de los pools de `rewards.pools`.

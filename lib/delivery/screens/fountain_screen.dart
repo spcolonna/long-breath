@@ -149,7 +149,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
               const Spacer(),
               option(
                 Icons.favorite,
-                t.fountainHeal(data.balance.fountainHeal),
+                t.fountainHeal(engine.healOf(run)),
                 () {
                   if (_healedFrom != null) return;
                   HapticFeedback.mediumImpact();

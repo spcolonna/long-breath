@@ -33,7 +33,15 @@ void main() {
 
     await tester.tap(find.text('La subida'));
     await settle();
+    // Antes de subir se elige la dificultad.
+    expect(find.text('Shifu'), findsOneWidget);
+    await tester.tap(find.text('Normal'));
+    await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
+    final run = ProviderScope.containerOf(
+      tester.element(find.byType(Scaffold).first),
+    ).read(runControllerProvider)!;
+    expect(run.difficulty, Difficulty.normal);
 
     await tester.tap(find.text('Eco de Murciélago'));
     await settle();

@@ -520,6 +520,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           HapticFeedback.heavyImpact();
           _audio.play(Sfx.broken);
           _queue.add(_Fx(t.broken, t.staggeredDouble, Palette.gold));
+        case ScaleShed(:final remaining):
+          _queue.add(_Fx(t.scaleShed, t.scalesLeft(remaining), Palette.jade));
         case PlayerBroken():
           HapticFeedback.heavyImpact();
           _queue.add(_Fx(t.playerBroken, '−2 ${t.breath}', Palette.lacquer));
@@ -1218,7 +1220,7 @@ class _EnemyStage extends ConsumerWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
-          child: e.guard > 0 || e.staggered
+          child: e.guard > 0 || e.staggered || e.scales > 0
               ? Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Wrap(
@@ -1238,6 +1240,25 @@ class _EnemyStage extends ConsumerWidget {
                           icon: Icons.blur_on,
                           text: t.staggeredDouble,
                           color: Palette.gold,
+                        ),
+                      // Escamas: se ignoran mientras está Desequilibrado.
+                      if (e.scales > 0 && !e.staggered)
+                        GestureDetector(
+                          onTap: () => showDialog<void>(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(text.enemy(def.id)),
+                              content: Text(text.enemyRule(def.id)),
+                            ),
+                          ),
+                          child: Bounce(
+                            trigger: e.scales,
+                            child: _Chip(
+                              icon: Icons.texture,
+                              text: t.scales(e.scales),
+                              color: Palette.jade,
+                            ),
+                          ),
                         ),
                     ],
                   ),

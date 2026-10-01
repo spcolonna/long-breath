@@ -10,6 +10,7 @@ import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/juice.dart';
+import '../widgets/difficulty_sheet.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
@@ -151,8 +152,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                   width: double.infinity,
                   height: 52,
                   child: FilledButton(
-                    onPressed: () {
-                      ref.read(runControllerProvider.notifier).newRun();
+                    onPressed: () async {
+                      final difficulty = await pickDifficulty(
+                        context,
+                        initial: run.difficulty,
+                      );
+                      if (difficulty == null || !context.mounted) return;
+                      ref
+                          .read(runControllerProvider.notifier)
+                          .newRun(difficulty);
                       context.go('/map');
                     },
                     child: Text(t.tryAgain),

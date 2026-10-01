@@ -18,6 +18,7 @@ class RunState {
     required this.rewardOptions,
     this.pathOptions = const [],
     required this.rng,
+    this.difficulty = Difficulty.normal,
   });
 
   /// Camino animal; null mientras sea novicio (antes del santuario).
@@ -36,6 +37,7 @@ class RunState {
   /// Caminos que ofrece el santuario (solo en la fase shrine).
   final List<Style> pathOptions;
   final Rng rng;
+  final Difficulty difficulty;
 
   RunState copyWith({
     Style? style,
@@ -62,6 +64,7 @@ class RunState {
         rewardOptions: rewardOptions ?? this.rewardOptions,
         pathOptions: pathOptions ?? this.pathOptions,
         rng: rng ?? this.rng,
+        difficulty: difficulty,
       );
 
   Map<String, dynamic> toJson() => {
@@ -76,6 +79,7 @@ class RunState {
         'rewardOptions': rewardOptions,
         'pathOptions': [for (final s in pathOptions) s.name],
         'rng': rng.state,
+        'difficulty': difficulty.name,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -98,5 +102,6 @@ class RunState {
           for (final s in (j['pathOptions'] as List?) ?? const []) Style.parse(s as String),
         ],
         rng: Rng(j['rng'] as int),
+        difficulty: Difficulty.parse(j['difficulty'] as String?),
       );
 }

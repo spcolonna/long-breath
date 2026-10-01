@@ -898,6 +898,90 @@ abstract class AppLocalizations {
   /// **'Empezá acá'**
   String get menuStartHere;
 
+  /// No description provided for @difficultyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cómo querés subir?'**
+  String get difficultyTitle;
+
+  /// No description provided for @difficultySubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés cambiarla en cada subida nueva.'**
+  String get difficultySubtitle;
+
+  /// No description provided for @difficultyEasy.
+  ///
+  /// In es, this message translates to:
+  /// **'Fácil'**
+  String get difficultyEasy;
+
+  /// No description provided for @difficultyNormal.
+  ///
+  /// In es, this message translates to:
+  /// **'Normal'**
+  String get difficultyNormal;
+
+  /// No description provided for @difficultyHard.
+  ///
+  /// In es, this message translates to:
+  /// **'Difícil'**
+  String get difficultyHard;
+
+  /// No description provided for @difficultyShifu.
+  ///
+  /// In es, this message translates to:
+  /// **'Shifu'**
+  String get difficultyShifu;
+
+  /// No description provided for @difficultyEasyDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Para conocer la montaña sin apuro. Más Vida y rivales más blandos.'**
+  String get difficultyEasyDesc;
+
+  /// No description provided for @difficultyNormalDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'La subida tal como fue pensada.'**
+  String get difficultyNormalDesc;
+
+  /// No description provided for @difficultyHardDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Rivales más duros y una fuente que cura menos.'**
+  String get difficultyHardDesc;
+
+  /// No description provided for @difficultyShifuDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Para maestros: menos Vida y cada error se paga.'**
+  String get difficultyShifuDesc;
+
+  /// No description provided for @difficultyStats.
+  ///
+  /// In es, this message translates to:
+  /// **'Vida {hp} · Fuente +{heal} · Rivales {enemy}%'**
+  String difficultyStats(int hp, int heal, int enemy);
+
+  /// No description provided for @scales.
+  ///
+  /// In es, this message translates to:
+  /// **'Escamas {count} · −{count} por golpe'**
+  String scales(int count);
+
+  /// No description provided for @scaleShed.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Escama arrancada!'**
+  String get scaleShed;
+
+  /// No description provided for @scalesLeft.
+  ///
+  /// In es, this message translates to:
+  /// **'Le quedan {count}'**
+  String scalesLeft(int count);
+
   /// No description provided for @menuClimb.
   ///
   /// In es, this message translates to:
@@ -1819,7 +1903,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide5.
   ///
   /// In es, this message translates to:
-  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente. El Tigre además tiene cartas propias, que solo te salen de recompensa si seguís su camino.'**
+  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.'**
   String get lesClimbSlide5;
 
   /// No description provided for @lesClimbSlide6Title.

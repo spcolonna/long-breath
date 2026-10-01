@@ -12,6 +12,7 @@ import '../theme.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/difficulty_sheet.dart';
 
 /// Última lección: cómo es la subida, en diapositivas ilustradas con las
 /// mismas piezas del juego (íconos del mapa, cartas, el héroe).
@@ -51,10 +52,12 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
     );
   }
 
-  void _climb() {
+  Future<void> _climb() async {
     HapticFeedback.mediumImpact();
     ref.read(audioProvider).play(Sfx.uiButton);
-    ref.read(runControllerProvider.notifier).newRun();
+    final difficulty = await pickDifficulty(context);
+    if (difficulty == null || !mounted) return;
+    ref.read(runControllerProvider.notifier).newRun(difficulty);
     context.go('/map');
   }
 

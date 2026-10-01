@@ -74,6 +74,7 @@ class EnemyCombat {
     required this.staggerEndsTurn,
     required this.skipNextAction,
     required this.chargeBonus,
+    this.scales = 0,
   });
 
   final String id;
@@ -95,6 +96,9 @@ class EnemyCombat {
   /// Bonus acumulado para su próximo ataque (Carga del Gólem).
   final int chargeBonus;
 
+  /// Escamas que le quedan (resta daño a cada golpe).
+  final int scales;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -114,6 +118,7 @@ class EnemyCombat {
         staggerEndsTurn: staggerEndsTurn,
         skipNextAction: skipNextAction,
         chargeBonus: chargeBonus,
+        scales: scales,
       );
 }
 
@@ -144,6 +149,7 @@ class CombatState {
     required this.formsCompleted,
     required this.deflects,
     required this.rng,
+    this.enemyDamagePct = 100,
   });
 
   final int turn;
@@ -177,6 +183,9 @@ class CombatState {
   final int deflects;
   final Rng rng;
 
+  /// Daño de los ataques enemigos según la dificultad (100 = normal).
+  final int enemyDamagePct;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -204,6 +213,7 @@ class CombatState {
         formsCompleted: formsCompleted,
         deflects: deflects,
         rng: rng,
+        enemyDamagePct: enemyDamagePct,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

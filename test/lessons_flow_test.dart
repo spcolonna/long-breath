@@ -151,6 +151,7 @@ void main() {
     }
     sees('Si perdés toda la Vida');
     await tap('Empezar la subida');
+    await tap('Fácil');
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getStringList('long_breath.lessonsDone'), contains('climb'));

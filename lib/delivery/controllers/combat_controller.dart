@@ -75,6 +75,8 @@ class CombatController extends Notifier<CombatView?> {
       enemyId: enemy,
       style: run.style,
       playerHp: run.hp,
+      maxHp: run.maxHp,
+      difficulty: run.difficulty,
       seed: seed,
     );
     state = CombatView(

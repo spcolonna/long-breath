@@ -47,6 +47,12 @@ class EnemyBroken extends CombatEvent {
   const EnemyBroken();
 }
 
+/// El enemigo perdió una escama al desequilibrarse; quedan [remaining].
+class ScaleShed extends CombatEvent {
+  const ScaleShed(this.remaining);
+  final int remaining;
+}
+
 class EnemyRecovered extends CombatEvent {
   const EnemyRecovered();
 }

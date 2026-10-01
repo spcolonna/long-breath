@@ -70,6 +70,35 @@ class MapNodeDef {
       );
 }
 
+/// Ajustes de una dificultad. Los porcentajes se aplican a los enemigos
+/// de la subida (no a los muñecos de las lecciones).
+class DifficultyDef {
+  const DifficultyDef({
+    required this.hanzi,
+    required this.playerHp,
+    required this.fountainHeal,
+    this.enemyHp = 100,
+    this.enemyDamage = 100,
+    this.enemyStructure = 100,
+  });
+
+  final String hanzi;
+  final int playerHp;
+  final int fountainHeal;
+  final int enemyHp;
+  final int enemyDamage;
+  final int enemyStructure;
+
+  factory DifficultyDef.fromJson(Map<String, dynamic> j) => DifficultyDef(
+        hanzi: j['hanzi'] as String,
+        playerHp: j['playerHp'] as int,
+        fountainHeal: j['fountainHeal'] as int,
+        enemyHp: j['enemyHp'] as int? ?? 100,
+        enemyDamage: j['enemyDamage'] as int? ?? 100,
+        enemyStructure: j['enemyStructure'] as int? ?? 100,
+      );
+}
+
 class GameBalance {
   const GameBalance({
     required this.playerHp,
@@ -90,6 +119,7 @@ class GameBalance {
     required this.runStart,
     required this.stage,
     required this.runNodes,
+    required this.difficulties,
   });
 
   final int playerHp;
@@ -114,6 +144,9 @@ class GameBalance {
   /// Etapa que recorre la run (nombre visible en el mapa).
   final StageDef stage;
   final List<MapNodeDef> runNodes;
+  final Map<Difficulty, DifficultyDef> difficulties;
+
+  DifficultyDef difficulty(Difficulty d) => difficulties[d]!;
 
   /// Estadísticas del camino, o las del novicio si todavía no eligió.
   StyleStats statsOf(Style? s) => s == null ? novice : styles[s]!;
@@ -152,6 +185,11 @@ class GameBalance {
         for (final n in run['nodes'] as List)
           MapNodeDef.fromJson(n as Map<String, dynamic>),
       ],
+      difficulties: {
+        for (final e in (j['difficulties'] as Map<String, dynamic>).entries)
+          Difficulty.parse(e.key):
+              DifficultyDef.fromJson(e.value as Map<String, dynamic>),
+      },
     );
   }
 }

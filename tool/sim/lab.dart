@@ -335,10 +335,18 @@ final profiles = <String, BotFactory>{
 };
 
 FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
-    String enemy, Style? style, int hp, int seed, List<Talisman> owned) {
+    String enemy, Style? style, int hp, int seed, List<Talisman> owned,
+    {Difficulty difficulty = Difficulty.normal, int? maxHp}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank);
   var s = engine
-      .start(deck: deck, enemyId: enemy, style: style, playerHp: hp, seed: seed)
+      .start(
+          deck: deck,
+          enemyId: enemy,
+          style: style,
+          playerHp: hp,
+          seed: seed,
+          difficulty: difficulty,
+          maxHp: maxHp)
       .state;
   for (final t in owned) {
     if (t.onStart != null) s = t.onStart!(s);
@@ -381,6 +389,7 @@ RunState _withMaxHp(RunState r, int add) => RunState(
       rewardOptions: r.rewardOptions,
       pathOptions: r.pathOptions,
       rng: r.rng,
+      difficulty: r.difficulty,
     );
 
 /// Juega una run entera. [wanted] es el camino que el bot toma si el
@@ -390,7 +399,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
     bool withTalismans = false,
     Set<String>? onlyTalisman,
     List<String> startTalismans = const [],
-    List<String> startCards = const []}) {
+    List<String> startCards = const [],
+    Difficulty difficulty = Difficulty.normal}) {
   final engine = CombatEngine(data);
   final runEngine = RunEngine(data);
   final log = RunLog();
@@ -398,7 +408,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
     for (final id in startTalismans) talismans.firstWhere((t) => t.id == id),
   ];
   final tRng = math.Random(seed * 13 + 5);
-  var r = runEngine.newRun(seed: seed);
+  var r = runEngine.newRun(seed: seed, difficulty: difficulty);
   for (final id in startCards) {
     r = r.copyWith(
         deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: id)],
@@ -418,7 +428,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
         r = next;
         final enemy = runEngine.enemyOf(r);
         if (r.currentNode == finalNode) log.hpAtBoss = r.hp;
-        final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, owned);
+        final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, owned,
+            difficulty: r.difficulty, maxHp: r.maxHp);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         if (f.won) hp = math.min(r.maxHp, hp + owned.fold(0, (a, t) => a + t.onWin));
