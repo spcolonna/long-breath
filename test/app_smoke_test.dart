@@ -35,6 +35,15 @@ void main() {
     await settle();
     // Antes de subir se elige la dificultad.
     expect(find.text('Shifu'), findsOneWidget);
+    // Shifu está bloqueada: tocarla explica cómo se gana y no arranca nada.
+    expect(find.text('Bloqueada'), findsOneWidget);
+    await tester.tap(find.text('Shifu'));
+    await settle();
+    expect(
+      find.text('Se desbloquea al ganar una subida en Difícil.'),
+      findsOneWidget,
+    );
+    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsNothing);
     await tester.tap(find.text('Normal'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);

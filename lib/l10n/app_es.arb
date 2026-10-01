@@ -349,6 +349,8 @@
   "difficultyNormalDesc": "La subida tal como fue pensada.",
   "difficultyHardDesc": "Rivales más duros y una fuente que cura menos.",
   "difficultyShifuDesc": "Para maestros: menos Vida y cada error se paga.",
+  "difficultyLocked": "Bloqueada",
+  "difficultyShifuLocked": "Se desbloquea al ganar una subida en Difícil.",
   "difficultyStats": "Vida {hp} · Fuente +{heal} · Rivales {enemy}%",
   "@difficultyStats": { "placeholders": { "hp": { "type": "int" }, "heal": { "type": "int" }, "enemy": { "type": "int" } } },
   "scales": "Escamas {count} · −{count} por golpe",

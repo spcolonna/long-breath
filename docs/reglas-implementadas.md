@@ -54,6 +54,7 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 ## Dificultad
 - Se elige al crear la run y se guarda en ella (`RunState.difficulty`; las runs viejas se leen como Normal).
 - Vida inicial y curación de la fuente salen de la dificultad.
+- Al ganar una subida se guarda la dificultad (`ProgressStorage`, fuera de la run). Shifu está bloqueada hasta tener una victoria en Difícil (o en Shifu).
 - Al empezar cada combate de la subida se escalan la Vida y la Estructura del enemigo (redondeo al entero más cercano). El daño de cada ataque (con Carga y castigo incluidos) se escala al anunciarlo y al ejecutarlo, así que la intención muestra el número real.
 
 ## Recompensas

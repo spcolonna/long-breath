@@ -243,7 +243,7 @@ Victoria y minutos de las runs ganadas (1000 runs por perfil):
 | Difícil | 0% | 29% · 12 min | **59%** · 12 min |
 | Shifu | 0% | 4% · 13 min | **18%** · 12 min |
 
-Cada escalón le quita al perfil de referencia entre 30 y 40 puntos: Fácil es para aprender, Normal la experiencia diseñada, Difícil el reto del experto y Shifu una meta de maestría. Los Picos (sección 6) siguen como idea para el juego completo, encima de estas cuatro.
+Cada escalón le quita al perfil de referencia entre 30 y 40 puntos: Fácil es para aprender, Normal la experiencia diseñada, Difícil el reto del experto y Shifu una meta de maestría: aparece bloqueada (tono blanco y candado) hasta ganar una subida en Difícil. Los Picos (sección 6) siguen como idea para el juego completo, encima de estas cuatro.
 
 Lo que sigue es el análisis de la primera vuelta, que llevó a esta decisión.
 

@@ -35,8 +35,15 @@ class RunController extends Notifier<RunState?> {
     return (seed, _engine.enemyOf(next));
   }
 
-  void finishCombat({required bool won, required int hp}) =>
-      _set(_engine.finishCombat(state!, won: won, hp: hp));
+  void finishCombat({required bool won, required int hp}) {
+    _set(_engine.finishCombat(state!, won: won, hp: hp));
+    if (state!.phase == RunPhase.victory) {
+      ref
+          .read(progressStorageProvider)
+          .markWin(state!.difficulty)
+          .then((_) => ref.invalidate(winsProvider));
+    }
+  }
 
   void chooseReward(String? cardId) =>
       _set(_engine.chooseReward(state!, cardId));
