@@ -53,7 +53,8 @@ const lessonSetups = <String, LessonSetup>{
       'tan_tui',
     ],
   ),
-  // 3. Posturas: Arco con el puño, Paso en T a Vacía y patada gratis.
+  // 3. Posturas: el puño a Arco prepara el siguiente puño; Paso en T a
+  // Vacía y patada gratis.
   'stances': LessonSetup(
     enemyId: 'dummy_light',
     deck: [

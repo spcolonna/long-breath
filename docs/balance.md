@@ -15,6 +15,8 @@ Los combates aislados se juegan con el mazo inicial y la Vida completa.
 
 Runs completas: aleatorio 47%, codicioso ~34%, planificador 99%. Tigre (antes Joven): 97–100% para todos los bots. Grulla (antes Anciano): aleatorio 37%, planificador 95%.
 
+**01/10/2026, regla nueva de posturas** (la carta pega con la postura en la que estás y después te mueve): el Dragón pasa a 72% / 7,4 turnos con el bot aleatorio y a 100% / 4,6 con el planificador, una diferencia de 28 pp. Las runs completas quedan en 49% para el aleatorio y 99,5% para el planificador. Los comunes siguen cayendo en 2 a 3 turnos.
+
 ## Lectura frente a los criterios de éxito
 
 - **Duración de 3 a 6 turnos:** no se cumple. Con 3 de Aliento y cartas de ~9 de daño (gōngbù), el jugador hace entre 20 y 27 de daño por turno. Los comunes (18 a 32 de Vida) caen en 1 o 2 turnos con buen juego.

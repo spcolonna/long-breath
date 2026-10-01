@@ -44,13 +44,20 @@ const filler = ['ge_dang', 'ge_dang', 'an_zhang', 'tui_zhang', 'tan_tui'];
 
 void main() {
   group('posturas', () {
-    test('Gōngbù Chōngquán primero mueve a gōngbù y recibe su bonus', () {
-      final s = play(setup(['gongbu_chongquan', ...filler]), 'gongbu_chongquan')
-          .state;
+    test('la carta pega con tu postura y después te deja en la suya', () {
+      var s = setup(['gongbu_chongquan', 'gongbu_chongquan', ...filler]);
+      var p = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
+      expect(p.damage, 8, reason: 'pega desde mǎbù: puño +2');
+      expect(p.stanceAfter, Stance.gongbu);
+      s = play(s, 'gongbu_chongquan').state;
       expect(s.player.stance, Stance.gongbu);
-      expect(s.enemy.hp, 24 - 9);
-      expect(s.enemy.structure, 8 - 2);
+      expect(s.enemy.hp, 24 - 8);
+      expect(s.enemy.structure, 8 - 1);
       expect(s.player.breath, 2);
+      // El segundo ya pega desde gōngbù: +3 y +1 de Estructura.
+      s = play(s, 'gongbu_chongquan').state;
+      expect(s.enemy.hp, 24 - 8 - 9);
+      expect(s.enemy.structure, 8 - 1 - 2);
     });
 
     test('mǎbù: puños +2; patadas cuestan +1', () {
@@ -66,7 +73,7 @@ void main() {
       var s = setup(['xubu_liangzhang', 'tan_tui', ...filler]);
       s = play(s, 'xubu_liangzhang').state;
       expect(s.player.stance, Stance.xubu);
-      expect(s.player.guard, 5);
+      expect(s.player.guard, 7, reason: 'se jugó desde mǎbù');
       final p = engine.preview(s, uidOf(s, 'tan_tui'));
       expect(p.cost, 0);
       expect(p.damage, 7);
@@ -154,7 +161,7 @@ void main() {
       expect(s.player.hp, 50);
       expect(s.enemy.staggered, isTrue);
       final p = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
-      expect(p.damage, 18);
+      expect(p.damage, 16, reason: '(6 + 2 de mǎbù) ×2');
       s = play(s, 'gongbu_chongquan').state;
       expect(s.phase, CombatPhase.won);
     });

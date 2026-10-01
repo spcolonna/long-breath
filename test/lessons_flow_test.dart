@@ -76,27 +76,30 @@ void main() {
     sees('Aprendiste a leer al rival');
     await tap('Siguiente lección');
 
-    // 3. Posturas.
+    // 3. Posturas: la carta pega con tu postura y después te mueve.
     sees('tres posturas');
     await tap('Siguiente');
+    sees('Esto da cada postura');
+    await tap('Siguiente');
     await select('Puñetazo a fondo');
-    sees('la vista previa dice 9');
+    sees('Fijate el daño: 8');
     await tester.tap(find.text('Puñetazo a fondo').last);
     await settle(3);
     sees('Ahora estás en Arco');
+    await tap('Siguiente');
+    await play('Puñetazo firme');
+    sees('Ese es el truco');
     await tap('Siguiente');
     await tap('Paso en T');
     await tap('Vacía');
     await settle();
     sees('Patada látigo ahora cuesta 0');
     await play('Patada látigo');
-    await tap('Siguiente');
     await tap('¡Vamos!');
-    await play('Puñetazo firme');
     await endTurn();
     await play('Puñetazo a fondo');
     await settle(3);
-    sees('Aprendiste a usar las posturas');
+    sees('Aprendiste a preparar tu postura');
     await tap('Siguiente lección');
 
     // 4. Estructura.
