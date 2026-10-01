@@ -545,11 +545,20 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         case FormsResetByEnemy():
           _audio.play(Sfx.formBroken);
           _queue.add(_Fx(t.formsInterrupted, null, Palette.textDim));
-        case EnemyPhaseChanged():
+        case EnemyPhaseChanged(:final phase):
           HapticFeedback.heavyImpact();
           _audio.play(Sfx.phaseTwo);
-          _shake(14);
-          _queue.add(_Fx(t.enemyPhase2, null, Palette.gold, big: true));
+          _shake(phase >= 2 ? 18 : 14);
+          _queue.add(_Fx(
+            phase >= 2 ? t.enemyPhase3 : t.enemyPhase2,
+            null,
+            phase >= 2 ? Palette.lacquer : Palette.gold,
+            big: true,
+          ));
+        case ScalesRegrown(:final scales):
+          HapticFeedback.mediumImpact();
+          _audio.play(Sfx.enemyGuard);
+          _queue.add(_Fx(t.scalesRegrown, t.scalesNow(scales), Palette.jade));
         default:
       }
     }

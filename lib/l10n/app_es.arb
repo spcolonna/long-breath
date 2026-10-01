@@ -200,6 +200,7 @@
   },
   "formsInterrupted": "Formas interrumpidas",
   "enemyPhase2": "¡Segunda fase!",
+  "enemyPhase3": "¡Última fase!",
   "formCompleted": "¡Forma completa!",
   "effStance": "Pasás a {name}",
   "@effStance": {
@@ -356,6 +357,9 @@
   "scales": "Escamas {count} · −{count} por golpe",
   "@scales": { "placeholders": { "count": { "type": "int" } } },
   "scaleShed": "¡Escama arrancada!",
+  "scalesRegrown": "¡Le crecen escamas!",
+  "scalesNow": "Ahora tiene {count}",
+  "@scalesNow": { "placeholders": { "count": { "type": "int" } } },
   "scalesLeft": "Le quedan {count}",
   "@scalesLeft": { "placeholders": { "count": { "type": "int" } } },
   "menuClimb": "La subida",

@@ -32,7 +32,7 @@ void main() {
       }
     }
     expect(data.enemies.length, 12); // 6 de la run + 6 muñecos de práctica
-    expect(data.enemy('dragon').phases.length, 2);
+    expect(data.enemy('dragon').phases.length, 3);
   });
 
   test('mapa de la run: 8 nodos, santuario y enemigos válidos', () {

@@ -104,6 +104,7 @@ class EnemyCombat {
     int? structure,
     int? phaseIndex,
     int? patternIndex,
+    int? scales,
   }) =>
       EnemyCombat(
         id: id,
@@ -118,7 +119,7 @@ class EnemyCombat {
         staggerEndsTurn: staggerEndsTurn,
         skipNextAction: skipNextAction,
         chargeBonus: chargeBonus,
-        scales: scales,
+        scales: scales ?? this.scales,
       );
 }
 

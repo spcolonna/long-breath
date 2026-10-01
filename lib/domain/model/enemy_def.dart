@@ -58,9 +58,12 @@ class IntentDef {
 }
 
 class EnemyPhase {
-  const EnemyPhase({required this.pattern, this.hpThreshold});
+  const EnemyPhase({required this.pattern, this.hpThreshold, this.scales});
 
   final List<IntentDef> pattern;
+
+  /// Al entrar en la fase, las escamas vuelven a este valor si tiene menos.
+  final int? scales;
 
   /// La fase empieza cuando la Vida cae a este porcentaje o menos.
   final double? hpThreshold;
@@ -71,6 +74,7 @@ class EnemyPhase {
         IntentDef.fromJson(i as Map<String, dynamic>),
     ],
     hpThreshold: (j['hpThreshold'] as num?)?.toDouble(),
+    scales: j['scales'] as int?,
   );
 }
 

@@ -53,6 +53,12 @@ class ScaleShed extends CombatEvent {
   final int remaining;
 }
 
+/// El enemigo se volvió a cubrir de escamas al cambiar de fase.
+class ScalesRegrown extends CombatEvent {
+  const ScalesRegrown(this.scales);
+  final int scales;
+}
+
 class EnemyRecovered extends CombatEvent {
   const EnemyRecovered();
 }

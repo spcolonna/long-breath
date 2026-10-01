@@ -223,6 +223,22 @@ Tres cambios de regla, medidos con 1000 runs por perfil en Normal:
 
 Probado y descartado: Serpiente retener 1 y Grulla 2 (el Tigre seguía 20 puntos abajo), Grulla con 5 de Aliento (desbalancea al revés), 2 o 3 escamas sin bajar la Estructura (el Dragón se rompe una sola vez y las escamas son solo una resta).
 
+## 3c. Tercera fase del Dragón (01/10/2026)
+
+El jefe seguía corto (6,1 turnos contra la meta de 7 a 10). Se le sumó una **fase 3 al 30% de Vida**:
+
+- **Le vuelven a crecer escamas** hasta tener 2: hay que desequilibrarlo de nuevo para que los golpes entren completos.
+- **El Aliento llega cada dos acciones** (medio 24, E8), con un barrido bajo doble (2 × 6, E2) entre medio. Se responde igual que en la fase 2: desviándolo o rompiéndolo antes.
+
+Para que la pelea más larga no se coma la victoria, se compensó: **Vida 150 → 175** y el golpe medio de la fase 1 **12 → 10**.
+
+| Eco del Dragón | Turnos | Vida perdida | Desequilibrios | Victoria |
+|---|---|---|---|---|
+| Promedio | **7,2** (antes 6,1) | 24,5 | 1,6 (antes 1,3) | 61% |
+| Experto | 6,4 | 20,5 | 1,6 | 83% |
+
+Run completa en Normal: novato 4%, promedio 59–61%, experto 83%. Caminos del promedio (3000 runs): Tigre 58%, Serpiente 61%, Grulla 64%. Probado y descartado: fase 3 sin compensar (63% pero solo 6,3 turnos) y solo subir la Vida (165 → 55%, 180 → 49%).
+
 ## 4. Dificultades (implementadas)
 
 **Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).
@@ -238,10 +254,12 @@ Victoria y minutos de las runs ganadas (1000 runs por perfil):
 
 | Dificultad | Novato | Promedio | Experto |
 |---|---|---|---|
-| Fácil | **34%** · 12 min | 96% · 11 min | 99% · 11 min |
-| Normal | 4% · 12 min | **63%** · 12 min | 86% · 11 min |
-| Difícil | 0% | 29% · 12 min | **59%** · 12 min |
-| Shifu | 0% | 4% · 13 min | **18%** · 12 min |
+| Fácil | **40%** · 13 min | 97% · 12 min | 99% · 11 min |
+| Normal | 4% · 13 min | **59%** · 12 min | 83% · 11 min |
+| Difícil | 0% | 27% · 13 min | **56%** · 12 min |
+| Shifu | 0% | 4% · 14 min | **18%** · 13 min |
+
+(Medido con el Dragón de tres fases, sección 3c.)
 
 Cada escalón le quita al perfil de referencia entre 30 y 40 puntos: Fácil es para aprender, Normal la experiencia diseñada, Difícil el reto del experto y Shifu una meta de maestría: aparece bloqueada (tono blanco y candado) hasta ganar una subida en Difícil. Los Picos (sección 6) siguen como idea para el juego completo, encima de estas cuatro.
 
@@ -347,7 +365,7 @@ Se acumulan: el Pico N incluye las reglas del 1 al N. Los pasos son chicos porqu
 ## 7. Lo que queda (palancas y decisiones)
 
 1. ~~Retener vale poco~~ → resuelto: lo retenido es extra (sección 3b).
-2. ~~El jefe es una carrera de daño~~ → resuelto en parte con las escamas (6,1 turnos, 1,3 Desequilibrios). Si con personas sigue corto, el próximo paso es una tercera fase.
+2. ~~El jefe es una carrera de daño~~ → resuelto en parte con las escamas (6,1 turnos, 1,3 Desequilibrios). Con la tercera fase (sección 3c) llega a 7,2 turnos.
 3. ~~Modo Sereno~~ → resuelto con las cuatro dificultades. Falta confirmarlas con personas reales.
 4. **Recompensas:** probar rareza (comunes y raras) cuando haya más cartas, y dar alguna señal de que saltear es una buena jugada.
 5. **Calibrar el tiempo** cronometrando a alguien que juegue por primera vez.
