@@ -100,7 +100,7 @@ class RunEngine {
     if (node(r.currentNode!).next.isEmpty) {
       return r.copyWith(hp: hp, phase: RunPhase.victory);
     }
-    final (options, rng) = _rollRewards(r.rng);
+    final (options, rng) = _rollRewards(r.rng, r.style);
     return r.copyWith(
       hp: hp,
       phase: RunPhase.reward,
@@ -109,8 +109,8 @@ class RunEngine {
     );
   }
 
-  (List<String>, Rng) _rollRewards(Rng rng) {
-    final pool = [for (final c in data.rewardPool) c.id];
+  (List<String>, Rng) _rollRewards(Rng rng, Style? style) {
+    final pool = [for (final c in data.rewardPoolFor(style)) c.id];
     final (shuffled, next) = rng.shuffle(pool);
     return (shuffled.take(data.balance.rewardChoices).toList(), next);
   }

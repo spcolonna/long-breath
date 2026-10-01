@@ -3,6 +3,9 @@ import 'dart:math' as math;
 import '../combat/combat_action.dart';
 import '../combat/combat_engine.dart';
 import '../combat/combat_state.dart';
+import '../model/card_def.dart';
+import '../model/enemy_def.dart';
+import '../model/enums.dart';
 import '../run/run_engine.dart';
 import '../run/run_state.dart';
 
@@ -91,9 +94,12 @@ class GreedyBot extends Bot {
 /// Busca en el árbol del turno la secuencia con mejor evaluación tras la
 /// acción del enemigo: persigue formas, desvíos y desequilibrios.
 class PlannerBot extends Bot {
-  PlannerBot(super.seed, {this.nodeLimit = 1200});
+  PlannerBot(super.seed, {this.nodeLimit = 1200, this.breathes = false});
 
   final int nodeLimit;
+
+  /// Usa Respirar cuando la mano no tiene ningún ataque pagable.
+  final bool breathes;
 
   @override
   String get name => 'planificador';
@@ -104,6 +110,7 @@ class PlannerBot extends Bot {
       final uid = _retainOrder(engine, s).last;
       return ChooseDiscard(uid);
     }
+    if (breathes && shouldBreathe(engine, s)) return const Breathe();
     final search = _Search(engine, this);
     final best = search.run(s);
     return best ?? EndTurn(retain: _retain(engine, s));
@@ -206,4 +213,168 @@ class _Search {
       _visit(engine.reduce(s, a).state, first ?? a);
     }
   }
+}
+
+
+/// Respirar conviene si la mano no tiene ningún ataque que se pueda pagar.
+bool shouldBreathe(CombatEngine engine, CombatState s) {
+  if (s.breathesLeft <= 0 || s.hand.isEmpty || s.player.breath == 0) return false;
+  if (engine.validate(s, const Breathe()) != null) return false;
+  for (final c in s.hand) {
+    final def = engine.data.card(c.cardId);
+    if (def.type.isAttack && engine.costOf(s, def) <= s.player.breath) return false;
+  }
+  return true;
+}
+
+/// Valor heurístico de una carta de recompensa para un jugador razonable.
+double cardValue(CardDef d) {
+  var v = d.damage + d.structure * 0.8 + d.guard * 0.7;
+  v += d.draw * 2.5 + d.gainBreath * 3 + d.turnStructureBonus * 2;
+  v += d.bonusDamageIfStaggered * 0.4 + d.onDeflectDamage * 0.4;
+  v += d.onDeflectStructure * 0.4;
+  return v / (d.cost == 0 ? 0.8 : d.cost);
+}
+
+/// Jugador nuevo que terminó el tutorial: pega con lo que más daño hace y
+/// se defiende de los golpes de 6 o más, pero lee mal la altura una de cada
+/// cuatro veces. No planifica posturas ni formas, ni usa Paso en T ni Respirar.
+class NoviceBot extends Bot {
+  NoviceBot(super.seed);
+
+  @override
+  String get name => 'novato';
+
+  int _defendedTurn = -1;
+
+  @override
+  CombatAction act(CombatEngine engine, CombatState s) {
+    if (s.phase == CombatPhase.discarding) return discard(s);
+    final plays = engine.legalActions(s).whereType<PlayCard>().toList();
+    CardDef def(PlayCard p) => engine.data.card(s.handCard(p.uid)!.cardId);
+    final view = engine.intentView(s);
+    final incoming = view.intent.kind == IntentKind.attack && !view.skipped
+        ? view.damage * view.intent.hits
+        : 0;
+    if (incoming >= 6 && _defendedTurn != s.turn) {
+      final defenses = plays.where((p) => def(p).type == CardType.defense).toList();
+      if (defenses.isNotEmpty) {
+        _defendedTurn = s.turn;
+        final right =
+            defenses.where((p) => def(p).height == view.intent.height).toList();
+        // Acierta la altura tres de cada cuatro veces.
+        return right.isNotEmpty && random.nextDouble() < 0.75
+            ? right.first
+            : defenses[random.nextInt(defenses.length)];
+      }
+    }
+    final attacks = plays.where((p) => def(p).type.isAttack).toList()
+      ..sort((a, b) => engine
+          .preview(s, b.uid)
+          .damage
+          .compareTo(engine.preview(s, a.uid).damage));
+    if (attacks.isNotEmpty) return attacks.first;
+    final others = plays.where((p) => def(p).type == CardType.technique).toList();
+    if (others.isNotEmpty && random.nextBool()) return others.first;
+    final retain = [...s.hand]..shuffle(random);
+    return EndTurn(retain: [for (final c in retain.take(s.retainMax)) c.uid]);
+  }
+}
+
+/// Jugador promedio: piensa el turno con poca profundidad y uno de cada
+/// cuatro turnos juega en piloto automático (lo que más pega). Elige
+/// recompensas con criterio pero no siempre la mejor.
+class AverageBot extends PlannerBot {
+  AverageBot(super.seed, {this.sloppiness = 0.25})
+      : _greedy = GreedyBot(seed + 1),
+        super(nodeLimit: 150, breathes: true);
+
+  final double sloppiness;
+  final GreedyBot _greedy;
+  int _turn = -1;
+  bool _sloppy = false;
+
+  @override
+  String get name => 'promedio';
+
+  @override
+  CombatAction act(CombatEngine engine, CombatState s) {
+    if (s.turn != _turn) {
+      _turn = s.turn;
+      _sloppy = random.nextDouble() < sloppiness;
+    }
+    if (_sloppy && s.phase == CombatPhase.playerTurn) {
+      return _greedy.act(engine, s);
+    }
+    return super.act(engine, s);
+  }
+
+  @override
+  String? pickReward(RunEngine run, RunState r) {
+    String? best;
+    var bestV = 3.5; // por debajo de esto, mejor no engordar el mazo
+    for (final id in r.rewardOptions) {
+      final v = cardValue(run.data.card(id)) + random.nextDouble() * 3;
+      if (v > bestV) {
+        bestV = v;
+        best = id;
+      }
+    }
+    return best;
+  }
+
+  @override
+  RunState useFountain(RunEngine run, RunState r) {
+    if (r.hp <= r.maxHp - 12) return run.fountainHeal(r);
+    return run.fountainUpgrade(r, _bestUpgrade(run, r));
+  }
+}
+
+/// Jugador experto: el planificador completo, con Respirar y mejor criterio
+/// en recompensas y fuente.
+class ExpertBot extends PlannerBot {
+  ExpertBot(super.seed) : super(breathes: true);
+
+  @override
+  String get name => 'experto';
+
+  @override
+  String? pickReward(RunEngine run, RunState r) {
+    String? best;
+    var bestV = 4.0;
+    for (final id in r.rewardOptions) {
+      final v = cardValue(run.data.card(id));
+      if (v > bestV) {
+        bestV = v;
+        best = id;
+      }
+    }
+    return best;
+  }
+
+  @override
+  RunState useFountain(RunEngine run, RunState r) {
+    if (r.hp <= r.maxHp - 15) return run.fountainHeal(r);
+    return run.fountainUpgrade(r, _bestUpgrade(run, r));
+  }
+}
+
+/// El ataque más barato y frecuente del mazo es el que más rinde mejorado.
+int _bestUpgrade(RunEngine run, RunState r) {
+  final counts = <String, int>{};
+  for (final c in r.deck) {
+    counts[c.cardId] = (counts[c.cardId] ?? 0) + 1;
+  }
+  CombatCard? best;
+  var bestV = -1.0;
+  for (final c in r.deck.where(run.canUpgrade)) {
+    final d = run.data.card(c.cardId);
+    if (!d.type.isAttack) continue;
+    final v = counts[c.cardId]! * 2 + d.damage / math.max(1, d.cost) - c.upgrades;
+    if (v > bestV) {
+      bestV = v;
+      best = c;
+    }
+  }
+  return (best ?? r.deck.firstWhere(run.canUpgrade)).uid;
 }

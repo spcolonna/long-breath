@@ -1819,7 +1819,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide5.
   ///
   /// In es, this message translates to:
-  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente.'**
+  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente. El Tigre además tiene cartas propias, que solo te salen de recompensa si seguís su camino.'**
   String get lesClimbSlide5;
 
   /// No description provided for @lesClimbSlide6Title.

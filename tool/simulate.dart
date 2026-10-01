@@ -1,145 +1,333 @@
 // ignore_for_file: avoid_print
-// Simulador de balance sin interfaz.
+// Simulador de balance sin interfaz. Imprime tablas en markdown.
 //
-//   dart run tool/simulate.dart --n 500 --style snake --runs 200
+//   dart run tool/simulate.dart                      # runs de la etapa 1, 3 perfiles
+//   dart run tool/simulate.dart --runs 400 --profile promedio --style all
+//   dart run tool/simulate.dart --hp common=1.8,boss=1.5 --dmg 1.2   # palancas
+//   dart run tool/simulate.dart --stages 3 --talismans               # prototipo
+//   dart run tool/simulate.dart --section picos --stages 3
+//   dart run tool/simulate.dart --section talismans --stages 3
+//   dart run tool/simulate.dart --section cards          # poder de cada carta
+//   dart run tool/simulate.dart --data otra/carpeta      # comparar con otros datos
 //
-// Juega combates aislados (mazo inicial, Vida completa) contra cada enemigo y
-// runs completas, con tres bots: aleatorio, codicioso y planificador.
-import 'package:long_breath/domain/combat/combat_engine.dart';
-import 'package:long_breath/domain/combat/combat_state.dart';
+// Perfiles: novato, promedio, experto (y de referencia aleatorio, codicioso).
+// Secciones: runs (defecto), picos, talismans.
+import 'dart:io';
+import 'dart:isolate';
+import 'dart:math' as math;
+
 import 'package:long_breath/domain/model/enums.dart';
-import 'package:long_breath/domain/model/game_balance.dart';
-import 'package:long_breath/domain/run/run_engine.dart';
-import 'package:long_breath/domain/run/run_state.dart';
-import 'package:long_breath/domain/sim/bots.dart';
-import 'package:long_breath/infrastructure/file_game_data_loader.dart';
 
-typedef BotFactory = Bot Function(int seed);
+import 'sim/lab.dart';
 
-final bots = <String, BotFactory>{
-  'aleatorio': RandomBot.new,
-  'codicioso': GreedyBot.new,
-  'planificador': PlannerBot.new,
-};
+late List<String> _args;
 
-class CombatStats {
-  int played = 0, won = 0, turnsWon = 0, forms = 0, deflects = 0, hpLost = 0;
-
-  String row() {
-    final wr = played == 0 ? 0 : won * 100 / played;
-    final t = won == 0 ? 0 : turnsWon / won;
-    return '${wr.toStringAsFixed(1).padLeft(6)}%  '
-        '${t.toStringAsFixed(1).padLeft(5)}  '
-        '${(forms / played).toStringAsFixed(2).padLeft(6)}  '
-        '${(deflects / played).toStringAsFixed(2).padLeft(6)}  '
-        '${(hpLost / played).toStringAsFixed(1).padLeft(6)}';
-  }
+String opt(String name, String def) {
+  final i = _args.indexOf('--$name');
+  return i >= 0 && i + 1 < _args.length ? _args[i + 1] : def;
 }
 
-(CombatState, int) playCombat(CombatEngine engine, Bot bot,
-    List<CombatCard> deck, String enemy, Style? style, int hp, int seed) {
-  var s = engine
-      .start(deck: deck, enemyId: enemy, style: style, playerHp: hp, seed: seed)
-      .state;
-  var steps = 0;
-  while (!s.isOver && s.turn <= 40 && steps++ < 2000) {
-    s = engine.reduce(s, bot.act(engine, s)).state;
-  }
-  return (s, s.turn);
+bool flag(String name) => _args.contains('--$name');
+
+class Config {
+  Config({
+    required this.raw,
+    required this.stages,
+    required this.talismans,
+    this.pico = 0,
+    this.startTalismans = const [],
+    this.startCards = const [],
+  });
+
+  final RawData raw;
+  final int stages;
+  final bool talismans;
+  final int pico;
+  final List<String> startTalismans;
+  final List<String> startCards;
 }
 
-void main(List<String> args) {
-  String opt(String name, String def) {
-    final i = args.indexOf('--$name');
-    return i >= 0 && i + 1 < args.length ? args[i + 1] : def;
-  }
-
-  final n = int.parse(opt('n', '300'));
-  final runs = int.parse(opt('runs', '200'));
-  final style = Style.parse(opt('style', 'snake'));
-  final baseSeed = int.parse(opt('seed', '1'));
-
-  final data = loadGameDataFromDir();
-  final engine = CombatEngine(data);
-  final runEngine = RunEngine(data);
-  final starter = [
-    for (final (i, id) in data.starterDeck.indexed) CombatCard(uid: i, cardId: id),
+/// Corre [runs] runs de un perfil repartidas en varios isolates.
+Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
+    {Style? style}) async {
+  final workers = math.min(Platform.numberOfProcessors, math.max(1, runs ~/ 10));
+  final chunks = [
+    for (var w = 0; w < workers; w++)
+      [for (var i = w; i < runs; i += workers) i],
   ];
+  final sloppy = sloppiness;
+  final curve = (stageHp, stageDmg, stageStr, fountainRate, bossHeal);
+  final parts = await Future.wait([
+    for (final chunk in chunks)
+      Isolate.run(() {
+        sloppiness = sloppy;
+        stageHp = curve.$1;
+        stageDmg = curve.$2;
+        stageStr = curve.$3;
+        fountainRate = curve.$4;
+        bossHeal = curve.$5;
+        final base = c.raw.copy();
+        if (c.pico > 0) applyPico(base, c.pico);
+        if (c.stages > 1) addStageEnemies(base);
+        final fixed = c.stages > 1 ? null : base.build();
+        return [
+          for (final i in chunk)
+            playRun(
+              fixed ?? protoData(base, seed * 7 + i),
+              profiles[profile]!(seed * 31 + i),
+              seed * 7 + i,
+              wanted: style ?? Style.values[i % 3],
+              withTalismans: c.talismans,
+              startTalismans: c.startTalismans,
+              startCards: c.startCards,
+            ),
+        ];
+      }),
+  ]);
+  return [for (final p in parts) ...p];
+}
 
-  print('Long Breath — simulador de balance');
-  print('estilo: ${style.name}, combates por enemigo: $n, runs: $runs\n');
+String pct(num a, num b) => b == 0 ? '-' : '${(a * 100 / b).toStringAsFixed(0)}%';
+String f1(num v) => v.toStringAsFixed(1);
+double mean(Iterable<num> xs) => xs.isEmpty ? 0 : xs.reduce((a, b) => a + b) / xs.length;
+num p90(List<num> xs) {
+  if (xs.isEmpty) return 0;
+  final s = [...xs]..sort();
+  return s[((s.length - 1) * 0.9).round()];
+}
 
-  final winRates = <String, Map<String, double>>{};
-  for (final enemy in data.enemies.keys.where((e) => !e.startsWith('dummy'))) {
-    print('== $enemy (${data.enemy(enemy).rank.name})');
-    print('bot            victoria  turnos  formas  desvíos  vida perdida');
-    for (final MapEntry(key: name, value: make) in bots.entries) {
-      final st = CombatStats();
-      for (var i = 0; i < n; i++) {
-        final bot = make(baseSeed * 7919 + i);
-        final (s, turns) = playCombat(engine, bot, starter, enemy, style,
-            data.balance.playerHp, baseSeed * 104729 + i);
-        st.played++;
-        if (s.phase == CombatPhase.won) {
-          st.won++;
-          st.turnsWon += turns;
-        }
-        st.forms += s.formsCompleted.values.fold(0, (a, b) => a + b);
-        st.deflects += s.deflects;
-        st.hpLost += data.balance.playerHp - s.player.hp;
-      }
-      winRates.putIfAbsent(enemy, () => {})[name] = st.won * 100 / st.played;
-      print('${name.padRight(14)} ${st.row()}');
+void table(List<String> head, List<List<String>> rows) {
+  print('| ${head.join(' | ')} |');
+  print('|${[for (final _ in head) '---'].join('|')}|');
+  for (final r in rows) {
+    print('| ${r.join(' | ')} |');
+  }
+  print('');
+}
+
+Future<void> main(List<String> args) async {
+  _args = args;
+  final runs = int.parse(opt('runs', '300'));
+  final seed = int.parse(opt('seed', '1'));
+  final stages = int.parse(opt('stages', '1'));
+  final section = opt('section', 'runs');
+  final profileArg = opt('profile', 'novato,promedio,experto');
+  final selected = profileArg == 'all' ? profiles.keys.toList() : profileArg.split(',');
+  final styleArg = opt('style', 'all');
+  final style = styleArg == 'all' ? null : Style.parse(styleArg);
+
+  final raw = RawData.load(opt('data', 'assets/data'));
+  final levers = Levers(
+    hp: Levers.parse(_args.contains('--hp') ? opt('hp', '') : null),
+    dmg: Levers.parse(_args.contains('--dmg') ? opt('dmg', '') : null),
+    str: Levers.parse(_args.contains('--str') ? opt('str', '') : null),
+  );
+  levers.apply(raw);
+  // --set game_balance.json:styles.tiger.draw=5;cards.json:pi_quan.damage=5
+  if (_args.contains('--set')) {
+    for (final kv in opt('set', '').split(';')) {
+      final [path, value] = kv.split('=');
+      final [file, keys] = path.split(':');
+      raw.set(file, keys.split('.'), num.parse(value));
     }
-    final gap = winRates[enemy]!['planificador']! - winRates[enemy]!['aleatorio']!;
-    print('diferencia planificador − aleatorio: ${gap.toStringAsFixed(1)} pp\n');
+  }
+  sloppiness = double.parse(opt('sloppy', '$sloppiness'));
+  // --curve 1.25,1.5,1.15,1.3 : Vida etapa 2 y 3, daño etapa 2 y 3.
+  if (_args.contains('--curve')) {
+    final v = [for (final x in opt('curve', '').split(',')) double.parse(x)];
+    stageHp = [1, v[0], v[1]];
+    stageDmg = [1, v[2], v[3]];
+    stageStr = stageDmg;
+  }
+  fountainRate = double.parse(opt('fountains', '$fountainRate'));
+  bossHeal = double.parse(opt('boss-heal', '$bossHeal'));
+
+  final sw = Stopwatch()..start();
+  print('# Long Breath — simulación ($section, ${stages == 1 ? 'etapa 1 real' : '$stages etapas (prototipo)'}, '
+      '$runs runs por perfil, semilla $seed${levers.isEmpty ? '' : ', con palancas'})\n');
+
+  switch (section) {
+    case 'picos':
+      await _picos(raw, stages, runs, seed, selected);
+    case 'cards':
+      await _cards(raw, stages, runs, seed, selected);
+    case 'talismans':
+      await _talismans(raw, stages, runs, seed);
+    default:
+      final cfg = Config(raw: raw, stages: stages, talismans: flag('talismans'));
+      final logs = <String, List<RunLog>>{};
+      for (final p in selected) {
+        logs[p] = await simulate(cfg, p, runs, seed, style: style);
+      }
+      _report(logs);
+  }
+  print('_${(sw.elapsedMilliseconds / 1000).toStringAsFixed(0)} s de cómputo_');
+}
+
+void _report(Map<String, List<RunLog>> logs) {
+  print('## Runs');
+  table([
+    'perfil', 'victoria', 'llega al jefe final', 'piso medio de derrota',
+    'Vida al jefe', 'minutos (media)', 'minutos (victorias)', 'mazo final', 'formas por run',
+  ], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      [
+        p,
+        pct(l.where((r) => r.won).length, l.length),
+        pct(l.where((r) => r.hpAtBoss != null).length, l.length),
+        f1(mean([for (final r in l.where((r) => !r.won)) r.nodes])),
+        f1(mean([for (final r in l) if (r.hpAtBoss != null) r.hpAtBoss!])),
+        f1(mean([for (final r in l) r.seconds / 60])),
+        f1(mean([for (final r in l.where((r) => r.won)) r.seconds / 60])),
+        f1(mean([for (final r in l) r.deckSize])),
+        f1(mean([for (final r in l) r.fights.fold(0, (a, f) => a + f.forms)])),
+      ],
+  ]);
+
+  print('## Victoria por camino');
+  table(['perfil', for (final s in Style.values) s.name, 'sin camino (murió antes)'], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      [
+        p,
+        for (final s in Style.values)
+          '${pct(l.where((r) => r.style == s && r.won).length, l.where((r) => r.style == s).length)} '
+              '(${l.where((r) => r.style == s).length})',
+        '${l.where((r) => r.style == null).length}',
+      ],
+  ]);
+
+  print('## Combates (dentro de las runs: mazo y Vida reales)');
+  for (final MapEntry(key: p, value: l) in logs.entries) {
+    print('### $p');
+    final byEnemy = <String, List<FightLog>>{};
+    for (final r in l) {
+      for (final f in r.fights) {
+        byEnemy.putIfAbsent(f.enemy, () => []).add(f);
+      }
+    }
+    final order = byEnemy.keys.toList()
+      ..sort((a, b) {
+        final ra = byEnemy[a]!.first.rank.index, rb = byEnemy[b]!.first.rank.index;
+        return ra != rb ? ra.compareTo(rb) : a.compareTo(b);
+      });
+    table([
+      'enemigo', 'rango', 'peleas', 'victoria', 'turnos', 'turnos p90',
+      'Vida perdida', 'desequilibrios', 'desvíos', 'formas', 'minutos',
+    ], [
+      for (final e in order)
+        () {
+          final fs = byEnemy[e]!;
+          final won = fs.where((f) => f.won).toList();
+          return [
+            e,
+            fs.first.rank.name,
+            '${fs.length}',
+            pct(won.length, fs.length),
+            f1(mean([for (final f in won) f.turns])),
+            '${p90([for (final f in won) f.turns])}',
+            f1(mean([for (final f in fs) f.hpLost])),
+            f1(mean([for (final f in fs) f.staggers])),
+            f1(mean([for (final f in fs) f.deflects])),
+            f1(mean([for (final f in fs) f.forms])),
+            f1(mean([for (final f in fs) (f.plays * 5 + f.turns * 6 + 10) / 60])),
+          ];
+        }(),
+    ]);
   }
 
-  print('== Runs completas (novicio hasta el santuario, después --style si sale)');
-  print('bot            victoria  llega al guardián  nodo medio de derrota');
-  for (final MapEntry(key: name, value: make) in bots.entries) {
-    var won = 0, reachedBoss = 0, deathDepth = 0;
-    for (var i = 0; i < runs; i++) {
-      final bot = make(baseSeed * 31 + i);
-      var r = runEngine.newRun(seed: baseSeed * 7 + i);
-      while (r.phase != RunPhase.victory && r.phase != RunPhase.defeat) {
-        switch (r.phase) {
-          case RunPhase.map:
-            r = runEngine.enter(r, bot.pickPath(runEngine.available(r)));
-          case RunPhase.combat:
-            final (seed, next) = runEngine.combatSeed(r);
-            r = next;
-            final enemy = runEngine.enemyOf(r);
-            if (runEngine.node(r.currentNode!).type == NodeType.combat &&
-                enemy == 'dragon') {
-              reachedBoss++;
-            }
-            final (s, _) =
-                playCombat(engine, bot, r.deck, enemy, r.style, r.hp, seed);
-            r = runEngine.finishCombat(r,
-                won: s.phase == CombatPhase.won, hp: s.player.hp);
-          case RunPhase.reward:
-            r = runEngine.chooseReward(r, bot.pickReward(runEngine, r));
-          case RunPhase.fountain:
-            r = bot.useFountain(runEngine, r);
-          case RunPhase.shrine:
-            // Toma el camino pedido si el santuario lo ofrece.
-            r = runEngine.choosePath(r,
-                r.pathOptions.contains(style) ? style : r.pathOptions.first);
-          case RunPhase.victory || RunPhase.defeat:
-            break;
+  print('## Uso de posturas (cartas jugadas desde cada una)');
+  table(['perfil', for (final s in Stance.values) s.name], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      () {
+        final c = <Stance, int>{};
+        for (final r in l) {
+          for (final f in r.fights) {
+            f.stanceUse.forEach((k, v) => c[k] = (c[k] ?? 0) + v);
+          }
         }
-      }
-      if (r.phase == RunPhase.victory) {
-        won++;
-      } else {
-        deathDepth += r.visited.length;
-      }
-    }
-    final lost = runs - won;
-    print('${name.padRight(14)} '
-        '${(won * 100 / runs).toStringAsFixed(1).padLeft(6)}%  '
-        '${(reachedBoss * 100 / runs).toStringAsFixed(1).padLeft(15)}%  '
-        '${lost == 0 ? '-' : (deathDepth / lost).toStringAsFixed(1)}');
+        final total = c.values.fold(0, (a, b) => a + b);
+        return [p, for (final s in Stance.values) pct(c[s] ?? 0, total)];
+      }(),
+  ]);
+
+  for (final p in ['promedio', 'experto']) {
+    final l = logs[p];
+    if (l == null) continue;
+    print('## Cartas de recompensa ($p)');
+    final ids = {for (final r in l) ...r.offered}.toList()..sort();
+    table(['carta', 'runs donde salió', 'elegida', 'victoria si la tomó', 'victoria si no'], [
+      for (final id in ids)
+        () {
+          final off = l.where((r) => r.offered.contains(id)).toList();
+          final took = off.where((r) => r.picked.contains(id)).toList();
+          final not = off.where((r) => !r.picked.contains(id)).toList();
+          return [
+            id,
+            '${off.length}',
+            pct(took.length, off.length),
+            pct(took.where((r) => r.won).length, took.length),
+            pct(not.where((r) => r.won).length, not.length),
+          ];
+        }(),
+    ]);
   }
+}
+
+Future<void> _picos(RawData raw, int stages, int runs, int seed, List<String> profilesSel) async {
+  print('## Picos (dificultad desbloqueable)');
+  final rows = <List<String>>[];
+  for (var pico = 0; pico <= 10; pico++) {
+    final cfg = Config(raw: raw, stages: stages, talismans: true, pico: pico);
+    final row = [pico == 0 ? '0 (normal)' : '$pico · ${picoRules[pico - 1]}'];
+    for (final p in profilesSel) {
+      final l = await simulate(cfg, p, runs, seed);
+      row.add(pct(l.where((r) => r.won).length, l.length));
+    }
+    rows.add(row);
+  }
+  table(['Pico', ...profilesSel], rows);
+}
+
+Future<void> _talismans(RawData raw, int stages, int runs, int seed) async {
+  print('## Talismanes: victoria del perfil promedio empezando con uno solo');
+  final base = await simulate(
+      Config(raw: raw, stages: stages, talismans: false), 'promedio', runs, seed);
+  final bw = base.where((r) => r.won).length * 100 / runs;
+  final rows = [
+    ['ninguno', '-', '${bw.toStringAsFixed(0)}%', '-'],
+  ];
+  for (final t in talismans) {
+    final l = await simulate(
+        Config(raw: raw, stages: stages, talismans: false, startTalismans: [t.id]),
+        'promedio', runs, seed);
+    final w = l.where((r) => r.won).length * 100 / runs;
+    rows.add([t.id, t.text, '${w.toStringAsFixed(0)}%', '${(w - bw) >= 0 ? '+' : ''}${(w - bw).toStringAsFixed(0)} pp']);
+  }
+  table(['talismán', 'efecto', 'victoria', 'diferencia'], rows);
+}
+
+/// Poder de cada carta: victoria si empieza la run ya en el mazo, contra el
+/// mazo inicial solo. Aísla la carta de la heurística de elección del bot.
+Future<void> _cards(RawData raw, int stages, int runs, int seed, List<String> sel) async {
+  print('## Poder de las cartas de recompensa (empezando la run con una copia)');
+  final data = raw.build();
+  final base = <String, double>{};
+  for (final p in sel) {
+    final l = await simulate(Config(raw: raw, stages: stages, talismans: false), p, runs, seed);
+    base[p] = l.where((r) => r.won).length * 100 / runs;
+  }
+  final rows = [
+    ['(mazo inicial)', '-', for (final p in sel) '${base[p]!.toStringAsFixed(0)}%'],
+  ];
+  for (final c in data.rewardPool) {
+    final row = [c.id, '${c.cost}'];
+    for (final p in sel) {
+      final l = await simulate(
+          Config(raw: raw, stages: stages, talismans: false, startCards: [c.id]), p, runs, seed);
+      final w = l.where((r) => r.won).length * 100 / runs - base[p]!;
+      row.add('${w >= 0 ? '+' : ''}${w.toStringAsFixed(0)} pp');
+    }
+    rows.add(row);
+  }
+  table(['carta', 'costo', ...sel], rows);
 }

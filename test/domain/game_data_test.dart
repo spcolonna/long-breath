@@ -14,6 +14,14 @@ void main() {
     expect(data.rewardPool.length, 12);
   });
 
+  test('las cartas del Tigre solo le salen al Tigre', () {
+    bool hasTiger(Style? s) => data.rewardPoolFor(s).any((c) => c.pool == 'tiger');
+    expect(data.rewardPoolFor(Style.tiger).length, 12);
+    expect(data.rewardPoolFor(Style.snake).length, 8);
+    expect(hasTiger(null), isFalse, reason: 'el novicio todavía no eligió');
+    expect(hasTiger(Style.crane), isFalse);
+  });
+
   test('posturas, formas y enemigos', () {
     expect(data.stances.keys, containsAll(Stance.values));
     expect(data.transition.cost, 1);

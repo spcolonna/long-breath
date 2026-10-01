@@ -39,7 +39,7 @@ void main() {
     r = run.enter(r, 'n4');
     expect(r.phase, RunPhase.fountain);
     r = run.fountainHeal(r);
-    expect(r.hp, 45);
+    expect(r.hp, 50);
   });
 
   test('fuente: mejorar y eliminar', () {

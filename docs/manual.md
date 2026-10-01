@@ -79,7 +79,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
 4. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
-5. **Fuente de meditación:** elegís una opción entre curar 15 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
+5. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 6. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
 
 La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí, completa.
@@ -89,13 +89,17 @@ La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí
 | Camino | Robás por turno | Aliento por turno | Retenés |
 |---|---|---|---|
 | Novicio (hasta el santuario) | 5 | 3 | 0 |
-| Tigre | 6 | 4 | 0 |
-| Serpiente | 5 | 3 | 1 |
-| Grulla | 4 | 3 | 3 |
+| Tigre | 4 | 4 | 0 |
+| Serpiente | 4 | 4 | 2 |
+| Grulla | 4 | 4 | 3 |
 
-- **Tigre:** más cartas y más Aliento, pero todo lo que no uses se pierde. Ideal para aprender.
-- **Serpiente:** el punto medio.
-- **Grulla:** pocas cartas por turno, pero puede guardar hasta 3 para armar formas y respuestas exactas. Es el más difícil.
+Al elegir camino el discípulo madura: pasa de 3 a 4 de Aliento por turno, sea cual sea el camino.
+
+- **Tigre:** no guarda nada, pero es el único que recibe las cartas del Tigre (Garra, Salto, Guardia y Rugido) como recompensa. Ideal para aprender.
+- **Serpiente:** guarda 2 cartas para el turno siguiente: encadena golpes y formas.
+- **Grulla:** guarda hasta 3 para armar formas y respuestas exactas.
+
+En la simulación los tres caminos quedan parejos (ver `balance.md`).
 
 Como el santuario ofrece solo dos, no siempre vas a poder jugar tu camino favorito: parte de la gracia es adaptarse al que te toca.
 
@@ -139,7 +143,6 @@ Hay cinco tipos: **Puño**, **Palma**, **Patada**, **Defensa** y **Técnica**. C
 
 - Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero pega** con la postura en la que estás y **después te deja** en la suya. Su bonus lo aprovecha la carta siguiente: ordenar la mano o usar Paso en T antes es la clave.
 - **Agotar:** la carta desaparece por el resto del combate al jugarla.
-- **Saludo marcial** (Bàoquán Lǐ) solo se puede jugar en el primer turno.
 
 ## Posturas
 
@@ -181,7 +184,7 @@ Una forma es una secuencia fija de cartas. Si la completás en orden, se desata 
 
 | Forma | Pasos | Al completarla |
 |---|---|---|
-| **Pequeño Puño Rojo** 小洪拳 | Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás | 10 de daño, 5 a Estructura, robás 2 |
+| **Pequeño Puño Rojo** 小洪拳 | Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás | 14 de daño, 6 a Estructura, robás 2 |
 | **Gran Puño Rojo** 大洪拳 | Puñetazo firme → Empujón a fondo → Patada de talón → Paso atrás → Puñetazo a fondo | 18 de daño, 8 a Estructura, Guardia 8 media |
 
 El Gran Puño Rojo necesita dos cartas de recompensa: *Empujón a fondo* y *Patada de talón*.
@@ -192,12 +195,12 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 
 | Enemigo | Rango | Vida | Estructura | Patrón | Regla especial |
 |---|---|---|---|---|---|
-| Eco de Murciélago | Común | 18 | 6 | Alto 3×2 → Alto 6 → Chillido | Chillido: al empezar tu turno descartás 1 carta a elección |
-| Discípulo Perdido | Común | 32 | 10 | Alto 6 → Medio 8 → Barrido bajo 6 | Si terminás el turno en la misma postura que el anterior, su ataque hace +4 de daño y +2 a Estructura |
-| Gólem de Estalactita | Común | 30 | 12 | Medio 10 → Carga → Medio 10 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +5 a su próximo ataque |
-| Salamandra de la Grieta | Común | 24 | 8 | Bajo 7 → Se entierra → Bajo 9 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
-| Monje sin Rostro | Élite | 55 | 15 | Medio 9 → Interrumpir (alto 5) → Bajo 12 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
-| Eco del Dragón | Guardián | 90 | 20 | Dos fases | Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 25, E8), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes |
+| Eco de Murciélago | Común | 48 | 11 | Alto 3×2 → Alto 7 → Chillido | Chillido: al empezar tu turno descartás 1 carta a elección |
+| Discípulo Perdido | Común | 70 | 18 | Alto 7 → Medio 9 → Barrido bajo 7 | Si terminás el turno en la misma postura que el anterior, su ataque hace +5 de daño y +2 a Estructura |
+| Gólem de Estalactita | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
+| Salamandra de la Grieta | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
+| Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
+| Eco del Dragón | Guardián | 154 | 26 | Dos fases | Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes |
 
 En la bifurcación conviene elegir según el mazo: el **Gólem** premia romper Estructura; la **Salamandra**, palmas y empujes.
 

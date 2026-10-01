@@ -51,19 +51,19 @@ void main() {
       expect(p.stanceAfter, Stance.gongbu);
       s = play(s, 'gongbu_chongquan').state;
       expect(s.player.stance, Stance.gongbu);
-      expect(s.enemy.hp, 24 - 8);
-      expect(s.enemy.structure, 8 - 1);
-      expect(s.player.breath, 2);
+      expect(s.enemy.hp, 57 - 8);
+      expect(s.enemy.structure, 14 - 1);
+      expect(s.player.breath, 3);
       // El segundo ya pega desde gōngbù: +3 y +1 de Estructura.
       s = play(s, 'gongbu_chongquan').state;
-      expect(s.enemy.hp, 24 - 8 - 9);
-      expect(s.enemy.structure, 8 - 1 - 2);
+      expect(s.enemy.hp, 57 - 8 - 9);
+      expect(s.enemy.structure, 14 - 1 - 2);
     });
 
     test('mǎbù: puños +2; patadas cuestan +1', () {
       var s = setup(['mabu_chongquan', 'tan_tui', ...filler]);
       s = play(s, 'mabu_chongquan').state;
-      expect(s.enemy.hp, 24 - 7);
+      expect(s.enemy.hp, 57 - 7);
       final p = engine.preview(s, uidOf(s, 'tan_tui'));
       expect(p.cost, 2);
       expect(p.damage, 5);
@@ -83,17 +83,17 @@ void main() {
       var s = setup(filler);
       s = engine.reduce(s, const Dingbu(Stance.gongbu)).state;
       expect(s.player.stance, Stance.gongbu);
-      expect(s.player.breath, 2);
+      expect(s.player.breath, 3);
       expect(engine.validate(s, const Dingbu(Stance.xubu)), isNotNull);
     });
   });
 
   group('guardia y altura', () {
     test('altura incorrecta absorbe la mitad', () {
-      // Salamandra: bajo 7 (E2). Gé Dǎng es medio 7 → absorbe 3.
+      // Salamandra: bajo 8 (E2). Gé Dǎng es medio 7 → absorbe 3.
       var s = play(setup(filler), 'ge_dang').state;
       s = endTurn(s).state;
-      expect(s.player.hp, 50 - 4);
+      expect(s.player.hp, 50 - 5);
       // bloqueado: 2 → 1, mǎbù ½ → 0
       expect(s.player.structure, 10);
     });
@@ -101,22 +101,22 @@ void main() {
     test('sin guardia en gōngbù recibís +2 a Estructura', () {
       var s = engine.reduce(setup(filler), const Dingbu(Stance.gongbu)).state;
       s = endTurn(s).state;
-      expect(s.player.hp, 43);
+      expect(s.player.hp, 42);
       expect(s.player.structure, 10 - 4);
     });
 
     test('desvío: sin daño, enemigo −3 Estructura, +1 Aliento', () {
       var s = setup(['an_zhang', 'ti_xi', ...filler]);
       s = play(s, 'an_zhang').state;
-      s = play(s, 'ti_xi').state; // Guardia 12 baja ≥ 7
+      s = play(s, 'ti_xi').state; // Guardia 14 baja ≥ 8
       final r = endTurn(s);
       s = r.state;
       expect(r.events.whereType<Deflected>(), hasLength(1));
       expect(s.player.hp, 50);
       expect(s.player.structure, 10);
-      expect(s.enemy.structure, 8 - 3);
-      expect(s.enemy.hp, 24 - 4); // Tí Xī: 4 de daño al desviar
-      expect(s.player.breath, 4);
+      expect(s.enemy.structure, 14 - 3);
+      expect(s.enemy.hp, 57 - 5); // Tí Xī: 5 de daño al desviar
+      expect(s.player.breath, 5);
     });
 
     test('ataque doble: la guardia se aplica a cada golpe', () {
@@ -129,17 +129,18 @@ void main() {
 
     test('desvío en xūbù da +1 Aliento extra', () {
       var s = setup(['xubu_liangzhang', ...filler], enemy: 'bat');
-      s = play(s, 'xubu_liangzhang').state; // Guardia 5 alta ≥ 3
+      s = play(s, 'xubu_liangzhang').state; // Guardia 7 alta ≥ 3
       s = endTurn(s).state;
-      expect(s.player.breath, 5);
-      expect(s.enemy.structure, 3);
+      expect(s.player.breath, 6);
+      expect(s.enemy.structure, 11 - 3);
     });
 
     test('Hǔ Bào Tóu: el desvío quita 3 de Estructura extra', () {
       var s = setup(['hu_bao_tou', ...filler], enemy: 'bat');
+      s = s.copyWith(enemy: s.enemy.copyWith(structure: 6));
       s = play(s, 'hu_bao_tou').state;
       s = endTurn(s).state;
-      expect(s.enemy.structure, 0 + 6 - 6); // se desequilibra
+      expect(s.enemy.structure, 6 - 3 - 3); // se desequilibra
       expect(s.enemy.staggered, isTrue);
     });
   });
@@ -150,6 +151,7 @@ void main() {
         'tui_zhang', 'mabu_chongquan', 'ge_dang', 'ge_dang', 'an_zhang', //
         'gongbu_chongquan', 'tan_tui', 'ge_dang', 'ge_dang', 'an_zhang',
       ], enemy: 'bat');
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 18, structure: 6));
       s = play(s, 'tui_zhang').state; // 4 daño, 4 E
       final r1 = play(s, 'mabu_chongquan'); // 7 daño, 2 E → rota
       s = r1.state;
@@ -174,7 +176,7 @@ void main() {
       s = endTurn(s).state; // pierde la acción
       final r = endTurn(s);
       expect(r.events.whereType<EnemyRecovered>(), hasLength(1));
-      expect(r.state.enemy.structure, 12);
+      expect(r.state.enemy.structure, 16);
       expect(r.state.enemy.staggered, isFalse);
       // reanuda el ciclo: la acción perdida era el ataque, ahora Carga
       expect(r.events.whereType<EnemyCharged>(), hasLength(1));
@@ -183,9 +185,9 @@ void main() {
     test('jugador con Estructura rota empieza con 2 de Aliento menos', () {
       var s = setup(filler);
       s = s.copyWith(player: s.player.copyWith(structure: 1));
-      final r = endTurn(s); // bajo 7 E2 → mǎbù 1
+      final r = endTurn(s); // bajo 8 E2 → mǎbù 1
       expect(r.events.whereType<PlayerBroken>(), hasLength(1));
-      expect(r.state.player.breath, 1);
+      expect(r.state.player.breath, 2);
       expect(r.state.player.structure, 10);
     });
 
@@ -193,39 +195,40 @@ void main() {
       final s = play(setup(['gongbu_chongquan', ...filler], enemy: 'golem'),
               'gongbu_chongquan')
           .state;
-      expect(s.enemy.hp, 30 - 4);
+      expect(s.enemy.hp, 64 - 4);
     });
   });
 
   group('cartas', () {
     test('Pī Quán +6 contra enemigo desequilibrado', () {
-      var s = setup(['pi_quan', ...filler], enemy: 'golem');
+      var s = setup(['pi_quan', 'tui_zhang', ...filler], enemy: 'golem');
       s = s.copyWith(enemy: s.enemy.copyWith(structure: 1));
       s = play(s, 'tui_zhang').state;
       final p = engine.preview(s, uidOf(s, 'pi_quan'));
-      expect(p.damage, (6 + 2 + 6) * 2);
+      expect(p.damage, (8 + 2 + 6) * 2);
     });
 
     test('Tiáo Xī: +1 Aliento, roba 1 y se agota', () {
       var s = setup(['tiao_xi', ...filler, 'ge_dang']);
       s = play(s, 'tiao_xi').state;
-      expect(s.player.breath, 4);
-      expect(s.hand.length, 5);
+      expect(s.player.breath, 5);
+      expect(s.hand.length, 4);
       expect(s.exhausted.map((c) => c.cardId), ['tiao_xi']);
     });
 
-    test('Bàoquán Lǐ solo en el primer turno', () {
-      var s = setup(['ge_dang', ...filler, 'baoquan_li', 'ge_dang', 'ge_dang',
-          'ge_dang']);
-      s = endTurn(s).state;
-      expect(engine.validate(s, PlayCard(uidOf(s, 'baoquan_li'))), isNotNull);
+    test('Bàoquán Lǐ: roba 2 y se agota', () {
+      var s = setup(['baoquan_li', ...filler]);
+      s = play(s, 'baoquan_li').state;
+      expect(s.player.breath, 4);
+      expect(s.hand.length, 3 + 2);
+      expect(s.exhausted.map((c) => c.cardId), ['baoquan_li']);
     });
 
     test('Hǔ Xiào: +2 a todo daño a Estructura este turno', () {
       var s = setup(['hu_xiao', 'hu_zhao', ...filler], enemy: 'golem');
       s = play(s, 'hu_xiao').state;
-      s = play(s, 'hu_zhao').state; // 4 + 2 (mǎbù) + 2
-      expect(s.enemy.structure, 12 - 8);
+      s = play(s, 'hu_zhao').state; // 5 + 2 (mǎbù) + 2
+      expect(s.enemy.structure, 16 - 9);
     });
 
     test('Hǔ Pū: perdés toda tu Guardia', () {
@@ -238,20 +241,22 @@ void main() {
   });
 
   group('mano', () {
-    test('retener según la edad', () {
+    test('retener según el camino', () {
       var s = setup([...filler, ...filler]);
       final keep = s.hand.first.uid;
-      expect(engine.validate(s, EndTurn(retain: [keep, s.hand[1].uid])),
+      expect(
+          engine.validate(
+              s, EndTurn(retain: [keep, s.hand[1].uid, s.hand[2].uid])),
           isNotNull);
       s = endTurn(s, [keep]).state;
-      expect(s.hand.length, 5);
+      expect(s.hand.length, 4);
       expect(s.hand.any((c) => c.uid == keep), isTrue);
     });
 
     test('respirar una vez por combate', () {
       var s = setup([...filler, ...filler]);
       s = engine.reduce(s, const Breathe()).state;
-      expect(s.hand.map((c) => c.uid), [5, 6, 7, 8, 9]);
+      expect(s.hand.map((c) => c.uid), [4, 5, 6, 7]);
       expect(engine.validate(s, const Breathe()), isNotNull);
     });
 
@@ -293,7 +298,7 @@ void main() {
       final r = play(s, 'xubu_liangzhang');
       expect(r.events.whereType<FormCompleted>(), hasLength(1));
       expect(r.state.formProgress[xhq], 0);
-      expect(r.state.enemy.hp, hpBefore - 5); // 10 a la mitad (Gólem)
+      expect(r.state.enemy.hp, hpBefore - 7); // 14 a la mitad (Gólem)
       expect(r.state.formsCompleted[xhq], 1);
     });
 
@@ -338,29 +343,29 @@ void main() {
 
   group('enemigos', () {
     test('Salamandra: su Guardia absorbe daño pero no Estructura', () {
-      var s = setup([...filler, ...filler]);
+      var s = setup(['tan_tui', 'ge_dang', 'ge_dang', 'an_zhang', ...filler]);
       s = s.copyWith(enemy: s.enemy.copyWith(patternIndex: 1));
       s = endTurn(s).state;
-      expect(s.enemy.guard, 8);
+      expect(s.enemy.guard, 9);
       s = play(s, 'tui_zhang').state; // 4 daño, 4 E
-      expect(s.enemy.hp, 24);
-      expect(s.enemy.guard, 4);
-      expect(s.enemy.structure, 4);
+      expect(s.enemy.hp, 57);
+      expect(s.enemy.guard, 5);
+      expect(s.enemy.structure, 14 - 4);
     });
 
-    test('Gólem: Carga suma +5 al próximo ataque', () {
+    test('Gólem: Carga suma +6 al próximo ataque', () {
       var s = setup([...filler, ...filler], enemy: 'golem');
       s = s.copyWith(enemy: s.enemy.copyWith(patternIndex: 1));
       s = endTurn(s).state;
-      expect(engine.intentView(s).damage, 15);
+      expect(engine.intentView(s).damage, 18);
     });
 
-    test('Discípulo: misma postura dos turnos → +4 daño y +2 E', () {
+    test('Discípulo: misma postura dos turnos → +5 daño y +2 E', () {
       var s = setup([...filler, ...filler, ...filler], enemy: 'disciple');
-      s = endTurn(s).state; // alto 6 (E2): 50 → 44
+      s = endTurn(s).state; // alto 7 (E2): 50 → 43
       expect(engine.intentView(s).punishIfSameStance, isTrue);
-      s = endTurn(s).state; // medio 8 + 4
-      expect(s.player.hp, 44 - 12);
+      s = endTurn(s).state; // medio 9 + 5
+      expect(s.player.hp, 43 - 14);
     });
 
     test('Murciélago: Chillido obliga a descartar', () {
@@ -371,7 +376,7 @@ void main() {
       expect(engine.validate(s, const EndTurn()), isNotNull);
       s = engine.reduce(s, ChooseDiscard(s.hand.first.uid)).state;
       expect(s.phase, CombatPhase.playerTurn);
-      expect(s.hand.length, 4);
+      expect(s.hand.length, 3);
     });
 
     test('Eco del Dragón: fase 2 al 50% con cuenta regresiva', () {

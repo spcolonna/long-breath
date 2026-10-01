@@ -40,7 +40,7 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 
 ## Enemigos
 - **Chillido:** al empezar tu próximo turno, después de robar, tenés que descartar 1 carta antes de hacer cualquier otra cosa.
-- **Discípulo:** si tu postura al terminar el turno es la misma que al terminar el anterior, el ataque que ejecuta en ese momento suma +4 de daño y +2 a Estructura. El primer turno no cuenta.
+- **Discípulo:** si tu postura al terminar el turno es la misma que al terminar el anterior, el ataque que ejecuta en ese momento suma +5 de daño y +2 a Estructura. El primer turno no cuenta.
 - **Gólem:** Carga se acumula para su próximo ataque.
 - **Salamandra:** su Guardia dura hasta su siguiente acción.
 - **Eco del Dragón:** al cruzar el 50% de Vida cambia de fase en el acto y el ciclo empieza desde el paso 0. La intención muestra cuántas acciones faltan para el Aliento del Dragón.
@@ -48,4 +48,8 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 ## Mano
 - Robás hasta completar el tamaño de mano de tu camino. Las cartas robadas por efectos pueden superar ese tamaño.
 - Retener se elige al terminar el turno (acción `EndTurn(retain: [...])`).
-- Bàoquán Lǐ solo se puede jugar en el turno 1. Si la robás más tarde, queda muerta.
+- Bàoquán Lǐ (Saludo marcial) roba 2 y se agota; se puede jugar en cualquier turno (antes era solo el turno 1 y quedaba muerta si la robabas tarde).
+
+## Recompensas
+- Se ofrecen 3 cartas al azar de los pools de `rewards.pools`.
+- Un pool con el nombre de un camino (`tiger`) solo aparece si seguís ese camino. Antes del santuario no sale ninguno.

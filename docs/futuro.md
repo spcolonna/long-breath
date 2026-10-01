@@ -6,12 +6,17 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 
 ## 1. Pendientes inmediatos
 
-- **Balance de combate** (ver `balance.md`): los combates duran 1 a 3 turnos y el objetivo es 3 a 6. Las palancas propuestas, sin aplicar, son:
-  - Más Vida a los enemigos (×2 a ×2,5).
-  - Bajar el bonus de puños en Arco.
-  - Subir el daño enemigo.
+- **Balance:** hecho el 01/10/2026 (ver `balance.md`).
+  - Combates de 2,4 a 4,8 turnos.
+  - El jugador promedio gana el 60% de las runs y el experto el 79%.
+  - Los tres caminos quedan parejos.
 
-  La nueva regla de posturas (01/10/2026) alarga un poco los combates: el Dragón pasó de 4,3 a 4,6 turnos con el planificador. No alcanza. Después de cada cambio hay que correr `dart run tool/simulate.dart`.
+  Lo que queda:
+  - **Modo Sereno** (Vida 65 y enemigos con −20% de daño) para la primera subida. Hoy un novato gana el 1% en Normal y el 12% en Sereno. Hay que agregarlo en la interfaz, al empezar la subida.
+  - **Retener que no ocupe lugar en la mano.** Hoy retener casi no suma. Es un cambio de regla y hay que decidirlo antes de diseñar los caminos de la Serpiente y la Grulla.
+  - **Una mecánica para el jefe que haya que responder** (por ejemplo, una tercera fase o escamas), para llevarlo a 6–8 turnos sin que sea una carrera de daño.
+  - **Formas más alcanzables:** formas propias de cada camino, o retener mejor.
+  - **Calibrar el modelo de tiempo** con partidas reales.
 - **Arte de enemigos faltante:** `disciple.png`, `monk.png` y `dragon.png` en `assets/art/enemies/`.
 - **Nombres de cueva:** "Salamandra de la Grieta", "Gólem de Estalactita" y "Eco de Murciélago" vienen de la vieja idea de la cueva. Hay que pasarlos a nombres de montaña, épicos o memorables (`assets/l10n/content/es.json`).
 - **Zoom de la carta seleccionada:** hoy es ×1,5 y tapa parte de la vista previa. Evaluar 1,35.
@@ -57,6 +62,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
   Los nombres finales tienen que ser épicos y no tener nada de cueva.
 - **Nodos:** cada etapa tiene entre 12 y 15 nodos, con bifurcaciones reales (2 o 3 caminos por piso, no uno solo).
+- **Prototipo simulado** (`balance.md`, sección 5): con 3 etapas de 13 pisos, una subida ganada dura unos 55 minutos. Lo que mata es el desgaste: hacen falta fuentes frecuentes y curar al vencer al jefe. Las etapas 2 y 3 necesitan **enemigos con reglas nuevas**, no números más grandes.
 - **Arte:** 1 fondo por etapa, o sea 2 fondos nuevos.
 
 ### 3.2 Mapa generado
@@ -79,6 +85,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - "El primer desvío de cada combate da +2 de Aliento."
   - "Las formas completas curan 3."
 - Son la fuente principal de combinaciones y de rejugabilidad en los roguelikes de cartas.
+- **Prototipo:** hay 10 talismanes medidos en `balance.md` (sección 5). Cada uno suma entre +1 y +14 puntos de victoria, y todos juntos unos +20.
 - Se obtienen en las élites, los jefes, los eventos y el mercader.
 - **Arte:** ícono chico por talismán. Se pueden armar con un set de íconos simples o con caracteres caligrafiados.
 
@@ -93,6 +100,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - La fuente cura menos.
   - Las élites tienen una regla extra.
 - Es lo que da cientos de horas de rejugabilidad.
+- **Prototipo:** hay una escala de 10 Picos simulada en `balance.md` (sección 6). La caída es gradual, de 55% a 12% para el experto.
 - **Arte:** ninguno.
 
 ### 3.7 Progresión entre partidas: el cultivo del aliento

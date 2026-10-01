@@ -7,16 +7,16 @@
   },
   "novice": { "hanzi": "徒", "pinyin": "Tú", "draw": 5, "breath": 3, "retain": 0 },
   "styles": {
-    "tiger": { "hanzi": "虎", "pinyin": "Hǔ", "draw": 6, "breath": 4, "retain": 0 },
-    "snake": { "hanzi": "蛇", "pinyin": "Shé", "draw": 5, "breath": 3, "retain": 1 },
-    "crane": { "hanzi": "鹤", "pinyin": "Hè", "draw": 4, "breath": 3, "retain": 3 }
+    "tiger": { "hanzi": "虎", "pinyin": "Hǔ", "draw": 4, "breath": 4, "retain": 0 },
+    "snake": { "hanzi": "蛇", "pinyin": "Shé", "draw": 4, "breath": 4, "retain": 2 },
+    "crane": { "hanzi": "鹤", "pinyin": "Hè", "draw": 4, "breath": 4, "retain": 3 }
   },
   "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
   "playerBreak": { "breathPenalty": 2 },
   "enemyBreak": { "damageMultiplier": 2 },
   "paths": { "choices": 2 },
   "rewards": { "choices": 3, "pools": ["reward", "tiger"] },
-  "fountain": { "heal": 15, "upgrade": 3 },
+  "fountain": { "heal": 20, "upgrade": 3 },
   "run": {
     "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "start": "n1",
