@@ -55,6 +55,36 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 - **Formas con cadena de postura:** cada paso tiene que jugarse en una postura determinada.
 - **Aprender formas en la subida:** las da un maestro errante, en un nodo del mapa.
 
+### Formas de la escuela (programa de examen)
+Fuente: programa de examen 2025 de la escuela (Shifu Matías Correa). Son las formas que se quieren llevar al juego.
+
+Las formas del juego son secuencias cortas de 3 a 5 cartas. Cada forma real se adapta como una secuencia inspirada en ella, con su nombre real, el hanzi y la traducción primero.
+
+| Faja | Mano vacía | Armas |
+| --- | --- | --- |
+| Amarillo 1º | Shu ho yi 组合一, Shu ho er 组合二, Wu bu chuen 五步拳 (puño de los cinco pasos) | Rutina de Damo palo |
+| Amarillo 2º | Liu hou chuen, Lian huan quan 连环拳 (puño encadenado), Tong bei quan 通背拳 | Rutina de Damo palo, sable hoja de sauce o espada jian fa 伏虎剑, Yi lu gun 一路棍 (palo, primera ruta) |
+| Verde 1º | Luohan shiba shou 罗汉十八手 (18 manos del Luohan), Candado de piedra, Xiao hong chuen 小洪拳 (pequeño puño rojo) | Sable hoja de sauce o espada, espada jian fa 伏虎剑, Er lu gun 二路棍, lanza Da Mo, San chen gun 三节棍 (palo de tres secciones) |
+| Verde 2º | Er lu da hong chuen 大洪拳二路, **Tigre** | Palo loco (y nociones de bu dao y guan dao / da dao) |
+| Azul 1º | Puño de 7 estrellas 七星拳, Ma ho tuei (12 ejercicios) | Espada de Damo (一), bu dao Da Mo (y nociones de cadena) |
+| Azul 2º | Er tang jia, **Serpiente** | Palo de Da Mo 阴手棍, sable Da Mo, cadena de Da Mo |
+| Rojo 1º | Ma ho tuei completo | Palo de Mei Hua, látigo de Da Mo |
+| Rojo 2º | Da hong chuen 大洪拳 (gran puño rojo), Di tang chuen (puño de suelo), **Mono** 猴拳 | Da dao de Da Mo 春秋大刀 |
+| Negro | **Borracho** 醉拳 | Espada de Da Mo (二), bastón de Da Mo Chang |
+
+- **Caminos:** Tigre y Serpiente ya son caminos. **Mono** y **Borracho** son candidatos a caminos nuevos.
+- **Armas:** el programa da casi uno a uno la lista de la idea de armas por nivel (palo, espada, sable, lanza, san chen gun, bu dao, da dao, cadena, látigo, bastón).
+- **Posturas del programa que el juego no tiene:**
+  - Chu bu.
+  - Ha tan bu.
+  - Ten jan bu.
+  - Tim bu.
+  - Palma bu.
+
+  Se suman a Pu bu y Duli bu (ver "Nuevas posturas").
+- **Fajas como progresión:** blanco (metal), amarillo (tierra), verde (madera), azul (agua), rojo (fuego) y negro. Pueden ser los reinos del cultivo (3.7): cada faja desbloquea sus formas y armas.
+- **Chi kung por faja:** respiración del gran círculo, del letrado y del guerrero, abrazo del árbol, 8 brocados, 5 animales y Luohan 13. Pueden dar técnicas o talismanes de Aliento.
+
 ---
 
 ## 3. Plan de crecimiento: profundidad y duración
