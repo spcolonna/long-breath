@@ -1,32 +1,307 @@
-# Balance: resultados del simulador
+# Balance de Long Breath
 
-`dart run tool/simulate.dart --n 500 --runs 300 --age adult` (29/09/2026, números del documento de diseño sin tocar).
+Este documento reúne los objetivos de balance, el método de medición, los valores actuales y el modelo para el juego completo. Los números salen del simulador (`tool/simulate.dart`). Última pasada: 01/10/2026.
 
-Los combates aislados se juegan con el mazo inicial y la Vida completa.
+> **Ojo con lo que mide el simulador.** Son bots, no personas. Sirve para comparar versiones del juego entre sí, no para predecir con exactitud cómo le va a una persona. Antes de dar un número por bueno hay que jugarlo.
 
-| Enemigo | Aleatorio: victoria / turnos | Planificador: victoria / turnos | Diferencia |
-| --- | --- | --- | --- |
-| Eco de Murciélago | 100% / 2.0 | 100% / 1.2 | 0 pp |
-| Salamandra | 100% / 2.7 | 100% / 1.6 | 0 pp |
-| Gólem | 100% / 4.6 | 100% / 2.8 | 0 pp |
-| Discípulo Perdido | 100% / 3.1 | 100% / 1.9 | 0 pp |
-| Monje sin Rostro | 100% / 4.6 | 100% / 3.0 | 0 pp |
-| Eco del Dragón | 81% / 6.9 | 100% / 4.3 | 19 pp |
+---
 
-Runs completas: aleatorio 47%, codicioso ~34%, planificador 99%. Tigre (antes Joven): 97–100% para todos los bots. Grulla (antes Anciano): aleatorio 37%, planificador 95%.
+## 1. Cómo se mide
 
-**01/10/2026, regla nueva de posturas** (la carta pega con la postura en la que estás y después te mueve): el Dragón pasa a 72% / 7,4 turnos con el bot aleatorio y a 100% / 4,6 con el planificador, una diferencia de 28 pp. Las runs completas quedan en 49% para el aleatorio y 99,5% para el planificador. Los comunes siguen cayendo en 2 a 3 turnos.
+### Tres perfiles de jugador (`lib/domain/sim/bots.dart`)
 
-## Lectura frente a los criterios de éxito
+| Perfil | A quién representa | Cómo juega |
+|---|---|---|
+| **Novato** | Alguien que hizo el tutorial y es su primera subida | Pega con lo que más daño hace. Se defiende de golpes de 6 o más y acierta la altura 3 de cada 4 veces. No planifica posturas ni formas, no usa Paso en T ni Respirar. Elige las recompensas al azar |
+| **Promedio** | Alguien que ya entendió el juego | Piensa el turno con poca profundidad. Uno de cada cuatro turnos juega "en piloto automático", pegando lo que más daño hace. Elige recompensas con criterio y algo de azar. Va a la fuente si le falta Vida y esquiva la élite si está golpeado |
+| **Experto** | Un buen jugador | Busca la mejor secuencia del turno, con desvíos, Desequilibrio y formas. Usa Respirar y elige con criterio. Es un piso: una persona experta puede jugar mejor que el bot (por ejemplo, retener cartas con intención) |
 
-- **Duración de 3 a 6 turnos:** no se cumple. Con 3 de Aliento y cartas de ~9 de daño (gōngbù), el jugador hace entre 20 y 27 de daño por turno. Los comunes (18 a 32 de Vida) caen en 1 o 2 turnos con buen juego.
-- **Diferencia de 30 pp o más:** en combates aislados no se cumple, porque todos se ganan. En runs completas sí: 99% contra 47%. La habilidad pesa, pero la run es fácil.
-- **Formas:** los bots casi nunca completan Xiǎo Hóng Quán (0,1 por combate). No les da tiempo: el combate termina antes.
+Como referencia quedan los bots `aleatorio` y `codicioso`.
 
-## Palancas sugeridas (a decidir)
+### Tiempo estimado
+Se calcula con un modelo simple:
+- 5 s por carta jugada.
+- 6 s por turno, incluida la animación del rival.
+- 10 s por combate (entrada y cierre).
+- 15 s por pantalla de mapa, recompensa o fuente, y 30 s el santuario.
 
-1. Multiplicar la Vida de los enemigos por 2 a 2,5. Es lo más directo para llegar a 3 a 6 turnos.
-2. Bajar el bonus de puños en gōngbù de +3 a +2, porque Gōngbù Chōngquán ×3 domina.
-3. Subir el daño de los enemigos entre un 30% y un 50%, para que defenderse y desviar importe más.
+Hay que calibrarlo cronometrando partidas reales. Una persona que recién empieza probablemente tarda bastante más que esto.
 
-Todo vive en `assets/data/*.json`: ajustar y volver a correr el simulador.
+### Comandos
+```bash
+dart run tool/simulate.dart                           # runs de la etapa 1, 3 perfiles
+```
+```bash
+dart run tool/simulate.dart --section cards           # poder de cada carta
+```
+```bash
+dart run tool/simulate.dart --stages 3 --talismans    # prototipo de 3 etapas
+```
+```bash
+dart run tool/simulate.dart --stages 3 --section picos
+```
+```bash
+dart run tool/simulate.dart --stages 3 --section talismans
+```
+
+**Palancas para explorar sin tocar los JSON:**
+- `--hp common=1.2,boss=1.1` y `--dmg 1.1`: multiplicadores por rango.
+- `--str ...`: Estructura enemiga.
+- `--set "archivo.json:id.campo=valor;..."`: cambiar cualquier valor puntual.
+- `--data carpeta`: correr con otro set de datos.
+- `--sloppy 0.4`: hacer más torpe al perfil promedio.
+- `--curve`, `--fountains` y `--boss-heal`: parámetros del prototipo.
+
+**Uso:** antes de cambiar un número, se corre con palancas. Cuando cumple los objetivos, se pasa al JSON.
+
+---
+
+## 2. Objetivos
+
+| Qué | Objetivo | Por qué |
+|---|---|---|
+| Combate común (promedio) | 3–5 turnos, 4–12 de Vida perdida | Que haya tiempo para leer al rival, cambiar de postura y buscar el Desequilibrio |
+| Élite (promedio) | 5–7 turnos | Una pelea que se recuerde |
+| Jefe (promedio) | 6–8 turnos | El clímax de la etapa |
+| Victoria de la run, etapa 1 | Promedio 45–60%; experto 75–90% | Difícil pero justo; la habilidad tiene que notarse |
+| Caminos | No más de 8 puntos entre el mejor y el peor (promedio) | Ningún camino obligatorio ni descartable |
+| Cartas de recompensa | Tomar cualquiera suma entre −3 y +10 puntos de victoria | Que elegir importe y que ninguna sea trampa |
+| Talismanes | Cada uno suma entre +3 y +10 puntos | Igual que las cartas, a otra escala |
+| Duración de la subida | Etapa 1: 10–15 min. Juego completo (3 etapas): 45–70 min | Ver `futuro.md` |
+
+---
+
+## 3. Etapa 1: antes y después
+
+**Antes:** valores del documento de diseño. **Después:** esta pasada. Son 1000 runs por perfil, con los caminos repartidos en partes iguales.
+
+### Runs completas
+
+| Perfil | Victoria antes | Victoria después | Minutos antes | Minutos después | Formas por run (antes → después) |
+|---|---|---|---|---|---|
+| Novato | 50% | **1%** | 8,6 | 9,3 | 0 → 0 |
+| Promedio | 91% | **60%** | 8,1 | 11,1 | 0,1 → 0,3 |
+| Experto | 95% | **79%** | 7,9 | 10,8 | 0,1 → 0,5 |
+
+### Victoria por camino
+
+| Perfil | Tigre (antes → después) | Serpiente | Grulla |
+|---|---|---|---|
+| Novato | 96% → 2% | 41% → 1% | 10% → 0% |
+| Promedio | 100% → **61%** | 89% → **59%** | 82% → **60%** |
+| Experto | 100% → **78%** | 96% → **79%** | 87% → **79%** |
+
+Antes el Tigre era obligatorio: sacaba 18 puntos de ventaja y con el novato, 86. Ahora los tres caminos quedan a 2 puntos o menos.
+
+### Combates del perfil promedio (dentro de las runs, con su mazo y su Vida)
+
+| Enemigo | Turnos antes | Turnos después | Vida perdida antes | Vida perdida después | Victoria después |
+|---|---|---|---|---|---|
+| Eco de Murciélago | 1,3 | 2,4 | 0,2 | 3,0 | 100% |
+| Salamandra | 1,6 | 3,2 | 1,7 | 4,5 | 100% |
+| Discípulo Perdido | 2,0 | 3,5 | 3,7 | 10,8 | 100% |
+| Gólem | 3,0 | 4,1 | 6,1 | 11,7 | 98% |
+| Monje sin Rostro (élite) | 3,0 | 4,8 | 7,7 | 12,9 | 100% |
+| Eco del Dragón (jefe) | 4,3 | 5,8 | 16,9 | 22,5 | 61% |
+
+- Cada pelea tiene ahora alrededor de un Desequilibrio (antes 0,2). Esa ventana de daño doble existe en todos los combates.
+- El murciélago sigue siendo corto, a propósito: es el primer combate.
+- El jefe queda en 5,8 turnos, por debajo del objetivo de 6 a 8. Con más Vida se vuelve una carrera de daño que castiga a la Serpiente y a la Grulla (con 170 de Vida, el promedio cae al 33%). Para alargarlo hace falta una mecánica, no más Vida (ver la sección 7).
+
+### Uso de posturas (cartas jugadas desde cada postura)
+
+| Perfil | Caballo | Arco | Vacía |
+|---|---|---|---|
+| Promedio | 30% | 39% | 31% |
+| Experto | 29% | 38% | 33% |
+
+Las tres posturas se usan. Arco es la más jugada, por los puñetazos.
+
+### Poder de cada carta de recompensa
+Cada valor es la victoria de una run que **empieza** con esa carta en el mazo, comparada con la del mazo inicial. Así se aísla la carta de cómo la elige el bot.
+
+| Carta | Costo | Antes (promedio / experto) | Después (promedio / experto) |
+|---|---|---|---|
+| Patada de talón | 2 | −4 / −3 | +7 / +6 |
+| Patada lateral | 2 | +9 / +3 | +5 / +1 |
+| Empujón a fondo | 1 | 0 / −4 | +1 / −1 |
+| Puño martillo | 1 | −1 / −8 | +4 / +3 |
+| Bloqueo alto | 1 | 0 / −3 | −1 / −1 |
+| Rodilla escudo | 1 | −1 / −2 | +2 / +1 |
+| Recuperar el aliento | 0 | +10 / +6 | +9 / +4 |
+| Saludo marcial | 0 | −4 / −10 | +5 / +7 |
+| Garra de tigre | 1 | 0 / −7 | 0 / 0 |
+| Salto del tigre | 2 | −8 / −10 | +4 / +2 |
+| Guardia del tigre | 1 | −3 / −6 | 0 / −1 |
+| Rugido del tigre | 0 | 0 / +2 | +1 / −2 |
+
+Antes, **la mayoría de las recompensas empeoraban el mazo**: eran más flojas que las cartas iniciales, así que lo mejor era saltearlas. Ahora todas quedan entre −2 y +9. Las de costo 2 y las de robo son las más fuertes; las defensas, neutras. El margen es chico (±2 puntos de ruido con 1000 runs).
+
+**Pendiente:** Bloqueo alto quedó en −1 porque lo usa la lección 2, con su Guardia de 9 en el guion. Si se la quiere mejorar, hay que cambiar también la lección.
+
+### Qué se cambió
+
+**Enemigos** (`enemies.json`; los muñecos de práctica no se tocaron):
+
+| Enemigo | Vida | Estructura | Daño |
+|---|---|---|---|
+| Comunes | ×2,2 a ×2,7 (por ejemplo, Murciélago 18 → 48, Discípulo 32 → 70) | ×1,3 a ×1,8 | ×1,15 |
+| Monje | 55 → 116 | 15 → 21 | ×1,15 |
+| Dragón | 90 → 154 | 20 → 26 | ×1,15 (el Aliento del Dragón pasa a 29) |
+
+La Estructura sube para que el Desequilibrio llegue a mitad de pelea y no en el primer turno.
+
+**Caminos** (`game_balance.json`):
+
+| Camino | Robás | Aliento | Retenés |
+|---|---|---|---|
+| Tigre | 6 → 4 | 4 | 0 |
+| Serpiente | 5 → 4 | 3 → 4 | 1 → 2 |
+| Grulla | 4 | 3 → 4 | 3 |
+
+Al tomar un camino, el discípulo pasa de 3 a 4 de Aliento: se siente como un salto de poder.
+
+**Cartas del Tigre exclusivas:**
+- Garra, Salto, Guardia y Rugido del tigre solo salen de recompensa si seguís el Tigre (`GameData.rewardPoolFor`).
+- Es la identidad del camino, y el primer paso del árbol por camino de `futuro.md`.
+- Lo que más pesa es el Aliento: con 4 de Aliento el Tigre ganaba 98% contra 46% de la Serpiente.
+- El retener casi no suma, porque al empezar el turno se roba hasta completar la mano. Ver la sección 7.
+
+**Fuente:** cura 15 → 20.
+
+**Mazo inicial:**
+- Un Bloqueo medio pasa a ser un segundo Paso atrás, que es el paso final del Pequeño Puño Rojo.
+- El Pequeño Puño Rojo hace 14 de daño y 6 a Estructura (antes 10 y 5).
+- Las formas pasan de 0,1 a 0,3–0,5 por run.
+
+**Cartas de recompensa:**
+
+| Carta | Antes | Después |
+|---|---|---|
+| Patada de talón | 8 de daño / 3 E | 11 / 4 |
+| Patada lateral | 5 / 6 | 6 / 8 |
+| Empujón a fondo | 3 de daño | 4 |
+| Puño martillo | 6 de daño | 8, +1 E |
+| Rodilla escudo | Guardia 6, desvío 4 | Guardia 8, desvío 5 |
+| Saludo marcial | Solo en el primer turno (si salía después era una carta muerta) | Se juega en cualquier turno |
+| Garra de tigre | 3 / 4 | 4 / 5 |
+| Salto del tigre | 10 / 3 | 14 / 5 |
+| Guardia del tigre | Guardia 7 | 9 |
+| Rugido del tigre | Costo 1 | Costo 0 |
+
+---
+
+## 4. Dificultad: ¿hace falta elegirla?
+
+**Sí: un modo Sereno** para la primera subida. Con los números nuevos, el novato gana el 1% de las runs: llega al Dragón la mitad de las veces y ahí cae. El Gólem es su gran muro: 39% de victoria y 27 de Vida perdida, porque el novato no busca el Desequilibrio.
+
+**Prototipo de Sereno:** Vida 65 en vez de 50 y enemigos con −20% de daño.
+
+| Perfil | Normal | Sereno |
+|---|---|---|
+| Novato | 1% | **12%** (Tigre 23%) |
+| Promedio | 60% | 99% |
+| Experto | 79% | 100% |
+
+**Recomendación:**
+1. **Sereno** como opción al empezar la subida, recomendada si todavía no ganaste nunca. Es "aprender la montaña". Más adelante se puede reforzar con avisos de altura en la mano.
+2. **Normal** es la experiencia diseñada.
+3. **Picos** (sección 6): la dificultad que se gana ganando, para quien ya domina el juego.
+
+Sereno no está implementado en la interfaz: queda en `futuro.md`.
+
+---
+
+## 5. Modelo del juego completo: 3 etapas (solo en el simulador)
+
+Es un prototipo en `tool/sim/lab.dart`. El juego no lo carga.
+- **Mapa:** 3 etapas de 13 pisos, con dos caminos por piso y generado con la semilla de la run.
+  - El santuario está en el piso 4 de la etapa 1.
+  - Hay élite desde el piso 5 (18%).
+  - Hay fuente desde el piso 3 (30%), y una fuente siempre antes del jefe.
+- **Enemigos:** las etapas 2 y 3 reutilizan los enemigos con una curva aplicada:
+  - Vida ×1,1 y ×1,2.
+  - Daño y Estructura ×1,05 y ×1,1.
+- **Jefe:** al vencer al jefe de una etapa se recupera toda la Vida.
+- **Talismanes:** uno al vencer cada élite y cada jefe.
+
+| Perfil | Victoria | Llega al jefe final | Minutos (media) | Minutos (victorias) | Mazo final |
+|---|---|---|---|---|---|
+| Novato | 0% | 0% | 10,7 | – | 16 |
+| Promedio | 45% | 56% | 41,8 | **55** | 33 |
+| Experto | 57% | 68% | 44,8 | **53** | 35 |
+
+**Lo que enseña el prototipo:**
+- **La duración ya da.** Una subida ganada dura 53 a 55 minutos, dentro del objetivo de 45 a 70, con unos 28 combates.
+- **En una run larga lo que mata es el desgaste, no un combate.**
+  - Con la curva que se pensaba al principio (Vida ×1,6 y ×2,3), nadie pasaba de la etapa 2.
+  - Con una fuente cada tanto y la curación del jefe, los combates de las etapas 2 y 3 se vuelven *más cortos* que los de la etapa 1, porque el mazo crece más rápido que la curva.
+  - Conclusión: las etapas 2 y 3 necesitan **enemigos nuevos con reglas nuevas** que exijan otras respuestas, no números más grandes. Ahí está la profundidad, y de paso el arte.
+- **El mazo engorda.** Los bots terminan con 33 a 35 cartas, porque casi nunca saltean.
+  - El Pico 7 (recompensas de 2 cartas) le *sube* la victoria al experto.
+  - Hacen falta más formas de achicar el mazo (la fuente ya permite eliminar una carta) y que la interfaz deje claro que saltear es válido.
+- **Las formas siguen siendo raras** (0,4 a 0,7 por run). Con un mazo de 30 cartas, juntar la secuencia es difícil. Hace falta retener mejor o tener formas propias de cada camino (sección 7).
+
+### Talismanes (perfil promedio, empezando la run de 3 etapas con uno solo)
+
+| Talismán | Efecto | Diferencia de victoria |
+|---|---|---|
+| Arco | Empezás cada combate en Arco | +1 a +5 |
+| Aliento | +1 de Aliento en el turno 1 | +9 a +11 |
+| Vida | +4 de Vida máxima | +6 a +10 |
+| Formas | Cada forma completa cura 8 | 0 a +1 |
+| Desvío | Cada desvío da +1 de Aliento extra | +1 a +3 |
+| Roca | +4 de Estructura al empezar cada combate | +4 a +6 |
+| Primer golpe | El rival empieza con 6 de Vida menos | +6 a +8 |
+| Grieta | El rival empieza con 3 de Estructura menos | +7 a +17 |
+| Fuente | La fuente cura 8 más | +6 a +8 |
+| Victoria | Ganar un combate cura 2 | +9 a +14 |
+
+Los rangos vienen de dos corridas de 400 runs; el ruido es de unos ±4 puntos.
+- **Para los talismanes comunes:** Primer golpe, Roca, Fuente y Vida.
+- **Para los raros o de jefe:** Grieta, Victoria y Aliento.
+- **Flojos:** Formas y Desvío. Hay que reforzarlos o atarlos a una mecánica que el jugador busque. Por ejemplo, Desvío podría dar +2 de Aliento.
+
+Todos los talismanes juntos valen unos +20 puntos: de 27% sin ninguno a 45% con los que se ganan en la subida.
+
+---
+
+## 6. Picos: dificultad desbloqueable (prototipo, 3 etapas)
+
+Se acumulan: el Pico N incluye las reglas del 1 al N. Los pasos son chicos porque en una run larga unos pocos puntos de Vida enemiga pesan mucho. En una primera versión el Pico 1 era "+8% de Vida enemiga" y bajaba 18 puntos de golpe.
+
+| Pico | Regla nueva | Promedio | Experto |
+|---|---|---|---|
+| 0 | Normal | 45% | 55% |
+| 1 | Élites +10% de Vida | 44% | 52% |
+| 2 | La fuente cura 3 menos | 39% | 47% |
+| 3 | Jefes +5% de Vida | 31% | 36% |
+| 4 | Comunes +4% de Vida | 28% | 37% |
+| 5 | Empezás con 3 de Vida menos | 23% | 34% |
+| 6 | Enemigos +5% de daño | 16% | 29% |
+| 7 | Recompensas de 2 cartas en vez de 3 | 16% | 32% |
+| 8 | Élites +10% de Vida (acumula) | 13% | 30% |
+| 9 | Jefes +5% de Vida (acumula) | 10% | 22% |
+| 10 | Todos los enemigos +3% de Vida y de daño | 5% | 12% |
+
+- **Curva:** la caída es gradual y el Pico 10 queda en 12% para el experto. Con un humano experto, que juega mejor que el bot, debería quedar en 15–30%.
+- **Pico 7:** no endurece. Con menos cartas para elegir, el mazo engorda menos. Hay que reemplazarlo, por ejemplo por "élites con una regla extra".
+- **Pico 3:** es el escalón más grande, porque el jefe es la pelea que más decide. Si se busca suavidad, conviene ponerlo más tarde.
+
+---
+
+## 7. Lo que queda (palancas y decisiones)
+
+1. **Retener vale poco.**
+   - Como se roba hasta completar la mano, guardar cartas no suma cartas: solo deja elegir cuáles quedan.
+   - Si se quiere que la Serpiente y la Grulla se sientan distintas, la opción es que **retener no ocupe lugar en la mano**: robás tu mano completa además de lo retenido.
+   - Es un cambio de regla, así que hay que decidirlo antes de volver a equilibrar los caminos.
+2. **El jefe es una carrera de daño.**
+   - Para llevarlo a 6 a 8 turnos sin castigar a ningún camino, conviene una mecánica que se *responda*. Por ejemplo:
+     - Una tercera fase que exija desvíos.
+     - Escamas que solo baja la Estructura.
+   - Subirle la Vida no sirve.
+3. **El perfil novato** pierde casi siempre contra el Gólem y el Dragón en Normal. Hay que confirmarlo con personas reales y decidir Sereno.
+4. **Recompensas:** probar rareza (comunes y raras) cuando haya más cartas, y dar alguna señal de que saltear es una buena jugada.
+5. **Calibrar el tiempo** cronometrando a alguien que juegue por primera vez.
+6. **Repetir esta pasada** después de cada cambio de reglas, contenido o enemigos, con `dart run tool/simulate.dart`.

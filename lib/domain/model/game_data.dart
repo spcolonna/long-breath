@@ -43,6 +43,13 @@ class GameData {
       .where((c) => balance.rewardPools.contains(c.pool))
       .toList();
 
+  /// Recompensas que puede ver quien sigue [style]: las cartas de un camino
+  /// (pool con el nombre del camino) solo le salen a ese camino.
+  List<CardDef> rewardPoolFor(Style? style) => [
+        for (final c in rewardPool)
+          if (!Style.values.any((s) => s.name == c.pool) || c.pool == style?.name) c,
+      ];
+
   /// Construye GameData desde los JSON ya decodificados (sin Flutter).
   factory GameData.fromJson({
     required Map<String, dynamic> cards,

@@ -1040,7 +1040,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide5 =>
-      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente.';
+      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente. El Tigre además tiene cartas propias, que solo te salen de recompensa si seguís su camino.';
 
   @override
   String get lesClimbSlide6Title => '¡A subir!';
