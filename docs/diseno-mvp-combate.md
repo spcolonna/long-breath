@@ -77,7 +77,7 @@ Siempre estás en una postura, y cada una tiene en el juego las propiedades que 
 
 **Dīngbù 丁步 (transición):** no es una postura donde te quedás, es una acción siempre disponible. Cuesta 1 Aliento, te lleva a cualquier postura y se puede usar una vez por turno. Existe para que una mano sin cartas de cambio de postura no te deje atrapado.
 
-**Regla de aplicación:** una carta que cambia de postura primero te mueve y después aplica su efecto. Por eso Gōngbù Chōngquán ya recibe el bonus de gōngbù. Las técnicas sin postura en el nombre usan la postura en la que estás.
+**Regla de aplicación (cambiada el 01/10/2026):** toda carta usa la postura en la que estás al jugarla (costo, bonus y Guardia). Si la carta tiene postura, te deja en ella **después** de aplicar su efecto. Así cada carta prepara la siguiente y Paso en T sirve para preparar la postura antes de pegar. Con la regla vieja (primero te movía) el bonus era gratis y Paso en T casi no tenía sentido.
 
 **Próximas posturas (fuera del MVP):** pūbù 仆步, xiēbù 歇步 y dúlìbù 独立步.
 

@@ -1802,7 +1802,8 @@ class _PreviewPanel extends ConsumerWidget {
       if (p.damage > 0) t.previewDamage(p.damage),
       if (p.structure > 0) t.previewStructure(p.structure),
       if (p.guard > 0) '${t.guard} ${p.guard} ${t.heightLabel(p.height)}',
-      if (p.stanceAfter != s.player.stance) '→ ${text.stance(p.stanceAfter)}',
+      if (p.stanceAfter != s.player.stance)
+        t.previewThen('→ ${text.stance(p.stanceAfter)}'),
     ];
     String formName(String id) => text.form(id);
     return GestureDetector(

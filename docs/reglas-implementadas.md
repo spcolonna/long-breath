@@ -13,7 +13,7 @@ Murciélago → Discípulo → Santuario → bifurcación [Gólem | Salamandra] 
 
 ## Daño del jugador
 1. Base de la carta + mejora de la fuente (a la Guardia si la carta tiene Guardia; si no, al daño).
-2. Bonus de la postura resultante (una carta con postura te mueve primero).
+2. Bonus (y costo, y Guardia) de la postura en la que estás al jugarla. Una carta con postura te mueve **después** de aplicar su efecto.
 3. Bonus condicionales: Pī Quán (+6 si el enemigo está Desequilibrado), Hǔ Zhǎo (+2 E en mǎbù).
 4. Hǔ Xiào: +2 a todo daño a Estructura en ese turno, incluido el de las formas.
 5. Enemigo Desequilibrado: daño ×2. Gólem (inamovible) sin desequilibrar: daño ½.

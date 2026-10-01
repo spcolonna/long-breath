@@ -81,14 +81,19 @@ void main() {
 
   test('3. Posturas', () {
     start('stances');
+    // Pega desde Caballo (+2) y recién después queda en Arco.
     final hit = play('gongbu_chongquan').whereType<EnemyDamaged>().single;
-    expect(hit.damage, 9);
+    expect(hit.damage, 8);
     expect(r.state.player.stance, Stance.gongbu);
+    // El puño de Caballo aprovecha el Arco (+3) y te deja en Caballo.
+    final fist = play('mabu_chongquan').whereType<EnemyDamaged>().single;
+    expect(fist.damage, 8);
+    expect(r.state.player.stance, Stance.mabu);
     act(const Dingbu(Stance.xubu));
     expect(r.state.player.stance, Stance.xubu);
     final kick = play('tan_tui').whereType<EnemyDamaged>().single;
     expect(kick.damage, 7);
-    expect(r.state.player.breath, 1);
+    expect(r.state.player.breath, 0);
   });
 
   test('4. Estructura y Desequilibrio', () {

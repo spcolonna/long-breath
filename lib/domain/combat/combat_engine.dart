@@ -265,9 +265,10 @@ class CombatEngine {
   CardPreview preview(CombatState s, int uid) {
     final c = s.handCard(uid)!;
     final def = data.card(c.cardId);
-    final stanceAfter = def.stance ?? s.player.stance;
+    final stance = s.player.stance;
+    final stanceAfter = def.stance ?? stance;
     final enemyDef = data.enemy(s.enemy.id);
-    final (dmg, str) = _cardHit(def, c.upgrades, stanceAfter, s.enemy.staggered,
+    final (dmg, str) = _cardHit(def, c.upgrades, stance, s.enemy.staggered,
         s.turnStructureBonus);
     final dealt = _enemyDamageTaken(enemyDef, s.enemy.staggered, dmg);
     final advances = <String>[], completes = <String>[], interrupts = <String>[];
@@ -286,7 +287,7 @@ class CombatEngine {
       reason: validate(s, PlayCard(uid)),
       damage: dealt,
       structure: s.enemy.staggered ? 0 : str,
-      guard: _guardOf(def, c.upgrades, stanceAfter),
+      guard: _guardOf(def, c.upgrades, stance),
       height: def.height,
       stanceAfter: stanceAfter,
       advancesForms: advances,
@@ -335,12 +336,6 @@ class CombatEngine {
     d.hand.remove(card);
     events.add(CardPlayed(def.id));
 
-    // Primero te mueve, después aplica el efecto.
-    if (def.stance != null && def.stance != d.stance) {
-      d.stance = def.stance!;
-      events.add(StanceChanged(d.stance));
-    }
-
     final g = _guardOf(def, card.upgrades, d.stance);
     if (def.type == CardType.defense) {
       d.guard += g;
@@ -357,6 +352,13 @@ class CombatEngine {
     if (def.clearGuard) {
       d.guard = 0;
       d.guardHeight = null;
+    }
+
+    // Pega con la postura en la que estabas; recién después te deja en la
+    // de la carta. Así preparar la postura (con otra carta o Paso en T) paga.
+    if (def.stance != null && def.stance != d.stance) {
+      d.stance = def.stance!;
+      events.add(StanceChanged(d.stance));
     }
     d.breath += def.gainBreath;
     d.turnStructureBonus += def.turnStructureBonus;

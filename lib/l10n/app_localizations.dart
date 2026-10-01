@@ -490,6 +490,12 @@ abstract class AppLocalizations {
   /// **'Desequilibrado · daño ×2'**
   String get staggeredDouble;
 
+  /// No description provided for @previewThen.
+  ///
+  /// In es, this message translates to:
+  /// **'después {stance}'**
+  String previewThen(String stance);
+
   /// No description provided for @previewDamage.
   ///
   /// In es, this message translates to:
@@ -784,12 +790,6 @@ abstract class AppLocalizations {
   /// **'Tocá Puñetazo a fondo una vez para ver qué hace y otra vez para jugarla.'**
   String get tutPlayFist;
 
-  /// No description provided for @tutStance.
-  ///
-  /// In es, this message translates to:
-  /// **'La carta te llevó a la postura Arco antes de pegar, y en Arco los puños hacen +3. Cada postura tiene ventajas y costos.'**
-  String get tutStance;
-
   /// No description provided for @tutDefend.
   ///
   /// In es, this message translates to:
@@ -1045,13 +1045,13 @@ abstract class AppLocalizations {
   /// No description provided for @lesStancesBlurb.
   ///
   /// In es, this message translates to:
-  /// **'Caballo, Arco y Vacía, y el Paso en T.'**
+  /// **'Caballo, Arco y Vacía: preparar la postura antes de pegar.'**
   String get lesStancesBlurb;
 
   /// No description provided for @lesStancesDone.
   ///
   /// In es, this message translates to:
-  /// **'Aprendiste a usar las posturas a tu favor.'**
+  /// **'Aprendiste a preparar tu postura antes de pegar.'**
   String get lesStancesDone;
 
   /// No description provided for @lesStructureTitle.
@@ -1213,7 +1213,7 @@ abstract class AppLocalizations {
   /// No description provided for @illStance.
   ///
   /// In es, this message translates to:
-  /// **'Postura a la que te lleva'**
+  /// **'Postura en la que te deja, después de actuar'**
   String get illStance;
 
   /// No description provided for @illGuard.
@@ -1411,7 +1411,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStrike5.
   ///
   /// In es, this message translates to:
-  /// **'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te lleva a esa postura antes de actuar.'**
+  /// **'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.'**
   String get lesStrike5;
 
   /// No description provided for @lesStrike6.
@@ -1573,50 +1573,62 @@ abstract class AppLocalizations {
   /// No description provided for @lesStances1.
   ///
   /// In es, this message translates to:
-  /// **'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Cada una cambia cuánto pegan y cuánto cuestan tus cartas. Ahora estás en Caballo.'**
+  /// **'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Ahora estás en Caballo. La postura en la que ESTÁS cambia cuánto pegan y cuánto cuestan tus cartas.'**
   String get lesStances1;
 
   /// No description provided for @lesStances2.
   ///
   /// In es, this message translates to:
-  /// **'Tocá Puñetazo a fondo una vez y mirá la vista previa.'**
+  /// **'Esto da cada postura. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".'**
   String get lesStances2;
 
   /// No description provided for @lesStances3.
   ///
   /// In es, this message translates to:
-  /// **'La carta dice 6 de daño, pero la vista previa dice 9: primero te lleva a postura Arco, y en Arco los puños pegan +3. Las cartas que abajo dicen → y una postura te cambian ANTES de pegar. Jugala.'**
+  /// **'Tocá Puñetazo a fondo una vez y mirá la vista previa.'**
   String get lesStances3;
 
   /// No description provided for @lesStances4.
   ///
   /// In es, this message translates to:
-  /// **'Ahora estás en Arco. Pegás fuerte con los puños, pero ojo: en Arco recibís 2 más de daño a tu Estructura.'**
+  /// **'Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.'**
   String get lesStances4;
 
   /// No description provided for @lesStances5.
   ///
   /// In es, this message translates to:
-  /// **'Paso en T te cambia a la postura que quieras por 1 de Aliento, una vez por turno. Tocalo y elegí Vacía.'**
+  /// **'Ahora estás en Arco: los puños pegan +3 y sacan +1 de Estructura. Esa ventaja no la usó la carta que te trajo: la aprovecha la PRÓXIMA.'**
   String get lesStances5;
 
   /// No description provided for @lesStances6.
   ///
   /// In es, this message translates to:
-  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.'**
+  /// **'Mirá Puñetazo firme: antes marcaba 7 de daño y 2 de Estructura; ahora, 8 y 3. Los números de tus cartas siempre muestran lo que pegan desde la postura en la que estás. Pega desde Arco y después te deja en Caballo. Jugalo.'**
   String get lesStances6;
 
   /// No description provided for @lesStances7.
   ///
   /// In es, this message translates to:
-  /// **'Este es el resumen de las tres posturas. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".'**
+  /// **'Ese es el truco: una carta con → te prepara la siguiente. Antes de jugar, pensá el orden: primero la que te deja en la postura que la otra aprovecha.'**
   String get lesStances7;
 
   /// No description provided for @lesStances8.
   ///
   /// In es, this message translates to:
-  /// **'Terminá el combate como quieras. Probá elegir la postura según las cartas que tengas.'**
+  /// **'Si ninguna carta te deja en la postura que necesitás, Paso en T te cambia YA, por 1 de Aliento, una vez por turno. Las patadas rinden en Vacía: tocalo y elegí Vacía.'**
   String get lesStances8;
+
+  /// No description provided for @lesStances9.
+  ///
+  /// In es, this message translates to:
+  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.'**
+  String get lesStances9;
+
+  /// No description provided for @lesStances10.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminá el combate como quieras. Antes de cada carta, mirá en qué postura estás y en cuál te deja.'**
+  String get lesStances10;
 
   /// No description provided for @lesStructure1.
   ///

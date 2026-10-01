@@ -230,6 +230,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get staggeredDouble => 'Desequilibrado · daño ×2';
 
   @override
+  String previewThen(String stance) {
+    return 'después $stance';
+  }
+
+  @override
   String previewDamage(int n) {
     return '$n daño';
   }
@@ -413,10 +418,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tocá Puñetazo a fondo una vez para ver qué hace y otra vez para jugarla.';
 
   @override
-  String get tutStance =>
-      'La carta te llevó a la postura Arco antes de pegar, y en Arco los puños hacen +3. Cada postura tiene ventajas y costos.';
-
-  @override
   String get tutDefend =>
       'Ahora defendete. El muñeco va a pegar ALTO y Paso atrás da Guardia alta. Si la altura coincide y la Guardia alcanza, desviás el golpe. Jugala con dos toques.';
 
@@ -574,10 +575,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lesStancesTitle => 'Posturas';
 
   @override
-  String get lesStancesBlurb => 'Caballo, Arco y Vacía, y el Paso en T.';
+  String get lesStancesBlurb =>
+      'Caballo, Arco y Vacía: preparar la postura antes de pegar.';
 
   @override
-  String get lesStancesDone => 'Aprendiste a usar las posturas a tu favor.';
+  String get lesStancesDone =>
+      'Aprendiste a preparar tu postura antes de pegar.';
 
   @override
   String get lesStructureTitle => 'Estructura';
@@ -664,7 +667,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get nodeCombat => 'Combate';
 
   @override
-  String get illStance => 'Postura a la que te lleva';
+  String get illStance => 'Postura en la que te deja, después de actuar';
 
   @override
   String get illGuard => 'Guardia y su altura';
@@ -781,7 +784,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesStrike5 =>
-      'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te lleva a esa postura antes de actuar.';
+      'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.';
 
   @override
   String get lesStrike6 =>
@@ -885,35 +888,43 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesStances1 =>
-      'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Cada una cambia cuánto pegan y cuánto cuestan tus cartas. Ahora estás en Caballo.';
+      'Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Ahora estás en Caballo. La postura en la que ESTÁS cambia cuánto pegan y cuánto cuestan tus cartas.';
 
   @override
   String get lesStances2 =>
-      'Tocá Puñetazo a fondo una vez y mirá la vista previa.';
+      'Esto da cada postura. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".';
 
   @override
   String get lesStances3 =>
-      'La carta dice 6 de daño, pero la vista previa dice 9: primero te lleva a postura Arco, y en Arco los puños pegan +3. Las cartas que abajo dicen → y una postura te cambian ANTES de pegar. Jugala.';
+      'Tocá Puñetazo a fondo una vez y mirá la vista previa.';
 
   @override
   String get lesStances4 =>
-      'Ahora estás en Arco. Pegás fuerte con los puños, pero ojo: en Arco recibís 2 más de daño a tu Estructura.';
+      'Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.';
 
   @override
   String get lesStances5 =>
-      'Paso en T te cambia a la postura que quieras por 1 de Aliento, una vez por turno. Tocalo y elegí Vacía.';
+      'Ahora estás en Arco: los puños pegan +3 y sacan +1 de Estructura. Esa ventaja no la usó la carta que te trajo: la aprovecha la PRÓXIMA.';
 
   @override
   String get lesStances6 =>
-      'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.';
+      'Mirá Puñetazo firme: antes marcaba 7 de daño y 2 de Estructura; ahora, 8 y 3. Los números de tus cartas siempre muestran lo que pegan desde la postura en la que estás. Pega desde Arco y después te deja en Caballo. Jugalo.';
 
   @override
   String get lesStances7 =>
-      'Este es el resumen de las tres posturas. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".';
+      'Ese es el truco: una carta con → te prepara la siguiente. Antes de jugar, pensá el orden: primero la que te deja en la postura que la otra aprovecha.';
 
   @override
   String get lesStances8 =>
-      'Terminá el combate como quieras. Probá elegir la postura según las cartas que tengas.';
+      'Si ninguna carta te deja en la postura que necesitás, Paso en T te cambia YA, por 1 de Aliento, una vez por turno. Las patadas rinden en Vacía: tocalo y elegí Vacía.';
+
+  @override
+  String get lesStances9 =>
+      'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.';
+
+  @override
+  String get lesStances10 =>
+      'Terminá el combate como quieras. Antes de cada carta, mirá en qué postura estás y en cuál te deja.';
 
   @override
   String get lesStructure1 =>

@@ -127,30 +127,32 @@ final lessons = <Lesson>[
     done: (t) => t.lesStancesDone,
     steps: (t) => [
       TutorialStep(t.lesStances1, anchor: 'stances'),
+      TutorialStep(t.lesStances2, illustration: Illustration.stances),
       TutorialStep(
-        t.lesStances2,
+        t.lesStances3,
         anchor: 'card:gongbu_chongquan',
         waitSelect: 'gongbu_chongquan',
       ),
       TutorialStep(
-        t.lesStances3,
+        t.lesStances4,
         anchor: 'card:gongbu_chongquan+preview',
         waitCard: 'gongbu_chongquan',
       ),
-      TutorialStep(t.lesStances4, anchor: 'stances', delayMs: 700),
-      TutorialStep(t.lesStances5, anchor: 'dingbu', waitStance: Stance.xubu),
+      TutorialStep(t.lesStances5, anchor: 'stances', delayMs: 700),
       TutorialStep(
         t.lesStances6,
+        anchor: 'card:mabu_chongquan+preview',
+        waitCard: 'mabu_chongquan',
+      ),
+      TutorialStep(t.lesStances7, anchor: 'stances', delayMs: 700),
+      TutorialStep(t.lesStances8, anchor: 'dingbu', waitStance: Stance.xubu),
+      TutorialStep(
+        t.lesStances9,
         anchor: 'card:tan_tui+preview',
         waitCard: 'tan_tui',
         delayMs: 500,
       ),
-      TutorialStep(
-        t.lesStances7,
-        illustration: Illustration.stances,
-        delayMs: 700,
-      ),
-      TutorialStep(t.lesStances8),
+      TutorialStep(t.lesStances10),
     ],
   ),
   Lesson(

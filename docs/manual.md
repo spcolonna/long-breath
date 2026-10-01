@@ -62,7 +62,7 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 La primera vez que abrís el juego, el botón principal es **Empezar entrenamiento**: un combate guiado en el patio de la escuela contra el **muñeco de madera** (木人桩 Mù Rén Zhuāng). El maestro resalta cada parte de la pantalla y, cuando pide una jugada, solo deja tocar lo que corresponde:
 
 1. Qué es el globo de intención del enemigo, su Vida y su Estructura, tus barras, tu mano y el Aliento.
-2. Jugar **Puñetazo a fondo**: un toque para ver la vista previa y otro para jugarla. La carta te mueve a postura Arco.
+2. Jugar **Puñetazo a fondo**: un toque para ver la vista previa y otro para jugarla. Pega desde la postura en la que estás y después te deja en Arco.
 3. Defenderte con **Paso atrás** (Guardia alta contra un ataque alto) y jugar **Patada látigo** gratis en postura Vacía, que además avanza el Pequeño Puño Rojo.
 4. Terminar el turno: desviás el golpe y el muñeco queda **Desequilibrado**.
 5. Rematarlo libremente con el daño doble. Al ganar, el maestro resume cómo sigue la montaña y ofrece **Empezar la subida**.
@@ -137,7 +137,7 @@ Un toque en una carta la selecciona y muestra la vista previa con los números f
 
 Hay cinco tipos: **Puño**, **Palma**, **Patada**, **Defensa** y **Técnica**. Cada carta muestra el nombre traducido, el nombre chino como marca de agua y el pinyin.
 
-- Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero te mueve** a esa postura y después aplica su efecto, ya con el bonus de la postura nueva.
+- Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero pega** con la postura en la que estás y **después te deja** en la suya. Su bonus lo aprovecha la carta siguiente: ordenar la mano o usar Paso en T antes es la clave.
 - **Agotar:** la carta desaparece por el resto del combate al jugarla.
 - **Saludo marcial** (Bàoquán Lǐ) solo se puede jugar en el primer turno.
 
