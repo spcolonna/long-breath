@@ -111,6 +111,13 @@ Descartada por ahora: Candado de piedra (Verde 1º).
 | Rojo 2º | Gran sable de Primavera y Otoño | 春秋大刀 · Chūnqiū dàdāo | Da dao de Da Mo | |
 | Negro | Bastón de Damo | 达摩杖 · Dámó zhàng | Bastón de Da Mo Chang | Por confirmar ("Chang" podría ser 杖 o 长) |
 
+**Lista de espera.** Estas formas no se usan en el juego hasta confirmar su nombre con la escuela:
+- **Liu hou chuen:** ¿es 六合拳 Liùhé quán (seis armonías)?
+- **Látigo y cadena de Da Mo:** ¿son la misma arma (九节鞭)?
+- **Bastón de Da Mo Chang:** ¿qué carácter es "Chang" (杖 o 长)?
+- **Er tang jia:** sin identificar; se ubica con un video.
+- **Palo loco / palo de fuego:** ¿es 烧火棍 o 疯魔棍?
+
 - **Caminos:** Tigre y Serpiente ya son caminos. **Mono** y **Borracho** son candidatos a caminos nuevos.
 - **Armas:** el programa da casi uno a uno la lista de la idea de armas por nivel (palo, espada, sable, lanza, san chen gun, bu dao, da dao, cadena, látigo, bastón).
 - **Posturas del programa que el juego no tiene:**
