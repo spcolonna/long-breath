@@ -492,6 +492,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuStartHere => 'Empezá acá';
 
   @override
+  String get difficultyTitle => '¿Cómo querés subir?';
+
+  @override
+  String get difficultySubtitle => 'Podés cambiarla en cada subida nueva.';
+
+  @override
+  String get difficultyEasy => 'Fácil';
+
+  @override
+  String get difficultyNormal => 'Normal';
+
+  @override
+  String get difficultyHard => 'Difícil';
+
+  @override
+  String get difficultyShifu => 'Shifu';
+
+  @override
+  String get difficultyEasyDesc =>
+      'Para conocer la montaña sin apuro. Más Vida y rivales más blandos.';
+
+  @override
+  String get difficultyNormalDesc => 'La subida tal como fue pensada.';
+
+  @override
+  String get difficultyHardDesc =>
+      'Rivales más duros y una fuente que cura menos.';
+
+  @override
+  String get difficultyShifuDesc =>
+      'Para maestros: menos Vida y cada error se paga.';
+
+  @override
+  String difficultyStats(int hp, int heal, int enemy) {
+    return 'Vida $hp · Fuente +$heal · Rivales $enemy%';
+  }
+
+  @override
+  String scales(int count) {
+    return 'Escamas $count · −$count por golpe';
+  }
+
+  @override
+  String get scaleShed => '¡Escama arrancada!';
+
+  @override
+  String scalesLeft(int count) {
+    return 'Le quedan $count';
+  }
+
+  @override
   String get menuClimb => 'La subida';
 
   @override
@@ -1040,7 +1091,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide5 =>
-      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. Cambia cuántas cartas robás, tu Aliento y cuántas cartas podés RETENER en tu mano para el turno siguiente. El Tigre además tiene cartas propias, que solo te salen de recompensa si seguís su camino.';
+      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.';
 
   @override
   String get lesClimbSlide6Title => '¡A subir!';

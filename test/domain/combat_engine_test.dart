@@ -249,7 +249,8 @@ void main() {
               s, EndTurn(retain: [keep, s.hand[1].uid, s.hand[2].uid])),
           isNotNull);
       s = endTurn(s, [keep]).state;
-      expect(s.hand.length, 4);
+      // La retenida es extra: se roba la mano completa igual.
+      expect(s.hand.length, 5);
       expect(s.hand.any((c) => c.uid == keep), isTrue);
     });
 
@@ -389,6 +390,52 @@ void main() {
       expect(engine.intentView(s).countdown, 2);
       s = endTurn(s).state;
       expect(engine.intentView(s).countdown, 1);
+    });
+
+    test('Eco del Dragón: las escamas restan daño y se caen al desequilibrarlo', () {
+      final deck = ['gongbu_chongquan', ...filler];
+      final vsSalamander = setup(deck);
+      var s = setup(deck, enemy: 'dragon');
+      expect(s.enemy.scales, 4);
+      final plain =
+          engine.preview(vsSalamander, uidOf(vsSalamander, 'gongbu_chongquan'));
+      final scaled = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
+      expect(scaled.damage, plain.damage - 4);
+      // A un punto de Estructura: el golpe lo desequilibra y pierde una escama.
+      s = s.copyWith(enemy: s.enemy.copyWith(structure: 1));
+      final r = play(s, 'gongbu_chongquan');
+      expect(r.events.whereType<EnemyBroken>(), hasLength(1));
+      expect(r.events.whereType<ScaleShed>().single.remaining, 3);
+      expect(r.state.enemy.scales, 3);
+    });
+  });
+
+  group('dificultad', () {
+    CombatState start(Difficulty d) => engine
+        .start(
+          deck: [for (final (i, id) in filler.indexed) CombatCard(uid: i, cardId: id)],
+          enemyId: 'salamander',
+          style: Style.snake,
+          playerHp: 50,
+          seed: 1,
+          shuffle: false,
+          difficulty: d,
+        )
+        .state;
+
+    test('Normal deja los números de los datos', () {
+      final s = start(Difficulty.normal);
+      expect(s.enemy.maxHp, 57);
+      expect(engine.intentView(s).damage, data.enemy('salamander').phases.first.pattern.first.damage);
+    });
+
+    test('Shifu sube Vida, Estructura y daño enemigos', () {
+      final normal = start(Difficulty.normal);
+      final s = start(Difficulty.shifu);
+      expect(s.enemy.maxHp, (57 * 1.2).round());
+      expect(s.enemy.maxStructure, (14 * 1.1).round());
+      expect(engine.intentView(s).damage,
+          (engine.intentView(normal).damage * 1.2).round());
     });
   });
 }

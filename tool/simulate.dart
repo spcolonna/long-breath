@@ -11,7 +11,8 @@
 //   dart run tool/simulate.dart --data otra/carpeta      # comparar con otros datos
 //
 // Perfiles: novato, promedio, experto (y de referencia aleatorio, codicioso).
-// Secciones: runs (defecto), picos, talismans.
+// Secciones: runs (defecto), picos, talismans, cards, difficulty.
+//   --difficulty easy|normal|hard|shifu  (sección runs)
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math' as math;
@@ -37,6 +38,7 @@ class Config {
     this.pico = 0,
     this.startTalismans = const [],
     this.startCards = const [],
+    this.difficulty = Difficulty.normal,
   });
 
   final RawData raw;
@@ -45,6 +47,7 @@ class Config {
   final int pico;
   final List<String> startTalismans;
   final List<String> startCards;
+  final Difficulty difficulty;
 }
 
 /// Corre [runs] runs de un perfil repartidas en varios isolates.
@@ -80,6 +83,7 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
               withTalismans: c.talismans,
               startTalismans: c.startTalismans,
               startCards: c.startCards,
+              difficulty: c.difficulty,
             ),
         ];
       }),
@@ -153,8 +157,14 @@ Future<void> main(List<String> args) async {
       await _cards(raw, stages, runs, seed, selected);
     case 'talismans':
       await _talismans(raw, stages, runs, seed);
+    case 'difficulty':
+      await _difficulties(raw, stages, runs, seed, selected);
     default:
-      final cfg = Config(raw: raw, stages: stages, talismans: flag('talismans'));
+      final cfg = Config(
+          raw: raw,
+          stages: stages,
+          talismans: flag('talismans'),
+          difficulty: Difficulty.parse(opt('difficulty', 'normal')));
       final logs = <String, List<RunLog>>{};
       for (final p in selected) {
         logs[p] = await simulate(cfg, p, runs, seed, style: style);
@@ -162,6 +172,25 @@ Future<void> main(List<String> args) async {
       _report(logs);
   }
   print('_${(sw.elapsedMilliseconds / 1000).toStringAsFixed(0)} s de cómputo_');
+}
+
+/// Victoria y minutos de cada perfil en cada dificultad.
+Future<void> _difficulties(
+    RawData raw, int stages, int runs, int seed, List<String> profilesSel) async {
+  final rows = <List<String>>[];
+  for (final d in Difficulty.values) {
+    final cfg = Config(
+        raw: raw, stages: stages, talismans: stages > 1, difficulty: d);
+    final row = [d.name];
+    for (final p in profilesSel) {
+      final l = await simulate(cfg, p, runs, seed);
+      final won = l.where((r) => r.won).toList();
+      row.add('${pct(won.length, l.length)} · '
+          '${mean([for (final r in won) r.seconds / 60]).toStringAsFixed(0)} min');
+    }
+    rows.add(row);
+  }
+  table(['Dificultad', ...profilesSel], rows);
 }
 
 void _report(Map<String, List<RunLog>> logs) {

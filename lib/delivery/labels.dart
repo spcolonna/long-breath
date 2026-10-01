@@ -21,6 +21,20 @@ extension Labels on AppLocalizations {
         null => '—',
       };
 
+  String difficultyName(Difficulty d) => switch (d) {
+        Difficulty.easy => difficultyEasy,
+        Difficulty.normal => difficultyNormal,
+        Difficulty.hard => difficultyHard,
+        Difficulty.shifu => difficultyShifu,
+      };
+
+  String difficultyDesc(Difficulty d) => switch (d) {
+        Difficulty.easy => difficultyEasyDesc,
+        Difficulty.normal => difficultyNormalDesc,
+        Difficulty.hard => difficultyHardDesc,
+        Difficulty.shifu => difficultyShifuDesc,
+      };
+
   String stanceHint(Stance s) => switch (s) {
         Stance.mabu => stanceHintMabu,
         Stance.gongbu => stanceHintGongbu,

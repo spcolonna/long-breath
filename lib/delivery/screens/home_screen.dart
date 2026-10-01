@@ -13,6 +13,8 @@ import '../providers.dart';
 import '../theme.dart';
 import '../tutorial/lessons.dart';
 import '../widgets/hero_sprite.dart';
+import '../widgets/difficulty_sheet.dart';
+import '../../domain/model/enums.dart';
 
 String routeFor(RunState r) => switch (r.phase) {
   RunPhase.map => '/map',
@@ -76,7 +78,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         );
         if (ok != true || !context.mounted) return;
       }
-      ref.read(runControllerProvider.notifier).newRun();
+      final difficulty = await pickDifficulty(
+        context,
+        initial: saved?.difficulty ?? Difficulty.normal,
+      );
+      if (difficulty == null || !context.mounted) return;
+      ref.read(runControllerProvider.notifier).newRun(difficulty);
       context.go('/map');
     }
 

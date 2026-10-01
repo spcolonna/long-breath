@@ -1,6 +1,6 @@
 # Balance de Long Breath
 
-Este documento reúne los objetivos de balance, el método de medición, los valores actuales y el modelo para el juego completo. Los números salen del simulador (`tool/simulate.dart`). Última pasada: 01/10/2026.
+Este documento reúne los objetivos de balance, el método de medición, los valores actuales y el modelo para el juego completo. Los números salen del simulador (`tool/simulate.dart`). Última pasada: 01/10/2026 (segunda vuelta: retener, Dragón y dificultades).
 
 > **Ojo con lo que mide el simulador.** Son bots, no personas. Sirve para comparar versiones del juego entre sí, no para predecir con exactitud cómo le va a una persona. Antes de dar un número por bueno hay que jugarlo.
 
@@ -33,6 +33,12 @@ dart run tool/simulate.dart                           # runs de la etapa 1, 3 pe
 ```
 ```bash
 dart run tool/simulate.dart --section cards           # poder de cada carta
+```
+```bash
+dart run tool/simulate.dart --section difficulty      # victoria por dificultad y perfil
+```
+```bash
+dart run tool/simulate.dart --difficulty hard         # informe completo en una dificultad
 ```
 ```bash
 dart run tool/simulate.dart --stages 3 --talismans    # prototipo de 3 etapas
@@ -191,9 +197,57 @@ Al tomar un camino, el discípulo pasa de 3 a 4 de Aliento: se siente como un sa
 
 ---
 
-## 4. Dificultad: ¿hace falta elegirla?
+## 3b. Segunda vuelta (01/10/2026): retener, Dragón y dificultades
 
-**Sí: un modo Sereno** para la primera subida. Con los números nuevos, el novato gana el 1% de las runs: llega al Dragón la mitad de las veces y ahí cae. El Gólem es su gran muro: 39% de victoria y 27 de Vida perdida, porque el novato no busca el Desequilibrio.
+Tres cambios de regla, medidos con 1000 runs por perfil en Normal:
+
+1. **Retener ya no ocupa lugar en la mano.** Al empezar el turno robás la mano completa y las cartas retenidas se suman. Con eso la Serpiente y la Grulla subieron a 84% y 83% (promedio) y el Tigre quedó atrás (62%). Se compensó con **Tigre: 5 cartas por turno** (antes 4).
+2. **Escamas del Dragón.** Cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada Desequilibrio le arranca una escama para siempre. Empieza con **4 escamas**, **150 de Vida** y **18 de Estructura** (antes 154 y 26) para que romperlo sea alcanzable y sea *la* respuesta. El Aliento del Dragón sigue cancelándose si lo desequilibrás antes.
+3. **Dificultades** en la interfaz (sección 4).
+
+| Perfil | Victoria (1.ª vuelta) | Victoria ahora | Minutos |
+|---|---|---|---|
+| Novato | 1% | 4% | 12,5 |
+| Promedio | 60% | **63%** | 11,5 |
+| Experto | 79% | **86%** | 10,9 |
+
+| Perfil | Tigre | Serpiente | Grulla |
+|---|---|---|---|
+| Promedio | 64% | 61% | 64% |
+| Experto | 85% | 87% | 86% |
+
+| Eco del Dragón | Turnos | Vida perdida | Desequilibrios | Victoria |
+|---|---|---|---|---|
+| Promedio | 6,1 (antes 5,8) | 23,1 | 1,3 (antes 0,9) | 63% |
+| Experto | 5,5 | 18,9 | 1,4 | 86% |
+
+Probado y descartado: Serpiente retener 1 y Grulla 2 (el Tigre seguía 20 puntos abajo), Grulla con 5 de Aliento (desbalancea al revés), 2 o 3 escamas sin bajar la Estructura (el Dragón se rompe una sola vez y las escamas son solo una resta).
+
+## 4. Dificultades (implementadas)
+
+**Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).
+
+| Dificultad | Vida | Fuente | Vida enemiga | Daño enemigo | Estructura enemiga |
+|---|---|---|---|---|---|
+| Fácil 易 | 60 | +25 | 95% | 85% | 100% |
+| Normal 常 | 50 | +20 | 100% | 100% | 100% |
+| Difícil 难 | 50 | +15 | 110% | 110% | 100% |
+| Shifu 师 | 45 | +15 | 120% | 120% | 110% |
+
+Victoria y minutos de las runs ganadas (1000 runs por perfil):
+
+| Dificultad | Novato | Promedio | Experto |
+|---|---|---|---|
+| Fácil | **34%** · 12 min | 96% · 11 min | 99% · 11 min |
+| Normal | 4% · 12 min | **63%** · 12 min | 86% · 11 min |
+| Difícil | 0% | 29% · 12 min | **59%** · 12 min |
+| Shifu | 0% | 4% · 13 min | **18%** · 12 min |
+
+Cada escalón le quita al perfil de referencia entre 30 y 40 puntos: Fácil es para aprender, Normal la experiencia diseñada, Difícil el reto del experto y Shifu una meta de maestría. Los Picos (sección 6) siguen como idea para el juego completo, encima de estas cuatro.
+
+Lo que sigue es el análisis de la primera vuelta, que llevó a esta decisión.
+
+**Primera vuelta: un modo Sereno** para la primera subida. Con los números nuevos, el novato gana el 1% de las runs: llega al Dragón la mitad de las veces y ahí cae. El Gólem es su gran muro: 39% de victoria y 27 de Vida perdida, porque el novato no busca el Desequilibrio.
 
 **Prototipo de Sereno:** Vida 65 en vez de 50 y enemigos con −20% de daño.
 
@@ -292,16 +346,9 @@ Se acumulan: el Pico N incluye las reglas del 1 al N. Los pasos son chicos porqu
 
 ## 7. Lo que queda (palancas y decisiones)
 
-1. **Retener vale poco.**
-   - Como se roba hasta completar la mano, guardar cartas no suma cartas: solo deja elegir cuáles quedan.
-   - Si se quiere que la Serpiente y la Grulla se sientan distintas, la opción es que **retener no ocupe lugar en la mano**: robás tu mano completa además de lo retenido.
-   - Es un cambio de regla, así que hay que decidirlo antes de volver a equilibrar los caminos.
-2. **El jefe es una carrera de daño.**
-   - Para llevarlo a 6 a 8 turnos sin castigar a ningún camino, conviene una mecánica que se *responda*. Por ejemplo:
-     - Una tercera fase que exija desvíos.
-     - Escamas que solo baja la Estructura.
-   - Subirle la Vida no sirve.
-3. **El perfil novato** pierde casi siempre contra el Gólem y el Dragón en Normal. Hay que confirmarlo con personas reales y decidir Sereno.
+1. ~~Retener vale poco~~ → resuelto: lo retenido es extra (sección 3b).
+2. ~~El jefe es una carrera de daño~~ → resuelto en parte con las escamas (6,1 turnos, 1,3 Desequilibrios). Si con personas sigue corto, el próximo paso es una tercera fase.
+3. ~~Modo Sereno~~ → resuelto con las cuatro dificultades. Falta confirmarlas con personas reales.
 4. **Recompensas:** probar rareza (comunes y raras) cuando haya más cartas, y dar alguna señal de que saltear es una buena jugada.
 5. **Calibrar el tiempo** cronometrando a alguien que juegue por primera vez.
 6. **Repetir esta pasada** después de cada cambio de reglas, contenido o enemigos, con `dart run tool/simulate.dart`.

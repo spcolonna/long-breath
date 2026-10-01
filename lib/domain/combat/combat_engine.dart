@@ -101,10 +101,16 @@ class CombatEngine {
     required int playerHp,
     required int seed,
     bool shuffle = true,
+    Difficulty difficulty = Difficulty.normal,
+    int? maxHp,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
     final enemy = data.enemy(enemyId);
+    final dif = b.difficulty(difficulty);
+    int pct(int v, int p) => (v * p / 100).round();
+    final enemyHp = pct(enemy.hp, dif.enemyHp);
+    final enemyStructure = pct(enemy.structure, dif.enemyStructure);
     final (shuffled, rng) =
         shuffle ? Rng.seeded(seed).shuffle(deck) : (deck, Rng.seeded(seed));
     final d = _Draft(
@@ -114,7 +120,7 @@ class CombatEngine {
       breathPerTurn: styleStats.breath,
       retainMax: styleStats.retain,
       hp: playerHp,
-      maxHp: b.playerHp,
+      maxHp: maxHp ?? b.playerHp,
       structure: b.playerStructure,
       maxStructure: b.playerStructure,
       guard: 0,
@@ -123,10 +129,11 @@ class CombatEngine {
       breath: 0,
       enemy: _EnemyDraft(
         id: enemy.id,
-        hp: enemy.hp,
-        maxHp: enemy.hp,
-        structure: enemy.structure,
-        maxStructure: enemy.structure,
+        hp: enemyHp,
+        maxHp: enemyHp,
+        structure: enemyStructure,
+        maxStructure: enemyStructure,
+        scales: enemy.scales,
       ),
       drawPile: [...shuffled],
       hand: [],
@@ -135,6 +142,7 @@ class CombatEngine {
       breathesLeft: b.breathesPerCombat,
       formProgress: {for (final f in data.forms) f.id: 0},
       rng: rng,
+      enemyDamagePct: dif.enemyDamage,
     );
     final events = <CombatEvent>[];
     _startPlayerTurn(d, events);
@@ -255,12 +263,17 @@ class CombatEngine {
     return math.max(0, def.guard + upgrades + data.stance(stance).guardModifier);
   }
 
-  /// Daño efectivo sobre el enemigo: ×2 desequilibrado, ½ inamovible.
-  int _enemyDamageTaken(EnemyDef def, bool staggered, int dmg) {
+  /// Daño efectivo sobre el enemigo: ×2 desequilibrado; si no, ½ inamovible
+  /// y menos sus escamas.
+  int _enemyDamageTaken(EnemyDef def, bool staggered, int scales, int dmg) {
     if (staggered) return dmg * data.balance.enemyBreakDamageMultiplier;
-    if (def.immovable) return dmg ~/ 2;
-    return dmg;
+    if (def.immovable) dmg ~/= 2;
+    return math.max(0, dmg - scales);
   }
+
+  /// Daño de un ataque enemigo con la dificultad aplicada.
+  int _enemyDamage(int dmg, int pct) =>
+      pct == 100 ? dmg : (dmg * pct / 100).round();
 
   CardPreview preview(CombatState s, int uid) {
     final c = s.handCard(uid)!;
@@ -270,7 +283,8 @@ class CombatEngine {
     final enemyDef = data.enemy(s.enemy.id);
     final (dmg, str) = _cardHit(def, c.upgrades, stance, s.enemy.staggered,
         s.turnStructureBonus);
-    final dealt = _enemyDamageTaken(enemyDef, s.enemy.staggered, dmg);
+    final dealt =
+        _enemyDamageTaken(enemyDef, s.enemy.staggered, s.enemy.scales, dmg);
     final advances = <String>[], completes = <String>[], interrupts = <String>[];
     for (final f in data.forms) {
       final p = s.formProgress[f.id]!;
@@ -314,7 +328,9 @@ class CombatEngine {
     return IntentView(
       intent: intent,
       damage: isAttack
-          ? intent.damage + e.chargeBonus + punish * def.sameStancePunishDamage
+          ? _enemyDamage(
+              intent.damage + e.chargeBonus + punish * def.sameStancePunishDamage,
+              s.enemyDamagePct)
           : 0,
       structure: isAttack
           ? intent.structure + punish * def.sameStancePunishStructure
@@ -407,7 +423,7 @@ class CombatEngine {
   void _hitEnemy(_Draft d, int dmg, int str, List<CombatEvent> events) {
     final e = d.enemy;
     final def = data.enemy(e.id);
-    var taken = _enemyDamageTaken(def, e.staggered, dmg);
+    var taken = dmg == 0 ? 0 : _enemyDamageTaken(def, e.staggered, e.scales, dmg);
     final absorbed = math.min(e.guard, taken);
     e.guard -= absorbed;
     taken -= absorbed;
@@ -430,6 +446,10 @@ class CombatEngine {
     e.skipNextAction = true;
     e.staggerEndsTurn = d.turn + 1;
     events.add(const EnemyBroken());
+    if (e.scales > 0) {
+      e.scales--;
+      events.add(ScaleShed(e.scales));
+    }
   }
 
   void _checkEnemyPhase(_Draft d, List<CombatEvent> events) {
@@ -516,6 +536,7 @@ class CombatEngine {
       structure += def.sameStancePunishStructure;
       d.punishPending = false;
     }
+    damage = _enemyDamage(damage, d.enemyDamagePct);
     final stance = data.stance(d.stance);
     final match = d.guard > 0 && d.guardHeight == intent.height;
     // La Guardia no se consume: en un ataque doble se aplica a cada golpe,
@@ -569,7 +590,8 @@ class CombatEngine {
     d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
     d.nextTurnBreathMod = 0;
     events.add(TurnStarted(d.turn, d.breath));
-    _draw(d, d.handSize - d.hand.length, events);
+    // Las cartas retenidas son extra: siempre se roba la mano completa.
+    _draw(d, d.handSize, events);
     if (d.pendingDiscard > 0 && d.hand.isNotEmpty) {
       d.pendingDiscard = math.min(d.pendingDiscard, d.hand.length);
       d.phase = CombatPhase.discarding;
@@ -613,6 +635,7 @@ class _EnemyDraft {
     this.staggerEndsTurn = 0,
     this.skipNextAction = false,
     this.chargeBonus = 0,
+    this.scales = 0,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -628,6 +651,7 @@ class _EnemyDraft {
         staggerEndsTurn: e.staggerEndsTurn,
         skipNextAction: e.skipNextAction,
         chargeBonus: e.chargeBonus,
+        scales: e.scales,
       );
 
   final String id;
@@ -642,6 +666,7 @@ class _EnemyDraft {
   int staggerEndsTurn;
   bool skipNextAction;
   int chargeBonus;
+  int scales;
 
   EnemyCombat freeze() => EnemyCombat(
         id: id,
@@ -656,6 +681,7 @@ class _EnemyDraft {
         staggerEndsTurn: staggerEndsTurn,
         skipNextAction: skipNextAction,
         chargeBonus: chargeBonus,
+        scales: scales,
       );
 }
 
@@ -692,6 +718,7 @@ class _Draft {
     this.pendingDiscard = 0,
     Map<String, int>? formsCompleted,
     this.deflects = 0,
+    this.enemyDamagePct = 100,
   }) : formsCompleted = formsCompleted ?? {};
 
   factory _Draft.of(CombatState s) => _Draft(
@@ -726,6 +753,7 @@ class _Draft {
         pendingDiscard: s.pendingDiscard,
         formsCompleted: {...s.formsCompleted},
         deflects: s.deflects,
+        enemyDamagePct: s.enemyDamagePct,
       );
 
   int turn;
@@ -759,6 +787,7 @@ class _Draft {
   int pendingDiscard;
   final Map<String, int> formsCompleted;
   int deflects;
+  final int enemyDamagePct;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
 
@@ -796,5 +825,6 @@ class _Draft {
         formsCompleted: Map.unmodifiable(formsCompleted),
         deflects: deflects,
         rng: rng,
+        enemyDamagePct: enemyDamagePct,
       );
 }

@@ -84,20 +84,33 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
 La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí, completa.
 
+## Dificultad
+
+Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cura la fuente y la fuerza de los enemigos de la subida (las lecciones no cambian).
+
+| Dificultad | Vida | Fuente | Enemigos |
+|---|---|---|---|
+| Fácil 易 | 60 | +25 | 95% de Vida, 85% de daño |
+| Normal 常 | 50 | +20 | Como están en la tabla de enemigos |
+| Difícil 难 | 50 | +15 | 110% de Vida y daño |
+| Shifu 师 | 45 | +15 | 120% de Vida y daño, 110% de Estructura |
+
 ## Tu camino
 
 | Camino | Robás por turno | Aliento por turno | Retenés |
 |---|---|---|---|
 | Novicio (hasta el santuario) | 5 | 3 | 0 |
-| Tigre | 4 | 4 | 0 |
+| Tigre | 5 | 4 | 0 |
 | Serpiente | 4 | 4 | 2 |
 | Grulla | 4 | 4 | 3 |
 
 Al elegir camino el discípulo madura: pasa de 3 a 4 de Aliento por turno, sea cual sea el camino.
 
-- **Tigre:** no guarda nada, pero es el único que recibe las cartas del Tigre (Garra, Salto, Guardia y Rugido) como recompensa. Ideal para aprender.
+- **Tigre:** no guarda nada, pero roba 5 cartas por turno y es el único que recibe las cartas del Tigre (Garra, Salto, Guardia y Rugido) como recompensa. Ideal para aprender.
 - **Serpiente:** guarda 2 cartas para el turno siguiente: encadena golpes y formas.
 - **Grulla:** guarda hasta 3 para armar formas y respuestas exactas.
+
+Las cartas retenidas son extra: al empezar el turno robás tu mano completa y se suman a lo que guardaste.
 
 En la simulación los tres caminos quedan parejos (ver `balance.md`).
 
@@ -107,7 +120,7 @@ Como el santuario ofrece solo dos, no siempre vas a poder jugar tu camino favori
 
 | Valor | Base | Nota |
 |---|---|---|
-| Vida | 50 | Si llega a 0 perdés la run |
+| Vida | 50 (según dificultad: 60 / 50 / 50 / 45) | Si llega a 0 perdés la run |
 | Estructura | 10 | Tu equilibrio. Se recupera al terminar cada combate |
 | Aliento | según camino | Se paga para jugar cartas. Lo que sobra se pierde |
 | Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, gratis |
@@ -200,7 +213,7 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Gólem de Estalactita | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
 | Salamandra de la Grieta | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
-| Eco del Dragón | Guardián | 154 | 26 | Dos fases | Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes |
+| Eco del Dragón | Guardián | 150 | 18 | Dos fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes |
 
 En la bifurcación conviene elegir según el mazo: el **Gólem** premia romper Estructura; la **Salamandra**, palmas y empujes.
 

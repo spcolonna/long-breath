@@ -43,3 +43,14 @@ enum EnemyRank {
 
   static EnemyRank parse(String s) => EnemyRank.values.byName(s);
 }
+
+/// Dificultad elegida al empezar la subida.
+enum Difficulty {
+  easy,
+  normal,
+  hard,
+  shifu;
+
+  static Difficulty parse(String? s) =>
+      s == null ? normal : Difficulty.values.byName(s);
+}

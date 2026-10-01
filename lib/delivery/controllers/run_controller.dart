@@ -19,8 +19,10 @@ class RunController extends Notifier<RunState?> {
 
   void resume(RunState r) => state = r;
 
-  void newRun() =>
-      _set(_engine.newRun(seed: DateTime.now().microsecondsSinceEpoch));
+  void newRun(Difficulty difficulty) => _set(_engine.newRun(
+        seed: DateTime.now().microsecondsSinceEpoch,
+        difficulty: difficulty,
+      ));
 
   void abandon() => _set(null);
 
