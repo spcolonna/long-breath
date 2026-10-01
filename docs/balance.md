@@ -103,7 +103,7 @@ Antes el Tigre era obligatorio: sacaba 18 puntos de ventaja y con el novato, 86.
 
 | Enemigo | Turnos antes | Turnos después | Vida perdida antes | Vida perdida después | Victoria después |
 |---|---|---|---|---|---|
-| Eco de Murciélago | 1,3 | 2,4 | 0,2 | 3,0 | 100% |
+| Murciélago de Jade | 1,3 | 2,4 | 0,2 | 3,0 | 100% |
 | Salamandra | 1,6 | 3,2 | 1,7 | 4,5 | 100% |
 | Discípulo Perdido | 2,0 | 3,5 | 3,7 | 10,8 | 100% |
 | Gólem | 3,0 | 4,1 | 6,1 | 11,7 | 98% |

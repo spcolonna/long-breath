@@ -36,16 +36,15 @@ La subida se hace por tramos: la ladera de bambú, el santuario de los animales,
 
 Antes de subir, los novicios practican en el patio con el **muñeco de madera** (木人桩), el mismo que se usa en las escuelas de Wing Chun y de Hung Gar. En el camino aparecen:
 
-- **Eco de Murciélago:** un espíritu hecho de ecos. Su chillido aturde y te hace soltar lo que tenés en la mano.
+- **Murciélago de Jade:** un espíritu de la montaña con alas de jade hechas de ecos. Su chillido aturde y te hace soltar lo que tenés en la mano.
 - **Discípulo Perdido:** un alumno que no llegó arriba y quedó atrapado en la montaña. Castiga a quien se queda quieto en la misma postura.
-- **Gólem de Estalactita:** roca con vetas de cristal, casi inamovible hasta que se le rompe el equilibrio.
-- **Salamandra de la Grieta:** ágil y escurridiza, se entierra para protegerse.
+- **Gólem de Cuarzo:** cuarzo pálido con vetas turquesa y musgo en los hombros, casi inamovible hasta que se le rompe el equilibrio.
+- **Salamandra de Brasa:** ágil y escurridiza, con la cola encendida como una brasa; se entierra para protegerse.
 - **Monje sin Rostro** (élite): un maestro con máscara de porcelana que interrumpe las formas a medio ejecutar.
 - **Eco del Dragón** 龙音 (guardián): en la cumbre no espera un dragón, sino su eco, un espíritu de aliento dorado y nubes. Al quedar herido despierta y prepara el **Aliento del Dragón**.
 
 El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que cayeron antes que vos. Esa pista prepara la historia completa: qué le pasó a los que no volvieron y qué quiere el maestro de la escuela.
 
-> **Pendiente:** Estalactita, Grieta y Murciélago vienen de la vieja idea de la cueva. Los nombres se pueden cambiar en `assets/l10n/content/es.json`.
 
 ## Lo que viene (fuera del MVP)
 
@@ -210,10 +209,10 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 
 | Enemigo | Rango | Vida | Estructura | Patrón | Regla especial |
 |---|---|---|---|---|---|
-| Eco de Murciélago | Común | 48 | 11 | Alto 3×2 → Alto 7 → Chillido | Chillido: al empezar tu turno descartás 1 carta a elección |
+| Murciélago de Jade | Común | 48 | 11 | Alto 3×2 → Alto 7 → Chillido | Chillido: al empezar tu turno descartás 1 carta a elección |
 | Discípulo Perdido | Común | 70 | 18 | Alto 7 → Medio 9 → Barrido bajo 7 | Si terminás el turno en la misma postura que el anterior, su ataque hace +5 de daño y +2 a Estructura |
-| Gólem de Estalactita | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
-| Salamandra de la Grieta | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
+| Gólem de Cuarzo | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
+| Salamandra de Brasa | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
 | Eco del Dragón | Guardián | 175 | 18 | Tres fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Al 30% entra en la última fase: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento (medio 24, E8) cada dos acciones, con un barrido bajo doble (2 × 6) entre medio |
 

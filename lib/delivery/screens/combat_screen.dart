@@ -1971,7 +1971,7 @@ class _Fan {
       16 + (isSelected ? -10.0 : (i - _mid).abs() * 3);
 
   /// Aumento de la carta seleccionada.
-  static const zoom = 1.5;
+  static const zoom = 1.35;
 
   /// Desde dónde crece la carta [i]: los extremos, hacia adentro.
   double growX(int i) => n <= 1 ? 0.0 : ((i - _mid) / _mid).clamp(-1.0, 1.0);

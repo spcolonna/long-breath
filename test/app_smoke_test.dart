@@ -52,11 +52,11 @@ void main() {
     ).read(runControllerProvider)!;
     expect(run.difficulty, Difficulty.normal);
 
-    await tester.tap(find.text('Eco de Murciélago'));
+    await tester.tap(find.text('Murciélago de Jade'));
     await settle();
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
-    expect(find.text('Eco de Murciélago'), findsWidgets);
+    expect(find.text('Murciélago de Jade'), findsWidgets);
     expect(find.text('Puñetazo a fondo'), findsWidgets);
 
     // Pausa → volver al menú: la subida queda guardada y se retoma del mapa.
@@ -68,7 +68,7 @@ void main() {
     await tester.tap(find.text('Continuar run'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
-    await tester.tap(find.text('Eco de Murciélago'));
+    await tester.tap(find.text('Murciélago de Jade'));
     await settle();
     expect(find.text('Turno 1'), findsOneWidget);
 
