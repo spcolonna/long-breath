@@ -33,7 +33,15 @@ void main() {
     // Se empieza como novicio: el camino no se elige en el inicio.
     expect(find.text('Tigre'), findsNothing);
 
+    // Arranca el Discípulo nº 1; todavía no hay registro.
+    expect(find.text('Discípulo nº 1'), findsOneWidget);
+    expect(find.text('Registro de la escuela'), findsNothing);
+
     await tester.tap(find.text('La subida'));
+    await settle();
+    // La primera vez, la escuela cuenta por qué se sube.
+    expect(find.text('La escuela del Dragón Dormido'), findsOneWidget);
+    await tester.tap(find.text('Subir'));
     await settle();
     // Antes de subir se elige la dificultad.
     expect(find.text('Shifu'), findsOneWidget);
@@ -262,5 +270,34 @@ void main() {
     await settle();
     expect(container.read(runControllerProvider)!.knownForms, contains(taught));
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
+
+    // Perder: el discípulo no vuelve, queda en el registro y sube otro.
+    final lost = container.read(runControllerProvider)!;
+    final combat = lost.map.firstWhere(
+      (n) => n.type == NodeType.combat && n.enemy == 'disciple',
+      orElse: () => lost.map.firstWhere((n) => n.type == NodeType.combat),
+    );
+    runs.resume(
+      lost.copyWith(phase: RunPhase.combat, currentNode: combat.id),
+    );
+    runs.finishCombat(won: false, hp: 0);
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/result');
+    for (var i = 0; i < 8; i++) {
+      await settle();
+    }
+    expect(find.text('Caíste en la montaña'), findsOneWidget);
+    expect(
+      find.text('El Discípulo nº 1 no volvió a la escuela.'),
+      findsOneWidget,
+    );
+    expect(find.text('Los que no vuelven'), findsOneWidget);
+    expect(find.text('Subir como Discípulo nº 2'), findsOneWidget);
+    await tester.tap(find.text('Volver a la escuela'));
+    await settle();
+    expect(find.text('Discípulo nº 2'), findsOneWidget);
+    await tester.tap(find.text('Registro de la escuela'));
+    await settle();
+    expect(find.text('Discípulo nº 1'), findsOneWidget);
+    expect(find.textContaining('Cayó ante'), findsOneWidget);
   });
 }

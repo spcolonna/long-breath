@@ -73,7 +73,11 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
 2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 9 pisos de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso).
 
-   Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. El ícono sí muestra si es común, élite o jefe. Al llegar, el rival se presenta.
+   Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. Al llegar, el rival se presenta.
+
+   **Cómo se ve:** una montaña pintada en capas (las cordilleras lejanas se mueven más despacio al desplazar, el cielo se vuelve dorado y rosa cerca de la cumbre) con nubes que van y vienen. Cada lugar es un **sello de piedra con su carácter tallado**: 武 combate (精 élite con aro dorado, 龙 jefe), 泉 fuente, 庙 santuario, 缘 evento, 商 mercader, 师 maestro. Los que podés tomar flotan y laten; los ya andados llevan el sello rojo 印. Los une un **sendero de escalones**: lo recorrido queda en tinta dorada y el último tramo se pinta al volver al mapa. Los pisos a más de 2 del tuyo quedan bajo la niebla y se despejan al subir. El santuario tiene su arco, la fuente su estanque, el élite su pagoda y en la cumbre se adivina el dragón entre las nubes. Arriba a la derecha, una regla marca el piso (por ejemplo 3/9).
+
+   Al tocar un lugar, tu discípulo (de espaldas, con la ropa de su camino) **camina el sendero** hasta él, la cámara lo sigue y la pantalla nueva entra con una **mancha de tinta** del color del lugar.
 
    | Piso | Qué puede salir |
    |---|---|
@@ -121,6 +125,27 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y dos servicios por visita: quitar una carta del mazo (30) y mejorar una carta +3 (25). Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
 10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
 11. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
+
+### Caer y volver a subir
+
+Cada subida la hace **un discípulo distinto, con número** (Discípulo nº 1, nº 2…); el número se ve en el inicio. La primera vez que tocás **La subida**, la escuela cuenta por qué se sube (el prólogo).
+
+- **Si caés:** una pincelada cruza el papel, cae el sello 败 y se narra qué pasó en tres líneas ("El aliento se te escapa en Terraza entre nubes." · "Salamandra de Brasa queda de pie entre la niebla." · "El Discípulo nº 4 no volvió a la escuela."). Queda su **tablilla**: camino, piso alcanzado, dificultad/Pico, Vida máxima y mazo. Ese discípulo se queda en la montaña, como los Discípulos Perdidos: **la escuela envía a otro novicio** ("Subir como Discípulo nº 5").
+- **Si llegás a la cumbre:** la misma escena en dorado con 龙 ("El Discípulo nº 4 llegó a la cumbre").
+- Tocar la pantalla adelanta la escena; los botones siempre quedan abajo.
+
+**Registro de la escuela 名册** (en el inicio, después de la primera subida terminada): una tablilla por subida (败 o 顶) y los **pergaminos** de la historia. Perder no da nada mecánico: da historia.
+
+| Pergamino | Se abre |
+|---|---|
+| La escuela del Dragón Dormido | al empezar la primera subida |
+| El santuario de los animales | al llegar al santuario |
+| Los que no vuelven | la primera vez que un discípulo cae |
+| La cinta desteñida | al caer ante el Discípulo Perdido |
+| El rostro borrado | al caer ante el Monje sin Rostro |
+| El eco | al caer ante el Eco del Dragón |
+| La cumbre | al llegar a la cumbre |
+| Cinco varillas / Lo que el maestro anota | con 5 y 10 caídos |
 
 La Vida **no** se recupera entre combates (solo en la fuente, algunos eventos y talismanes). La Estructura sí, completa.
 

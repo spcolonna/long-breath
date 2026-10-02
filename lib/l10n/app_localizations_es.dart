@@ -225,6 +225,113 @@ class AppLocalizationsEs extends AppLocalizations {
   String get continueLabel => 'Continuar';
 
   @override
+  String discipleN(int n) {
+    return 'Discípulo nº $n';
+  }
+
+  @override
+  String resultFellAt(String place) {
+    return 'El aliento se te escapa en $place.';
+  }
+
+  @override
+  String resultFellTo(String enemy) {
+    return '$enemy queda de pie entre la niebla.';
+  }
+
+  @override
+  String resultFellNo(int n) {
+    return 'El Discípulo nº $n no volvió a la escuela.';
+  }
+
+  @override
+  String resultSummitAt(String place) {
+    return 'Subiste entre las nubes hasta $place.';
+  }
+
+  @override
+  String resultSummitTo(String enemy) {
+    return '$enemy se deshace en aliento dorado.';
+  }
+
+  @override
+  String resultSummitNo(int n) {
+    return 'El Discípulo nº $n llegó a la cumbre.';
+  }
+
+  @override
+  String get tabletNovice => 'Novicio sin camino';
+
+  @override
+  String tabletPath(String style) {
+    return 'Camino de $style';
+  }
+
+  @override
+  String tabletFloor(int floor, int floors) {
+    return 'Piso $floor de $floors';
+  }
+
+  @override
+  String tabletStats(int hp, int deck) {
+    return 'Vida máx. $hp · Mazo $deck';
+  }
+
+  @override
+  String get loreNew => 'Pergamino nuevo';
+
+  @override
+  String get relayLine => 'La escuela envía a otro novicio.';
+
+  @override
+  String get relaySummit => 'La escuela pide que suba el siguiente.';
+
+  @override
+  String relayButton(int n) {
+    return 'Subir como Discípulo nº $n';
+  }
+
+  @override
+  String get backSchool => 'Volver a la escuela';
+
+  @override
+  String get tapToSkip => 'Tocá para seguir';
+
+  @override
+  String get registryTitle => 'Registro de la escuela';
+
+  @override
+  String get registryAscents => 'Subidas';
+
+  @override
+  String get registryScrolls => 'Pergaminos';
+
+  @override
+  String get registryEmpty => 'Todavía no terminó ninguna subida.';
+
+  @override
+  String registryFell(String enemy) {
+    return 'Cayó ante $enemy';
+  }
+
+  @override
+  String get registryFellEarly => 'Cayó en la montaña';
+
+  @override
+  String get registrySummit => 'Llegó a la cumbre';
+
+  @override
+  String registrySummary(int fallen, int summits) {
+    return '$fallen caídos · $summits en la cumbre';
+  }
+
+  @override
+  String get scrollSealed => 'Lacrado';
+
+  @override
+  String get prologueClimb => 'Subir';
+
+  @override
   String get runWon => 'Llegaste a la cumbre';
 
   @override
@@ -1226,7 +1333,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide6 =>
-      'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!';
+      'Si perdés toda la Vida, ese discípulo no vuelve: la escuela manda a otro novicio, que empieza de cero. Mirá siempre el globo del rival antes de jugar. ¡Suerte!';
 
   @override
   String get eventNode => 'Evento';

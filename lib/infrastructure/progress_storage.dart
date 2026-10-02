@@ -1,11 +1,20 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/model/enums.dart';
+import '../domain/run/ascent.dart';
 
 /// Recuerda en qué dificultades ganó el jugador una subida completa.
 class ProgressStorage {
   static const _key = 'long_breath.winsByDifficulty';
   static const _picoKey = 'long_breath.picoUnlocked';
+  static const _discipleKey = 'long_breath.disciple';
+  static const _ascentsKey = 'long_breath.ascents';
+  static const _loreKey = 'long_breath.lore';
+
+  /// Subidas que guarda el registro (las más viejas se borran).
+  static const maxAscents = 50;
 
   /// Último Pico que se puede elegir: 10 es la cima.
   static const maxPico = 10;
@@ -41,6 +50,68 @@ class ProgressStorage {
     final open = await picoUnlocked();
     final next = (pico + 1).clamp(0, maxPico);
     if (next > open) await prefs.setInt(_picoKey, next);
+  }
+}
+
+extension SchoolRecord on ProgressStorage {
+  /// Número del discípulo que sube ahora. Cada subida terminada (se caiga o
+  /// se llegue a la cumbre) suma uno: la escuela manda al siguiente. Quien
+  /// ya había ganado antes del registro arranca después de esas victorias.
+  Future<int> discipleNumber() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getInt(ProgressStorage._discipleKey);
+    if (saved != null) return saved;
+    return 1 + (await wins()).length;
+  }
+
+  Future<List<Ascent>> ascents() async {
+    final prefs = await SharedPreferences.getInstance();
+    return [
+      for (final s in prefs.getStringList(ProgressStorage._ascentsKey) ??
+          const <String>[])
+        Ascent.fromJson(jsonDecode(s) as Map<String, dynamic>),
+    ];
+  }
+
+  Future<Set<String>> lore() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {...?prefs.getStringList(ProgressStorage._loreKey)};
+  }
+
+  /// Abre un pergamino; devuelve true si es nuevo.
+  Future<bool> unlockLore(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final have = await lore();
+    if (have.contains(id)) return false;
+    await prefs.setStringList(ProgressStorage._loreKey, [...have, id]);
+    return true;
+  }
+
+  /// Anota la subida con el número del discípulo actual, abre los
+  /// pergaminos que corresponden y pasa al siguiente discípulo. Devuelve la
+  /// subida tal como quedó (con su número y sus pergaminos nuevos).
+  Future<Ascent> recordAscent(Ascent a) async {
+    final prefs = await SharedPreferences.getInstance();
+    final n = await discipleNumber();
+    final before = await ascents();
+    final have = await lore();
+    final numbered = Ascent.fromJson({...a.toJson(), 'n': n});
+    final done = numbered.withLore(earnedLore(numbered, before, have));
+    final all = [...before, done];
+    await prefs.setStringList(ProgressStorage._ascentsKey, [
+      for (final x in all.skip(
+        all.length > ProgressStorage.maxAscents
+            ? all.length - ProgressStorage.maxAscents
+            : 0,
+      ))
+        jsonEncode(x.toJson()),
+    ]);
+    await prefs.setStringList(ProgressStorage._loreKey, [
+      ...have,
+      ...done.lore,
+    ]);
+    await prefs.setInt(ProgressStorage._discipleKey, n + 1);
+    return done;
   }
 }
 

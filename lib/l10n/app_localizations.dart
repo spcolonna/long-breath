@@ -436,6 +436,168 @@ abstract class AppLocalizations {
   /// **'Continuar'**
   String get continueLabel;
 
+  /// No description provided for @discipleN.
+  ///
+  /// In es, this message translates to:
+  /// **'Discípulo nº {n}'**
+  String discipleN(int n);
+
+  /// No description provided for @resultFellAt.
+  ///
+  /// In es, this message translates to:
+  /// **'El aliento se te escapa en {place}.'**
+  String resultFellAt(String place);
+
+  /// No description provided for @resultFellTo.
+  ///
+  /// In es, this message translates to:
+  /// **'{enemy} queda de pie entre la niebla.'**
+  String resultFellTo(String enemy);
+
+  /// No description provided for @resultFellNo.
+  ///
+  /// In es, this message translates to:
+  /// **'El Discípulo nº {n} no volvió a la escuela.'**
+  String resultFellNo(int n);
+
+  /// No description provided for @resultSummitAt.
+  ///
+  /// In es, this message translates to:
+  /// **'Subiste entre las nubes hasta {place}.'**
+  String resultSummitAt(String place);
+
+  /// No description provided for @resultSummitTo.
+  ///
+  /// In es, this message translates to:
+  /// **'{enemy} se deshace en aliento dorado.'**
+  String resultSummitTo(String enemy);
+
+  /// No description provided for @resultSummitNo.
+  ///
+  /// In es, this message translates to:
+  /// **'El Discípulo nº {n} llegó a la cumbre.'**
+  String resultSummitNo(int n);
+
+  /// No description provided for @tabletNovice.
+  ///
+  /// In es, this message translates to:
+  /// **'Novicio sin camino'**
+  String get tabletNovice;
+
+  /// No description provided for @tabletPath.
+  ///
+  /// In es, this message translates to:
+  /// **'Camino de {style}'**
+  String tabletPath(String style);
+
+  /// No description provided for @tabletFloor.
+  ///
+  /// In es, this message translates to:
+  /// **'Piso {floor} de {floors}'**
+  String tabletFloor(int floor, int floors);
+
+  /// No description provided for @tabletStats.
+  ///
+  /// In es, this message translates to:
+  /// **'Vida máx. {hp} · Mazo {deck}'**
+  String tabletStats(int hp, int deck);
+
+  /// No description provided for @loreNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Pergamino nuevo'**
+  String get loreNew;
+
+  /// No description provided for @relayLine.
+  ///
+  /// In es, this message translates to:
+  /// **'La escuela envía a otro novicio.'**
+  String get relayLine;
+
+  /// No description provided for @relaySummit.
+  ///
+  /// In es, this message translates to:
+  /// **'La escuela pide que suba el siguiente.'**
+  String get relaySummit;
+
+  /// No description provided for @relayButton.
+  ///
+  /// In es, this message translates to:
+  /// **'Subir como Discípulo nº {n}'**
+  String relayButton(int n);
+
+  /// No description provided for @backSchool.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver a la escuela'**
+  String get backSchool;
+
+  /// No description provided for @tapToSkip.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá para seguir'**
+  String get tapToSkip;
+
+  /// No description provided for @registryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Registro de la escuela'**
+  String get registryTitle;
+
+  /// No description provided for @registryAscents.
+  ///
+  /// In es, this message translates to:
+  /// **'Subidas'**
+  String get registryAscents;
+
+  /// No description provided for @registryScrolls.
+  ///
+  /// In es, this message translates to:
+  /// **'Pergaminos'**
+  String get registryScrolls;
+
+  /// No description provided for @registryEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no terminó ninguna subida.'**
+  String get registryEmpty;
+
+  /// No description provided for @registryFell.
+  ///
+  /// In es, this message translates to:
+  /// **'Cayó ante {enemy}'**
+  String registryFell(String enemy);
+
+  /// No description provided for @registryFellEarly.
+  ///
+  /// In es, this message translates to:
+  /// **'Cayó en la montaña'**
+  String get registryFellEarly;
+
+  /// No description provided for @registrySummit.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegó a la cumbre'**
+  String get registrySummit;
+
+  /// No description provided for @registrySummary.
+  ///
+  /// In es, this message translates to:
+  /// **'{fallen} caídos · {summits} en la cumbre'**
+  String registrySummary(int fallen, int summits);
+
+  /// No description provided for @scrollSealed.
+  ///
+  /// In es, this message translates to:
+  /// **'Lacrado'**
+  String get scrollSealed;
+
+  /// No description provided for @prologueClimb.
+  ///
+  /// In es, this message translates to:
+  /// **'Subir'**
+  String get prologueClimb;
+
   /// No description provided for @runWon.
   ///
   /// In es, this message translates to:
@@ -2095,7 +2257,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide6.
   ///
   /// In es, this message translates to:
-  /// **'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!'**
+  /// **'Si perdés toda la Vida, ese discípulo no vuelve: la escuela manda a otro novicio, que empieza de cero. Mirá siempre el globo del rival antes de jugar. ¡Suerte!'**
   String get lesClimbSlide6;
 
   /// No description provided for @eventNode.

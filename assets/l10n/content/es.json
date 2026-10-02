@@ -185,5 +185,52 @@
       "pray": "Meditar en silencio",
       "prayResult": "La calma del lugar te alivia los golpes."
     }
+  },
+  "lore": {
+    "prologue": {
+      "title": "La escuela del Dragón Dormido",
+      "text": "Al pie de la Montaña de las Mil Nubes hay una escuela que respira despacio. Dicen que en la cumbre duerme un dragón y que su aliento hace las nubes. Cada novicio, cuando el maestro lo decide, sube solo. Hoy te toca a vos.",
+      "hint": "Se abre al empezar la primera subida."
+    },
+    "reach_shrine": {
+      "title": "El santuario de los animales",
+      "text": "Nadie elige su camino en la montaña: los espíritus aparecen y uno se acerca. El maestro dice que el camino ya te conocía antes de que llegaras. La túnica de lino se tiñe sola, como si siempre hubiera sido de ese color.",
+      "hint": "Llegá al santuario."
+    },
+    "first_fall": {
+      "title": "Los que no vuelven",
+      "text": "En la escuela no se habla de los que no vuelven. Se enciende una varilla de incienso, se borra un nombre de la lista de la cena y al día siguiente sube otro. La montaña no devuelve a nadie: los que caen, se quedan.",
+      "hint": "Se abre la primera vez que un discípulo cae."
+    },
+    "fell_disciple": {
+      "title": "La cinta desteñida",
+      "text": "El Discípulo Perdido llevaba una cinta como la tuya, desteñida por la niebla. Peleaba con las formas de la escuela, pero con una tristeza que nadie le enseñó. ¿Cuántos años lleva esperando en el sendero?",
+      "hint": "Caé ante el Discípulo Perdido."
+    },
+    "fell_monk": {
+      "title": "El rostro borrado",
+      "text": "Los viejos dicen que el Monje sin Rostro fue maestro antes que el maestro. Subió para ver al dragón con sus propios ojos y la montaña le quitó la cara. Desde entonces cuida las campanas para que nadie pase.",
+      "hint": "Caé ante el Monje sin Rostro."
+    },
+    "fell_dragon": {
+      "title": "El eco",
+      "text": "Lo que te venció en la cumbre no era el dragón: era su eco, aliento dorado que tomó forma. Si el eco pelea así, ¿qué es lo que duerme debajo? Nadie en la escuela quiere responder.",
+      "hint": "Caé ante el Eco del Dragón."
+    },
+    "summit": {
+      "title": "La cumbre",
+      "text": "Arriba no había un dragón despierto: solo nubes que nacían de la roca, lentas como una respiración. En la piedra estaban tallados los nombres de todos los discípulos que la escuela mandó a subir. El tuyo ya estaba. Alguien lo había escrito antes de que llegaras.",
+      "hint": "Llegá a la cumbre."
+    },
+    "fallen_5": {
+      "title": "Cinco varillas",
+      "text": "En el patio ya arden cinco varillas de incienso por los que no volvieron. El maestro las enciende sin decir nada y mira la montaña más de lo necesario.",
+      "hint": "Que caigan 5 discípulos."
+    },
+    "fallen_10": {
+      "title": "Lo que el maestro anota",
+      "text": "Diez caídos. Una noche ves al maestro escribir en un cuaderno que no muestra a nadie: no anota nombres, anota hasta qué piso llegó cada uno. Como si estuviera midiendo algo.",
+      "hint": "Que caigan 10 discípulos."
+    }
   }
 }
