@@ -64,6 +64,8 @@ class MapNodeDef {
     required this.type,
     required this.next,
     this.enemy,
+    this.scene,
+    this.light,
   });
 
   final String id;
@@ -71,11 +73,18 @@ class MapNodeDef {
   final String? enemy;
   final List<String> next;
 
+  /// Escenario del combate y la luz del momento (alba, niebla, ocaso): de
+  /// ahí sale el nombre del camino en el mapa, que no dice quién espera.
+  final String? scene;
+  final String? light;
+
   factory MapNodeDef.fromJson(Map<String, dynamic> j) => MapNodeDef(
         id: j['id'] as String,
         type: NodeType.parse(j['type'] as String),
         enemy: j['enemy'] as String?,
         next: (j['next'] as List).cast<String>(),
+        scene: j['scene'] as String?,
+        light: j['light'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -83,6 +92,8 @@ class MapNodeDef {
         'type': type.name,
         if (enemy != null) 'enemy': enemy,
         'next': next,
+        if (scene != null) 'scene': scene,
+        if (light != null) 'light': light,
       };
 }
 
@@ -94,12 +105,17 @@ class FloorDef {
     required this.maxWidth,
     required this.types,
     this.enemies = const [],
+    this.scene,
   });
 
   final int minWidth;
   final int maxWidth;
   final Map<NodeType, int> types;
   final List<String> enemies;
+
+  /// Escenario fijo de los combates del piso (la cumbre del jefe); si no,
+  /// sale al azar de [GameBalance.scenes].
+  final String? scene;
 
   factory FloorDef.fromJson(Map<String, dynamic> j) {
     final width = j['width'];
@@ -116,6 +132,7 @@ class FloorDef {
           NodeType.parse(e.key): e.value as int,
       },
       enemies: ((j['enemies'] as List?) ?? const []).cast<String>(),
+      scene: j['scene'] as String?,
     );
   }
 }
@@ -181,6 +198,7 @@ class GameBalance {
     required this.playerStructure,
     required this.startStance,
     required this.breathesPerCombat,
+    this.breatheCost = 1,
     required this.novice,
     required this.styles,
     required this.pathChoices,
@@ -196,6 +214,8 @@ class GameBalance {
     required this.stage,
     this.fixedMap,
     this.floors = const [],
+    this.scenes = const ['terraza'],
+    this.lights = const ['alba'],
     this.jadeCommon = 0,
     this.jadeElite = 0,
     this.jadeSpread = 0,
@@ -208,6 +228,9 @@ class GameBalance {
   final int playerStructure;
   final Stance startStance;
   final int breathesPerCombat;
+
+  /// Aliento que cuesta Respirar (cambiar toda la mano).
+  final int breatheCost;
   final StyleStats novice;
   final Map<Style, StyleStats> styles;
 
@@ -232,6 +255,10 @@ class GameBalance {
 
   /// Pisos del mapa generado, de abajo hacia arriba.
   final List<FloorDef> floors;
+
+  /// Escenarios y luces que se reparten entre los combates del mapa.
+  final List<String> scenes;
+  final List<String> lights;
 
   /// Jade que se gana al vencer a un común o a un élite (más 0..spread).
   final int jadeCommon;
@@ -261,6 +288,7 @@ class GameBalance {
       playerStructure: player['structure'] as int,
       startStance: Stance.parse(player['startStance'] as String)!,
       breathesPerCombat: player['breathesPerCombat'] as int,
+      breatheCost: player['breatheCost'] as int? ?? 1,
       novice: StyleStats.fromJson(j['novice'] as Map<String, dynamic>),
       styles: {
         for (final e in styles.entries)
@@ -285,6 +313,8 @@ class GameBalance {
           ],
         _ => null,
       },
+      scenes: ((run['scenes'] as List?) ?? const ['terraza']).cast<String>(),
+      lights: ((run['lights'] as List?) ?? const ['alba']).cast<String>(),
       floors: [
         for (final f in (run['floors'] as List?) ?? const [])
           FloorDef.fromJson(f as Map<String, dynamic>),

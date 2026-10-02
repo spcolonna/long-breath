@@ -36,7 +36,7 @@ El combate es por turnos, uno contra uno, y el enemigo siempre anuncia su próxi
 | Aliento por turno | 3 | Lo que no se usa se pierde |
 | Cartas robadas por turno | 5 |  |
 | Retener | 1 carta | Se guarda para el turno siguiente |
-| Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, cuesta 0 |
+| Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, cuesta 1 de Aliento |
 | Postura inicial | Mǎbù |  |
 
 ### Orden del turno

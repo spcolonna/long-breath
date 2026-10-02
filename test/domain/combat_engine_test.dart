@@ -275,9 +275,19 @@ void main() {
 
     test('respirar una vez por combate', () {
       var s = setup([...filler, ...filler]);
+      final before = s.player.breath;
       s = engine.reduce(s, const Breathe()).state;
       expect(s.hand.map((c) => c.uid), [4, 5, 6, 7]);
+      expect(s.player.breath, before - data.balance.breatheCost);
       expect(engine.validate(s, const Breathe()), isNotNull);
+    });
+
+    test('respirar sin Aliento no se puede', () {
+      var s = setup([...filler, ...filler]);
+      while (s.player.breath > 0) {
+        s = engine.reduce(s, PlayCard(s.hand.first.uid)).state;
+      }
+      expect(engine.validate(s, const Breathe()), Invalid.noBreath);
     });
 
     test('mismo seed, misma mano', () {

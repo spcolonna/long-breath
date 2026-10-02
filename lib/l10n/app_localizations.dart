@@ -967,7 +967,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutActions.
   ///
   /// In es, this message translates to:
-  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.'**
+  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate.'**
   String get tutActions;
 
   /// No description provided for @tutFree.
@@ -1990,10 +1990,16 @@ abstract class AppLocalizations {
   /// **'Tercer paso: Bloqueo y contragolpe, una defensa que además pega.'**
   String get lesForms8;
 
+  /// No description provided for @lesForms8b.
+  ///
+  /// In es, this message translates to:
+  /// **'Te queda 1 de Aliento: no alcanza para Respirar y jugar Paso atrás. Terminá el turno; la forma te espera.'**
+  String get lesForms8b;
+
   /// No description provided for @lesForms9.
   ///
   /// In es, this message translates to:
-  /// **'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.'**
+  /// **'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas. Cuesta 1 de Aliento y se usa una vez por combate. Usalo.'**
   String get lesForms9;
 
   /// No description provided for @lesForms10.
@@ -2091,6 +2097,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Evento'**
   String get eventNode;
+
+  /// No description provided for @combatNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Camino'**
+  String get combatNode;
+
+  /// No description provided for @formMissingShort.
+  ///
+  /// In es, this message translates to:
+  /// **'Faltan cartas'**
+  String get formMissingShort;
 
   /// No description provided for @eventCost.
   ///

@@ -53,12 +53,17 @@ void main() {
       tester.element(find.byType(Scaffold).first),
     ).read(runControllerProvider)!;
     expect(run.difficulty, Difficulty.normal);
-    // El mapa se genera con la semilla: se entra por el primer nodo.
-    final firstEnemy = ProviderScope.containerOf(
+    // El mapa se genera con la semilla: se entra por el primer nodo. El
+    // camino tiene nombre de lugar; el enemigo recién se ve al llegar.
+    final text = ProviderScope.containerOf(
       tester.element(find.byType(Scaffold).first),
-    ).read(textProvider).enemy(run.node(run.starts.first).enemy!);
+    ).read(textProvider);
+    final firstNode = run.node(run.starts.first);
+    final firstEnemy = text.enemy(firstNode.enemy!);
+    final pathName = text.path(firstNode.scene!, firstNode.light!);
+    expect(find.text(firstEnemy), findsNothing);
 
-    await tester.tap(find.text(firstEnemy).first);
+    await tester.tap(find.text(pathName).first);
     await settle();
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
@@ -82,7 +87,7 @@ void main() {
     await tester.tap(find.text('Continuar run'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
-    await tester.tap(find.text(firstEnemy).first);
+    await tester.tap(find.text(pathName).first);
     await settle();
     expect(find.text('Turno 1'), findsOneWidget);
 

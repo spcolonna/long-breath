@@ -315,7 +315,9 @@ class _Search {
 
 /// Respirar conviene si la mano no tiene ningún ataque que se pueda pagar.
 bool shouldBreathe(CombatEngine engine, CombatState s) {
-  if (s.breathesLeft <= 0 || s.hand.isEmpty || s.player.breath == 0) return false;
+  // Respirar cuesta: solo si después queda Aliento para jugar algo.
+  if (s.breathesLeft <= 0 || s.hand.isEmpty) return false;
+  if (s.player.breath <= engine.data.balance.breatheCost) return false;
   if (engine.validate(s, const Breathe()) != null) return false;
   for (final c in s.hand) {
     final def = engine.data.card(c.cardId);

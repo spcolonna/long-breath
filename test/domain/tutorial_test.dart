@@ -120,8 +120,12 @@ void main() {
     endTurn();
     expect(r.state.formProgress['xiao_hong_quan'], 2);
     play('mabu_jiada');
+    // Queda 1 de Aliento: Respirar se podría, pero no alcanzaría para el paso.
+    expect(r.state.player.breath, 1);
+    endTurn();
     expect(r.state.hand.any((c) => c.cardId == 'xubu_liangzhang'), isFalse);
     act(const Breathe());
+    expect(r.state.player.breath, 2);
     final ev = play('xubu_liangzhang');
     expect(ev.whereType<FormCompleted>(), isNotEmpty);
     expect(r.state.phase, isNot(CombatPhase.won));

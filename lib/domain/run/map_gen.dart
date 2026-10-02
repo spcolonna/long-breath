@@ -17,7 +17,13 @@ const _required = [NodeType.merchant, NodeType.master];
 ///
 /// Reglas: cada piso que permite combates tiene al menos uno; los
 /// enemigos no se repiten dentro de un piso; los caminos no se cruzan.
-(List<MapNodeDef>, Rng) generateMap(List<FloorDef> floors, Rng rng) {
+/// Cada combate lleva un escenario (sin repetir en el piso) y una luz.
+(List<MapNodeDef>, Rng) generateMap(
+  List<FloorDef> floors,
+  Rng rng, {
+  List<String> scenes = const [],
+  List<String> lights = const [],
+}) {
   final types = <List<NodeType>>[];
   for (final f in floors) {
     final (w, r1) = rng.nextInt(f.maxWidth - f.minWidth + 1);
@@ -62,22 +68,39 @@ const _required = [NodeType.merchant, NodeType.master];
     row[_slot(row)] = need;
   }
 
-  // Mezcla las posiciones y reparte enemigos sin repetir dentro del piso.
-  final rows = <List<(NodeType, String?)>>[];
+  // Mezcla las posiciones y reparte enemigos y escenarios sin repetir
+  // dentro del piso.
+  final rows = <List<(NodeType, String?, String?, String?)>>[];
   for (var f = 0; f < floors.length; f++) {
     final (shuffled, r1) = rng.shuffle(types[f]);
     final (enemies, r2) = r1.shuffle(floors[f].enemies);
-    rng = r2;
+    final (places, r3) = r2.shuffle(scenes);
+    rng = r3;
     var e = 0;
-    rows.add([
-      for (final t in shuffled)
-        (
-          t,
-          t == NodeType.combat && enemies.isNotEmpty
-              ? enemies[e++ % enemies.length]
-              : null,
-        ),
-    ]);
+    final row = <(NodeType, String?, String?, String?)>[];
+    for (final t in shuffled) {
+      if (t != NodeType.combat) {
+        row.add((t, null, null, null));
+        continue;
+      }
+      String? light;
+      if (lights.isNotEmpty) {
+        final (l, r4) = rng.nextInt(lights.length);
+        rng = r4;
+        light = lights[l];
+      }
+      final scene =
+          floors[f].scene ??
+          (places.isEmpty ? null : places[e % places.length]);
+      row.add((
+        t,
+        enemies.isEmpty ? null : enemies[e % enemies.length],
+        scene,
+        light,
+      ));
+      e++;
+    }
+    rows.add(row);
   }
 
   final nodes = <MapNodeDef>[];
@@ -92,6 +115,8 @@ const _required = [NodeType.merchant, NodeType.master];
           id: _id(f, i),
           type: rows[f][i].$1,
           enemy: rows[f][i].$2,
+          scene: rows[f][i].$3,
+          light: rows[f][i].$4,
           next: [for (final j in next.$1[i]) _id(f + 1, j)],
         ),
       );

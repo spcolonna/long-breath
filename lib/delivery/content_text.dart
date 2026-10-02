@@ -30,6 +30,9 @@ class ContentText {
   String enemyRule(String id) => _get('enemies', id, 'rule');
   String intent(String key) => _get('intents', key);
   String stage(String id) => _get('stages', id);
+
+  /// Nombre del camino de un combate según su escenario y su luz.
+  String path(String scene, String light) => _get('paths', scene, light);
   String style(Style a) => _get('styles', a.name);
   String styleMotto(Style a) => _get('styleMottos', a.name);
   String talisman(String id) => _get('talismans', id);

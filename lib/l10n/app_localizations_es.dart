@@ -543,7 +543,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutActions =>
-      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano, una vez por combate.';
+      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate.';
 
   @override
   String get tutFree =>
@@ -1164,8 +1164,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tercer paso: Bloqueo y contragolpe, una defensa que además pega.';
 
   @override
+  String get lesForms8b =>
+      'Te queda 1 de Aliento: no alcanza para Respirar y jugar Paso atrás. Terminá el turno; la forma te espera.';
+
+  @override
   String get lesForms9 =>
-      'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.';
+      'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas. Cuesta 1 de Aliento y se usa una vez por combate. Usalo.';
 
   @override
   String get lesForms10 => '¡Ahí está! Último paso: Paso atrás.';
@@ -1221,6 +1225,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventNode => 'Evento';
+
+  @override
+  String get combatNode => 'Camino';
+
+  @override
+  String get formMissingShort => 'Faltan cartas';
 
   @override
   String eventCost(int n) {

@@ -73,6 +73,8 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
 2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 9 pisos de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso).
 
+   Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. El ícono sí muestra si es común, élite o jefe. Al llegar, el rival se presenta.
+
    | Piso | Qué puede salir |
    |---|---|
    | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
@@ -163,7 +165,7 @@ Como el santuario ofrece solo dos, no siempre vas a poder jugar tu camino favori
 | Vida | 50 (según dificultad: 60 / 50 / 50 / 45) | Si llega a 0 perdés la run |
 | Estructura | 10 | Tu equilibrio. Se recupera al terminar cada combate |
 | Aliento | según camino | Se paga para jugar cartas. Lo que sobra se pierde |
-| Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, gratis |
+| Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, por 1 de Aliento |
 | Postura inicial | Caballo (马步) | |
 
 ## Cómo leer la pantalla de combate
@@ -176,9 +178,9 @@ De arriba hacia abajo:
    - **Barras:** Vida (rojo) y Estructura (violeta). Debajo aparecen su Guardia y si está Desequilibrado.
 2. **Tus barras:** Vida y Estructura.
 3. **Posturas:** Caballo, Arco y Vacía; la actual está resaltada. A la derecha, tu Guardia.
-4. **Formas:** los pasos de cada forma; el próximo paso se resalta.
+4. **Formas:** todas las que aprendiste, siempre a la vista, con el próximo paso resaltado. Si te falta la carta de algún paso, ese paso se ve apagado con un candado y la forma dice "Faltan cartas": hay que conseguirla en una recompensa o el mercader.
 5. **Mano:** tus cartas. Arriba a la izquierda de cada una está el costo en Aliento.
-6. **Acciones:** Aliento disponible, **Paso en T**, **Respirar** y **Terminar turno**.
+6. **Acciones:** Aliento disponible, **Paso en T** y **Respirar** (cada botón muestra su costo en Aliento) y **Terminar turno**.
 
 Un toque en una carta la selecciona y muestra la vista previa con los números finales (bonus incluidos). Un segundo toque la juega. Nunca hace falta hacer cuentas.
 
