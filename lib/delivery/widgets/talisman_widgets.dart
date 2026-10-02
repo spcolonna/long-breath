@@ -88,6 +88,15 @@ class TalismanRow extends StatelessWidget {
     final badges = [
       for (final id in ids)
         TalismanBadge(id: id, size: size, trigger: triggers[id]),
+      // Avisa que se puede tocar para leer qué hace cada uno.
+      SizedBox(
+        height: size,
+        child: Icon(
+          Icons.info_outline_rounded,
+          size: size * 0.6,
+          color: Palette.textDim,
+        ),
+      ),
     ];
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
