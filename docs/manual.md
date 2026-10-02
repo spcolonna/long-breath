@@ -107,8 +107,8 @@ Shifu arranca bloqueada: se ve en blanco con un candado y, al tocarla, avisa que
 
 Al elegir camino el discípulo madura: pasa de 3 a 4 de Aliento por turno, sea cual sea el camino.
 
-- **Tigre:** no guarda nada, pero roba 5 cartas por turno y es el único que recibe las cartas del Tigre (Garra, Salto, Guardia y Rugido) como recompensa. Ideal para aprender.
-- **Serpiente:** guarda 2 cartas para el turno siguiente: encadena golpes y formas.
+- **Tigre:** no guarda nada, pero roba 5 cartas por turno y es el único que recibe las cartas del Tigre (Garra, Salto, Guardia y Rugido) y el Puño del Tigre como recompensa. Ideal para aprender.
+- **Serpiente:** guarda 2 cartas para el turno siguiente: encadena golpes y formas. Es la única que puede aprender el Puño de la Serpiente.
 - **Grulla:** guarda hasta 3 para armar formas y respuestas exactas.
 
 Las cartas retenidas son extra: al empezar el turno robás tu mano completa y se suman a lo que guardaste.
@@ -189,19 +189,27 @@ La Estructura es el equilibrio del luchador.
 
 ## Formas (套路)
 
-Una forma es una secuencia fija de cartas. Si la completás en orden, se desata un efecto grande y su nombre aparece en pantalla.
+Una forma es una secuencia fija de cartas. Si la completás en orden, se desata su efecto y su nombre aparece en pantalla.
+
+**Se aprenden en la subida.** Arrancás sin ninguna. Después de cada combate ganado, además de las 3 cartas aparece un **pergamino de forma**, y elegís **una sola cosa**: una carta, la forma o nada. El pergamino muestra los pasos y marca en dorado las cartas que ya tenés. Una forma aprendida vale para toda la subida.
 
 - Avanza cuando jugás el paso siguiente. El progreso se mantiene entre turnos dentro del mismo combate.
 - Un Puño, Palma o Patada que no sea el paso siguiente la **interrumpe** y vuelve a 0.
 - Defensas y técnicas fuera de la secuencia **no** interrumpen: podés defenderte en medio de una forma.
 - Varias formas pueden avanzar a la vez, y una forma completada se puede repetir.
+- En combate se ven en fila las formas aprendidas que se pueden armar con tu mazo; las que necesitan cartas que no tenés aparecen en una línea aparte.
 
-| Forma | Pasos | Al completarla |
-|---|---|---|
-| **Pequeño Puño Rojo** 小洪拳 | Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás | 14 de daño, 6 a Estructura, robás 2 |
-| **Gran Puño Rojo** 大洪拳 | Puñetazo firme → Empujón a fondo → Patada de talón → Paso atrás → Puñetazo a fondo | 18 de daño, 8 a Estructura, Guardia 8 media |
+| Forma | Pasos | Al completarla | Estilo |
+|---|---|---|---|
+| **Pequeño Puño Rojo** 小洪拳 | Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás | 14 de daño, 6 a Estructura, robás 2 | equilibrada |
+| **Puño de los cinco pasos** 五步拳 | Puñetazo a fondo → Patada látigo → Puñetazo firme | +2 Aliento, robás 1 | economía: corta y con cartas iniciales |
+| **Puño de la Serpiente** 蛇拳 (solo Serpiente) | Empujón de palma → Paso atrás → Empujón de palma | curás 6, Guardia 8 media | aguante |
+| **Puño encadenado** 连环拳 | Puñetazo a fondo → Puño martillo → Puñetazo firme | tus puños pegan +2 el resto del combate (se acumula) | crece |
+| **Patadas de la puerta** 门户腿 | Patada látigo → Patada lateral → Patada de talón | 6 de daño, 14 a Estructura | rompe guardias |
+| **Puño del Tigre** 虎拳 (solo Tigre) | Garra de tigre → Salto del tigre → Rugido del tigre | 22 de daño, 8 a Estructura | remate |
+| **Gran Puño Rojo** 大洪拳 | Puñetazo firme → Empujón a fondo → Patada de talón → Paso atrás → Puñetazo a fondo | 18 de daño, 8 a Estructura, Guardia 8 media | la gran forma |
 
-El Gran Puño Rojo necesita dos cartas de recompensa: *Empujón a fondo* y *Patada de talón*.
+Varias necesitan cartas de recompensa (Puño martillo, Patada lateral, Patada de talón, Empujón a fondo, las del Tigre): conviene elegir cartas y formas pensando una en la otra.
 
 ## Enemigos
 

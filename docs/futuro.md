@@ -66,19 +66,19 @@ Nombre en español primero, después chino y pinyin, y entre paréntesis cómo f
 | --- | --- | --- | --- | --- |
 | Amarillo 1º | Combinación 1 | 组合一 · Zǔhé yī | Shu ho yi | |
 | Amarillo 1º | Combinación 2 | 组合二 · Zǔhé èr | Shu ho er | |
-| Amarillo 1º | Puño de los cinco pasos | 五步拳 · Wǔbù quán | Wu bu chuen | |
+| Amarillo 1º | Puño de los cinco pasos | 五步拳 · Wǔbù quán | Wu bu chuen | En el juego |
 | Amarillo 2º | Puño de las seis armonías | 六合拳 · Liùhé quán | Liu hou chuen | Por confirmar |
-| Amarillo 2º | Puño encadenado | 连环拳 · Liánhuán quán | Lian huan quan | |
+| Amarillo 2º | Puño encadenado | 连环拳 · Liánhuán quán | Lian huan quan | En el juego |
 | Amarillo 2º | Puño que atraviesa la espalda | 通背拳 · Tōngbèi quán | Tong bei quan | |
 | Verde 1º | Las 18 manos del Luohan | 罗汉十八手 · Luóhàn shíbā shǒu | Luohan shiba shou | |
-| Verde 1º | Pequeño Puño Hong | 小洪拳 · Xiǎo hóng quán | Xiao hong chuen | |
+| Verde 1º | Pequeño Puño Hong | 小洪拳 · Xiǎo hóng quán | Xiao hong chuen | En el juego |
 | Verde 2º | Gran Puño Hong, segunda ruta | 大洪拳二路 · Dà hóng quán èr lù | Er lu da hong chuen | |
-| Verde 2º | Puño del Tigre | 虎拳 · Hǔ quán | Tigre | |
+| Verde 2º | Puño del Tigre | 虎拳 · Hǔ quán | Tigre | En el juego |
 | Azul 1º | Puño de las siete estrellas | 七星拳 · Qīxīng quán | Puño de 7 estrellas | |
-| Azul 1º y Rojo 1º | Las 12 rutas de patadas de la puerta | 十二路门户腿 · Shí'èr lù ménhù tuǐ | Ma ho tuei (12 ejercicios; completo en Rojo 1º) | |
+| Azul 1º y Rojo 1º | Las 12 rutas de patadas de la puerta | 十二路门户腿 · Shí'èr lù ménhù tuǐ | Ma ho tuei (12 ejercicios; completo en Rojo 1º) | En el juego |
 | Azul 2º | (pendiente) | — | Er tang jia | Prevista. Se identifica con un video |
-| Azul 2º | Puño de la Serpiente | 蛇拳 · Shé quán | Serpiente | |
-| Rojo 2º | Gran Puño Hong | 大洪拳 · Dà hóng quán | Da hong chuen | |
+| Azul 2º | Puño de la Serpiente | 蛇拳 · Shé quán | Serpiente | En el juego |
+| Rojo 2º | Gran Puño Hong | 大洪拳 · Dà hóng quán | Da hong chuen | En el juego |
 | Rojo 2º | Puño de suelo | 地趟拳 · Dìtáng quán | Di tang chuen | |
 | Rojo 2º | Puño del Mono | 猴拳 · Hóu quán | Mono | |
 | Negro | Puño del Borracho | 醉拳 · Zuì quán | Borracho | |

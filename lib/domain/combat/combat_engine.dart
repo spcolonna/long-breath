@@ -113,6 +113,7 @@ class CombatEngine {
     bool shuffle = true,
     Difficulty difficulty = Difficulty.normal,
     int? maxHp,
+    Iterable<String>? forms,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -151,7 +152,11 @@ class CombatEngine {
       discard: [],
       exhausted: [],
       breathesLeft: b.breathesPerCombat,
-      formProgress: {for (final f in data.forms) f.id: 0},
+      // Solo las formas que conoce (null = todas: tests y herramientas).
+      formProgress: {
+        for (final f in data.forms)
+          if (forms == null || forms.contains(f.id)) f.id: 0,
+      },
       rng: rng,
       enemyDamagePct: dif.enemyDamage,
     );
@@ -246,6 +251,10 @@ class CombatEngine {
 
   // ------------------------------------------------------------- cálculos
 
+  /// Formas que se siguen en este combate (las que el jugador conoce).
+  Iterable<FormDef> knownForms(CombatState s) =>
+      data.forms.where((f) => s.formProgress.containsKey(f.id));
+
   int costOf(CombatState s, CardDef def) => _cost(def, s.player.stance);
 
   int _cost(CardDef def, Stance stance) =>
@@ -258,6 +267,7 @@ class CombatEngine {
     Stance stance,
     bool staggered,
     int turnStructureBonus,
+    int fistBonus,
   ) {
     if (def.damage == 0 && def.structure == 0) return (0, 0);
     final st = data.stance(stance);
@@ -267,6 +277,7 @@ class CombatEngine {
       dmg += st.damageBonus[def.type] ?? 0;
       str += st.structureBonus[def.type] ?? 0;
     }
+    if (def.type == CardType.fist && def.damage > 0) dmg += fistBonus;
     if (staggered) dmg += def.bonusDamageIfStaggered;
     final ssb = def.stanceStructureBonus;
     if (ssb != null && ssb.$1 == stance) str += ssb.$2;
@@ -322,6 +333,7 @@ class CombatEngine {
       stance,
       s.enemy.staggered,
       s.turnStructureBonus,
+      s.fistBonus,
     );
     final dealt = _enemyDamageTaken(
       enemyDef,
@@ -333,7 +345,7 @@ class CombatEngine {
     final advances = <String>[],
         completes = <String>[],
         interrupts = <String>[];
-    for (final f in data.forms) {
+    for (final f in knownForms(s)) {
       final p = s.formProgress[f.id]!;
       if (f.steps[p] == def.id) {
         (p + 1 == f.steps.length ? completes : advances).add(f.id);
@@ -422,6 +434,7 @@ class CombatEngine {
       d.stance,
       d.enemy.staggered,
       d.turnStructureBonus,
+      d.fistBonus,
     );
     if (dmg > 0 || str > 0) _hitEnemy(d, dmg, str, events);
 
@@ -447,7 +460,8 @@ class CombatEngine {
 
   void _advanceForms(_Draft d, CardDef def, List<CombatEvent> events) {
     for (final f in data.forms) {
-      final p = d.formProgress[f.id]!;
+      final p = d.formProgress[f.id];
+      if (p == null) continue;
       if (f.steps[p] == def.id) {
         if (p + 1 == f.steps.length) {
           d.formProgress[f.id] = 0;
@@ -476,6 +490,19 @@ class CombatEngine {
       d.guard += fx.guard;
       d.guardHeight = fx.height ?? d.guardHeight;
       events.add(GuardGained(fx.guard, fx.height));
+    }
+    if (fx.heal > 0) {
+      final healed = math.min(fx.heal, d.maxHp - d.hp);
+      d.hp += healed;
+      events.add(PlayerHealed(healed));
+    }
+    if (fx.breath > 0) {
+      d.breath += fx.breath;
+      events.add(BreathGained(fx.breath));
+    }
+    if (fx.fistBonus > 0) {
+      d.fistBonus += fx.fistBonus;
+      events.add(FistBonusGained(fx.fistBonus, d.fistBonus));
     }
     if (fx.draw > 0) _draw(d, fx.draw, events);
   }
@@ -791,6 +818,7 @@ class _Draft {
     Map<String, int>? formsCompleted,
     this.deflects = 0,
     this.enemyDamagePct = 100,
+    this.fistBonus = 0,
   }) : formsCompleted = formsCompleted ?? {};
 
   factory _Draft.of(CombatState s) => _Draft(
@@ -826,6 +854,7 @@ class _Draft {
     formsCompleted: {...s.formsCompleted},
     deflects: s.deflects,
     enemyDamagePct: s.enemyDamagePct,
+    fistBonus: s.fistBonus,
   );
 
   int turn;
@@ -860,6 +889,7 @@ class _Draft {
   final Map<String, int> formsCompleted;
   int deflects;
   final int enemyDamagePct;
+  int fistBonus;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
 
@@ -898,5 +928,6 @@ class _Draft {
     deflects: deflects,
     rng: rng,
     enemyDamagePct: enemyDamagePct,
+    fistBonus: fistBonus,
   );
 }

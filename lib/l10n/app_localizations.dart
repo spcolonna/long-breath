@@ -226,6 +226,72 @@ abstract class AppLocalizations {
   /// **'{changes} por {stance}'**
   String stanceDeltaBy(String changes, String stance);
 
+  /// No description provided for @formsMissingCards.
+  ///
+  /// In es, this message translates to:
+  /// **'Te faltan cartas para: {forms}'**
+  String formsMissingCards(String forms);
+
+  /// No description provided for @effHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'Curás {n}'**
+  String effHeal(int n);
+
+  /// No description provided for @effGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Guardia'**
+  String effGuard(int n);
+
+  /// No description provided for @effFistBonus.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus puños pegan +{n} el resto del combate'**
+  String effFistBonus(int n);
+
+  /// No description provided for @formScroll.
+  ///
+  /// In es, this message translates to:
+  /// **'Forma · 套路'**
+  String get formScroll;
+
+  /// No description provided for @formScrollHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprenderla reemplaza a la carta. Al jugar sus pasos en orden se dispara:'**
+  String get formScrollHint;
+
+  /// No description provided for @formLearned.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Aprendiste {name}!'**
+  String formLearned(String name);
+
+  /// No description provided for @formStepOwned.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya tenés esta carta'**
+  String get formStepOwned;
+
+  /// No description provided for @formStepMissing.
+  ///
+  /// In es, this message translates to:
+  /// **'Te falta esta carta'**
+  String get formStepMissing;
+
+  /// No description provided for @fistBonusTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Puños encadenados!'**
+  String get fistBonusTitle;
+
+  /// No description provided for @fistBonusNow.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus puños pegan +{n} todo el combate'**
+  String fistBonusNow(int n);
+
   /// No description provided for @life.
   ///
   /// In es, this message translates to:
@@ -301,7 +367,7 @@ abstract class AppLocalizations {
   /// No description provided for @rewardHint.
   ///
   /// In es, this message translates to:
-  /// **'Elegí 1 carta o salteá. Un mazo chico es más predecible.'**
+  /// **'Elegí 1 carta o aprendé la forma, o salteá. Un mazo chico es más predecible.'**
   String get rewardHint;
 
   /// No description provided for @skip.
@@ -1567,7 +1633,7 @@ abstract class AppLocalizations {
   /// No description provided for @illForms.
   ///
   /// In es, this message translates to:
-  /// **'Secuencias fijas de cartas. Si las jugás en orden, el último paso suma un golpe extra. Un ataque fuera de orden la interrumpe; las defensas y técnicas no.'**
+  /// **'Secuencias fijas de cartas. Si las jugás en orden, el último paso dispara el efecto de la forma (un golpe, Aliento, curación…). Un ataque fuera de orden la interrumpe; las defensas y técnicas no. En la subida se aprenden como recompensa.'**
   String get illForms;
 
   /// No description provided for @lesStrike1.
@@ -1939,7 +2005,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesForms11.
   ///
   /// In es, this message translates to:
-  /// **'¡Forma completa! Además del efecto de la carta: 10 de daño, 5 de Estructura y robás 2 cartas.'**
+  /// **'¡Forma completa! Además del efecto de la carta: 14 de daño, 6 de Estructura y robás 2 cartas. En la subida, las formas se aprenden como recompensa al ganar combates.'**
   String get lesForms11;
 
   /// No description provided for @lesForms12.
@@ -1981,7 +2047,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide3.
   ///
   /// In es, this message translates to:
-  /// **'Elegís 1 de 3 cartas para sumar a tu mazo, o ninguna. Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
+  /// **'Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
   String get lesClimbSlide3;
 
   /// No description provided for @lesClimbSlide4Title.
@@ -2005,7 +2071,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide5.
   ///
   /// In es, this message translates to:
-  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.'**
+  /// **'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias y el Puño del Tigre, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa. A la Serpiente se le ofrece además el Puño de la Serpiente.'**
   String get lesClimbSlide5;
 
   /// No description provided for @lesClimbSlide6Title.

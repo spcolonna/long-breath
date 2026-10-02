@@ -25,7 +25,12 @@ void main() {
   test('posturas, formas y enemigos', () {
     expect(data.stances.keys, containsAll(Stance.values));
     expect(data.transition.cost, 1);
-    expect(data.forms.map((f) => f.id), ['xiao_hong_quan', 'da_hong_quan']);
+    expect(data.forms.map((f) => f.id), [
+      'xiao_hong_quan', 'wu_bu_quan', 'she_quan', 'lian_huan_quan',
+      'men_hu_tui', 'hu_quan', 'da_hong_quan',
+    ]);
+    expect(data.forms.firstWhere((f) => f.id == 'hu_quan').pool, Style.tiger);
+    expect(data.forms.firstWhere((f) => f.id == 'she_quan').pool, Style.snake);
     for (final f in data.forms) {
       for (final step in f.steps) {
         expect(data.cards.containsKey(step), isTrue, reason: step);

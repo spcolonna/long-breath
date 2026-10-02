@@ -19,6 +19,8 @@ class RunState {
     this.pathOptions = const [],
     required this.rng,
     this.difficulty = Difficulty.normal,
+    this.knownForms = const [],
+    this.rewardForm,
   });
 
   /// Camino animal; null mientras sea novicio (antes del santuario).
@@ -39,6 +41,12 @@ class RunState {
   final Rng rng;
   final Difficulty difficulty;
 
+  /// Formas aprendidas en la subida (se arranca sin ninguna).
+  final List<String> knownForms;
+
+  /// Forma que se ofrece junto a las cartas en la recompensa.
+  final String? rewardForm;
+
   RunState copyWith({
     Style? style,
     int? hp,
@@ -51,6 +59,9 @@ class RunState {
     List<String>? rewardOptions,
     List<Style>? pathOptions,
     Rng? rng,
+    List<String>? knownForms,
+    String? rewardForm,
+    bool clearRewardForm = false,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -65,6 +76,8 @@ class RunState {
         pathOptions: pathOptions ?? this.pathOptions,
         rng: rng ?? this.rng,
         difficulty: difficulty,
+        knownForms: knownForms ?? this.knownForms,
+        rewardForm: clearRewardForm ? null : rewardForm ?? this.rewardForm,
       );
 
   Map<String, dynamic> toJson() => {
@@ -80,6 +93,8 @@ class RunState {
         'pathOptions': [for (final s in pathOptions) s.name],
         'rng': rng.state,
         'difficulty': difficulty.name,
+        'knownForms': knownForms,
+        'rewardForm': rewardForm,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -103,5 +118,7 @@ class RunState {
         ],
         rng: Rng(j['rng'] as int),
         difficulty: Difficulty.parse(j['difficulty'] as String?),
+        knownForms: ((j['knownForms'] as List?) ?? const []).cast<String>(),
+        rewardForm: j['rewardForm'] as String?,
       );
 }

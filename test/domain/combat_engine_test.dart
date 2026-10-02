@@ -16,6 +16,7 @@ CombatState setup(
   String enemy = 'salamander',
   Style style = Style.snake,
   int hp = 50,
+  List<String>? forms,
 }) => engine
     .start(
       deck: [
@@ -26,6 +27,7 @@ CombatState setup(
       playerHp: hp,
       seed: 1,
       shuffle: false,
+      forms: forms,
     )
     .state;
 
@@ -323,6 +325,62 @@ void main() {
       expect(r.state.formProgress[xhq], 0);
       expect(r.state.enemy.hp, hpBefore - 7); // 14 a la mitad (Gólem)
       expect(r.state.formsCompleted[xhq], 1);
+    });
+
+    test('una forma que no se aprendió no avanza', () {
+      var s = setup(['gongbu_chongquan', 'tan_tui', ...filler], forms: []);
+      expect(s.formProgress, isEmpty);
+      final p = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
+      expect(p.advancesForms, isEmpty);
+      final r = play(s, 'gongbu_chongquan');
+      expect(r.events.whereType<FormAdvanced>(), isEmpty);
+    });
+
+    test('Puño de los cinco pasos: +2 Aliento y roba 1', () {
+      var s = setup(
+        ['gongbu_chongquan', 'tan_tui', 'mabu_chongquan', ...filler],
+        forms: ['wu_bu_quan'],
+      );
+      s = play(s, 'gongbu_chongquan').state;
+      s = play(s, 'tan_tui').state;
+      final before = s.player.breath;
+      final hand = s.hand.length;
+      final r = play(s, 'mabu_chongquan');
+      expect(r.events.whereType<BreathGained>().single.amount, 2);
+      expect(r.state.player.breath, before - 1 + 2);
+      expect(r.state.hand.length, hand - 1 + 1);
+    });
+
+    test('Puño de la Serpiente: cura y da guardia', () {
+      var s = setup(
+        ['tui_zhang', 'xubu_liangzhang', 'tui_zhang', ...filler],
+        hp: 30,
+        forms: ['she_quan'],
+      );
+      s = play(s, 'tui_zhang').state;
+      s = play(s, 'xubu_liangzhang').state;
+      final r = play(s, 'tui_zhang');
+      expect(r.events.whereType<PlayerHealed>().single.amount, 6);
+      expect(r.state.player.hp, 36);
+      expect(r.state.player.guard, s.player.guard + 8);
+    });
+
+    test('Puño encadenado: los puños pegan +2 el resto del combate', () {
+      var s = setup(
+        ['gongbu_chongquan', 'pi_quan', 'mabu_chongquan', 'gongbu_chongquan',
+          'ge_dang'],
+        forms: ['lian_huan_quan'],
+      );
+      final before = engine.preview(s, uidOf(s, 'gongbu_chongquan')).damage;
+      s = play(s, 'gongbu_chongquan').state;
+      s = play(s, 'pi_quan').state;
+      final r = play(s, 'mabu_chongquan');
+      expect(r.events.whereType<FistBonusGained>().single.total, 2);
+      expect(r.state.fistBonus, 2);
+      // Mismo puño, misma postura (mǎbù) que al principio: +2.
+      final after =
+          engine.preview(r.state, uidOf(r.state, 'gongbu_chongquan')).damage;
+      expect(after, before + 2);
     });
 
     test('un ataque fuera de secuencia interrumpe; una defensa no', () {

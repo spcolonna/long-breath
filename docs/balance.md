@@ -239,6 +239,18 @@ Para que la pelea más larga no se coma la victoria, se compensó: **Vida 150 �
 
 Run completa en Normal: novato 4%, promedio 59–61%, experto 83%. Caminos del promedio (3000 runs): Tigre 58%, Serpiente 61%, Grulla 64%. Probado y descartado: fase 3 sin compensar (63% pero solo 6,3 turnos) y solo subir la Vida (165 → 55%, 180 → 49%).
 
+## 3d. Formas como recompensa (02/10/2026)
+
+La subida arranca sin formas y cada recompensa ofrece 3 cartas **o** 1 forma. Se sumaron 5 formas con efectos distintos (Aliento, curación, +daño a puños, Estructura, remate del Tigre). Los bots valoran una forma por su efecto, cuántos pasos ya tienen y que se repite cada combate.
+
+| Normal | antes (formas gratis) | ahora |
+|---|---|---|
+| Novato | 4–6% | 6% |
+| Promedio | 59–60% | 58–60% |
+| Experto | 83% | 82–83% |
+
+Los bots aprenden ~0,5 formas por subida y completan 0,2–0,4 por subida (antes 0,3–0,7). Sus heurísticas casi no juegan alrededor de las formas, así que el balance no se mueve. La ventaja la saca el jugador que planifica, y eso es lo que hay que mirar en las pruebas reales.
+
 ## 4. Dificultades (implementadas)
 
 **Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).
