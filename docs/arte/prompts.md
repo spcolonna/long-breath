@@ -157,7 +157,7 @@ Fondos de combate por tramo. Son opcionales y se toman solos, sin tocar código:
 
 **Formato:** la arena es casi cuadrada (la mitad de arriba de la pantalla; las cartas van abajo, sobre papel). Los fondos nuevos van **cuadrados 1:1** (1024×1024 o más), sin transparencia, con un suelo plano y despejado en el tercio inferior para que se paren los luchadores y el centro libre para el enemigo. Si llega uno vertical, se ve solo la franja del medio; `_variantFocus` en `combat_screen.dart` permite bajarla o subirla (el templo usa 0,45).
 
-**Estado:** cumbre y templo ya están en el juego. Faltan bifurcación y ladera.
+**Estado:** los 4 fondos de tramo (ladera, bifurcación, templo y cumbre) ya están en el juego.
 
 #### Ladera (n1–n2)
 
