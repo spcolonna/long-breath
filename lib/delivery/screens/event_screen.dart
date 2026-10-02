@@ -296,16 +296,25 @@ class _ResultCard extends ConsumerWidget {
       if (r.maxHp > 0)
         _chip(t.eventMaxHp(r.maxHp), Palette.jade, Icons.favorite_border),
       if (r.talisman != null)
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _PopIn(child: TalismanBadge(id: r.talisman!, size: 30)),
-            const SizedBox(width: 6),
-            Text(
-              t.eventResultTalisman(text.talisman(r.talisman!)),
-              style: const TextStyle(fontWeight: FontWeight.w700),
+        _PopIn(
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Palette.bg,
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
+            child: Column(
+              children: [
+                TalismanTile(id: r.talisman!, badgeSize: 40),
+                const SizedBox(height: 6),
+                Text(
+                  t.talismanTapHint,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 12, color: Palette.textDim),
+                ),
+              ],
+            ),
+          ),
         ),
       if (r.form != null)
         _chip(
