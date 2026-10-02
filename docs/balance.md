@@ -263,6 +263,18 @@ El mapa suma dos eventos (uno compite con el Discípulo, otro va después de la 
 
 Subir la Vida del Dragón casi no movía nada (×1,1 → 62%); el daño sí. Quedó en 10/11/10, 13/13/31 y 6×2/26 por fase. En Fácil el promedio gana el 95% y en Difícil el 27% (experto 56%). Los bots consiguen ~1 talismán por subida y la subida dura unos 12 minutos (los eventos se cuentan como 30 s).
 
+## 3f. Mapa generado, jade, mercader y maestro (02/10/2026)
+
+El mapa pasa a generarse por subida (9 pisos, ver `manual.md`), con mercader y maestro errante en los pisos 4 a 6. Los combates dan jade (14–20; élite 30–36). Precios: carta 20, talismán común 50, quitar carta 30, mejorar 25. Los bots van al mercader si les alcanza para una carta; ahí compran talismán si pueden, la mejor carta si vale la pena y quitan la carta inicial más floja. Con el maestro aprenden la forma que más rinde con su mazo o mejoran.
+
+| Normal (1000 runs) | antes | mapa generado |
+|---|---|---|
+| Novato | 5% | **5%** |
+| Promedio | 59% | **59%** |
+| Experto | 82% | **84%** |
+
+La subida sigue en ~13 minutos (mercader 40 s, maestro 25 s en el modelo de tiempo). Los bots pasan por 0,8 mercaderes y 0,8 maestros por subida y gastan ~17 de jade: un jugador real seguramente gaste más, así que conviene mirar el balance con partidas reales.
+
 ## 4. Dificultades (implementadas)
 
 **Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).

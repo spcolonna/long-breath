@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/model/form_def.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
@@ -13,6 +12,8 @@ import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/card_widget.dart';
+import '../widgets/form_scroll.dart';
+import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 
 class RewardScreen extends ConsumerStatefulWidget {
@@ -104,6 +105,41 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Palette.textDim),
               ),
+              if (run.jadeGained > 0) ...[
+                const SizedBox(height: 10),
+                // El jade del combate entra con un rebote.
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.3, end: 1),
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.elasticOut,
+                  builder: (_, v, child) =>
+                      Transform.scale(scale: v, child: child),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Palette.jade.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const JadeCoin(),
+                        const SizedBox(width: 6),
+                        Text(
+                          t.jadeGained(run.jadeGained),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Palette.jade,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,7 +196,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                           picked: _formPicked,
                           dimmed: _picked != null,
                           taking: false,
-                          child: _FormScroll(
+                          child: FormScroll(
                             form: offered,
                             name: text.form(offered.id),
                             steps: [
@@ -350,151 +386,6 @@ class _Choice extends StatelessWidget {
           curve: taking ? const Interval(0.5, 1) : Curves.linear,
           child: child,
         ),
-      ),
-    );
-  }
-}
-
-/// Pergamino de forma: nombre, pasos (marcando las cartas que ya tenés) y lo
-/// que hace al completarse.
-class _FormScroll extends StatelessWidget {
-  const _FormScroll({
-    required this.form,
-    required this.name,
-    required this.steps,
-    required this.effect,
-    required this.selected,
-  });
-
-  final FormDef form;
-  final String name;
-  final List<(String, bool)> steps;
-  final String effect;
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-      decoration: BoxDecoration(
-        color: Palette.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: selected ? Palette.lacquer : Palette.gold,
-          width: selected ? 3 : 2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Palette.gold.withValues(alpha: selected ? 0.5 : 0.25),
-            blurRadius: selected ? 16 : 8,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                form.hanzi,
-                style: const TextStyle(
-                  fontSize: 24,
-                  height: 1.1,
-                  color: Palette.lacquer,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      t.formScroll,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        color: Palette.gold,
-                      ),
-                    ),
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Palette.text,
-                      ),
-                    ),
-                    Text(
-                      form.pinyin,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontStyle: FontStyle.italic,
-                        color: Palette.textDim,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              for (final (i, (label, owned)) in steps.indexed) ...[
-                if (i > 0)
-                  const Icon(
-                    Icons.chevron_right,
-                    size: 14,
-                    color: Palette.textDim,
-                  ),
-                Expanded(
-                  child: Tooltip(
-                    message: owned ? t.formStepOwned : t.formStepMissing,
-                    child: Container(
-                      height: 34,
-                      padding: const EdgeInsets.symmetric(horizontal: 3),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: owned
-                            ? Palette.gold.withValues(alpha: 0.22)
-                            : Palette.surface,
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          color: owned ? Palette.gold : Palette.line,
-                        ),
-                      ),
-                      child: Text(
-                        label,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 9,
-                          height: 1.05,
-                          fontWeight: FontWeight.w600,
-                          color: owned ? Palette.text : Palette.textDim,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            effect,
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: Palette.lacquer,
-            ),
-          ),
-        ],
       ),
     );
   }

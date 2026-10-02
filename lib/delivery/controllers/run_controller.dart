@@ -57,6 +57,20 @@ class RunController extends Notifier<RunState?> {
   void resolveEvent(String optionId) =>
       _set(_engine.resolveEvent(state!, optionId));
 
+  void buyCard(String cardId) => _set(_engine.buyCard(state!, cardId));
+
+  void buyTalisman() => _set(_engine.buyTalisman(state!));
+
+  void buyRemove(int uid) => _set(_engine.buyRemove(state!, uid));
+
+  void buyUpgrade(int uid) => _set(_engine.buyUpgrade(state!, uid));
+
+  void leaveShop() => _set(_engine.leaveShop(state!));
+
+  void masterTeach(String formId) => _set(_engine.masterTeach(state!, formId));
+
+  void masterUpgrade(int uid) => _set(_engine.masterUpgrade(state!, uid));
+
   void choosePath(Style style) => _set(_engine.choosePath(state!, style));
 
   void heal() => _set(_engine.fountainHeal(state!));

@@ -7,22 +7,25 @@ import '../model/game_balance.dart';
 import '../model/game_data.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
+import 'map_gen.dart';
 import 'run_state.dart';
 
-/// Reglas de la run: mapa, recompensas, santuario, eventos, talismanes y
-/// fuente de meditación.
+/// Reglas de la run: mapa, recompensas, santuario, eventos, talismanes,
+/// mercader, maestro errante y fuente de meditación.
 class RunEngine {
   RunEngine(this.data);
 
   final GameData data;
 
-  MapNodeDef node(String id) =>
-      data.balance.runNodes.firstWhere((n) => n.id == id);
-
   /// La run empieza como novicio; el camino se elige en el santuario.
   RunState newRun({required int seed, Difficulty difficulty = Difficulty.normal}) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp;
+    // El mapa sale de la misma semilla: la subida entera es reproducible.
+    final fixed = data.balance.fixedMap;
+    final (map, rng) = fixed != null
+        ? (fixed, Rng.seeded(seed))
+        : generateMap(data.balance.floors, Rng.seeded(seed));
     return RunState(
       difficulty: difficulty,
       style: null,
@@ -37,7 +40,8 @@ class RunEngine {
       currentNode: null,
       visited: const [],
       rewardOptions: const [],
-      rng: Rng.seeded(seed),
+      rng: rng,
+      map: map,
     );
   }
 
@@ -45,7 +49,7 @@ class RunEngine {
   List<String> available(RunState r) {
     if (r.phase != RunPhase.map) return const [];
     final current = r.currentNode;
-    return current == null ? [data.balance.runStart] : node(current).next;
+    return current == null ? r.starts : r.node(current).next;
   }
 
   /// Un combate a medias (se cerró la app o el jugador salió) se retoma
@@ -65,7 +69,7 @@ class RunEngine {
     if (!available(r).contains(nodeId)) {
       throw StateError('Nodo no disponible: $nodeId');
     }
-    final n = node(nodeId);
+    final n = r.node(nodeId);
     final entered = r.copyWith(
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
@@ -74,9 +78,13 @@ class RunEngine {
         NodeType.fountain => RunPhase.fountain,
         NodeType.shrine => RunPhase.shrine,
         NodeType.event => RunPhase.event,
+        NodeType.merchant => RunPhase.merchant,
+        NodeType.master => RunPhase.master,
       },
     );
     if (n.type == NodeType.event) return _rollEvent(entered);
+    if (n.type == NodeType.merchant) return _rollShop(entered);
+    if (n.type == NodeType.master) return _rollMaster(entered);
     if (n.type != NodeType.shrine) return entered;
     final (shuffled, rng) = entered.rng.shuffle(Style.values);
     return entered.copyWith(
@@ -100,15 +108,18 @@ class RunEngine {
     return (seed, r.copyWith(rng: rng));
   }
 
-  String enemyOf(RunState r) => node(r.currentNode!).enemy!;
+  String enemyOf(RunState r) => r.node(r.currentNode!).enemy!;
 
   RunState finishCombat(RunState r, {required bool won, required int hp}) {
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
-    if (node(r.currentNode!).next.isEmpty) {
+    if (r.node(r.currentNode!).next.isEmpty) {
       return r.copyWith(hp: hp, phase: RunPhase.victory);
     }
+    final (jade, rngJ) = _rollJade(r);
+    r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     final healed = math.min(r.maxHp, hp + talismanSum(r, (e) => e.winHeal));
-    final (options, rng) = _rollRewards(r.rng, r.style);
+    final (options, rng) =
+        _rollRewards(r.rng, r.style, data.balance.rewardChoices);
     final (form, rng2) = _rollForm(rng, r);
     // El élite deja elegir un talismán antes de la recompensa.
     final elite = data.enemy(enemyOf(r)).rank == EnemyRank.elite;
@@ -235,19 +246,7 @@ class RunEngine {
         if (pool.isNotEmpty) {
           final (uid, rng2) = _pick(next.rng, pool);
           upgraded = next.deck.firstWhere((c) => c.uid == uid).cardId;
-          next = next.copyWith(
-            deck: [
-              for (final c in next.deck)
-                c.uid == uid
-                    ? CombatCard(
-                        uid: c.uid,
-                        cardId: c.cardId,
-                        upgrades: c.upgrades + data.balance.fountainUpgrade,
-                      )
-                    : c,
-            ],
-            rng: rng2,
-          );
+          next = _upgrade(next, uid).copyWith(rng: rng2);
         }
       case EventGain.loseStarter:
         final pool = [
@@ -315,10 +314,10 @@ class RunEngine {
     return (shuffled.first, next);
   }
 
-  (List<String>, Rng) _rollRewards(Rng rng, Style? style) {
+  (List<String>, Rng) _rollRewards(Rng rng, Style? style, int n) {
     final pool = [for (final c in data.rewardPoolFor(style)) c.id];
     final (shuffled, next) = rng.shuffle(pool);
-    return (shuffled.take(data.balance.rewardChoices).toList(), next);
+    return (shuffled.take(n).toList(), next);
   }
 
   /// Elegir una recompensa o saltear (cardId null).
@@ -381,20 +380,131 @@ class RunEngine {
 
   RunState fountainUpgrade(RunState r, int uid) {
     _checkFountain(r);
+    return _upgrade(r, uid).copyWith(phase: RunPhase.map);
+  }
+
+  RunState _upgrade(RunState r, int uid) => r.copyWith(
+        deck: [
+          for (final c in r.deck)
+            if (c.uid == uid)
+              CombatCard(
+                uid: c.uid,
+                cardId: c.cardId,
+                upgrades: c.upgrades + data.balance.fountainUpgrade,
+              )
+            else
+              c,
+        ],
+      );
+
+  // ----------------------------------------------------------------- jade
+
+  (int, Rng) _rollJade(RunState r) {
+    final b = data.balance;
+    final elite = data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    final (extra, rng) = r.rng.nextInt(b.jadeSpread + 1);
+    return ((elite ? b.jadeElite : b.jadeCommon) + extra, rng);
+  }
+
+  // ------------------------------------------------------------- mercader
+
+  RunState _rollShop(RunState r) {
+    final (cards, rng) = _rollRewards(r.rng, r.style, data.balance.merchant.cards);
+    final (talismans, rng2) = rng.shuffle(missingTalismans(r, rare: false));
     return r.copyWith(
-      deck: [
-        for (final c in r.deck)
-          if (c.uid == uid)
-            CombatCard(
-              uid: c.uid,
-              cardId: c.cardId,
-              upgrades: c.upgrades + data.balance.fountainUpgrade,
-            )
-          else
-            c,
-      ],
+      shopCards: cards,
+      shopTalisman: talismans.isEmpty ? null : talismans.first,
+      clearShopTalisman: talismans.isEmpty,
+      shopRemoved: false,
+      shopUpgraded: false,
+      rng: rng2,
+    );
+  }
+
+  bool canAfford(RunState r, int price) => r.jade >= price;
+
+  RunState buyCard(RunState r, String cardId) {
+    final price = data.balance.merchant.card;
+    _checkShop(r, price);
+    if (!r.shopCards.contains(cardId)) throw StateError('No está en venta');
+    return r.copyWith(
+      jade: r.jade - price,
+      deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: cardId)],
+      nextUid: r.nextUid + 1,
+      shopCards: [for (final c in r.shopCards) if (c != cardId) c],
+    );
+  }
+
+  RunState buyTalisman(RunState r) {
+    final price = data.balance.merchant.talisman;
+    _checkShop(r, price);
+    if (r.shopTalisman == null) throw StateError('No hay talismán');
+    return addTalisman(r, r.shopTalisman!)
+        .copyWith(jade: r.jade - price, clearShopTalisman: true);
+  }
+
+  RunState buyRemove(RunState r, int uid) {
+    final price = data.balance.merchant.remove;
+    _checkShop(r, price);
+    if (r.shopRemoved) throw StateError('Ya se usó');
+    return r.copyWith(
+      jade: r.jade - price,
+      deck: [for (final c in r.deck) if (c.uid != uid) c],
+      shopRemoved: true,
+    );
+  }
+
+  RunState buyUpgrade(RunState r, int uid) {
+    final price = data.balance.merchant.upgrade;
+    _checkShop(r, price);
+    if (r.shopUpgraded) throw StateError('Ya se usó');
+    return _upgrade(r, uid).copyWith(jade: r.jade - price, shopUpgraded: true);
+  }
+
+  RunState leaveShop(RunState r) {
+    if (r.phase != RunPhase.merchant) throw StateError('No hay mercader');
+    return r.copyWith(
+      phase: RunPhase.map,
+      shopCards: const [],
+      clearShopTalisman: true,
+    );
+  }
+
+  void _checkShop(RunState r, int price) {
+    if (r.phase != RunPhase.merchant) throw StateError('No hay mercader');
+    if (!canAfford(r, price)) throw StateError('No alcanza el jade');
+  }
+
+  // -------------------------------------------------------- maestro errante
+
+  RunState _rollMaster(RunState r) {
+    final (forms, rng) = r.rng.shuffle(learnableForms(r));
+    return r.copyWith(
+      masterForms: forms.take(data.balance.masterForms).toList(),
+      rng: rng,
+    );
+  }
+
+  /// Aprender una de las formas que enseña el maestro.
+  RunState masterTeach(RunState r, String formId) {
+    _checkMaster(r);
+    if (!r.masterForms.contains(formId)) throw StateError('Forma no ofrecida');
+    return r.copyWith(
+      knownForms: [...r.knownForms, formId],
+      masterForms: const [],
       phase: RunPhase.map,
     );
+  }
+
+  /// Mejorar una carta con el maestro (en vez de aprender una forma).
+  RunState masterUpgrade(RunState r, int uid) {
+    _checkMaster(r);
+    return _upgrade(r, uid)
+        .copyWith(masterForms: const [], phase: RunPhase.map);
+  }
+
+  void _checkMaster(RunState r) {
+    if (r.phase != RunPhase.master) throw StateError('No hay maestro');
   }
 
   void _checkFountain(RunState r) {

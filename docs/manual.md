@@ -71,11 +71,19 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 ## Una partida (run)
 
 1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
-2. **Mapa:** 10 nodos de abajo hacia arriba. Tocás el siguiente nodo para avanzar.
+2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 9 pisos de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso).
 
-   Murciélago → (Discípulo o **Evento**) → **Santuario** → **bifurcación** (Gólem o Salamandra) → **Evento** → Fuente → Monje sin Rostro → Eco del Dragón
+   | Piso | Qué puede salir |
+   |---|---|
+   | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
+   | 2 | Combates o eventos |
+   | 3 | **Santuario** (siempre) |
+   | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** |
+   | 7 | Fuente (siempre) |
+   | 8 | Monje sin Rostro (élite) |
+   | 9 | Eco del Dragón (jefe) |
 
-   La primera bifurcación es una decisión real: pelear contra el Discípulo (gastás Vida, ganás una recompensa) o ir al evento.
+   Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un mercader y un maestro.
 
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
@@ -107,7 +115,10 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Cinta de la Victoria 胜 | Ganar un combate cura 3 | raro |
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
-8. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
+8. **Jade** 玉: cada combate ganado da 14 a 20 de jade; el élite, 30 a 36. Se ve arriba en el mapa y en la recompensa.
+9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y dos servicios por visita: quitar una carta del mazo (30) y mejorar una carta +3 (25). Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
+10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
+11. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
 
 La Vida **no** se recupera entre combates (solo en la fuente, algunos eventos y talismanes). La Estructura sí, completa.
 

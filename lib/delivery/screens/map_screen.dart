@@ -18,6 +18,7 @@ import '../theme.dart';
 import '../widgets/deck_sheet.dart';
 import '../labels.dart';
 import '../widgets/difficulty_sheet.dart';
+import '../widgets/jade.dart';
 import '../widgets/talisman_widgets.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -33,7 +34,6 @@ class MapScreen extends ConsumerWidget {
     final data = ref.watch(dataProvider);
     final engine = ref.watch(runEngineProvider);
     final available = engine.available(run).toSet();
-    final rows = _rows(data.balance);
 
     return Scaffold(
       appBar: AppBar(
@@ -90,95 +90,143 @@ class MapScreen extends ConsumerWidget {
         child: Column(
           children: [
             _RunHeader(run: run),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, box) {
-                  final pos = <String, Offset>{};
-                  final rowH = box.maxHeight / rows.length;
-                  for (var r = 0; r < rows.length; r++) {
-                    final row = rows[r];
-                    for (var i = 0; i < row.length; i++) {
-                      // La run se juega de abajo hacia arriba.
-                      pos[row[i].id] = Offset(
-                        box.maxWidth * (i + 1) / (row.length + 1),
-                        box.maxHeight - rowH * (r + 0.5),
-                      );
-                    }
-                  }
-                  return Stack(
-                    children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: _PathPainter(
-                            data.balance.runNodes,
-                            pos,
-                            run,
-                          ),
-                        ),
-                      ),
-                      for (final n in data.balance.runNodes)
-                        Positioned(
-                          left: pos[n.id]!.dx - 60,
-                          top: pos[n.id]!.dy - 36,
-                          child: _NodeButton(
-                            node: n,
-                            data: data,
-                            visited: run.visited.contains(n.id),
-                            available: available.contains(n.id),
-                            onTap: () {
-                              ref.read(audioProvider).play(Sfx.mapNode);
-                              _enter(context, ref, n);
-                            },
-                          ),
-                        ),
-                    ],
-                  );
-                },
-              ),
-            ),
+            Expanded(child: _MapView(run: run, available: available)),
           ],
         ),
       ),
     );
   }
+}
 
-  void _enter(BuildContext context, WidgetRef ref, MapNodeDef n) {
-    ref.read(runControllerProvider.notifier).enter(n.id);
-    switch (n.type) {
-      case NodeType.combat:
-        ref.read(combatControllerProvider.notifier).start();
-        context.go('/combat');
-      case NodeType.fountain:
-        context.go('/fountain');
-      case NodeType.shrine:
-        context.go('/shrine');
-      case NodeType.event:
-        context.go('/event');
-    }
-  }
-
-  /// Filas por profundidad desde el inicio.
-  List<List<MapNodeDef>> _rows(GameBalance b) {
-    final depth = <String, int>{b.runStart: 0};
-    final queue = [b.runStart];
-    while (queue.isNotEmpty) {
-      final id = queue.removeAt(0);
-      final node = b.runNodes.firstWhere((n) => n.id == id);
-      for (final next in node.next) {
-        if (!depth.containsKey(next)) {
-          depth[next] = depth[id]! + 1;
-          queue.add(next);
-        }
+/// Filas por profundidad desde los nodos de inicio.
+List<List<MapNodeDef>> _rows(RunState run) {
+  final depth = {for (final id in run.starts) id: 0};
+  final queue = [...run.starts];
+  while (queue.isNotEmpty) {
+    final id = queue.removeAt(0);
+    for (final next in run.node(id).next) {
+      if (!depth.containsKey(next)) {
+        depth[next] = depth[id]! + 1;
+        queue.add(next);
       }
     }
-    final maxD = depth.values.fold(0, (a, b) => a > b ? a : b);
-    return [
-      for (var d = 0; d <= maxD; d++)
-        [
-          for (final n in b.runNodes)
-            if (depth[n.id] == d) n,
-        ],
-    ];
+  }
+  final maxD = depth.values.fold(0, (a, b) => a > b ? a : b);
+  return [
+    for (var d = 0; d <= maxD; d++)
+      [
+        for (final n in run.map)
+          if (depth[n.id] == d) n,
+      ],
+  ];
+}
+
+/// El mapa se recorre de abajo hacia arriba y, si no entra, se desplaza;
+/// arranca mostrando el piso al que se puede ir.
+class _MapView extends ConsumerStatefulWidget {
+  const _MapView({required this.run, required this.available});
+
+  final RunState run;
+  final Set<String> available;
+
+  @override
+  ConsumerState<_MapView> createState() => _MapViewState();
+}
+
+class _MapViewState extends ConsumerState<_MapView> {
+  static const _rowH = 96.0;
+  ScrollController? _scroll;
+
+  @override
+  void dispose() {
+    _scroll?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final run = widget.run;
+    final data = ref.watch(dataProvider);
+    final rows = _rows(run);
+    return LayoutBuilder(
+      builder: (context, box) {
+        final height = math.max(box.maxHeight, rows.length * _rowH);
+        final rowH = height / rows.length;
+        final target = rows.indexWhere(
+          (row) => row.any((n) => widget.available.contains(n.id)),
+        );
+        _scroll ??= ScrollController(
+          initialScrollOffset: math.max(
+            0,
+            math.min(
+              height - box.maxHeight,
+              (target < 0 ? 0 : target) * rowH - box.maxHeight * 0.3,
+            ),
+          ),
+        );
+        final pos = <String, Offset>{};
+        for (var r = 0; r < rows.length; r++) {
+          final row = rows[r];
+          for (var i = 0; i < row.length; i++) {
+            pos[row[i].id] = Offset(
+              box.maxWidth * (i + 1) / (row.length + 1),
+              height - rowH * (r + 0.5),
+            );
+          }
+        }
+        return SingleChildScrollView(
+          controller: _scroll,
+          reverse: true,
+          child: SizedBox(
+            width: box.maxWidth,
+            height: height,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _PathPainter(run.map, pos, run),
+                  ),
+                ),
+                for (final n in run.map)
+                  Positioned(
+                    left: pos[n.id]!.dx - 50,
+                    top: pos[n.id]!.dy - 36,
+                    child: _NodeButton(
+                      node: n,
+                      data: data,
+                      visited: run.visited.contains(n.id),
+                      available: widget.available.contains(n.id),
+                      onTap: () {
+                        ref.read(audioProvider).play(Sfx.mapNode);
+                        _enter(context, ref, n);
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+void _enter(BuildContext context, WidgetRef ref, MapNodeDef n) {
+  ref.read(runControllerProvider.notifier).enter(n.id);
+  switch (n.type) {
+    case NodeType.combat:
+      ref.read(combatControllerProvider.notifier).start();
+      context.go('/combat');
+    case NodeType.fountain:
+      context.go('/fountain');
+    case NodeType.shrine:
+      context.go('/shrine');
+    case NodeType.event:
+      context.go('/event');
+    case NodeType.merchant:
+      context.go('/merchant');
+    case NodeType.master:
+      context.go('/master');
   }
 }
 
@@ -223,7 +271,9 @@ class _RunHeader extends StatelessWidget {
           const Icon(Icons.favorite, color: Palette.jade, size: 18),
           const SizedBox(width: 4),
           Text('${run.hp}/${run.maxHp}'),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
+          JadeCount(jade: run.jade),
+          const SizedBox(width: 4),
           TextButton.icon(
             onPressed: () => showDeckSheet(context, run.deck),
             icon: const Icon(Icons.style, size: 18),
@@ -274,6 +324,16 @@ class _NodeButton extends ConsumerWidget {
         Palette.blossom,
         t.eventNode,
       ),
+      NodeType.merchant => (
+        Icons.storefront_rounded,
+        Palette.jade,
+        t.merchantNode,
+      ),
+      NodeType.master => (
+        Icons.self_improvement_rounded,
+        Palette.structure,
+        t.masterNode,
+      ),
     };
     // Cada tipo de nodo tiene su color, así el mapa se lee de un vistazo.
     final color = available
@@ -288,8 +348,9 @@ class _NodeButton extends ConsumerWidget {
               onTap();
             }
           : null,
+      // Angosto: con tres lugares por piso los nombres no se pisan.
       child: SizedBox(
-        width: 120,
+        width: 100,
         height: 84,
         child: Column(
           children: [

@@ -259,6 +259,7 @@ class FightLog {
 class RunLog {
   bool won = false;
   int nodes = 0, fountains = 0, shrines = 0, events = 0;
+  int merchants = 0, masters = 0, jadeSpent = 0;
   int? hpAtBoss;
   Style? style;
   final fights = <FightLog>[];
@@ -271,13 +272,15 @@ class RunLog {
 
   /// Modelo de tiempo: 5 s por carta, 6 s por turno (incluye la animación
   /// del rival), 15 s por pantalla de mapa/recompensa/fuente, 30 s el santuario
-  /// y 30 s cada evento (leer la escena y decidir).
+  /// 30 s cada evento (leer la escena y decidir), 40 s el mercader y 25 s
+  /// el maestro.
   double get seconds {
     var t = 0.0;
     for (final f in fights) {
       t += f.plays * 5 + f.turns * 6 + 10;
     }
-    return t + nodes * 15 + fountains * 15 + shrines * 30 + events * 30;
+    return t + nodes * 15 + fountains * 15 + shrines * 30 + events * 30 +
+        merchants * 40 + masters * 25;
   }
 
   /// Mazo al terminar (cuenta cartas de eventos y las que se pierden).
@@ -361,7 +364,6 @@ RunLog playRun(GameData data, Bot bot, int seed,
   for (final id in startTalismans) {
     r = runEngine.addTalisman(r, id);
   }
-  final finalNode = data.balance.runNodes.last.id;
   while (r.phase != RunPhase.victory && r.phase != RunPhase.defeat) {
     switch (r.phase) {
       case RunPhase.map:
@@ -371,7 +373,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final (cs, next) = runEngine.combatSeed(r);
         r = next;
         final enemy = runEngine.enemyOf(r);
-        if (r.currentNode == finalNode) log.hpAtBoss = r.hp;
+        if (r.node(r.currentNode!).next.isEmpty) log.hpAtBoss = r.hp;
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, maxHp: r.maxHp, forms: r.knownForms);
         log.fights.add(f);
@@ -411,6 +413,14 @@ RunLog playRun(GameData data, Bot bot, int seed,
           if (pick != null) log.picked.add(pick);
           r = runEngine.chooseReward(r, pick);
         }
+      case RunPhase.merchant:
+        log.merchants++;
+        final before = r.jade;
+        r = bot.shop(runEngine, r);
+        log.jadeSpent += before - r.jade;
+      case RunPhase.master:
+        log.masters++;
+        r = bot.master(runEngine, r);
       case RunPhase.fountain:
         log.fountains++;
         r = bot.useFountain(runEngine, r);
@@ -455,8 +465,12 @@ String _route(RunEngine run, Bot bot, RunState r) {
   }
   final ratio = r.hp / r.maxHp;
   double score(String id) {
-    final n = run.node(id);
+    final n = r.node(id);
     if (n.type == NodeType.fountain) return ratio < 0.6 ? 3 : 0.5;
+    if (n.type == NodeType.merchant) {
+      return r.jade >= run.data.balance.merchant.card ? 1.5 : 0.5;
+    }
+    if (n.type == NodeType.master) return 1.2;
     if (n.type != NodeType.combat) return 1;
     final rank = run.data.enemy(n.enemy!).rank;
     if (rank == EnemyRank.elite) return ratio > 0.7 ? 2 : -1;

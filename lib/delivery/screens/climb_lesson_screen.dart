@@ -12,6 +12,7 @@ import '../theme.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/jade.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/difficulty_sheet.dart';
 
@@ -27,7 +28,7 @@ class ClimbLessonScreen extends ConsumerStatefulWidget {
 class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
   final _pages = PageController();
   int _page = 0;
-  static const _count = 7;
+  static const _count = 8;
 
   @override
   void dispose() {
@@ -70,6 +71,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
       t.lesClimbSlide2Title,
       t.lesClimbSlide3Title,
       t.lesClimbSlideEventsTitle,
+      t.lesClimbSlideShopTitle,
       t.lesClimbSlide4Title,
       t.lesClimbSlide5Title,
       t.lesClimbSlide6Title,
@@ -79,6 +81,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
       t.lesClimbSlide2,
       t.lesClimbSlide3,
       t.lesClimbSlideEvents,
+      t.lesClimbSlideShop,
       t.lesClimbSlide4,
       t.lesClimbSlide5,
       t.lesClimbSlide6,
@@ -88,6 +91,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
       _NodeLegend(),
       _RewardFan(),
       _EventsVisual(),
+      _ShopVisual(),
       _LifeVisual(),
       _Paths(),
       _Summit(),
@@ -235,6 +239,8 @@ class _NodeLegend extends StatelessWidget {
       (Icons.water_drop, Palette.sky, t.fountainNode),
       (Icons.temple_buddhist, Palette.gold, t.shrineNode),
       (Icons.question_mark_rounded, Palette.blossom, t.eventNode),
+      (Icons.storefront_rounded, Palette.jade, t.merchantNode),
+      (Icons.self_improvement_rounded, Palette.structure, t.masterNode),
     ];
     return Wrap(
       alignment: WrapAlignment.center,
@@ -314,6 +320,28 @@ class _EventsVisual extends StatelessWidget {
           TalismanBadge(id: 'roca', size: 46),
           SizedBox(width: 12),
           TalismanBadge(id: 'victoria', size: 46),
+        ],
+      ),
+    ],
+  );
+}
+
+/// El jade, el mercader y el maestro errante.
+class _ShopVisual extends StatelessWidget {
+  const _ShopVisual();
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      const Bounce(trigger: 1, child: JadeCoin(size: 72)),
+      const SizedBox(height: 22),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _node(Icons.storefront_rounded, Palette.jade, size: 64),
+          const SizedBox(width: 28),
+          _node(Icons.self_improvement_rounded, Palette.structure, size: 64),
         ],
       ),
     ],

@@ -40,19 +40,20 @@ void main() {
     expect(data.enemy('dragon').phases.length, 3);
   });
 
-  test('mapa de la run: 10 nodos, santuario, eventos y enemigos válidos', () {
-    final nodes = data.balance.runNodes;
-    expect(nodes.length, 10);
-    expect(nodes.where((n) => n.type == NodeType.shrine).length, 1);
-    expect(nodes.where((n) => n.type == NodeType.event).length, 2);
-    final ids = nodes.map((n) => n.id).toSet();
-    for (final n in nodes) {
-      expect(ids.containsAll(n.next), isTrue);
-      if (n.enemy != null) expect(data.enemies.containsKey(n.enemy), isTrue);
+  test('pisos del mapa: enemigos válidos, santuario, fuente, élite y jefe', () {
+    final floors = data.balance.floors;
+    expect(floors, hasLength(9));
+    for (final f in floors) {
+      for (final e in f.enemies) {
+        expect(data.enemies.containsKey(e), isTrue, reason: e);
+      }
+      expect(f.minWidth, lessThanOrEqualTo(f.maxWidth));
     }
-    expect(data.balance.styles[Style.crane]!.retain, 3);
-    expect(data.balance.statsOf(null).draw, 5);
-    expect(data.balance.pathChoices, 2);
+    expect(floors[2].types.keys, [NodeType.shrine]);
+    expect(floors[6].types.keys, [NodeType.fountain]);
+    expect(floors[7].enemies, ['monk']);
+    expect(floors.last.enemies, ['dragon']);
+    expect(data.balance.jadeElite, greaterThan(data.balance.jadeCommon));
   });
 
   test('talismanes y eventos', () {

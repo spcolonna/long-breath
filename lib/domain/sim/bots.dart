@@ -48,6 +48,22 @@ abstract class Bot {
 
   CombatAction discard(CombatState s) =>
       ChooseDiscard(s.hand[random.nextInt(s.hand.length)].uid);
+
+  /// Compras en el mercader: una carta al azar si alcanza, y se va.
+  RunState shop(RunEngine run, RunState r) {
+    final price = run.data.balance.merchant.card;
+    if (r.shopCards.isNotEmpty && run.canAfford(r, price)) {
+      r = run.buyCard(r, r.shopCards[random.nextInt(r.shopCards.length)]);
+    }
+    return run.leaveShop(r);
+  }
+
+  /// Con el maestro: la primera forma que ofrece, o mejorar una carta.
+  RunState master(RunEngine run, RunState r) {
+    if (r.masterForms.isNotEmpty) return run.masterTeach(r, r.masterForms.first);
+    final pool = [for (final c in r.deck) if (run.canUpgrade(c)) c];
+    return run.masterUpgrade(r, pool[random.nextInt(pool.length)].uid);
+  }
 }
 
 /// Juega cartas al azar hasta no poder más.
@@ -174,6 +190,49 @@ class PlannerBot extends Bot {
   @override
   bool learnForm(RunEngine run, RunState r, String? cardPick) =>
       prefersForm(run, r, cardPick, 0);
+
+  /// Talismán si alcanza, después la mejor carta y, con lo que sobre,
+  /// quitar la carta inicial más floja.
+  @override
+  RunState shop(RunEngine run, RunState r) {
+    final m = run.data.balance.merchant;
+    if (r.shopTalisman != null && run.canAfford(r, m.talisman)) {
+      r = run.buyTalisman(r);
+    }
+    final cards = [...r.shopCards]..sort((a, b) => cardValue(run.data.card(b))
+        .compareTo(cardValue(run.data.card(a))));
+    if (cards.isNotEmpty &&
+        cardValue(run.data.card(cards.first)) > 4 &&
+        run.canAfford(r, m.card)) {
+      r = run.buyCard(r, cards.first);
+    }
+    if (!r.shopRemoved && run.canAfford(r, m.remove)) {
+      final starters = [
+        for (final c in r.deck)
+          if (run.data.card(c.cardId).pool == 'starter') c,
+      ]..sort((a, b) => cardValue(run.data.card(a.cardId))
+          .compareTo(cardValue(run.data.card(b.cardId))));
+      if (starters.isNotEmpty) r = run.buyRemove(r, starters.first.uid);
+    }
+    return run.leaveShop(r);
+  }
+
+  /// La forma que más rinde con el mazo actual; si ninguna vale, mejora.
+  @override
+  RunState master(RunEngine run, RunState r) {
+    String? best;
+    var bestV = 4.0;
+    for (final id in r.masterForms) {
+      final v = formValue(run, r, run.data.forms.firstWhere((f) => f.id == id));
+      if (v > bestV) {
+        bestV = v;
+        best = id;
+      }
+    }
+    return best != null
+        ? run.masterTeach(r, best)
+        : run.masterUpgrade(r, _bestUpgrade(run, r));
+  }
 
   @override
   String pickTalisman(RunEngine run, RunState r) => r.talismanOptions
