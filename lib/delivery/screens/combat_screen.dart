@@ -801,6 +801,10 @@ const _stageVariants = {
   'n5': 'templo',
 };
 
+/// Altura de la franja visible de cada fondo (-1 arriba, 1 abajo): el suelo
+/// tiene que quedar bajo los pies.
+const _variantFocus = {'templo': 0.45};
+
 /// Fondo de la etapa: prueba la variante del tramo y cae al común.
 class _StageBackground extends StatelessWidget {
   const _StageBackground({
@@ -824,6 +828,8 @@ class _StageBackground extends StatelessWidget {
     return Image.asset(
       'assets/art/stages/$stageId/combat_bg_$variant.png',
       fit: BoxFit.cover,
+      // La arena es casi cuadrada: se elige qué franja del fondo vertical se ve.
+      alignment: Alignment(0, _variantFocus[variant] ?? 0),
       errorBuilder: (_, _, _) => base,
     );
   }

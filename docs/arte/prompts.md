@@ -155,14 +155,16 @@ backgrounds, no photorealism, no text, no watermark.
 
 Fondos de combate por tramo. Son opcionales y se toman solos, sin tocar código: si falta el del tramo, se usa `combat_bg.png`. La ladera es n1–n2, la bifurcación n3a/n3b, el templo n5 y la cumbre la pelea del jefe. La fuente no tiene combate: su fondo queda para cuando tenga pantalla propia.
 
-**Prioridad:** primero la **cumbre** (la pelea contra el Eco del Dragón), después templo, bifurcación y ladera. La zona superior queda despejada para el enemigo y la inferior es más suave para las cartas.
+**Formato:** la arena es casi cuadrada (la mitad de arriba de la pantalla; las cartas van abajo, sobre papel). Los fondos nuevos van **cuadrados 1:1** (1024×1024 o más), sin transparencia, con un suelo plano y despejado en el tercio inferior para que se paren los luchadores y el centro libre para el enemigo. Si llega uno vertical, se ve solo la franja del medio; `_variantFocus` en `combat_screen.dart` permite bajarla o subirla (el templo usa 0,45).
+
+**Estado:** cumbre y templo ya están en el juego. Faltan bifurcación y ladera.
 
 #### Ladera (n1–n2)
 
-**Destino:** `assets/art/stages/qianyunshan/combat_bg_ladera.png`, vertical 9:19.5, sin transparencia.
+**Destino:** `assets/art/stages/qianyunshan/combat_bg_ladera.png`, cuadrado 1:1, sin transparencia.
 
 ```
-Mobile game combat background, vertical 9:19.5, no characters: mountain slope with a bamboo grove and soft morning mist, jade and mint tones. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Mobile game combat background, square 1:1, no characters: a flat grassy clearing on a mountain slope, framed by a bamboo grove on the sides, soft morning mist and distant jade peaks behind, a few stone steps and a small vermilion lantern post at one edge, fresh jade and mint tones with touches of gold sunlight. Flat open ground across the lower third where two fighters stand, center open and uncluttered for a character. No people, no animals, no text.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
@@ -173,10 +175,10 @@ backgrounds, no photorealism, no text, no watermark.
 
 #### Bifurcación (n3a / n3b)
 
-**Destino:** `assets/art/stages/qianyunshan/combat_bg_bifurcacion.png`, vertical 9:19.5, sin transparencia.
+**Destino:** `assets/art/stages/qianyunshan/combat_bg_bifurcacion.png`, cuadrado 1:1, sin transparencia.
 
 ```
-Mobile game combat background, vertical 9:19.5, no characters: rocky mountain ledge with crystal formations and a softly glowing crack, turquoise and cobalt tones. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Mobile game combat background, square 1:1, no characters: a wide flat rocky ledge where the mountain path splits in two, a weathered stone signpost at the fork, bright turquoise and cobalt quartz crystals growing from the cliffs on the sides, a softly glowing crack in the rock, pine trees and drifting clouds behind, turquoise, cobalt and jade tones in bright daylight. Flat open ground across the lower third where two fighters stand, center open and uncluttered for a character. No people, no animals, no text.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
