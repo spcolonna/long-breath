@@ -43,6 +43,61 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String styleTileStats(int draw, int retain) {
+    return 'Robás $draw · Retenés $retain';
+  }
+
+  @override
+  String get styleBenefitTiger =>
+      'Robás 5 cartas por turno, una más que los otros caminos. Te salen las cartas del tigre y el Puño del Tigre.';
+
+  @override
+  String get styleBenefitSnake =>
+      'Al terminar el turno retenés hasta 2 cartas y igual robás la mano completa. Te sale el Puño de la Serpiente.';
+
+  @override
+  String get styleBenefitCrane =>
+      'Al terminar el turno retenés hasta 3 cartas y igual robás la mano completa: guardás todo para el momento justo.';
+
+  @override
+  String styleChipRetain(String hanzi, int count) {
+    return '$hanzi Retenés $count';
+  }
+
+  @override
+  String styleChipDraw(String hanzi, int count) {
+    return '$hanzi Robás $count';
+  }
+
+  @override
+  String get styleBenefitPick => 'Tocá un camino para ver qué te da.';
+
+  @override
+  String stanceDeltaDamage(String value) {
+    return '$value daño';
+  }
+
+  @override
+  String stanceDeltaStructure(String value) {
+    return '$value Estructura';
+  }
+
+  @override
+  String stanceDeltaGuard(String value) {
+    return '$value guardia';
+  }
+
+  @override
+  String stanceDeltaCost(String value) {
+    return '$value costo';
+  }
+
+  @override
+  String stanceDeltaBy(String changes, String stance) {
+    return '$changes por $stance';
+  }
+
+  @override
   String get life => 'Vida';
 
   @override
@@ -969,7 +1024,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesStances4 =>
-      'Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.';
+      'Fijate el daño: 8 con un ▲ verde. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños: el ▲ marca lo que te suma la postura y arriba dice \"+2 daño por Mǎbù\". Si una postura te resta, vas a ver un ▼ rojo. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.';
 
   @override
   String get lesStances5 =>
@@ -989,7 +1044,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesStances9 =>
-      'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.';
+      'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 (el costo se pone verde) y hace 7 ▲. Jugala.';
 
   @override
   String get lesStances10 =>

@@ -9,6 +9,7 @@ import '../../domain/model/enums.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
+import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/hero_sprite.dart';
@@ -102,6 +103,10 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                           name: text.style(s),
                           hanzi: data.balance.styles[s]!.hanzi,
                           motto: text.styleMotto(s),
+                          stats: t.styleTileStats(
+                            data.balance.styles[s]!.draw,
+                            data.balance.styles[s]!.retain,
+                          ),
                           color: styleColor(s),
                           selected: s == picked,
                           onTap: () {
@@ -116,12 +121,33 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              AnimatedOpacity(
-                duration: const Duration(milliseconds: 200),
-                opacity: picked == null ? 0 : 1,
-                child: Text(
-                  t.styleSummary(stats.draw, stats.breath, stats.retain),
-                  style: const TextStyle(fontSize: 12, color: Palette.textDim),
+              SizedBox(
+                height: 54,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, anim) => FadeTransition(
+                    opacity: anim,
+                    child: SlideTransition(
+                      position: Tween(
+                        begin: const Offset(0, 0.15),
+                        end: Offset.zero,
+                      ).animate(anim),
+                      child: child,
+                    ),
+                  ),
+                  child: Text(
+                    picked == null
+                        ? t.styleBenefitPick
+                        : '${t.styleBenefit(picked)}\n'
+                              '${t.styleSummary(stats.draw, stats.breath, stats.retain)}',
+                    key: ValueKey(picked),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      height: 1.3,
+                      color: picked == null ? Palette.textDim : Palette.text,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -174,6 +200,7 @@ class _PathTile extends StatelessWidget {
     required this.name,
     required this.hanzi,
     required this.motto,
+    required this.stats,
     required this.color,
     required this.selected,
     required this.onTap,
@@ -182,6 +209,7 @@ class _PathTile extends StatelessWidget {
   final String name;
   final String hanzi;
   final String motto;
+  final String stats;
   final Color color;
   final bool selected;
   final VoidCallback onTap;
@@ -233,6 +261,16 @@ class _PathTile extends StatelessWidget {
                 fontSize: 12,
                 fontStyle: FontStyle.italic,
                 color: fg,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              stats,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: selected ? Palette.onColor : Palette.textDim,
               ),
             ),
           ],

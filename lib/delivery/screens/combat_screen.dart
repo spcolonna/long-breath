@@ -549,12 +549,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           HapticFeedback.heavyImpact();
           _audio.play(Sfx.phaseTwo);
           _shake(phase >= 2 ? 18 : 14);
-          _queue.add(_Fx(
-            phase >= 2 ? t.enemyPhase3 : t.enemyPhase2,
-            null,
-            phase >= 2 ? Palette.lacquer : Palette.gold,
-            big: true,
-          ));
+          _queue.add(
+            _Fx(
+              phase >= 2 ? t.enemyPhase3 : t.enemyPhase2,
+              null,
+              phase >= 2 ? Palette.lacquer : Palette.gold,
+              big: true,
+            ),
+          );
         case ScalesRegrown(:final scales):
           HapticFeedback.mediumImpact();
           _audio.play(Sfx.enemyGuard);
@@ -845,16 +847,25 @@ class _Arena extends StatelessWidget {
               Positioned(
                 left: 12,
                 top: 8,
-                child: TutorialAnchor(
-                  id: 'turn',
-                  child: Bounce(
-                    trigger: turn,
-                    child: _Chip(
-                      icon: Icons.hourglass_bottom,
-                      text: t.turn(turn),
-                      color: Palette.text,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TutorialAnchor(
+                      id: 'turn',
+                      child: Bounce(
+                        trigger: turn,
+                        child: _Chip(
+                          icon: Icons.hourglass_bottom,
+                          text: t.turn(turn),
+                          color: Palette.text,
+                        ),
+                      ),
                     ),
-                  ),
+                    if (style != null) ...[
+                      const SizedBox(height: 6),
+                      _StyleChip(style: style!),
+                    ],
+                  ],
                 ),
               ),
               Padding(
@@ -1836,6 +1847,23 @@ class _PreviewPanel extends ConsumerWidget {
         t.previewThen('→ ${text.stance(p.stanceAfter)}'),
     ];
     String formName(String id) => text.form(id);
+    String signed(int v) => v > 0 ? '+$v' : '−${-v}';
+    final changes = [
+      if (p.stanceDamage != 0) t.stanceDeltaDamage(signed(p.stanceDamage)),
+      if (p.stanceStructure != 0)
+        t.stanceDeltaStructure(signed(p.stanceStructure)),
+      if (p.stanceGuard != 0) t.stanceDeltaGuard(signed(p.stanceGuard)),
+      if (p.stanceCost != 0) t.stanceDeltaCost(signed(p.stanceCost)),
+    ];
+    final stanceNote = changes.isEmpty
+        ? null
+        : t.stanceDeltaBy(
+            changes.join(', '),
+            data.stance(s.player.stance).pinyin,
+          );
+    // Bueno si suma daño/Estructura/guardia o abarata; malo si no.
+    final stanceGood =
+        p.stanceDamage + p.stanceStructure + p.stanceGuard - p.stanceCost > 0;
     return GestureDetector(
       onTap: () => ref.read(combatControllerProvider.notifier).clearSelection(),
       child: Container(
@@ -1853,8 +1881,22 @@ class _PreviewPanel extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${text.card(def.id)} · ${def.pinyin}',
+                  Text.rich(
+                    TextSpan(
+                      text: '${text.card(def.id)} · ${def.pinyin}',
+                      children: [
+                        if (stanceNote != null)
+                          TextSpan(
+                            text: '  $stanceNote',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: stanceGood
+                                  ? Palette.jade
+                                  : Palette.lacquer,
+                            ),
+                          ),
+                      ],
+                    ),
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 12,
@@ -2502,6 +2544,91 @@ class _BreathPips extends StatelessWidget {
 }
 
 // ----------------------------------------------------------------- efectos
+
+/// Camino elegido y su ventaja; al tocarlo se explica qué da.
+class _StyleChip extends ConsumerStatefulWidget {
+  const _StyleChip({required this.style});
+
+  final Style style;
+
+  @override
+  ConsumerState<_StyleChip> createState() => _StyleChipState();
+}
+
+class _StyleChipState extends ConsumerState<_StyleChip> {
+  bool _open = false;
+  Timer? _close;
+
+  @override
+  void dispose() {
+    _close?.cancel();
+    super.dispose();
+  }
+
+  void _toggle() {
+    HapticFeedback.selectionClick();
+    _close?.cancel();
+    setState(() => _open = !_open);
+    if (_open) {
+      _close = Timer(const Duration(seconds: 5), () {
+        if (mounted) setState(() => _open = false);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final stats = ref.watch(dataProvider).balance.styles[widget.style]!;
+    final color = styleColor(widget.style);
+    final edge = stats.retain > 0
+        ? t.styleChipRetain(stats.hanzi, stats.retain)
+        : t.styleChipDraw(stats.hanzi, stats.draw);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: _toggle,
+          child: Bounce(
+            trigger: _open,
+            child: _Chip(icon: Icons.info_outline, text: edge, color: color),
+          ),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOut,
+          alignment: Alignment.topLeft,
+          child: !_open
+              ? const SizedBox(width: 0)
+              : GestureDetector(
+                  onTap: _toggle,
+                  child: Container(
+                    width: 220,
+                    margin: const EdgeInsets.only(top: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Palette.surface,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: color, width: 1.5),
+                    ),
+                    child: Text(
+                      t.styleBenefit(widget.style),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        height: 1.25,
+                        color: Palette.text,
+                      ),
+                    ),
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+}
 
 class _Chip extends StatelessWidget {
   const _Chip({required this.icon, required this.text, required this.color});

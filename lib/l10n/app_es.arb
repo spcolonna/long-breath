@@ -23,6 +23,86 @@
       }
     }
   },
+  "styleTileStats": "Robás {draw} · Retenés {retain}",
+  "@styleTileStats": {
+    "placeholders": {
+      "draw": {
+        "type": "int"
+      },
+      "retain": {
+        "type": "int"
+      }
+    }
+  },
+  "styleBenefitTiger": "Robás 5 cartas por turno, una más que los otros caminos. Te salen las cartas del tigre y el Puño del Tigre.",
+  "styleBenefitSnake": "Al terminar el turno retenés hasta 2 cartas y igual robás la mano completa. Te sale el Puño de la Serpiente.",
+  "styleBenefitCrane": "Al terminar el turno retenés hasta 3 cartas y igual robás la mano completa: guardás todo para el momento justo.",
+  "styleChipRetain": "{hanzi} Retenés {count}",
+  "@styleChipRetain": {
+    "placeholders": {
+      "hanzi": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "styleChipDraw": "{hanzi} Robás {count}",
+  "@styleChipDraw": {
+    "placeholders": {
+      "hanzi": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "styleBenefitPick": "Tocá un camino para ver qué te da.",
+  "stanceDeltaDamage": "{value} daño",
+  "@stanceDeltaDamage": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "stanceDeltaStructure": "{value} Estructura",
+  "@stanceDeltaStructure": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "stanceDeltaGuard": "{value} guardia",
+  "@stanceDeltaGuard": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "stanceDeltaCost": "{value} costo",
+  "@stanceDeltaCost": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "stanceDeltaBy": "{changes} por {stance}",
+  "@stanceDeltaBy": {
+    "placeholders": {
+      "changes": {
+        "type": "String"
+      },
+      "stance": {
+        "type": "String"
+      }
+    }
+  },
   "life": "Vida",
   "structure": "Estructura",
   "guard": "Guardia",
@@ -479,12 +559,12 @@
   "lesStances1": "Siempre estás en una de tres posturas: Caballo 马步, Arco 弓步 o Vacía 虚步. Ahora estás en Caballo. La postura en la que ESTÁS cambia cuánto pegan y cuánto cuestan tus cartas.",
   "lesStances2": "Esto da cada postura. Lo podés volver a ver cuando quieras desde la pausa, en \"Cómo se juega\".",
   "lesStances3": "Tocá Puñetazo a fondo una vez y mirá la vista previa.",
-  "lesStances4": "Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.",
+  "lesStances4": "Fijate el daño: 8 con un ▲ verde. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños: el ▲ marca lo que te suma la postura y arriba dice \"+2 daño por Mǎbù\". Si una postura te resta, vas a ver un ▼ rojo. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.",
   "lesStances5": "Ahora estás en Arco: los puños pegan +3 y sacan +1 de Estructura. Esa ventaja no la usó la carta que te trajo: la aprovecha la PRÓXIMA.",
   "lesStances6": "Mirá Puñetazo firme: antes marcaba 7 de daño y 2 de Estructura; ahora, 8 y 3. Los números de tus cartas siempre muestran lo que pegan desde la postura en la que estás. Pega desde Arco y después te deja en Caballo. Jugalo.",
   "lesStances7": "Ese es el truco: una carta con → te prepara la siguiente. Antes de jugar, pensá el orden: primero la que te deja en la postura que la otra aprovecha.",
   "lesStances8": "Si ninguna carta te deja en la postura que necesitás, Paso en T te cambia YA, por 1 de Aliento, una vez por turno. Las patadas rinden en Vacía: tocalo y elegí Vacía.",
-  "lesStances9": "En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.",
+  "lesStances9": "En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 (el costo se pone verde) y hace 7 ▲. Jugala.",
   "lesStances10": "Terminá el combate como quieras. Antes de cada carta, mirá en qué postura estás y en cuál te deja.",
   "lesStructure1": "Este muñeco tiene poca Estructura: 8. Cada ataque tiene dos números: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si la Estructura del rival llega a 0, queda DESEQUILIBRADO.",
   "lesStructure2": "Empujón de palma casi no hace daño, pero saca 4 de Estructura. Jugalo.",
