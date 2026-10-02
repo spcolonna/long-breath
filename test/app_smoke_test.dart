@@ -8,6 +8,7 @@ import 'package:long_breath/delivery/controllers/run_controller.dart';
 import 'package:long_breath/delivery/providers.dart';
 import 'package:long_breath/delivery/screens/combat_screen.dart';
 import 'package:long_breath/domain/model/enums.dart';
+import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,12 +53,16 @@ void main() {
       tester.element(find.byType(Scaffold).first),
     ).read(runControllerProvider)!;
     expect(run.difficulty, Difficulty.normal);
+    // El mapa se genera con la semilla: se entra por el primer nodo.
+    final firstEnemy = ProviderScope.containerOf(
+      tester.element(find.byType(Scaffold).first),
+    ).read(textProvider).enemy(run.node(run.starts.first).enemy!);
 
-    await tester.tap(find.text('Murciélago de Jade'));
+    await tester.tap(find.text(firstEnemy).first);
     await settle();
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
-    expect(find.text('Murciélago de Jade'), findsWidgets);
+    expect(find.text(firstEnemy), findsWidgets);
     // La mano sale de una run con semilla al azar: se busca la primera carta.
     final scope = ProviderScope.containerOf(
       tester.element(find.byType(Scaffold).first),
@@ -77,7 +82,7 @@ void main() {
     await tester.tap(find.text('Continuar run'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
-    await tester.tap(find.text('Murciélago de Jade'));
+    await tester.tap(find.text(firstEnemy).first);
     await settle();
     expect(find.text('Turno 1'), findsOneWidget);
 
@@ -85,14 +90,15 @@ void main() {
     final context = tester.element(find.byType(CombatScreen));
     final container = ProviderScope.containerOf(context);
     final runs = container.read(runControllerProvider.notifier);
+    final current = container.read(runControllerProvider)!;
+    final shrine = current.map.singleWhere((n) => n.type == NodeType.shrine);
+    final before = current.map.firstWhere((n) => n.next.contains(shrine.id));
     runs.resume(
       container
           .read(runEngineProvider)
           .enter(
-            container
-                .read(runControllerProvider)!
-                .copyWith(phase: RunPhase.map, currentNode: 'n2'),
-            'ns',
+            current.copyWith(phase: RunPhase.map, currentNode: before.id),
+            shrine.id,
           ),
     );
     GoRouter.of(context).go('/shrine');
@@ -164,9 +170,78 @@ void main() {
     expect(after.phase, RunPhase.reward);
 
     // El combate siguiente arranca con los talismanes de la run.
-    runs.resume(after.copyWith(phase: RunPhase.map, currentNode: 'n4'));
-    runs.enter('n5');
+    final fountain = after.map.singleWhere((n) => n.type == NodeType.fountain);
+    runs.resume(after.copyWith(phase: RunPhase.map, currentNode: fountain.id));
+    runs.enter(fountain.next.single);
     container.read(combatControllerProvider.notifier).start();
     expect(container.read(combatControllerProvider)!.state.talismans, ['vida']);
+
+    // Mercader: precios, compra con jade y sello de comprado.
+    final engine = container.read(runEngineProvider);
+    const merchant = MapNodeDef(id: 'm', type: NodeType.merchant, next: []);
+    runs.resume(
+      engine.enter(
+        after.copyWith(
+          phase: RunPhase.map,
+          currentNode: fountain.id,
+          jade: 100,
+        ).copyWith(
+          map: [
+            for (final n in after.map)
+              n.id == fountain.id
+                  ? MapNodeDef(id: n.id, type: n.type, next: ['m'])
+                  : n,
+            merchant,
+          ],
+        ),
+        'm',
+      ),
+    );
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/merchant');
+    await settle();
+    expect(find.text('Mercader de pergaminos'), findsOneWidget);
+    expect(find.text('Quitar 1 carta del mazo'), findsOneWidget);
+    final shop = container.read(runControllerProvider)!;
+    final ware = container.read(textProvider).talisman(shop.shopTalisman!);
+    await tester.tap(find.text(ware));
+    await settle();
+    await tester.tap(find.text('Confirmar'));
+    await settle();
+    expect(find.text('¡Comprado!'), findsOneWidget);
+    expect(
+      container.read(runControllerProvider)!.jade,
+      100 - container.read(dataProvider).balance.merchant.talisman,
+    );
+    await tester.tap(find.text('Seguir subiendo'));
+    await settle();
+    expect(container.read(runControllerProvider)!.phase, RunPhase.map);
+
+    // Maestro errante: una forma o mejorar una carta.
+    const master = MapNodeDef(id: 'w', type: NodeType.master, next: []);
+    runs.resume(
+      engine.enter(
+        container.read(runControllerProvider)!.copyWith(
+          currentNode: 'm',
+          map: [
+            for (final n in after.map)
+              if (n.id != 'm') n,
+            const MapNodeDef(id: 'm', type: NodeType.merchant, next: ['w']),
+            master,
+          ],
+        ),
+        'w',
+      ),
+    );
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/master');
+    await settle();
+    expect(find.text('Maestro errante'), findsOneWidget);
+    final taught = container.read(runControllerProvider)!.masterForms.first;
+    await tester.tap(find.text(container.read(textProvider).form(taught)));
+    await settle();
+    await tester.tap(find.text('Confirmar'));
+    await settle();
+    await settle();
+    expect(container.read(runControllerProvider)!.knownForms, contains(taught));
+    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
   });
 }

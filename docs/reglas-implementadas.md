@@ -80,3 +80,20 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 ## Recompensas
 - Se ofrecen 3 cartas al azar de los pools de `rewards.pools`.
 - Un pool con el nombre de un camino (`tiger`) solo aparece si seguís ese camino. Antes del santuario no sale ninguno.
+
+## Mapa generado
+- `run.floors` en `game_balance.json`: cada piso tiene un ancho (`width`, fijo o `[min, max]`), tipos con peso (`types`) y enemigos posibles (`enemies`).
+- Se genera en `RunEngine.newRun` con la semilla de la run (`lib/domain/run/map_gen.dart`) y se guarda en la run (`RunState.map`). Las subidas guardadas sin mapa se descartan.
+- Reglas: al menos un combate en cada piso que los permite; santuario, fuente, mercader y maestro como mucho uno por piso; mercader y maestro aparecen al menos una vez en el mapa; enemigos sin repetir dentro de un piso.
+- Conexiones: cada nodo se une con los que le quedan enfrente; entre pisos del mismo ancho se suman diagonales al azar sin cruces.
+- Se empieza eligiendo entre los nodos del primer piso (los que no tienen ninguno antes).
+
+## Jade y mercader
+- Cada combate ganado da `jade.common` + 0..`jade.spread` (élite: `jade.elite` + 0..`spread`). El jefe no da (termina la subida).
+- El mercader (`merchant` en el balance) ofrece `cards` cartas del pool de recompensas, 1 talismán común que no tengas y dos servicios por visita: quitar una carta y mejorar una carta (+`fountain.upgrade`).
+- No se puede comprar sin jade suficiente.
+
+## Maestro errante
+- Ofrece hasta `master.forms` formas que todavía no sabés y que tu camino permite.
+- Se elige una sola cosa: aprender una de ellas o mejorar una carta (+`fountain.upgrade`).
+

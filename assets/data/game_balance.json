@@ -17,6 +17,9 @@
   "paths": { "choices": 2 },
   "rewards": { "choices": 3, "pools": ["reward", "tiger"], "talismanChoices": 3 },
   "fountain": { "heal": 20, "upgrade": 3 },
+  "jade": { "common": 14, "elite": 30, "spread": 6 },
+  "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25 },
+  "master": { "forms": 2 },
   "difficulties": {
     "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 95, "enemyDamage": 85 },
     "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20 },
@@ -25,18 +28,16 @@
   },
   "run": {
     "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
-    "start": "n1",
-    "nodes": [
-      { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2", "e1"] },
-      { "id": "n2", "type": "combat", "enemy": "disciple", "next": ["ns"] },
-      { "id": "e1", "type": "event", "next": ["ns"] },
-      { "id": "ns", "type": "shrine", "next": ["n3a", "n3b"] },
-      { "id": "n3a", "type": "combat", "enemy": "golem", "next": ["e2"] },
-      { "id": "n3b", "type": "combat", "enemy": "salamander", "next": ["e2"] },
-      { "id": "e2", "type": "event", "next": ["n4"] },
-      { "id": "n4", "type": "fountain", "next": ["n5"] },
-      { "id": "n5", "type": "combat", "enemy": "monk", "next": ["n6"] },
-      { "id": "n6", "type": "combat", "enemy": "dragon", "next": [] }
+    "floors": [
+      { "width": 2, "types": { "combat": 1 }, "enemies": ["bat", "salamander"] },
+      { "width": [2, 3], "types": { "combat": 3, "event": 2 }, "enemies": ["bat", "salamander", "disciple"] },
+      { "width": 1, "types": { "shrine": 1 } },
+      { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander"] },
+      { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple"] },
+      { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 2, "master": 2 }, "enemies": ["golem", "disciple", "salamander"] },
+      { "width": 1, "types": { "fountain": 1 } },
+      { "width": 1, "types": { "combat": 1 }, "enemies": ["monk"] },
+      { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"] }
     ]
   }
 }

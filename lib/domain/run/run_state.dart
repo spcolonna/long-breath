@@ -1,5 +1,6 @@
 import '../combat/combat_state.dart';
 import '../model/enums.dart';
+import '../model/game_balance.dart';
 import '../rng.dart';
 
 enum RunPhase {
@@ -14,6 +15,12 @@ enum RunPhase {
 
   /// Escena con una decisión.
   event,
+
+  /// Tienda del mercader de pergaminos.
+  merchant,
+
+  /// Maestro errante.
+  master,
   victory,
   defeat,
 }
@@ -99,6 +106,14 @@ class RunState {
     this.eventId,
     this.seenEvents = const [],
     this.lastEvent,
+    required this.map,
+    this.jade = 0,
+    this.jadeGained = 0,
+    this.shopCards = const [],
+    this.shopTalisman,
+    this.shopRemoved = false,
+    this.shopUpgraded = false,
+    this.masterForms = const [],
   });
 
   /// Camino animal; null mientras sea novicio (antes del santuario).
@@ -140,6 +155,26 @@ class RunState {
   /// Resultado del último evento resuelto.
   final EventResult? lastEvent;
 
+  /// Mapa de esta subida (generado con la semilla de la run).
+  final List<MapNodeDef> map;
+
+  /// Monedas de jade para el mercader.
+  final int jade;
+
+  /// Jade ganado en el último combate (para mostrarlo en la recompensa).
+  final int jadeGained;
+
+  /// Cartas y talismán en venta (solo en la fase merchant).
+  final List<String> shopCards;
+  final String? shopTalisman;
+
+  /// Servicios del mercader ya usados en esta visita.
+  final bool shopRemoved;
+  final bool shopUpgraded;
+
+  /// Formas que ofrece el maestro errante (solo en la fase master).
+  final List<String> masterForms;
+
   RunState copyWith({
     Style? style,
     int? hp,
@@ -162,6 +197,15 @@ class RunState {
     bool clearEventId = false,
     List<String>? seenEvents,
     EventResult? lastEvent,
+    int? jade,
+    int? jadeGained,
+    List<String>? shopCards,
+    String? shopTalisman,
+    bool clearShopTalisman = false,
+    bool? shopRemoved,
+    bool? shopUpgraded,
+    List<String>? masterForms,
+    List<MapNodeDef>? map,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -183,7 +227,25 @@ class RunState {
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
         lastEvent: lastEvent ?? this.lastEvent,
+        map: map ?? this.map,
+        jade: jade ?? this.jade,
+        jadeGained: jadeGained ?? this.jadeGained,
+        shopCards: shopCards ?? this.shopCards,
+        shopTalisman:
+            clearShopTalisman ? null : shopTalisman ?? this.shopTalisman,
+        shopRemoved: shopRemoved ?? this.shopRemoved,
+        shopUpgraded: shopUpgraded ?? this.shopUpgraded,
+        masterForms: masterForms ?? this.masterForms,
       );
+
+  /// Nodo del mapa por id.
+  MapNodeDef node(String id) => map.firstWhere((n) => n.id == id);
+
+  /// Nodos por los que se empieza (los que no tienen ninguno antes).
+  List<String> get starts {
+    final reached = {for (final n in map) ...n.next};
+    return [for (final n in map) if (!reached.contains(n.id)) n.id];
+  }
 
   Map<String, dynamic> toJson() => {
         'style': style?.name,
@@ -205,6 +267,14 @@ class RunState {
         'eventId': eventId,
         'seenEvents': seenEvents,
         'lastEvent': lastEvent?.toJson(),
+        'map': [for (final n in map) n.toJson()],
+        'jade': jade,
+        'jadeGained': jadeGained,
+        'shopCards': shopCards,
+        'shopTalisman': shopTalisman,
+        'shopRemoved': shopRemoved,
+        'shopUpgraded': shopUpgraded,
+        'masterForms': masterForms,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -239,5 +309,18 @@ class RunState {
           final Map<String, dynamic> e => EventResult.fromJson(e),
           _ => null,
         },
+        // Las subidas guardadas antes del mapa generado no tienen 'map' y se
+        // descartan al cargar.
+        map: [
+          for (final n in j['map'] as List)
+            MapNodeDef.fromJson(n as Map<String, dynamic>),
+        ],
+        jade: j['jade'] as int? ?? 0,
+        jadeGained: j['jadeGained'] as int? ?? 0,
+        shopCards: ((j['shopCards'] as List?) ?? const []).cast<String>(),
+        shopTalisman: j['shopTalisman'] as String?,
+        shopRemoved: j['shopRemoved'] as bool? ?? false,
+        shopUpgraded: j['shopUpgraded'] as bool? ?? false,
+        masterForms: ((j['masterForms'] as List?) ?? const []).cast<String>(),
       );
 }

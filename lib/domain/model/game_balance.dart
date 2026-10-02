@@ -33,7 +33,13 @@ enum NodeType {
   shrine,
 
   /// Escena con una decisión (ermitaño, puente, manantial…).
-  event;
+  event,
+
+  /// Mercader de pergaminos: se compra con jade.
+  merchant,
+
+  /// Maestro errante: enseña una forma o mejora una carta.
+  master;
 
   static NodeType parse(String s) => NodeType.values.byName(s);
 }
@@ -70,6 +76,73 @@ class MapNodeDef {
         type: NodeType.parse(j['type'] as String),
         enemy: j['enemy'] as String?,
         next: (j['next'] as List).cast<String>(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'type': type.name,
+        if (enemy != null) 'enemy': enemy,
+        'next': next,
+      };
+}
+
+/// Un piso del mapa generado: cuántos nodos tiene, de qué tipo pueden ser
+/// (con su peso) y qué enemigos pueden salir en sus combates.
+class FloorDef {
+  const FloorDef({
+    required this.minWidth,
+    required this.maxWidth,
+    required this.types,
+    this.enemies = const [],
+  });
+
+  final int minWidth;
+  final int maxWidth;
+  final Map<NodeType, int> types;
+  final List<String> enemies;
+
+  factory FloorDef.fromJson(Map<String, dynamic> j) {
+    final width = j['width'];
+    final (min, max) = switch (width) {
+      final List w => (w[0] as int, w[1] as int),
+      final int w => (w, w),
+      _ => (1, 1),
+    };
+    return FloorDef(
+      minWidth: min,
+      maxWidth: max,
+      types: {
+        for (final e in (j['types'] as Map<String, dynamic>).entries)
+          NodeType.parse(e.key): e.value as int,
+      },
+      enemies: ((j['enemies'] as List?) ?? const []).cast<String>(),
+    );
+  }
+}
+
+/// Precios del mercader, en jade.
+class MerchantDef {
+  const MerchantDef({
+    this.cards = 3,
+    this.card = 25,
+    this.talisman = 60,
+    this.remove = 35,
+    this.upgrade = 30,
+  });
+
+  /// Cartas en venta.
+  final int cards;
+  final int card;
+  final int talisman;
+  final int remove;
+  final int upgrade;
+
+  factory MerchantDef.fromJson(Map<String, dynamic> j) => MerchantDef(
+        cards: j['cards'] as int? ?? 3,
+        card: j['card'] as int? ?? 25,
+        talisman: j['talisman'] as int? ?? 60,
+        remove: j['remove'] as int? ?? 35,
+        upgrade: j['upgrade'] as int? ?? 30,
       );
 }
 
@@ -120,9 +193,14 @@ class GameBalance {
     this.talismanChoices = 3,
     required this.fountainHeal,
     required this.fountainUpgrade,
-    required this.runStart,
     required this.stage,
-    required this.runNodes,
+    this.fixedMap,
+    this.floors = const [],
+    this.jadeCommon = 0,
+    this.jadeElite = 0,
+    this.jadeSpread = 0,
+    this.merchant = const MerchantDef(),
+    this.masterForms = 2,
     required this.difficulties,
   });
 
@@ -146,11 +224,23 @@ class GameBalance {
   final int talismanChoices;
   final int fountainHeal;
   final int fountainUpgrade;
-  final String runStart;
-
   /// Etapa que recorre la run (nombre visible en el mapa).
   final StageDef stage;
-  final List<MapNodeDef> runNodes;
+
+  /// Mapa fijo (solo para el simulador); si no hay, se genera por run.
+  final List<MapNodeDef>? fixedMap;
+
+  /// Pisos del mapa generado, de abajo hacia arriba.
+  final List<FloorDef> floors;
+
+  /// Jade que se gana al vencer a un común o a un élite (más 0..spread).
+  final int jadeCommon;
+  final int jadeElite;
+  final int jadeSpread;
+  final MerchantDef merchant;
+
+  /// Formas que ofrece el maestro errante.
+  final int masterForms;
   final Map<Difficulty, DifficultyDef> difficulties;
 
   DifficultyDef difficulty(Difficulty d) => difficulties[d]!;
@@ -165,6 +255,7 @@ class GameBalance {
     final rewards = j['rewards'] as Map<String, dynamic>;
     final fountain = j['fountain'] as Map<String, dynamic>;
     final run = j['run'] as Map<String, dynamic>;
+    final jade = (j['jade'] as Map<String, dynamic>?) ?? const {};
     return GameBalance(
       playerHp: player['hp'] as int,
       playerStructure: player['structure'] as int,
@@ -187,12 +278,26 @@ class GameBalance {
       talismanChoices: rewards['talismanChoices'] as int? ?? 3,
       fountainHeal: fountain['heal'] as int,
       fountainUpgrade: fountain['upgrade'] as int,
-      runStart: run['start'] as String,
       stage: StageDef.fromJson(run['stage'] as Map<String, dynamic>),
-      runNodes: [
-        for (final n in run['nodes'] as List)
-          MapNodeDef.fromJson(n as Map<String, dynamic>),
+      fixedMap: switch (run['nodes']) {
+        final List nodes => [
+            for (final n in nodes) MapNodeDef.fromJson(n as Map<String, dynamic>),
+          ],
+        _ => null,
+      },
+      floors: [
+        for (final f in (run['floors'] as List?) ?? const [])
+          FloorDef.fromJson(f as Map<String, dynamic>),
       ],
+      jadeCommon: jade['common'] as int? ?? 0,
+      jadeElite: jade['elite'] as int? ?? 0,
+      jadeSpread: jade['spread'] as int? ?? 0,
+      merchant: MerchantDef.fromJson(
+        (j['merchant'] as Map<String, dynamic>?) ?? const {},
+      ),
+      masterForms:
+          ((j['master'] as Map<String, dynamic>?) ?? const {})['forms'] as int? ??
+              2,
       difficulties: {
         for (final e in (j['difficulties'] as Map<String, dynamic>).entries)
           Difficulty.parse(e.key):

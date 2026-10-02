@@ -1182,14 +1182,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide1 =>
-      'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre en dos, decidís vos.';
+      'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre, decidís vos. Cada subida arma un mapa distinto: deslizá para verlo entero.';
 
   @override
   String get lesClimbSlide2Title => 'Los lugares del mapa';
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario y los eventos.';
+      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el mercader y el maestro errante.';
 
   @override
   String get lesClimbSlide3Title => 'Después de cada combate';
@@ -1386,4 +1386,96 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get talismanTapHint =>
       'Tocá tus talismanes arriba para volver a ver qué hacen.';
+
+  @override
+  String get merchantNode => 'Mercader';
+
+  @override
+  String get masterNode => 'Maestro errante';
+
+  @override
+  String jadeGained(int n) {
+    return '+$n de jade';
+  }
+
+  @override
+  String get merchantTitle => 'Mercader de pergaminos';
+
+  @override
+  String get merchantHint =>
+      'Cambiá jade por cartas, un talismán o un servicio. Lo que no gastes te queda para después.';
+
+  @override
+  String get merchantCards => 'Cartas';
+
+  @override
+  String get merchantTalisman => 'Talismán';
+
+  @override
+  String get merchantServices => 'Servicios';
+
+  @override
+  String get merchantRemove => 'Quitar 1 carta del mazo';
+
+  @override
+  String merchantUpgrade(int amount) {
+    return 'Mejorar 1 carta (+$amount)';
+  }
+
+  @override
+  String get merchantUsed => 'Ya usado';
+
+  @override
+  String get merchantNoJade => 'Te falta jade';
+
+  @override
+  String get merchantBought => '¡Comprado!';
+
+  @override
+  String get merchantPickRemove => 'Elegí la carta que querés quitar';
+
+  @override
+  String get merchantPickUpgrade => 'Elegí la carta que querés mejorar';
+
+  @override
+  String get merchantEmpty => 'No queda nada en venta.';
+
+  @override
+  String get masterTitle => 'Maestro errante';
+
+  @override
+  String get masterText =>
+      'Un anciano practica en el sendero. Te ve llegar, sonríe y te ofrece una sola lección.';
+
+  @override
+  String get masterTeach => 'Aprender una forma';
+
+  @override
+  String get masterTeachHint => 'Tocá la que quieras aprender.';
+
+  @override
+  String masterUpgrade(int amount) {
+    return 'Mejorar 1 carta (+$amount)';
+  }
+
+  @override
+  String get masterUpgradeHint => 'Elegí la carta que el maestro va a pulir.';
+
+  @override
+  String get masterNoForms => 'Ya sabés todas las formas que te puede enseñar.';
+
+  @override
+  String get masterOr => 'o';
+
+  @override
+  String masterUpgraded(String name, int n) {
+    return '¡$name +$n!';
+  }
+
+  @override
+  String get lesClimbSlideShopTitle => 'Jade, mercader y maestro';
+
+  @override
+  String get lesClimbSlideShop =>
+      'Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.';
 }

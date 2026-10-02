@@ -154,6 +154,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Arte:** 1 fondo por etapa, o sea 2 fondos nuevos.
 
 ### 3.2 Mapa generado
+- **En el juego** (02/10/2026) para la etapa 1: 9 pisos con pesos por tipo, mercader y maestro garantizados. Falta: más pisos por etapa cuando haya 3 etapas, élites opcionales en pisos intermedios.
 - El mapa deja de ser fijo: se arma con la semilla de la run, con reglas por piso. Por ejemplo:
   - Élite no antes del piso 4.
   - Fuente antes del jefe.
@@ -163,8 +164,8 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ### 3.3 Nuevos tipos de nodo
 - **Evento:** **en el juego** (02/10/2026): 6 eventos y 2 nodos en la etapa 1. Para crecer: más eventos por etapa, eventos que dependan del camino o de un talismán, y eventos con más de dos opciones.
-- **Mercader de pergaminos:** compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
-- **Maestro errante:** enseña una forma o mejora una carta.
+- **Mercader de pergaminos:** **en el juego** (02/10/2026), con jade de los combates. Falta: más jade en eventos, ofertas especiales. Idea original: compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
+- **Maestro errante:** **en el juego** (02/10/2026): enseña una forma o mejora una carta.
 - **Arte:** 1 ícono por tipo de nodo. Los eventos se resuelven con texto y alguna ilustración reutilizada.
 
 ### 3.4 Talismanes (objetos pasivos)

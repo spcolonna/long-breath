@@ -2023,7 +2023,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide1.
   ///
   /// In es, this message translates to:
-  /// **'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre en dos, decidís vos.'**
+  /// **'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre, decidís vos. Cada subida arma un mapa distinto: deslizá para verlo entero.'**
   String get lesClimbSlide1;
 
   /// No description provided for @lesClimbSlide2Title.
@@ -2035,7 +2035,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario y los eventos.'**
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el mercader y el maestro errante.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.
@@ -2331,6 +2331,168 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Tocá tus talismanes arriba para volver a ver qué hacen.'**
   String get talismanTapHint;
+
+  /// No description provided for @merchantNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Mercader'**
+  String get merchantNode;
+
+  /// No description provided for @masterNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestro errante'**
+  String get masterNode;
+
+  /// No description provided for @jadeGained.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de jade'**
+  String jadeGained(int n);
+
+  /// No description provided for @merchantTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Mercader de pergaminos'**
+  String get merchantTitle;
+
+  /// No description provided for @merchantHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiá jade por cartas, un talismán o un servicio. Lo que no gastes te queda para después.'**
+  String get merchantHint;
+
+  /// No description provided for @merchantCards.
+  ///
+  /// In es, this message translates to:
+  /// **'Cartas'**
+  String get merchantCards;
+
+  /// No description provided for @merchantTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'Talismán'**
+  String get merchantTalisman;
+
+  /// No description provided for @merchantServices.
+  ///
+  /// In es, this message translates to:
+  /// **'Servicios'**
+  String get merchantServices;
+
+  /// No description provided for @merchantRemove.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar 1 carta del mazo'**
+  String get merchantRemove;
+
+  /// No description provided for @merchantUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'Mejorar 1 carta (+{amount})'**
+  String merchantUpgrade(int amount);
+
+  /// No description provided for @merchantUsed.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya usado'**
+  String get merchantUsed;
+
+  /// No description provided for @merchantNoJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Te falta jade'**
+  String get merchantNoJade;
+
+  /// No description provided for @merchantBought.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Comprado!'**
+  String get merchantBought;
+
+  /// No description provided for @merchantPickRemove.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí la carta que querés quitar'**
+  String get merchantPickRemove;
+
+  /// No description provided for @merchantPickUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí la carta que querés mejorar'**
+  String get merchantPickUpgrade;
+
+  /// No description provided for @merchantEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'No queda nada en venta.'**
+  String get merchantEmpty;
+
+  /// No description provided for @masterTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestro errante'**
+  String get masterTitle;
+
+  /// No description provided for @masterText.
+  ///
+  /// In es, this message translates to:
+  /// **'Un anciano practica en el sendero. Te ve llegar, sonríe y te ofrece una sola lección.'**
+  String get masterText;
+
+  /// No description provided for @masterTeach.
+  ///
+  /// In es, this message translates to:
+  /// **'Aprender una forma'**
+  String get masterTeach;
+
+  /// No description provided for @masterTeachHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá la que quieras aprender.'**
+  String get masterTeachHint;
+
+  /// No description provided for @masterUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'Mejorar 1 carta (+{amount})'**
+  String masterUpgrade(int amount);
+
+  /// No description provided for @masterUpgradeHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí la carta que el maestro va a pulir.'**
+  String get masterUpgradeHint;
+
+  /// No description provided for @masterNoForms.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya sabés todas las formas que te puede enseñar.'**
+  String get masterNoForms;
+
+  /// No description provided for @masterOr.
+  ///
+  /// In es, this message translates to:
+  /// **'o'**
+  String get masterOr;
+
+  /// No description provided for @masterUpgraded.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{name} +{n}!'**
+  String masterUpgraded(String name, int n);
+
+  /// No description provided for @lesClimbSlideShopTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Jade, mercader y maestro'**
+  String get lesClimbSlideShopTitle;
+
+  /// No description provided for @lesClimbSlideShop.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.'**
+  String get lesClimbSlideShop;
 }
 
 class _AppLocalizationsDelegate
