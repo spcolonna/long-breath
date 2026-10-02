@@ -2325,6 +2325,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'El ícono rosa es un evento: una escena con una decisión (pagar Vida por algo, arriesgarse o ir a lo seguro). Ahí y al vencer al élite conseguís talismanes: objetos que actúan solos toda la subida, como empezar en Arco o curarte al ganar. Los ves arriba en el mapa y en el combate; tocalos para leerlos.'**
   String get lesClimbSlideEvents;
+
+  /// No description provided for @talismanTapHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá tus talismanes arriba para volver a ver qué hacen.'**
+  String get talismanTapHint;
 }
 
 class _AppLocalizationsDelegate
