@@ -232,6 +232,8 @@ backgrounds, no photorealism, no text, no watermark.
 
 El juego ya les agrega un aura del color del rango (jade común, violeta élite, bermellón jefe), así que no hace falta pintarla.
 
+**Estado:** murciélago, salamandra, gólem, discípulo y monje ya están en el juego. **Falta el Eco del Dragón** (`dragon.png`), que hoy usa el placeholder.
+
 ### Murciélago de Jade (`bat`, común)
 
 Ataca dos veces y chilla para hacerte descartar.
@@ -324,14 +326,17 @@ backgrounds, no photorealism, no text, no watermark.
 
 ### Eco del Dragón (`dragon`, jefe)
 
-Jefe final; en fase 2 lanza el Aliento del Dragón.
+Jefe final, con 3 fases: tiene **escamas** que restan daño a cada golpe (se caen al desequilibrarlo y le vuelven a crecer en la fase 3) y desde la fase 2 lanza el **Aliento del Dragón**. Por eso el prompt pide escamas de jade bien visibles en pecho y brazos y la boca abierta juntando aliento dorado.
 
 ```
-Game boss character, facing the viewer, centered, transparent background: a colossal
-translucent dragon spirit formed of swirling golden breath and white clouds, head and
-front claws coming toward the viewer, the long body coiling up and behind in an S shape,
-vermilion glowing eyes, flowing jade whiskers and mane, small pearls of light around it,
-awe-inspiring and majestic but colorful and bright, fills the frame, iconic silhouette.
+Game boss character, full body, facing the viewer, centered, transparent background: a
+colossal dragon spirit made of swirling golden breath and soft white clouds, the head and
+both front claws reaching toward the viewer, the long serpentine body coiling up and behind
+in a clear S shape, a few large armored scales of bright jade and gold on its chest and
+forearms like a natural breastplate, mouth half open gathering a glowing ball of golden
+breath between its fangs, vermilion glowing eyes, flowing jade whiskers and white mane,
+small pearls of light floating around it, majestic and awe-inspiring but colorful and bright,
+fills most of the frame, iconic silhouette readable at small size.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
