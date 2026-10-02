@@ -126,7 +126,11 @@ void main() {
     await settle();
     expect(
       find.textContaining(
-        offered.first == Style.tiger ? 'Robás 5 cartas' : 'retenés hasta',
+        switch (offered.first) {
+          Style.tiger => 'Golpe primero',
+          Style.snake => 'Cadena:',
+          Style.crane => 'Paciencia:',
+        },
       ),
       findsOneWidget,
     );

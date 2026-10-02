@@ -163,19 +163,19 @@ abstract class AppLocalizations {
   /// No description provided for @styleBenefitTiger.
   ///
   /// In es, this message translates to:
-  /// **'Robás 5 cartas por turno, una más que los otros caminos. Te salen las cartas del tigre y el Puño del Tigre.'**
+  /// **'Golpe primero: el primer ataque de cada turno pega +3. Robás 5 cartas por turno, una más que los otros. Te salen las cartas del tigre y el Puño del Tigre.'**
   String get styleBenefitTiger;
 
   /// No description provided for @styleBenefitSnake.
   ///
   /// In es, this message translates to:
-  /// **'Al terminar el turno retenés hasta 2 cartas y igual robás la mano completa. Te sale el Puño de la Serpiente.'**
+  /// **'Cadena: cada ataque pega +1 por cada ataque que ya jugaste en el turno. Retenés hasta 2 cartas. Te salen las cartas de la serpiente y el Puño de la Serpiente.'**
   String get styleBenefitSnake;
 
   /// No description provided for @styleBenefitCrane.
   ///
   /// In es, this message translates to:
-  /// **'Al terminar el turno retenés hasta 3 cartas y igual robás la mano completa: guardás todo para el momento justo.'**
+  /// **'Paciencia: retenés hasta 3 cartas y las retenidas cuestan 1 menos el turno siguiente. Te salen las cartas de la grulla y el Puño de la Grulla.'**
   String get styleBenefitCrane;
 
   /// No description provided for @styleChipRetain.
@@ -2511,6 +2511,54 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.'**
   String get lesClimbSlideShop;
+
+  /// No description provided for @effChain.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de daño por cada ataque que ya jugaste en el turno'**
+  String effChain(int n);
+
+  /// No description provided for @effRetained.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la retuviste, +{n} de daño'**
+  String effRetained(int n);
+
+  /// No description provided for @styleChipFirstStrike.
+  ///
+  /// In es, this message translates to:
+  /// **'{hanzi} Primer golpe +{n}'**
+  String styleChipFirstStrike(String hanzi, int n);
+
+  /// No description provided for @styleChipChain.
+  ///
+  /// In es, this message translates to:
+  /// **'{hanzi} Cadena +{n}'**
+  String styleChipChain(String hanzi, int n);
+
+  /// No description provided for @styleChipRetained.
+  ///
+  /// In es, this message translates to:
+  /// **'{hanzi} Retenidas −{n}'**
+  String styleChipRetained(String hanzi, int n);
+
+  /// No description provided for @retainedTag.
+  ///
+  /// In es, this message translates to:
+  /// **'Retenida'**
+  String get retainedTag;
+
+  /// No description provided for @styleDeltaDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} daño por tu camino'**
+  String styleDeltaDamage(int n);
+
+  /// No description provided for @retainedCheaper.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} costo por retenida'**
+  String retainedCheaper(int n);
 }
 
 class _AppLocalizationsDelegate

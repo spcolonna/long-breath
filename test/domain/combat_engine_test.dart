@@ -14,7 +14,9 @@ final engine = CombatEngine(data);
 CombatState setup(
   List<String> ids, {
   String enemy = 'salamander',
-  Style style = Style.snake,
+  // Grulla: su pasiva solo toca cartas retenidas, así los números de las
+  // pruebas son los de la carta y la postura.
+  Style style = Style.crane,
   int hp = 50,
   List<String>? forms,
   List<String> talismans = const [],
@@ -53,12 +55,12 @@ void main() {
       expect(p.stanceAfter, Stance.gongbu);
       s = play(s, 'gongbu_chongquan').state;
       expect(s.player.stance, Stance.gongbu);
-      expect(s.enemy.hp, 57 - 8);
+      expect(s.enemy.hp, 63 - 8);
       expect(s.enemy.structure, 14 - 1);
       expect(s.player.breath, 3);
       // El segundo ya pega desde gōngbù: +3 y +1 de Estructura.
       s = play(s, 'gongbu_chongquan').state;
-      expect(s.enemy.hp, 57 - 8 - 9);
+      expect(s.enemy.hp, 63 - 8 - 9);
       expect(s.enemy.structure, 14 - 1 - 2);
     });
 
@@ -70,7 +72,7 @@ void main() {
         ...filler,
       ]);
       s = play(s, 'mabu_chongquan').state;
-      expect(s.enemy.hp, 57 - 7);
+      expect(s.enemy.hp, 63 - 7);
       final p = engine.preview(s, uidOf(s, 'tan_tui'));
       expect(p.cost, 2);
       expect(p.damage, 5);
@@ -130,7 +132,7 @@ void main() {
       expect(s.player.hp, 50);
       expect(s.player.structure, 10);
       expect(s.enemy.structure, 14 - 3);
-      expect(s.enemy.hp, 57 - 5); // Tí Xī: 5 de daño al desviar
+      expect(s.enemy.hp, 63 - 5); // Tí Xī: 5 de daño al desviar
       expect(s.player.breath, 5);
     });
 
@@ -211,7 +213,7 @@ void main() {
         setup(['gongbu_chongquan', ...filler], enemy: 'golem'),
         'gongbu_chongquan',
       ).state;
-      expect(s.enemy.hp, 64 - 4);
+      expect(s.enemy.hp, 70 - 4);
     });
   });
 
@@ -258,7 +260,7 @@ void main() {
 
   group('mano', () {
     test('retener según el camino', () {
-      var s = setup([...filler, ...filler]);
+      var s = setup([...filler, ...filler], style: Style.snake);
       final keep = s.hand.first.uid;
       expect(
         engine.validate(
@@ -365,16 +367,18 @@ void main() {
 
     test('Puño de la Serpiente: cura y da guardia', () {
       var s = setup(
-        ['tui_zhang', 'xubu_liangzhang', 'tui_zhang', ...filler],
+        ['tui_zhang', 'she_tu_xin', 'she_xing_shou', ...filler],
         hp: 30,
         forms: ['she_quan'],
+        style: Style.snake,
       );
       s = play(s, 'tui_zhang').state;
-      s = play(s, 'xubu_liangzhang').state;
-      final r = play(s, 'tui_zhang');
+      s = play(s, 'she_tu_xin').state;
+      final r = play(s, 'she_xing_shou');
+      expect(r.events.whereType<FormCompleted>(), isNotEmpty);
       expect(r.events.whereType<PlayerHealed>().single.amount, 6);
       expect(r.state.player.hp, 36);
-      expect(r.state.player.guard, s.player.guard + 8);
+      expect(r.state.player.guard, s.player.guard + 6);
     });
 
     test('Puño encadenado: los puños pegan +2 el resto del combate', () {
@@ -446,7 +450,7 @@ void main() {
       s = endTurn(s).state;
       expect(s.enemy.guard, 9);
       s = play(s, 'tui_zhang').state; // 4 daño, 4 E
-      expect(s.enemy.hp, 57);
+      expect(s.enemy.hp, 63);
       expect(s.enemy.guard, 5);
       expect(s.enemy.structure, 14 - 4);
     });
@@ -548,7 +552,7 @@ void main() {
 
     test('Normal deja los números de los datos', () {
       final s = start(Difficulty.normal);
-      expect(s.enemy.maxHp, 57);
+      expect(s.enemy.maxHp, 63);
       expect(
         engine.intentView(s).damage,
         data.enemy('salamander').phases.first.pattern.first.damage,
@@ -558,7 +562,7 @@ void main() {
     test('Shifu sube Vida, Estructura y daño enemigos', () {
       final normal = start(Difficulty.normal);
       final s = start(Difficulty.shifu);
-      expect(s.enemy.maxHp, (57 * 1.2).round());
+      expect(s.enemy.maxHp, (63 * 1.2).round());
       expect(s.enemy.maxStructure, (14 * 1.1).round());
       expect(
         engine.intentView(s).damage,
@@ -585,8 +589,8 @@ void main() {
       expect(s.player.structure, 14);
       expect(s.player.maxStructure, 14);
       expect(s.player.breath, 5, reason: 'Serpiente 4 + 1 del talismán');
-      expect(s.enemy.hp, 57 - 6);
-      expect(s.enemy.maxHp, 57);
+      expect(s.enemy.hp, 63 - 6);
+      expect(s.enemy.maxHp, 63);
       expect(s.enemy.structure, 14 - 3);
       expect(
         r.events.whereType<TalismanTriggered>().map((e) => e.talismanId),
@@ -619,6 +623,66 @@ void main() {
       expect(r.events.whereType<FormCompleted>(), hasLength(1));
       expect(r.events.whereType<TalismanTriggered>(), hasLength(1));
       expect(r.state.player.hp, 38);
+    });
+  });
+
+  group('pasivas de los caminos', () {
+    int dmg(CombatState s, String id) =>
+        engine.preview(s, uidOf(s, id)).damage;
+
+    test('Tigre: el primer ataque del turno pega +3', () {
+      final base = setup(['tan_tui', 'tan_tui', ...filler], style: Style.crane);
+      var s = setup(['tan_tui', 'tan_tui', ...filler], style: Style.tiger);
+      expect(dmg(s, 'tan_tui'), dmg(base, 'tan_tui') + 3);
+      expect(engine.preview(s, uidOf(s, 'tan_tui')).styleDamage, 3);
+      s = play(s, 'tan_tui').state;
+      expect(dmg(s, 'tan_tui'), dmg(base, 'tan_tui'));
+    });
+
+    test('Serpiente: cada ataque suma +1 por los anteriores del turno', () {
+      var s = setup(['tan_tui', 'tan_tui', 'tan_tui', ...filler],
+          style: Style.snake);
+      final first = dmg(s, 'tan_tui');
+      s = play(s, 'tan_tui').state;
+      expect(dmg(s, 'tan_tui'), first + 1);
+      s = play(s, 'tan_tui').state;
+      expect(dmg(s, 'tan_tui'), first + 2);
+      // Las defensas no cuentan ni reciben la cadena.
+      expect(s.attacksThisTurn, 2);
+      s = endTurn(s).state;
+      expect(s.attacksThisTurn, 0);
+    });
+
+    test('Mano de serpiente: +2 por cada ataque anterior, más la cadena', () {
+      var s = setup(['tan_tui', 'tan_tui', 'she_xing_shou', ...filler],
+          style: Style.snake);
+      final alone = dmg(s, 'she_xing_shou');
+      s = play(s, 'tan_tui').state;
+      s = play(s, 'tan_tui').state;
+      expect(dmg(s, 'she_xing_shou'), alone + 2 * (2 + 1));
+    });
+
+    test('Grulla: la carta retenida cuesta 1 menos y Pico pega +6', () {
+      var s = setup(['he_zui', 'mabu_jiada', ...filler, ...filler],
+          style: Style.crane);
+      final zui = uidOf(s, 'he_zui');
+      final jiada = uidOf(s, 'mabu_jiada');
+      final fresh = dmg(s, 'he_zui');
+      final jiadaCost = engine.preview(s, jiada).cost;
+      s = endTurn(s, [zui, jiada]).state;
+      expect(engine.preview(s, jiada).cost, jiadaCost - 1);
+      expect(engine.preview(s, jiada).retained, isTrue);
+      expect(dmg(s, 'he_zui'), fresh + 6);
+      // Al siguiente fin de turno, lo no retenido deja de serlo.
+      s = endTurn(s).state;
+      expect(s.retained, isEmpty);
+    });
+
+    test('Respirar borra las retenidas', () {
+      var s = setup(['he_zui', ...filler, ...filler], style: Style.crane);
+      s = endTurn(s, [uidOf(s, 'he_zui')]).state;
+      s = engine.reduce(s, const Breathe()).state;
+      expect(s.retained, isEmpty);
     });
   });
 }

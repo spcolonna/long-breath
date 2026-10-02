@@ -348,11 +348,24 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       for (final e in ev) {
         switch (e) {
           case PlayerHealed(:final amount) when amount > 0:
-            _pop(_heroPops, '+$amount', Palette.jade,
-                size: 26, icon: Icons.favorite, dx: -30, dy: -20);
+            _pop(
+              _heroPops,
+              '+$amount',
+              Palette.jade,
+              size: 26,
+              icon: Icons.favorite,
+              dx: -30,
+              dy: -20,
+            );
           case BreathGained(:final amount):
-            _pop(_heroPops, '+$amount ${t.breath}', Palette.gold,
-                size: 20, dx: 20, dy: -40);
+            _pop(
+              _heroPops,
+              '+$amount ${t.breath}',
+              Palette.gold,
+              size: 20,
+              dx: 20,
+              dy: -40,
+            );
           default:
         }
       }
@@ -665,9 +678,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       talismanHits: {..._talismanHits},
     );
     final run = live.tutorial ? null : ref.watch(runControllerProvider);
-    final node = run?.currentNode == null
-        ? null
-        : run!.node(run.currentNode!);
+    final node = run?.currentNode == null ? null : run!.node(run.currentNode!);
 
     final column = Column(
       children: [
@@ -954,9 +965,7 @@ class _MistDriftState extends State<_MistDrift>
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: CustomPaint(painter: _MistPainter(_c)),
-    );
+    return RepaintBoundary(child: CustomPaint(painter: _MistPainter(_c)));
   }
 }
 
@@ -2110,6 +2119,7 @@ class _PreviewPanel extends ConsumerWidget {
     final c = s.handCard(uid)!;
     final def = data.card(c.cardId);
     final p = engine.preview(s, uid);
+    final costOfFresh = engine.costOf(s, def);
     final parts = <String>[
       if (p.damage > 0) t.previewDamage(p.damage),
       if (p.structure > 0) t.previewStructure(p.structure),
@@ -2164,6 +2174,15 @@ class _PreviewPanel extends ConsumerWidget {
                               color: stanceGood
                                   ? Palette.jade
                                   : Palette.lacquer,
+                            ),
+                          ),
+                        if (p.styleDamage > 0 || p.retained)
+                          TextSpan(
+                            text:
+                                '  ${[if (p.styleDamage > 0) t.styleDeltaDamage(p.styleDamage), if (p.retained && p.cost < costOfFresh) t.retainedCheaper(costOfFresh - p.cost)].join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Palette.jade,
                             ),
                           ),
                       ],
@@ -2697,8 +2716,7 @@ class _ActionBar extends ConsumerWidget {
             child: TutorialAnchor(
               id: 'breathe',
               child: OutlinedButton(
-                onPressed:
-                    !busy && engine.validate(s, const Breathe()) == null
+                onPressed: !busy && engine.validate(s, const Breathe()) == null
                     ? ctl.breathe
                     : null,
                 style: OutlinedButton.styleFrom(
@@ -2899,7 +2917,14 @@ class _StyleChipState extends ConsumerState<_StyleChip> {
     final t = AppLocalizations.of(context);
     final stats = ref.watch(dataProvider).balance.styles[widget.style]!;
     final color = styleColor(widget.style);
-    final edge = stats.retain > 0
+    // El chip muestra la pasiva propia del camino.
+    final edge = stats.firstStrike > 0
+        ? t.styleChipFirstStrike(stats.hanzi, stats.firstStrike)
+        : stats.chain > 0
+        ? t.styleChipChain(stats.hanzi, stats.chain)
+        : stats.retainedDiscount > 0
+        ? t.styleChipRetained(stats.hanzi, stats.retainedDiscount)
+        : stats.retain > 0
         ? t.styleChipRetain(stats.hanzi, stats.retain)
         : t.styleChipDraw(stats.hanzi, stats.draw);
     return Column(

@@ -32,6 +32,7 @@
     "lian_huan_quan": "Puño encadenado",
     "men_hu_tui": "Patadas de la puerta",
     "hu_quan": "Puño del Tigre",
+    "he_quan": "Puño de la Grulla",
     "da_hong_quan": "Gran Puño Rojo"
   },
   "cards": {
@@ -54,7 +55,15 @@
     "hu_zhao": "Garra de tigre",
     "hu_pu": "Salto del tigre",
     "hu_bao_tou": "Guardia del tigre",
-    "hu_xiao": "Rugido del tigre"
+    "hu_xiao": "Rugido del tigre",
+    "she_xing_shou": "Mano de serpiente",
+    "she_tu_xin": "Lengua de serpiente",
+    "she_chan_shen": "Serpiente enroscada",
+    "jin_she": "Serpiente dorada",
+    "he_chi": "Ala de grulla",
+    "du_li": "Grulla en una pata",
+    "he_zui": "Pico de grulla",
+    "he_wu": "Danza de la grulla"
   },
   "enemies": {
     "dummy": {

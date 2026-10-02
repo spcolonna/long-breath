@@ -99,20 +99,25 @@ class CardWidget extends ConsumerWidget {
                     _CostBadge(
                       cost: cost,
                       base: def.cost,
-                      stanceDelta: p?.stanceCost ?? 0,
+                      // Postura o carta retenida: verde si baja, rojo si sube.
+                      stanceDelta: p == null ? 0 : cost - def.cost,
                       scale: s,
                     ),
                     SizedBox(width: 4 * s),
                     Expanded(
                       child: Text(
-                        t.typeLabel(def.type),
+                        p?.retained == true
+                            ? t.retainedTag
+                            : t.typeLabel(def.type),
                         textAlign: TextAlign.right,
                         maxLines: 1,
                         overflow: TextOverflow.clip,
                         style: TextStyle(
                           fontSize: 9 * s,
-                          color: color,
-                          fontWeight: FontWeight.w600,
+                          color: p?.retained == true ? Palette.jade : color,
+                          fontWeight: p?.retained == true
+                              ? FontWeight.w800
+                              : FontWeight.w600,
                         ),
                       ),
                     ),
@@ -185,7 +190,7 @@ class CardWidget extends ConsumerWidget {
                   guard: guard,
                   height: def.height,
                   scale: s,
-                  damageDelta: p?.stanceDamage ?? 0,
+                  damageDelta: (p?.stanceDamage ?? 0) + (p?.styleDamage ?? 0),
                   structureDelta: p?.stanceStructure ?? 0,
                   guardDelta: p?.stanceGuard ?? 0,
                 ),
@@ -220,6 +225,14 @@ class CardWidget extends ConsumerWidget {
     );
   }
 }
+
+/// Los números van centrados por su caja, sin el aire de arriba y abajo
+/// que la fuente deja por defecto (si no, se ven corridos en los círculos).
+const _tight = TextHeightBehavior(
+  applyHeightToFirstAscent: false,
+  applyHeightToLastDescent: false,
+  leadingDistribution: TextLeadingDistribution.even,
+);
 
 /// Costo de la carta: jade si la postura la abarata, laca si la encarece.
 class _CostBadge extends StatelessWidget {
@@ -258,8 +271,11 @@ class _CostBadge extends StatelessWidget {
         ),
         child: Text(
           '$cost',
+          textHeightBehavior: _tight,
           style: TextStyle(
             fontSize: 12 * scale,
+            height: 1,
+            leadingDistribution: TextLeadingDistribution.even,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -321,7 +337,10 @@ class _Stats extends StatelessWidget {
       scale: 1.3,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        padding: EdgeInsets.symmetric(horizontal: delta == 0 ? 0 : 2 * scale),
+        padding: EdgeInsets.symmetric(
+          horizontal: delta == 0 ? 0 : 3 * scale,
+          vertical: delta == 0 ? 0 : 1 * scale,
+        ),
         decoration: BoxDecoration(
           color: delta == 0 ? null : mark.withValues(alpha: 0.16),
           borderRadius: BorderRadius.circular(4 * scale),
@@ -332,8 +351,11 @@ class _Stats extends StatelessWidget {
             Icon(icon, size: 11 * scale, color: c),
             Text(
               '$v',
+              textHeightBehavior: _tight,
               style: TextStyle(
                 fontSize: 11 * scale,
+                height: 1,
+                leadingDistribution: TextLeadingDistribution.even,
                 fontWeight: FontWeight.bold,
                 color: c,
               ),
@@ -341,8 +363,11 @@ class _Stats extends StatelessWidget {
             if (delta != 0)
               Text(
                 delta > 0 ? '▲' : '▼',
+                textHeightBehavior: _tight,
                 style: TextStyle(
                   fontSize: 8 * scale,
+                  height: 1,
+                  leadingDistribution: TextLeadingDistribution.even,
                   fontWeight: FontWeight.bold,
                   color: mark,
                 ),

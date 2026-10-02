@@ -275,6 +275,20 @@ El mapa pasa a generarse por subida (9 pisos, ver `manual.md`), con mercader y m
 
 La subida sigue en ~13 minutos (mercader 40 s, maestro 25 s en el modelo de tiempo). Los bots pasan por 0,8 mercaderes y 0,8 maestros por subida y gastan ~17 de jade: un jugador real seguramente gaste más, así que conviene mirar el balance con partidas reales.
 
+## 3g. Pasivas y cartas propias de cada camino (02/10/2026)
+
+Cada camino gana una pasiva, 4 cartas propias y una forma propia (ver `manual.md`): Tigre +3 al primer ataque del turno, Serpiente +1 por cada ataque anterior del turno, Grulla −1 de costo a lo retenido. Respirar pasa a costar 1 de Aliento.
+
+Las pasivas subieron el promedio de Normal de 59% a 68%. Para volver a ~60% se subió **+10% la Vida base de los seis rivales de la subida** (Murciélago 53, Salamandra 63, Discípulo 77, Gólem 70, Monje 128, Dragón 193). Así también endurecen Difícil y Shifu, que multiplican sobre esa base.
+
+| Normal (1500 runs) | Tigre | Serpiente | Grulla | Total |
+|---|---|---|---|---|
+| Novato | 3% | 5% | 7% | 5% |
+| Promedio | 61% | 61% | 63% | **62%** |
+| Experto | 79% | 81% | 85% | **82%** |
+
+Ojo: los bots eligen cartas por sus números base, así que casi no toman Mano de serpiente ni Serpiente dorada (su valor depende de la cadena). Un jugador que arme la cadena puede sacarles más que el bot.
+
 ## 4. Dificultades (implementadas)
 
 **Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).

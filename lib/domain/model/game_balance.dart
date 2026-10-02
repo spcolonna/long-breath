@@ -8,6 +8,9 @@ class StyleStats {
     required this.draw,
     required this.breath,
     required this.retain,
+    this.firstStrike = 0,
+    this.chain = 0,
+    this.retainedDiscount = 0,
   });
 
   final String hanzi;
@@ -16,12 +19,24 @@ class StyleStats {
   final int breath;
   final int retain;
 
+  /// Tigre: daño extra del primer ataque de cada turno.
+  final int firstStrike;
+
+  /// Serpiente: daño extra de cada ataque por cada ataque anterior del turno.
+  final int chain;
+
+  /// Grulla: las cartas retenidas cuestan esto menos el turno siguiente.
+  final int retainedDiscount;
+
   factory StyleStats.fromJson(Map<String, dynamic> j) => StyleStats(
         hanzi: j['hanzi'] as String,
         pinyin: j['pinyin'] as String,
         draw: j['draw'] as int,
         breath: j['breath'] as int,
         retain: j['retain'] as int,
+        firstStrike: j['firstStrike'] as int? ?? 0,
+        chain: j['chain'] as int? ?? 0,
+        retainedDiscount: j['retainedDiscount'] as int? ?? 0,
       );
 }
 
