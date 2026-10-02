@@ -153,7 +153,9 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-Fondos de combate por tramo. Son opcionales: hoy todos los combates usan `combat_bg.png`. La zona superior queda despejada para el enemigo y la inferior es más suave para las cartas.
+Fondos de combate por tramo. Son opcionales y se toman solos, sin tocar código: si falta el del tramo, se usa `combat_bg.png`. La ladera es n1–n2, la bifurcación n3a/n3b, el templo n5 y la cumbre la pelea del jefe. La fuente no tiene combate: su fondo queda para cuando tenga pantalla propia.
+
+**Prioridad:** primero la **cumbre** (la pelea contra el Eco del Dragón), después templo, bifurcación y ladera. La zona superior queda despejada para el enemigo y la inferior es más suave para las cartas.
 
 #### Ladera (n1–n2)
 
@@ -216,7 +218,7 @@ backgrounds, no photorealism, no text, no watermark.
 **Destino:** `assets/art/stages/qianyunshan/combat_bg_cumbre.png`, vertical 9:19.5, sin transparencia.
 
 ```
-Mobile game combat background, vertical 9:19.5, no characters: summit above a sea of clouds at sunset, gold, coral and violet sky. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Mobile game combat background, vertical 9:19.5, no characters: wide flat stone summit platform with a few weathered carved railings and a small vermilion shrine gate at one side, high above an endless sea of fluffy white clouds, bright golden-hour sky in gold, coral and soft violet, faint swirling golden breath trails in the sky, distant mountain peaks poking through the clouds, epic and luminous final-battle feeling while staying bright and airy. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
@@ -232,7 +234,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 El juego ya les agrega un aura del color del rango (jade común, violeta élite, bermellón jefe), así que no hace falta pintarla.
 
-**Estado:** murciélago, salamandra, gólem, discípulo y monje ya están en el juego. **Falta el Eco del Dragón** (`dragon.png`), que hoy usa el placeholder.
+**Estado:** los 6 enemigos de la subida ya están en el juego (murciélago, salamandra, gólem, discípulo, monje y Eco del Dragón).
 
 ### Murciélago de Jade (`bat`, común)
 

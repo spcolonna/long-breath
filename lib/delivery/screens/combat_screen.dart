@@ -640,6 +640,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         Expanded(
           child: _Arena(
             stageId: data.balance.stage.id,
+            node: live.tutorial
+                ? null
+                : ref.watch(runControllerProvider)?.currentNode,
             turn: s.turn,
             style: live.tutorial
                 ? null
@@ -789,11 +792,49 @@ class _EnemySlot {
   final GlobalKey key;
 }
 
+/// Fondo de cada tramo de la subida (`combat_bg_<tramo>.png`).
+const _stageVariants = {
+  'n1': 'ladera',
+  'n2': 'ladera',
+  'n3a': 'bifurcacion',
+  'n3b': 'bifurcacion',
+  'n5': 'templo',
+};
+
+/// Fondo de la etapa: prueba la variante del tramo y cae al común.
+class _StageBackground extends StatelessWidget {
+  const _StageBackground({
+    required this.stageId,
+    required this.variant,
+    required this.fallback,
+  });
+
+  final String stageId;
+  final String? variant;
+  final Widget fallback;
+
+  @override
+  Widget build(BuildContext context) {
+    final base = Image.asset(
+      'assets/art/stages/$stageId/combat_bg.png',
+      fit: BoxFit.cover,
+      errorBuilder: (_, _, _) => fallback,
+    );
+    if (variant == null) return base;
+    return Image.asset(
+      'assets/art/stages/$stageId/combat_bg_$variant.png',
+      fit: BoxFit.cover,
+      errorBuilder: (_, _, _) => base,
+    );
+  }
+}
+
 /// Escenario del combate: fondo de la etapa, suelo, los enemigos al frente y
 /// el héroe de espaldas en primer plano.
 class _Arena extends StatelessWidget {
   const _Arena({
     required this.stageId,
+    required this.node,
     required this.turn,
     required this.style,
     required this.fx,
@@ -803,6 +844,9 @@ class _Arena extends StatelessWidget {
   });
 
   final String stageId;
+
+  /// Nodo de la subida (null en las lecciones): elige el fondo del tramo.
+  final String? node;
   final int turn;
   final Style? style;
   final _ArenaFx fx;
@@ -833,10 +877,13 @@ class _Arena extends StatelessWidget {
           return Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(
-                'assets/art/stages/$stageId/combat_bg.png',
-                fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => fallback,
+              _StageBackground(
+                stageId: stageId,
+                // El jefe pelea en la cumbre; si falta, el fondo común.
+                variant: slots.any((e) => e.def.rank == EnemyRank.boss)
+                    ? 'cumbre'
+                    : _stageVariants[node],
+                fallback: fallback,
               ),
               // Suelo.
               Align(
