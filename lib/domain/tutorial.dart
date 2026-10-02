@@ -103,7 +103,8 @@ const lessonSetups = <String, LessonSetup>{
       'mabu_chongquan',
     ],
   ),
-  // 5. Formas: dos pasos en el turno 1; en el 2, Respirar trae el último.
+  // 5. Formas: dos pasos en el turno 1, el tercero en el 2; en el 3,
+  // Respirar (1 de Aliento) trae el último.
   'forms': LessonSetup(
     enemyId: 'dummy_forms',
     forms: ['xiao_hong_quan'],
@@ -118,14 +119,20 @@ const lessonSetups = <String, LessonSetup>{
       'an_zhang',
       'mabu_chongquan',
       'tui_zhang',
-      'xubu_liangzhang',
+      'ge_dang',
+      'an_zhang',
+      'mabu_chongquan',
+      'tui_zhang',
       'gongbu_chongquan',
+      'xubu_liangzhang',
       'tan_tui',
       'mabu_chongquan',
       'tui_zhang',
       'mabu_chongquan',
       'gongbu_chongquan',
       'tan_tui',
+      'mabu_chongquan',
+      'mabu_chongquan',
     ],
   ),
 };

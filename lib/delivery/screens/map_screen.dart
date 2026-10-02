@@ -315,7 +315,10 @@ class _NodeButton extends ConsumerWidget {
           EnemyRank.boss => Icons.military_tech,
         },
         rankColor(enemy.rank),
-        text.enemy(enemy.id),
+        // El camino tiene nombre de lugar: quién espera se ve al llegar.
+        node.scene == null
+            ? t.combatNode
+            : text.path(node.scene!, node.light ?? 'alba'),
       ),
       NodeType.fountain => (Icons.water_drop, Palette.sky, t.fountainNode),
       NodeType.shrine => (Icons.temple_buddhist, Palette.gold, t.shrineNode),

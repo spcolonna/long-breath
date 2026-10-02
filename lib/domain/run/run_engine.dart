@@ -25,7 +25,12 @@ class RunEngine {
     final fixed = data.balance.fixedMap;
     final (map, rng) = fixed != null
         ? (fixed, Rng.seeded(seed))
-        : generateMap(data.balance.floors, Rng.seeded(seed));
+        : generateMap(
+            data.balance.floors,
+            Rng.seeded(seed),
+            scenes: data.balance.scenes,
+            lights: data.balance.lights,
+          );
     return RunState(
       difficulty: difficulty,
       style: null,

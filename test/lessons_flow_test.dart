@@ -133,6 +133,8 @@ void main() {
     await tap('Siguiente');
     await endTurn();
     await play('Bloqueo y contragolpe');
+    sees('no alcanza para Respirar');
+    await endTurn();
     await tap('Respirar');
     await settle();
     await play('Paso atrás');

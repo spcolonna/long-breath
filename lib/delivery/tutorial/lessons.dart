@@ -229,6 +229,7 @@ final lessons = <Lesson>[
         waitCard: 'mabu_jiada',
         delayMs: 1800,
       ),
+      TutorialStep(t.lesForms8b, anchor: 'endTurn', waitTurn: 3, delayMs: 600),
       TutorialStep(
         t.lesForms9,
         anchor: 'breathe',

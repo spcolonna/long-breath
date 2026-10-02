@@ -201,6 +201,7 @@ class CombatEngine {
         d.discard.addAll(d.hand);
         d.hand.clear();
         d.breathesLeft--;
+        d.breath -= data.balance.breatheCost;
         _draw(d, n, events);
       case EndTurn(:final retain):
         _endTurn(d, retain.toSet(), events);
@@ -233,6 +234,7 @@ class CombatEngine {
         if (stance == s.player.stance) return Invalid.sameStance;
       case Breathe():
         if (s.breathesLeft <= 0) return Invalid.breatheUsed;
+        if (s.player.breath < data.balance.breatheCost) return Invalid.noBreath;
       case EndTurn(:final retain):
         if (retain.length > s.retainMax) return Invalid.retainTooMany;
         if (retain.any((u) => s.handCard(u) == null)) return Invalid.notInHand;
@@ -260,7 +262,9 @@ class CombatEngine {
       final a = Dingbu(st);
       if (validate(s, a) == null) out.add(a);
     }
-    if (s.breathesLeft > 0 && s.hand.isNotEmpty) out.add(const Breathe());
+    if (s.hand.isNotEmpty && validate(s, const Breathe()) == null) {
+      out.add(const Breathe());
+    }
     out.add(const EndTurn());
     return out;
   }

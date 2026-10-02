@@ -2,6 +2,13 @@
   "stages": {
     "qianyunshan": "Montaña de las Mil Nubes"
   },
+  "paths": {
+    "terraza": { "alba": "Terraza del alba", "niebla": "Terraza entre nubes", "ocaso": "Terraza del ocaso" },
+    "bambu": { "alba": "Bambú del rocío", "niebla": "Bambú en la niebla", "ocaso": "Bambú al atardecer" },
+    "cristales": { "alba": "Senda de cristal", "niebla": "Cristales en la bruma", "ocaso": "Cristales del ocaso" },
+    "campanas": { "alba": "Patio de las campanas", "niebla": "Campanas en la bruma", "ocaso": "Campanas del ocaso" },
+    "cumbre": { "alba": "La cumbre", "niebla": "Cumbre entre nubes", "ocaso": "Cumbre del ocaso" }
+  },
   "styles": {
     "tiger": "Tigre",
     "snake": "Serpiente",

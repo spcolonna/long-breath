@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/combat/combat_action.dart';
 import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
@@ -663,15 +664,18 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       heroPops: _heroPops,
       talismanHits: {..._talismanHits},
     );
+    final run = live.tutorial ? null : ref.watch(runControllerProvider);
+    final node = run?.currentNode == null
+        ? null
+        : run!.node(run.currentNode!);
 
     final column = Column(
       children: [
         Expanded(
           child: _Arena(
             stageId: data.balance.stage.id,
-            node: live.tutorial
-                ? null
-                : ref.watch(runControllerProvider)?.currentNode,
+            scene: node?.scene,
+            light: node?.light,
             turn: s.turn,
             style: live.tutorial
                 ? null
@@ -822,13 +826,13 @@ class _EnemySlot {
   final GlobalKey key;
 }
 
-/// Fondo de cada tramo de la subida (`combat_bg_<tramo>.png`).
-const _stageVariants = {
-  'n1': 'ladera',
-  'n2': 'ladera',
-  'n3a': 'bifurcacion',
-  'n3b': 'bifurcacion',
-  'n5': 'templo',
+/// Archivo de cada escenario (`combat_bg_<archivo>.png`); la terraza es el
+/// fondo común de la etapa.
+const _sceneFiles = {
+  'bambu': 'ladera',
+  'cristales': 'bifurcacion',
+  'campanas': 'templo',
+  'cumbre': 'cumbre',
 };
 
 /// Altura de la franja visible de cada fondo (-1 arriba, 1 abajo): el suelo
@@ -865,12 +869,130 @@ class _StageBackground extends StatelessWidget {
   }
 }
 
+/// La luz del momento sobre el fondo: el mismo lugar se siente distinto al
+/// alba, entre la niebla o al caer la tarde. Siempre claro, nunca de noche.
+class _LightWash extends StatelessWidget {
+  const _LightWash({required this.light});
+
+  final String? light;
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: switch (light) {
+        'niebla' => Stack(
+          fit: StackFit.expand,
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.white.withValues(alpha: 0.55),
+                    Colors.white.withValues(alpha: 0.18),
+                    Colors.white.withValues(alpha: 0.28),
+                  ],
+                  stops: const [0, 0.55, 1],
+                ),
+              ),
+            ),
+            const _MistDrift(),
+          ],
+        ),
+        'ocaso' => DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                const Color(0xFFFF9A62).withValues(alpha: 0.34),
+                const Color(0xFFF7A8C4).withValues(alpha: 0.16),
+                const Color(0xFFFFD9A0).withValues(alpha: 0.10),
+              ],
+            ),
+          ),
+        ),
+        // Alba: un brillo tibio que entra por un costado.
+        _ => DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              center: const Alignment(-0.9, -0.9),
+              radius: 1.3,
+              colors: [
+                const Color(0xFFFFE6C2).withValues(alpha: 0.40),
+                const Color(0xFFFFE6C2).withValues(alpha: 0),
+              ],
+            ),
+          ),
+        ),
+      },
+    );
+  }
+}
+
+/// Bancos de niebla que cruzan despacio la arena.
+class _MistDrift extends StatefulWidget {
+  const _MistDrift();
+
+  @override
+  State<_MistDrift> createState() => _MistDriftState();
+}
+
+class _MistDriftState extends State<_MistDrift>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 24),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      child: CustomPaint(painter: _MistPainter(_c)),
+    );
+  }
+}
+
+class _MistPainter extends CustomPainter {
+  _MistPainter(this.t) : super(repaint: t);
+
+  final Animation<double> t;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.6)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28);
+    // Tres bancos a distintas alturas y velocidades; dan la vuelta al salir.
+    const banks = [(0.30, 1.0, 0.9), (0.55, 0.6, 1.2), (0.78, 1.4, 1.0)];
+    for (final (i, (y, speed, scale)) in banks.indexed) {
+      final w = size.width * 0.8 * scale;
+      final x = ((t.value * speed + i / 3) % 1) * (size.width + w) - w;
+      canvas.drawOval(
+        Rect.fromLTWH(x, size.height * y, w, size.height * 0.12 * scale),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_MistPainter old) => false;
+}
+
 /// Escenario del combate: fondo de la etapa, suelo, los enemigos al frente y
 /// el héroe de espaldas en primer plano.
 class _Arena extends StatelessWidget {
   const _Arena({
     required this.stageId,
-    required this.node,
+    required this.scene,
+    required this.light,
     required this.turn,
     required this.style,
     required this.talismans,
@@ -882,8 +1004,9 @@ class _Arena extends StatelessWidget {
 
   final String stageId;
 
-  /// Nodo de la subida (null en las lecciones): elige el fondo del tramo.
-  final String? node;
+  /// Escenario y luz del camino (null en las lecciones: la terraza al alba).
+  final String? scene;
+  final String? light;
   final int turn;
   final Style? style;
   final List<String> talismans;
@@ -917,12 +1040,10 @@ class _Arena extends StatelessWidget {
             children: [
               _StageBackground(
                 stageId: stageId,
-                // El jefe pelea en la cumbre; si falta, el fondo común.
-                variant: slots.any((e) => e.def.rank == EnemyRank.boss)
-                    ? 'cumbre'
-                    : _stageVariants[node],
+                variant: _sceneFiles[scene],
                 fallback: fallback,
               ),
+              _LightWash(light: light),
               // Suelo.
               Align(
                 alignment: const Alignment(0, 0.62),
@@ -1823,32 +1944,18 @@ class _FormsPanel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final text = ref.watch(textProvider);
     final t = AppLocalizations.of(context);
-    // Formas aprendidas: con todas sus cartas en el mazo, en fila; las que
-    // no se pueden armar en este combate, en una línea aparte.
+    // Todas las formas aprendidas, siempre a la vista. Los pasos cuya carta
+    // no está en el mazo se ven apagados con un candado: hay que conseguirla.
     final owned = {
       for (final c in [...s.drawPile, ...s.hand, ...s.discard, ...s.exhausted])
         c.cardId,
     };
     final known = data.forms.where((f) => s.formProgress.containsKey(f.id));
-    final forms = known.where((f) => owned.containsAll(f.steps)).toList();
-    final missing = known.where((f) => !owned.containsAll(f.steps)).toList();
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
       child: Column(
         children: [
-          if (missing.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 2),
-              child: Text(
-                t.formsMissingCards(
-                  missing.map((f) => text.form(f.id)).join(', '),
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 10, color: Palette.textDim),
-              ),
-            ),
-          for (final f in forms)
+          for (final f in known)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),
               child: Row(
@@ -1869,10 +1976,16 @@ class _FormsPanel extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          f.hanzi,
-                          style: const TextStyle(
+                          owned.containsAll(f.steps)
+                              ? f.hanzi
+                              : t.formMissingShort,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
                             fontSize: 9,
-                            color: Palette.textDim,
+                            color: owned.containsAll(f.steps)
+                                ? Palette.textDim
+                                : Palette.lacquer,
                           ),
                         ),
                       ],
@@ -1887,6 +2000,7 @@ class _FormsPanel extends ConsumerWidget {
                           label: text.card(f.steps[i]),
                           done: i < s.formProgress[f.id]!,
                           next: i == s.formProgress[f.id]!,
+                          owned: owned.contains(f.steps[i]),
                         ),
                       ),
                     ),
@@ -1904,11 +2018,15 @@ class _FormStep extends StatelessWidget {
     required this.label,
     required this.done,
     required this.next,
+    this.owned = true,
   });
 
   final String label;
   final bool done;
   final bool next;
+
+  /// La carta del paso está en el mazo; si no, el paso no se puede dar.
+  final bool owned;
 
   @override
   Widget build(BuildContext context) {
@@ -1926,16 +2044,35 @@ class _FormStep extends StatelessWidget {
         ),
       ),
       alignment: Alignment.center,
-      child: Text(
-        label,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          fontSize: 8.5,
-          height: 1.05,
-          fontWeight: FontWeight.w600,
-          color: done ? Palette.onColor : Palette.textDim,
+      child: Opacity(
+        opacity: owned ? 1 : 0.5,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!owned)
+              const Padding(
+                padding: EdgeInsets.only(right: 1),
+                child: Icon(
+                  Icons.lock_outline,
+                  size: 9,
+                  color: Palette.textDim,
+                ),
+              ),
+            Flexible(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 8.5,
+                  height: 1.05,
+                  fontWeight: FontWeight.w600,
+                  color: done ? Palette.onColor : Palette.textDim,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -2548,7 +2685,10 @@ class _ActionBar extends ConsumerWidget {
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                 ),
-                child: FittedBox(child: Text(text.dingbu(), maxLines: 1)),
+                child: _CostLabel(
+                  label: text.dingbu(),
+                  cost: data.transition.cost,
+                ),
               ),
             ),
           ),
@@ -2557,11 +2697,17 @@ class _ActionBar extends ConsumerWidget {
             child: TutorialAnchor(
               id: 'breathe',
               child: OutlinedButton(
-                onPressed: !busy && s.breathesLeft > 0 ? ctl.breathe : null,
+                onPressed:
+                    !busy && engine.validate(s, const Breathe()) == null
+                    ? ctl.breathe
+                    : null,
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                 ),
-                child: Text(t.breathe, maxLines: 1),
+                child: _CostLabel(
+                  label: t.breathe,
+                  cost: data.balance.breatheCost,
+                ),
               ),
             ),
           ),
@@ -2627,6 +2773,44 @@ class _ActionBar extends ConsumerWidget {
             const SizedBox(height: 8),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Nombre de una acción con lo que cuesta en Aliento, en un punto celeste.
+class _CostLabel extends StatelessWidget {
+  const _CostLabel({required this.label, required this.cost});
+
+  final String label;
+  final int cost;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(label, maxLines: 1),
+          const SizedBox(width: 4),
+          Container(
+            width: 16,
+            height: 16,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Palette.sky,
+            ),
+            child: Text(
+              '$cost',
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                color: Palette.onColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
