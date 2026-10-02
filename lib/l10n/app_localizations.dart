@@ -1408,6 +1408,12 @@ abstract class AppLocalizations {
   /// **'Más opciones'**
   String get mapMore;
 
+  /// No description provided for @mapFloor.
+  ///
+  /// In es, this message translates to:
+  /// **'Piso {floor} de {floors}'**
+  String mapFloor(int floor, int floors);
+
   /// No description provided for @abandonConfirmTitle.
   ///
   /// In es, this message translates to:

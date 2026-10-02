@@ -810,6 +810,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapMore => 'Más opciones';
 
   @override
+  String mapFloor(int floor, int floors) {
+    return 'Piso $floor de $floors';
+  }
+
+  @override
   String get abandonConfirmTitle => '¿Abandonar la subida?';
 
   @override

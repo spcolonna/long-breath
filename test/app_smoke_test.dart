@@ -71,6 +71,8 @@ void main() {
     expect(find.text(firstEnemy), findsNothing);
 
     await tester.tap(find.text(pathName).first);
+    // El discípulo camina hasta el lugar antes de entrar.
+    await settle();
     await settle();
     expect(find.text('Terminar turno'), findsOneWidget);
     expect(find.text('Turno 1'), findsOneWidget);
@@ -95,6 +97,7 @@ void main() {
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
     await tester.tap(find.text(pathName).first);
+    await settle();
     await settle();
     expect(find.text('Turno 1'), findsOneWidget);
 
