@@ -17,7 +17,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - **Formas más alcanzables:** formas propias de cada camino.
   - **Calibrar el modelo de tiempo** con partidas reales, y confirmar las dificultades con personas.
 - **Duración acorde al precio (requisito de la versión final).** Hoy una subida se resuelve en unos 12 minutos y el juego completo (3 etapas, prototipo) en alrededor de una hora. Para la versión que se venda, eso no alcanza: la duración total tiene que estar a la altura de lo que cuesta. Antes de lanzar hay que fijar el precio y, con él, la meta de horas (ver sección 3), y verificarla con el simulador y con personas: horas hasta la primera victoria, horas hasta ganar con los tres caminos y horas de rejugabilidad (dificultades, Picos, cultivo).
-- **Arte de enemigos faltante:** `disciple.png`, `monk.png` y `dragon.png` en `assets/art/enemies/`.
+- **Arte de la etapa 1:** completo el 02/10/2026 (6 enemigos y 4 fondos de tramo).
 
 ## 2. Ideas de mecánica
 
