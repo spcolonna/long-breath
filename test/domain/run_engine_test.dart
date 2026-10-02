@@ -165,6 +165,21 @@ void main() {
     expect(RunState.fromJson(old).difficulty, Difficulty.normal);
   });
 
+  test('el Pico baja la Vida inicial y la fuente, y se guarda', () {
+    final pico = run.data.balance.picoMods(5);
+    expect(pico.fountainHeal, -5);
+    expect(pico.playerHp, -5);
+    var r = run.newRun(seed: 1, pico: 5);
+    expect(r.maxHp, 45);
+    expect(run.healOf(r), 15);
+    r = RunState.fromJson(r.toJson());
+    expect(r.pico, 5);
+    // Antes del Pico 2 la fuente cura lo de siempre.
+    expect(run.healOf(run.newRun(seed: 1, pico: 1)), 20);
+    final old = fresh(1).toJson()..remove('pico');
+    expect(RunState.fromJson(old).pico, 0);
+  });
+
   group('eventos', () {
     RunState at(String eventId, {int hp = 40, int seed = 4}) => fresh(seed)
         .copyWith(phase: RunPhase.event, eventId: eventId, hp: hp);

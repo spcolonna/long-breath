@@ -19,9 +19,10 @@ class RunController extends Notifier<RunState?> {
 
   void resume(RunState r) => state = r;
 
-  void newRun(Difficulty difficulty) => _set(_engine.newRun(
+  void newRun(Difficulty difficulty, {int pico = 0}) => _set(_engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
         difficulty: difficulty,
+        pico: pico,
       ));
 
   void abandon() => _set(null);
@@ -38,10 +39,12 @@ class RunController extends Notifier<RunState?> {
   void finishCombat({required bool won, required int hp}) {
     _set(_engine.finishCombat(state!, won: won, hp: hp));
     if (state!.phase == RunPhase.victory) {
-      ref
-          .read(progressStorageProvider)
-          .markWin(state!.difficulty)
-          .then((_) => ref.invalidate(winsProvider));
+      final progress = ref.read(progressStorageProvider);
+      final run = state!;
+      progress.markWin(run.difficulty).then((_) => ref.invalidate(winsProvider));
+      progress
+          .markPicoWin(run.difficulty, run.pico)
+          .then((_) => ref.invalidate(picoUnlockedProvider));
     }
   }
 

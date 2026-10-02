@@ -38,7 +38,14 @@ void main() {
     // Antes de subir se elige la dificultad.
     expect(find.text('Shifu'), findsOneWidget);
     // Shifu está bloqueada: tocarla explica cómo se gana y no arranca nada.
-    expect(find.text('Bloqueada'), findsOneWidget);
+    // Shifu y los Picos arrancan bloqueados.
+    expect(find.text('Bloqueada'), findsNWidgets(2));
+    await tester.tap(find.text('Picos'));
+    await settle();
+    expect(
+      find.text('Ganá una subida en Normal para abrir el Pico 1.'),
+      findsOneWidget,
+    );
     await tester.tap(find.text('Shifu'));
     await settle();
     expect(

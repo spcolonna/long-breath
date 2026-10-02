@@ -535,13 +535,18 @@ void main() {
   });
 
   group('dificultad', () {
-    CombatState start(Difficulty d) => engine
+    CombatState start(
+      Difficulty d, {
+      int pico = 0,
+      String enemy = 'salamander',
+    }) => engine
         .start(
           deck: [
             for (final (i, id) in filler.indexed)
               CombatCard(uid: i, cardId: id),
           ],
-          enemyId: 'salamander',
+          enemyId: enemy,
+          pico: pico,
           style: Style.snake,
           playerHp: 50,
           seed: 1,
@@ -556,6 +561,28 @@ void main() {
       expect(
         engine.intentView(s).damage,
         data.enemy('salamander').phases.first.pattern.first.damage,
+      );
+    });
+
+    test('los Picos se acumulan y separan por rango', () {
+      // Pico 1: solo las élites.
+      expect(start(Difficulty.normal, pico: 1).enemy.maxHp, 63);
+      expect(
+        start(Difficulty.normal, pico: 1, enemy: 'monk').enemy.maxHp,
+        (128 * 1.15).round(),
+      );
+      // Pico 6: daño del 4 y Estructura del 6, sin tocar la Vida común.
+      final s = start(Difficulty.normal, pico: 6);
+      expect(s.enemy.maxHp, 63);
+      expect(s.enemy.maxStructure, (14 * 1.1).round());
+      expect(
+        engine.intentView(s).damage,
+        (engine.intentView(start(Difficulty.normal)).damage * 1.05).round(),
+      );
+      // Pico 10 sobre las reglas anteriores: jefe +10 +10 +8.
+      expect(
+        start(Difficulty.normal, pico: 10, enemy: 'dragon').enemy.maxHp,
+        (193 * 1.28).round(),
       );
     });
 

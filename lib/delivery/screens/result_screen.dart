@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/model/enums.dart';
+import '../../infrastructure/progress_storage.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
@@ -144,6 +146,34 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                   style: const TextStyle(color: Palette.textDim),
                 ),
               ),
+              // Ganar en Normal o más difícil abre el Pico siguiente.
+              if (won && run.difficulty != Difficulty.easy) ...[
+                const SizedBox(height: 14),
+                _enter(
+                  0.6,
+                  0.9,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Palette.surface,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: picoColor, width: 1.5),
+                    ),
+                    child: Text(
+                      run.pico >= ProgressStorage.maxPico
+                          ? t.picoTop
+                          : t.picoOpened(run.pico + 1),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        color: picoColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
               const Spacer(),
               _enter(
                 0.7,
@@ -153,14 +183,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                   height: 52,
                   child: FilledButton(
                     onPressed: () async {
-                      final difficulty = await pickDifficulty(
+                      final choice = await pickDifficulty(
                         context,
                         initial: run.difficulty,
+                        initialPico: run.pico,
                       );
-                      if (difficulty == null || !context.mounted) return;
+                      if (choice == null || !context.mounted) return;
                       ref
                           .read(runControllerProvider.notifier)
-                          .newRun(difficulty);
+                          .newRun(choice.difficulty, pico: choice.pico);
                       context.go('/map');
                     },
                     child: Text(t.tryAgain),

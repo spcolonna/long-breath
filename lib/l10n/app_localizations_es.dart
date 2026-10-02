@@ -1526,4 +1526,76 @@ class AppLocalizationsEs extends AppLocalizations {
   String retainedCheaper(int n) {
     return '−$n costo por retenida';
   }
+
+  @override
+  String get picosTitle => 'Picos';
+
+  @override
+  String get picosDesc =>
+      'Normal con reglas extra. Cada Pico suma una más a las anteriores.';
+
+  @override
+  String get picosLocked => 'Ganá una subida en Normal para abrir el Pico 1.';
+
+  @override
+  String picoName(int n) {
+    return 'Pico $n';
+  }
+
+  @override
+  String picoNew(String rule) {
+    return 'Nueva: $rule';
+  }
+
+  @override
+  String get picoStackedOne => 'Más la regla del Pico 1.';
+
+  @override
+  String picoStacked(int n) {
+    return 'Más las reglas de los Picos 1 a $n.';
+  }
+
+  @override
+  String get picoLower => 'Bajar de Pico';
+
+  @override
+  String get picoHigher => 'Subir de Pico';
+
+  @override
+  String picoOpened(int n) {
+    return '¡Se abrió el Pico $n!';
+  }
+
+  @override
+  String get picoTop => 'Coronaste el último Pico.';
+
+  @override
+  String get picoRule1 => 'Élites +15% de Vida';
+
+  @override
+  String get picoRule2 => 'La fuente cura 5 menos';
+
+  @override
+  String get picoRule3 => 'El jefe +10% de Vida';
+
+  @override
+  String get picoRule4 => 'Rivales +5% de daño';
+
+  @override
+  String get picoRule5 => 'Empezás con 5 de Vida menos';
+
+  @override
+  String get picoRule6 => 'Rivales +10% de Estructura';
+
+  @override
+  String get picoRule7 => 'Rivales +5% de daño otra vez';
+
+  @override
+  String get picoRule8 => 'Élites y jefe +10% de Vida otra vez';
+
+  @override
+  String get picoRule9 => 'Rivales +5% de daño otra vez';
+
+  @override
+  String get picoRule10 => 'Todos los rivales +8% de Vida y +5% de Estructura';
 }

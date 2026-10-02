@@ -38,6 +38,26 @@ extension Labels on AppLocalizations {
     Difficulty.shifu => difficultyShifuDesc,
   };
 
+  String picoRule(int n) => switch (n) {
+    1 => picoRule1,
+    2 => picoRule2,
+    3 => picoRule3,
+    4 => picoRule4,
+    5 => picoRule5,
+    6 => picoRule6,
+    7 => picoRule7,
+    8 => picoRule8,
+    9 => picoRule9,
+    _ => picoRule10,
+  };
+
+  /// Las reglas que el Pico [n] arrastra de los anteriores.
+  String? picoStack(int n) => switch (n) {
+    <= 1 => null,
+    2 => picoStackedOne,
+    _ => picoStacked(n - 1),
+  };
+
   String styleBenefit(Style s) => switch (s) {
     Style.tiger => styleBenefitTiger,
     Style.snake => styleBenefitSnake,

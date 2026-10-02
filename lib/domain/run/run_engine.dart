@@ -18,9 +18,14 @@ class RunEngine {
   final GameData data;
 
   /// La run empieza como novicio; el camino se elige en el santuario.
-  RunState newRun({required int seed, Difficulty difficulty = Difficulty.normal}) {
+  RunState newRun({
+    required int seed,
+    Difficulty difficulty = Difficulty.normal,
+    int pico = 0,
+  }) {
     final starter = data.starterDeck;
-    final hp = data.balance.difficulty(difficulty).playerHp;
+    final hp = data.balance.difficulty(difficulty).playerHp +
+        data.balance.picoMods(pico).playerHp;
     // El mapa sale de la misma semilla: la subida entera es reproducible.
     final fixed = data.balance.fixedMap;
     final (map, rng) = fixed != null
@@ -33,6 +38,7 @@ class RunEngine {
           );
     return RunState(
       difficulty: difficulty,
+      pico: pico,
       style: null,
       hp: hp,
       maxHp: hp,
@@ -359,6 +365,7 @@ class RunEngine {
   /// Vida que cura la fuente en la dificultad de la run.
   int healOf(RunState r) =>
       data.balance.difficulty(r.difficulty).fountainHeal +
+      data.balance.picoMods(r.pico).fountainHeal +
       talismanSum(r, (e) => e.fountainHeal);
 
   RunState fountainHeal(RunState r) {

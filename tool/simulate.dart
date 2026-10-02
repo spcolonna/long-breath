@@ -70,7 +70,6 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
         fountainRate = curve.$4;
         bossHeal = curve.$5;
         final base = c.raw.copy();
-        if (c.pico > 0) applyPico(base, c.pico);
         if (c.stages > 1) addStageEnemies(base);
         final fixed = c.stages > 1 ? null : base.build();
         return [
@@ -84,6 +83,7 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
               startTalismans: c.startTalismans,
               startCards: c.startCards,
               difficulty: c.difficulty,
+              pico: c.pico,
             ),
         ];
       }),
@@ -312,7 +312,7 @@ Future<void> _picos(RawData raw, int stages, int runs, int seed, List<String> pr
   final rows = <List<String>>[];
   for (var pico = 0; pico <= 10; pico++) {
     final cfg = Config(raw: raw, stages: stages, talismans: true, pico: pico);
-    final row = [pico == 0 ? '0 (normal)' : '$pico · ${picoRules[pico - 1]}'];
+    final row = [pico == 0 ? '0 (normal)' : '$pico'];
     for (final p in profilesSel) {
       final l = await simulate(cfg, p, runs, seed);
       row.add(pct(l.where((r) => r.won).length, l.length));
