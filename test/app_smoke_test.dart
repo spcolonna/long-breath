@@ -76,20 +76,40 @@ void main() {
     final context = tester.element(find.byType(CombatScreen));
     final container = ProviderScope.containerOf(context);
     final runs = container.read(runControllerProvider.notifier);
-    runs.resume(container.read(runEngineProvider).enter(
-        container.read(runControllerProvider)!
-            .copyWith(phase: RunPhase.map, currentNode: 'n2'),
-        'ns'));
+    runs.resume(
+      container
+          .read(runEngineProvider)
+          .enter(
+            container
+                .read(runControllerProvider)!
+                .copyWith(phase: RunPhase.map, currentNode: 'n2'),
+            'ns',
+          ),
+    );
     GoRouter.of(context).go('/shrine');
     await settle();
     expect(find.text('Santuario de los animales'), findsOneWidget);
     final offered = container.read(runControllerProvider)!.pathOptions;
-    final names = {Style.tiger: 'Tigre', Style.snake: 'Serpiente', Style.crane: 'Grulla'};
+    final names = {
+      Style.tiger: 'Tigre',
+      Style.snake: 'Serpiente',
+      Style.crane: 'Grulla',
+    };
     for (final s in Style.values) {
-      expect(find.text(names[s]!), offered.contains(s) ? findsOneWidget : findsNothing);
+      expect(
+        find.text(names[s]!),
+        offered.contains(s) ? findsOneWidget : findsNothing,
+      );
     }
+    expect(find.text('Tocá un camino para ver qué te da.'), findsOneWidget);
     await tester.tap(find.text(names[offered.first]!));
     await settle();
+    expect(
+      find.textContaining(
+        offered.first == Style.tiger ? 'Robás 5 cartas' : 'retenés hasta',
+      ),
+      findsOneWidget,
+    );
     await tester.tap(find.text('Tomar este camino'));
     await settle();
     expect(container.read(runControllerProvider)!.style, offered.first);

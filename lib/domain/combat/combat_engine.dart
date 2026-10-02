@@ -44,6 +44,10 @@ class CardPreview {
     required this.completesForms,
     required this.interruptsForms,
     this.reason,
+    this.stanceDamage = 0,
+    this.stanceStructure = 0,
+    this.stanceGuard = 0,
+    this.stanceCost = 0,
   });
 
   final int cost;
@@ -59,6 +63,12 @@ class CardPreview {
   final List<String> advancesForms;
   final List<String> completesForms;
   final List<String> interruptsForms;
+
+  /// Cuánto suma (o resta) la postura actual a cada valor de la carta.
+  final int stanceDamage;
+  final int stanceStructure;
+  final int stanceGuard;
+  final int stanceCost;
 }
 
 /// Intención del enemigo con los valores finales ya aplicados.
@@ -111,8 +121,9 @@ class CombatEngine {
     int pct(int v, int p) => (v * p / 100).round();
     final enemyHp = pct(enemy.hp, dif.enemyHp);
     final enemyStructure = pct(enemy.structure, dif.enemyStructure);
-    final (shuffled, rng) =
-        shuffle ? Rng.seeded(seed).shuffle(deck) : (deck, Rng.seeded(seed));
+    final (shuffled, rng) = shuffle
+        ? Rng.seeded(seed).shuffle(deck)
+        : (deck, Rng.seeded(seed));
     final d = _Draft(
       turn: 0,
       phase: CombatPhase.playerTurn,
@@ -241,8 +252,13 @@ class CombatEngine {
       math.max(0, def.cost + (data.stance(stance).costModifier[def.type] ?? 0));
 
   /// Daño y Estructura de la carta antes de los modificadores del enemigo.
-  (int, int) _cardHit(CardDef def, int upgrades, Stance stance, bool staggered,
-      int turnStructureBonus) {
+  (int, int) _cardHit(
+    CardDef def,
+    int upgrades,
+    Stance stance,
+    bool staggered,
+    int turnStructureBonus,
+  ) {
     if (def.damage == 0 && def.structure == 0) return (0, 0);
     final st = data.stance(stance);
     var dmg = def.damage + (def.guard == 0 ? upgrades : 0);
@@ -258,9 +274,28 @@ class CombatEngine {
     return (dmg, str);
   }
 
+  /// Aporte de la postura a daño, Estructura, guardia y costo de la carta.
+  (int, int, int, int) _stanceDelta(CardDef def, int upgrades, Stance stance) {
+    final st = data.stance(stance);
+    var dmg = 0, str = 0;
+    if ((def.damage > 0 || def.structure > 0) && def.type.isAttack) {
+      dmg = st.damageBonus[def.type] ?? 0;
+      str = st.structureBonus[def.type] ?? 0;
+    }
+    final ssb = def.stanceStructureBonus;
+    if (ssb != null && ssb.$1 == stance) str += ssb.$2;
+    final guard = def.guard == 0
+        ? 0
+        : _guardOf(def, upgrades, stance) - (def.guard + upgrades);
+    return (dmg, str, guard, _cost(def, stance) - def.cost);
+  }
+
   int _guardOf(CardDef def, int upgrades, Stance stance) {
     if (def.guard == 0) return 0;
-    return math.max(0, def.guard + upgrades + data.stance(stance).guardModifier);
+    return math.max(
+      0,
+      def.guard + upgrades + data.stance(stance).guardModifier,
+    );
   }
 
   /// Daño efectivo sobre el enemigo: ×2 desequilibrado; si no, ½ inamovible
@@ -281,11 +316,23 @@ class CombatEngine {
     final stance = s.player.stance;
     final stanceAfter = def.stance ?? stance;
     final enemyDef = data.enemy(s.enemy.id);
-    final (dmg, str) = _cardHit(def, c.upgrades, stance, s.enemy.staggered,
-        s.turnStructureBonus);
-    final dealt =
-        _enemyDamageTaken(enemyDef, s.enemy.staggered, s.enemy.scales, dmg);
-    final advances = <String>[], completes = <String>[], interrupts = <String>[];
+    final (dmg, str) = _cardHit(
+      def,
+      c.upgrades,
+      stance,
+      s.enemy.staggered,
+      s.turnStructureBonus,
+    );
+    final dealt = _enemyDamageTaken(
+      enemyDef,
+      s.enemy.staggered,
+      s.enemy.scales,
+      dmg,
+    );
+    final (sDmg, sStr, sGuard, sCost) = _stanceDelta(def, c.upgrades, stance);
+    final advances = <String>[],
+        completes = <String>[],
+        interrupts = <String>[];
     for (final f in data.forms) {
       final p = s.formProgress[f.id]!;
       if (f.steps[p] == def.id) {
@@ -307,6 +354,10 @@ class CombatEngine {
       advancesForms: advances,
       completesForms: completes,
       interruptsForms: interrupts,
+      stanceDamage: dmg > 0 ? sDmg : 0,
+      stanceStructure: s.enemy.staggered ? 0 : sStr,
+      stanceGuard: sGuard,
+      stanceCost: sCost,
     );
   }
 
@@ -329,15 +380,19 @@ class CombatEngine {
       intent: intent,
       damage: isAttack
           ? _enemyDamage(
-              intent.damage + e.chargeBonus + punish * def.sameStancePunishDamage,
-              s.enemyDamagePct)
+              intent.damage +
+                  e.chargeBonus +
+                  punish * def.sameStancePunishDamage,
+              s.enemyDamagePct,
+            )
           : 0,
       structure: isAttack
           ? intent.structure + punish * def.sameStancePunishStructure
           : 0,
       skipped: e.skipNextAction,
       countdown: countdown,
-      punishIfSameStance: def.sameStancePunishDamage > 0 &&
+      punishIfSameStance:
+          def.sameStancePunishDamage > 0 &&
           s.lastTurnEndStance != null &&
           s.lastTurnEndStance == s.player.stance,
     );
@@ -361,8 +416,13 @@ class CombatEngine {
       events.add(GuardGained(g, def.height));
     }
 
-    final (dmg, str) = _cardHit(def, card.upgrades, d.stance,
-        d.enemy.staggered, d.turnStructureBonus);
+    final (dmg, str) = _cardHit(
+      def,
+      card.upgrades,
+      d.stance,
+      d.enemy.staggered,
+      d.turnStructureBonus,
+    );
     if (dmg > 0 || str > 0) _hitEnemy(d, dmg, str, events);
 
     if (def.clearGuard) {
@@ -423,7 +483,9 @@ class CombatEngine {
   void _hitEnemy(_Draft d, int dmg, int str, List<CombatEvent> events) {
     final e = d.enemy;
     final def = data.enemy(e.id);
-    var taken = dmg == 0 ? 0 : _enemyDamageTaken(def, e.staggered, e.scales, dmg);
+    var taken = dmg == 0
+        ? 0
+        : _enemyDamageTaken(def, e.staggered, e.scales, dmg);
     final absorbed = math.min(e.guard, taken);
     e.guard -= absorbed;
     taken -= absorbed;
@@ -531,7 +593,11 @@ class CombatEngine {
   }
 
   void _enemyAttack(
-      _Draft d, EnemyDef def, IntentDef intent, List<CombatEvent> events) {
+    _Draft d,
+    EnemyDef def,
+    IntentDef intent,
+    List<CombatEvent> events,
+  ) {
     final e = d.enemy;
     var damage = intent.damage + e.chargeBonus;
     var structure = intent.structure;
@@ -552,10 +618,11 @@ class CombatEngine {
       d.nextTurnBreathMod +=
           data.balance.deflectBreathBonus + stance.deflectBreathBonus;
       _hitEnemy(
-          d,
-          d.deflectBonusDamage,
-          data.balance.deflectEnemyStructureLoss + d.deflectBonusStructure,
-          events);
+        d,
+        d.deflectBonusDamage,
+        data.balance.deflectEnemyStructureLoss + d.deflectBonusStructure,
+        events,
+      );
       return;
     }
     final absorb = d.guard == 0 ? 0 : (match ? d.guard : d.guard ~/ 2);
@@ -644,20 +711,20 @@ class _EnemyDraft {
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
-        id: e.id,
-        hp: e.hp,
-        maxHp: e.maxHp,
-        structure: e.structure,
-        maxStructure: e.maxStructure,
-        guard: e.guard,
-        phaseIndex: e.phaseIndex,
-        patternIndex: e.patternIndex,
-        staggered: e.staggered,
-        staggerEndsTurn: e.staggerEndsTurn,
-        skipNextAction: e.skipNextAction,
-        chargeBonus: e.chargeBonus,
-        scales: e.scales,
-      );
+    id: e.id,
+    hp: e.hp,
+    maxHp: e.maxHp,
+    structure: e.structure,
+    maxStructure: e.maxStructure,
+    guard: e.guard,
+    phaseIndex: e.phaseIndex,
+    patternIndex: e.patternIndex,
+    staggered: e.staggered,
+    staggerEndsTurn: e.staggerEndsTurn,
+    skipNextAction: e.skipNextAction,
+    chargeBonus: e.chargeBonus,
+    scales: e.scales,
+  );
 
   final String id;
   int hp;
@@ -674,20 +741,20 @@ class _EnemyDraft {
   int scales;
 
   EnemyCombat freeze() => EnemyCombat(
-        id: id,
-        hp: hp,
-        maxHp: maxHp,
-        structure: structure,
-        maxStructure: maxStructure,
-        guard: guard,
-        phaseIndex: phaseIndex,
-        patternIndex: patternIndex,
-        staggered: staggered,
-        staggerEndsTurn: staggerEndsTurn,
-        skipNextAction: skipNextAction,
-        chargeBonus: chargeBonus,
-        scales: scales,
-      );
+    id: id,
+    hp: hp,
+    maxHp: maxHp,
+    structure: structure,
+    maxStructure: maxStructure,
+    guard: guard,
+    phaseIndex: phaseIndex,
+    patternIndex: patternIndex,
+    staggered: staggered,
+    staggerEndsTurn: staggerEndsTurn,
+    skipNextAction: skipNextAction,
+    chargeBonus: chargeBonus,
+    scales: scales,
+  );
 }
 
 class _Draft {
@@ -727,39 +794,39 @@ class _Draft {
   }) : formsCompleted = formsCompleted ?? {};
 
   factory _Draft.of(CombatState s) => _Draft(
-        turn: s.turn,
-        phase: s.phase,
-        handSize: s.handSize,
-        breathPerTurn: s.breathPerTurn,
-        retainMax: s.retainMax,
-        hp: s.player.hp,
-        maxHp: s.player.maxHp,
-        structure: s.player.structure,
-        maxStructure: s.player.maxStructure,
-        guard: s.player.guard,
-        guardHeight: s.player.guardHeight,
-        stance: s.player.stance,
-        breath: s.player.breath,
-        enemy: _EnemyDraft.of(s.enemy),
-        drawPile: [...s.drawPile],
-        hand: [...s.hand],
-        discard: [...s.discard],
-        exhausted: [...s.exhausted],
-        breathesLeft: s.breathesLeft,
-        formProgress: {...s.formProgress},
-        rng: s.rng,
-        nextTurnBreathMod: s.nextTurnBreathMod,
-        dingbuUsed: s.dingbuUsed,
-        turnStructureBonus: s.turnStructureBonus,
-        deflectBonusDamage: s.deflectBonusDamage,
-        deflectBonusStructure: s.deflectBonusStructure,
-        lastTurnEndStance: s.lastTurnEndStance,
-        punishPending: s.punishPending,
-        pendingDiscard: s.pendingDiscard,
-        formsCompleted: {...s.formsCompleted},
-        deflects: s.deflects,
-        enemyDamagePct: s.enemyDamagePct,
-      );
+    turn: s.turn,
+    phase: s.phase,
+    handSize: s.handSize,
+    breathPerTurn: s.breathPerTurn,
+    retainMax: s.retainMax,
+    hp: s.player.hp,
+    maxHp: s.player.maxHp,
+    structure: s.player.structure,
+    maxStructure: s.player.maxStructure,
+    guard: s.player.guard,
+    guardHeight: s.player.guardHeight,
+    stance: s.player.stance,
+    breath: s.player.breath,
+    enemy: _EnemyDraft.of(s.enemy),
+    drawPile: [...s.drawPile],
+    hand: [...s.hand],
+    discard: [...s.discard],
+    exhausted: [...s.exhausted],
+    breathesLeft: s.breathesLeft,
+    formProgress: {...s.formProgress},
+    rng: s.rng,
+    nextTurnBreathMod: s.nextTurnBreathMod,
+    dingbuUsed: s.dingbuUsed,
+    turnStructureBonus: s.turnStructureBonus,
+    deflectBonusDamage: s.deflectBonusDamage,
+    deflectBonusStructure: s.deflectBonusStructure,
+    lastTurnEndStance: s.lastTurnEndStance,
+    punishPending: s.punishPending,
+    pendingDiscard: s.pendingDiscard,
+    formsCompleted: {...s.formsCompleted},
+    deflects: s.deflects,
+    enemyDamagePct: s.enemyDamagePct,
+  );
 
   int turn;
   CombatPhase phase;
@@ -797,39 +864,39 @@ class _Draft {
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
 
   CombatState freeze() => CombatState(
-        turn: turn,
-        phase: phase,
-        handSize: handSize,
-        breathPerTurn: breathPerTurn,
-        retainMax: retainMax,
-        player: PlayerCombat(
-          hp: hp,
-          maxHp: maxHp,
-          structure: structure,
-          maxStructure: maxStructure,
-          guard: guard,
-          guardHeight: guardHeight,
-          stance: stance,
-          breath: breath,
-        ),
-        enemy: enemy.freeze(),
-        drawPile: List.unmodifiable(drawPile),
-        hand: List.unmodifiable(hand),
-        discard: List.unmodifiable(discard),
-        exhausted: List.unmodifiable(exhausted),
-        nextTurnBreathMod: nextTurnBreathMod,
-        dingbuUsed: dingbuUsed,
-        breathesLeft: breathesLeft,
-        turnStructureBonus: turnStructureBonus,
-        deflectBonusDamage: deflectBonusDamage,
-        deflectBonusStructure: deflectBonusStructure,
-        lastTurnEndStance: lastTurnEndStance,
-        punishPending: punishPending,
-        formProgress: Map.unmodifiable(formProgress),
-        pendingDiscard: pendingDiscard,
-        formsCompleted: Map.unmodifiable(formsCompleted),
-        deflects: deflects,
-        rng: rng,
-        enemyDamagePct: enemyDamagePct,
-      );
+    turn: turn,
+    phase: phase,
+    handSize: handSize,
+    breathPerTurn: breathPerTurn,
+    retainMax: retainMax,
+    player: PlayerCombat(
+      hp: hp,
+      maxHp: maxHp,
+      structure: structure,
+      maxStructure: maxStructure,
+      guard: guard,
+      guardHeight: guardHeight,
+      stance: stance,
+      breath: breath,
+    ),
+    enemy: enemy.freeze(),
+    drawPile: List.unmodifiable(drawPile),
+    hand: List.unmodifiable(hand),
+    discard: List.unmodifiable(discard),
+    exhausted: List.unmodifiable(exhausted),
+    nextTurnBreathMod: nextTurnBreathMod,
+    dingbuUsed: dingbuUsed,
+    breathesLeft: breathesLeft,
+    turnStructureBonus: turnStructureBonus,
+    deflectBonusDamage: deflectBonusDamage,
+    deflectBonusStructure: deflectBonusStructure,
+    lastTurnEndStance: lastTurnEndStance,
+    punishPending: punishPending,
+    formProgress: Map.unmodifiable(formProgress),
+    pendingDiscard: pendingDiscard,
+    formsCompleted: Map.unmodifiable(formsCompleted),
+    deflects: deflects,
+    rng: rng,
+    enemyDamagePct: enemyDamagePct,
+  );
 }

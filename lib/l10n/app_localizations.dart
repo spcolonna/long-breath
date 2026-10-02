@@ -154,6 +154,78 @@ abstract class AppLocalizations {
   /// **'Robás {draw} · Aliento {breath} · Retenés {retain}'**
   String styleSummary(int draw, int breath, int retain);
 
+  /// No description provided for @styleTileStats.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {draw} · Retenés {retain}'**
+  String styleTileStats(int draw, int retain);
+
+  /// No description provided for @styleBenefitTiger.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás 5 cartas por turno, una más que los otros caminos. Te salen las cartas del tigre y el Puño del Tigre.'**
+  String get styleBenefitTiger;
+
+  /// No description provided for @styleBenefitSnake.
+  ///
+  /// In es, this message translates to:
+  /// **'Al terminar el turno retenés hasta 2 cartas y igual robás la mano completa. Te sale el Puño de la Serpiente.'**
+  String get styleBenefitSnake;
+
+  /// No description provided for @styleBenefitCrane.
+  ///
+  /// In es, this message translates to:
+  /// **'Al terminar el turno retenés hasta 3 cartas y igual robás la mano completa: guardás todo para el momento justo.'**
+  String get styleBenefitCrane;
+
+  /// No description provided for @styleChipRetain.
+  ///
+  /// In es, this message translates to:
+  /// **'{hanzi} Retenés {count}'**
+  String styleChipRetain(String hanzi, int count);
+
+  /// No description provided for @styleChipDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'{hanzi} Robás {count}'**
+  String styleChipDraw(String hanzi, int count);
+
+  /// No description provided for @styleBenefitPick.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá un camino para ver qué te da.'**
+  String get styleBenefitPick;
+
+  /// No description provided for @stanceDeltaDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'{value} daño'**
+  String stanceDeltaDamage(String value);
+
+  /// No description provided for @stanceDeltaStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'{value} Estructura'**
+  String stanceDeltaStructure(String value);
+
+  /// No description provided for @stanceDeltaGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'{value} guardia'**
+  String stanceDeltaGuard(String value);
+
+  /// No description provided for @stanceDeltaCost.
+  ///
+  /// In es, this message translates to:
+  /// **'{value} costo'**
+  String stanceDeltaCost(String value);
+
+  /// No description provided for @stanceDeltaBy.
+  ///
+  /// In es, this message translates to:
+  /// **'{changes} por {stance}'**
+  String stanceDeltaBy(String changes, String stance);
+
   /// No description provided for @life.
   ///
   /// In es, this message translates to:
@@ -1705,7 +1777,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStances4.
   ///
   /// In es, this message translates to:
-  /// **'Fijate el daño: 8. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.'**
+  /// **'Fijate el daño: 8 con un ▲ verde. La carta base hace 6, pero pegás desde Caballo, que suma +2 a los puños: el ▲ marca lo que te suma la postura y arriba dice \"+2 daño por Mǎbù\". Si una postura te resta, vas a ver un ▼ rojo. Lo de abajo, → Arco, es la postura en la que te deja DESPUÉS de pegar. Jugala.'**
   String get lesStances4;
 
   /// No description provided for @lesStances5.
@@ -1735,7 +1807,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStances9.
   ///
   /// In es, this message translates to:
-  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 y hace 7. Jugala.'**
+  /// **'En Vacía las patadas cuestan 1 menos y pegan +2: Patada látigo ahora cuesta 0 (el costo se pone verde) y hace 7 ▲. Jugala.'**
   String get lesStances9;
 
   /// No description provided for @lesStances10.

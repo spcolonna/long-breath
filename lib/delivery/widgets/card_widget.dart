@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import 'juice.dart';
 
 /// Carta de juego. Con [preview] muestra los valores finales (bonus aplicados).
 class CardWidget extends ConsumerWidget {
@@ -95,17 +96,25 @@ class CardWidget extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    _CostBadge(cost: cost, base: def.cost, scale: s),
+                    _CostBadge(
+                      cost: cost,
+                      base: def.cost,
+                      stanceDelta: p?.stanceCost ?? 0,
+                      scale: s,
+                    ),
                     SizedBox(width: 4 * s),
                     Expanded(
-                      child: Text(t.typeLabel(def.type),
-                          textAlign: TextAlign.right,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontSize: 9 * s,
-                              color: color,
-                              fontWeight: FontWeight.w600)),
+                      child: Text(
+                        t.typeLabel(def.type),
+                        textAlign: TextAlign.right,
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                          fontSize: 9 * s,
+                          color: color,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -116,12 +125,15 @@ class CardWidget extends ConsumerWidget {
                     children: [
                       Positioned.fill(
                         child: FittedBox(
-                          child: Text(def.hanzi,
-                              style: TextStyle(
-                                  fontSize: 40 * s,
-                                  height: 1,
-                                  color: color.withValues(alpha: 0.16),
-                                  fontWeight: FontWeight.w700)),
+                          child: Text(
+                            def.hanzi,
+                            style: TextStyle(
+                              fontSize: 40 * s,
+                              height: 1,
+                              color: color.withValues(alpha: 0.16),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
                       ),
                       // Con manos grandes la carta se achica: el texto se reduce
@@ -134,24 +146,30 @@ class CardWidget extends ConsumerWidget {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(text.card(def.id),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 12 * s,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.1,
-                                        color: Palette.text)),
+                                Text(
+                                  text.card(def.id),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 12 * s,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.1,
+                                    color: Palette.text,
+                                  ),
+                                ),
                                 SizedBox(height: 2 * s),
-                                Text(def.pinyin,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 8 * s,
-                                        fontStyle: FontStyle.italic,
-                                        color: Palette.textDim)),
+                                Text(
+                                  def.pinyin,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 8 * s,
+                                    fontStyle: FontStyle.italic,
+                                    color: Palette.textDim,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -167,6 +185,9 @@ class CardWidget extends ConsumerWidget {
                   guard: guard,
                   height: def.height,
                   scale: s,
+                  damageDelta: p?.stanceDamage ?? 0,
+                  structureDelta: p?.stanceStructure ?? 0,
+                  guardDelta: p?.stanceGuard ?? 0,
                 ),
                 if (def.stance != null || def.exhaust || upgrades > 0)
                   Padding(
@@ -187,8 +208,11 @@ class CardWidget extends ConsumerWidget {
               Positioned(
                 right: 0,
                 top: 16 * s,
-                child: Icon(Icons.warning_amber_rounded,
-                    size: 16 * s, color: Palette.lacquer),
+                child: Icon(
+                  Icons.warning_amber_rounded,
+                  size: 16 * s,
+                  color: Palette.lacquer,
+                ),
               ),
           ],
         ),
@@ -197,34 +221,56 @@ class CardWidget extends ConsumerWidget {
   }
 }
 
+/// Costo de la carta: jade si la postura la abarata, laca si la encarece.
 class _CostBadge extends StatelessWidget {
-  const _CostBadge({required this.cost, required this.base, required this.scale});
+  const _CostBadge({
+    required this.cost,
+    required this.base,
+    required this.stanceDelta,
+    required this.scale,
+  });
 
   final int cost;
   final int base;
+  final int stanceDelta;
   final double scale;
 
   @override
   Widget build(BuildContext context) {
     final changed = cost != base;
-    return Container(
-      width: 20 * scale,
-      height: 20 * scale,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Palette.sky.withValues(alpha: 0.85),
-        border: changed ? Border.all(color: Palette.gold, width: 2) : null,
-      ),
-      child: Text('$cost',
+    final fill = stanceDelta < 0
+        ? Palette.jade
+        : stanceDelta > 0
+        ? Palette.lacquer
+        : Palette.sky.withValues(alpha: 0.85);
+    return Bounce(
+      trigger: stanceDelta,
+      scale: 1.3,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        width: 20 * scale,
+        height: 20 * scale,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: fill,
+          border: changed ? Border.all(color: Palette.gold, width: 2) : null,
+        ),
+        child: Text(
+          '$cost',
           style: TextStyle(
-              fontSize: 12 * scale,
-              fontWeight: FontWeight.bold,
-              color: Colors.white)),
+            fontSize: 12 * scale,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }
 
+/// Daño, Estructura y guardia. Lo que suma la postura va con ▲ en jade y lo
+/// que resta con ▼ en laca, y rebota cuando cambia la postura.
 class _Stats extends StatelessWidget {
   const _Stats({
     required this.damage,
@@ -232,6 +278,9 @@ class _Stats extends StatelessWidget {
     required this.guard,
     required this.height,
     required this.scale,
+    this.damageDelta = 0,
+    this.structureDelta = 0,
+    this.guardDelta = 0,
   });
 
   final int damage;
@@ -239,13 +288,23 @@ class _Stats extends StatelessWidget {
   final int guard;
   final Height? height;
   final double scale;
+  final int damageDelta;
+  final int structureDelta;
+  final int guardDelta;
 
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      if (damage > 0) _stat(Icons.flash_on, '$damage', Palette.lacquer),
-      if (structure > 0) _stat(Icons.hexagon_outlined, '$structure', Palette.structure),
-      if (guard > 0) _stat(heightIcon(height), '$guard', Palette.sky),
+      if (damage > 0)
+        _stat(Icons.flash_on, damage, damageDelta, Palette.lacquer),
+      if (structure > 0)
+        _stat(
+          Icons.hexagon_outlined,
+          structure,
+          structureDelta,
+          Palette.structure,
+        ),
+      if (guard > 0) _stat(heightIcon(height), guard, guardDelta, Palette.sky),
     ];
     if (items.isEmpty) return SizedBox(height: 14 * scale);
     return Wrap(
@@ -255,13 +314,42 @@ class _Stats extends StatelessWidget {
     );
   }
 
-  Widget _stat(IconData icon, String v, Color c) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 11 * scale, color: c),
-          Text(v,
+  Widget _stat(IconData icon, int v, int delta, Color c) {
+    final mark = delta > 0 ? Palette.jade : Palette.lacquer;
+    return Bounce(
+      trigger: delta,
+      scale: 1.3,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: EdgeInsets.symmetric(horizontal: delta == 0 ? 0 : 2 * scale),
+        decoration: BoxDecoration(
+          color: delta == 0 ? null : mark.withValues(alpha: 0.16),
+          borderRadius: BorderRadius.circular(4 * scale),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 11 * scale, color: c),
+            Text(
+              '$v',
               style: TextStyle(
-                  fontSize: 11 * scale, fontWeight: FontWeight.bold, color: c)),
-        ],
-      );
+                fontSize: 11 * scale,
+                fontWeight: FontWeight.bold,
+                color: c,
+              ),
+            ),
+            if (delta != 0)
+              Text(
+                delta > 0 ? '▲' : '▼',
+                style: TextStyle(
+                  fontSize: 8 * scale,
+                  fontWeight: FontWeight.bold,
+                  color: mark,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }

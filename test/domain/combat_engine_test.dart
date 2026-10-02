@@ -16,20 +16,18 @@ CombatState setup(
   String enemy = 'salamander',
   Style style = Style.snake,
   int hp = 50,
-}) =>
-    engine
-        .start(
-          deck: [
-            for (var i = 0; i < ids.length; i++)
-              CombatCard(uid: i, cardId: ids[i]),
-          ],
-          enemyId: enemy,
-          style: style,
-          playerHp: hp,
-          seed: 1,
-          shuffle: false,
-        )
-        .state;
+}) => engine
+    .start(
+      deck: [
+        for (var i = 0; i < ids.length; i++) CombatCard(uid: i, cardId: ids[i]),
+      ],
+      enemyId: enemy,
+      style: style,
+      playerHp: hp,
+      seed: 1,
+      shuffle: false,
+    )
+    .state;
 
 int uidOf(CombatState s, String cardId) =>
     s.hand.firstWhere((c) => c.cardId == cardId).uid;
@@ -61,12 +59,21 @@ void main() {
     });
 
     test('mǎbù: puños +2; patadas cuestan +1', () {
-      var s = setup(['mabu_chongquan', 'tan_tui', ...filler]);
+      var s = setup([
+        'mabu_chongquan',
+        'tan_tui',
+        'gongbu_chongquan',
+        ...filler,
+      ]);
       s = play(s, 'mabu_chongquan').state;
       expect(s.enemy.hp, 57 - 7);
       final p = engine.preview(s, uidOf(s, 'tan_tui'));
       expect(p.cost, 2);
       expect(p.damage, 5);
+      expect(p.stanceCost, 1, reason: 'la UI lo marca ▼');
+      expect(p.stanceDamage, 0);
+      final fist = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
+      expect(fist.stanceDamage, 2, reason: 'la UI lo marca ▲');
     });
 
     test('xūbù: patadas cuestan 1 menos y hacen +2; defensas −2', () {
@@ -77,6 +84,10 @@ void main() {
       final p = engine.preview(s, uidOf(s, 'tan_tui'));
       expect(p.cost, 0);
       expect(p.damage, 7);
+      expect(p.stanceCost, -1);
+      expect(p.stanceDamage, 2);
+      final def = engine.preview(s, uidOf(s, 'ge_dang'));
+      expect(def.stanceGuard, -2);
     });
 
     test('Dīngbù: 1 Aliento, una vez por turno', () {
@@ -192,9 +203,10 @@ void main() {
     });
 
     test('Gólem inamovible: mitad de daño', () {
-      final s = play(setup(['gongbu_chongquan', ...filler], enemy: 'golem'),
-              'gongbu_chongquan')
-          .state;
+      final s = play(
+        setup(['gongbu_chongquan', ...filler], enemy: 'golem'),
+        'gongbu_chongquan',
+      ).state;
       expect(s.enemy.hp, 64 - 4);
     });
   });
@@ -245,9 +257,12 @@ void main() {
       var s = setup([...filler, ...filler]);
       final keep = s.hand.first.uid;
       expect(
-          engine.validate(
-              s, EndTurn(retain: [keep, s.hand[1].uid, s.hand[2].uid])),
-          isNotNull);
+        engine.validate(
+          s,
+          EndTurn(retain: [keep, s.hand[1].uid, s.hand[2].uid]),
+        ),
+        isNotNull,
+      );
       s = endTurn(s, [keep]).state;
       // La retenida es extra: se roba la mano completa igual.
       expect(s.hand.length, 5);
@@ -274,7 +289,10 @@ void main() {
             seed: seed,
           )
           .state;
-      expect(start(42).hand.map((c) => c.uid), start(42).hand.map((c) => c.uid));
+      expect(
+        start(42).hand.map((c) => c.uid),
+        start(42).hand.map((c) => c.uid),
+      );
     });
   });
 
@@ -282,12 +300,16 @@ void main() {
     const xhq = 'xiao_hong_quan';
 
     test('Xiǎo Hóng Quán completa en dos turnos', () {
-      var s = setup([
-        'gongbu_chongquan', 'tan_tui', 'mabu_jiada', 'ge_dang', 'ge_dang',
-        'an_zhang', //
-        'xubu_liangzhang', 'tui_zhang', 'tui_zhang', 'tui_zhang', 'tui_zhang',
-        'tui_zhang', 'tui_zhang', 'tui_zhang',
-      ], enemy: 'golem', style: Style.tiger);
+      var s = setup(
+        [
+          'gongbu_chongquan', 'tan_tui', 'mabu_jiada', 'ge_dang', 'ge_dang',
+          'an_zhang', //
+          'xubu_liangzhang', 'tui_zhang', 'tui_zhang', 'tui_zhang', 'tui_zhang',
+          'tui_zhang', 'tui_zhang', 'tui_zhang',
+        ],
+        enemy: 'golem',
+        style: Style.tiger,
+      );
       s = play(s, 'gongbu_chongquan').state;
       s = play(s, 'tan_tui').state;
       s = play(s, 'mabu_jiada').state;
@@ -315,8 +337,13 @@ void main() {
     });
 
     test('si la carta es el primer paso, la forma reinicia en 1', () {
-      var s = setup(['gongbu_chongquan', 'tan_tui', 'gongbu_chongquan', 'ge_dang',
-          'ge_dang']);
+      var s = setup([
+        'gongbu_chongquan',
+        'tan_tui',
+        'gongbu_chongquan',
+        'ge_dang',
+        'ge_dang',
+      ]);
       s = play(s, 'gongbu_chongquan').state;
       s = play(s, 'tan_tui').state;
       expect(s.formProgress[xhq], 2);
@@ -392,42 +419,54 @@ void main() {
       expect(engine.intentView(s).countdown, 1);
     });
 
-    test('Eco del Dragón: fase 3 al 30%, le crecen escamas y el Aliento llega antes', () {
-      var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
-      // En fase 2, sin escamas y apenas arriba del 30% (52,5 de 175).
-      s = s.copyWith(
-          enemy: s.enemy.copyWith(hp: 55, phaseIndex: 1, scales: 0));
-      final r = play(s, 'gongbu_chongquan');
-      s = r.state;
-      expect(r.events.whereType<EnemyPhaseChanged>().single.phase, 2);
-      expect(r.events.whereType<ScalesRegrown>().single.scales, 2);
-      expect(s.enemy.scales, 2);
-      // Barrido doble y después el Aliento: una acción de aviso.
-      expect(engine.intentView(s).countdown, 1);
-    });
+    test(
+      'Eco del Dragón: fase 3 al 30%, le crecen escamas y el Aliento llega antes',
+      () {
+        var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
+        // En fase 2, sin escamas y apenas arriba del 30% (52,5 de 175).
+        s = s.copyWith(
+          enemy: s.enemy.copyWith(hp: 55, phaseIndex: 1, scales: 0),
+        );
+        final r = play(s, 'gongbu_chongquan');
+        s = r.state;
+        expect(r.events.whereType<EnemyPhaseChanged>().single.phase, 2);
+        expect(r.events.whereType<ScalesRegrown>().single.scales, 2);
+        expect(s.enemy.scales, 2);
+        // Barrido doble y después el Aliento: una acción de aviso.
+        expect(engine.intentView(s).countdown, 1);
+      },
+    );
 
-    test('Eco del Dragón: las escamas restan daño y se caen al desequilibrarlo', () {
-      final deck = ['gongbu_chongquan', ...filler];
-      final vsSalamander = setup(deck);
-      var s = setup(deck, enemy: 'dragon');
-      expect(s.enemy.scales, 4);
-      final plain =
-          engine.preview(vsSalamander, uidOf(vsSalamander, 'gongbu_chongquan'));
-      final scaled = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
-      expect(scaled.damage, plain.damage - 4);
-      // A un punto de Estructura: el golpe lo desequilibra y pierde una escama.
-      s = s.copyWith(enemy: s.enemy.copyWith(structure: 1));
-      final r = play(s, 'gongbu_chongquan');
-      expect(r.events.whereType<EnemyBroken>(), hasLength(1));
-      expect(r.events.whereType<ScaleShed>().single.remaining, 3);
-      expect(r.state.enemy.scales, 3);
-    });
+    test(
+      'Eco del Dragón: las escamas restan daño y se caen al desequilibrarlo',
+      () {
+        final deck = ['gongbu_chongquan', ...filler];
+        final vsSalamander = setup(deck);
+        var s = setup(deck, enemy: 'dragon');
+        expect(s.enemy.scales, 4);
+        final plain = engine.preview(
+          vsSalamander,
+          uidOf(vsSalamander, 'gongbu_chongquan'),
+        );
+        final scaled = engine.preview(s, uidOf(s, 'gongbu_chongquan'));
+        expect(scaled.damage, plain.damage - 4);
+        // A un punto de Estructura: el golpe lo desequilibra y pierde una escama.
+        s = s.copyWith(enemy: s.enemy.copyWith(structure: 1));
+        final r = play(s, 'gongbu_chongquan');
+        expect(r.events.whereType<EnemyBroken>(), hasLength(1));
+        expect(r.events.whereType<ScaleShed>().single.remaining, 3);
+        expect(r.state.enemy.scales, 3);
+      },
+    );
   });
 
   group('dificultad', () {
     CombatState start(Difficulty d) => engine
         .start(
-          deck: [for (final (i, id) in filler.indexed) CombatCard(uid: i, cardId: id)],
+          deck: [
+            for (final (i, id) in filler.indexed)
+              CombatCard(uid: i, cardId: id),
+          ],
           enemyId: 'salamander',
           style: Style.snake,
           playerHp: 50,
@@ -440,7 +479,10 @@ void main() {
     test('Normal deja los números de los datos', () {
       final s = start(Difficulty.normal);
       expect(s.enemy.maxHp, 57);
-      expect(engine.intentView(s).damage, data.enemy('salamander').phases.first.pattern.first.damage);
+      expect(
+        engine.intentView(s).damage,
+        data.enemy('salamander').phases.first.pattern.first.damage,
+      );
     });
 
     test('Shifu sube Vida, Estructura y daño enemigos', () {
@@ -448,9 +490,10 @@ void main() {
       final s = start(Difficulty.shifu);
       expect(s.enemy.maxHp, (57 * 1.2).round());
       expect(s.enemy.maxStructure, (14 * 1.1).round());
-      expect(engine.intentView(s).damage,
-          (engine.intentView(normal).damage * 1.2).round());
+      expect(
+        engine.intentView(s).damage,
+        (engine.intentView(normal).damage * 1.2).round(),
+      );
     });
   });
 }
-
