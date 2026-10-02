@@ -103,6 +103,59 @@
       }
     }
   },
+  "formsMissingCards": "Te faltan cartas para: {forms}",
+  "@formsMissingCards": {
+    "placeholders": {
+      "forms": {
+        "type": "String"
+      }
+    }
+  },
+  "effHeal": "Curás {n}",
+  "@effHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effGuard": "+{n} Guardia",
+  "@effGuard": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "effFistBonus": "Tus puños pegan +{n} el resto del combate",
+  "@effFistBonus": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "formScroll": "Forma · 套路",
+  "formScrollHint": "Aprenderla reemplaza a la carta. Al jugar sus pasos en orden se dispara:",
+  "formLearned": "¡Aprendiste {name}!",
+  "@formLearned": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "formStepOwned": "Ya tenés esta carta",
+  "formStepMissing": "Te falta esta carta",
+  "fistBonusTitle": "¡Puños encadenados!",
+  "fistBonusNow": "Tus puños pegan +{n} todo el combate",
+  "@fistBonusNow": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "life": "Vida",
   "structure": "Estructura",
   "guard": "Guardia",
@@ -136,7 +189,7 @@
   },
   "chooseCard": "Elegí una carta",
   "rewardTitle": "Recompensa",
-  "rewardHint": "Elegí 1 carta o salteá. Un mazo chico es más predecible.",
+  "rewardHint": "Elegí 1 carta o aprendé la forma, o salteá. Un mazo chico es más predecible.",
   "skip": "Saltear",
   "breathe": "Respirar",
   "endTurn": "Terminar turno",
@@ -524,7 +577,7 @@
   "illBrokenTitle": "Desequilibrado",
   "illBroken": "Si la Estructura del rival llega a 0, pierde su próxima acción y recibe el doble de daño hasta el final de tu próximo turno. Si te pasa a vos, empezás el turno siguiente con 2 de Aliento menos.",
   "illFormsTitle": "Formas",
-  "illForms": "Secuencias fijas de cartas. Si las jugás en orden, el último paso suma un golpe extra. Un ataque fuera de orden la interrumpe; las defensas y técnicas no.",
+  "illForms": "Secuencias fijas de cartas. Si las jugás en orden, el último paso dispara el efecto de la forma (un golpe, Aliento, curación…). Un ataque fuera de orden la interrumpe; las defensas y técnicas no. En la subida se aprenden como recompensa.",
   "lesStrike1": "Bienvenido. Esto es un combate por turnos: vos sos el de la izquierda y el muñeco de madera es tu rival. En tu turno jugás cartas; después el rival hace lo suyo. Te voy a explicar todo, paso a paso.",
   "lesStrike2": "Esto sos vos. La barra verde es tu Vida: si llega a 0, perdés. La violeta es tu Estructura, tu equilibrio: más adelante vas a ver para qué sirve.",
   "lesStrike3": "Este es el rival: su nombre, su Vida (roja) y su Estructura (violeta). Para ganar, llevá su Vida a 0.",
@@ -586,18 +639,18 @@
   "lesForms8": "Tercer paso: Bloqueo y contragolpe, una defensa que además pega.",
   "lesForms9": "Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas, gratis, una vez por combate. Usalo.",
   "lesForms10": "¡Ahí está! Último paso: Paso atrás.",
-  "lesForms11": "¡Forma completa! Además del efecto de la carta: 10 de daño, 5 de Estructura y robás 2 cartas.",
+  "lesForms11": "¡Forma completa! Además del efecto de la carta: 14 de daño, 6 de Estructura y robás 2 cartas. En la subida, las formas se aprenden como recompensa al ganar combates.",
   "lesForms12": "Terminá el combate.",
   "lesClimbSlide1Title": "La montaña",
   "lesClimbSlide1": "La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre en dos, decidís vos.",
   "lesClimbSlide2Title": "Los lugares del mapa",
   "lesClimbSlide2": "Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente y el santuario.",
   "lesClimbSlide3Title": "Después de cada combate",
-  "lesClimbSlide3": "Elegís 1 de 3 cartas para sumar a tu mazo, o ninguna. Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.",
+  "lesClimbSlide3": "Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.",
   "lesClimbSlide4Title": "Vida y Estructura",
   "lesClimbSlide4": "Tu Vida NO se recupera sola entre combates: cuidala. En la fuente podés curarte, mejorar una carta o sacar una del mazo. La Estructura sí vuelve completa en cada combate.",
   "lesClimbSlide5Title": "El santuario",
-  "lesClimbSlide5": "A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.",
+  "lesClimbSlide5": "A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias y el Puño del Tigre, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa. A la Serpiente se le ofrece además el Puño de la Serpiente.",
   "lesClimbSlide6Title": "¡A subir!",
   "lesClimbSlide6": "Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!"
 }

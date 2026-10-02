@@ -78,6 +78,7 @@ class CombatController extends Notifier<CombatView?> {
       maxHp: run.maxHp,
       difficulty: run.difficulty,
       seed: seed,
+      forms: run.knownForms,
     );
     state = CombatView(
       state: r.state,
@@ -100,6 +101,7 @@ class CombatController extends Notifier<CombatView?> {
       playerHp: ref.read(dataProvider).balance.playerHp,
       seed: 1,
       shuffle: false,
+      forms: setup.forms,
     );
     state = CombatView(
       state: r.state,

@@ -151,6 +151,7 @@ class CombatState {
     required this.deflects,
     required this.rng,
     this.enemyDamagePct = 100,
+    this.fistBonus = 0,
   });
 
   final int turn;
@@ -187,6 +188,9 @@ class CombatState {
   /// Daño de los ataques enemigos según la dificultad (100 = normal).
   final int enemyDamagePct;
 
+  /// Daño extra de los puños por el resto del combate (Puño encadenado).
+  final int fistBonus;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -215,6 +219,7 @@ class CombatState {
         deflects: deflects,
         rng: rng,
         enemyDamagePct: enemyDamagePct,
+        fistBonus: fistBonus,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

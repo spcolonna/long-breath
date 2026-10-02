@@ -6,6 +6,7 @@ import '../combat/combat_state.dart';
 import '../model/card_def.dart';
 import '../model/enemy_def.dart';
 import '../model/enums.dart';
+import '../model/form_def.dart';
 import '../run/run_engine.dart';
 import '../run/run_state.dart';
 
@@ -18,6 +19,9 @@ abstract class Bot {
   String get name;
 
   CombatAction act(CombatEngine engine, CombatState s);
+
+  /// Si aprende la forma ofrecida en vez de la carta [cardPick].
+  bool learnForm(RunEngine run, RunState r, String? cardPick) => false;
 
   /// Recompensa elegida (null = saltear).
   String? pickReward(RunEngine run, RunState r) =>
@@ -121,7 +125,7 @@ class PlannerBot extends Bot {
     final data = engine.data;
     int value(CombatCard c) {
       var v = data.card(c.cardId).damage + data.card(c.cardId).structure;
-      for (final f in data.forms) {
+      for (final f in engine.knownForms(s)) {
         final p = s.formProgress[f.id]!;
         if (p > 0 && f.steps[p] == c.cardId) v += 30;
       }
@@ -147,11 +151,15 @@ class PlannerBot extends Bot {
     }
     v += s.player.breath * 2.0;
     v += s.player.structure * 0.4;
-    for (final f in engine.data.forms) {
-      v += s.formProgress[f.id]! / f.steps.length * f.effect.damage * 1.2;
+    for (final f in engine.knownForms(s)) {
+      v += s.formProgress[f.id]! / f.steps.length * effectValue(f.effect) * 1.2;
     }
     return v;
   }
+
+  @override
+  bool learnForm(RunEngine run, RunState r, String? cardPick) =>
+      prefersForm(run, r, cardPick, 0);
 
   @override
   String? pickReward(RunEngine run, RunState r) {
@@ -225,6 +233,35 @@ bool shouldBreathe(CombatEngine engine, CombatState s) {
     if (def.type.isAttack && engine.costOf(s, def) <= s.player.breath) return false;
   }
   return true;
+}
+
+/// Valor de lo que da una forma al completarse, en "daño equivalente".
+double effectValue(FormEffect e) =>
+    e.damage +
+    e.structure * 0.8 +
+    e.guard * 0.7 +
+    e.draw * 2.5 +
+    e.breath * 3 +
+    e.heal * 0.8 +
+    e.fistBonus * 6;
+
+/// Valor de aprender una forma con este mazo: cuánto rinde por lo que cuesta
+/// armarla y qué parte de sus pasos ya tenés.
+double formValue(RunEngine run, RunState r, FormDef f) {
+  final deck = [for (final c in r.deck) c.cardId];
+  final owned = f.steps.toSet().where(deck.contains).length /
+      f.steps.toSet().length;
+  // Se repite en cada combate: vale más que su golpe suelto por paso.
+  return effectValue(f.effect) / f.steps.length * owned * owned * 1.8;
+}
+
+/// Comparación forma vs carta para los bots que planifican.
+bool prefersForm(RunEngine run, RunState r, String? cardPick, double margin) {
+  final id = r.rewardForm;
+  if (id == null) return false;
+  final f = run.data.forms.firstWhere((f) => f.id == id);
+  final card = cardPick == null ? 0.0 : cardValue(run.data.card(cardPick));
+  return formValue(run, r, f) > card + margin;
 }
 
 /// Valor heurístico de una carta de recompensa para un jugador razonable.
@@ -308,6 +345,10 @@ class AverageBot extends PlannerBot {
     }
     return super.act(engine, s);
   }
+
+  @override
+  bool learnForm(RunEngine run, RunState r, String? cardPick) =>
+      prefersForm(run, r, cardPick, random.nextDouble() * 3 - 1.5);
 
   @override
   String? pickReward(RunEngine run, RunState r) {

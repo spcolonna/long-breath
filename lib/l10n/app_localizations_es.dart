@@ -98,6 +98,52 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String formsMissingCards(String forms) {
+    return 'Te faltan cartas para: $forms';
+  }
+
+  @override
+  String effHeal(int n) {
+    return 'Curás $n';
+  }
+
+  @override
+  String effGuard(int n) {
+    return '+$n Guardia';
+  }
+
+  @override
+  String effFistBonus(int n) {
+    return 'Tus puños pegan +$n el resto del combate';
+  }
+
+  @override
+  String get formScroll => 'Forma · 套路';
+
+  @override
+  String get formScrollHint =>
+      'Aprenderla reemplaza a la carta. Al jugar sus pasos en orden se dispara:';
+
+  @override
+  String formLearned(String name) {
+    return '¡Aprendiste $name!';
+  }
+
+  @override
+  String get formStepOwned => 'Ya tenés esta carta';
+
+  @override
+  String get formStepMissing => 'Te falta esta carta';
+
+  @override
+  String get fistBonusTitle => '¡Puños encadenados!';
+
+  @override
+  String fistBonusNow(int n) {
+    return 'Tus puños pegan +$n todo el combate';
+  }
+
+  @override
   String get life => 'Vida';
 
   @override
@@ -141,7 +187,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rewardHint =>
-      'Elegí 1 carta o salteá. Un mazo chico es más predecible.';
+      'Elegí 1 carta o aprendé la forma, o salteá. Un mazo chico es más predecible.';
 
   @override
   String get skip => 'Saltear';
@@ -888,7 +934,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get illForms =>
-      'Secuencias fijas de cartas. Si las jugás en orden, el último paso suma un golpe extra. Un ataque fuera de orden la interrumpe; las defensas y técnicas no.';
+      'Secuencias fijas de cartas. Si las jugás en orden, el último paso dispara el efecto de la forma (un golpe, Aliento, curación…). Un ataque fuera de orden la interrumpe; las defensas y técnicas no. En la subida se aprenden como recompensa.';
 
   @override
   String get lesStrike1 =>
@@ -1126,7 +1172,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesForms11 =>
-      '¡Forma completa! Además del efecto de la carta: 10 de daño, 5 de Estructura y robás 2 cartas.';
+      '¡Forma completa! Además del efecto de la carta: 14 de daño, 6 de Estructura y robás 2 cartas. En la subida, las formas se aprenden como recompensa al ganar combates.';
 
   @override
   String get lesForms12 => 'Terminá el combate.';
@@ -1150,7 +1196,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide3 =>
-      'Elegís 1 de 3 cartas para sumar a tu mazo, o ninguna. Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
+      'Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
 
   @override
   String get lesClimbSlide4Title => 'Vida y Estructura';
@@ -1164,7 +1210,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide5 =>
-      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa.';
+      'A mitad de camino elegís un camino: Tigre, Serpiente o Grulla. El Tigre roba más cartas y tiene cartas propias y el Puño del Tigre, que solo te salen de recompensa si seguís su camino. La Serpiente y la Grulla pueden RETENER cartas al terminar el turno: esas cartas se guardan y además robás la mano completa. A la Serpiente se le ofrece además el Puño de la Serpiente.';
 
   @override
   String get lesClimbSlide6Title => '¡A subir!';

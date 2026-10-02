@@ -304,6 +304,9 @@ class RunLog {
   final fights = <FightLog>[];
   final offered = <String>{};
   final picked = <String>[];
+
+  /// Formas aprendidas en la run.
+  final learned = <String>[];
   final talismans = <String>[];
 
   /// Modelo de tiempo: 5 s por carta, 6 s por turno (incluye la animación
@@ -336,7 +339,9 @@ final profiles = <String, BotFactory>{
 
 FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     String enemy, Style? style, int hp, int seed, List<Talisman> owned,
-    {Difficulty difficulty = Difficulty.normal, int? maxHp}) {
+    {Difficulty difficulty = Difficulty.normal,
+    int? maxHp,
+    Iterable<String>? forms}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank);
   var s = engine
       .start(
@@ -346,7 +351,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           playerHp: hp,
           seed: seed,
           difficulty: difficulty,
-          maxHp: maxHp)
+          maxHp: maxHp,
+          forms: forms)
       .state;
   for (final t in owned) {
     if (t.onStart != null) s = t.onStart!(s);
@@ -390,6 +396,8 @@ RunState _withMaxHp(RunState r, int add) => RunState(
       pathOptions: r.pathOptions,
       rng: r.rng,
       difficulty: r.difficulty,
+      knownForms: r.knownForms,
+      rewardForm: r.rewardForm,
     );
 
 /// Juega una run entera. [wanted] es el camino que el bot toma si el
@@ -429,7 +437,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final enemy = runEngine.enemyOf(r);
         if (r.currentNode == finalNode) log.hpAtBoss = r.hp;
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, owned,
-            difficulty: r.difficulty, maxHp: r.maxHp);
+            difficulty: r.difficulty, maxHp: r.maxHp, forms: r.knownForms);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         if (f.won) hp = math.min(r.maxHp, hp + owned.fold(0, (a, t) => a + t.onWin));
@@ -452,8 +460,13 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.reward:
         log.offered.addAll(r.rewardOptions);
         final pick = bot.pickReward(runEngine, r);
-        if (pick != null) log.picked.add(pick);
-        r = runEngine.chooseReward(r, pick);
+        if (bot.learnForm(runEngine, r, pick)) {
+          log.learned.add(r.rewardForm!);
+          r = runEngine.chooseForm(r, r.rewardForm!);
+        } else {
+          if (pick != null) log.picked.add(pick);
+          r = runEngine.chooseReward(r, pick);
+        }
       case RunPhase.fountain:
         log.fountains++;
         final before = r.hp;

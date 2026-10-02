@@ -103,12 +103,30 @@ class RunEngine {
       return r.copyWith(hp: hp, phase: RunPhase.victory);
     }
     final (options, rng) = _rollRewards(r.rng, r.style);
+    final (form, rng2) = _rollForm(rng, r);
     return r.copyWith(
       hp: hp,
       phase: RunPhase.reward,
       rewardOptions: options,
-      rng: rng,
+      rewardForm: form,
+      clearRewardForm: form == null,
+      rng: rng2,
     );
+  }
+
+  /// Formas que todavía se pueden aprender en este camino.
+  List<String> learnableForms(RunState r) => [
+        for (final f in data.forms)
+          if (!r.knownForms.contains(f.id) &&
+              (f.pool == null || f.pool == r.style))
+            f.id,
+      ];
+
+  (String?, Rng) _rollForm(Rng rng, RunState r) {
+    final pool = learnableForms(r);
+    if (pool.isEmpty) return (null, rng);
+    final (shuffled, next) = rng.shuffle(pool);
+    return (shuffled.first, next);
   }
 
   (List<String>, Rng) _rollRewards(Rng rng, Style? style) {
@@ -129,6 +147,21 @@ class RunEngine {
           : [...r.deck, CombatCard(uid: r.nextUid, cardId: cardId)],
       nextUid: cardId == null ? r.nextUid : r.nextUid + 1,
       rewardOptions: const [],
+      clearRewardForm: true,
+      phase: RunPhase.map,
+    );
+  }
+
+  /// Aprender la forma ofrecida en vez de sumar una carta.
+  RunState chooseForm(RunState r, String formId) {
+    if (r.phase != RunPhase.reward) throw StateError('No hay recompensa');
+    if (r.rewardForm != formId) {
+      throw StateError('Forma no ofrecida: $formId');
+    }
+    return r.copyWith(
+      knownForms: [...r.knownForms, formId],
+      rewardOptions: const [],
+      clearRewardForm: true,
       phase: RunPhase.map,
     );
   }

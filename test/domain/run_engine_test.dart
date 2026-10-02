@@ -42,6 +42,39 @@ void main() {
     expect(r.hp, 50);
   });
 
+  test('formas: se arranca sin ninguna y se aprenden en la recompensa', () {
+    var r = run.newRun(seed: 3);
+    expect(r.knownForms, isEmpty);
+    r = run.enter(r, 'n1');
+    r = run.finishCombat(r, won: true, hp: 40);
+    final form = r.rewardForm;
+    expect(form, isNotNull);
+    expect(run.learnableForms(r), isNot(contains('hu_quan')),
+        reason: 'la del tigre solo en su camino');
+    expect(run.learnableForms(r), isNot(contains('she_quan')));
+    r = run.chooseForm(r, form!);
+    expect(r.knownForms, [form]);
+    expect(r.deck.length, 12, reason: 'la forma reemplaza a la carta');
+    expect(r.rewardForm, isNull);
+    expect(r.phase, RunPhase.map);
+    // Se guarda y se recupera.
+    final back = RunState.fromJson(r.toJson());
+    expect(back.knownForms, [form]);
+    // Ya no se vuelve a ofrecer.
+    expect(run.learnableForms(r), isNot(contains(form)));
+    expect(
+      run.learnableForms(r.copyWith(style: Style.tiger)),
+      contains('hu_quan'),
+    );
+    // Elegir carta descarta la forma ofrecida.
+    r = run.enter(r, 'n2');
+    r = run.finishCombat(r, won: true, hp: 30);
+    expect(r.rewardForm, isNotNull);
+    r = run.chooseReward(r, r.rewardOptions.first);
+    expect(r.rewardForm, isNull);
+    expect(r.knownForms, [form]);
+  });
+
   test('fuente: mejorar y eliminar', () {
     var r = run.newRun(seed: 1)
         .copyWith(phase: RunPhase.fountain);

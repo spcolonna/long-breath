@@ -34,6 +34,9 @@ Murciélago → Discípulo → Santuario → bifurcación [Gólem | Salamandra] 
 Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Estructura se restablece a 10 en ese momento.
 
 ## Formas
+- La subida arranca sin formas (`RunState.knownForms` vacío). Al ganar un combate que no es el último, se sortea una forma no aprendida y permitida por el camino (`pool`) como `rewardForm`. Elegir carta (o saltear) la descarta; `chooseForm` la aprende sin sumar carta.
+- El combate solo sigue las formas conocidas (`CombatEngine.start(forms:)`). Las lecciones pasan las suyas en `LessonSetup.forms`.
+- Efectos posibles: daño, Estructura, Guardia (+altura), robar, Aliento (`breath`), curar (`heal`, hasta la Vida máxima) y `fistBonus` (+daño a los Puños con daño, acumulable, todo el combate).
 - Solo los Puños, Palmas y Patadas pueden interrumpir. Las defensas y técnicas nunca interrumpen, aunque estén en otro paso de la secuencia.
 - El efecto de la forma no recibe el bonus de postura; sí le aplican el ×2 por desequilibrio, el ½ del Gólem y Hǔ Xiào.
 - Interrumpir del Monje: si no lo desviás, todas las formas vuelven a 0.

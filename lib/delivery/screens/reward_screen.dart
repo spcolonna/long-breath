@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/model/form_def.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
@@ -23,6 +24,9 @@ class RewardScreen extends ConsumerStatefulWidget {
 
 class _RewardScreenState extends ConsumerState<RewardScreen> {
   String? _picked;
+
+  /// Se eligió la forma ofrecida (en vez de una carta).
+  bool _formPicked = false;
 
   /// La elegida vuela al mazo antes de volver al mapa.
   bool _taking = false;
@@ -55,6 +59,36 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
       });
     }
 
+    void learn(String formId) {
+      if (_taking) return;
+      HapticFeedback.heavyImpact();
+      ref.read(audioProvider).play(Sfx.formComplete);
+      setState(() {
+        _taking = true;
+        _burst++;
+      });
+      Future.delayed(const Duration(milliseconds: 1400), () {
+        if (!context.mounted) return;
+        ref.read(runControllerProvider.notifier).chooseForm(formId);
+        context.go('/map');
+      });
+    }
+
+    void select({String? card, bool form = false}) {
+      if (_taking) return;
+      HapticFeedback.selectionClick();
+      ref.read(audioProvider).play(Sfx.cardSelect);
+      setState(() {
+        _picked = card;
+        _formPicked = form;
+      });
+    }
+
+    final text = ref.watch(textProvider);
+    final offered = run.rewardForm == null
+        ? null
+        : data.forms.firstWhere((f) => f.id == run.rewardForm);
+    final deckIds = {for (final c in run.deck) c.cardId};
     final picked = _picked == null ? null : data.card(_picked!);
     return Scaffold(
       body: SafeArea(
@@ -79,18 +113,14 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                       delayMs: 150 + 140 * i,
                       onFlip: () => ref.read(audioProvider).play(Sfx.rewardFlip),
                       child: GestureDetector(
-                        onTap: () {
-                          if (_taking) return;
-                          HapticFeedback.selectionClick();
-                          ref.read(audioProvider).play(Sfx.cardSelect);
-                          setState(() => _picked = id);
-                        },
+                        onTap: () => select(card: id),
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
                             _Choice(
                               picked: _picked == id,
-                              dimmed: _picked != null && _picked != id,
+                              dimmed: (_picked != null || _formPicked) &&
+                                  _picked != id,
                               taking: _taking && _picked == id,
                               child: CardWidget(
                                 def: data.card(id),
@@ -116,17 +146,81 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                     ),
                 ],
               ),
-              const SizedBox(height: 16),
+              if (offered != null) ...[
+                const SizedBox(height: 16),
+                _Reveal(
+                  delayMs: 150 + 140 * run.rewardOptions.length,
+                  onFlip: () => ref.read(audioProvider).play(Sfx.rewardFlip),
+                  child: GestureDetector(
+                    onTap: () => select(form: true),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        _Choice(
+                          picked: _formPicked,
+                          dimmed: _picked != null,
+                          taking: false,
+                          child: _FormScroll(
+                            form: offered,
+                            name: text.form(offered.id),
+                            steps: [
+                              for (final id in offered.steps)
+                                (text.card(id), deckIds.contains(id)),
+                            ],
+                            effect: t.formEffect(offered.effect),
+                            selected: _formPicked,
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: InkBurst(
+                            trigger: _formPicked ? _burst : 0,
+                            colors: const [
+                              Palette.gold,
+                              Palette.lacquer,
+                              Colors.white,
+                            ],
+                            count: 44,
+                            radius: 180,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 12),
               SizedBox(
                 height: 72,
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
-                  child: picked == null
+                  child: _formPicked && offered != null
+                      ? (_taking
+                          ? Bounce(
+                              key: const ValueKey('learned'),
+                              trigger: _burst,
+                              scale: 1.25,
+                              child: Text(
+                                t.formLearned(text.form(offered.id)),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Palette.lacquer,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              t.formScrollHint,
+                              key: const ValueKey('form'),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Palette.textDim),
+                            ))
+                      : picked == null
                       ? const SizedBox()
                       : Text(
                           '${ref.watch(textProvider).card(picked.id)} · ${picked.pinyin} ${picked.hanzi}\n'
                           '${t.cardEffect(picked, ref.watch(textProvider))}'
-                          '${data.forms.any((f) => f.steps.contains(picked.id)) ? '\n${t.partOfForm}' : ''}',
+                          '${data.forms.any((f) => (run.knownForms.contains(f.id) || f.id == run.rewardForm) && f.steps.contains(picked.id)) ? '\n${t.partOfForm}' : ''}',
                           key: ValueKey(picked.id),
                           textAlign: TextAlign.center,
                         ),
@@ -144,7 +238,11 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
-                      onPressed: _picked == null ? null : () => choose(_picked),
+                      onPressed: _formPicked && offered != null
+                          ? () => learn(offered.id)
+                          : _picked == null
+                          ? null
+                          : () => choose(_picked),
                       child: Text(t.confirm),
                     ),
                   ),
@@ -252,6 +350,151 @@ class _Choice extends StatelessWidget {
           curve: taking ? const Interval(0.5, 1) : Curves.linear,
           child: child,
         ),
+      ),
+    );
+  }
+}
+
+/// Pergamino de forma: nombre, pasos (marcando las cartas que ya tenés) y lo
+/// que hace al completarse.
+class _FormScroll extends StatelessWidget {
+  const _FormScroll({
+    required this.form,
+    required this.name,
+    required this.steps,
+    required this.effect,
+    required this.selected,
+  });
+
+  final FormDef form;
+  final String name;
+  final List<(String, bool)> steps;
+  final String effect;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 220),
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
+      decoration: BoxDecoration(
+        color: Palette.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: selected ? Palette.lacquer : Palette.gold,
+          width: selected ? 3 : 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Palette.gold.withValues(alpha: selected ? 0.5 : 0.25),
+            blurRadius: selected ? 16 : 8,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                form.hanzi,
+                style: const TextStyle(
+                  fontSize: 24,
+                  height: 1.1,
+                  color: Palette.lacquer,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      t.formScroll,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: Palette.gold,
+                      ),
+                    ),
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Palette.text,
+                      ),
+                    ),
+                    Text(
+                      form.pinyin,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontStyle: FontStyle.italic,
+                        color: Palette.textDim,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              for (final (i, (label, owned)) in steps.indexed) ...[
+                if (i > 0)
+                  const Icon(
+                    Icons.chevron_right,
+                    size: 14,
+                    color: Palette.textDim,
+                  ),
+                Expanded(
+                  child: Tooltip(
+                    message: owned ? t.formStepOwned : t.formStepMissing,
+                    child: Container(
+                      height: 34,
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: owned
+                            ? Palette.gold.withValues(alpha: 0.22)
+                            : Palette.surface,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: owned ? Palette.gold : Palette.line,
+                        ),
+                      ),
+                      child: Text(
+                        label,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 9,
+                          height: 1.05,
+                          fontWeight: FontWeight.w600,
+                          color: owned ? Palette.text : Palette.textDim,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            effect,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: Palette.lacquer,
+            ),
+          ),
+        ],
       ),
     );
   }

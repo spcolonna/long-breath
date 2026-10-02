@@ -318,6 +318,17 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         _guardKey++;
         _pop(_heroPops, '+$guard', Palette.sky, size: 26, icon: Icons.shield);
       }
+      for (final e in ev) {
+        switch (e) {
+          case PlayerHealed(:final amount) when amount > 0:
+            _pop(_heroPops, '+$amount', Palette.jade,
+                size: 26, icon: Icons.favorite, dx: -30, dy: -20);
+          case BreathGained(:final amount):
+            _pop(_heroPops, '+$amount ${t.breath}', Palette.gold,
+                size: 20, dx: 20, dy: -40);
+          default:
+        }
+      }
     });
     if (hits.isNotEmpty) {
       _heavy ? HapticFeedback.heavyImpact() : HapticFeedback.mediumImpact();
@@ -541,6 +552,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               Palette.lacquer,
               big: true,
             ),
+          );
+        case FistBonusGained(:final total):
+          _queue.add(
+            _Fx(t.fistBonusTitle, t.fistBonusNow(total), Palette.lacquer),
           );
         case FormsResetByEnemy():
           _audio.play(Sfx.formBroken);
@@ -1704,16 +1719,32 @@ class _FormsPanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final text = ref.watch(textProvider);
-    // Solo formas cuyas cartas están todas en el mazo del combate.
+    final t = AppLocalizations.of(context);
+    // Formas aprendidas: con todas sus cartas en el mazo, en fila; las que
+    // no se pueden armar en este combate, en una línea aparte.
     final owned = {
       for (final c in [...s.drawPile, ...s.hand, ...s.discard, ...s.exhausted])
         c.cardId,
     };
-    final forms = data.forms.where((f) => owned.containsAll(f.steps));
+    final known = data.forms.where((f) => s.formProgress.containsKey(f.id));
+    final forms = known.where((f) => owned.containsAll(f.steps)).toList();
+    final missing = known.where((f) => !owned.containsAll(f.steps)).toList();
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
       child: Column(
         children: [
+          if (missing.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: Text(
+                t.formsMissingCards(
+                  missing.map((f) => text.form(f.id)).join(', '),
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 10, color: Palette.textDim),
+              ),
+            ),
           for (final f in forms)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),

@@ -2,9 +2,16 @@
 /// muñeco de madera (木人桩). El mazo no se mezcla, así cada mano es la que
 /// el guion del maestro espera. Los textos viven en la capa de presentación.
 class LessonSetup {
-  const LessonSetup({required this.enemyId, required this.deck});
+  const LessonSetup({
+    required this.enemyId,
+    required this.deck,
+    this.forms = const [],
+  });
 
   final String enemyId;
+
+  /// Formas que se siguen en la lección (en la subida se aprenden).
+  final List<String> forms;
 
   /// En orden de robo: las 5 primeras son la primera mano, y así.
   final List<String> deck;
@@ -99,6 +106,7 @@ const lessonSetups = <String, LessonSetup>{
   // 5. Formas: dos pasos en el turno 1; en el 2, Respirar trae el último.
   'forms': LessonSetup(
     enemyId: 'dummy_forms',
+    forms: ['xiao_hong_quan'],
     deck: [
       'gongbu_chongquan',
       'tan_tui',

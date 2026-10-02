@@ -1,6 +1,7 @@
 import '../domain/combat/combat_engine.dart';
 import '../domain/model/card_def.dart';
 import '../domain/model/enums.dart';
+import '../domain/model/form_def.dart';
 import '../l10n/app_localizations.dart';
 import 'content_text.dart';
 
@@ -79,4 +80,15 @@ extension Labels on AppLocalizations {
     if (d.firstTurnOnly) effFirstTurn,
     if (d.exhaust) effExhaust,
   ].join('. ');
+
+  /// Lo que hace una forma al completarse.
+  String formEffect(FormEffect e) => [
+    if (e.damage > 0) previewDamage(e.damage),
+    if (e.structure > 0) previewStructure(e.structure),
+    if (e.guard > 0) effGuard(e.guard),
+    if (e.heal > 0) effHeal(e.heal),
+    if (e.breath > 0) effBreath(e.breath),
+    if (e.draw > 0) effDraw(e.draw),
+    if (e.fistBonus > 0) effFistBonus(e.fistBonus),
+  ].join(' · ');
 }

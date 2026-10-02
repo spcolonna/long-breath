@@ -113,6 +113,23 @@ class FormCompleted extends CombatEvent {
   final String formId;
 }
 
+/// Efectos de forma sobre el jugador.
+class BreathGained extends CombatEvent {
+  const BreathGained(this.amount);
+  final int amount;
+}
+
+class PlayerHealed extends CombatEvent {
+  const PlayerHealed(this.amount);
+  final int amount;
+}
+
+class FistBonusGained extends CombatEvent {
+  const FistBonusGained(this.amount, this.total);
+  final int amount;
+  final int total;
+}
+
 class FormsResetByEnemy extends CombatEvent {
   const FormsResetByEnemy();
 }
