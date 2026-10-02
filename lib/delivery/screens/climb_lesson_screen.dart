@@ -57,9 +57,11 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
   Future<void> _climb() async {
     HapticFeedback.mediumImpact();
     ref.read(audioProvider).play(Sfx.uiButton);
-    final difficulty = await pickDifficulty(context);
-    if (difficulty == null || !mounted) return;
-    ref.read(runControllerProvider.notifier).newRun(difficulty);
+    final choice = await pickDifficulty(context);
+    if (choice == null || !mounted) return;
+    ref
+        .read(runControllerProvider.notifier)
+        .newRun(choice.difficulty, pico: choice.pico);
     context.go('/map');
   }
 

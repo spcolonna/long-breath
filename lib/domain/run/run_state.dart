@@ -99,6 +99,7 @@ class RunState {
     this.pathOptions = const [],
     required this.rng,
     this.difficulty = Difficulty.normal,
+    this.pico = 0,
     this.knownForms = const [],
     this.rewardForm,
     this.talismans = const [],
@@ -133,6 +134,9 @@ class RunState {
   final List<Style> pathOptions;
   final Rng rng;
   final Difficulty difficulty;
+
+  /// Pico de la subida (0 = sin Picos). Se suma encima de la dificultad.
+  final int pico;
 
   /// Formas aprendidas en la subida (se arranca sin ninguna).
   final List<String> knownForms;
@@ -220,6 +224,7 @@ class RunState {
         pathOptions: pathOptions ?? this.pathOptions,
         rng: rng ?? this.rng,
         difficulty: difficulty,
+        pico: pico,
         knownForms: knownForms ?? this.knownForms,
         rewardForm: clearRewardForm ? null : rewardForm ?? this.rewardForm,
         talismans: talismans ?? this.talismans,
@@ -260,6 +265,7 @@ class RunState {
         'pathOptions': [for (final s in pathOptions) s.name],
         'rng': rng.state,
         'difficulty': difficulty.name,
+        'pico': pico,
         'knownForms': knownForms,
         'rewardForm': rewardForm,
         'talismans': talismans,
@@ -298,6 +304,7 @@ class RunState {
         ],
         rng: Rng(j['rng'] as int),
         difficulty: Difficulty.parse(j['difficulty'] as String?),
+        pico: j['pico'] as int? ?? 0,
         knownForms: ((j['knownForms'] as List?) ?? const []).cast<String>(),
         rewardForm: j['rewardForm'] as String?,
         talismans: ((j['talismans'] as List?) ?? const []).cast<String>(),

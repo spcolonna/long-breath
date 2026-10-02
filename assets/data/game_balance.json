@@ -27,6 +27,18 @@
     "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 110, "enemyDamage": 110 },
     "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 120, "enemyDamage": 120, "enemyStructure": 110 }
   },
+  "picos": [
+    { "eliteHp": 15 },
+    { "fountainHeal": -5 },
+    { "bossHp": 10 },
+    { "enemyDamage": 5 },
+    { "playerHp": -5 },
+    { "enemyStructure": 10 },
+    { "enemyDamage": 5 },
+    { "eliteHp": 10, "bossHp": 10 },
+    { "enemyDamage": 5 },
+    { "enemyHp": 8, "enemyStructure": 5 }
+  ],
   "run": {
     "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "floors": [

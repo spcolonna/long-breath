@@ -122,6 +122,7 @@ class CombatEngine {
     required int seed,
     bool shuffle = true,
     Difficulty difficulty = Difficulty.normal,
+    int pico = 0,
     int? maxHp,
     Iterable<String>? forms,
     List<String> talismans = const [],
@@ -130,9 +131,19 @@ class CombatEngine {
     final styleStats = b.statsOf(style);
     final enemy = data.enemy(enemyId);
     final dif = b.difficulty(difficulty);
-    int pct(int v, int p) => (v * p / 100).round();
-    final enemyHp = pct(enemy.hp, dif.enemyHp);
-    final enemyStructure = pct(enemy.structure, dif.enemyStructure);
+    // Los Picos se suman encima de la dificultad.
+    final pm = b.picoMods(pico);
+    final rankHp = pm.enemyHp +
+        switch (enemy.rank) {
+          EnemyRank.common => pm.commonHp,
+          EnemyRank.elite => pm.eliteHp,
+          EnemyRank.boss => pm.bossHp,
+        };
+    int pct(int v, int p, [int extra = 0]) =>
+        (v * p * (100 + extra) / 10000).round();
+    final enemyHp = pct(enemy.hp, dif.enemyHp, rankHp);
+    final enemyStructure =
+        pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
     final effects = [for (final id in talismans) data.talisman(id).effect];
     int sum(int Function(TalismanEffect e) of) =>
         effects.fold(0, (a, e) => a + of(e));
@@ -178,7 +189,7 @@ class CombatEngine {
           if (forms == null || forms.contains(f.id)) f.id: 0,
       },
       rng: rng,
-      enemyDamagePct: dif.enemyDamage,
+      enemyDamagePct: pct(dif.enemyDamage, 100, pm.enemyDamage),
       talismans: talismans,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath),
       firstStrike: styleStats.firstStrike,

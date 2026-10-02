@@ -19,6 +19,31 @@ void main() {
     expect(isUnlocked(Difficulty.shifu, await storage.wins()), isTrue);
   });
 
+  test('ganar abre el Pico siguiente al jugado, hasta el 10', () async {
+    SharedPreferences.setMockInitialValues({});
+    final storage = ProgressStorage();
+    expect(await storage.picoUnlocked(), 0);
+    // Ganar en Fácil no abre Picos.
+    await storage.markPicoWin(Difficulty.easy, 0);
+    expect(await storage.picoUnlocked(), 0);
+    await storage.markPicoWin(Difficulty.normal, 0);
+    expect(await storage.picoUnlocked(), 1);
+    await storage.markPicoWin(Difficulty.normal, 1);
+    expect(await storage.picoUnlocked(), 2);
+    // Ganar un Pico más bajo no cierra los abiertos.
+    await storage.markPicoWin(Difficulty.hard, 0);
+    expect(await storage.picoUnlocked(), 2);
+    await storage.markPicoWin(Difficulty.normal, 10);
+    expect(await storage.picoUnlocked(), ProgressStorage.maxPico);
+  });
+
+  test('quien ganó antes de los Picos ya tiene el 1', () async {
+    SharedPreferences.setMockInitialValues({
+      'long_breath.winsByDifficulty': ['normal'],
+    });
+    expect(await ProgressStorage().picoUnlocked(), 1);
+  });
+
   test('ignora valores desconocidos guardados', () async {
     SharedPreferences.setMockInitialValues({
       'long_breath.winsByDifficulty': ['hard', 'legend'],

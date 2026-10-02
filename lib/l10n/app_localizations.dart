@@ -2559,6 +2559,132 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'−{n} costo por retenida'**
   String retainedCheaper(int n);
+
+  /// No description provided for @picosTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Picos'**
+  String get picosTitle;
+
+  /// No description provided for @picosDesc.
+  ///
+  /// In es, this message translates to:
+  /// **'Normal con reglas extra. Cada Pico suma una más a las anteriores.'**
+  String get picosDesc;
+
+  /// No description provided for @picosLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Ganá una subida en Normal para abrir el Pico 1.'**
+  String get picosLocked;
+
+  /// No description provided for @picoName.
+  ///
+  /// In es, this message translates to:
+  /// **'Pico {n}'**
+  String picoName(int n);
+
+  /// No description provided for @picoNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva: {rule}'**
+  String picoNew(String rule);
+
+  /// No description provided for @picoStackedOne.
+  ///
+  /// In es, this message translates to:
+  /// **'Más la regla del Pico 1.'**
+  String get picoStackedOne;
+
+  /// No description provided for @picoStacked.
+  ///
+  /// In es, this message translates to:
+  /// **'Más las reglas de los Picos 1 a {n}.'**
+  String picoStacked(int n);
+
+  /// No description provided for @picoLower.
+  ///
+  /// In es, this message translates to:
+  /// **'Bajar de Pico'**
+  String get picoLower;
+
+  /// No description provided for @picoHigher.
+  ///
+  /// In es, this message translates to:
+  /// **'Subir de Pico'**
+  String get picoHigher;
+
+  /// No description provided for @picoOpened.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Se abrió el Pico {n}!'**
+  String picoOpened(int n);
+
+  /// No description provided for @picoTop.
+  ///
+  /// In es, this message translates to:
+  /// **'Coronaste el último Pico.'**
+  String get picoTop;
+
+  /// No description provided for @picoRule1.
+  ///
+  /// In es, this message translates to:
+  /// **'Élites +15% de Vida'**
+  String get picoRule1;
+
+  /// No description provided for @picoRule2.
+  ///
+  /// In es, this message translates to:
+  /// **'La fuente cura 5 menos'**
+  String get picoRule2;
+
+  /// No description provided for @picoRule3.
+  ///
+  /// In es, this message translates to:
+  /// **'El jefe +10% de Vida'**
+  String get picoRule3;
+
+  /// No description provided for @picoRule4.
+  ///
+  /// In es, this message translates to:
+  /// **'Rivales +5% de daño'**
+  String get picoRule4;
+
+  /// No description provided for @picoRule5.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezás con 5 de Vida menos'**
+  String get picoRule5;
+
+  /// No description provided for @picoRule6.
+  ///
+  /// In es, this message translates to:
+  /// **'Rivales +10% de Estructura'**
+  String get picoRule6;
+
+  /// No description provided for @picoRule7.
+  ///
+  /// In es, this message translates to:
+  /// **'Rivales +5% de daño otra vez'**
+  String get picoRule7;
+
+  /// No description provided for @picoRule8.
+  ///
+  /// In es, this message translates to:
+  /// **'Élites y jefe +10% de Vida otra vez'**
+  String get picoRule8;
+
+  /// No description provided for @picoRule9.
+  ///
+  /// In es, this message translates to:
+  /// **'Rivales +5% de daño otra vez'**
+  String get picoRule9;
+
+  /// No description provided for @picoRule10.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos los rivales +8% de Vida y +5% de Estructura'**
+  String get picoRule10;
 }
 
 class _AppLocalizationsDelegate

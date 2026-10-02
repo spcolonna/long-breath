@@ -388,12 +388,29 @@ Todos los talismanes juntos valen unos +20 puntos: de 27% sin ninguno a 45% con 
 
 ---
 
-## 6. Picos: dificultad desbloqueable (prototipo, 3 etapas)
+## 6. Picos: dificultad desbloqueable (etapa 1, en el juego)
 
-Se acumulan: el Pico N incluye las reglas del 1 al N. Los pasos son chicos porque en una run larga unos pocos puntos de Vida enemiga pesan mucho. En una primera versión el Pico 1 era "+8% de Vida enemiga" y bajaba 18 puntos de golpe.
+Están en `game_balance.json` → `picos` y se acumulan: el Pico N incluye las reglas del 1 al N. Van encima de Normal; ganar en Normal o más difícil abre el siguiente. `dart run tool/simulate.dart --section picos` usa las mismas reglas que la app.
 
 | Pico | Regla nueva | Promedio | Experto |
 |---|---|---|---|
+| 0 | Normal | 62% | 82% |
+| 1 | Élites +15% de Vida | 61% | 80% |
+| 2 | La fuente cura 5 menos | 56% | 78% |
+| 3 | El jefe +10% de Vida | 51% | 74% |
+| 4 | Rivales +5% de daño | 39% | 65% |
+| 5 | Empezás con 5 de Vida menos | 30% | 56% |
+| 6 | Rivales +10% de Estructura | 20% | 44% |
+| 7 | Rivales +5% de daño otra vez | 16% | 38% |
+| 8 | Élites y jefe +10% de Vida otra vez | 11% | 32% |
+| 9 | Rivales +5% de daño otra vez | 7% | 24% |
+| 10 | Todos los rivales +8% de Vida y +5% de Estructura | 3% | 17% |
+
+- **Curva:** cada Pico le quita al experto entre 2 y 12 puntos, sin saltos grandes. Con un humano experto, que juega mejor que el bot, el Pico 10 debería quedar en 20–30%.
+- **Qué pesa:** el daño enemigo y la Vida inicial son las palancas más fuertes; la Vida de los comunes casi no cambia nada (se descartó). La Vida de élites y jefe muerde poco al principio, por eso abre la escala.
+- **Prototipo anterior (3 etapas):** las reglas "la fuente cura menos" y "empezás con menos Vida" no tenían efecto en el simulador (tocaban valores que la run no usa), así que sus números estaban inflados. Las "recompensas de 2 cartas" no endurecían y se sacaron.
+
+---|---|---|---|
 | 0 | Normal | 45% | 55% |
 | 1 | Élites +10% de Vida | 44% | 52% |
 | 2 | La fuente cura 3 menos | 39% | 47% |

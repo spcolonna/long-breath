@@ -44,11 +44,15 @@ class MapScreen extends ConsumerWidget {
               style: const TextStyle(fontSize: 18),
             ),
             Text(
-              t.difficultyName(run.difficulty),
+              run.pico > 0
+                  ? '${t.difficultyName(run.difficulty)} · ${t.picoName(run.pico)}'
+                  : t.difficultyName(run.difficulty),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: difficultyColor(run.difficulty),
+                color: run.pico > 0
+                    ? picoColor
+                    : difficultyColor(run.difficulty),
               ),
             ),
           ],

@@ -201,43 +201,8 @@ List<Json> generateMap(int seed, {int stages = 3}) {
 
 // ------------------------------------------------------------------ Picos
 
-/// Modificadores acumulativos: el Pico N incluye los del 1 al N. Pasos
-/// chicos: en una run larga, unos pocos puntos de Vida enemiga pesan mucho.
-const picoRules = [
-  'Élites +10% de Vida',
-  'La fuente cura 3 menos',
-  'Jefes +5% de Vida',
-  'Enemigos comunes +4% de Vida',
-  'Empezás con 3 de Vida menos',
-  'Enemigos +5% de daño',
-  'Recompensas de 2 cartas en vez de 3',
-  'Élites +10% de Vida (acumula)',
-  'Jefes +5% de Vida (acumula)',
-  'Todos los enemigos +3% de Vida y de daño',
-];
-
-void applyPico(RawData d, int pico) {
-  double hp(String rank) {
-    var m = 1.0;
-    if (pico >= 1 && rank == 'elite') m += 0.1;
-    if (pico >= 3 && rank == 'boss') m += 0.05;
-    if (pico >= 4 && rank == 'common') m += 0.04;
-    if (pico >= 8 && rank == 'elite') m += 0.1;
-    if (pico >= 9 && rank == 'boss') m += 0.05;
-    if (pico >= 10) m += 0.03;
-    return m;
-  }
-
-  final dmg = 1.0 + (pico >= 6 ? 0.05 : 0) + (pico >= 10 ? 0.03 : 0);
-  for (final e in d.enemies) {
-    if ((e['id'] as String).startsWith('dummy')) continue;
-    scaleEnemy(e, hp: hp(e['rank'] as String), dmg: dmg);
-  }
-  final b = d.balance;
-  if (pico >= 2) (b['fountain'] as Json)['heal'] = ((b['fountain'] as Json)['heal'] as int) - 3;
-  if (pico >= 5) (b['player'] as Json)['hp'] = ((b['player'] as Json)['hp'] as int) - 3;
-  if (pico >= 7) (b['rewards'] as Json)['choices'] = 2;
-}
+// Los Picos son del juego (game_balance.json → picos): la run los aplica
+// con `pico`, igual que la app.
 
 // -------------------------------------------------------------- talismanes
 
@@ -305,6 +270,7 @@ final profiles = <String, BotFactory>{
 FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     String enemy, Style? style, int hp, int seed, List<String> talismans,
     {Difficulty difficulty = Difficulty.normal,
+    int pico = 0,
     int? maxHp,
     Iterable<String>? forms}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank);
@@ -316,6 +282,7 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           playerHp: hp,
           seed: seed,
           difficulty: difficulty,
+          pico: pico,
           maxHp: maxHp,
           forms: forms,
           talismans: talismans)
@@ -350,12 +317,13 @@ RunLog playRun(GameData data, Bot bot, int seed,
     Set<String>? onlyTalisman,
     List<String> startTalismans = const [],
     List<String> startCards = const [],
-    Difficulty difficulty = Difficulty.normal}) {
+    Difficulty difficulty = Difficulty.normal,
+    int pico = 0}) {
   final engine = CombatEngine(data);
   final runEngine = RunEngine(data);
   final log = RunLog();
   final tRng = math.Random(seed * 13 + 5);
-  var r = runEngine.newRun(seed: seed, difficulty: difficulty);
+  var r = runEngine.newRun(seed: seed, difficulty: difficulty, pico: pico);
   for (final id in startCards) {
     r = r.copyWith(
         deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: id)],
@@ -375,7 +343,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final enemy = runEngine.enemyOf(r);
         if (r.node(r.currentNode!).next.isEmpty) log.hpAtBoss = r.hp;
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
-            difficulty: r.difficulty, maxHp: r.maxHp, forms: r.knownForms);
+            difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         if (f.won && f.rank == EnemyRank.boss) {

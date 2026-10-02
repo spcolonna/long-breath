@@ -207,6 +207,52 @@ class DifficultyDef {
       );
 }
 
+/// Una regla de Pico. Se acumulan: el Pico N suma las reglas del 1 al N.
+/// Los porcentajes se suman a los de la dificultad.
+class PicoDef {
+  const PicoDef({
+    this.enemyHp = 0,
+    this.commonHp = 0,
+    this.eliteHp = 0,
+    this.bossHp = 0,
+    this.enemyDamage = 0,
+    this.enemyStructure = 0,
+    this.fountainHeal = 0,
+    this.playerHp = 0,
+  });
+
+  final int enemyHp;
+  final int commonHp;
+  final int eliteHp;
+  final int bossHp;
+  final int enemyDamage;
+  final int enemyStructure;
+  final int fountainHeal;
+  final int playerHp;
+
+  PicoDef operator +(PicoDef o) => PicoDef(
+        enemyHp: enemyHp + o.enemyHp,
+        commonHp: commonHp + o.commonHp,
+        eliteHp: eliteHp + o.eliteHp,
+        bossHp: bossHp + o.bossHp,
+        enemyDamage: enemyDamage + o.enemyDamage,
+        enemyStructure: enemyStructure + o.enemyStructure,
+        fountainHeal: fountainHeal + o.fountainHeal,
+        playerHp: playerHp + o.playerHp,
+      );
+
+  factory PicoDef.fromJson(Map<String, dynamic> j) => PicoDef(
+        enemyHp: j['enemyHp'] as int? ?? 0,
+        commonHp: j['commonHp'] as int? ?? 0,
+        eliteHp: j['eliteHp'] as int? ?? 0,
+        bossHp: j['bossHp'] as int? ?? 0,
+        enemyDamage: j['enemyDamage'] as int? ?? 0,
+        enemyStructure: j['enemyStructure'] as int? ?? 0,
+        fountainHeal: j['fountainHeal'] as int? ?? 0,
+        playerHp: j['playerHp'] as int? ?? 0,
+      );
+}
+
 class GameBalance {
   const GameBalance({
     required this.playerHp,
@@ -237,6 +283,7 @@ class GameBalance {
     this.merchant = const MerchantDef(),
     this.masterForms = 2,
     required this.difficulties,
+    this.picos = const [],
   });
 
   final int playerHp;
@@ -286,6 +333,13 @@ class GameBalance {
   final Map<Difficulty, DifficultyDef> difficulties;
 
   DifficultyDef difficulty(Difficulty d) => difficulties[d]!;
+
+  /// Reglas de los Picos, del 1 al 10.
+  final List<PicoDef> picos;
+
+  /// Reglas acumuladas hasta el Pico [n] (0 = ninguna).
+  PicoDef picoMods(int n) =>
+      picos.take(n).fold(const PicoDef(), (a, p) => a + p);
 
   /// Estadísticas del camino, o las del novicio si todavía no eligió.
   StyleStats statsOf(Style? s) => s == null ? novice : styles[s]!;
@@ -348,6 +402,10 @@ class GameBalance {
           Difficulty.parse(e.key):
               DifficultyDef.fromJson(e.value as Map<String, dynamic>),
       },
+      picos: [
+        for (final p in (j['picos'] as List?) ?? const [])
+          PicoDef.fromJson(p as Map<String, dynamic>),
+      ],
     );
   }
 }

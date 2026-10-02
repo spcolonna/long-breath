@@ -137,6 +137,27 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 
 Shifu arranca bloqueada: se ve en blanco con un candado y, al tocarla, avisa que se desbloquea al ganar una subida en Difícil.
 
+### Picos 峰
+
+Los Picos son Normal con reglas extra, para quien ya gana. Aparecen debajo de las dificultades, bloqueados hasta ganar una subida en Normal (o más difícil). Ganar en el Pico N abre el Pico N+1, hasta el 10. Cada Pico suma su regla a las de los anteriores:
+
+| Pico | Regla nueva |
+|---|---|
+| 1 | Élites +15% de Vida |
+| 2 | La fuente cura 5 menos |
+| 3 | El jefe +10% de Vida |
+| 4 | Rivales +5% de daño |
+| 5 | Empezás con 5 de Vida menos |
+| 6 | Rivales +10% de Estructura |
+| 7 | Rivales +5% de daño otra vez |
+| 8 | Élites y jefe +10% de Vida otra vez |
+| 9 | Rivales +5% de daño otra vez |
+| 10 | Todos los rivales +8% de Vida y +5% de Estructura |
+
+- **Selector:** la tarjeta de Picos muestra el número, la regla nueva y cuántas arrastra. Con − y + se elige entre el 1 y el más alto abierto; tocar la tarjeta empieza la subida.
+- **En la subida:** el mapa muestra "Normal · Pico N" en morado.
+- **Al ganar:** la pantalla final avisa "¡Se abrió el Pico N!".
+
 ## Tu camino
 
 | Camino | Robás por turno | Aliento por turno | Retenés | Pasiva |

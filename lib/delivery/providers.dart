@@ -61,6 +61,11 @@ final winsProvider = FutureProvider<Set<Difficulty>>(
   (ref) => ref.watch(progressStorageProvider).wins(),
 );
 
+/// Pico más alto que el jugador puede elegir (0 = ninguno abierto).
+final picoUnlockedProvider = FutureProvider<int>(
+  (ref) => ref.watch(progressStorageProvider).picoUnlocked(),
+);
+
 final lessonsDoneProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(tutorialStorageProvider).lessonsDone(),
 );

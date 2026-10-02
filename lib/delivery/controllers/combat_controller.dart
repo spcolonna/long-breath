@@ -77,6 +77,7 @@ class CombatController extends Notifier<CombatView?> {
       playerHp: run.hp,
       maxHp: run.maxHp,
       difficulty: run.difficulty,
+      pico: run.pico,
       seed: seed,
       forms: run.knownForms,
       talismans: run.talismans,

@@ -82,12 +82,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         );
         if (ok != true || !context.mounted) return;
       }
-      final difficulty = await pickDifficulty(
+      final choice = await pickDifficulty(
         context,
         initial: saved?.difficulty ?? Difficulty.normal,
+        initialPico: saved?.pico ?? 0,
       );
-      if (difficulty == null || !context.mounted) return;
-      ref.read(runControllerProvider.notifier).newRun(difficulty);
+      if (choice == null || !context.mounted) return;
+      ref
+          .read(runControllerProvider.notifier)
+          .newRun(choice.difficulty, pico: choice.pico);
       context.go('/map');
     }
 
