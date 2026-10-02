@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/run/run_engine.dart';
 import '../../domain/run/run_state.dart';
+import '../../domain/run/ascent.dart';
+import '../../infrastructure/progress_storage.dart';
 import '../providers.dart';
+import '../screens/map/map_layout.dart';
 
 /// Run en curso. Cada cambio se guarda localmente.
 class RunController extends Notifier<RunState?> {
@@ -38,7 +41,11 @@ class RunController extends Notifier<RunState?> {
 
   void finishCombat({required bool won, required int hp}) {
     _set(_engine.finishCombat(state!, won: won, hp: hp));
-    if (state!.phase == RunPhase.victory) {
+    final phase = state!.phase;
+    if (phase == RunPhase.victory || phase == RunPhase.defeat) {
+      _record(state!);
+    }
+    if (phase == RunPhase.victory) {
       final progress = ref.read(progressStorageProvider);
       final run = state!;
       progress.markWin(run.difficulty).then((_) => ref.invalidate(winsProvider));
@@ -46,6 +53,35 @@ class RunController extends Notifier<RunState?> {
           .markPicoWin(run.difficulty, run.pico)
           .then((_) => ref.invalidate(picoUnlockedProvider));
     }
+  }
+
+  /// La subida terminó: queda en el registro de la escuela y el próximo
+  /// en subir es otro discípulo.
+  void _record(RunState run) {
+    final rows = mapRows(run);
+    final node = run.currentNode == null ? null : run.node(run.currentNode!);
+    final ascent = Ascent(
+      n: 0,
+      fell: run.phase == RunPhase.defeat,
+      floor: rows.indexWhere((r) => r.any((n) => n.id == run.currentNode)) + 1,
+      floors: rows.length,
+      difficulty: run.difficulty,
+      pico: run.pico,
+      enemy: node?.enemy,
+      scene: node?.scene,
+      light: node?.light,
+      style: run.style,
+      maxHp: run.maxHp,
+      deck: run.deck.length,
+    );
+    ref.read(lastAscentProvider.notifier).set(null);
+    ref.read(progressStorageProvider).recordAscent(ascent).then((done) {
+      ref.read(lastAscentProvider.notifier).set(done);
+      ref
+        ..invalidate(discipleProvider)
+        ..invalidate(ascentsProvider)
+        ..invalidate(loreProvider);
+    });
   }
 
   void chooseReward(String? cardId) =>

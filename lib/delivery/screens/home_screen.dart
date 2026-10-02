@@ -14,6 +14,8 @@ import '../theme.dart';
 import '../tutorial/lessons.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/difficulty_sheet.dart';
+import '../widgets/lore_scroll.dart';
+import '../../infrastructure/progress_storage.dart';
 import '../../domain/model/enums.dart';
 
 String routeFor(RunState r) => switch (r.phase) {
@@ -81,6 +83,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         );
         if (ok != true || !context.mounted) return;
+      }
+      // La primera vez, antes de subir, la escuela cuenta por qué se sube.
+      final lore = await ref.read(loreProvider.future);
+      if (!context.mounted) return;
+      if (!lore.contains('prologue')) {
+        if (!context.mounted) return;
+        final go = await _prologue(context);
+        if (go != true || !context.mounted) return;
+        await ref.read(progressStorageProvider).unlockLore('prologue');
+        ref.invalidate(loreProvider);
+        if (!context.mounted) return;
       }
       final choice = await pickDifficulty(
         context,
@@ -161,7 +174,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   color: Palette.text,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 8),
+              const _SchoolLine(),
+              const SizedBox(height: 14),
               _MenuButton(
                 icon: Icons.school_rounded,
                 title: t.menuLearn,
@@ -203,6 +218,119 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 }
+
+/// Quién sube ahora y, si ya hubo subidas, el registro de la escuela.
+class _SchoolLine extends ConsumerWidget {
+  const _SchoolLine();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final n = ref.watch(discipleProvider).value;
+    final ascents = ref.watch(ascentsProvider).value ?? const [];
+    if (n == null) return const SizedBox(height: 32);
+    return SizedBox(
+      height: 32,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              decoration: BoxDecoration(
+                color: Palette.surface,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Palette.gold.withValues(alpha: 0.6)),
+              ),
+              child: Text(
+                t.discipleN(n),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: Palette.gold,
+                ),
+              ),
+            ),
+            if (ascents.isNotEmpty) ...[
+              const SizedBox(width: 6),
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  context.go('/registry');
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        '名册 ',
+                        style: TextStyle(fontSize: 13, color: Palette.lacquer),
+                      ),
+                      Text(
+                        t.registryTitle,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Palette.lacquer,
+                        ),
+                      ),
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        size: 18,
+                        color: Palette.lacquer,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// La primera subida empieza con el prólogo: un pergamino y "Subir".
+Future<bool?> _prologue(BuildContext context) => showModalBottomSheet<bool>(
+  context: context,
+  backgroundColor: Palette.bg,
+  isScrollControlled: true,
+  builder: (ctx) {
+    final t = AppLocalizations.of(ctx);
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: 1),
+              duration: const Duration(milliseconds: 900),
+              curve: Curves.easeOutCubic,
+              builder: (_, v, _) => LoreScroll(id: 'prologue', open: v),
+            ),
+            const SizedBox(height: 18),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(t.prologueClimb),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+);
 
 /// Botón grande del menú, con ícono, subtítulo y una marca opcional.
 class _MenuButton extends StatelessWidget {

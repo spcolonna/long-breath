@@ -13,6 +13,7 @@ import 'delivery/screens/fountain_screen.dart';
 import 'delivery/screens/home_screen.dart';
 import 'delivery/screens/lessons_screen.dart';
 import 'delivery/screens/map_screen.dart';
+import 'delivery/screens/registry_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
 import 'delivery/screens/shrine_screen.dart';
@@ -80,6 +81,7 @@ final _router = GoRouter(
     _route('/master', const MasterScreen()),
     _route('/talisman', const TalismanScreen()),
     _route('/result', const ResultScreen()),
+    _route('/registry', const RegistryScreen()),
   ],
 );
 

@@ -9,6 +9,7 @@ import '../infrastructure/content_text_loader.dart';
 import 'audio/game_audio.dart';
 import 'content_text.dart';
 import '../domain/model/enums.dart';
+import '../domain/run/ascent.dart';
 import '../infrastructure/progress_storage.dart';
 import '../infrastructure/run_storage.dart';
 import '../infrastructure/tutorial_storage.dart';
@@ -65,6 +66,34 @@ final winsProvider = FutureProvider<Set<Difficulty>>(
 final picoUnlockedProvider = FutureProvider<int>(
   (ref) => ref.watch(progressStorageProvider).picoUnlocked(),
 );
+
+/// Número del discípulo que sube ahora.
+final discipleProvider = FutureProvider<int>(
+  (ref) => ref.watch(progressStorageProvider).discipleNumber(),
+);
+
+/// El registro de la escuela: todas las subidas terminadas.
+final ascentsProvider = FutureProvider<List<Ascent>>(
+  (ref) => ref.watch(progressStorageProvider).ascents(),
+);
+
+/// Pergaminos de la escuela ya abiertos.
+final loreProvider = FutureProvider<Set<String>>(
+  (ref) => ref.watch(progressStorageProvider).lore(),
+);
+
+/// La subida que acaba de terminar, ya anotada (con su número y sus
+/// pergaminos nuevos), para la pantalla final.
+final lastAscentProvider = NotifierProvider<LastAscent, Ascent?>(
+  LastAscent.new,
+);
+
+class LastAscent extends Notifier<Ascent?> {
+  @override
+  Ascent? build() => null;
+
+  void set(Ascent? a) => state = a;
+}
 
 final lessonsDoneProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(tutorialStorageProvider).lessonsDone(),

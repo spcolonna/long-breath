@@ -205,8 +205,12 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Arte:** ninguno.
 
 ### 3.8 Historia y legado
+- **Hecho (base):** cada subida la hace un discípulo con número; al caer se narra qué pasó y "la escuela envía a otro novicio"; registro de la escuela 名册 con tablillas y 9 pergaminos de lore que se abren por hitos (prólogo, santuario, caer ante cada rival, cumbre, 5 y 10 caídos). Sin efecto mecánico.
+- **Pendiente:**
+  - Que el Discípulo Perdido lleve algo de un discípulo caído del registro (nombre/número, su camino).
+  - Pergaminos de las etapas 2 y 3, y del giro del maestro (la cumbre ya siembra la duda: tu nombre ya estaba tallado).
 - **Escenas:**
-  - Prólogo en el templo del Dragón Dormido 卧龙门.
+  - Prólogo en el templo del Dragón Dormido 卧龙门 (hoy es un pergamino; falta la ilustración).
   - Giro del maestro.
   - Finales distintos según el camino.
 - **Legado:** lo que un discípulo deja para el siguiente, por ejemplo una carta heredada.
