@@ -1189,7 +1189,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente y el santuario.';
+      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario y los eventos.';
 
   @override
   String get lesClimbSlide3Title => 'Después de cada combate';
@@ -1218,4 +1218,168 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get lesClimbSlide6 =>
       'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!';
+
+  @override
+  String get eventNode => 'Evento';
+
+  @override
+  String eventCost(int n) {
+    return '−$n Vida';
+  }
+
+  @override
+  String eventHeal(int n) {
+    return '+$n Vida';
+  }
+
+  @override
+  String eventMaxHp(int n) {
+    return '+$n Vida máxima';
+  }
+
+  @override
+  String get eventGainForm => 'aprendés una forma';
+
+  @override
+  String get eventGainTalisman => 'un talismán';
+
+  @override
+  String get eventGainRareTalisman => 'un talismán raro';
+
+  @override
+  String get eventGainCard => 'una carta nueva al azar';
+
+  @override
+  String get eventGainUpgrade => 'mejorás una carta al azar';
+
+  @override
+  String get eventGainLoseStarter => 'perdés una carta inicial al azar';
+
+  @override
+  String get eventNothing => 'sin cambios';
+
+  @override
+  String eventChance(int pct, String ok, String fail) {
+    return '$pct%: $ok · si no: $fail';
+  }
+
+  @override
+  String get eventCantPay => 'No te alcanza la Vida';
+
+  @override
+  String get eventContinue => 'Seguir subiendo';
+
+  @override
+  String eventResultTalisman(String name) {
+    return 'Talismán: $name';
+  }
+
+  @override
+  String eventResultCard(String name) {
+    return 'Carta nueva: $name';
+  }
+
+  @override
+  String eventResultForm(String name) {
+    return 'Forma aprendida: $name';
+  }
+
+  @override
+  String eventResultUpgrade(String name) {
+    return 'Mejorada: $name';
+  }
+
+  @override
+  String eventResultLost(String name) {
+    return 'Se fue del mazo: $name';
+  }
+
+  @override
+  String get eventLucky => '¡Salió bien!';
+
+  @override
+  String get eventUnlucky => 'Salió mal…';
+
+  @override
+  String get talismanPickTitle => 'Elegí un talismán';
+
+  @override
+  String get talismanPickHint =>
+      'Vale para toda la subida y actúa solo. Los raros brillan en oro.';
+
+  @override
+  String get talismanRare => 'Raro';
+
+  @override
+  String talismanGained(String name) {
+    return '¡$name!';
+  }
+
+  @override
+  String get talismansTitle => 'Talismanes';
+
+  @override
+  String get talismansHint =>
+      'Objetos que te acompañan toda la subida y actúan solos.';
+
+  @override
+  String get talismansNone =>
+      'Todavía no tenés talismanes. Se consiguen en los eventos y al vencer al élite.';
+
+  @override
+  String talEffStance(String stance) {
+    return 'Empezás cada combate en $stance.';
+  }
+
+  @override
+  String talEffFirstBreath(int n) {
+    return '+$n de Aliento en el primer turno de cada combate.';
+  }
+
+  @override
+  String talEffStructure(int n) {
+    return '+$n de Estructura en cada combate.';
+  }
+
+  @override
+  String talEffEnemyHp(int n) {
+    return 'El rival empieza cada combate con $n de Vida menos.';
+  }
+
+  @override
+  String talEffEnemyStructure(int n) {
+    return 'El rival empieza cada combate con $n de Estructura menos.';
+  }
+
+  @override
+  String talEffMaxHp(int n) {
+    return '+$n de Vida máxima.';
+  }
+
+  @override
+  String talEffFountain(int n) {
+    return 'La fuente cura $n más.';
+  }
+
+  @override
+  String talEffWinHeal(int n) {
+    return 'Ganar un combate cura $n.';
+  }
+
+  @override
+  String talEffDeflect(int n) {
+    return 'Cada desvío da +$n de Aliento.';
+  }
+
+  @override
+  String talEffFormHeal(int n) {
+    return 'Cada forma completa cura $n.';
+  }
+
+  @override
+  String get lesClimbSlideEventsTitle => 'Eventos y talismanes';
+
+  @override
+  String get lesClimbSlideEvents =>
+      'El ícono rosa es un evento: una escena con una decisión (pagar Vida por algo, arriesgarse o ir a lo seguro). Ahí y al vencer al élite conseguís talismanes: objetos que actúan solos toda la subida, como empezar en Arco o curarte al ganar. Los ves arriba en el mapa y en el combate; tocalos para leerlos.';
 }

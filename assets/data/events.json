@@ -1,0 +1,46 @@
+{
+  "events": [
+    {
+      "id": "hermit", "hanzi": "隐",
+      "options": [
+        { "id": "pay", "hp": 8, "gain": "form" },
+        { "id": "leave" }
+      ]
+    },
+    {
+      "id": "bridge", "hanzi": "桥",
+      "options": [
+        { "id": "cross", "chance": 50, "success": { "gain": "talisman" }, "failure": { "hp": 10 } },
+        { "id": "around", "hp": 3 }
+      ]
+    },
+    {
+      "id": "spring", "hanzi": "泉",
+      "options": [
+        { "id": "drink", "heal": 12 },
+        { "id": "bathe", "gain": "upgrade" }
+      ]
+    },
+    {
+      "id": "monkey", "hanzi": "猴",
+      "options": [
+        { "id": "chase", "hp": 6, "gain": "talisman" },
+        { "id": "let", "gain": "loseStarter" }
+      ]
+    },
+    {
+      "id": "tea", "hanzi": "茶",
+      "options": [
+        { "id": "drink", "maxHp": 4 },
+        { "id": "spar", "gain": "card" }
+      ]
+    },
+    {
+      "id": "altar", "hanzi": "祠",
+      "options": [
+        { "id": "offer", "hp": 7, "gain": "rareTalisman" },
+        { "id": "pray", "heal": 8 }
+      ]
+    }
+  ]
+}

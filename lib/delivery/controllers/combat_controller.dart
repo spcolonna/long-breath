@@ -79,6 +79,7 @@ class CombatController extends Notifier<CombatView?> {
       difficulty: run.difficulty,
       seed: seed,
       forms: run.knownForms,
+      talismans: run.talismans,
     );
     state = CombatView(
       state: r.state,

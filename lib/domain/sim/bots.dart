@@ -6,6 +6,7 @@ import '../combat/combat_state.dart';
 import '../model/card_def.dart';
 import '../model/enemy_def.dart';
 import '../model/enums.dart';
+import '../model/event_def.dart';
 import '../model/form_def.dart';
 import '../run/run_engine.dart';
 import '../run/run_state.dart';
@@ -31,6 +32,19 @@ abstract class Bot {
 
   String pickPath(List<String> options) =>
       options[random.nextInt(options.length)];
+
+  /// Talismán elegido entre los que ofrece el élite.
+  String pickTalisman(RunEngine run, RunState r) =>
+      r.talismanOptions[random.nextInt(r.talismanOptions.length)];
+
+  /// Opción elegida en un evento (entre las que puede pagar).
+  String pickEventOption(RunEngine run, RunState r) {
+    final options = [
+      for (final o in run.data.event(r.eventId!).options)
+        if (run.canChoose(r, o)) o.id,
+    ];
+    return options[random.nextInt(options.length)];
+  }
 
   CombatAction discard(CombatState s) =>
       ChooseDiscard(s.hand[random.nextInt(s.hand.length)].uid);
@@ -162,6 +176,22 @@ class PlannerBot extends Bot {
       prefersForm(run, r, cardPick, 0);
 
   @override
+  String pickTalisman(RunEngine run, RunState r) => r.talismanOptions
+      .reduce((a, b) => talismanValue(b) > talismanValue(a) ? b : a);
+
+  @override
+  String pickEventOption(RunEngine run, RunState r) {
+    final options = [
+      for (final o in run.data.event(r.eventId!).options)
+        if (run.canChoose(r, o)) o,
+    ];
+    return options
+        .reduce((a, b) =>
+            eventOptionValue(run, r, b) > eventOptionValue(run, r, a) ? b : a)
+        .id;
+  }
+
+  @override
   String? pickReward(RunEngine run, RunState r) {
     const priority = [
       'gongbu_tuizhang', 'deng_tui', 'pi_quan', 'hu_zhao', 'ce_chuai',
@@ -256,6 +286,38 @@ double formValue(RunEngine run, RunState r, FormDef f) {
 }
 
 /// Comparación forma vs carta para los bots que planifican.
+/// Valor de un talismán según lo que mide el simulador (`balance.md`).
+double talismanValue(String id) => const {
+      'grieta': 12.0, 'victoria': 11.0, 'aliento': 10.0, 'vida': 8.0,
+      'primer': 7.0, 'fuente': 7.0, 'roca': 5.0, 'arco': 3.0,
+      'desvio': 3.0, 'formas': 2.0,
+    }[id] ??
+    4.0;
+
+/// Valor esperado de una opción de evento: la Vida pesa más cuanto menos
+/// queda.
+double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
+  final missing = r.maxHp - r.hp;
+  final hpWeight = 0.4 + (1 - r.hp / r.maxHp);
+  double value(EventOutcome e) {
+    var v = -e.hp * hpWeight + math.min(e.heal, missing) * hpWeight + e.maxHp * 1.5;
+    v += switch (e.gain) {
+      null => 0.0,
+      EventGain.form => run.learnableForms(r).isEmpty ? 3.0 : 6.0,
+      EventGain.talisman => 7.0,
+      EventGain.rareTalisman => 10.0,
+      EventGain.card => 3.0,
+      EventGain.upgrade => 4.0,
+      EventGain.loseStarter => 2.0,
+    };
+    return v;
+  }
+
+  final chance = o.chance;
+  if (chance == null) return value(o.outcome);
+  return value(o.outcome) * chance / 100 + value(o.failure!) * (100 - chance) / 100;
+}
+
 bool prefersForm(RunEngine run, RunState r, String? cardPick, double margin) {
   final id = r.rewardForm;
   if (id == null) return false;

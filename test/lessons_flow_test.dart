@@ -146,7 +146,7 @@ void main() {
     await tester.scrollUntilVisible(find.text('La subida'), 200);
     await tap('La subida');
     sees('camino de combates');
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 6; i++) {
       await tap('Siguiente');
     }
     sees('Si perdés toda la Vida');

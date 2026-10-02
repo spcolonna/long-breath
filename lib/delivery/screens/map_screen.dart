@@ -18,6 +18,7 @@ import '../theme.dart';
 import '../widgets/deck_sheet.dart';
 import '../labels.dart';
 import '../widgets/difficulty_sheet.dart';
+import '../widgets/talisman_widgets.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -151,6 +152,8 @@ class MapScreen extends ConsumerWidget {
         context.go('/fountain');
       case NodeType.shrine:
         context.go('/shrine');
+      case NodeType.event:
+        context.go('/event');
     }
   }
 
@@ -226,6 +229,8 @@ class _RunHeader extends StatelessWidget {
             icon: const Icon(Icons.style, size: 18),
             label: Text(t.deckCount(run.deck.length)),
           ),
+          // Los talismanes de la subida; tocarlos explica qué hace cada uno.
+          Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
         ],
       ),
     );
@@ -252,18 +257,25 @@ class _NodeButton extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
     final enemy = node.enemy == null ? null : data.enemy(node.enemy!);
-    final shrine = node.type == NodeType.shrine;
-    final icon = enemy == null
-        ? (shrine ? Icons.temple_buddhist : Icons.water_drop)
-        : switch (enemy.rank) {
-            EnemyRank.common => Icons.sports_martial_arts,
-            EnemyRank.elite => Icons.whatshot,
-            EnemyRank.boss => Icons.military_tech,
-          };
+    final (IconData icon, Color accent, String label) = switch (node.type) {
+      NodeType.combat => (
+        switch (enemy!.rank) {
+          EnemyRank.common => Icons.sports_martial_arts,
+          EnemyRank.elite => Icons.whatshot,
+          EnemyRank.boss => Icons.military_tech,
+        },
+        rankColor(enemy.rank),
+        text.enemy(enemy.id),
+      ),
+      NodeType.fountain => (Icons.water_drop, Palette.sky, t.fountainNode),
+      NodeType.shrine => (Icons.temple_buddhist, Palette.gold, t.shrineNode),
+      NodeType.event => (
+        Icons.question_mark_rounded,
+        Palette.blossom,
+        t.eventNode,
+      ),
+    };
     // Cada tipo de nodo tiene su color, así el mapa se lee de un vistazo.
-    final accent = enemy == null
-        ? (shrine ? Palette.gold : Palette.sky)
-        : rankColor(enemy.rank);
     final color = available
         ? Palette.gold
         : visited
@@ -321,9 +333,7 @@ class _NodeButton extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                enemy == null
-                    ? (shrine ? t.shrineNode : t.fountainNode)
-                    : text.enemy(enemy.id),
+                label,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,

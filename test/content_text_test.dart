@@ -37,6 +37,19 @@ void main() {
           if (!text.has('styles', a.name)) 'styles.${a.name}',
           if (!text.has('styleMottos', a.name)) 'styleMottos.${a.name}',
         ],
+        for (final id in data.talismans.keys)
+          if (!text.has('talismans', id)) 'talismans.$id',
+        for (final e in data.events) ...[
+          for (final f in ['name', 'text'])
+            if (!text.has('events', e.id, f)) 'events.${e.id}.$f',
+          for (final o in e.options) ...[
+            if (!text.has('events', e.id, o.id)) 'events.${e.id}.${o.id}',
+            if (!text.has('events', e.id, '${o.id}Result'))
+              'events.${e.id}.${o.id}Result',
+            if (o.chance != null && !text.has('events', e.id, '${o.id}Fail'))
+              'events.${e.id}.${o.id}Fail',
+          ],
+        ],
         if (!text.has('stages', data.balance.stage.id))
           'stages.${data.balance.stage.id}',
       ];

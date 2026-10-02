@@ -40,10 +40,11 @@ void main() {
     expect(data.enemy('dragon').phases.length, 3);
   });
 
-  test('mapa de la run: 8 nodos, santuario y enemigos válidos', () {
+  test('mapa de la run: 10 nodos, santuario, eventos y enemigos válidos', () {
     final nodes = data.balance.runNodes;
-    expect(nodes.length, 8);
+    expect(nodes.length, 10);
     expect(nodes.where((n) => n.type == NodeType.shrine).length, 1);
+    expect(nodes.where((n) => n.type == NodeType.event).length, 2);
     final ids = nodes.map((n) => n.id).toSet();
     for (final n in nodes) {
       expect(ids.containsAll(n.next), isTrue);
@@ -52,5 +53,16 @@ void main() {
     expect(data.balance.styles[Style.crane]!.retain, 3);
     expect(data.balance.statsOf(null).draw, 5);
     expect(data.balance.pathChoices, 2);
+  });
+
+  test('talismanes y eventos', () {
+    expect(data.talismans, hasLength(10));
+    expect(data.talismans.values.where((t) => t.rare), hasLength(3));
+    expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(10),
+        reason: 'cada uno se reconoce por su carácter');
+    expect(data.events, hasLength(6));
+    for (final e in data.events) {
+      expect(e.options, hasLength(2), reason: e.id);
+    }
   });
 }

@@ -251,6 +251,18 @@ La subida arranca sin formas y cada recompensa ofrece 3 cartas **o** 1 forma. Se
 
 Los bots aprenden ~0,5 formas por subida y completan 0,2–0,4 por subida (antes 0,3–0,7). Sus heurísticas casi no juegan alrededor de las formas, así que el balance no se mueve. La ventaja la saca el jugador que planifica, y eso es lo que hay que mirar en las pruebas reales.
 
+## 3e. Eventos y talismanes (02/10/2026)
+
+El mapa suma dos eventos (uno compite con el Discípulo, otro va después de la bifurcación) y el Monje deja elegir 1 de 3 talismanes. Los bots eligen talismanes por el valor medido en la sección 5 y opciones de evento por valor esperado (la Vida pesa más cuanto menos queda).
+
+| Normal | antes | con eventos y talismanes | + Dragón con 8% más de daño |
+|---|---|---|---|
+| Novato | 6% | 8% | **5%** |
+| Promedio | 58–60% | 66% | **59%** |
+| Experto | 82–83% | 87% | **82%** |
+
+Subir la Vida del Dragón casi no movía nada (×1,1 → 62%); el daño sí. Quedó en 10/11/10, 13/13/31 y 6×2/26 por fase. En Fácil el promedio gana el 95% y en Difícil el 27% (experto 56%). Los bots consiguen ~1 talismán por subida y la subida dura unos 12 minutos (los eventos se cuentan como 30 s).
+
 ## 4. Dificultades (implementadas)
 
 **Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).

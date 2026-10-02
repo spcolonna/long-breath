@@ -152,6 +152,7 @@ class CombatState {
     required this.rng,
     this.enemyDamagePct = 100,
     this.fistBonus = 0,
+    this.talismans = const [],
   });
 
   final int turn;
@@ -191,6 +192,9 @@ class CombatState {
   /// Daño extra de los puños por el resto del combate (Puño encadenado).
   final int fistBonus;
 
+  /// Talismanes de la run que acompañan este combate.
+  final List<String> talismans;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -220,6 +224,7 @@ class CombatState {
         rng: rng,
         enemyDamagePct: enemyDamagePct,
         fistBonus: fistBonus,
+        talismans: talismans,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

@@ -13,5 +13,7 @@ GameData loadGameDataFromDir([String dir = 'assets/data']) {
     forms: read('forms.json'),
     enemies: read('enemies.json'),
     balance: read('game_balance.json'),
+    talismans: read('talismans.json'),
+    events: read('events.json'),
   );
 }

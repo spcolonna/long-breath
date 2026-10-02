@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'delivery/providers.dart';
 import 'delivery/screens/climb_lesson_screen.dart';
 import 'delivery/screens/combat_screen.dart';
+import 'delivery/screens/event_screen.dart';
 import 'delivery/screens/fountain_screen.dart';
 import 'delivery/screens/home_screen.dart';
 import 'delivery/screens/lessons_screen.dart';
@@ -13,6 +14,7 @@ import 'delivery/screens/map_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
 import 'delivery/screens/shrine_screen.dart';
+import 'delivery/screens/talisman_screen.dart';
 import 'delivery/theme.dart';
 import 'l10n/app_localizations.dart';
 
@@ -59,6 +61,8 @@ final _router = GoRouter(
     _route('/reward', const RewardScreen()),
     _route('/fountain', const FountainScreen()),
     _route('/shrine', const ShrineScreen()),
+    _route('/event', const EventScreen()),
+    _route('/talisman', const TalismanScreen()),
     _route('/result', const ResultScreen()),
   ],
 );

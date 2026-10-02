@@ -65,18 +65,18 @@
     { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 175, "structure": 18, "scales": 4,
       "phases": [
         { "pattern": [
-          { "kind": "attack", "height": "high", "damage": 9, "structure": 2 },
-          { "kind": "attack", "height": "mid", "damage": 10, "structure": 3 },
-          { "kind": "attack", "height": "low", "damage": 9, "structure": 4 }
+          { "kind": "attack", "height": "high", "damage": 10, "structure": 2 },
+          { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
+          { "kind": "attack", "height": "low", "damage": 10, "structure": 4 }
         ] },
         { "hpThreshold": 0.5, "pattern": [
-          { "kind": "attack", "height": "high", "damage": 12, "structure": 3 },
-          { "kind": "attack", "height": "low", "damage": 12, "structure": 3 },
-          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 29, "structure": 9, "countdown": true }
+          { "kind": "attack", "height": "high", "damage": 13, "structure": 3 },
+          { "kind": "attack", "height": "low", "damage": 13, "structure": 3 },
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 31, "structure": 9, "countdown": true }
         ] },
         { "hpThreshold": 0.3, "scales": 2, "pattern": [
           { "kind": "attack", "height": "low", "damage": 6, "structure": 2, "hits": 2 },
-          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 24, "structure": 8, "countdown": true }
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 26, "structure": 8, "countdown": true }
         ] }
       ] }
   ]

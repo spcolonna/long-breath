@@ -17,6 +17,7 @@ CombatState setup(
   Style style = Style.snake,
   int hp = 50,
   List<String>? forms,
+  List<String> talismans = const [],
 }) => engine
     .start(
       deck: [
@@ -28,6 +29,7 @@ CombatState setup(
       seed: 1,
       shuffle: false,
       forms: forms,
+      talismans: talismans,
     )
     .state;
 
@@ -552,6 +554,61 @@ void main() {
         engine.intentView(s).damage,
         (engine.intentView(normal).damage * 1.2).round(),
       );
+    });
+  });
+
+  group('talismanes', () {
+    test('al empezar: postura, Estructura, Aliento y rival debilitado', () {
+      final r = engine.start(
+        deck: [
+          for (final (i, id) in filler.indexed) CombatCard(uid: i, cardId: id),
+        ],
+        enemyId: 'salamander',
+        style: Style.snake,
+        playerHp: 50,
+        seed: 1,
+        shuffle: false,
+        talismans: ['arco', 'roca', 'aliento', 'primer', 'grieta', 'fuente'],
+      );
+      final s = r.state;
+      expect(s.player.stance, Stance.gongbu);
+      expect(s.player.structure, 14);
+      expect(s.player.maxStructure, 14);
+      expect(s.player.breath, 5, reason: 'Serpiente 4 + 1 del talismán');
+      expect(s.enemy.hp, 57 - 6);
+      expect(s.enemy.maxHp, 57);
+      expect(s.enemy.structure, 14 - 3);
+      expect(
+        r.events.whereType<TalismanTriggered>().map((e) => e.talismanId),
+        ['arco', 'roca', 'aliento', 'primer', 'grieta'],
+        reason: 'la fuente actúa en el mapa, no en el combate',
+      );
+      // El Aliento extra es solo del primer turno.
+      expect(endTurn(s).state.player.breath, 4);
+    });
+
+    test('desvío: el talismán suma Aliento al turno siguiente', () {
+      var s = setup(['an_zhang', 'ti_xi', ...filler], talismans: ['desvio']);
+      s = play(s, 'an_zhang').state;
+      s = play(s, 'ti_xi').state;
+      final r = endTurn(s);
+      expect(r.events.whereType<TalismanTriggered>(), hasLength(1));
+      expect(r.state.player.breath, 5 + 2);
+    });
+
+    test('forma completa: el talismán cura', () {
+      var s = setup(
+        ['gongbu_chongquan', 'tan_tui', 'mabu_chongquan', ...filler],
+        forms: ['wu_bu_quan'],
+        talismans: ['formas'],
+        hp: 30,
+      );
+      s = play(s, 'gongbu_chongquan').state;
+      s = play(s, 'tan_tui').state;
+      final r = play(s, 'mabu_chongquan');
+      expect(r.events.whereType<FormCompleted>(), hasLength(1));
+      expect(r.events.whereType<TalismanTriggered>(), hasLength(1));
+      expect(r.state.player.hp, 38);
     });
   });
 }

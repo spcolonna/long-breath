@@ -1,0 +1,14 @@
+{
+  "talismans": [
+    { "id": "arco",     "hanzi": "弓", "rarity": "common", "effect": { "startStance": "gongbu" } },
+    { "id": "primer",   "hanzi": "先", "rarity": "common", "effect": { "enemyHp": 6 } },
+    { "id": "roca",     "hanzi": "石", "rarity": "common", "effect": { "structure": 4 } },
+    { "id": "vida",     "hanzi": "命", "rarity": "common", "effect": { "maxHp": 6 } },
+    { "id": "fuente",   "hanzi": "泉", "rarity": "common", "effect": { "fountainHeal": 8 } },
+    { "id": "desvio",   "hanzi": "卸", "rarity": "common", "effect": { "deflectBreath": 2 } },
+    { "id": "formas",   "hanzi": "套", "rarity": "common", "effect": { "formHeal": 8 } },
+    { "id": "aliento",  "hanzi": "气", "rarity": "rare",   "effect": { "firstTurnBreath": 1 } },
+    { "id": "grieta",   "hanzi": "裂", "rarity": "rare",   "effect": { "enemyStructure": 3 } },
+    { "id": "victoria", "hanzi": "胜", "rarity": "rare",   "effect": { "winHeal": 3 } }
+  ]
+}

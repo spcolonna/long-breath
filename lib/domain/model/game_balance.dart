@@ -30,7 +30,10 @@ enum NodeType {
   fountain,
 
   /// Santuario de los animales: se elige el camino.
-  shrine;
+  shrine,
+
+  /// Escena con una decisión (ermitaño, puente, manantial…).
+  event;
 
   static NodeType parse(String s) => NodeType.values.byName(s);
 }
@@ -114,6 +117,7 @@ class GameBalance {
     required this.enemyBreakDamageMultiplier,
     required this.rewardChoices,
     required this.rewardPools,
+    this.talismanChoices = 3,
     required this.fountainHeal,
     required this.fountainUpgrade,
     required this.runStart,
@@ -137,6 +141,9 @@ class GameBalance {
   final int enemyBreakDamageMultiplier;
   final int rewardChoices;
   final List<String> rewardPools;
+
+  /// Talismanes que ofrece el élite al vencerlo.
+  final int talismanChoices;
   final int fountainHeal;
   final int fountainUpgrade;
   final String runStart;
@@ -177,6 +184,7 @@ class GameBalance {
           (j['enemyBreak'] as Map<String, dynamic>)['damageMultiplier'] as int,
       rewardChoices: rewards['choices'] as int,
       rewardPools: (rewards['pools'] as List).cast<String>(),
+      talismanChoices: rewards['talismanChoices'] as int? ?? 3,
       fountainHeal: fountain['heal'] as int,
       fountainUpgrade: fountain['upgrade'] as int,
       runStart: run['start'] as String,

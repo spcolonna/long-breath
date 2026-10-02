@@ -21,6 +21,9 @@ abstract final class Palette {
   static const sky = Color(0xFF3E7BE0);
   static const structure = Color(0xFF9B5DE5);
 
+  /// Flor de durazno: los eventos del mapa.
+  static const blossom = Color(0xFFE76F9A);
+
   /// Degradado de fondo global (papel → jade claro).
   static const backdrop = LinearGradient(
     begin: Alignment.topCenter,

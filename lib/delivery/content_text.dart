@@ -32,4 +32,12 @@ class ContentText {
   String stage(String id) => _get('stages', id);
   String style(Style a) => _get('styles', a.name);
   String styleMotto(Style a) => _get('styleMottos', a.name);
+  String talisman(String id) => _get('talismans', id);
+  String event(String id) => _get('events', id, 'name');
+  String eventText(String id) => _get('events', id, 'text');
+  String eventOption(String id, String option) => _get('events', id, option);
+
+  /// Lo que pasó al elegir [option] (con [failed], la versión que salió mal).
+  String eventResult(String id, String option, {bool failed = false}) =>
+      _get('events', id, failed ? '${option}Fail' : '${option}Result');
 }

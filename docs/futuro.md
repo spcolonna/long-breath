@@ -162,7 +162,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Arte:** ninguno.
 
 ### 3.3 Nuevos tipos de nodo
-- **Evento:** una escena de texto con una decisión. Por ejemplo, un ermitaño ofrece una carta a cambio de Vida, o un puente roto se cruza con riesgo o se rodea. Es barato de producir y le da mucha variedad e historia a la subida.
+- **Evento:** **en el juego** (02/10/2026): 6 eventos y 2 nodos en la etapa 1. Para crecer: más eventos por etapa, eventos que dependan del camino o de un talismán, y eventos con más de dos opciones.
 - **Mercader de pergaminos:** compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
 - **Maestro errante:** enseña una forma o mejora una carta.
 - **Arte:** 1 ícono por tipo de nodo. Los eventos se resuelven con texto y alguna ilustración reutilizada.
@@ -175,6 +175,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - Son la fuente principal de combinaciones y de rejugabilidad en los roguelikes de cartas.
 - **Prototipo:** hay 10 talismanes medidos en `balance.md` (sección 5). Cada uno suma entre +1 y +14 puntos de victoria, y todos juntos unos +20.
 - Se obtienen en las élites, los jefes, los eventos y el mercader.
+- **En el juego** (02/10/2026): los 10 del prototipo, del élite (1 de 3) y de los eventos. Falta: talismanes de jefe, del mercader y talismanes que cambien reglas (no solo números).
 - **Arte:** ícono chico por talismán. Se pueden armar con un set de íconos simples o con caracteres caligrafiados.
 
 ### 3.5 Más enemigos
