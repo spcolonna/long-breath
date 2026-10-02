@@ -30,39 +30,39 @@
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 3, "structure": 1 }
       ] } ] },
-    { "id": "bat", "rank": "common", "hp": 48, "structure": 11,
+    { "id": "bat", "rank": "common", "hp": 53, "structure": 11,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "high", "damage": 3, "hits": 2, "structure": 1 },
         { "kind": "attack", "height": "high", "damage": 7, "structure": 2 },
         { "kind": "discard", "labelKey": "screech", "count": 1 }
       ] } ] },
-    { "id": "salamander", "rank": "common", "hp": 57, "structure": 14,
+    { "id": "salamander", "rank": "common", "hp": 63, "structure": 14,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "low", "damage": 8, "structure": 2 },
         { "kind": "guard", "labelKey": "burrow", "value": 9 },
         { "kind": "attack", "height": "low", "damage": 10, "structure": 3 }
       ] } ] },
-    { "id": "golem", "rank": "common", "hp": 64, "structure": 16,
+    { "id": "golem", "rank": "common", "hp": 70, "structure": 16,
       "immovable": true,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 12, "structure": 4 },
         { "kind": "charge", "labelKey": "charge", "value": 6 },
         { "kind": "attack", "height": "mid", "damage": 12, "structure": 4 }
       ] } ] },
-    { "id": "disciple", "rank": "common", "hp": 70, "structure": 18,
+    { "id": "disciple", "rank": "common", "hp": 77, "structure": 18,
       "sameStancePunish": { "damage": 5, "structure": 2 },
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "high", "damage": 7, "structure": 2 },
         { "kind": "attack", "height": "mid", "damage": 9, "structure": 2 },
         { "kind": "attack", "labelKey": "sweep", "height": "low", "damage": 7, "structure": 4 }
       ] } ] },
-    { "id": "monk", "rank": "elite", "hp": 116, "structure": 21,
+    { "id": "monk", "rank": "elite", "hp": 128, "structure": 21,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 10, "structure": 3 },
         { "kind": "attack", "labelKey": "interrupt", "height": "high", "damage": 6, "structure": 0, "interrupt": true },
         { "kind": "attack", "height": "low", "damage": 14, "structure": 4 }
       ] } ] },
-    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 175, "structure": 18, "scales": 4,
+    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 193, "structure": 18, "scales": 4,
       "phases": [
         { "pattern": [
           { "kind": "attack", "height": "high", "damage": 10, "structure": 2 },

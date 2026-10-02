@@ -153,6 +153,11 @@ class CombatState {
     this.enemyDamagePct = 100,
     this.fistBonus = 0,
     this.talismans = const [],
+    this.firstStrike = 0,
+    this.chain = 0,
+    this.retainedDiscount = 0,
+    this.attacksThisTurn = 0,
+    this.retained = const [],
   });
 
   final int turn;
@@ -195,6 +200,17 @@ class CombatState {
   /// Talismanes de la run que acompañan este combate.
   final List<String> talismans;
 
+  /// Pasivas del camino (ver [StyleStats]).
+  final int firstStrike;
+  final int chain;
+  final int retainedDiscount;
+
+  /// Ataques jugados en este turno (Tigre y Serpiente cuentan con esto).
+  final int attacksThisTurn;
+
+  /// Cartas que vienen retenidas del turno anterior (Grulla).
+  final List<int> retained;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -225,6 +241,11 @@ class CombatState {
         enemyDamagePct: enemyDamagePct,
         fistBonus: fistBonus,
         talismans: talismans,
+        firstStrike: firstStrike,
+        chain: chain,
+        retainedDiscount: retainedDiscount,
+        attacksThisTurn: attacksThisTurn,
+        retained: retained,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

@@ -79,6 +79,8 @@ extension Labels on AppLocalizations {
       ),
     if (d.clearGuard) effClearGuard,
     if (d.turnStructureBonus > 0) effTurnStructure(d.turnStructureBonus),
+    if (d.chainDamage > 0) effChain(d.chainDamage),
+    if (d.retainedDamage > 0) effRetained(d.retainedDamage),
     if (d.firstTurnOnly) effFirstTurn,
     if (d.exhaust) effExhaust,
   ].join('. ');

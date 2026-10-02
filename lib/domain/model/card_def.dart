@@ -23,6 +23,8 @@ class CardDef {
     this.stanceStructureBonus,
     this.clearGuard = false,
     this.turnStructureBonus = 0,
+    this.chainDamage = 0,
+    this.retainedDamage = 0,
     this.pool = 'starter',
     this.copies = 1,
   });
@@ -47,6 +49,12 @@ class CardDef {
   final (Stance, int)? stanceStructureBonus;
   final bool clearGuard;
   final int turnStructureBonus;
+
+  /// Daño extra por cada ataque jugado antes en el turno (Serpiente).
+  final int chainDamage;
+
+  /// Daño extra si la carta viene retenida del turno anterior (Grulla).
+  final int retainedDamage;
   final String pool;
   final int copies;
 
@@ -75,6 +83,8 @@ class CardDef {
           : (Stance.parse(ssb['stance'] as String)!, ssb['value'] as int),
       clearGuard: j['clearGuard'] as bool? ?? false,
       turnStructureBonus: j['turnStructureBonus'] as int? ?? 0,
+      chainDamage: j['chainDamage'] as int? ?? 0,
+      retainedDamage: j['retainedDamage'] as int? ?? 0,
       pool: j['pool'] as String? ?? 'starter',
       copies: j['copies'] as int? ?? 1,
     );

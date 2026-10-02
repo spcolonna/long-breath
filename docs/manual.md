@@ -139,18 +139,20 @@ Shifu arranca bloqueada: se ve en blanco con un candado y, al tocarla, avisa que
 
 ## Tu camino
 
-| Camino | Robás por turno | Aliento por turno | Retenés |
-|---|---|---|---|
-| Novicio (hasta el santuario) | 5 | 3 | 0 |
-| Tigre | 5 | 4 | 0 |
-| Serpiente | 4 | 4 | 2 |
-| Grulla | 4 | 4 | 3 |
+| Camino | Robás por turno | Aliento por turno | Retenés | Pasiva |
+|---|---|---|---|---|
+| Novicio (hasta el santuario) | 5 | 3 | 0 | — |
+| Tigre | 5 | 4 | 0 | **Golpe primero:** el primer ataque de cada turno pega +3 |
+| Serpiente | 4 | 4 | 2 | **Cadena:** cada ataque pega +1 por cada ataque que ya jugaste en el turno |
+| Grulla | 4 | 4 | 3 | **Paciencia:** las cartas retenidas cuestan 1 menos el turno siguiente |
 
-Al elegir camino el discípulo madura: pasa de 3 a 4 de Aliento por turno, sea cual sea el camino.
+Al elegir camino el discípulo madura: pasa de 3 a 4 de Aliento por turno, sea cual sea el camino. Cada camino tiene **su pasiva, 4 cartas propias y una forma propia** que solo le salen a él como recompensa:
 
-- **Tigre:** no guarda nada, pero roba 5 cartas por turno y es el único que recibe las cartas del Tigre (Garra, Salto, Guardia y Rugido) y el Puño del Tigre como recompensa. Ideal para aprender.
-- **Serpiente:** guarda 2 cartas para el turno siguiente: encadena golpes y formas. Es la única que puede aprender el Puño de la Serpiente.
-- **Grulla:** guarda hasta 3 para armar formas y respuestas exactas.
+- **Tigre — golpear fuerte y primero.** Abrí el turno con tu mejor golpe. Cartas: Garra de tigre, Salto del tigre, Guardia del tigre, Rugido del tigre. Forma: Puño del Tigre. Ideal para aprender.
+- **Serpiente — fluir y encadenar.** Muchos golpes chicos en el mismo turno; los últimos pegan más. Cartas: Mano de serpiente (0 de Aliento, +2 por cada ataque anterior), Lengua de serpiente (roba 1), Serpiente enroscada (Guardia que devuelve 1 de Aliento) y Serpiente dorada (+3 por cada ataque anterior). Forma: Puño de la Serpiente.
+- **Grulla — esperar y contraatacar.** Guardá cartas para el turno justo: salen más baratas y algunas pegan más. Cartas: Ala de grulla (si desviás, 6 de daño), Grulla en una pata (0 de Aliento, Guardia baja, roba 1, → Vacía), Pico de grulla (+6 si la retuviste) y Danza de la grulla (+7 si la retuviste). Forma: Puño de la Grulla.
+
+En combate, el chip del camino junto al héroe muestra la pasiva; tocarlo la explica. Cuando la pasiva suma, el daño de la carta se ve con ▲ en verde, y la vista previa dice "+N daño por tu camino". Una carta retenida dice **Retenida** arriba y su costo baja en verde.
 
 Las cartas retenidas son extra: al empezar el turno robás tu mano completa y se suman a lo que guardaste.
 
@@ -244,7 +246,8 @@ Una forma es una secuencia fija de cartas. Si la completás en orden, se desata 
 |---|---|---|---|
 | **Pequeño Puño Rojo** 小洪拳 | Puñetazo a fondo → Patada látigo → Bloqueo y contragolpe → Paso atrás | 14 de daño, 6 a Estructura, robás 2 | equilibrada |
 | **Puño de los cinco pasos** 五步拳 | Puñetazo a fondo → Patada látigo → Puñetazo firme | +2 Aliento, robás 1 | economía: corta y con cartas iniciales |
-| **Puño de la Serpiente** 蛇拳 (solo Serpiente) | Empujón de palma → Paso atrás → Empujón de palma | curás 6, Guardia 8 media | aguante |
+| **Puño de la Serpiente** 蛇拳 (solo Serpiente) | Empujón de palma → Lengua de serpiente → Mano de serpiente | 8 de daño, curás 6, Guardia 6 media | aguante |
+| **Puño de la Grulla** 鹤拳 (solo Grulla) | Ala de grulla → Grulla en una pata → Pico de grulla | 12 de daño, 6 a Estructura, +1 Aliento | contraataque |
 | **Puño encadenado** 连环拳 | Puñetazo a fondo → Puño martillo → Puñetazo firme | tus puños pegan +2 el resto del combate (se acumula) | crece |
 | **Patadas de la puerta** 门户腿 | Patada látigo → Patada lateral → Patada de talón | 6 de daño, 14 a Estructura | rompe guardias |
 | **Puño del Tigre** 虎拳 (solo Tigre) | Garra de tigre → Salto del tigre → Rugido del tigre | 22 de daño, 8 a Estructura | remate |

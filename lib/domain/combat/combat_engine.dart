@@ -49,6 +49,8 @@ class CardPreview {
     this.stanceStructure = 0,
     this.stanceGuard = 0,
     this.stanceCost = 0,
+    this.styleDamage = 0,
+    this.retained = false,
   });
 
   final int cost;
@@ -70,6 +72,13 @@ class CardPreview {
   final int stanceStructure;
   final int stanceGuard;
   final int stanceCost;
+
+  /// Daño que suma el camino o la carta por el turno (primer golpe, cadena,
+  /// retenida); ya está incluido en [damage].
+  final int styleDamage;
+
+  /// La carta viene retenida del turno anterior.
+  final bool retained;
 }
 
 /// Intención del enemigo con los valores finales ya aplicados.
@@ -172,6 +181,9 @@ class CombatEngine {
       enemyDamagePct: dif.enemyDamage,
       talismans: talismans,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath),
+      firstStrike: styleStats.firstStrike,
+      chain: styleStats.chain,
+      retainedDiscount: styleStats.retainedDiscount,
     );
     final events = <CombatEvent>[
       for (final id in talismans)
@@ -200,6 +212,7 @@ class CombatEngine {
         final n = d.hand.length;
         d.discard.addAll(d.hand);
         d.hand.clear();
+        d.retained.clear();
         d.breathesLeft--;
         d.breath -= data.balance.breatheCost;
         _draw(d, n, events);
@@ -208,6 +221,7 @@ class CombatEngine {
       case ChooseDiscard(:final uid):
         final card = d.hand.firstWhere((c) => c.uid == uid);
         d.hand.remove(card);
+        d.retained.remove(uid);
         d.discard.add(card);
         d.pendingDiscard--;
         if (d.pendingDiscard == 0) d.phase = CombatPhase.playerTurn;
@@ -227,7 +241,7 @@ class CombatEngine {
         if (c == null) return Invalid.notInHand;
         final def = data.card(c.cardId);
         if (def.firstTurnOnly && s.turn != 1) return Invalid.firstTurnOnly;
-        if (costOf(s, def) > s.player.breath) return Invalid.noBreath;
+        if (costOf(s, def, uid) > s.player.breath) return Invalid.noBreath;
       case Dingbu(:final stance):
         if (s.dingbuUsed) return Invalid.dingbuUsed;
         if (s.player.breath < data.transition.cost) return Invalid.noBreath;
@@ -275,10 +289,32 @@ class CombatEngine {
   Iterable<FormDef> knownForms(CombatState s) =>
       data.forms.where((f) => s.formProgress.containsKey(f.id));
 
-  int costOf(CombatState s, CardDef def) => _cost(def, s.player.stance);
+  /// Costo de la carta en mano; con [uid], cuenta si viene retenida.
+  int costOf(CombatState s, CardDef def, [int? uid]) => _cost(
+    def,
+    s.player.stance,
+    uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0,
+  );
 
-  int _cost(CardDef def, Stance stance) =>
-      math.max(0, def.cost + (data.stance(stance).costModifier[def.type] ?? 0));
+  int _cost(CardDef def, Stance stance, [int discount = 0]) => math.max(
+    0,
+    def.cost + (data.stance(stance).costModifier[def.type] ?? 0) - discount,
+  );
+
+  /// Daño extra que el camino y la carta suman a un ataque según el turno:
+  /// primer golpe (Tigre), cadena (Serpiente) y carta retenida (Grulla).
+  int _styleDamage(
+    CardDef def, {
+    required int attacks,
+    required bool retained,
+    required int firstStrike,
+    required int chain,
+  }) {
+    if (!def.type.isAttack || def.damage == 0) return 0;
+    return (attacks == 0 ? firstStrike : 0) +
+        (chain + def.chainDamage) * attacks +
+        (retained ? def.retainedDamage : 0);
+  }
 
   /// Daño y Estructura de la carta antes de los modificadores del enemigo.
   (int, int) _cardHit(
@@ -287,8 +323,9 @@ class CombatEngine {
     Stance stance,
     bool staggered,
     int turnStructureBonus,
-    int fistBonus,
-  ) {
+    int fistBonus, [
+    int styleDamage = 0,
+  ]) {
     if (def.damage == 0 && def.structure == 0) return (0, 0);
     final st = data.stance(stance);
     var dmg = def.damage + (def.guard == 0 ? upgrades : 0);
@@ -298,6 +335,7 @@ class CombatEngine {
       str += st.structureBonus[def.type] ?? 0;
     }
     if (def.type == CardType.fist && def.damage > 0) dmg += fistBonus;
+    dmg += styleDamage;
     if (staggered) dmg += def.bonusDamageIfStaggered;
     final ssb = def.stanceStructureBonus;
     if (ssb != null && ssb.$1 == stance) str += ssb.$2;
@@ -347,6 +385,13 @@ class CombatEngine {
     final stance = s.player.stance;
     final stanceAfter = def.stance ?? stance;
     final enemyDef = data.enemy(s.enemy.id);
+    final style = _styleDamage(
+      def,
+      attacks: s.attacksThisTurn,
+      retained: s.retained.contains(uid),
+      firstStrike: s.firstStrike,
+      chain: s.chain,
+    );
     final (dmg, str) = _cardHit(
       def,
       c.upgrades,
@@ -354,6 +399,7 @@ class CombatEngine {
       s.enemy.staggered,
       s.turnStructureBonus,
       s.fistBonus,
+      style,
     );
     final dealt = _enemyDamageTaken(
       enemyDef,
@@ -375,7 +421,7 @@ class CombatEngine {
       }
     }
     return CardPreview(
-      cost: costOf(s, def),
+      cost: costOf(s, def, uid),
       playable: validate(s, PlayCard(uid)) == null,
       reason: validate(s, PlayCard(uid)),
       damage: dealt,
@@ -390,6 +436,8 @@ class CombatEngine {
       stanceStructure: s.enemy.staggered ? 0 : sStr,
       stanceGuard: sGuard,
       stanceCost: sCost,
+      styleDamage: style,
+      retained: s.retained.contains(uid),
     );
   }
 
@@ -435,7 +483,8 @@ class CombatEngine {
   void _playCard(_Draft d, int uid, List<CombatEvent> events) {
     final card = d.hand.firstWhere((c) => c.uid == uid);
     final def = data.card(card.cardId);
-    d.breath -= _cost(def, d.stance);
+    final wasRetained = d.retained.remove(uid);
+    d.breath -= _cost(def, d.stance, wasRetained ? d.retainedDiscount : 0);
     d.hand.remove(card);
     events.add(CardPlayed(def.id));
 
@@ -455,7 +504,15 @@ class CombatEngine {
       d.enemy.staggered,
       d.turnStructureBonus,
       d.fistBonus,
+      _styleDamage(
+        def,
+        attacks: d.attacksThisTurn,
+        retained: wasRetained,
+        firstStrike: d.firstStrike,
+        chain: d.chain,
+      ),
     );
+    if (def.type.isAttack) d.attacksThisTurn++;
     if (dmg > 0 || str > 0) _hitEnemy(d, dmg, str, events);
 
     if (def.clearGuard) {
@@ -601,6 +658,9 @@ class CombatEngine {
     d.hand
       ..clear()
       ..addAll(kept);
+    d.retained
+      ..clear()
+      ..addAll(kept.map((c) => c.uid));
 
     final enemyDef = data.enemy(d.enemy.id);
     if (enemyDef.sameStancePunishDamage > 0 &&
@@ -727,6 +787,7 @@ class CombatEngine {
     d.deflectBonusDamage = 0;
     d.deflectBonusStructure = 0;
     d.dingbuUsed = false;
+    d.attacksThisTurn = 0;
     d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
     d.nextTurnBreathMod = 0;
     events.add(TurnStarted(d.turn, d.breath));
@@ -861,7 +922,13 @@ class _Draft {
     this.enemyDamagePct = 100,
     this.fistBonus = 0,
     this.talismans = const [],
-  }) : formsCompleted = formsCompleted ?? {};
+    this.firstStrike = 0,
+    this.chain = 0,
+    this.retainedDiscount = 0,
+    this.attacksThisTurn = 0,
+    List<int>? retained,
+  }) : formsCompleted = formsCompleted ?? {},
+       retained = retained ?? [];
 
   factory _Draft.of(CombatState s) => _Draft(
     turn: s.turn,
@@ -898,6 +965,11 @@ class _Draft {
     enemyDamagePct: s.enemyDamagePct,
     fistBonus: s.fistBonus,
     talismans: s.talismans,
+    firstStrike: s.firstStrike,
+    chain: s.chain,
+    retainedDiscount: s.retainedDiscount,
+    attacksThisTurn: s.attacksThisTurn,
+    retained: [...s.retained],
   );
 
   int turn;
@@ -934,6 +1006,11 @@ class _Draft {
   final int enemyDamagePct;
   int fistBonus;
   final List<String> talismans;
+  final int firstStrike;
+  final int chain;
+  final int retainedDiscount;
+  int attacksThisTurn;
+  final List<int> retained;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
 
@@ -974,5 +1051,10 @@ class _Draft {
     enemyDamagePct: enemyDamagePct,
     fistBonus: fistBonus,
     talismans: talismans,
+    firstStrike: firstStrike,
+    chain: chain,
+    retainedDiscount: retainedDiscount,
+    attacksThisTurn: attacksThisTurn,
+    retained: List.unmodifiable(retained),
   );
 }

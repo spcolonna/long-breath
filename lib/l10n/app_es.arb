@@ -34,9 +34,9 @@
       }
     }
   },
-  "styleBenefitTiger": "Robás 5 cartas por turno, una más que los otros caminos. Te salen las cartas del tigre y el Puño del Tigre.",
-  "styleBenefitSnake": "Al terminar el turno retenés hasta 2 cartas y igual robás la mano completa. Te sale el Puño de la Serpiente.",
-  "styleBenefitCrane": "Al terminar el turno retenés hasta 3 cartas y igual robás la mano completa: guardás todo para el momento justo.",
+  "styleBenefitTiger": "Golpe primero: el primer ataque de cada turno pega +3. Robás 5 cartas por turno, una más que los otros. Te salen las cartas del tigre y el Puño del Tigre.",
+  "styleBenefitSnake": "Cadena: cada ataque pega +1 por cada ataque que ya jugaste en el turno. Retenés hasta 2 cartas. Te salen las cartas de la serpiente y el Puño de la Serpiente.",
+  "styleBenefitCrane": "Paciencia: retenés hasta 3 cartas y las retenidas cuestan 1 menos el turno siguiente. Te salen las cartas de la grulla y el Puño de la Grulla.",
   "styleChipRetain": "{hanzi} Retenés {count}",
   "@styleChipRetain": {
     "placeholders": {
@@ -747,5 +747,20 @@
   "masterUpgraded": "¡{name} +{n}!",
   "@masterUpgraded": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
   "lesClimbSlideShopTitle": "Jade, mercader y maestro",
-  "lesClimbSlideShop": "Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos."
+  "lesClimbSlideShop": "Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.",
+  "effChain": "+{n} de daño por cada ataque que ya jugaste en el turno",
+  "@effChain": {"placeholders": {"n": {"type": "int"}}},
+  "effRetained": "Si la retuviste, +{n} de daño",
+  "@effRetained": {"placeholders": {"n": {"type": "int"}}},
+  "styleChipFirstStrike": "{hanzi} Primer golpe +{n}",
+  "@styleChipFirstStrike": {"placeholders": {"hanzi": {"type": "String"}, "n": {"type": "int"}}},
+  "styleChipChain": "{hanzi} Cadena +{n}",
+  "@styleChipChain": {"placeholders": {"hanzi": {"type": "String"}, "n": {"type": "int"}}},
+  "styleChipRetained": "{hanzi} Retenidas −{n}",
+  "@styleChipRetained": {"placeholders": {"hanzi": {"type": "String"}, "n": {"type": "int"}}},
+  "retainedTag": "Retenida",
+  "styleDeltaDamage": "+{n} daño por tu camino",
+  "@styleDeltaDamage": {"placeholders": {"n": {"type": "int"}}},
+  "retainedCheaper": "−{n} costo por retenida",
+  "@retainedCheaper": {"placeholders": {"n": {"type": "int"}}}
 }

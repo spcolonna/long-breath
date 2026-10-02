@@ -49,15 +49,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get styleBenefitTiger =>
-      'Robás 5 cartas por turno, una más que los otros caminos. Te salen las cartas del tigre y el Puño del Tigre.';
+      'Golpe primero: el primer ataque de cada turno pega +3. Robás 5 cartas por turno, una más que los otros. Te salen las cartas del tigre y el Puño del Tigre.';
 
   @override
   String get styleBenefitSnake =>
-      'Al terminar el turno retenés hasta 2 cartas y igual robás la mano completa. Te sale el Puño de la Serpiente.';
+      'Cadena: cada ataque pega +1 por cada ataque que ya jugaste en el turno. Retenés hasta 2 cartas. Te salen las cartas de la serpiente y el Puño de la Serpiente.';
 
   @override
   String get styleBenefitCrane =>
-      'Al terminar el turno retenés hasta 3 cartas y igual robás la mano completa: guardás todo para el momento justo.';
+      'Paciencia: retenés hasta 3 cartas y las retenidas cuestan 1 menos el turno siguiente. Te salen las cartas de la grulla y el Puño de la Grulla.';
 
   @override
   String styleChipRetain(String hanzi, int count) {
@@ -1488,4 +1488,42 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get lesClimbSlideShop =>
       'Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.';
+
+  @override
+  String effChain(int n) {
+    return '+$n de daño por cada ataque que ya jugaste en el turno';
+  }
+
+  @override
+  String effRetained(int n) {
+    return 'Si la retuviste, +$n de daño';
+  }
+
+  @override
+  String styleChipFirstStrike(String hanzi, int n) {
+    return '$hanzi Primer golpe +$n';
+  }
+
+  @override
+  String styleChipChain(String hanzi, int n) {
+    return '$hanzi Cadena +$n';
+  }
+
+  @override
+  String styleChipRetained(String hanzi, int n) {
+    return '$hanzi Retenidas −$n';
+  }
+
+  @override
+  String get retainedTag => 'Retenida';
+
+  @override
+  String styleDeltaDamage(int n) {
+    return '+$n daño por tu camino';
+  }
+
+  @override
+  String retainedCheaper(int n) {
+    return '−$n costo por retenida';
+  }
 }
