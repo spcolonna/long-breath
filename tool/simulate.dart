@@ -197,7 +197,7 @@ void _report(Map<String, List<RunLog>> logs) {
   print('## Runs');
   table([
     'perfil', 'victoria', 'llega al jefe final', 'piso medio de derrota',
-    'Vida al jefe', 'minutos (media)', 'minutos (victorias)', 'mazo final', 'formas por run', 'formas aprendidas',
+    'Vida al jefe', 'minutos (media)', 'minutos (victorias)', 'mazo final', 'formas por run', 'formas aprendidas', 'talismanes',
   ], [
     for (final MapEntry(key: p, value: l) in logs.entries)
       [
@@ -211,6 +211,7 @@ void _report(Map<String, List<RunLog>> logs) {
         f1(mean([for (final r in l) r.deckSize])),
         f1(mean([for (final r in l) r.fights.fold(0, (a, f) => a + f.forms)])),
         f1(mean([for (final r in l) r.learned.length])),
+        f1(mean([for (final r in l) r.talismans.length])),
       ],
   ]);
 
@@ -326,14 +327,15 @@ Future<void> _talismans(RawData raw, int stages, int runs, int seed) async {
   final rows = [
     ['ninguno', '-', '${bw.toStringAsFixed(0)}%', '-'],
   ];
-  for (final t in talismans) {
+  final data = raw.build();
+  for (final t in talismanIds(data)) {
     final l = await simulate(
-        Config(raw: raw, stages: stages, talismans: false, startTalismans: [t.id]),
+        Config(raw: raw, stages: stages, talismans: false, startTalismans: [t]),
         'promedio', runs, seed);
     final w = l.where((r) => r.won).length * 100 / runs;
-    rows.add([t.id, t.text, '${w.toStringAsFixed(0)}%', '${(w - bw) >= 0 ? '+' : ''}${(w - bw).toStringAsFixed(0)} pp']);
+    rows.add([t, data.talisman(t).hanzi, '${w.toStringAsFixed(0)}%', '${(w - bw) >= 0 ? '+' : ''}${(w - bw).toStringAsFixed(0)} pp']);
   }
-  table(['talismán', 'efecto', 'victoria', 'diferencia'], rows);
+  table(['talismán', 'carácter', 'victoria', 'diferencia'], rows);
 }
 
 /// Poder de cada carta: victoria si empieza la run ya en el mazo, contra el

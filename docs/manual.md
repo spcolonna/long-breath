@@ -71,17 +71,45 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 ## Una partida (run)
 
 1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
-2. **Mapa:** 8 nodos de abajo hacia arriba. Tocás el siguiente nodo para avanzar.
+2. **Mapa:** 10 nodos de abajo hacia arriba. Tocás el siguiente nodo para avanzar.
 
-   Murciélago → Discípulo → **Santuario** → **bifurcación** (Gólem o Salamandra) → Fuente → Monje sin Rostro → Eco del Dragón
+   Murciélago → (Discípulo o **Evento**) → **Santuario** → **bifurcación** (Gólem o Salamandra) → **Evento** → Fuente → Monje sin Rostro → Eco del Dragón
+
+   La primera bifurcación es una decisión real: pelear contra el Discípulo (gastás Vida, ganás una recompensa) o ir al evento.
 
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
 4. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
-5. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
-6. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
+5. **Eventos** (ícono rosa ?): una escena con dos opciones. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida aparece apagada. En una subida no se repite ningún evento.
 
-La Vida **no** se recupera entre combates (solo en la fuente). La Estructura sí, completa.
+   | Evento | Opciones |
+   |---|---|
+   | El ermitaño del pino 隐 | Entrenar con él: −8 Vida, aprendés una forma · Agradecer y seguir: nada |
+   | El puente colgante 桥 | Cruzar corriendo: 50% un talismán, si no −10 Vida · Rodear: −3 Vida |
+   | El manantial de jade 泉 | Beber: +12 Vida · Templar los puños: mejora una carta al azar |
+   | El mono ladrón 猴 | Perseguirlo: −6 Vida, un talismán · Dejarlo ir: perdés una carta inicial al azar |
+   | El maestro de té 茶 | Tomar el té: +4 Vida máxima · Practicar: una carta al azar |
+   | El altar de los maestros 祠 | Cien reverencias: −7 Vida, un talismán raro · Meditar: +8 Vida |
+
+6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al Monje sin Rostro** (élite): ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
+
+   | Talismán | Efecto | Rareza |
+   |---|---|---|
+   | Cuerda del Arco 弓 | Empezás cada combate en Arco | común |
+   | Golpe Primero 先 | El rival empieza con 6 de Vida menos | común |
+   | Piedra de la Montaña 石 | +4 de Estructura en cada combate | común |
+   | Hilo de Vida 命 | +6 de Vida máxima | común |
+   | Gota del Manantial 泉 | La fuente cura 8 más | común |
+   | Manga de Seda 卸 | Cada desvío da +2 de Aliento | común |
+   | Pergamino Gastado 套 | Cada forma completa cura 8 | común |
+   | Perla del Aliento 气 | +1 de Aliento en el primer turno | raro |
+   | Sello de la Grieta 裂 | El rival empieza con 3 de Estructura menos | raro |
+   | Cinta de la Victoria 胜 | Ganar un combate cura 3 | raro |
+
+7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
+8. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
+
+La Vida **no** se recupera entre combates (solo en la fuente, algunos eventos y talismanes). La Estructura sí, completa.
 
 ## Dificultad
 

@@ -2,7 +2,80 @@ import '../combat/combat_state.dart';
 import '../model/enums.dart';
 import '../rng.dart';
 
-enum RunPhase { map, combat, reward, fountain, shrine, victory, defeat }
+enum RunPhase {
+  map,
+  combat,
+
+  /// Elegir un talismán (después de vencer al élite, antes de la recompensa).
+  talisman,
+  reward,
+  fountain,
+  shrine,
+
+  /// Escena con una decisión.
+  event,
+  victory,
+  defeat,
+}
+
+/// Lo que pasó en el último evento (para mostrarlo y para los tests).
+class EventResult {
+  const EventResult({
+    required this.eventId,
+    required this.optionId,
+    this.success,
+    this.hp = 0,
+    this.maxHp = 0,
+    this.talisman,
+    this.card,
+    this.form,
+    this.upgraded,
+    this.lost,
+  });
+
+  final String eventId;
+  final String optionId;
+
+  /// Si la opción tenía riesgo: salió bien o mal. Null si no había riesgo.
+  final bool? success;
+
+  /// Cambio de Vida (negativo = se perdió).
+  final int hp;
+  final int maxHp;
+  final String? talisman;
+  final String? card;
+  final String? form;
+
+  /// Carta mejorada y carta perdida (ids).
+  final String? upgraded;
+  final String? lost;
+
+  Map<String, dynamic> toJson() => {
+        'eventId': eventId,
+        'optionId': optionId,
+        'success': success,
+        'hp': hp,
+        'maxHp': maxHp,
+        'talisman': talisman,
+        'card': card,
+        'form': form,
+        'upgraded': upgraded,
+        'lost': lost,
+      };
+
+  factory EventResult.fromJson(Map<String, dynamic> j) => EventResult(
+        eventId: j['eventId'] as String,
+        optionId: j['optionId'] as String,
+        success: j['success'] as bool?,
+        hp: j['hp'] as int? ?? 0,
+        maxHp: j['maxHp'] as int? ?? 0,
+        talisman: j['talisman'] as String?,
+        card: j['card'] as String?,
+        form: j['form'] as String?,
+        upgraded: j['upgraded'] as String?,
+        lost: j['lost'] as String?,
+      );
+}
 
 /// Estado inmutable de una run (serializable para el guardado local).
 class RunState {
@@ -21,6 +94,11 @@ class RunState {
     this.difficulty = Difficulty.normal,
     this.knownForms = const [],
     this.rewardForm,
+    this.talismans = const [],
+    this.talismanOptions = const [],
+    this.eventId,
+    this.seenEvents = const [],
+    this.lastEvent,
   });
 
   /// Camino animal; null mientras sea novicio (antes del santuario).
@@ -47,9 +125,25 @@ class RunState {
   /// Forma que se ofrece junto a las cartas en la recompensa.
   final String? rewardForm;
 
+  /// Talismanes conseguidos en la subida.
+  final List<String> talismans;
+
+  /// Talismanes que ofrece el élite (solo en la fase talisman).
+  final List<String> talismanOptions;
+
+  /// Evento del nodo actual (solo en la fase event).
+  final String? eventId;
+
+  /// Eventos que ya salieron en esta subida (no se repiten).
+  final List<String> seenEvents;
+
+  /// Resultado del último evento resuelto.
+  final EventResult? lastEvent;
+
   RunState copyWith({
     Style? style,
     int? hp,
+    int? maxHp,
     List<CombatCard>? deck,
     int? nextUid,
     RunPhase? phase,
@@ -62,11 +156,17 @@ class RunState {
     List<String>? knownForms,
     String? rewardForm,
     bool clearRewardForm = false,
+    List<String>? talismans,
+    List<String>? talismanOptions,
+    String? eventId,
+    bool clearEventId = false,
+    List<String>? seenEvents,
+    EventResult? lastEvent,
   }) =>
       RunState(
         style: style ?? this.style,
         hp: hp ?? this.hp,
-        maxHp: maxHp,
+        maxHp: maxHp ?? this.maxHp,
         deck: deck ?? this.deck,
         nextUid: nextUid ?? this.nextUid,
         phase: phase ?? this.phase,
@@ -78,6 +178,11 @@ class RunState {
         difficulty: difficulty,
         knownForms: knownForms ?? this.knownForms,
         rewardForm: clearRewardForm ? null : rewardForm ?? this.rewardForm,
+        talismans: talismans ?? this.talismans,
+        talismanOptions: talismanOptions ?? this.talismanOptions,
+        eventId: clearEventId ? null : eventId ?? this.eventId,
+        seenEvents: seenEvents ?? this.seenEvents,
+        lastEvent: lastEvent ?? this.lastEvent,
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,6 +200,11 @@ class RunState {
         'difficulty': difficulty.name,
         'knownForms': knownForms,
         'rewardForm': rewardForm,
+        'talismans': talismans,
+        'talismanOptions': talismanOptions,
+        'eventId': eventId,
+        'seenEvents': seenEvents,
+        'lastEvent': lastEvent?.toJson(),
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -120,5 +230,14 @@ class RunState {
         difficulty: Difficulty.parse(j['difficulty'] as String?),
         knownForms: ((j['knownForms'] as List?) ?? const []).cast<String>(),
         rewardForm: j['rewardForm'] as String?,
+        talismans: ((j['talismans'] as List?) ?? const []).cast<String>(),
+        talismanOptions:
+            ((j['talismanOptions'] as List?) ?? const []).cast<String>(),
+        eventId: j['eventId'] as String?,
+        seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),
+        lastEvent: switch (j['lastEvent']) {
+          final Map<String, dynamic> e => EventResult.fromJson(e),
+          _ => null,
+        },
       );
 }

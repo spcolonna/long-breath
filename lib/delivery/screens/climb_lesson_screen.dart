@@ -12,6 +12,7 @@ import '../theme.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/talisman_widgets.dart';
 import '../widgets/difficulty_sheet.dart';
 
 /// Última lección: cómo es la subida, en diapositivas ilustradas con las
@@ -26,7 +27,7 @@ class ClimbLessonScreen extends ConsumerStatefulWidget {
 class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
   final _pages = PageController();
   int _page = 0;
-  static const _count = 6;
+  static const _count = 7;
 
   @override
   void dispose() {
@@ -68,6 +69,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
       t.lesClimbSlide1Title,
       t.lesClimbSlide2Title,
       t.lesClimbSlide3Title,
+      t.lesClimbSlideEventsTitle,
       t.lesClimbSlide4Title,
       t.lesClimbSlide5Title,
       t.lesClimbSlide6Title,
@@ -76,6 +78,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
       t.lesClimbSlide1,
       t.lesClimbSlide2,
       t.lesClimbSlide3,
+      t.lesClimbSlideEvents,
       t.lesClimbSlide4,
       t.lesClimbSlide5,
       t.lesClimbSlide6,
@@ -84,6 +87,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
       _MapPath(),
       _NodeLegend(),
       _RewardFan(),
+      _EventsVisual(),
       _LifeVisual(),
       _Paths(),
       _Summit(),
@@ -230,6 +234,7 @@ class _NodeLegend extends StatelessWidget {
       (Icons.military_tech, Palette.lacquer, t.rankBoss),
       (Icons.water_drop, Palette.sky, t.fountainNode),
       (Icons.temple_buddhist, Palette.gold, t.shrineNode),
+      (Icons.question_mark_rounded, Palette.blossom, t.eventNode),
     ];
     return Wrap(
       alignment: WrapAlignment.center,
@@ -286,6 +291,33 @@ class _RewardFan extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// Un evento y los talismanes que se pueden conseguir.
+class _EventsVisual extends StatelessWidget {
+  const _EventsVisual();
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Bounce(
+        trigger: 1,
+        child: _node(Icons.question_mark_rounded, Palette.blossom, size: 84),
+      ),
+      const SizedBox(height: 18),
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TalismanBadge(id: 'arco', size: 46),
+          SizedBox(width: 12),
+          TalismanBadge(id: 'roca', size: 46),
+          SizedBox(width: 12),
+          TalismanBadge(id: 'victoria', size: 46),
+        ],
+      ),
+    ],
+  );
 }
 
 class _LifeVisual extends StatelessWidget {

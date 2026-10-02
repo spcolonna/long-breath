@@ -68,6 +68,8 @@ class RawData {
         forms: files['forms.json']!,
         enemies: files['enemies.json']!,
         balance: files['game_balance.json']!,
+        talismans: files['talismans.json'],
+        events: files['events.json'],
       );
 }
 
@@ -239,50 +241,8 @@ void applyPico(RawData d, int pico) {
 
 // -------------------------------------------------------------- talismanes
 
-class Talisman {
-  const Talisman(this.id, this.text, {this.onStart, this.onEvents, this.onWin = 0, this.extraHeal = 0, this.maxHp = 0});
-
-  final String id;
-  final String text;
-  final CombatState Function(CombatState s)? onStart;
-  final CombatState Function(CombatState s, List<CombatEvent> ev, TalismanFlags f)? onEvents;
-
-  /// Vida que cura al ganar un combate.
-  final int onWin;
-  final int extraHeal;
-  final int maxHp;
-}
-
-class TalismanFlags {
-  bool deflected = false;
-}
-
-PlayerCombat _p(CombatState s) => s.player;
-
-final talismans = <Talisman>[
-  Talisman('arco', 'Empezás cada combate en Arco',
-      onStart: (s) => s.copyWith(player: _p(s).copyWith(stance: Stance.gongbu))),
-  Talisman('aliento', '+1 de Aliento en el turno 1',
-      onStart: (s) => s.copyWith(player: _p(s).copyWith(breath: _p(s).breath + 1))),
-  const Talisman('vida', '+4 de Vida máxima', maxHp: 4),
-  Talisman('formas', 'Cada forma completa cura 8',
-      onEvents: (s, ev, f) => ev.any((e) => e is FormCompleted)
-          ? s.copyWith(player: _p(s).copyWith(hp: _p(s).hp + 8))
-          : s),
-  Talisman('desvio', 'Cada desvío da +1 de Aliento extra',
-      onEvents: (s, ev, f) => ev.any((e) => e is Deflected)
-          ? s.copyWith(player: _p(s).copyWith(breath: _p(s).breath + 1))
-          : s),
-  Talisman('roca', '+4 de Estructura al empezar cada combate',
-      onStart: (s) => s.copyWith(player: _p(s).copyWith(structure: _p(s).structure + 4))),
-  Talisman('primer', 'El rival empieza con 6 de Vida menos',
-      onStart: (s) => s.copyWith(enemy: s.enemy.copyWith(hp: s.enemy.hp - 6))),
-  Talisman('grieta', 'El rival empieza con 3 de Estructura menos',
-      onStart: (s) => s.copyWith(
-          enemy: s.enemy.copyWith(structure: math.max(1, s.enemy.structure - 3)))),
-  const Talisman('fuente', 'La fuente cura 8 más', extraHeal: 8),
-  const Talisman('victoria', 'Ganar un combate cura 2', onWin: 2),
-];
+/// Ids de los talismanes del juego, en el orden de los datos.
+List<String> talismanIds(GameData data) => data.talismans.keys.toList();
 
 // ------------------------------------------------------------- métricas
 
@@ -298,7 +258,7 @@ class FightLog {
 
 class RunLog {
   bool won = false;
-  int nodes = 0, fountains = 0, shrines = 0;
+  int nodes = 0, fountains = 0, shrines = 0, events = 0;
   int? hpAtBoss;
   Style? style;
   final fights = <FightLog>[];
@@ -310,16 +270,18 @@ class RunLog {
   final talismans = <String>[];
 
   /// Modelo de tiempo: 5 s por carta, 6 s por turno (incluye la animación
-  /// del rival), 15 s por pantalla de mapa/recompensa/fuente, 30 s el santuario.
+  /// del rival), 15 s por pantalla de mapa/recompensa/fuente, 30 s el santuario
+  /// y 30 s cada evento (leer la escena y decidir).
   double get seconds {
     var t = 0.0;
     for (final f in fights) {
       t += f.plays * 5 + f.turns * 6 + 10;
     }
-    return t + nodes * 15 + fountains * 15 + shrines * 30;
+    return t + nodes * 15 + fountains * 15 + shrines * 30 + events * 30;
   }
 
-  int get deckSize => 12 + picked.length;
+  /// Mazo al terminar (cuenta cartas de eventos y las que se pierden).
+  int deckSize = 12;
 }
 
 // ------------------------------------------------------------- simulación
@@ -338,7 +300,7 @@ final profiles = <String, BotFactory>{
 };
 
 FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
-    String enemy, Style? style, int hp, int seed, List<Talisman> owned,
+    String enemy, Style? style, int hp, int seed, List<String> talismans,
     {Difficulty difficulty = Difficulty.normal,
     int? maxHp,
     Iterable<String>? forms}) {
@@ -352,12 +314,9 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           seed: seed,
           difficulty: difficulty,
           maxHp: maxHp,
-          forms: forms)
+          forms: forms,
+          talismans: talismans)
       .state;
-  for (final t in owned) {
-    if (t.onStart != null) s = t.onStart!(s);
-  }
-  final flags = TalismanFlags();
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
     final action = bot.act(engine, s);
@@ -368,9 +327,6 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     final r = engine.reduce(s, action);
     s = r.state;
     log.staggers += r.events.whereType<EnemyBroken>().length;
-    for (final t in owned) {
-      if (t.onEvents != null) s = t.onEvents!(s, r.events, flags);
-    }
   }
   log.won = s.phase == CombatPhase.won;
   log.turns = s.turn;
@@ -382,23 +338,6 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
 }
 
 int _lastHp = 0;
-
-RunState _withMaxHp(RunState r, int add) => RunState(
-      style: r.style,
-      hp: r.hp + add,
-      maxHp: r.maxHp + add,
-      deck: r.deck,
-      nextUid: r.nextUid,
-      phase: r.phase,
-      currentNode: r.currentNode,
-      visited: r.visited,
-      rewardOptions: r.rewardOptions,
-      pathOptions: r.pathOptions,
-      rng: r.rng,
-      difficulty: r.difficulty,
-      knownForms: r.knownForms,
-      rewardForm: r.rewardForm,
-    );
 
 /// Juega una run entera. [wanted] es el camino que el bot toma si el
 /// santuario lo ofrece.
@@ -412,9 +351,6 @@ RunLog playRun(GameData data, Bot bot, int seed,
   final engine = CombatEngine(data);
   final runEngine = RunEngine(data);
   final log = RunLog();
-  final owned = [
-    for (final id in startTalismans) talismans.firstWhere((t) => t.id == id),
-  ];
   final tRng = math.Random(seed * 13 + 5);
   var r = runEngine.newRun(seed: seed, difficulty: difficulty);
   for (final id in startCards) {
@@ -422,8 +358,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
         deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: id)],
         nextUid: r.nextUid + 1);
   }
-  for (final t in owned) {
-    if (t.maxHp > 0) r = _withMaxHp(r, t.maxHp);
+  for (final id in startTalismans) {
+    r = runEngine.addTalisman(r, id);
   }
   final finalNode = data.balance.runNodes.last.id;
   while (r.phase != RunPhase.victory && r.phase != RunPhase.defeat) {
@@ -436,27 +372,35 @@ RunLog playRun(GameData data, Bot bot, int seed,
         r = next;
         final enemy = runEngine.enemyOf(r);
         if (r.currentNode == finalNode) log.hpAtBoss = r.hp;
-        final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, owned,
+        final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, maxHp: r.maxHp, forms: r.knownForms);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
-        if (f.won) hp = math.min(r.maxHp, hp + owned.fold(0, (a, t) => a + t.onWin));
         if (f.won && f.rank == EnemyRank.boss) {
           hp = math.min(r.maxHp, hp + (r.maxHp * bossHeal).round());
         }
         r = runEngine.finishCombat(r, won: f.won, hp: hp);
-        if (f.won && withTalismans && f.rank != EnemyRank.common) {
-          final pool = talismans
-              .where((t) => !owned.contains(t))
-              .where((t) => onlyTalisman == null || onlyTalisman.contains(t.id))
+        // Prototipo de 3 etapas: los jefes intermedios también dejan un
+        // talismán (el élite ya lo da el motor de la run).
+        if (f.won && withTalismans && f.rank == EnemyRank.boss &&
+            r.phase != RunPhase.victory) {
+          final pool = runEngine
+              .missingTalismans(r)
+              .where((t) => onlyTalisman == null || onlyTalisman.contains(t))
               .toList();
           if (pool.isNotEmpty) {
             final t = pool[tRng.nextInt(pool.length)];
-            owned.add(t);
-            log.talismans.add(t.id);
-            if (t.maxHp > 0) r = _withMaxHp(r, t.maxHp);
+            log.talismans.add(t);
+            r = runEngine.addTalisman(r, t);
           }
         }
+      case RunPhase.talisman:
+        final t = bot.pickTalisman(runEngine, r);
+        log.talismans.add(t);
+        r = runEngine.chooseTalisman(r, t);
+      case RunPhase.event:
+        log.events++;
+        r = runEngine.resolveEvent(r, bot.pickEventOption(runEngine, r));
       case RunPhase.reward:
         log.offered.addAll(r.rewardOptions);
         final pick = bot.pickReward(runEngine, r);
@@ -469,12 +413,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
         }
       case RunPhase.fountain:
         log.fountains++;
-        final before = r.hp;
         r = bot.useFountain(runEngine, r);
-        final extra = owned.fold(0, (a, t) => a + t.extraHeal);
-        if (r.hp > before && extra > 0) {
-          r = r.copyWith(hp: math.min(r.maxHp, r.hp + extra));
-        }
       case RunPhase.shrine:
         log.shrines++;
         r = runEngine.choosePath(
@@ -488,6 +427,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
   }
   log.won = r.phase == RunPhase.victory;
   log.style = r.style;
+  log.deckSize = r.deck.length;
   return log;
 }
 

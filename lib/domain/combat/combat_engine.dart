@@ -5,6 +5,7 @@ import '../model/enemy_def.dart';
 import '../model/enums.dart';
 import '../model/form_def.dart';
 import '../model/game_data.dart';
+import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'combat_action.dart';
 import 'combat_event.dart';
@@ -114,6 +115,7 @@ class CombatEngine {
     Difficulty difficulty = Difficulty.normal,
     int? maxHp,
     Iterable<String>? forms,
+    List<String> talismans = const [],
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -122,6 +124,15 @@ class CombatEngine {
     int pct(int v, int p) => (v * p / 100).round();
     final enemyHp = pct(enemy.hp, dif.enemyHp);
     final enemyStructure = pct(enemy.structure, dif.enemyStructure);
+    final effects = [for (final id in talismans) data.talisman(id).effect];
+    int sum(int Function(TalismanEffect e) of) =>
+        effects.fold(0, (a, e) => a + of(e));
+    final extraStructure = sum((e) => e.structure);
+    final startStance = effects
+            .map((e) => e.startStance)
+            .whereType<Stance>()
+            .firstOrNull ??
+        b.startStance;
     final (shuffled, rng) = shuffle
         ? Rng.seeded(seed).shuffle(deck)
         : (deck, Rng.seeded(seed));
@@ -133,17 +144,17 @@ class CombatEngine {
       retainMax: styleStats.retain,
       hp: playerHp,
       maxHp: maxHp ?? b.playerHp,
-      structure: b.playerStructure,
-      maxStructure: b.playerStructure,
+      structure: b.playerStructure + extraStructure,
+      maxStructure: b.playerStructure + extraStructure,
       guard: 0,
       guardHeight: null,
-      stance: b.startStance,
+      stance: startStance,
       breath: 0,
       enemy: _EnemyDraft(
         id: enemy.id,
-        hp: enemyHp,
+        hp: math.max(1, enemyHp - sum((e) => e.enemyHp)),
         maxHp: enemyHp,
-        structure: enemyStructure,
+        structure: math.max(1, enemyStructure - sum((e) => e.enemyStructure)),
         maxStructure: enemyStructure,
         scales: enemy.scales,
       ),
@@ -159,8 +170,13 @@ class CombatEngine {
       },
       rng: rng,
       enemyDamagePct: dif.enemyDamage,
+      talismans: talismans,
+      nextTurnBreathMod: sum((e) => e.firstTurnBreath),
     );
-    final events = <CombatEvent>[];
+    final events = <CombatEvent>[
+      for (final id in talismans)
+        if (data.talisman(id).effect.atStart) TalismanTriggered(id),
+    ];
     _startPlayerTurn(d, events);
     return CombatResult(d.freeze(), events);
   }
@@ -469,6 +485,7 @@ class CombatEngine {
           events.add(FormCompleted(f.id));
           _applyForm(d, f.effect, events);
           if (d.isOver) return;
+          _talismansOnForm(d, events);
         } else {
           d.formProgress[f.id] = p + 1;
           events.add(FormAdvanced(f.id, p + 1));
@@ -505,6 +522,19 @@ class CombatEngine {
       events.add(FistBonusGained(fx.fistBonus, d.fistBonus));
     }
     if (fx.draw > 0) _draw(d, fx.draw, events);
+  }
+
+  void _talismansOnForm(_Draft d, List<CombatEvent> events) {
+    for (final id in d.talismans) {
+      final heal = data.talisman(id).effect.formHeal;
+      if (heal <= 0) continue;
+      final healed = math.min(heal, d.maxHp - d.hp);
+      events.add(TalismanTriggered(id));
+      if (healed > 0) {
+        d.hp += healed;
+        events.add(PlayerHealed(healed));
+      }
+    }
   }
 
   void _hitEnemy(_Draft d, int dmg, int str, List<CombatEvent> events) {
@@ -644,6 +674,13 @@ class CombatEngine {
       events.add(const Deflected());
       d.nextTurnBreathMod +=
           data.balance.deflectBreathBonus + stance.deflectBreathBonus;
+      for (final id in d.talismans) {
+        final extra = data.talisman(id).effect.deflectBreath;
+        if (extra > 0) {
+          d.nextTurnBreathMod += extra;
+          events.add(TalismanTriggered(id));
+        }
+      }
       _hitEnemy(
         d,
         d.deflectBonusDamage,
@@ -819,6 +856,7 @@ class _Draft {
     this.deflects = 0,
     this.enemyDamagePct = 100,
     this.fistBonus = 0,
+    this.talismans = const [],
   }) : formsCompleted = formsCompleted ?? {};
 
   factory _Draft.of(CombatState s) => _Draft(
@@ -855,6 +893,7 @@ class _Draft {
     deflects: s.deflects,
     enemyDamagePct: s.enemyDamagePct,
     fistBonus: s.fistBonus,
+    talismans: s.talismans,
   );
 
   int turn;
@@ -890,6 +929,7 @@ class _Draft {
   int deflects;
   final int enemyDamagePct;
   int fistBonus;
+  final List<String> talismans;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
 
@@ -929,5 +969,6 @@ class _Draft {
     rng: rng,
     enemyDamagePct: enemyDamagePct,
     fistBonus: fistBonus,
+    talismans: talismans,
   );
 }

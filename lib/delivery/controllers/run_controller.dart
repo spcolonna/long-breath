@@ -51,6 +51,12 @@ class RunController extends Notifier<RunState?> {
   void chooseForm(String formId) =>
       _set(_engine.chooseForm(state!, formId));
 
+  void chooseTalisman(String id) =>
+      _set(_engine.chooseTalisman(state!, id));
+
+  void resolveEvent(String optionId) =>
+      _set(_engine.resolveEvent(state!, optionId));
+
   void choosePath(Style style) => _set(_engine.choosePath(state!, style));
 
   void heal() => _set(_engine.fountainHeal(state!));

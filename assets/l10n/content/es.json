@@ -106,5 +106,68 @@
     "screech": "Chillido",
     "interrupt": "Interrumpir",
     "burrow": "Se entierra"
+  },
+  "talismans": {
+    "arco": "Cuerda del Arco",
+    "primer": "Golpe Primero",
+    "roca": "Piedra de la Montaña",
+    "vida": "Hilo de Vida",
+    "fuente": "Gota del Manantial",
+    "desvio": "Manga de Seda",
+    "formas": "Pergamino Gastado",
+    "aliento": "Perla del Aliento",
+    "grieta": "Sello de la Grieta",
+    "victoria": "Cinta de la Victoria"
+  },
+  "events": {
+    "hermit": {
+      "name": "El ermitaño del pino",
+      "text": "Bajo un pino torcido medita un anciano. Abre un ojo y sonríe: «Te enseño una forma, si aguantás entrenar conmigo hasta el atardecer».",
+      "pay": "Entrenar con él",
+      "payResult": "Entrenás hasta que el sol toca las nubes. Te duele todo, pero aprendiste algo nuevo.",
+      "leave": "Agradecer y seguir",
+      "leaveResult": "Le hacés una reverencia y seguís el sendero."
+    },
+    "bridge": {
+      "name": "El puente colgante",
+      "text": "Un puente de cuerdas cruza entre dos picos. Del otro lado brilla algo entre las rocas, y las tablas crujen con el viento.",
+      "cross": "Cruzar corriendo",
+      "crossResult": "Llegás de un salto y encontrás un talismán entre las rocas.",
+      "crossFail": "Una tabla se suelta: te agarrás de la cuerda y subís a los tirones.",
+      "around": "Rodear por la ladera",
+      "aroundResult": "El rodeo es largo y empinado, pero llegás sin sorpresas."
+    },
+    "spring": {
+      "name": "El manantial de jade",
+      "text": "Entre las piedras brota un agua verde y clara. Dicen que le da fuerza a quien la respeta.",
+      "drink": "Beber del manantial",
+      "drinkResult": "El agua fresca te devuelve el aliento.",
+      "bathe": "Templar los puños en el agua",
+      "batheResult": "Golpeás el agua mil veces, hasta que el movimiento sale solo."
+    },
+    "monkey": {
+      "name": "El mono ladrón",
+      "text": "Un mono dorado te arranca la bolsa de un tirón y trepa a un pino, muerto de risa.",
+      "chase": "Perseguirlo",
+      "chaseResult": "Lo alcanzás en la copa. Asustado, suelta tu bolsa… y un talismán que había robado antes.",
+      "let": "Dejarlo ir",
+      "letResult": "El mono se queda con uno de tus pergaminos básicos. Con el mazo más liviano, te movés más suelto."
+    },
+    "tea": {
+      "name": "El maestro de té",
+      "text": "En una terraza sobre las nubes, un maestro sirve té. Te invita a sentarte… o a practicar con él.",
+      "drink": "Tomar el té con calma",
+      "drinkResult": "El té te calienta el cuerpo y el espíritu.",
+      "spar": "Practicar con él",
+      "sparResult": "Entre sorbo y sorbo te muestra un movimiento nuevo."
+    },
+    "altar": {
+      "name": "El altar de los maestros",
+      "text": "Un altar pequeño, con incienso y flores, mira al valle. Los antiguos maestros parecen observarte.",
+      "offer": "Hacer cien reverencias",
+      "offerResult": "Terminás sin aire. Sobre el altar aparece un talismán antiguo.",
+      "pray": "Meditar en silencio",
+      "prayResult": "La calma del lugar te alivia los golpes."
+    }
   }
 }

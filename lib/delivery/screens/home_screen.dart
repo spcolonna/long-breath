@@ -19,7 +19,9 @@ import '../../domain/model/enums.dart';
 String routeFor(RunState r) => switch (r.phase) {
   RunPhase.map => '/map',
   RunPhase.combat => '/map',
+  RunPhase.talisman => '/talisman',
   RunPhase.reward => '/reward',
+  RunPhase.event => '/event',
   RunPhase.fountain => '/fountain',
   RunPhase.shrine => '/shrine',
   RunPhase.victory || RunPhase.defeat => '/result',

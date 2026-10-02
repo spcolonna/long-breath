@@ -30,6 +30,7 @@ import '../widgets/enemy_sprite.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/stat_bar.dart';
+import '../widgets/talisman_widgets.dart';
 
 class CombatScreen extends ConsumerWidget {
   const CombatScreen({super.key});
@@ -98,6 +99,7 @@ class _ArenaFx {
     this.defeated = false,
     this.enemyPops = const [],
     this.heroPops = const [],
+    this.talismanHits = const {},
   });
 
   final int hitKey;
@@ -116,6 +118,9 @@ class _ArenaFx {
   final bool defeated;
   final List<_Pop> enemyPops;
   final List<_Pop> heroPops;
+
+  /// Cuántas veces actuó cada talismán (rebota su ficha).
+  final Map<String, int> talismanHits;
 }
 
 class _CombatScreenState extends ConsumerState<_CombatBody> {
@@ -151,6 +156,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   bool _heavy = false, _dying = false, _victory = false, _defeated = false;
   final _enemyPops = <_Pop>[];
   final _heroPops = <_Pop>[];
+  final _talismanHits = <String, int>{};
 
   GameAudio get _audio => ref.read(audioProvider);
 
@@ -173,6 +179,26 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     _after(120, () => _audio.play(Sfx.enemyDrop));
     _after(300, () => _audio.play(Sfx.fightStart));
     _dealSounds(450, live.state.hand.length);
+    // Los talismanes que actúan al empezar se anuncian uno por uno.
+    for (final (i, e) in live.events.whereType<TalismanTriggered>().indexed) {
+      _after(1500 + 420 * i, () => setState(() => _talismanActs(e.talismanId)));
+    }
+  }
+
+  /// La ficha del talismán rebota y su nombre sale del héroe.
+  void _talismanActs(String id) {
+    final def = ref.read(dataProvider).talisman(id);
+    _talismanHits[id] = (_talismanHits[id] ?? 0) + 1;
+    HapticFeedback.lightImpact();
+    _audio.play(Sfx.breathGain);
+    _pop(
+      _heroPops,
+      '${def.hanzi} ${ref.read(textProvider).talisman(id)}',
+      def.rare ? Palette.gold : Palette.jade,
+      size: 16,
+      dx: 70,
+      dy: -70,
+    );
   }
 
   /// Un "flic" por carta, al ritmo del reparto de la mano.
@@ -576,6 +602,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           HapticFeedback.mediumImpact();
           _audio.play(Sfx.enemyGuard);
           _queue.add(_Fx(t.scalesRegrown, t.scalesNow(scales), Palette.jade));
+        case TalismanTriggered(:final talismanId):
+          setState(() => _talismanActs(talismanId));
         default:
       }
     }
@@ -633,6 +661,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       defeated: _defeated,
       enemyPops: _enemyPops,
       heroPops: _heroPops,
+      talismanHits: {..._talismanHits},
     );
 
     final column = Column(
@@ -647,6 +676,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             style: live.tutorial
                 ? null
                 : ref.watch(runControllerProvider)?.style,
+            talismans: s.talismans,
             fx: fx,
             heroKey: _heroKey,
             introTitle: ref.watch(textProvider).enemy(s.enemy.id),
@@ -843,6 +873,7 @@ class _Arena extends StatelessWidget {
     required this.node,
     required this.turn,
     required this.style,
+    required this.talismans,
     required this.fx,
     required this.heroKey,
     required this.introTitle,
@@ -855,6 +886,7 @@ class _Arena extends StatelessWidget {
   final String? node;
   final int turn;
   final Style? style;
+  final List<String> talismans;
   final _ArenaFx fx;
   final GlobalKey heroKey;
   final String introTitle;
@@ -932,6 +964,17 @@ class _Arena extends StatelessWidget {
                     if (style != null) ...[
                       const SizedBox(height: 6),
                       _StyleChip(style: style!),
+                    ],
+                    if (talismans.isNotEmpty) ...[
+                      const SizedBox(height: 6),
+                      SizedBox(
+                        width: 100,
+                        child: TalismanRow(
+                          ids: talismans,
+                          size: 26,
+                          triggers: fx.talismanHits,
+                        ),
+                      ),
                     ],
                   ],
                 ),
@@ -3186,6 +3229,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
     ref.read(combatControllerProvider.notifier).finish();
     final run = ref.read(runControllerProvider)!;
     context.go(switch (run.phase) {
+      RunPhase.talisman => '/talisman',
       RunPhase.reward => '/reward',
       RunPhase.victory || RunPhase.defeat => '/result',
       _ => '/map',

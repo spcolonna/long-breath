@@ -2035,7 +2035,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente y el santuario.'**
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario y los eventos.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.
@@ -2085,6 +2085,246 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Si perdés toda la Vida, la subida termina y se empieza de nuevo. Mirá siempre el globo del rival antes de jugar. ¡Suerte!'**
   String get lesClimbSlide6;
+
+  /// No description provided for @eventNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Evento'**
+  String get eventNode;
+
+  /// No description provided for @eventCost.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} Vida'**
+  String eventCost(int n);
+
+  /// No description provided for @eventHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Vida'**
+  String eventHeal(int n);
+
+  /// No description provided for @eventMaxHp.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Vida máxima'**
+  String eventMaxHp(int n);
+
+  /// No description provided for @eventGainForm.
+  ///
+  /// In es, this message translates to:
+  /// **'aprendés una forma'**
+  String get eventGainForm;
+
+  /// No description provided for @eventGainTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'un talismán'**
+  String get eventGainTalisman;
+
+  /// No description provided for @eventGainRareTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'un talismán raro'**
+  String get eventGainRareTalisman;
+
+  /// No description provided for @eventGainCard.
+  ///
+  /// In es, this message translates to:
+  /// **'una carta nueva al azar'**
+  String get eventGainCard;
+
+  /// No description provided for @eventGainUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'mejorás una carta al azar'**
+  String get eventGainUpgrade;
+
+  /// No description provided for @eventGainLoseStarter.
+  ///
+  /// In es, this message translates to:
+  /// **'perdés una carta inicial al azar'**
+  String get eventGainLoseStarter;
+
+  /// No description provided for @eventNothing.
+  ///
+  /// In es, this message translates to:
+  /// **'sin cambios'**
+  String get eventNothing;
+
+  /// No description provided for @eventChance.
+  ///
+  /// In es, this message translates to:
+  /// **'{pct}%: {ok} · si no: {fail}'**
+  String eventChance(int pct, String ok, String fail);
+
+  /// No description provided for @eventCantPay.
+  ///
+  /// In es, this message translates to:
+  /// **'No te alcanza la Vida'**
+  String get eventCantPay;
+
+  /// No description provided for @eventContinue.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir subiendo'**
+  String get eventContinue;
+
+  /// No description provided for @eventResultTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'Talismán: {name}'**
+  String eventResultTalisman(String name);
+
+  /// No description provided for @eventResultCard.
+  ///
+  /// In es, this message translates to:
+  /// **'Carta nueva: {name}'**
+  String eventResultCard(String name);
+
+  /// No description provided for @eventResultForm.
+  ///
+  /// In es, this message translates to:
+  /// **'Forma aprendida: {name}'**
+  String eventResultForm(String name);
+
+  /// No description provided for @eventResultUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'Mejorada: {name}'**
+  String eventResultUpgrade(String name);
+
+  /// No description provided for @eventResultLost.
+  ///
+  /// In es, this message translates to:
+  /// **'Se fue del mazo: {name}'**
+  String eventResultLost(String name);
+
+  /// No description provided for @eventLucky.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Salió bien!'**
+  String get eventLucky;
+
+  /// No description provided for @eventUnlucky.
+  ///
+  /// In es, this message translates to:
+  /// **'Salió mal…'**
+  String get eventUnlucky;
+
+  /// No description provided for @talismanPickTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un talismán'**
+  String get talismanPickTitle;
+
+  /// No description provided for @talismanPickHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Vale para toda la subida y actúa solo. Los raros brillan en oro.'**
+  String get talismanPickHint;
+
+  /// No description provided for @talismanRare.
+  ///
+  /// In es, this message translates to:
+  /// **'Raro'**
+  String get talismanRare;
+
+  /// No description provided for @talismanGained.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{name}!'**
+  String talismanGained(String name);
+
+  /// No description provided for @talismansTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Talismanes'**
+  String get talismansTitle;
+
+  /// No description provided for @talismansHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Objetos que te acompañan toda la subida y actúan solos.'**
+  String get talismansHint;
+
+  /// No description provided for @talismansNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no tenés talismanes. Se consiguen en los eventos y al vencer al élite.'**
+  String get talismansNone;
+
+  /// No description provided for @talEffStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezás cada combate en {stance}.'**
+  String talEffStance(String stance);
+
+  /// No description provided for @talEffFirstBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Aliento en el primer turno de cada combate.'**
+  String talEffFirstBreath(int n);
+
+  /// No description provided for @talEffStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Estructura en cada combate.'**
+  String talEffStructure(int n);
+
+  /// No description provided for @talEffEnemyHp.
+  ///
+  /// In es, this message translates to:
+  /// **'El rival empieza cada combate con {n} de Vida menos.'**
+  String talEffEnemyHp(int n);
+
+  /// No description provided for @talEffEnemyStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'El rival empieza cada combate con {n} de Estructura menos.'**
+  String talEffEnemyStructure(int n);
+
+  /// No description provided for @talEffMaxHp.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Vida máxima.'**
+  String talEffMaxHp(int n);
+
+  /// No description provided for @talEffFountain.
+  ///
+  /// In es, this message translates to:
+  /// **'La fuente cura {n} más.'**
+  String talEffFountain(int n);
+
+  /// No description provided for @talEffWinHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'Ganar un combate cura {n}.'**
+  String talEffWinHeal(int n);
+
+  /// No description provided for @talEffDeflect.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada desvío da +{n} de Aliento.'**
+  String talEffDeflect(int n);
+
+  /// No description provided for @talEffFormHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada forma completa cura {n}.'**
+  String talEffFormHeal(int n);
+
+  /// No description provided for @lesClimbSlideEventsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Eventos y talismanes'**
+  String get lesClimbSlideEventsTitle;
+
+  /// No description provided for @lesClimbSlideEvents.
+  ///
+  /// In es, this message translates to:
+  /// **'El ícono rosa es un evento: una escena con una decisión (pagar Vida por algo, arriesgarse o ir a lo seguro). Ahí y al vencer al élite conseguís talismanes: objetos que actúan solos toda la subida, como empezar en Arco o curarte al ganar. Los ves arriba en el mapa y en el combate; tocalos para leerlos.'**
+  String get lesClimbSlideEvents;
 }
 
 class _AppLocalizationsDelegate

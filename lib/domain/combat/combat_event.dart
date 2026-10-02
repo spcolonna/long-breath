@@ -130,6 +130,12 @@ class FistBonusGained extends CombatEvent {
   final int total;
 }
 
+/// Un talismán actuó (al empezar, en un desvío, al completar una forma…).
+class TalismanTriggered extends CombatEvent {
+  const TalismanTriggered(this.talismanId);
+  final String talismanId;
+}
+
 class FormsResetByEnemy extends CombatEvent {
   const FormsResetByEnemy();
 }

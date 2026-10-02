@@ -2,12 +2,15 @@ import 'dart:math' as math;
 
 import '../combat/combat_state.dart';
 import '../model/enums.dart';
+import '../model/event_def.dart';
 import '../model/game_balance.dart';
 import '../model/game_data.dart';
+import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'run_state.dart';
 
-/// Reglas de la run: mapa, recompensas, santuario y fuente de meditación.
+/// Reglas de la run: mapa, recompensas, santuario, eventos, talismanes y
+/// fuente de meditación.
 class RunEngine {
   RunEngine(this.data);
 
@@ -70,8 +73,10 @@ class RunEngine {
         NodeType.combat => RunPhase.combat,
         NodeType.fountain => RunPhase.fountain,
         NodeType.shrine => RunPhase.shrine,
+        NodeType.event => RunPhase.event,
       },
     );
+    if (n.type == NodeType.event) return _rollEvent(entered);
     if (n.type != NodeType.shrine) return entered;
     final (shuffled, rng) = entered.rng.shuffle(Style.values);
     return entered.copyWith(
@@ -102,16 +107,197 @@ class RunEngine {
     if (node(r.currentNode!).next.isEmpty) {
       return r.copyWith(hp: hp, phase: RunPhase.victory);
     }
+    final healed = math.min(r.maxHp, hp + talismanSum(r, (e) => e.winHeal));
     final (options, rng) = _rollRewards(r.rng, r.style);
     final (form, rng2) = _rollForm(rng, r);
+    // El élite deja elegir un talismán antes de la recompensa.
+    final elite = data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    final (talismans, rng3) = elite
+        ? _rollTalismans(rng2, r, data.balance.talismanChoices)
+        : (const <String>[], rng2);
     return r.copyWith(
-      hp: hp,
-      phase: RunPhase.reward,
+      hp: healed,
+      phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       rewardOptions: options,
       rewardForm: form,
       clearRewardForm: form == null,
-      rng: rng2,
+      talismanOptions: talismans,
+      rng: rng3,
     );
+  }
+
+  // ------------------------------------------------------------ talismanes
+
+  /// Suma un efecto de todos los talismanes de la run.
+  int talismanSum(RunState r, int Function(TalismanEffect e) of) =>
+      r.talismans.fold(0, (a, id) => a + of(data.talisman(id).effect));
+
+  /// Talismanes que todavía no se tienen ([rare]: null = cualquiera).
+  List<String> missingTalismans(RunState r, {bool? rare}) => [
+        for (final t in data.talismans.values)
+          if (!r.talismans.contains(t.id) && (rare == null || t.rare == rare))
+            t.id,
+      ];
+
+  (List<String>, Rng) _rollTalismans(Rng rng, RunState r, int n) {
+    final (shuffled, next) = rng.shuffle(missingTalismans(r));
+    return (shuffled.take(n).toList(), next);
+  }
+
+  /// Suma un talismán: los de Vida máxima también curan lo mismo.
+  RunState addTalisman(RunState r, String id) {
+    final extra = data.talisman(id).effect.maxHp;
+    return r.copyWith(
+      talismans: [...r.talismans, id],
+      maxHp: r.maxHp + extra,
+      hp: r.hp + extra,
+    );
+  }
+
+  /// Elegir uno de los talismanes del élite; después viene la recompensa.
+  RunState chooseTalisman(RunState r, String id) {
+    if (r.phase != RunPhase.talisman) throw StateError('No hay talismán');
+    if (!r.talismanOptions.contains(id)) {
+      throw StateError('Talismán no ofrecido: $id');
+    }
+    return addTalisman(r, id)
+        .copyWith(talismanOptions: const [], phase: RunPhase.reward);
+  }
+
+  // --------------------------------------------------------------- eventos
+
+  RunState _rollEvent(RunState r) {
+    final fresh = [
+      for (final e in data.events)
+        if (!r.seenEvents.contains(e.id)) e.id,
+    ];
+    final pool = fresh.isEmpty ? [for (final e in data.events) e.id] : fresh;
+    final (shuffled, rng) = r.rng.shuffle(pool);
+    return r.copyWith(eventId: shuffled.first, rng: rng);
+  }
+
+  /// Una opción con costo de Vida solo se puede pagar si no te deja en 0.
+  bool canChoose(RunState r, EventOptionDef o) => r.hp > o.cost;
+
+  /// Resuelve la opción elegida y vuelve al mapa.
+  RunState resolveEvent(RunState r, String optionId) {
+    if (r.phase != RunPhase.event) throw StateError('No hay evento');
+    final event = data.event(r.eventId!);
+    final option = event.option(optionId);
+    if (!canChoose(r, option)) throw StateError('No alcanza la Vida');
+    var rng = r.rng;
+    bool? success;
+    var outcome = option.outcome;
+    if (option.chance != null) {
+      final (roll, next) = rng.nextInt(100);
+      rng = next;
+      success = roll < option.chance!;
+      if (!success) outcome = option.failure!;
+    }
+    var next = r.copyWith(rng: rng);
+    final startHp = next.hp;
+    if (outcome.maxHp > 0) {
+      next = next.copyWith(
+        maxHp: next.maxHp + outcome.maxHp,
+        hp: next.hp + outcome.maxHp,
+      );
+    }
+    if (outcome.hp > 0) next = next.copyWith(hp: math.max(1, next.hp - outcome.hp));
+    if (outcome.heal > 0) {
+      next = next.copyWith(hp: math.min(next.maxHp, next.hp + outcome.heal));
+    }
+    String? talisman, card, form, upgraded, lost;
+    switch (outcome.gain) {
+      case null:
+        break;
+      case EventGain.form:
+        final forms = learnableForms(next);
+        if (forms.isNotEmpty) {
+          final (pick, rng2) = _pick(next.rng, forms);
+          form = pick;
+          next = next.copyWith(knownForms: [...next.knownForms, pick], rng: rng2);
+        } else {
+          (next, card) = _gainCard(next);
+        }
+      case EventGain.talisman || EventGain.rareTalisman:
+        final rare = outcome.gain == EventGain.rareTalisman;
+        var pool = missingTalismans(next, rare: rare);
+        if (pool.isEmpty) pool = missingTalismans(next);
+        if (pool.isNotEmpty) {
+          final (pick, rng2) = _pick(next.rng, pool);
+          talisman = pick;
+          next = addTalisman(next.copyWith(rng: rng2), pick);
+        }
+      case EventGain.card:
+        (next, card) = _gainCard(next);
+      case EventGain.upgrade:
+        final pool = [for (final c in next.deck) if (canUpgrade(c)) c.uid];
+        if (pool.isNotEmpty) {
+          final (uid, rng2) = _pick(next.rng, pool);
+          upgraded = next.deck.firstWhere((c) => c.uid == uid).cardId;
+          next = next.copyWith(
+            deck: [
+              for (final c in next.deck)
+                c.uid == uid
+                    ? CombatCard(
+                        uid: c.uid,
+                        cardId: c.cardId,
+                        upgrades: c.upgrades + data.balance.fountainUpgrade,
+                      )
+                    : c,
+            ],
+            rng: rng2,
+          );
+        }
+      case EventGain.loseStarter:
+        final pool = [
+          for (final c in next.deck)
+            if (data.card(c.cardId).pool == 'starter') c.uid,
+        ];
+        if (pool.isNotEmpty) {
+          final (uid, rng2) = _pick(next.rng, pool);
+          lost = next.deck.firstWhere((c) => c.uid == uid).cardId;
+          next = next.copyWith(
+            deck: [for (final c in next.deck) if (c.uid != uid) c],
+            rng: rng2,
+          );
+        }
+    }
+    return next.copyWith(
+      phase: RunPhase.map,
+      clearEventId: true,
+      seenEvents: [...next.seenEvents, event.id],
+      lastEvent: EventResult(
+        eventId: event.id,
+        optionId: optionId,
+        success: success,
+        hp: next.hp - startHp - (next.maxHp - r.maxHp),
+        maxHp: next.maxHp - r.maxHp,
+        talisman: talisman,
+        card: card,
+        form: form,
+        upgraded: upgraded,
+        lost: lost,
+      ),
+    );
+  }
+
+  (RunState, String) _gainCard(RunState r) {
+    final pool = [for (final c in data.rewardPoolFor(r.style)) c.id];
+    final (id, rng) = _pick(r.rng, pool);
+    return (
+      r.copyWith(
+        deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: id)],
+        nextUid: r.nextUid + 1,
+        rng: rng,
+      ),
+      id,
+    );
+  }
+
+  (T, Rng) _pick<T>(Rng rng, List<T> items) {
+    final (i, next) = rng.nextInt(items.length);
+    return (items[i], next);
   }
 
   /// Formas que todavía se pueden aprender en este camino.
@@ -167,7 +353,9 @@ class RunEngine {
   }
 
   /// Vida que cura la fuente en la dificultad de la run.
-  int healOf(RunState r) => data.balance.difficulty(r.difficulty).fountainHeal;
+  int healOf(RunState r) =>
+      data.balance.difficulty(r.difficulty).fountainHeal +
+      talismanSum(r, (e) => e.fountainHeal);
 
   RunState fountainHeal(RunState r) {
     _checkFountain(r);

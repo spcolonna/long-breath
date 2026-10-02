@@ -1,7 +1,9 @@
 import '../domain/combat/combat_engine.dart';
 import '../domain/model/card_def.dart';
 import '../domain/model/enums.dart';
+import '../domain/model/event_def.dart';
 import '../domain/model/form_def.dart';
+import '../domain/model/talisman_def.dart';
 import '../l10n/app_localizations.dart';
 import 'content_text.dart';
 
@@ -91,4 +93,42 @@ extension Labels on AppLocalizations {
     if (e.draw > 0) effDraw(e.draw),
     if (e.fistBonus > 0) effFistBonus(e.fistBonus),
   ].join(' · ');
+
+  /// Lo que hace un talismán, una frase por efecto.
+  String talismanEffect(TalismanEffect e, ContentText text) => [
+    if (e.startStance != null) talEffStance(text.stance(e.startStance!)),
+    if (e.firstTurnBreath > 0) talEffFirstBreath(e.firstTurnBreath),
+    if (e.structure > 0) talEffStructure(e.structure),
+    if (e.enemyHp > 0) talEffEnemyHp(e.enemyHp),
+    if (e.enemyStructure > 0) talEffEnemyStructure(e.enemyStructure),
+    if (e.maxHp > 0) talEffMaxHp(e.maxHp),
+    if (e.fountainHeal > 0) talEffFountain(e.fountainHeal),
+    if (e.winHeal > 0) talEffWinHeal(e.winHeal),
+    if (e.deflectBreath > 0) talEffDeflect(e.deflectBreath),
+    if (e.formHeal > 0) talEffFormHeal(e.formHeal),
+  ].join(' ');
+
+  /// Consecuencias de un resultado de evento, en corto ("−8 Vida · …").
+  String eventOutcome(EventOutcome o) {
+    final parts = [
+      if (o.hp > 0) eventCost(o.hp),
+      if (o.heal > 0) eventHeal(o.heal),
+      if (o.maxHp > 0) eventMaxHp(o.maxHp),
+      if (o.gain != null)
+        switch (o.gain!) {
+          EventGain.form => eventGainForm,
+          EventGain.talisman => eventGainTalisman,
+          EventGain.rareTalisman => eventGainRareTalisman,
+          EventGain.card => eventGainCard,
+          EventGain.upgrade => eventGainUpgrade,
+          EventGain.loseStarter => eventGainLoseStarter,
+        },
+    ];
+    return parts.isEmpty ? eventNothing : parts.join(' · ');
+  }
+
+  /// Lo que promete una opción (con riesgo: las dos salidas posibles).
+  String eventOptionSummary(EventOptionDef o) => o.chance == null
+      ? eventOutcome(o.outcome)
+      : eventChance(o.chance!, eventOutcome(o.outcome), eventOutcome(o.failure!));
 }

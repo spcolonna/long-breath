@@ -15,7 +15,7 @@
   "playerBreak": { "breathPenalty": 2 },
   "enemyBreak": { "damageMultiplier": 2 },
   "paths": { "choices": 2 },
-  "rewards": { "choices": 3, "pools": ["reward", "tiger"] },
+  "rewards": { "choices": 3, "pools": ["reward", "tiger"], "talismanChoices": 3 },
   "fountain": { "heal": 20, "upgrade": 3 },
   "difficulties": {
     "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 95, "enemyDamage": 85 },
@@ -27,11 +27,13 @@
     "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "start": "n1",
     "nodes": [
-      { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2"] },
+      { "id": "n1", "type": "combat", "enemy": "bat", "next": ["n2", "e1"] },
       { "id": "n2", "type": "combat", "enemy": "disciple", "next": ["ns"] },
+      { "id": "e1", "type": "event", "next": ["ns"] },
       { "id": "ns", "type": "shrine", "next": ["n3a", "n3b"] },
-      { "id": "n3a", "type": "combat", "enemy": "golem", "next": ["n4"] },
-      { "id": "n3b", "type": "combat", "enemy": "salamander", "next": ["n4"] },
+      { "id": "n3a", "type": "combat", "enemy": "golem", "next": ["e2"] },
+      { "id": "n3b", "type": "combat", "enemy": "salamander", "next": ["e2"] },
+      { "id": "e2", "type": "event", "next": ["n4"] },
       { "id": "n4", "type": "fountain", "next": ["n5"] },
       { "id": "n5", "type": "combat", "enemy": "monk", "next": ["n6"] },
       { "id": "n6", "type": "combat", "enemy": "dragon", "next": [] }

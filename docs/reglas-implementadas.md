@@ -3,7 +3,23 @@
 El documento de diseño deja algunos puntos abiertos. Estas son las decisiones que toma el motor (`lib/domain/combat/combat_engine.dart`). Cada una se puede cambiar.
 
 ## Mapa de la run
-Murciélago → Discípulo → Santuario → bifurcación [Gólem | Salamandra] → Fuente → Monje sin Rostro → Eco del Dragón (8 nodos y 7 pasos). Está definido en `assets/data/game_balance.json`.
+Murciélago → [Discípulo | Evento] → Santuario → bifurcación [Gólem | Salamandra] → Evento → Fuente → Monje sin Rostro → Eco del Dragón (10 nodos y 8 pasos). Está definido en `assets/data/game_balance.json`.
+
+## Eventos
+- Datos en `assets/data/events.json`; textos (nombre, escena, opciones y resultados) en `assets/l10n/content/es.json` → `events`.
+- Al entrar a un nodo `event` se sortea uno con el RNG de la run entre los que no salieron (`seenEvents`); si salieron todos, entre todos.
+- Cada opción tiene un resultado (`hp` = Vida que se pierde, `heal`, `maxHp`, `gain`) o, si tiene `chance`, un `success` y un `failure`.
+- La Vida perdida en un evento nunca baja de 1. Una opción con costo de Vida solo se puede elegir si `hp > costo`. El riesgo no cuenta como costo.
+- `maxHp` sube la Vida máxima y cura lo mismo.
+- Ganancias: `form` (una forma aprendible; si no queda ninguna, una carta), `talisman` / `rareTalisman` (uno que no se tenga de esa rareza; si no queda, cualquiera), `card` (del pool de recompensas del camino), `upgrade` (+3 a una carta mejorable al azar), `loseStarter` (se va una carta inicial al azar).
+- Al resolver se vuelve al mapa y queda `lastEvent` con lo que pasó, para mostrarlo.
+
+## Talismanes
+- Datos en `assets/data/talismans.json` (efecto y rareza); nombres en `es.json` → `talismans`. El texto del efecto se arma con l10n desde los números.
+- El élite (Monje) abre la fase `talisman`: 3 al azar de los que no se tienen. Se elige uno (no se saltea) y después viene la recompensa, que ya estaba sorteada.
+- Al empezar el combate: postura inicial, Estructura máxima extra, Aliento del turno 1 (vía `nextTurnBreathMod`) y Vida/Estructura del rival (nunca menos de 1; el máximo del rival no cambia, así se ve la diferencia). Cada uno emite `TalismanTriggered`.
+- En combate: Aliento extra por desvío (al turno siguiente) y curación al completar una forma.
+- En la run: Vida máxima (al conseguirlo), curación de la fuente (`healOf`) y curación al ganar un combate (no en el jefe final, que termina la run).
 
 ## Santuario y caminos
 - La run empieza sin camino (`style: null`) con las estadísticas de `novice`.
