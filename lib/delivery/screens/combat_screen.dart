@@ -1431,11 +1431,18 @@ class _MiniBar extends StatelessWidget {
             background: Palette.surface.withValues(alpha: 0.8),
           ),
         ),
-        SizedBox(
-          width: 46,
+        const SizedBox(width: 4),
+        // Pastilla clara: el número se lee sobre cualquier fondo.
+        Container(
+          constraints: const BoxConstraints(minWidth: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+          decoration: BoxDecoration(
+            color: Palette.surface.withValues(alpha: 0.88),
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: Text(
             '$value/$max',
-            textAlign: TextAlign.right,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
