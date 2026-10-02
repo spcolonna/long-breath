@@ -18,26 +18,38 @@ import 'delivery/screens/reward_screen.dart';
 import 'delivery/screens/shrine_screen.dart';
 import 'delivery/screens/talisman_screen.dart';
 import 'delivery/theme.dart';
+import 'delivery/widgets/ink_reveal.dart';
 import 'l10n/app_localizations.dart';
 
 /// Las pantallas son transparentes sobre el mismo fondo de papel, así que
 /// no se deslizan una sobre otra: la que sale se desvanece primero y la que
 /// entra aparece después, con un leve acercamiento.
+///
+/// Si se navega con un [InkFrom] como `extra` (al tocar un lugar del mapa),
+/// la pantalla entra con una mancha de tinta desde ese punto.
 GoRoute _route(String path, Widget screen) => GoRoute(
   path: path,
   pageBuilder: (_, state) => CustomTransitionPage(
     key: state.pageKey,
     child: screen,
-    transitionDuration: const Duration(milliseconds: 420),
+    transitionDuration: Duration(
+      milliseconds: state.extra is InkFrom ? 620 : 420,
+    ),
     reverseTransitionDuration: const Duration(milliseconds: 300),
     transitionsBuilder: (_, animation, secondary, child) {
-      final enter = CurvedAnimation(
-        parent: animation,
-        curve: const Interval(0.4, 1, curve: Curves.easeOutCubic),
-      );
       final exit = CurvedAnimation(
         parent: secondary,
         curve: const Interval(0, 0.4, curve: Curves.easeIn),
+      );
+      if (state.extra case final InkFrom from) {
+        return FadeTransition(
+          opacity: ReverseAnimation(exit),
+          child: inkReveal(animation, child, from),
+        );
+      }
+      final enter = CurvedAnimation(
+        parent: animation,
+        curve: const Interval(0.4, 1, curve: Curves.easeOutCubic),
       );
       return FadeTransition(
         opacity: ReverseAnimation(exit),

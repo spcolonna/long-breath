@@ -138,7 +138,9 @@ backgrounds, no photorealism, no text, no watermark.
 
 **Destino:** `assets/art/stages/qianyunshan/`
 
-Fondo del mapa (`map_bg.png`, vertical y alto, se puede desplazar):
+**El mapa ya se dibuja por código** (cielo que cambia con la altura, cordilleras en parallax, pinos, nubes, arco del santuario, estanque, pagoda, cumbre y dragón, sendero de escalones y sellos de piedra). Los dos assets de abajo son **opcionales**: si están, el código los suma sin tocar nada; si no, no pasa nada.
+
+Fondo del mapa (`map_bg.png`, opcional, **1080×4000**, vertical, se dibuja al 85% sobre las capas pintadas). Que no tenga sendero ni escalones propios (los pone el código) y que el centro quede despejado:
 
 ```
 Tall vertical map background of an ascending mountain path: stone stairs zig-zagging up a green
@@ -151,6 +153,16 @@ background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
+
+Textura de los sellos del mapa (`map_node_stone.png`, opcional, 512×512, PNG con transparencia; se recorta en círculo y se dibuja al 90% debajo del carácter tallado):
+
+```
+Top-down view of a single round flat stone disc for a game map node, pale warm granite with
+subtle mineral speckles and soft worn edges, light coming from the top left, centered, empty
+center (no carving, no symbol), transparent background.
+Style: modern Chinese ink-and-watercolor illustration, bright and light, warm rice-paper tones
+(#F6EEDC, #E2D3B6). NOT dark, no black, no text, no watermark.
 ```
 
 Fondos de combate por tramo. Son opcionales y se toman solos, sin tocar código: si falta el del tramo, se usa `combat_bg.png`. La ladera es n1–n2, la bifurcación n3a/n3b, el templo n5 y la cumbre la pelea del jefe. La fuente no tiene combate: su fondo queda para cuando tenga pantalla propia.

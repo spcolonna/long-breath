@@ -540,6 +540,13 @@
   "pauseExitLesson": "Salir a las lecciones",
   "mapHome": "Menú principal",
   "mapMore": "Más opciones",
+  "mapFloor": "Piso {floor} de {floors}",
+  "@mapFloor": {
+    "placeholders": {
+      "floor": {"type": "int"},
+      "floors": {"type": "int"}
+    }
+  },
   "abandonConfirmTitle": "¿Abandonar la subida?",
   "abandonConfirmBody": "Se pierde todo el progreso de esta subida.",
   "illCardTitle": "Cómo se lee una carta",
