@@ -45,7 +45,7 @@ void main() {
         expect(data.cards.containsKey(step), isTrue, reason: step);
       }
     }
-    expect(data.enemies.length, 15); // 9 de la run + 6 muñecos de práctica
+    expect(data.enemies.length, 16); // 10 de la run + 6 muñecos de práctica
     expect(data.enemy('dragon').phases.length, 3);
   });
 

@@ -745,6 +745,18 @@ void main() {
       expect(iv.damage, greaterThan(base));
     });
 
+    test('Bandido: tantea y al turno siguiente avisa el bastonazo', () {
+      var s = setup([...filler, ...filler, ...filler], enemy: 'bandit');
+      var iv = engine.intentView(s);
+      expect(iv.intent.labelKey, 'staff_jab');
+      expect(iv.countdown, 1);
+      s = endTurn(s).state;
+      iv = engine.intentView(s);
+      expect(iv.intent.labelKey, 'staff_smash');
+      expect(iv.countdown, 0);
+      expect(iv.damage, 15);
+    });
+
     test('Mono: roba jade con cada golpe y en su tercera acción se escapa', () {
       var s = setup(
         [...filler, ...filler, ...filler, ...filler],

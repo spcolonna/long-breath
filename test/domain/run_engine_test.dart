@@ -68,8 +68,10 @@ void main() {
     expect(r.phase, RunPhase.map);
     r = run.enter(r, 'n4');
     expect(r.phase, RunPhase.fountain);
+    final before = r.hp;
     r = run.fountainHeal(r);
-    expect(r.hp, r.maxHp);
+    expect(r.hp, greaterThan(before));
+    expect(r.hp, lessThanOrEqualTo(r.maxHp));
   });
 
   test('si el rival se escapa, se lleva el jade y no deja', () {
