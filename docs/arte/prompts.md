@@ -905,6 +905,99 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
+### Tanda 2
+
+#### Bandido del Paso (`bandit`, común)
+
+`assets/art/enemies/bandit.png`. 1024×1536, transparente. Común con bastón: golpe fuerte cada dos turnos (se telegrafía).
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+burly but comical mountain pass bandit, bamboo hat tilted over one eye, red scarf over his
+nose, sleeveless patched jade vest, a long wooden staff held across his shoulders with both
+wrists hooked over it, wide boastful stance, a gourd of wine and a pouch of stolen coins at
+his belt, bushy eyebrows and a cocky grin, clear wide silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+#### Hongo Lingzhi (`lingzhi`, común)
+
+`assets/art/enemies/lingzhi.png`. 1024×1536, transparente. Común que se cura cada turno: hay que pegarle fuerte y rápido.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+living lingzhi mushroom spirit the size of a child, glossy layered caps in vermilion, gold and
+coral like a fan, tiny root legs and little leafy arms, round sleepy eyes and a smug smile,
+glowing jade spores floating around it like healing sparkles, a small drop of dew on its cap,
+cute but stubborn, compact readable silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+#### Fondo de la Fuente (`fountain_bg.png`)
+
+`assets/art/stages/qianyunshan/fountain_bg.png`. 1080×1920 vertical, sin transparencia. Pantalla de descanso del nodo 泉; centro despejado para la UI.
+
+```
+Vertical background of a peaceful mountain spring: a small clear turquoise pond fed by a
+thin waterfall over mossy rocks, lotus leaves and a few pink lotus flowers, a flat stone
+ledge to sit and rest, bamboo and a leaning pine framing the sides, soft morning mist and
+sunbeams, ripples and light reflections on the water, the middle of the image calm and open
+for interface elements.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+#### Fondo del Santuario (`shrine_bg.png`)
+
+`assets/art/stages/qianyunshan/shrine_bg.png`. 1080×1920 vertical, sin transparencia. Donde los espíritus eligen camino; las 3 estatuas van atrás y chicas, la UI va adelante.
+
+```
+Vertical background of a small open-air mountain shrine at dawn: a stone courtyard with
+three weathered statues on pedestals in the back, a tiger on the left, a crane in the middle
+and a coiled snake on the right, each with a faint glow of its own color (vermilion, cobalt,
+jade), incense smoke curling up, red paper lanterns and prayer ribbons tied to a pine branch,
+clouds below the courtyard, the lower two thirds clean and open for interface elements.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+#### Muro de la escuela (`school_wall.png`)
+
+`assets/art/school/school_wall.png`. 1080×1920 vertical, sin transparencia. Fondo del Registro y de la escena de derrota: donde la escuela recuerda a los que no volvieron.
+
+```
+Vertical background of a quiet courtyard wall at the Sleeping Dragon school, warm
+plastered wall with a small tiled roof on top, rows of small wooden name tablets hanging from
+red cords (no readable writing), a few faded headbands and ribbons tied among them moving in
+the breeze, a stone incense burner with a thin line of smoke, fallen plum blossoms on the
+ground, soft afternoon light, nostalgic but bright and hopeful, the center calm and open for
+interface elements.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
 ---
 
 ## Pendiente
