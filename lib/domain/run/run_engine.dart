@@ -121,13 +121,25 @@ class RunEngine {
 
   String enemyOf(RunState r) => r.node(r.currentNode!).enemy!;
 
-  RunState finishCombat(RunState r, {required bool won, required int hp}) {
+  /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
+  /// lo venciste). Escapado no deja jade.
+  RunState finishCombat(
+    RunState r, {
+    required bool won,
+    required int hp,
+    int? fledWith,
+  }) {
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
     if (r.node(r.currentNode!).next.isEmpty) {
       return r.copyWith(hp: hp, phase: RunPhase.victory);
     }
-    final (jade, rngJ) = _rollJade(r);
-    r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
+    if (fledWith != null) {
+      final lost = math.min(r.jade, fledWith);
+      r = r.copyWith(jade: r.jade - lost, jadeGained: -lost);
+    } else {
+      final (jade, rngJ) = _rollJade(r);
+      r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
+    }
     final healed = math.min(r.maxHp, hp + talismanSum(r, (e) => e.winHeal));
     final (options, rng) =
         _rollRewards(r.rng, r.style, data.balance.rewardChoices);

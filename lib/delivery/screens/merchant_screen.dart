@@ -13,6 +13,7 @@ import '../widgets/card_widget.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
 
 /// Lo que se tiene elegido en la tienda.
@@ -202,8 +203,11 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                 child: ListView(
                   padding: const EdgeInsets.only(top: 12, bottom: 16),
                   children: [
-                    Center(
-                      child: _Medallion(hanzi: '商', burst: _burst),
+                    NpcPortrait(
+                      asset: 'assets/art/npc/merchant.png',
+                      color: Palette.jade,
+                      height: 150,
+                      badge: _Medallion(hanzi: '商', burst: _burst),
                     ),
                     const SizedBox(height: 8),
                     Text(

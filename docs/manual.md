@@ -40,7 +40,10 @@ Antes de subir, los novicios practican en el patio con el **muñeco de madera** 
 - **Discípulo Perdido:** un alumno que no llegó arriba y quedó atrapado en la montaña. Castiga a quien se queda quieto en la misma postura.
 - **Gólem de Cuarzo:** cuarzo pálido con vetas turquesa y musgo en los hombros, casi inamovible hasta que se le rompe el equilibrio.
 - **Salamandra de Brasa:** ágil y escurridiza, con la cola encendida como una brasa; se entierra para protegerse.
+- **Mono Ladrón:** un mono dorado que se lleva tu jade en cada manotazo y, si no lo frenás a tiempo, se escapa con el botín.
 - **Monje sin Rostro** (élite): un maestro con máscara de porcelana que interrumpe las formas a medio ejecutar.
+- **León de Piedra** 石狮 (élite): el guardián del arco, que se despierta de a poco y pega cada vez más fuerte hasta que lo desequilibrás.
+- **Dama del Abanico** 铁扇 (élite): con su abanico de hierro desvía el primer golpe de cada turno y te lo devuelve.
 - **Eco del Dragón** 龙音 (guardián): en la cumbre no espera un dragón, sino su eco, un espíritu de aliento dorado y nubes. Al quedar herido despierta y prepara el **Aliento del Dragón**.
 
 El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que cayeron antes que vos. Esa pista prepara la historia completa: qué le pasó a los que no volvieron y qué quiere el maestro de la escuela.
@@ -82,11 +85,11 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Piso | Qué puede salir |
    |---|---|
    | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
-   | 2 | Combates o eventos |
+   | 2 | Combates o eventos (aparece el Mono Ladrón) |
    | 3 | **Santuario** (siempre) |
    | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** |
    | 7 | Fuente (siempre) |
-   | 8 | Monje sin Rostro (élite) |
+   | 8 | Élite: Monje sin Rostro, León de Piedra o Dama del Abanico (al azar) |
    | 9 | Eco del Dragón (jefe) |
 
    Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un mercader y un maestro.
@@ -105,7 +108,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | El maestro de té 茶 | Tomar el té: +4 Vida máxima · Practicar: una carta al azar |
    | El altar de los maestros 祠 | Cien reverencias: −7 Vida, un talismán raro · Meditar: +8 Vida |
 
-6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al Monje sin Rostro** (élite): ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
+6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** del piso 8: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
 
    | Talismán | Efecto | Rareza |
    |---|---|---|
@@ -311,7 +314,10 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Discípulo Perdido | Común | 70 | 18 | Alto 7 → Medio 9 → Barrido bajo 7 | Si terminás el turno en la misma postura que el anterior, su ataque hace +5 de daño y +2 a Estructura |
 | Gólem de Cuarzo | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
 | Salamandra de Brasa | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
+| Mono Ladrón | Común | 58 | 13 | Manotazo alto 4×2 → Manotazo bajo 5×2 → Se escapa | **Ladrón:** cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa (con cuenta regresiva): se lleva lo robado y ese combate no da jade, aunque la carta de recompensa se gana igual. Si lo vencés antes, no perdés nada. Desequilibrarlo le hace perder la acción y te da un turno más |
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
+| León de Piedra | Élite | 134 | 20 | Medio 9 → Piel de piedra (Guardia 8) → Zarpazo alto 11 | **Despierta:** después de cada acción sus golpes suman +3, y se acumula (se ve en su placa). Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0 |
+| Dama del Abanico | Élite | 100 | 19 | Ráfaga baja 5×2 → Alto 10 → Filo de hierro medio 12 | **Abanico:** el primer golpe con daño de cada turno no le hace daño y te devuelve 3; la Estructura sí entra. Abrí el turno con una carta barata o una palma. Desequilibrada no puede usarlo |
 | Eco del Dragón | Guardián | 175 | 18 | Tres fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Al 30% entra en la última fase: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento (medio 24, E8) cada dos acciones, con un barrido bajo doble (2 × 6) entre medio |
 
 En la bifurcación conviene elegir según el mazo: el **Gólem** premia romper Estructura; la **Salamandra**, palmas y empujes.

@@ -45,7 +45,7 @@ void main() {
         expect(data.cards.containsKey(step), isTrue, reason: step);
       }
     }
-    expect(data.enemies.length, 12); // 6 de la run + 6 muñecos de práctica
+    expect(data.enemies.length, 15); // 9 de la run + 6 muñecos de práctica
     expect(data.enemy('dragon').phases.length, 3);
   });
 
@@ -60,7 +60,7 @@ void main() {
     }
     expect(floors[2].types.keys, [NodeType.shrine]);
     expect(floors[6].types.keys, [NodeType.fountain]);
-    expect(floors[7].enemies, ['monk']);
+    expect(floors[7].enemies, ['monk', 'lion', 'fan']);
     expect(floors.last.enemies, ['dragon']);
     expect(data.balance.jadeElite, greaterThan(data.balance.jadeCommon));
   });

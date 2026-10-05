@@ -62,6 +62,24 @@
         { "kind": "attack", "labelKey": "interrupt", "height": "high", "damage": 6, "structure": 0, "interrupt": true },
         { "kind": "attack", "height": "low", "damage": 14, "structure": 4 }
       ] } ] },
+    { "id": "monkey", "rank": "common", "hp": 58, "structure": 13, "steal": 4,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "snatch", "height": "high", "damage": 4, "hits": 2, "structure": 1 },
+        { "kind": "attack", "labelKey": "snatch", "height": "low", "damage": 5, "hits": 2, "structure": 2 },
+        { "kind": "flee", "labelKey": "flee", "countdown": true }
+      ] } ] },
+    { "id": "lion", "hanzi": "石狮", "pinyin": "Shí Shī", "rank": "elite", "hp": 134, "structure": 20, "wrath": 3,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 9, "structure": 3 },
+        { "kind": "guard", "labelKey": "stone_skin", "value": 8 },
+        { "kind": "attack", "labelKey": "pounce", "height": "high", "damage": 11, "structure": 4 }
+      ] } ] },
+    { "id": "fan", "hanzi": "铁扇", "pinyin": "Tiě Shàn", "rank": "elite", "hp": 100, "structure": 19, "parry": 3,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "fan_gust", "height": "low", "damage": 5, "hits": 2, "structure": 2 },
+        { "kind": "attack", "height": "high", "damage": 10, "structure": 3 },
+        { "kind": "attack", "labelKey": "fan_edge", "height": "mid", "damage": 12, "structure": 3 }
+      ] } ] },
     { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 193, "structure": 18, "scales": 4,
       "phases": [
         { "pattern": [

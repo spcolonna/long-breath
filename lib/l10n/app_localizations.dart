@@ -2853,6 +2853,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Todos los rivales +8% de Vida y +5% de Estructura'**
   String get picoRule10;
+
+  /// No description provided for @wrathChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Despierto · +{n} por golpe'**
+  String wrathChip(int n);
+
+  /// No description provided for @wrathCalmed.
+  ///
+  /// In es, this message translates to:
+  /// **'Se vuelve a dormir'**
+  String get wrathCalmed;
+
+  /// No description provided for @parryChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Abanico listo'**
+  String get parryChip;
+
+  /// No description provided for @parried.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Abanico!'**
+  String get parried;
+
+  /// No description provided for @previewParried.
+  ///
+  /// In es, this message translates to:
+  /// **'Abanico: 0 daño, te devuelve {n}'**
+  String previewParried(int n);
+
+  /// No description provided for @parriedDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Desvía tu golpe y te devuelve {n}'**
+  String parriedDetail(int n);
+
+  /// No description provided for @stolenChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Te robó {n} de jade'**
+  String stolenChip(int n);
+
+  /// No description provided for @intentFlee.
+  ///
+  /// In es, this message translates to:
+  /// **'Se escapa'**
+  String get intentFlee;
+
+  /// No description provided for @intentFleeDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'con {n} de jade'**
+  String intentFleeDetail(int n);
+
+  /// No description provided for @fledTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Se escapó'**
+  String get fledTitle;
+
+  /// No description provided for @endSummaryFled.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} se escapó con {n} de jade'**
+  String endSummaryFled(String name, int n);
+
+  /// No description provided for @jadeLost.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} de jade · se lo llevó'**
+  String jadeLost(int n);
 }
 
 class _AppLocalizationsDelegate

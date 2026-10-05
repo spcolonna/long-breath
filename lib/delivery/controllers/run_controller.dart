@@ -39,8 +39,8 @@ class RunController extends Notifier<RunState?> {
     return (seed, _engine.enemyOf(next));
   }
 
-  void finishCombat({required bool won, required int hp}) {
-    _set(_engine.finishCombat(state!, won: won, hp: hp));
+  void finishCombat({required bool won, required int hp, int? fledWith}) {
+    _set(_engine.finishCombat(state!, won: won, hp: hp, fledWith: fledWith));
     final phase = state!.phase;
     if (phase == RunPhase.victory || phase == RunPhase.defeat) {
       _record(state!);

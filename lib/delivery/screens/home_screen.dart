@@ -15,6 +15,7 @@ import '../tutorial/lessons.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/lore_scroll.dart';
+import '../widgets/npc_portrait.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../domain/model/enums.dart';
 
@@ -310,6 +311,30 @@ Future<bool?> _prologue(BuildContext context) => showModalBottomSheet<bool>(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // El maestro de la escuela despide al novicio.
+            NpcPortrait(
+              asset: 'assets/art/npc/master.png',
+              color: Palette.gold,
+              height: 180,
+              badge: Container(
+                width: 56,
+                height: 56,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Palette.lacquer.withValues(alpha: 0.9),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  '师',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Palette.onColor,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
             TweenAnimationBuilder<double>(
               tween: Tween(begin: 0, end: 1),
               duration: const Duration(milliseconds: 900),

@@ -4,7 +4,10 @@ enum IntentKind {
   attack,
   guard,
   charge,
-  discard;
+  discard,
+
+  /// Se escapa: termina el combate y se lleva lo que robó.
+  flee;
 
   static IntentKind parse(String s) => IntentKind.values.byName(s);
 }
@@ -92,6 +95,9 @@ class EnemyDef {
     this.sameStancePunishDamage = 0,
     this.sameStancePunishStructure = 0,
     this.scales = 0,
+    this.wrath = 0,
+    this.parry = 0,
+    this.steal = 0,
   }) : _art = art;
 
   final String id;
@@ -113,6 +119,18 @@ class EnemyDef {
   /// Cada vez que se lo desequilibra pierde una escama.
   final int scales;
 
+  /// Despierta: después de cada acción sus golpes suman esto (se acumula).
+  /// Desequilibrarlo lo vuelve a dormir (vuelve a 0).
+  final int wrath;
+
+  /// Abanico: el primer golpe con daño de cada turno no le hace daño y te
+  /// devuelve esto. No funciona mientras está Desequilibrado.
+  final int parry;
+
+  /// Ladrón: cada golpe que te hace daño te roba este jade. Si se escapa,
+  /// se lo lleva; si lo vencés, lo recuperás.
+  final int steal;
+
   factory EnemyDef.fromJson(Map<String, dynamic> j) {
     final ssp = j['sameStancePunish'] as Map<String, dynamic>?;
     return EnemyDef(
@@ -131,6 +149,9 @@ class EnemyDef {
       sameStancePunishDamage: ssp?['damage'] as int? ?? 0,
       sameStancePunishStructure: ssp?['structure'] as int? ?? 0,
       scales: j['scales'] as int? ?? 0,
+      wrath: j['wrath'] as int? ?? 0,
+      parry: j['parry'] as int? ?? 0,
+      steal: j['steal'] as int? ?? 0,
     );
   }
 }

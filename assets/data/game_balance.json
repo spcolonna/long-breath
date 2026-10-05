@@ -43,13 +43,13 @@
     "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "floors": [
       { "width": 2, "types": { "combat": 1 }, "enemies": ["bat", "salamander"] },
-      { "width": [2, 3], "types": { "combat": 3, "event": 2 }, "enemies": ["bat", "salamander", "disciple"] },
+      { "width": [2, 3], "types": { "combat": 3, "event": 2 }, "enemies": ["bat", "salamander", "disciple", "monkey"] },
       { "width": 1, "types": { "shrine": 1 } },
       { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander"] },
-      { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple"] },
+      { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey"] },
       { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 2, "master": 2 }, "enemies": ["golem", "disciple", "salamander"] },
       { "width": 1, "types": { "fountain": 1 } },
-      { "width": 1, "types": { "combat": 1 }, "enemies": ["monk"], "scene": "campanas" },
+      { "width": 1, "types": { "combat": 1 }, "enemies": ["monk", "lion", "fan"], "scene": "campanas" },
       { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"], "scene": "cumbre" }
     ],
     "scenes": ["terraza", "bambu", "cristales", "campanas"],

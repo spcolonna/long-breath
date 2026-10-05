@@ -812,6 +812,8 @@ backgrounds, no photorealism, no text, no watermark.
 
 **Formato:** igual que los enemigos, vertical 2:3 (1024×1536) con fondo transparente, figura completa y pies cerca del borde inferior. Los retratos van en `assets/art/npc/`. Hasta que el código los use, no hace falta nada más que dejarlos en su carpeta.
 
+**Estado:** los 5 de la primera tanda ya están en el juego (León, Abanico y Mono en combate; mercader y maestro en sus pantallas y en el prólogo). De la tanda 2 faltan todos.
+
 ### León de Piedra (`lion`, élite)
 
 `assets/art/enemies/lion.png`. Guardián del arco del santuario: despierta de a poco; si no lo golpeás en un turno, gana Guardia.

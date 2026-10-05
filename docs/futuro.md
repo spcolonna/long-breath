@@ -183,6 +183,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Por etapa:** entre 6 y 8 comunes, 2 o 3 élites y 1 jefe, cada uno con una regla que enseñe algo.
 - **Variantes con poco arte:** el mismo sprite recoloreado por código, como el héroe, con otro patrón y otra regla. Por ejemplo, "Gólem de Jade" frente a "Gólem de Piedra".
 - **Arte:** entre 4 y 6 sprites nuevos por etapa. El resto son variantes.
+- **Hecho (05/10/2026):** élites con regla propia en la etapa 1: el piso 8 sale al azar entre Monje sin Rostro, León de Piedra (despierta, se calma al desequilibrarlo) y Dama del Abanico (desvía el primer golpe de cada turno). Común nuevo: Mono Ladrón (roba jade y se escapa en su tercera acción). Promedio en Normal: 59%. El mercader y el maestro tienen retrato. Falta: el Bandido del Paso y el Hongo Lingzhi (arte pendiente), y élites opcionales en pisos intermedios.
 
 ### 3.6 Dificultad creciente: los Picos
 - Después de ganar se habilita el **Pico 1**, y así hasta el 10. Cada pico suma un modificador acumulativo. Por ejemplo:
