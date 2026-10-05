@@ -33,6 +33,7 @@ class EventResult {
     this.success,
     this.hp = 0,
     this.maxHp = 0,
+    this.jade = 0,
     this.talisman,
     this.card,
     this.form,
@@ -49,6 +50,9 @@ class EventResult {
   /// Cambio de Vida (negativo = se perdió).
   final int hp;
   final int maxHp;
+
+  /// Cambio de jade (negativo = se pagó).
+  final int jade;
   final String? talisman;
   final String? card;
   final String? form;
@@ -63,6 +67,7 @@ class EventResult {
         'success': success,
         'hp': hp,
         'maxHp': maxHp,
+        'jade': jade,
         'talisman': talisman,
         'card': card,
         'form': form,
@@ -76,6 +81,7 @@ class EventResult {
         success: j['success'] as bool?,
         hp: j['hp'] as int? ?? 0,
         maxHp: j['maxHp'] as int? ?? 0,
+        jade: j['jade'] as int? ?? 0,
         talisman: j['talisman'] as String?,
         card: j['card'] as String?,
         form: j['form'] as String?,
@@ -114,6 +120,8 @@ class RunState {
     this.shopTalisman,
     this.shopRemoved = false,
     this.shopUpgraded = false,
+    this.shopSale,
+    this.shopTea = false,
     this.masterForms = const [],
   });
 
@@ -176,6 +184,10 @@ class RunState {
   final bool shopRemoved;
   final bool shopUpgraded;
 
+  /// Carta en oferta (más barata) y si ya se tomó el té.
+  final String? shopSale;
+  final bool shopTea;
+
   /// Formas que ofrece el maestro errante (solo en la fase master).
   final List<String> masterForms;
 
@@ -208,6 +220,9 @@ class RunState {
     bool clearShopTalisman = false,
     bool? shopRemoved,
     bool? shopUpgraded,
+    String? shopSale,
+    bool clearShopSale = false,
+    bool? shopTea,
     List<String>? masterForms,
     List<MapNodeDef>? map,
   }) =>
@@ -240,6 +255,8 @@ class RunState {
             clearShopTalisman ? null : shopTalisman ?? this.shopTalisman,
         shopRemoved: shopRemoved ?? this.shopRemoved,
         shopUpgraded: shopUpgraded ?? this.shopUpgraded,
+        shopSale: clearShopSale ? null : shopSale ?? this.shopSale,
+        shopTea: shopTea ?? this.shopTea,
         masterForms: masterForms ?? this.masterForms,
       );
 
@@ -280,6 +297,8 @@ class RunState {
         'shopTalisman': shopTalisman,
         'shopRemoved': shopRemoved,
         'shopUpgraded': shopUpgraded,
+        'shopSale': shopSale,
+        'shopTea': shopTea,
         'masterForms': masterForms,
       };
 
@@ -328,6 +347,8 @@ class RunState {
         shopTalisman: j['shopTalisman'] as String?,
         shopRemoved: j['shopRemoved'] as bool? ?? false,
         shopUpgraded: j['shopUpgraded'] as bool? ?? false,
+        shopSale: j['shopSale'] as String?,
+        shopTea: j['shopTea'] as bool? ?? false,
         masterForms: ((j['masterForms'] as List?) ?? const []).cast<String>(),
       );
 }

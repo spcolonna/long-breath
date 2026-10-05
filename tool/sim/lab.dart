@@ -224,7 +224,7 @@ class FightLog {
 class RunLog {
   bool won = false;
   int nodes = 0, fountains = 0, shrines = 0, events = 0;
-  int merchants = 0, masters = 0, jadeSpent = 0;
+  int merchants = 0, masters = 0, jadeSpent = 0, jadeLeft = 0;
   int? hpAtBoss;
   Style? style;
   final fights = <FightLog>[];
@@ -370,7 +370,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
         r = runEngine.chooseTalisman(r, t);
       case RunPhase.event:
         log.events++;
+        final before = r.jade;
         r = runEngine.resolveEvent(r, bot.pickEventOption(runEngine, r));
+        if (r.jade < before) log.jadeSpent += before - r.jade;
       case RunPhase.reward:
         log.offered.addAll(r.rewardOptions);
         final pick = bot.pickReward(runEngine, r);
@@ -406,6 +408,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
   log.won = r.phase == RunPhase.victory;
   log.style = r.style;
   log.deckSize = r.deck.length;
+  log.jadeLeft = r.jade;
   return log;
 }
 

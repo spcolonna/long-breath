@@ -44,6 +44,10 @@ class _UpgradeItem extends _Item {
   const _UpgradeItem();
 }
 
+class _TeaItem extends _Item {
+  const _TeaItem();
+}
+
 /// Mercader de pergaminos: se compra con el jade de los combates.
 class MerchantScreen extends ConsumerStatefulWidget {
   const MerchantScreen({super.key});
@@ -64,10 +68,14 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
   int _burst = 0;
   int? _spent;
 
+  /// La carta en oferta al entrar (queda marcada aunque se compre).
+  String? _sale;
+
   int _price(_Item i) {
     final m = ref.read(dataProvider).balance.merchant;
     return switch (i) {
-      _CardItem() => m.card,
+      _CardItem(:final id) => id == _sale ? m.salePrice : m.card,
+      _TeaItem() => m.tea,
       _TalismanItem() => m.talisman,
       _RemoveItem() => m.remove,
       _UpgradeItem() => m.upgrade,
@@ -94,6 +102,9 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
         ctl.buyCard(id);
       case _TalismanItem():
         ctl.buyTalisman();
+      case _TeaItem():
+        ctl.buyTea();
+        ref.read(audioProvider).play(Sfx.fountainHeal);
       case _RemoveItem() || _UpgradeItem():
         break;
     }
@@ -123,6 +134,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     final m = data.balance.merchant;
     _cards ??= run.shopCards;
     _talisman ??= run.shopTalisman;
+    _sale ??= run.shopSale;
     final ctl = ref.read(runControllerProvider.notifier);
 
     if (_picking != null) {
@@ -148,6 +160,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     bool used(_Item i) => switch (i) {
       _RemoveItem() => run.shopRemoved,
       _UpgradeItem() => run.shopUpgraded,
+      _TeaItem() => run.shopTea,
       _ => _bought.contains(i),
     };
 
@@ -162,6 +175,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
             '${t.talismanEffect(data.talisman(_talisman!).effect, text)}',
       _RemoveItem() => t.merchantRemove,
       _UpgradeItem() => t.merchantUpgrade(data.balance.fountainUpgrade),
+      _TeaItem() => t.merchantTeaDetail(m.teaHeal),
     };
 
     return Scaffold(
@@ -174,9 +188,13 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                 children: [
                   const Icon(Icons.favorite, color: Palette.jade, size: 18),
                   const SizedBox(width: 4),
-                  Text(
-                    '${run.hp}/${run.maxHp}',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  Bounce(
+                    trigger: run.hp,
+                    scale: 1.3,
+                    child: Text(
+                      '${run.hp}/${run.maxHp}',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Stack(
@@ -224,7 +242,9 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                       children: [
                         for (final id in _cards!)
                           _Ware(
-                            price: m.card,
+                            price: _price(_CardItem(id)),
+                            oldPrice: id == _sale ? m.card : null,
+                            tag: id == _sale ? t.merchantSale(m.sale) : null,
                             affordable: affordable(_CardItem(id)),
                             selected: _selected == _CardItem(id),
                             sold: _bought.contains(_CardItem(id)),
@@ -262,6 +282,11 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                         const _UpgradeItem() as _Item,
                         Icons.upgrade,
                         t.merchantUpgrade(data.balance.fountainUpgrade),
+                      ),
+                      (
+                        const _TeaItem() as _Item,
+                        Icons.emoji_food_beverage_outlined,
+                        t.merchantTea(m.teaHeal),
                       ),
                     ])
                       Padding(
@@ -465,9 +490,15 @@ class _Ware extends StatelessWidget {
     required this.onTap,
     required this.child,
     this.soldLabel,
+    this.oldPrice,
+    this.tag,
   });
 
   final int price;
+
+  /// Precio tachado y cinta de oferta.
+  final int? oldPrice;
+  final String? tag;
   final bool affordable;
   final bool selected;
   final bool sold;
@@ -486,6 +517,7 @@ class _Ware extends StatelessWidget {
         curve: Curves.easeOutBack,
         child: Stack(
           alignment: Alignment.center,
+          clipBehavior: Clip.none,
           children: [
             AnimatedOpacity(
               opacity: sold ? 0.35 : (affordable ? 1 : 0.6),
@@ -500,6 +532,16 @@ class _Ware extends StatelessWidget {
                     children: [
                       const JadeCoin(size: 16),
                       const SizedBox(width: 4),
+                      if (oldPrice != null) ...[
+                        Text(
+                          '$oldPrice',
+                          style: const TextStyle(
+                            color: Palette.textDim,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                      ],
                       Text(
                         '$price',
                         style: TextStyle(
@@ -512,6 +554,8 @@ class _Ware extends StatelessWidget {
                 ],
               ),
             ),
+            if (tag != null && !sold)
+              Positioned(top: -4, right: -6, child: _SaleTag(tag!)),
             if (sold)
               TweenAnimationBuilder<double>(
                 tween: Tween(begin: 1.8, end: 1),
@@ -545,4 +589,58 @@ class _Ware extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Cinta de oferta que se balancea apenas, para que se note sin gritar.
+class _SaleTag extends StatefulWidget {
+  const _SaleTag(this.label);
+
+  final String label;
+
+  @override
+  State<_SaleTag> createState() => _SaleTagState();
+}
+
+class _SaleTagState extends State<_SaleTag>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1800),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: _c,
+    builder: (_, child) => Transform.rotate(
+      angle: 0.12 + 0.05 * Curves.easeInOut.transform(_c.value),
+      child: child,
+    ),
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: Palette.lacquer,
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(
+            color: Palette.lacquer.withValues(alpha: 0.35),
+            blurRadius: 6,
+          ),
+        ],
+      ),
+      child: Text(
+        widget.label,
+        style: const TextStyle(
+          color: Palette.onColor,
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    ),
+  );
 }

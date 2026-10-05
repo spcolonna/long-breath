@@ -86,7 +86,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Piso | Qué puede salir |
    |---|---|
    | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
-   | 2 | Combates o eventos (aparece el Mono Ladrón) |
+   | 2 | Combates, eventos o un mercader (aparece el Mono Ladrón) |
    | 3 | **Santuario** (siempre) |
    | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** (en 4 y 6 aparece el Bandido del Paso) |
    | 7 | Fuente (siempre) |
@@ -98,16 +98,18 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
 4. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
-5. **Eventos** (ícono rosa ?): una escena con dos opciones. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida aparece apagada. En una subida no se repite ningún evento.
+5. **Eventos** (ícono rosa ?): una escena con dos o tres opciones. Algunas se pagan con jade o lo dan. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida, o que cuesta más jade del que tenés, aparece apagada y dice por qué. En una subida no se repite ningún evento.
 
    | Evento | Opciones |
    |---|---|
-   | El ermitaño del pino 隐 | Entrenar con él: −8 Vida, aprendés una forma · Agradecer y seguir: nada |
+   | El ermitaño del pino 隐 | Entrenar con él: −8 Vida, aprendés una forma · Dejarle jade: pagás 25, aprendés una forma · Agradecer y seguir: nada |
    | El puente colgante 桥 | Cruzar corriendo: 50% un talismán, si no −10 Vida · Rodear: −3 Vida |
    | El manantial de jade 泉 | Beber: +12 Vida · Templar los puños: mejora una carta al azar |
    | El mono ladrón 猴 | Perseguirlo: −6 Vida, un talismán · Dejarlo ir: perdés una carta inicial al azar |
    | El maestro de té 茶 | Tomar el té: +4 Vida máxima · Practicar: una carta al azar |
    | El altar de los maestros 祠 | Cien reverencias: −7 Vida, un talismán raro · Meditar: +8 Vida |
+   | Los dados del arriero 骰 | Apostar: pagás 15, 50% +35 jade · Seguir de largo: nada |
+   | El peregrino perdido 旅 | Acompañarlo: −6 Vida, +30 jade · Señalarle el camino: nada |
 
 6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** del piso 8: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
 
@@ -125,8 +127,8 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Cinta de la Victoria 胜 | Ganar un combate cura 3 | raro |
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
-8. **Jade** 玉: cada combate ganado da 14 a 20 de jade; el élite, 30 a 36. Se ve arriba en el mapa y en la recompensa.
-9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y dos servicios por visita: quitar una carta del mazo (30) y mejorar una carta +3 (25). Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
+8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
+9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. Puede aparecer desde el piso 2. Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
 10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
 11. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
 

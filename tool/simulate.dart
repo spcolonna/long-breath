@@ -197,7 +197,7 @@ void _report(Map<String, List<RunLog>> logs) {
   print('## Runs');
   table([
     'perfil', 'victoria', 'llega al jefe final', 'piso medio de derrota',
-    'Vida al jefe', 'minutos (media)', 'minutos (victorias)', 'mazo final', 'formas por run', 'formas aprendidas', 'talismanes', 'mercader', 'maestro', 'jade gastado',
+    'Vida al jefe', 'minutos (media)', 'minutos (victorias)', 'mazo final', 'formas por run', 'formas aprendidas', 'talismanes', 'mercader', 'maestro', 'jade gastado', 'jade sin gastar',
   ], [
     for (final MapEntry(key: p, value: l) in logs.entries)
       [
@@ -215,6 +215,7 @@ void _report(Map<String, List<RunLog>> logs) {
         f1(mean([for (final r in l) r.merchants])),
         f1(mean([for (final r in l) r.masters])),
         f1(mean([for (final r in l) r.jadeSpent])),
+        f1(mean([for (final r in l) r.jadeLeft])),
       ],
   ]);
 

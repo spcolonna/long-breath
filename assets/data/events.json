@@ -4,6 +4,7 @@
       "id": "hermit", "hanzi": "隐",
       "options": [
         { "id": "pay", "hp": 8, "gain": "form" },
+        { "id": "gift", "price": 25, "gain": "form" },
         { "id": "leave" }
       ]
     },
@@ -40,6 +41,20 @@
       "options": [
         { "id": "offer", "hp": 7, "gain": "rareTalisman" },
         { "id": "pray", "heal": 8 }
+      ]
+    },
+    {
+      "id": "dice", "hanzi": "骰",
+      "options": [
+        { "id": "bet", "price": 15, "chance": 50, "success": { "jade": 35 }, "failure": {} },
+        { "id": "leave" }
+      ]
+    },
+    {
+      "id": "pilgrim", "hanzi": "旅",
+      "options": [
+        { "id": "guide", "hp": 6, "jade": 30 },
+        { "id": "point" }
       ]
     }
   ]

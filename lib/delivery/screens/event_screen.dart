@@ -11,6 +11,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/talisman_widgets.dart';
 
@@ -39,7 +40,8 @@ class _EventScreenState extends ConsumerState<EventScreen> {
         r.form != null ||
         r.card != null ||
         r.upgraded != null ||
-        r.maxHp > 0;
+        r.maxHp > 0 ||
+        r.jade > 0;
     if (good) {
       HapticFeedback.heavyImpact();
       audio.play(Sfx.rewardTake);
@@ -89,6 +91,8 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                       style: const TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ),
+                  const SizedBox(width: 12),
+                  JadeCount(jade: run.jade, size: 20),
                   Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
                 ],
               ),
@@ -153,6 +157,9 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                               summary: t.eventOptionSummary(o),
                               risky: o.chance != null,
                               enabled: engine.canChoose(run, o),
+                              blocked: run.hp > o.cost
+                                  ? t.merchantNoJade
+                                  : t.eventCantPay,
                               onTap: () => _choose(o),
                             ),
                             const SizedBox(height: 10),
@@ -211,10 +218,14 @@ class _OptionButton extends StatelessWidget {
     required this.summary,
     required this.risky,
     required this.enabled,
+    required this.blocked,
     required this.onTap,
   });
 
   final String label;
+
+  /// Por qué no se puede elegir (Vida o jade).
+  final String blocked;
   final String summary;
   final bool risky;
   final bool enabled;
@@ -222,7 +233,6 @@ class _OptionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
     return Opacity(
       opacity: enabled ? 1 : 0.5,
       child: Material(
@@ -256,7 +266,7 @@ class _OptionButton extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        enabled ? summary : t.eventCantPay,
+                        enabled ? summary : blocked,
                         style: TextStyle(
                           fontSize: 13,
                           color: enabled ? Palette.textDim : Palette.lacquer,
@@ -295,6 +305,8 @@ class _ResultCard extends ConsumerWidget {
       if (r.hp > 0) _chip(t.eventHeal(r.hp), Palette.jade, Icons.favorite),
       if (r.maxHp > 0)
         _chip(t.eventMaxHp(r.maxHp), Palette.jade, Icons.favorite_border),
+      if (r.jade > 0) _PopIn(child: _jadeChip(t.eventJade(r.jade), Palette.jade)),
+      if (r.jade < 0) _jadeChip(t.eventJadeSpent(-r.jade), Palette.gold),
       if (r.talisman != null)
         _PopIn(
           child: Container(
@@ -381,6 +393,25 @@ class _ResultCard extends ConsumerWidget {
       ),
     );
   }
+
+  Widget _jadeChip(String label, Color color) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: 0.12),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const JadeCoin(size: 16),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: TextStyle(fontWeight: FontWeight.w700, color: color),
+        ),
+      ],
+    ),
+  );
 
   Widget _chip(String label, Color color, IconData icon) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -239,6 +241,23 @@ void main() {
       container.read(runControllerProvider)!.jade,
       100 - container.read(dataProvider).balance.merchant.talisman,
     );
+    // Oferta marcada y té de jengibre.
+    expect(find.text('Oferta −40%'), findsOneWidget);
+    final teaLabel = find.text('Té de jengibre (+15 Vida)');
+    await tester.scrollUntilVisible(
+      teaLabel,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await settle();
+    final hpBefore = container.read(runControllerProvider)!.hp;
+    await tester.tap(teaLabel);
+    await settle();
+    await tester.tap(find.text('Confirmar'));
+    await settle();
+    final afterTea = container.read(runControllerProvider)!;
+    expect(afterTea.shopTea, isTrue);
+    expect(afterTea.hp, math.min(afterTea.maxHp, hpBefore + 15));
     await tester.tap(find.text('Seguir subiendo'));
     await settle();
     expect(container.read(runControllerProvider)!.phase, RunPhase.map);

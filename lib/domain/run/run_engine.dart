@@ -210,15 +210,17 @@ class RunEngine {
     return r.copyWith(eventId: shuffled.first, rng: rng);
   }
 
-  /// Una opción con costo de Vida solo se puede pagar si no te deja en 0.
-  bool canChoose(RunState r, EventOptionDef o) => r.hp > o.cost;
+  /// Una opción con costo de Vida solo se puede pagar si no te deja en 0;
+  /// una con precio, si alcanza el jade.
+  bool canChoose(RunState r, EventOptionDef o) =>
+      r.hp > o.cost && r.jade >= o.price;
 
   /// Resuelve la opción elegida y vuelve al mapa.
   RunState resolveEvent(RunState r, String optionId) {
     if (r.phase != RunPhase.event) throw StateError('No hay evento');
     final event = data.event(r.eventId!);
     final option = event.option(optionId);
-    if (!canChoose(r, option)) throw StateError('No alcanza la Vida');
+    if (!canChoose(r, option)) throw StateError('No alcanza la Vida o el jade');
     var rng = r.rng;
     bool? success;
     var outcome = option.outcome;
@@ -228,7 +230,10 @@ class RunEngine {
       success = roll < option.chance!;
       if (!success) outcome = option.failure!;
     }
-    var next = r.copyWith(rng: rng);
+    var next = r.copyWith(
+      rng: rng,
+      jade: r.jade - option.price + outcome.jade,
+    );
     final startHp = next.hp;
     if (outcome.maxHp > 0) {
       next = next.copyWith(
@@ -295,6 +300,7 @@ class RunEngine {
         success: success,
         hp: next.hp - startHp - (next.maxHp - r.maxHp),
         maxHp: next.maxHp - r.maxHp,
+        jade: next.jade - r.jade,
         talisman: talisman,
         card: card,
         form: form,
@@ -426,6 +432,8 @@ class RunEngine {
   (int, Rng) _rollJade(RunState r) {
     final b = data.balance;
     final elite = data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    // La élite paga con un talismán; si no da jade, no se tira.
+    if (elite && b.jadeElite == 0) return (0, r.rng);
     final (extra, rng) = r.rng.nextInt(b.jadeSpread + 1);
     return ((elite ? b.jadeElite : b.jadeCommon) + extra, rng);
   }
@@ -435,20 +443,29 @@ class RunEngine {
   RunState _rollShop(RunState r) {
     final (cards, rng) = _rollRewards(r.rng, r.style, data.balance.merchant.cards);
     final (talismans, rng2) = rng.shuffle(missingTalismans(r, rare: false));
+    final (sale, rng3) = rng2.nextInt(math.max(1, cards.length));
     return r.copyWith(
       shopCards: cards,
+      shopSale: cards.isEmpty ? null : cards[sale],
+      clearShopSale: cards.isEmpty,
+      shopTea: false,
       shopTalisman: talismans.isEmpty ? null : talismans.first,
       clearShopTalisman: talismans.isEmpty,
       shopRemoved: false,
       shopUpgraded: false,
-      rng: rng2,
+      rng: rng3,
     );
   }
 
   bool canAfford(RunState r, int price) => r.jade >= price;
 
+  /// Precio de una carta de la tienda (la de oferta sale más barata).
+  int cardPrice(RunState r, String cardId) => cardId == r.shopSale
+      ? data.balance.merchant.salePrice
+      : data.balance.merchant.card;
+
   RunState buyCard(RunState r, String cardId) {
-    final price = data.balance.merchant.card;
+    final price = cardPrice(r, cardId);
     _checkShop(r, price);
     if (!r.shopCards.contains(cardId)) throw StateError('No está en venta');
     return r.copyWith(
@@ -485,12 +502,25 @@ class RunEngine {
     return _upgrade(r, uid).copyWith(jade: r.jade - price, shopUpgraded: true);
   }
 
+  /// Té de jengibre: cura un poco, una vez por tienda.
+  RunState buyTea(RunState r) {
+    final m = data.balance.merchant;
+    _checkShop(r, m.tea);
+    if (r.shopTea) throw StateError('Ya se usó');
+    return r.copyWith(
+      jade: r.jade - m.tea,
+      hp: math.min(r.maxHp, r.hp + m.teaHeal),
+      shopTea: true,
+    );
+  }
+
   RunState leaveShop(RunState r) {
     if (r.phase != RunPhase.merchant) throw StateError('No hay mercader');
     return r.copyWith(
       phase: RunPhase.map,
       shopCards: const [],
       clearShopTalisman: true,
+      clearShopSale: true,
     );
   }
 

@@ -24,7 +24,13 @@ enum EventGain {
 
 /// Resultado de una opción: Vida y, a veces, algo más.
 class EventOutcome {
-  const EventOutcome({this.hp = 0, this.heal = 0, this.maxHp = 0, this.gain});
+  const EventOutcome({
+    this.hp = 0,
+    this.heal = 0,
+    this.maxHp = 0,
+    this.jade = 0,
+    this.gain,
+  });
 
   /// Vida que se pierde (nunca deja al jugador en menos de 1).
   final int hp;
@@ -34,12 +40,16 @@ class EventOutcome {
 
   /// Vida máxima extra (también cura lo mismo).
   final int maxHp;
+
+  /// Jade que se gana.
+  final int jade;
   final EventGain? gain;
 
   factory EventOutcome.fromJson(Map<String, dynamic> j) => EventOutcome(
     hp: j['hp'] as int? ?? 0,
     heal: j['heal'] as int? ?? 0,
     maxHp: j['maxHp'] as int? ?? 0,
+    jade: j['jade'] as int? ?? 0,
     gain: EventGain.parse(j['gain'] as String?),
   );
 }
@@ -51,9 +61,13 @@ class EventOptionDef {
     required this.outcome,
     this.chance,
     this.failure,
+    this.price = 0,
   });
 
   final String id;
+
+  /// Jade que se paga al elegirla, salga bien o mal.
+  final int price;
 
   /// Lo que pasa (o lo que pasa si sale bien, cuando hay riesgo).
   final EventOutcome outcome;
@@ -70,6 +84,7 @@ class EventOptionDef {
     return EventOptionDef(
       id: j['id'] as String,
       chance: chance,
+      price: j['price'] as int? ?? 0,
       outcome: EventOutcome.fromJson(
         (chance == null ? j : j['success']) as Map<String, dynamic>,
       ),

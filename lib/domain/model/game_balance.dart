@@ -160,6 +160,9 @@ class MerchantDef {
     this.talisman = 60,
     this.remove = 35,
     this.upgrade = 30,
+    this.sale = 40,
+    this.tea = 15,
+    this.teaHeal = 15,
   });
 
   /// Cartas en venta.
@@ -169,12 +172,25 @@ class MerchantDef {
   final int remove;
   final int upgrade;
 
+  /// Descuento (%) de la carta en oferta.
+  final int sale;
+
+  /// Té de jengibre: precio y Vida que cura (una vez por tienda).
+  final int tea;
+  final int teaHeal;
+
+  /// Precio de una carta en oferta.
+  int get salePrice => (card * (100 - sale) / 100).round();
+
   factory MerchantDef.fromJson(Map<String, dynamic> j) => MerchantDef(
         cards: j['cards'] as int? ?? 3,
         card: j['card'] as int? ?? 25,
         talisman: j['talisman'] as int? ?? 60,
         remove: j['remove'] as int? ?? 35,
         upgrade: j['upgrade'] as int? ?? 30,
+        sale: j['sale'] as int? ?? 40,
+        tea: j['tea'] as int? ?? 15,
+        teaHeal: j['teaHeal'] as int? ?? 15,
       );
 }
 
