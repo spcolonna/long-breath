@@ -1389,6 +1389,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventCantPay => 'No te alcanza la Vida';
 
   @override
+  String eventJade(int n) {
+    return '+$n jade';
+  }
+
+  @override
+  String eventJadeSpent(int n) {
+    return '−$n jade';
+  }
+
+  @override
+  String eventPrice(int n) {
+    return 'Pagás $n jade';
+  }
+
+  @override
   String get eventContinue => 'Seguir subiendo';
 
   @override
@@ -1546,6 +1561,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get merchantUsed => 'Ya usado';
+
+  @override
+  String merchantSale(int pct) {
+    return 'Oferta −$pct%';
+  }
+
+  @override
+  String merchantTea(int n) {
+    return 'Té de jengibre (+$n Vida)';
+  }
+
+  @override
+  String merchantTeaDetail(int n) {
+    return 'Un tazón caliente que te devuelve $n de Vida. Una vez por visita.';
+  }
 
   @override
   String get merchantNoJade => 'Te falta jade';

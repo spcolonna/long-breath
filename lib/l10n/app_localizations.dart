@@ -2350,6 +2350,24 @@ abstract class AppLocalizations {
   /// **'No te alcanza la Vida'**
   String get eventCantPay;
 
+  /// No description provided for @eventJade.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} jade'**
+  String eventJade(int n);
+
+  /// No description provided for @eventJadeSpent.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} jade'**
+  String eventJadeSpent(int n);
+
+  /// No description provided for @eventPrice.
+  ///
+  /// In es, this message translates to:
+  /// **'Pagás {n} jade'**
+  String eventPrice(int n);
+
   /// No description provided for @eventContinue.
   ///
   /// In es, this message translates to:
@@ -2583,6 +2601,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Ya usado'**
   String get merchantUsed;
+
+  /// No description provided for @merchantSale.
+  ///
+  /// In es, this message translates to:
+  /// **'Oferta −{pct}%'**
+  String merchantSale(int pct);
+
+  /// No description provided for @merchantTea.
+  ///
+  /// In es, this message translates to:
+  /// **'Té de jengibre (+{n} Vida)'**
+  String merchantTea(int n);
+
+  /// No description provided for @merchantTeaDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Un tazón caliente que te devuelve {n} de Vida. Una vez por visita.'**
+  String merchantTeaDetail(int n);
 
   /// No description provided for @merchantNoJade.
   ///

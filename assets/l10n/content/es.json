@@ -165,6 +165,8 @@
       "text": "Bajo un pino torcido medita un anciano. Abre un ojo y sonríe: «Te enseño una forma, si aguantás entrenar conmigo hasta el atardecer».",
       "pay": "Entrenar con él",
       "payResult": "Entrenás hasta que el sol toca las nubes. Te duele todo, pero aprendiste algo nuevo.",
+      "gift": "Dejarle jade para el templo",
+      "giftResult": "Guarda el jade en la manga sin mirarlo y te enseña la forma con calma, sin hacerte sudar.",
       "leave": "Agradecer y seguir",
       "leaveResult": "Le hacés una reverencia y seguís el sendero."
     },
@@ -208,6 +210,23 @@
       "offerResult": "Terminás sin aire. Sobre el altar aparece un talismán antiguo.",
       "pray": "Meditar en silencio",
       "prayResult": "La calma del lugar te alivia los golpes."
+    },
+    "dice": {
+      "name": "Los dados del arriero",
+      "text": "En un recodo, dos arrieros juegan a los dados sobre una piedra plana. «¿Te animás, novicio? Si sale par, te llevás más del doble.»",
+      "bet": "Apostar",
+      "betResult": "¡Par! Los arrieros se ríen y te llenan la mano de jade.",
+      "betFail": "Impar. Los arrieros se guardan tu jade y te convidan un trago de consuelo.",
+      "leave": "Seguir de largo",
+      "leaveResult": "Los dejás con su juego y seguís subiendo."
+    },
+    "pilgrim": {
+      "name": "El peregrino perdido",
+      "text": "Un peregrino con el farol apagado busca el sendero del templo entre la niebla. Te ofrece su bolsa si lo acompañás por la ladera.",
+      "guide": "Acompañarlo por la ladera",
+      "guideResult": "El camino es empinado y resbaloso, pero llegan. Te da su bolsa con una reverencia larga.",
+      "point": "Señalarle el camino",
+      "pointResult": "Le mostrás el rumbo con la mano. Te agradece y se pierde entre la niebla."
     }
   },
   "lore": {

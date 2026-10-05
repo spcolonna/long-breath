@@ -253,6 +253,33 @@ void main() {
       expect(outcomes, {true, false});
     });
 
+    test('jade: el ermitaño acepta jade, los dados y el peregrino', () {
+      final hermit = run.data.event('hermit').option('gift');
+      expect(run.canChoose(at('hermit'), hermit), isFalse, reason: 'sin jade');
+      final rich = at('hermit').copyWith(jade: 40);
+      final r = run.resolveEvent(rich, 'gift');
+      expect(r.jade, 15);
+      expect(r.hp, 40, reason: 'no cuesta Vida');
+      expect(r.knownForms, hasLength(1));
+      expect(r.lastEvent!.jade, -25);
+
+      final outcomes = <bool>{};
+      for (var seed = 1; seed < 30; seed++) {
+        final d = run.resolveEvent(
+          at('dice', seed: seed).copyWith(jade: 20),
+          'bet',
+        );
+        outcomes.add(d.lastEvent!.success!);
+        expect(d.jade, d.lastEvent!.success! ? 20 - 15 + 35 : 5);
+      }
+      expect(outcomes, {true, false});
+
+      final p = run.resolveEvent(at('pilgrim'), 'guide');
+      expect(p.jade, 30);
+      expect(p.hp, 34);
+      expect(p.lastEvent!.jade, 30);
+    });
+
     test('altar: talismán raro; manantial: mejora una carta', () {
       final altar = run.resolveEvent(at('altar'), 'offer');
       expect(run.data.talisman(altar.talismans.single).rare, isTrue);
@@ -392,7 +419,7 @@ void main() {
     test('comprar descuenta jade y suma lo comprado', () {
       final m = run.data.balance.merchant;
       var r = shop();
-      final card = r.shopCards.first;
+      final card = r.shopCards.firstWhere((c) => c != r.shopSale);
       r = run.buyCard(r, card);
       expect(r.jade, 200 - m.card);
       expect(r.deck.last.cardId, card);
@@ -412,6 +439,23 @@ void main() {
       r = run.leaveShop(r);
       expect(r.phase, RunPhase.map);
       expect(r.shopCards, isEmpty);
+    });
+
+    test('una carta en oferta y un té por visita', () {
+      final m = run.data.balance.merchant;
+      var r = shop().copyWith(hp: 20);
+      expect(r.shopCards, contains(r.shopSale));
+      expect(m.salePrice, lessThan(m.card));
+      expect(run.cardPrice(r, r.shopSale!), m.salePrice);
+      r = run.buyCard(r, r.shopSale!);
+      expect(r.jade, 200 - m.salePrice);
+      r = run.buyTea(r);
+      expect(r.hp, 20 + m.teaHeal);
+      expect(r.jade, 200 - m.salePrice - m.tea);
+      expect(() => run.buyTea(r), throwsStateError, reason: 'una vez');
+      expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
+      r = run.leaveShop(r);
+      expect(r.shopSale, isNull);
     });
 
     test('sin jade no se compra', () {

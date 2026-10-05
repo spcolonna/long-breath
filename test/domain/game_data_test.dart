@@ -62,7 +62,8 @@ void main() {
     expect(floors[6].types.keys, [NodeType.fountain]);
     expect(floors[7].enemies, ['monk', 'lion', 'fan']);
     expect(floors.last.enemies, ['dragon']);
-    expect(data.balance.jadeElite, greaterThan(data.balance.jadeCommon));
+    expect(data.balance.jadeElite, 0, reason: 'la élite paga con un talismán');
+    expect(floors[1].types.keys, contains(NodeType.merchant));
   });
 
   test('talismanes y eventos', () {
@@ -70,9 +71,9 @@ void main() {
     expect(data.talismans.values.where((t) => t.rare), hasLength(3));
     expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(10),
         reason: 'cada uno se reconoce por su carácter');
-    expect(data.events, hasLength(6));
+    expect(data.events, hasLength(8));
     for (final e in data.events) {
-      expect(e.options, hasLength(2), reason: e.id);
+      expect(e.options.length, inInclusiveRange(2, 3), reason: e.id);
     }
   });
 }

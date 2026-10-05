@@ -104,6 +104,8 @@ class RunController extends Notifier<RunState?> {
 
   void buyUpgrade(int uid) => _set(_engine.buyUpgrade(state!, uid));
 
+  void buyTea() => _set(_engine.buyTea(state!));
+
   void leaveShop() => _set(_engine.leaveShop(state!));
 
   void masterTeach(String formId) => _set(_engine.masterTeach(state!, formId));

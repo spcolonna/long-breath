@@ -136,6 +136,7 @@ extension Labels on AppLocalizations {
       if (o.hp > 0) eventCost(o.hp),
       if (o.heal > 0) eventHeal(o.heal),
       if (o.maxHp > 0) eventMaxHp(o.maxHp),
+      if (o.jade > 0) eventJade(o.jade),
       if (o.gain != null)
         switch (o.gain!) {
           EventGain.form => eventGainForm,
@@ -150,7 +151,13 @@ extension Labels on AppLocalizations {
   }
 
   /// Lo que promete una opción (con riesgo: las dos salidas posibles).
-  String eventOptionSummary(EventOptionDef o) => o.chance == null
-      ? eventOutcome(o.outcome)
-      : eventChance(o.chance!, eventOutcome(o.outcome), eventOutcome(o.failure!));
+  String eventOptionSummary(EventOptionDef o) {
+    final s = o.chance == null
+        ? eventOutcome(o.outcome)
+        : eventChance(o.chance!, eventOutcome(o.outcome), eventOutcome(o.failure!));
+    if (o.price == 0) return s;
+    return o.chance == null && s == eventNothing
+        ? eventPrice(o.price)
+        : '${eventPrice(o.price)} · $s';
+  }
 }

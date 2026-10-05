@@ -18,7 +18,7 @@
   "paths": { "choices": 2 },
   "rewards": { "choices": 3, "pools": ["reward", "tiger", "snake", "crane"], "talismanChoices": 3 },
   "fountain": { "heal": 20, "upgrade": 3 },
-  "jade": { "common": 14, "elite": 30, "spread": 6 },
+  "jade": { "common": 14, "elite": 0, "spread": 6 },
   "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25 },
   "master": { "forms": 2 },
   "difficulties": {
@@ -43,11 +43,11 @@
     "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
     "floors": [
       { "width": 2, "types": { "combat": 1 }, "enemies": ["bat", "salamander"] },
-      { "width": [2, 3], "types": { "combat": 3, "event": 2 }, "enemies": ["bat", "salamander", "disciple", "monkey"] },
+      { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1 }, "enemies": ["bat", "salamander", "disciple", "monkey"] },
       { "width": 1, "types": { "shrine": 1 } },
       { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
       { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey"] },
-      { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 2, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
+      { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
       { "width": 1, "types": { "fountain": 1 } },
       { "width": 1, "types": { "combat": 1 }, "enemies": ["monk", "lion", "fan"], "scene": "campanas" },
       { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"], "scene": "cumbre" }

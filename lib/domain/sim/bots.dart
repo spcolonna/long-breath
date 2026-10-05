@@ -51,9 +51,9 @@ abstract class Bot {
 
   /// Compras en el mercader: una carta al azar si alcanza, y se va.
   RunState shop(RunEngine run, RunState r) {
-    final price = run.data.balance.merchant.card;
-    if (r.shopCards.isNotEmpty && run.canAfford(r, price)) {
-      r = run.buyCard(r, r.shopCards[random.nextInt(r.shopCards.length)]);
+    if (r.shopCards.isNotEmpty) {
+      final id = r.shopCards[random.nextInt(r.shopCards.length)];
+      if (run.canAfford(r, run.cardPrice(r, id))) r = run.buyCard(r, id);
     }
     return run.leaveShop(r);
   }
@@ -191,11 +191,14 @@ class PlannerBot extends Bot {
   bool learnForm(RunEngine run, RunState r, String? cardPick) =>
       prefersForm(run, r, cardPick, 0);
 
-  /// Talismán si alcanza, después la mejor carta y, con lo que sobre,
-  /// quitar la carta inicial más floja.
+  /// Té si viene golpeado, talismán si alcanza, después la mejor carta y,
+  /// con lo que sobre, quitar la carta inicial más floja.
   @override
   RunState shop(RunEngine run, RunState r) {
     final m = run.data.balance.merchant;
+    if (!r.shopTea && r.hp <= r.maxHp * 0.6 && run.canAfford(r, m.tea)) {
+      r = run.buyTea(r);
+    }
     if (r.shopTalisman != null && run.canAfford(r, m.talisman)) {
       r = run.buyTalisman(r);
     }
@@ -203,7 +206,7 @@ class PlannerBot extends Bot {
         .compareTo(cardValue(run.data.card(a))));
     if (cards.isNotEmpty &&
         cardValue(run.data.card(cards.first)) > 4 &&
-        run.canAfford(r, m.card)) {
+        run.canAfford(r, run.cardPrice(r, cards.first))) {
       r = run.buyCard(r, cards.first);
     }
     if (!r.shopRemoved && run.canAfford(r, m.remove)) {
@@ -213,6 +216,11 @@ class PlannerBot extends Bot {
       ]..sort((a, b) => cardValue(run.data.card(a.cardId))
           .compareTo(cardValue(run.data.card(b.cardId))));
       if (starters.isNotEmpty) r = run.buyRemove(r, starters.first.uid);
+    }
+    if (!r.shopUpgraded &&
+        run.canAfford(r, m.upgrade) &&
+        r.deck.any((c) => run.canUpgrade(c))) {
+      r = run.buyUpgrade(r, _bestUpgrade(run, r));
     }
     return run.leaveShop(r);
   }
@@ -355,13 +363,18 @@ double talismanValue(String id) => const {
     }[id] ??
     4.0;
 
+/// Lo que vale 1 de jade frente a 1 punto de las otras ganancias (un
+/// talismán, 7 puntos, cuesta 50 de jade).
+const jadeWorth = 0.15;
+
 /// Valor esperado de una opción de evento: la Vida pesa más cuanto menos
 /// queda.
 double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
   final missing = r.maxHp - r.hp;
   final hpWeight = 0.4 + (1 - r.hp / r.maxHp);
   double value(EventOutcome e) {
-    var v = -e.hp * hpWeight + math.min(e.heal, missing) * hpWeight + e.maxHp * 1.5;
+    var v = -e.hp * hpWeight + math.min(e.heal, missing) * hpWeight + e.maxHp * 1.5 +
+        e.jade * jadeWorth;
     v += switch (e.gain) {
       null => 0.0,
       EventGain.form => run.learnableForms(r).isEmpty ? 3.0 : 6.0,
@@ -375,8 +388,11 @@ double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
   }
 
   final chance = o.chance;
-  if (chance == null) return value(o.outcome);
-  return value(o.outcome) * chance / 100 + value(o.failure!) * (100 - chance) / 100;
+  final price = o.price * jadeWorth;
+  if (chance == null) return value(o.outcome) - price;
+  return value(o.outcome) * chance / 100 +
+      value(o.failure!) * (100 - chance) / 100 -
+      price;
 }
 
 bool prefersForm(RunEngine run, RunState r, String? cardPick, double margin) {
