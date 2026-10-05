@@ -41,6 +41,7 @@ Antes de subir, los novicios practican en el patio con el **muñeco de madera** 
 - **Gólem de Cuarzo:** cuarzo pálido con vetas turquesa y musgo en los hombros, casi inamovible hasta que se le rompe el equilibrio.
 - **Salamandra de Brasa:** ágil y escurridiza, con la cola encendida como una brasa; se entierra para protegerse.
 - **Mono Ladrón:** un mono dorado que se lleva tu jade en cada manotazo y, si no lo frenás a tiempo, se escapa con el botín.
+- **Bandido del Paso:** un fanfarrón con bastón y sombrero de bambú. Tantea un turno y al siguiente descarga el bastonazo: el contador te avisa.
 - **Monje sin Rostro** (élite): un maestro con máscara de porcelana que interrumpe las formas a medio ejecutar.
 - **León de Piedra** 石狮 (élite): el guardián del arco, que se despierta de a poco y pega cada vez más fuerte hasta que lo desequilibrás.
 - **Dama del Abanico** 铁扇 (élite): con su abanico de hierro desvía el primer golpe de cada turno y te lo devuelve.
@@ -87,7 +88,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
    | 2 | Combates o eventos (aparece el Mono Ladrón) |
    | 3 | **Santuario** (siempre) |
-   | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** |
+   | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** (en 4 y 6 aparece el Bandido del Paso) |
    | 7 | Fuente (siempre) |
    | 8 | Élite: Monje sin Rostro, León de Piedra o Dama del Abanico (al azar) |
    | 9 | Eco del Dragón (jefe) |
@@ -315,6 +316,7 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Gólem de Cuarzo | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
 | Salamandra de Brasa | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
 | Mono Ladrón | Común | 58 | 13 | Manotazo alto 4×2 → Manotazo bajo 5×2 → Se escapa | **Ladrón:** cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa (con cuenta regresiva): se lleva lo robado y ese combate no da jade, aunque la carta de recompensa se gana igual. Si lo vencés antes, no perdés nada. Desequilibrarlo le hace perder la acción y te da un turno más |
+| Bandido del Paso | Común | 66 | 15 | Tanteo alto 6 → Bastonazo medio 15 | **Bastón:** alterna un golpe liviano y un bastonazo fuerte. El contador muestra cuántos turnos faltan: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe |
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
 | León de Piedra | Élite | 134 | 20 | Medio 9 → Piel de piedra (Guardia 8) → Zarpazo alto 11 | **Despierta:** después de cada acción sus golpes suman +3, y se acumula (se ve en su placa). Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0 |
 | Dama del Abanico | Élite | 100 | 19 | Ráfaga baja 5×2 → Alto 10 → Filo de hierro medio 12 | **Abanico:** el primer golpe con daño de cada turno no le hace daño y te devuelve 3; la Estructura sí entra. Abrí el turno con una carta barata o una palma. Desequilibrada no puede usarlo |

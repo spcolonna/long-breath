@@ -118,6 +118,10 @@
       "name": "Mono Ladrón",
       "rule": "Ladrón: cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa con lo robado y no deja jade. Si lo vencés antes, recuperás todo. Desequilibrarlo le hace perder la acción y le da más tiempo."
     },
+    "bandit": {
+      "name": "Bandido del Paso",
+      "rule": "Bastón: un turno tantea con un golpe ALTO y al siguiente descarga un bastonazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe."
+    },
     "lion": {
       "name": "León de Piedra",
       "rule": "Despierta: después de cada acción sus golpes hacen +3 de daño, y se acumula. Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0."
@@ -139,7 +143,9 @@
     "stone_skin": "Piel de piedra",
     "pounce": "Zarpazo",
     "fan_gust": "Ráfaga del abanico",
-    "fan_edge": "Filo de hierro"
+    "fan_edge": "Filo de hierro",
+    "staff_jab": "Tanteo",
+    "staff_smash": "Bastonazo"
   },
   "talismans": {
     "arco": "Cuerda del Arco",
