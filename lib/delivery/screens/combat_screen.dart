@@ -263,7 +263,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           e is Deflected ||
           e is EnemyActionSkipped ||
           e is EnemyGuarded ||
-          e is EnemyCharged,
+          e is EnemyCharged ||
+          e is EnemyFled,
     );
     if (enemyTurn) return _enemyTurn(prev, next);
     if (!ev.any((e) => e is CardPlayed)) {
@@ -294,6 +295,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _banners(ev);
       if (ev.any((e) => e is Victory)) {
         _win();
+      } else if (ev.any((e) => e is Defeat)) {
+        _lose();
       } else {
         setState(() => _busy = false);
       }
@@ -506,6 +509,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _after(at - 300, _lose);
       return;
     }
+    if (ev.any((e) => e is EnemyFled)) {
+      _after(at - 300, _fled);
+      return;
+    }
     _after(at, () {
       setState(() {
         _hideHand = false;
@@ -542,6 +549,18 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     });
   }
 
+  /// Se escapó: sale de escena sin la explosión de la victoria.
+  void _fled() {
+    HapticFeedback.mediumImpact();
+    _audio.play(Sfx.enemySkip);
+    setState(() {
+      _queue.clear();
+      _current = null;
+      _dying = true;
+    });
+    _after(900, () => setState(() => _endShown = true));
+  }
+
   void _lose() {
     HapticFeedback.heavyImpact();
     _audio.play(Sfx.heroFall);
@@ -573,6 +592,33 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           _queue.add(_Fx(t.broken, t.staggeredDouble, Palette.gold));
         case ScaleShed(:final remaining):
           _queue.add(_Fx(t.scaleShed, t.scalesLeft(remaining), Palette.jade));
+        case Parried(:final damage):
+          HapticFeedback.heavyImpact();
+          _audio.play(Sfx.block);
+          _flashKey++;
+          _shake(8);
+          _pop(_heroPops, '−$damage', Palette.lacquer, size: 34);
+          _queue.add(_Fx(t.parried, t.parriedDetail(damage), Palette.structure));
+        case WrathCalmed():
+          _queue.add(_Fx(t.wrathCalmed, null, Palette.gold));
+        case EnemyEnraged(:final total):
+          _pop(
+            _enemyPops,
+            '+$total',
+            Palette.lacquer,
+            size: 22,
+            icon: Icons.local_fire_department,
+          );
+        case JadeStolen(:final amount):
+          _pop(
+            _heroPops,
+            '−$amount',
+            Palette.gold,
+            size: 20,
+            icon: Icons.savings_outlined,
+            dx: -44,
+            dy: 30,
+          );
         case PlayerBroken():
           HapticFeedback.heavyImpact();
           _queue.add(_Fx(t.playerBroken, '−2 ${t.breath}', Palette.lacquer));
@@ -622,6 +668,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       }
     }
     if (events.any((e) => e is Victory || e is Defeat)) _queue.clear();
+    setState(() {});
     _pump();
   }
 
@@ -798,6 +845,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                 maxHp: live.state.player.maxHp,
                 enemyName: ref.watch(textProvider).enemy(live.state.enemy.id),
                 enemyHp: live.state.enemy.hp,
+                fledWith: live.state.enemy.fled
+                    ? live.state.enemy.stolen
+                    : null,
               ),
             // Con key: los banners de arriba entran y salen sin reiniciar la guía.
             if (live.tutorial)
@@ -1481,7 +1531,13 @@ class _EnemyStage extends ConsumerWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
-          child: e.guard > 0 || e.staggered || e.scales > 0
+          child:
+              e.guard > 0 ||
+                  e.staggered ||
+                  e.scales > 0 ||
+                  e.wrath > 0 ||
+                  e.parryReady ||
+                  e.stolen > 0
               ? Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Wrap(
@@ -1519,6 +1575,30 @@ class _EnemyStage extends ConsumerWidget {
                               text: t.scales(e.scales),
                               color: Palette.jade,
                             ),
+                          ),
+                        ),
+                      if (e.wrath > 0)
+                        Bounce(
+                          trigger: e.wrath,
+                          child: _Chip(
+                            icon: Icons.local_fire_department,
+                            text: t.wrathChip(e.wrath),
+                            color: Palette.lacquer,
+                          ),
+                        ),
+                      if (e.parryReady && !e.staggered)
+                        _Chip(
+                          icon: Icons.filter_tilt_shift,
+                          text: t.parryChip,
+                          color: Palette.structure,
+                        ),
+                      if (e.stolen > 0)
+                        Bounce(
+                          trigger: e.stolen,
+                          child: _Chip(
+                            icon: Icons.savings_outlined,
+                            text: t.stolenChip(e.stolen),
+                            color: Palette.gold,
                           ),
                         ),
                     ],
@@ -1662,6 +1742,11 @@ class _IntentBubble extends ConsumerWidget {
         Icons.graphic_eq,
         named ?? t.intentDiscard,
         t.intentDiscardDetail(i.count),
+      ),
+      IntentKind.flee => (
+        Icons.directions_run,
+        named ?? t.intentFlee,
+        t.intentFleeDetail(iv.stolen),
       ),
     };
     final color = iv.skipped ? Palette.textDim : Palette.lacquer;
@@ -2120,8 +2205,14 @@ class _PreviewPanel extends ConsumerWidget {
     final def = data.card(c.cardId);
     final p = engine.preview(s, uid);
     final costOfFresh = engine.costOf(s, def);
+    // Abanico: este golpe no entra y te devuelve el suyo.
+    final parried =
+        p.damage > 0 && s.enemy.parryReady && !s.enemy.staggered;
     final parts = <String>[
-      if (p.damage > 0) t.previewDamage(p.damage),
+      if (parried)
+        t.previewParried(data.enemy(s.enemy.id).parry)
+      else if (p.damage > 0)
+        t.previewDamage(p.damage),
       if (p.structure > 0) t.previewStructure(p.structure),
       if (p.guard > 0) '${t.guard} ${p.guard} ${t.heightLabel(p.height)}',
       if (p.stanceAfter != s.player.stance)
@@ -3123,9 +3214,13 @@ class _EndOverlay extends ConsumerStatefulWidget {
     required this.maxHp,
     required this.enemyName,
     required this.enemyHp,
+    this.fledWith,
   });
 
   final bool won;
+
+  /// El enemigo se escapó con este jade (null si lo venciste).
+  final int? fledWith;
 
   /// En una lección: botones para seguir, reintentar o volver a la lista.
   final String? lessonId;
@@ -3201,7 +3296,12 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
         ? null
         : lessonById(widget.lessonId!);
     final next = lesson == null ? null : nextLesson(lesson.id);
+    final fled = widget.fledWith;
     final String summaryText = switch ((lesson, won)) {
+      (null, true) when fled != null => t.endSummaryFled(
+        widget.enemyName,
+        fled,
+      ),
       (null, true) => t.endSummaryWon(widget.turns, widget.hp, widget.maxHp),
       (null, false) => t.endSummaryLost(widget.enemyName, widget.enemyHp),
       (final l?, true) => l.done!(t),
@@ -3234,7 +3334,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
             child: Stack(
               alignment: Alignment.center,
               children: [
-                if (won)
+                if (won && fled == null)
                   Opacity(
                     opacity: veil,
                     child: Transform.rotate(
@@ -3248,7 +3348,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
                       ),
                     ),
                   ),
-                if (won)
+                if (won && fled == null)
                   Positioned.fill(
                     child: CustomPaint(
                       painter: _PetalsPainter(t: _loop.value, fade: summary),
@@ -3271,7 +3371,11 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
                                   1.6 * title +
                                   0.06 * math.sin(math.pi * settle),
                               child: Text(
-                                won ? t.victory : t.defeat,
+                                fled != null
+                                    ? t.fledTitle
+                                    : won
+                                    ? t.victory
+                                    : t.defeat,
                                 style: TextStyle(
                                   fontSize: 54,
                                   fontWeight: FontWeight.w900,

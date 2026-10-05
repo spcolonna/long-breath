@@ -105,7 +105,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Palette.textDim),
               ),
-              if (run.jadeGained > 0) ...[
+              if (run.jadeGained != 0) ...[
                 const SizedBox(height: 10),
                 // El jade del combate entra con un rebote.
                 TweenAnimationBuilder<double>(
@@ -120,7 +120,8 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: Palette.jade.withValues(alpha: 0.12),
+                      color: (run.jadeGained > 0 ? Palette.jade : Palette.gold)
+                          .withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -128,11 +129,18 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                       children: [
                         const JadeCoin(),
                         const SizedBox(width: 6),
-                        Text(
-                          t.jadeGained(run.jadeGained),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: Palette.jade,
+                        Flexible(
+                          child: Text(
+                            run.jadeGained > 0
+                                ? t.jadeGained(run.jadeGained)
+                                : t.jadeLost(-run.jadeGained),
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              color: run.jadeGained > 0
+                                  ? Palette.jade
+                                  : Palette.gold,
+                            ),
                           ),
                         ),
                       ],

@@ -30,6 +30,7 @@ flutter:
     - assets/data/
     - assets/l10n/content/
     - assets/art/enemies/
+    - assets/art/npc/
     - assets/audio/sfx/
     - assets/audio/music/
     - assets/art/stages/qianyunshan/

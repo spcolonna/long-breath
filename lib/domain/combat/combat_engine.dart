@@ -90,9 +90,13 @@ class IntentView {
     required this.skipped,
     required this.countdown,
     required this.punishIfSameStance,
+    this.stolen = 0,
   });
 
   final IntentDef intent;
+
+  /// Jade que se lleva si se escapa (Mono Ladrón).
+  final int stolen;
   final int damage;
   final int structure;
 
@@ -473,6 +477,7 @@ class CombatEngine {
           ? _enemyDamage(
               intent.damage +
                   e.chargeBonus +
+                  e.wrath +
                   punish * def.sameStancePunishDamage,
               s.enemyDamagePct,
             )
@@ -486,6 +491,7 @@ class CombatEngine {
           def.sameStancePunishDamage > 0 &&
           s.lastTurnEndStance != null &&
           s.lastTurnEndStance == s.player.stance,
+      stolen: e.stolen,
     );
   }
 
@@ -524,7 +530,12 @@ class CombatEngine {
       ),
     );
     if (def.type.isAttack) d.attacksThisTurn++;
-    if (dmg > 0 || str > 0) _hitEnemy(d, dmg, str, events);
+    if (dmg > 0 && d.enemy.parryReady && !d.enemy.staggered) {
+      _parry(d, str, events);
+    } else if (dmg > 0 || str > 0) {
+      _hitEnemy(d, dmg, str, events);
+    }
+    if (d.isOver) return;
 
     if (def.clearGuard) {
       d.guard = 0;
@@ -637,9 +648,28 @@ class CombatEngine {
     e.skipNextAction = true;
     e.staggerEndsTurn = d.turn + 1;
     events.add(const EnemyBroken());
+    if (e.wrath > 0) {
+      e.wrath = 0;
+      events.add(const WrathCalmed());
+    }
     if (e.scales > 0) {
       e.scales--;
       events.add(ScaleShed(e.scales));
+    }
+  }
+
+  /// Abanico: el golpe no hace daño (la Estructura sí entra) y el enemigo
+  /// devuelve el suyo.
+  void _parry(_Draft d, int str, List<CombatEvent> events) {
+    final back = data.enemy(d.enemy.id).parry;
+    d.enemy.parryReady = false;
+    events.add(Parried(back));
+    if (str > 0) _hitEnemy(d, 0, str, events);
+    if (d.isOver) return;
+    d.hp = math.max(0, d.hp - back);
+    if (d.hp == 0) {
+      d.phase = CombatPhase.lost;
+      events.add(const Defeat());
     }
   }
 
@@ -715,6 +745,15 @@ class CombatEngine {
           events.add(EnemyCharged(intent.value));
         case IntentKind.discard:
           d.pendingDiscard += intent.count;
+        case IntentKind.flee:
+          e.fled = true;
+          d.phase = CombatPhase.won;
+          events.add(EnemyFled(e.stolen));
+          return;
+      }
+      if (def.wrath > 0 && !d.isOver) {
+        e.wrath += def.wrath;
+        events.add(EnemyEnraged(e.wrath));
       }
     }
     if (d.isOver) return;
@@ -731,7 +770,7 @@ class CombatEngine {
     List<CombatEvent> events,
   ) {
     final e = d.enemy;
-    var damage = intent.damage + e.chargeBonus;
+    var damage = intent.damage + e.chargeBonus + e.wrath;
     var structure = intent.structure;
     e.chargeBonus = 0;
     if (d.punishPending) {
@@ -774,6 +813,10 @@ class CombatEngine {
       d.hp = math.max(0, d.hp - taken);
       d.structure = math.max(0, d.structure - s);
       events.add(PlayerHit(taken, s, blocked: blocked));
+      if (taken > 0 && def.steal > 0) {
+        e.stolen += def.steal;
+        events.add(JadeStolen(def.steal, e.stolen));
+      }
       if (d.hp == 0) {
         d.phase = CombatPhase.lost;
         events.add(const Defeat());
@@ -799,6 +842,7 @@ class CombatEngine {
     d.deflectBonusStructure = 0;
     d.dingbuUsed = false;
     d.attacksThisTurn = 0;
+    d.enemy.parryReady = data.enemy(d.enemy.id).parry > 0;
     d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
     d.nextTurnBreathMod = 0;
     events.add(TurnStarted(d.turn, d.breath));
@@ -848,6 +892,10 @@ class _EnemyDraft {
     this.skipNextAction = false,
     this.chargeBonus = 0,
     this.scales = 0,
+    this.wrath = 0,
+    this.parryReady = false,
+    this.stolen = 0,
+    this.fled = false,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -864,6 +912,10 @@ class _EnemyDraft {
     skipNextAction: e.skipNextAction,
     chargeBonus: e.chargeBonus,
     scales: e.scales,
+    wrath: e.wrath,
+    parryReady: e.parryReady,
+    stolen: e.stolen,
+    fled: e.fled,
   );
 
   final String id;
@@ -879,6 +931,10 @@ class _EnemyDraft {
   bool skipNextAction;
   int chargeBonus;
   int scales;
+  int wrath;
+  bool parryReady;
+  int stolen;
+  bool fled;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -894,6 +950,10 @@ class _EnemyDraft {
     skipNextAction: skipNextAction,
     chargeBonus: chargeBonus,
     scales: scales,
+    wrath: wrath,
+    parryReady: parryReady,
+    stolen: stolen,
+    fled: fled,
   );
 }
 

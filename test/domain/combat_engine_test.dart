@@ -3,6 +3,7 @@ import 'package:long_breath/domain/combat/combat_action.dart';
 import 'package:long_breath/domain/combat/combat_engine.dart';
 import 'package:long_breath/domain/combat/combat_event.dart';
 import 'package:long_breath/domain/combat/combat_state.dart';
+import 'package:long_breath/domain/model/enemy_def.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
 
@@ -710,6 +711,55 @@ void main() {
       s = endTurn(s, [uidOf(s, 'he_zui')]).state;
       s = engine.reduce(s, const Breathe()).state;
       expect(s.retained, isEmpty);
+    });
+  });
+
+  group('élites y comunes nuevos', () {
+    test('Abanico: el primer golpe del turno no hace daño y te devuelve 3', () {
+      var s = setup([
+        'gongbu_chongquan',
+        'gongbu_chongquan',
+        ...filler,
+      ], enemy: 'fan');
+      expect(s.enemy.parryReady, isTrue);
+      final r = play(s, 'gongbu_chongquan');
+      s = r.state;
+      expect(r.events.whereType<Parried>().single.damage, 3);
+      expect(s.enemy.hp, 100, reason: 'no le entra daño');
+      expect(s.enemy.structure, 19 - 1, reason: 'la Estructura sí');
+      expect(s.player.hp, 47);
+      expect(s.enemy.parryReady, isFalse);
+      s = play(s, 'gongbu_chongquan').state;
+      expect(s.enemy.hp, 100 - 9, reason: 'el segundo golpe entra');
+    });
+
+    test('León: despierta +3 por acción y lo suma a sus golpes', () {
+      var s = setup([...filler, ...filler, ...filler], enemy: 'lion');
+      final base = engine.intentView(s).damage;
+      s = endTurn(s).state;
+      expect(s.enemy.wrath, 3);
+      s = endTurn(s).state; // Piel de piedra: también despierta.
+      expect(s.enemy.wrath, 6);
+      final iv = engine.intentView(s);
+      expect(iv.intent.labelKey, 'pounce');
+      expect(iv.damage, greaterThan(base));
+    });
+
+    test('Mono: roba jade con cada golpe y en su tercera acción se escapa', () {
+      var s = setup(
+        [...filler, ...filler, ...filler, ...filler],
+        enemy: 'monkey',
+        hp: 80,
+      );
+      for (var i = 0; i < 2; i++) {
+        s = endTurn(s).state;
+      }
+      expect(s.enemy.stolen, 4 * 4, reason: '2 + 2 golpes');
+      expect(engine.intentView(s).intent.kind, IntentKind.flee);
+      final r = endTurn(s);
+      expect(r.events.whereType<EnemyFled>().single.stolen, 16);
+      expect(r.state.phase, CombatPhase.won);
+      expect(r.state.enemy.fled, isTrue);
     });
   });
 }

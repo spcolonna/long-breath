@@ -75,6 +75,10 @@ class EnemyCombat {
     required this.skipNextAction,
     required this.chargeBonus,
     this.scales = 0,
+    this.wrath = 0,
+    this.parryReady = false,
+    this.stolen = 0,
+    this.fled = false,
   });
 
   final String id;
@@ -99,6 +103,18 @@ class EnemyCombat {
   /// Escamas que le quedan (resta daño a cada golpe).
   final int scales;
 
+  /// Fuerza acumulada al despertar (León de Piedra).
+  final int wrath;
+
+  /// El abanico todavía puede desviar un golpe este turno.
+  final bool parryReady;
+
+  /// Jade que te robó en este combate.
+  final int stolen;
+
+  /// Se escapó (el combate termina sin vencerlo).
+  final bool fled;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -120,6 +136,10 @@ class EnemyCombat {
         skipNextAction: skipNextAction,
         chargeBonus: chargeBonus,
         scales: scales ?? this.scales,
+        wrath: wrath,
+        parryReady: parryReady,
+        stolen: stolen,
+        fled: fled,
       );
 }
 

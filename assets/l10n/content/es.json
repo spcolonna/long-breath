@@ -113,6 +113,18 @@
     "dummy_forms": {
       "name": "Muñeco de madera",
       "rule": "Muñeco para practicar formas: pega suave y MEDIO todos los turnos."
+    },
+    "monkey": {
+      "name": "Mono Ladrón",
+      "rule": "Ladrón: cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa con lo robado y no deja jade. Si lo vencés antes, recuperás todo. Desequilibrarlo le hace perder la acción y le da más tiempo."
+    },
+    "lion": {
+      "name": "León de Piedra",
+      "rule": "Despierta: después de cada acción sus golpes hacen +3 de daño, y se acumula. Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0."
+    },
+    "fan": {
+      "name": "Dama del Abanico",
+      "rule": "Abanico: el primer golpe con daño de cada turno no le hace daño y te devuelve 3. La Estructura sí entra. Abrí el turno con una carta barata o una palma; Desequilibrada no puede usar el abanico."
     }
   },
   "intents": {
@@ -121,7 +133,13 @@
     "charge": "Carga",
     "screech": "Chillido",
     "interrupt": "Interrumpir",
-    "burrow": "Se entierra"
+    "burrow": "Se entierra",
+    "snatch": "Manotazo",
+    "flee": "Escaparse",
+    "stone_skin": "Piel de piedra",
+    "pounce": "Zarpazo",
+    "fan_gust": "Ráfaga del abanico",
+    "fan_edge": "Filo de hierro"
   },
   "talismans": {
     "arco": "Cuerda del Arco",

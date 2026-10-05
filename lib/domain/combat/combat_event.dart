@@ -145,6 +145,36 @@ class DiscardRequired extends CombatEvent {
   final int count;
 }
 
+/// Abanico: desvió tu golpe y te devolvió [damage].
+class Parried extends CombatEvent {
+  const Parried(this.damage);
+  final int damage;
+}
+
+/// El enemigo despertó un poco más: sus golpes suman [total].
+class EnemyEnraged extends CombatEvent {
+  const EnemyEnraged(this.total);
+  final int total;
+}
+
+/// Al desequilibrarlo, se le pasó el enojo.
+class WrathCalmed extends CombatEvent {
+  const WrathCalmed();
+}
+
+/// Te robó [amount] de jade ([total] en este combate).
+class JadeStolen extends CombatEvent {
+  const JadeStolen(this.amount, this.total);
+  final int amount;
+  final int total;
+}
+
+/// Se escapó con [stolen] de jade. El combate termina.
+class EnemyFled extends CombatEvent {
+  const EnemyFled(this.stolen);
+  final int stolen;
+}
+
 class Victory extends CombatEvent {
   const Victory();
 }

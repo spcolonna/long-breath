@@ -1710,4 +1710,54 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get picoRule10 => 'Todos los rivales +8% de Vida y +5% de Estructura';
+
+  @override
+  String wrathChip(int n) {
+    return 'Despierto · +$n por golpe';
+  }
+
+  @override
+  String get wrathCalmed => 'Se vuelve a dormir';
+
+  @override
+  String get parryChip => 'Abanico listo';
+
+  @override
+  String get parried => '¡Abanico!';
+
+  @override
+  String previewParried(int n) {
+    return 'Abanico: 0 daño, te devuelve $n';
+  }
+
+  @override
+  String parriedDetail(int n) {
+    return 'Desvía tu golpe y te devuelve $n';
+  }
+
+  @override
+  String stolenChip(int n) {
+    return 'Te robó $n de jade';
+  }
+
+  @override
+  String get intentFlee => 'Se escapa';
+
+  @override
+  String intentFleeDetail(int n) {
+    return 'con $n de jade';
+  }
+
+  @override
+  String get fledTitle => 'Se escapó';
+
+  @override
+  String endSummaryFled(String name, int n) {
+    return '$name se escapó con $n de jade';
+  }
+
+  @override
+  String jadeLost(int n) {
+    return '−$n de jade · se lo llevó';
+  }
 }

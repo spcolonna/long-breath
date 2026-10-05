@@ -177,7 +177,11 @@ class CombatController extends Notifier<CombatView?> {
     }
     ref
         .read(runControllerProvider.notifier)
-        .finishCombat(won: s.phase == CombatPhase.won, hp: s.player.hp);
+        .finishCombat(
+          won: s.phase == CombatPhase.won,
+          hp: s.player.hp,
+          fledWith: s.enemy.fled ? s.enemy.stolen : null,
+        );
     state = null;
   }
 }

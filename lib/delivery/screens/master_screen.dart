@@ -14,6 +14,7 @@ import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
 
 /// Maestro errante: una sola lección, una forma o mejorar una carta.
@@ -106,8 +107,11 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                 child: ListView(
                   padding: const EdgeInsets.only(top: 12, bottom: 16),
                   children: [
-                    Center(
-                      child: SizedBox(
+                    NpcPortrait(
+                      asset: 'assets/art/npc/master.png',
+                      color: Palette.structure,
+                      height: 150,
+                      badge: SizedBox(
                         width: 120,
                         height: 96,
                         child: Stack(

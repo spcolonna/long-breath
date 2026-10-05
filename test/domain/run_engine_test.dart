@@ -72,6 +72,15 @@ void main() {
     expect(r.hp, r.maxHp);
   });
 
+  test('si el rival se escapa, se lleva el jade y no deja', () {
+    var r = fresh(3).copyWith(jade: 30);
+    r = run.enter(r, 'n1');
+    r = run.finishCombat(r, won: true, hp: 40, fledWith: 12);
+    expect(r.jade, 18);
+    expect(r.jadeGained, -12);
+    expect(r.phase, RunPhase.reward, reason: 'la carta se gana igual');
+  });
+
   test('formas: se arranca sin ninguna y se aprenden en la recompensa', () {
     var r = fresh(3);
     expect(r.knownForms, isEmpty);
@@ -316,7 +325,7 @@ void main() {
         // Un solo santuario y una sola fuente, que es lo previo al élite.
         expect(map.where((n) => n.type == NodeType.shrine), hasLength(1));
         final fountain = map.singleWhere((n) => n.type == NodeType.fountain);
-        expect(r.node(fountain.next.single).enemy, 'monk');
+        expect(['monk', 'lion', 'fan'], contains(r.node(fountain.next.single).enemy));
         // Siempre hay mercader y maestro.
         expect(map.any((n) => n.type == NodeType.merchant), isTrue);
         expect(map.any((n) => n.type == NodeType.master), isTrue);
