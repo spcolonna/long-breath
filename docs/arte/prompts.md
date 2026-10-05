@@ -805,6 +805,106 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
+
+---
+
+## 6. Lo que viene (élites, economía y lore)
+
+**Formato:** igual que los enemigos, vertical 2:3 (1024×1536) con fondo transparente, figura completa y pies cerca del borde inferior. Los retratos van en `assets/art/npc/`. Hasta que el código los use, no hace falta nada más que dejarlos en su carpeta.
+
+### León de Piedra (`lion`, élite)
+
+`assets/art/enemies/lion.png`. Guardián del arco del santuario: despierta de a poco; si no lo golpeás en un turno, gana Guardia.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: an
+elite stone guardian lion (Chinese shishi) that has just woken up on its pedestal, pale carved
+granite body with curly stone mane, one front paw resting on an embroidered ball, cracks of
+glowing gold light along its back and mane, moss and fallen pine needles on its shoulders,
+red silk ribbon tied around its neck, mouth open in a silent roar, heavy powerful crouch,
+wide blocky silhouette that fills the frame.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Dama del Abanico (`fan`, élite)
+
+`assets/art/enemies/fan.png`. Élite humana: devuelve el primer golpe de cada turno con el abanico; hay que abrirla con fintas o palmas.
+
+```
+Game enemy character, full body, facing the viewer in an elegant fighting stance, centered,
+transparent background: an elite martial artist woman of the mountain, flowing layered violet
+and coral robes with wide sleeves caught in the wind, a large open iron war fan painted with
+clouds held in front of her face like a shield, the other hand in a crane-beak gesture, calm
+confident eyes above the fan, petals swirling around her feet, tall graceful silhouette at
+small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Mono Ladrón (`monkey`, común)
+
+`assets/art/enemies/monkey.png`. Común rápido: si sobrevive dos turnos, se escapa con parte de tu jade.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a
+cheeky golden mountain monkey thief, a small red cloth bundle full of jade coins slung over
+its shoulder, a stolen peach in one hand and a coin between its teeth, crouched on its toes
+ready to bolt, long curling tail, mischievous grin and wide eyes, a tiny jade coin falling
+from the bundle, compact readable silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Mercader del Paso (`merchant`, retrato)
+
+`assets/art/npc/merchant.png`. Retrato para la tienda (nodo 商) cuando se haga la economía.
+
+```
+Game character portrait, full body, facing the viewer, centered, transparent background: a
+friendly old wandering merchant of the mountain pass, round straw hat, warm smile and long
+white eyebrows, a huge wooden backpack frame stacked with scrolls, paper talismans, jars,
+small jade charms and a hanging lantern, abacus at his belt, one hand raised in welcome,
+patched gold and jade travel robes, cozy and trustworthy, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### El Maestro de la escuela (`master`, retrato)
+
+`assets/art/npc/master.png`. Lore: aparece en el prólogo y al llegar a la cumbre. Que tenga algo ambiguo (la duda del pergamino de la cumbre).
+
+```
+Game character portrait, full body, facing the viewer, centered, transparent background: the
+old master of the Sleeping Dragon school, tall and thin, long white beard flowing in the
+wind, simple undyed linen robe with a jade sash, hands folded inside his sleeves, a wooden
+staff leaning on his shoulder, serene half-smile with eyes that seem to hide a secret, a
+faint gold dragon-scale pattern barely visible on the hem of his robe, wisps of cloud around
+his feet, dignified and calm, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
 ---
 
 ## Pendiente
