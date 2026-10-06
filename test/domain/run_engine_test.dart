@@ -213,9 +213,9 @@ void main() {
 
   test('la dificultad fija la Vida, la fuente y se guarda', () {
     var r = fresh(1, difficulty: Difficulty.easy);
-    expect(r.hp, 60);
-    expect(r.maxHp, 60);
-    expect(run.healOf(r), 25);
+    expect(r.hp, 65);
+    expect(r.maxHp, 65);
+    expect(run.healOf(r), 30);
     r = RunState.fromJson(r.toJson());
     expect(r.difficulty, Difficulty.easy);
     // Las runs guardadas antes de las dificultades se leen como Normal.

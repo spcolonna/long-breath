@@ -176,10 +176,10 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 
 | Dificultad | Vida | Fuente | Enemigos |
 |---|---|---|---|
-| Fácil 易 | 60 | +25 | 95% de Vida, 85% de daño |
+| Fácil 易 | 65 | +30 | 88% de Vida, 80% de daño |
 | Normal 常 | 50 | +20 | Como están en la tabla de enemigos |
-| Difícil 难 | 50 | +15 | 110% de Vida y daño |
-| Shifu 师 | 45 | +15 | 120% de Vida y daño, 110% de Estructura |
+| Difícil 难 | 50 | +15 | 106% de Vida, 107% de daño |
+| Shifu 师 | 45 | +15 | 114% de Vida y daño, 106% de Estructura |
 
 Shifu arranca bloqueada: se ve en blanco con un candado y, al tocarla, avisa que se desbloquea al ganar una subida en Difícil.
 

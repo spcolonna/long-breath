@@ -1206,6 +1206,96 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
+### Tanda 3: mapas, fuentes y paso entre etapas
+
+**Estado:** el código todavía no los carga (el mapa usa solo `qianyunshan/map_bg.png` y la fuente no tiene fondo). Cuando lleguen, se conectan por `stageId` igual que `combat_bg.png`. Mismos formatos que sus pares de la etapa 1.
+
+#### Mapa del Monasterio Colgado (`xuankongsi/map_bg.png`)
+
+1080×4000 vertical, sin sendero propio (lo dibuja el código) y con el centro despejado.
+
+```
+Tall vertical map background of the Hanging Monastery: red lacquered halls and wooden walkways
+pinned to a sheer cliff face, rising level after level, bronze bells and prayer flags, thin
+waterfalls and soft clouds drifting between the buildings, the bottom in warm saffron stone tones
+shifting to bright gold and pale sky near a great bell tower at the top, lots of empty space
+along the middle for UI nodes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+#### Mapa de la Cumbre del Dragón Dormido (`wolongding/map_bg.png`)
+
+1080×4000 vertical, sin sendero propio y con el centro despejado.
+
+```
+Tall vertical map background of a snowy summit above the clouds: wind-carved snow ridges, ice
+crystals and a few frosted pines at the bottom, a sea of pastel clouds in the middle, pale blue
+sky turning pink and gold near the peak, where the huge calm coil of a sleeping azure dragon rests
+half hidden in the clouds, lots of empty space along the middle for UI nodes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+#### Fuente del Monasterio (`xuankongsi/fountain_bg.png`)
+
+1080×1920 vertical, sin transparencia; centro despejado para la UI.
+
+```
+Vertical background of a quiet tea terrace inside a cliffside monastery: a bamboo pipe pouring
+clear water into a round stone basin, a low wooden table with a clay teapot and steaming cups,
+red lacquered railings, hanging lanterns, a view of soft clouds below the cliff, warm saffron
+afternoon light, the middle of the image calm and open for interface elements.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+#### Manantial de la Cumbre (`wolongding/fountain_bg.png`)
+
+1080×1920 vertical, sin transparencia; centro despejado para la UI.
+
+```
+Vertical background of a hot spring high on a snowy mountain: a turquoise steaming pool among
+smooth snow-covered rocks, warm vapor curling up, small icicles shining, a red-ribboned prayer
+rope on a stone, pale blue sky and pink dawn light over a sea of clouds, the middle of the image
+calm and open for interface elements.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+#### Paso entre etapas (`stage_clear_bg.png`)
+
+`assets/art/ui/stage_clear_bg.png`. 1080×1920 vertical, sin transparencia. Fondo de la pantalla de etapa superada: el hanzi y la Vida van encima, así que el centro tiene que quedar muy limpio.
+
+```
+Vertical background of a mountain gate (paifang) of red lacquered wood standing on a stone
+stairway that climbs from green misty slopes at the bottom, through a sea of clouds, toward a
+far snowy peak glowing in gold and pink light at the top, a few cranes flying, very soft and
+airy composition with a wide clean empty area in the center for large text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
 ---
 
 ## Pendiente

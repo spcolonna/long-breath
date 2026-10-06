@@ -310,16 +310,25 @@ La subida pasa a tener 3 etapas reales de 9 pisos (27 en total): Montaña de las
 
 La etapa 1 sola queda más fácil que antes (promedio 84%, experto 95%) porque ya no es el final.
 
-**Por dificultad (600 runs):**
+**Por dificultad, con los valores de la etapa 1 (600 runs):** Fácil 13% / 99% / 100%, Difícil 0% / 15% / 45%, Shifu 0% / 1% / 6% (novato / promedio / experto). Con tres etapas el castigo se acumula, así que se recalibraron (sección 4).
+
+### 3i. Dificultades para 3 etapas (06/10/2026)
+
+Se buscaron las mismas referencias que en la etapa 1: novato ~40% en Fácil, promedio ~60% en Normal, experto ~55–60% en Difícil y ~18% en Shifu. Fácil se abrió más (el novato llegaba a la etapa 2 pero no pasaba de ahí) y Difícil y Shifu se suavizaron.
 
 | Dificultad | Novato | Promedio | Experto |
 |---|---|---|---|
-| Fácil | 13% | 99% | 100% |
-| Normal | 0% | 60% | 82% |
-| Difícil | 0% | 15% | 45% |
-| Shifu | 0% | 1% | 6% |
+| Fácil | **45%** · 42 min | 100% · 37 min | 100% · 35 min |
+| Normal | 0% | **59%** · 39 min | 82% · 37 min |
+| Difícil | 0% | 27% · 40 min | **60%** · 38 min |
+| Shifu | 0% | 4% · 41 min | **17%** · 39 min |
 
-Pendiente: Fácil quedó demasiado fácil para el promedio y Difícil demasiado duro; recalibrar las dificultades y los Picos para 3 etapas.
+(1000 runs por perfil.) Los Picos no se tocaron: encima de Normal bajan parejo, del 80% al 3% para el experto y del 50% al 1% para el promedio (400 runs):
+
+| Pico | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Promedio | 50% | 40% | 35% | 26% | 13% | 6% | 4% | 3% | 1% | 1% |
+| Experto | 80% | 74% | 64% | 59% | 42% | 30% | 22% | 12% | 7% | 3% |
 
 ## 4. Dificultades (implementadas)
 
@@ -327,12 +336,14 @@ Pendiente: Fácil quedó demasiado fácil para el promedio y Difícil demasiado 
 
 | Dificultad | Vida | Fuente | Vida enemiga | Daño enemigo | Estructura enemiga |
 |---|---|---|---|---|---|
-| Fácil 易 | 60 | +25 | 95% | 85% | 100% |
+| Fácil 易 | 65 | +30 | 88% | 80% | 100% |
 | Normal 常 | 50 | +20 | 100% | 100% | 100% |
-| Difícil 难 | 50 | +15 | 110% | 110% | 100% |
-| Shifu 师 | 45 | +15 | 120% | 120% | 110% |
+| Difícil 难 | 50 | +15 | 106% | 107% | 100% |
+| Shifu 师 | 45 | +15 | 114% | 114% | 106% |
 
-Victoria y minutos de las runs ganadas (1000 runs por perfil):
+Valores para 3 etapas (sección 3i). La tabla de abajo es la medición original, con la etapa 1 sola y Fácil 60/+25/95%/85%, Difícil 110%/110% y Shifu 120%/120%/110%.
+
+Victoria y minutos de las runs ganadas (1000 runs por perfil, etapa 1):
 
 | Dificultad | Novato | Promedio | Experto |
 |---|---|---|---|
