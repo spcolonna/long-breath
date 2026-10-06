@@ -143,16 +143,17 @@ backgrounds, no photorealism, no text, no watermark.
 Fondo del mapa (`map_bg.png`, opcional, **1080×4000**, vertical, se dibuja al 85% sobre las capas pintadas). Que no tenga sendero ni escalones propios (los pone el código) y que el centro quede despejado:
 
 ```
-Tall vertical map background, 1080x4000 pixels (aspect ratio 27:100, very tall and narrow), of an ascending mountain path: stone stairs zig-zagging up a green
-mountain through layers of fluffy pastel clouds, small pagodas, pine trees and waterfalls, the
-bottom in fresh morning jade tones gradually shifting to warm gold and pink near the summit,
-lots of empty space along the path for UI nodes.
+Tall vertical map background, 1080x4000 pixels (aspect ratio 27:100, very tall and narrow), of a green
+mountain of a thousand clouds: mossy cliffs, small pagodas, pine trees, bamboo groves and thin
+waterfalls rising through layers of fluffy pastel clouds, a stone memorial arch near the bottom, the
+bottom in fresh morning jade tones gradually shifting to warm gold and pink near a misty summit at
+the top, no visible path or stairs, lots of empty space along the middle for UI nodes.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
 Textura de los sellos del mapa (`map_node_stone.png`, opcional, 512×512, PNG con transparencia; se recorta en círculo y se dibuja al 90% debajo del carácter tallado):
