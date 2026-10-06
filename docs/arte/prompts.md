@@ -1208,7 +1208,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 ### Tanda 3: mapas, fuentes y paso entre etapas
 
-**Estado:** el código todavía no los carga (el mapa usa solo `qianyunshan/map_bg.png` y la fuente no tiene fondo). Cuando lleguen, se conectan por `stageId` igual que `combat_bg.png`. Mismos formatos que sus pares de la etapa 1.
+**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Faltan el manantial de la cumbre y el paso entre etapas; los dos ya se cargan apenas se guarden.
 
 #### Mapa del Monasterio Colgado (`xuankongsi/map_bg.png`)
 

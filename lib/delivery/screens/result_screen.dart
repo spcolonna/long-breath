@@ -14,6 +14,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/scene_backdrop.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
@@ -126,200 +127,213 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     const lineAt = [0.26, 0.36, 0.46];
 
     return Scaffold(
-      body: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: _skip,
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 124,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          clipBehavior: Clip.none,
-                          children: [
-                            // La pincelada que cruza el papel antes del sello.
-                            Positioned.fill(
-                              child: AnimatedBuilder(
+      body: SceneBackdrop(
+        // Perder frente al muro de la escuela; ganar, frente a la cumbre.
+        assets: won
+            ? stageArt('wolongding', 'map_bg.png')
+            : stageArt('qianyunshan', 'school_wall.png'),
+        veil: 0.62,
+        alignment: won ? Alignment.topCenter : Alignment.center,
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: _skip,
+          child: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 124,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            clipBehavior: Clip.none,
+                            children: [
+                              // La pincelada que cruza el papel antes del sello.
+                              Positioned.fill(
+                                child: AnimatedBuilder(
+                                  animation: _c,
+                                  builder: (_, _) => CustomPaint(
+                                    painter: _BrushPainter(
+                                      _span(0, 0.12, Curves.easeOutCubic),
+                                      Color.lerp(ink, Palette.bg, 0.62)!,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              AnimatedBuilder(
                                 animation: _c,
-                                builder: (_, _) => CustomPaint(
-                                  painter: _BrushPainter(
-                                    _span(0, 0.12, Curves.easeOutCubic),
-                                    Color.lerp(ink, Palette.bg, 0.62)!,
+                                builder: (_, child) {
+                                  final v = _span(
+                                    0.05,
+                                    _landAt,
+                                    Curves.easeInCubic,
+                                  );
+                                  final settle = _span(
+                                    _landAt,
+                                    0.22,
+                                    Curves.easeOutBack,
+                                  );
+                                  return Opacity(
+                                    opacity: v,
+                                    child: Transform.scale(
+                                      scale:
+                                          2.8 -
+                                          1.8 * v +
+                                          0.05 * (1 - settle) * v,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  won ? '龙' : '败',
+                                  style: TextStyle(
+                                    fontSize: 92,
+                                    height: 1.2,
+                                    color: ink,
                                   ),
                                 ),
                               ),
-                            ),
-                            AnimatedBuilder(
-                              animation: _c,
-                              builder: (_, child) {
-                                final v = _span(
-                                  0.05,
-                                  _landAt,
-                                  Curves.easeInCubic,
-                                );
-                                final settle = _span(
-                                  _landAt,
-                                  0.22,
-                                  Curves.easeOutBack,
-                                );
-                                return Opacity(
-                                  opacity: v,
-                                  child: Transform.scale(
-                                    scale:
-                                        2.8 - 1.8 * v + 0.05 * (1 - settle) * v,
-                                    child: child,
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                won ? '龙' : '败',
-                                style: TextStyle(
-                                  fontSize: 92,
-                                  height: 1.2,
-                                  color: ink,
+                              Positioned.fill(
+                                child: InkBurst(
+                                  trigger: _burst,
+                                  colors: won
+                                      ? const [
+                                          Palette.gold,
+                                          Palette.lacquer,
+                                          Colors.white,
+                                        ]
+                                      : const [
+                                          Palette.lacquer,
+                                          Palette.textDim,
+                                        ],
+                                  count: 34,
+                                  radius: 150,
+                                  duration: const Duration(milliseconds: 1000),
                                 ),
                               ),
-                            ),
-                            Positioned.fill(
-                              child: InkBurst(
-                                trigger: _burst,
-                                colors: won
-                                    ? const [
-                                        Palette.gold,
-                                        Palette.lacquer,
-                                        Colors.white,
-                                      ]
-                                    : const [Palette.lacquer, Palette.textDim],
-                                count: 34,
-                                radius: 150,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      _enter(
-                        0.16,
-                        0.24,
-                        Text(
-                          won ? t.runWon : t.runLost,
-                          style: const TextStyle(fontSize: 24),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      for (var i = 0; i < lines.length; i++)
                         _enter(
-                          lineAt[i],
-                          lineAt[i] + 0.07,
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: Text(
-                              lines[i],
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                height: 1.35,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: i == lines.length - 1 && n != null
-                                    ? FontWeight.w700
-                                    : FontWeight.w400,
-                                color: i == lines.length - 1 && n != null
-                                    ? Palette.text
-                                    : Palette.textDim,
+                          0.16,
+                          0.24,
+                          Text(
+                            won ? t.runWon : t.runLost,
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                        for (var i = 0; i < lines.length; i++)
+                          _enter(
+                            lineAt[i],
+                            lineAt[i] + 0.07,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: Text(
+                                lines[i],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  height: 1.35,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: i == lines.length - 1 && n != null
+                                      ? FontWeight.w700
+                                      : FontWeight.w400,
+                                  color: i == lines.length - 1 && n != null
+                                      ? Palette.text
+                                      : Palette.textDim,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      const SizedBox(height: 14),
-                      _enter(0.55, 0.64, _Tablet(run: run, n: n, won: won)),
-                      // Ganar en Normal o más difícil abre el Pico siguiente.
-                      if (won && run.difficulty != Difficulty.easy) ...[
                         const SizedBox(height: 14),
-                        _enter(0.6, 0.68, _PicoPill(run: run)),
-                      ],
-                      for (final (i, id)
-                          in (ascent?.lore ?? const <String>[]).indexed) ...[
-                        const SizedBox(height: 16),
+                        _enter(0.55, 0.64, _Tablet(run: run, n: n, won: won)),
+                        // Ganar en Normal o más difícil abre el Pico siguiente.
+                        if (won && run.difficulty != Difficulty.easy) ...[
+                          const SizedBox(height: 14),
+                          _enter(0.6, 0.68, _PicoPill(run: run)),
+                        ],
+                        for (final (i, id)
+                            in (ascent?.lore ?? const <String>[]).indexed) ...[
+                          const SizedBox(height: 16),
+                          AnimatedBuilder(
+                            animation: _c,
+                            builder: (_, _) {
+                              final v = _span(0.66 + i * 0.06, 0.78 + i * 0.06);
+                              return Opacity(
+                                opacity: math.min(1, v * 3),
+                                child: LoreScroll(id: id, fresh: true, open: v),
+                              );
+                            },
+                          ),
+                        ],
                         AnimatedBuilder(
                           animation: _c,
-                          builder: (_, _) {
-                            final v = _span(0.66 + i * 0.06, 0.78 + i * 0.06);
-                            return Opacity(
-                              opacity: math.min(1, v * 3),
-                              child: LoreScroll(id: id, fresh: true, open: v),
-                            );
-                          },
+                          builder: (_, child) => Opacity(
+                            opacity: _c.value < 0.8 && _c.value > 0.2 ? 0.6 : 0,
+                            child: child,
+                          ),
+                          child: Text(
+                            t.tapToSkip,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Palette.textDim,
+                            ),
+                          ),
                         ),
                       ],
-                      AnimatedBuilder(
-                        animation: _c,
-                        builder: (_, child) => Opacity(
-                          opacity: _c.value < 0.8 && _c.value > 0.2 ? 0.6 : 0,
-                          child: child,
+                    ),
+                  ),
+                ),
+                // La escuela manda al siguiente: siempre a mano, abajo.
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+                  child: Column(
+                    children: [
+                      _enter(
+                        0.8,
+                        0.88,
+                        Text(
+                          won ? t.relaySummit : t.relayLine,
+                          style: const TextStyle(color: Palette.textDim),
                         ),
-                        child: Text(
-                          t.tapToSkip,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Palette.textDim,
+                      ),
+                      const SizedBox(height: 10),
+                      _enter(
+                        0.86,
+                        0.95,
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: FilledButton(
+                            onPressed: () => _again(run),
+                            child: Text(
+                              n == null ? t.tryAgain : t.relayButton(n + 1),
+                            ),
                           ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      _enter(
+                        0.9,
+                        1,
+                        TextButton(
+                          onPressed: () {
+                            ref.read(runControllerProvider.notifier).abandon();
+                            ref.invalidate(savedRunProvider);
+                            context.go('/');
+                          },
+                          child: Text(t.backSchool),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              // La escuela manda al siguiente: siempre a mano, abajo.
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-                child: Column(
-                  children: [
-                    _enter(
-                      0.8,
-                      0.88,
-                      Text(
-                        won ? t.relaySummit : t.relayLine,
-                        style: const TextStyle(color: Palette.textDim),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    _enter(
-                      0.86,
-                      0.95,
-                      SizedBox(
-                        width: double.infinity,
-                        height: 52,
-                        child: FilledButton(
-                          onPressed: () => _again(run),
-                          child: Text(
-                            n == null ? t.tryAgain : t.relayButton(n + 1),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    _enter(
-                      0.9,
-                      1,
-                      TextButton(
-                        onPressed: () {
-                          ref.read(runControllerProvider.notifier).abandon();
-                          ref.invalidate(savedRunProvider);
-                          context.go('/');
-                        },
-                        child: Text(t.backSchool),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

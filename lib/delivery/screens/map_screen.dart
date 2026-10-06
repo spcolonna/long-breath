@@ -310,20 +310,19 @@ class _MapViewState extends ConsumerState<_MapView>
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
+                      // El fondo pintado de la etapa ya trae sus hitos; si
+                      // falta, se dibujan por código.
                       Positioned.fill(
                         child: Image.asset(
-                          'assets/art/stages/qianyunshan/map_bg.png',
+                          'assets/art/stages/${data.balance.stages[run.stage].id}/map_bg.png',
                           fit: BoxFit.cover,
                           opacity: const AlwaysStoppedAnimation(0.85),
-                          errorBuilder: (_, _, _) => const SizedBox(),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: RepaintBoundary(
-                          child: CustomPaint(
-                            painter: LandmarkPainter(
-                              layout,
-                              stage: widget.run.stage,
+                          errorBuilder: (_, _, _) => RepaintBoundary(
+                            child: CustomPaint(
+                              painter: LandmarkPainter(
+                                layout,
+                                stage: widget.run.stage,
+                              ),
                             ),
                           ),
                         ),

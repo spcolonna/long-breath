@@ -46,7 +46,7 @@ void main() {
       }
     }
     // 10 de la etapa 1, 7 del monasterio, 7 de la cumbre y 6 muñecos.
-    expect(data.enemies.length, 30);
+    expect(data.enemies.length, 31);
     expect(data.enemy('dragon').phases.length, 3);
   });
 

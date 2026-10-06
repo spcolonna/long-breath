@@ -61,6 +61,12 @@
         { "kind": "attack", "labelKey": "staff_jab", "height": "high", "damage": 6, "structure": 2 },
         { "kind": "attack", "labelKey": "staff_smash", "height": "mid", "damage": 15, "structure": 5, "countdown": true }
       ] } ] },
+    { "id": "lingzhi", "rank": "common", "hp": 52, "structure": 13, "regen": 3,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "spores", "height": "mid", "damage": 7, "structure": 2 },
+        { "kind": "guard", "labelKey": "cap_shield", "value": 7 },
+        { "kind": "attack", "labelKey": "root_lash", "height": "low", "damage": 9, "structure": 3 }
+      ] } ] },
     { "id": "monk", "rank": "elite", "hp": 128, "structure": 21,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 10, "structure": 3 },
