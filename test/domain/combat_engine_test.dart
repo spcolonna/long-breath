@@ -590,11 +590,11 @@ void main() {
     test('Shifu sube Vida, Estructura y daño enemigos', () {
       final normal = start(Difficulty.normal);
       final s = start(Difficulty.shifu);
-      expect(s.enemy.maxHp, (63 * 1.2).round());
-      expect(s.enemy.maxStructure, (14 * 1.1).round());
+      expect(s.enemy.maxHp, (63 * 1.14).round());
+      expect(s.enemy.maxStructure, (14 * 1.06).round());
       expect(
         engine.intentView(s).damage,
-        (engine.intentView(normal).damage * 1.2).round(),
+        (engine.intentView(normal).damage * 1.14).round(),
       );
     });
   });

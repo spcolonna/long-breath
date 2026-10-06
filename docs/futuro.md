@@ -156,7 +156,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Falta:**
   - Arte propio: 2 fondos de combate por etapa, los sprites definitivos de los 14 enemigos (prompts en `docs/arte/prompts.md`) y los jefes con silueta propia (hoy el abad es el monje dorado y el Dragón Dormido, el eco recoloreado).
   - Eventos propios de cada etapa (hoy se comparten los 8).
-  - Recalibrar Fácil, Difícil, Shifu y los Picos para 3 etapas (Fácil quedó en 99% para el promedio y Difícil en 15%).
+  - Dificultades recalibradas para 3 etapas (06/10/2026, `balance.md` §3i). Falta confirmarlas con personas.
   - Precios del mercader por etapa (sobran ~43 de jade al final).
   - Duración: 39 minutos, por debajo de la meta de 45 a 75; se puede subir a 11 a 13 pisos por etapa cuando haya más eventos.
 
@@ -198,7 +198,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - La fuente cura menos.
   - Las élites tienen una regla extra.
 - Es lo que da cientos de horas de rejugabilidad.
-- **Hecho (etapa 1):** 10 Picos encima de Normal, en `game_balance.json`. El bot experto baja de 80% a 17% (`balance.md`, sección 6). Falta: élites con una regla extra como Pico, y recalibrar cuando haya 3 etapas.
+- **Hecho (etapa 1):** 10 Picos encima de Normal, en `game_balance.json`. El bot experto baja de 80% a 17% (`balance.md`, sección 6). Medidos con 3 etapas (`balance.md` §3i): del 80% al 3% para el experto. Falta: élites con una regla extra como Pico.
 - **Arte:** ninguno.
 
 ### 3.7 Progresión entre partidas: el cultivo del aliento

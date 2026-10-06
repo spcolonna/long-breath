@@ -22,10 +22,10 @@
   "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25 },
   "master": { "forms": 2 },
   "difficulties": {
-    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 95, "enemyDamage": 85 },
+    "easy":   { "hanzi": "易", "playerHp": 65, "fountainHeal": 30, "enemyHp": 88, "enemyDamage": 80 },
     "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20 },
-    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 110, "enemyDamage": 110 },
-    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 120, "enemyDamage": 120, "enemyStructure": 110 }
+    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 106, "enemyDamage": 107 },
+    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 114, "enemyDamage": 114, "enemyStructure": 106 }
   },
   "picos": [
     { "eliteHp": 15 },
