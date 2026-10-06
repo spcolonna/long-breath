@@ -17,6 +17,7 @@ import 'delivery/screens/registry_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
 import 'delivery/screens/shrine_screen.dart';
+import 'delivery/screens/stage_clear_screen.dart';
 import 'delivery/screens/talisman_screen.dart';
 import 'delivery/theme.dart';
 import 'delivery/widgets/ink_reveal.dart';
@@ -80,6 +81,7 @@ final _router = GoRouter(
     _route('/merchant', const MerchantScreen()),
     _route('/master', const MasterScreen()),
     _route('/talisman', const TalismanScreen()),
+    _route('/stage', const StageClearScreen()),
     _route('/result', const ResultScreen()),
     _route('/registry', const RegistryScreen()),
   ],

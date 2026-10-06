@@ -17,6 +17,7 @@ class Ascent {
     this.maxHp = 0,
     this.deck = 0,
     this.lore = const [],
+    this.stage = 0,
   });
 
   /// Número del discípulo que subió.
@@ -40,6 +41,9 @@ class Ascent {
   /// Pergaminos que se abrieron con esta subida.
   final List<String> lore;
 
+  /// Etapa a la que llegó (0 = la primera).
+  final int stage;
+
   Ascent withLore(List<String> ids) => Ascent(
     n: n,
     fell: fell,
@@ -54,6 +58,7 @@ class Ascent {
     maxHp: maxHp,
     deck: deck,
     lore: ids,
+    stage: stage,
   );
 
   Map<String, dynamic> toJson() => {
@@ -70,6 +75,7 @@ class Ascent {
     'maxHp': maxHp,
     'deck': deck,
     'lore': lore,
+    'stage': stage,
   };
 
   factory Ascent.fromJson(Map<String, dynamic> j) => Ascent(
@@ -89,6 +95,7 @@ class Ascent {
     maxHp: j['maxHp'] as int? ?? 0,
     deck: j['deck'] as int? ?? 0,
     lore: [for (final s in (j['lore'] as List?) ?? const []) s as String],
+    stage: j['stage'] as int? ?? 0,
   );
 }
 
@@ -100,6 +107,10 @@ const loreOrder = [
   'fell_disciple',
   'fell_monk',
   'fell_dragon',
+  'reach_monastery',
+  'fell_abbot',
+  'reach_peak',
+  'fell_sleeping_dragon',
   'summit',
   'fallen_5',
   'fallen_10',
@@ -115,6 +126,10 @@ List<String> earnedLore(Ascent a, List<Ascent> before, Set<String> have) {
     if (a.fell && a.enemy == 'disciple') 'fell_disciple',
     if (a.fell && a.enemy == 'monk') 'fell_monk',
     if (a.fell && a.enemy == 'dragon') 'fell_dragon',
+    if (a.stage >= 1) 'reach_monastery',
+    if (a.fell && a.enemy == 'bell_abbot') 'fell_abbot',
+    if (a.stage >= 2) 'reach_peak',
+    if (a.fell && a.enemy == 'sleeping_dragon') 'fell_sleeping_dragon',
     if (!a.fell) 'summit',
     if (fallen >= 5) 'fallen_5',
     if (fallen >= 10) 'fallen_10',

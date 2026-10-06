@@ -609,6 +609,40 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             size: 22,
             icon: Icons.local_fire_department,
           );
+        case ThornsHurt(:final damage):
+          HapticFeedback.mediumImpact();
+          _audio.play(Sfx.playerHurt);
+          _flashKey++;
+          _pop(
+            _heroPops,
+            '−$damage',
+            Palette.lacquer,
+            size: 26,
+            icon: Icons.grass,
+            dx: 36,
+            dy: -10,
+          );
+        case EnemyRegenerated(:final amount):
+          _pop(
+            _enemyPops,
+            '+$amount',
+            Palette.jade,
+            size: 24,
+            icon: Icons.favorite,
+            dx: -36,
+            dy: -16,
+          );
+        case GuardBypassed():
+          HapticFeedback.lightImpact();
+          _queue.add(_Fx(t.guardBypassed, t.guardBypassedDetail, Palette.sky));
+        case BreathDrained(:final amount):
+          _audio.play(Sfx.breathSpend);
+          _queue.add(
+            _Fx(t.breathDrained, t.breathDrainedDetail(amount), Palette.gold),
+          );
+        case HandFrozen(:final amount):
+          _audio.play(Sfx.breathSpend);
+          _queue.add(_Fx(t.handFrozen, t.handFrozenDetail(amount), Palette.sky));
         case JadeStolen(:final amount):
           _pop(
             _heroPops,
@@ -731,7 +765,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       children: [
         Expanded(
           child: _Arena(
-            stageId: data.balance.stage.id,
+            stageId: run == null
+                ? data.balance.stage.id
+                : data.balance.stages[run.stage].id,
             scene: node?.scene,
             light: node?.light,
             turn: s.turn,
@@ -894,6 +930,33 @@ const _sceneFiles = {
   'cristales': 'bifurcacion',
   'campanas': 'templo',
   'cumbre': 'cumbre',
+  // Monasterio Colgado y Cumbre del Dragón Dormido: mientras no tengan arte
+  // propio, usan el fondo de la etapa 1 más parecido, teñido (_stageTint).
+  'pasarela': 'bifurcacion',
+  'escalera': 'ladera',
+  'campanario': 'templo',
+  'gran_campana': 'templo',
+  'ventisquero': 'ladera',
+  'glaciar': 'bifurcacion',
+  'templo_helado': 'templo',
+  'lecho_dragon': 'cumbre',
+};
+
+/// Tinte del fondo prestado de la etapa 1 en las etapas sin arte propio:
+/// el monasterio, tibio y azafrán; la cumbre, nevada y clara.
+const _stageTint = <String, List<double>>{
+  'xuankongsi': [
+    1.06, 0.04, 0, 0, 10, //
+    0.02, 0.98, 0, 0, 4,
+    0, 0.02, 0.86, 0, 0,
+    0, 0, 0, 1, 0,
+  ],
+  'wolongding': [
+    0.62, 0.3, 0.06, 0, 26, //
+    0.18, 0.74, 0.06, 0, 30,
+    0.18, 0.3, 0.52, 0, 46,
+    0, 0, 0, 1, 0,
+  ],
 };
 
 /// Altura de la franja visible de cada fondo (-1 arriba, 1 abajo): el suelo
@@ -1100,7 +1163,16 @@ class _Arena extends StatelessWidget {
               _StageBackground(
                 stageId: stageId,
                 variant: _sceneFiles[scene],
-                fallback: fallback,
+                fallback: _stageTint[stageId] == null
+                    ? fallback
+                    : ColorFiltered(
+                        colorFilter: ColorFilter.matrix(_stageTint[stageId]!),
+                        child: _StageBackground(
+                          stageId: 'qianyunshan',
+                          variant: _sceneFiles[scene],
+                          fallback: fallback,
+                        ),
+                      ),
               ),
               _LightWash(light: light),
               // Suelo.
@@ -1537,7 +1609,9 @@ class _EnemyStage extends ConsumerWidget {
                   e.scales > 0 ||
                   e.wrath > 0 ||
                   e.parryReady ||
-                  e.stolen > 0
+                  e.stolen > 0 ||
+                  def.thorns > 0 ||
+                  def.regen > 0
               ? Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Wrap(
@@ -1548,9 +1622,26 @@ class _EnemyStage extends ConsumerWidget {
                           trigger: e.guard,
                           child: _Chip(
                             icon: Icons.shield,
-                            text: '${t.guard} ${e.guard}',
+                            text: e.guardBlocks == null
+                                ? '${t.guard} ${e.guard}'
+                                : t.guardOnlyChip(
+                                    e.guard,
+                                    t.typeLabel(e.guardBlocks!),
+                                  ),
                             color: Palette.sky,
                           ),
+                        ),
+                      if (def.thorns > 0 && !e.staggered)
+                        _Chip(
+                          icon: Icons.grass,
+                          text: t.thornsChip(def.thorns),
+                          color: Palette.lacquer,
+                        ),
+                      if (def.regen > 0 && e.hp < e.maxHp)
+                        _Chip(
+                          icon: Icons.favorite_border,
+                          text: t.regenChip(def.regen),
+                          color: Palette.jade,
                         ),
                       if (e.staggered)
                         _Chip(
@@ -1731,7 +1822,9 @@ class _IntentBubble extends ConsumerWidget {
       IntentKind.guard => (
         Icons.shield,
         named ?? t.guard,
-        '${t.guard} ${i.value}',
+        i.blocks == null
+            ? '${t.guard} ${i.value}'
+            : t.guardOnly(t.typeLabel(i.blocks!), i.value),
       ),
       IntentKind.charge => (
         Icons.bolt,
@@ -1807,6 +1900,22 @@ class _IntentBubble extends ConsumerWidget {
                     if (i.interrupt)
                       Text(
                         t.intentInterrupt,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Palette.textDim,
+                        ),
+                      ),
+                    if (i.drain > 0 && i.kind == IntentKind.attack)
+                      Text(
+                        t.intentDrain(i.drain),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Palette.textDim,
+                        ),
+                      ),
+                    if (i.freeze > 0 && i.kind == IntentKind.attack)
+                      Text(
+                        t.intentFreeze(i.freeze),
                         style: const TextStyle(
                           fontSize: 10,
                           color: Palette.textDim,
@@ -2208,11 +2317,22 @@ class _PreviewPanel extends ConsumerWidget {
     // Abanico: este golpe no entra y te devuelve el suyo.
     final parried =
         p.damage > 0 && s.enemy.parryReady && !s.enemy.staggered;
+    final enemyDef = data.enemy(s.enemy.id);
+    // Guardia de un solo tipo: un golpe de otro tipo la esquiva.
+    final guardNote =
+        p.damage > 0 && s.enemy.guard > 0 && s.enemy.guardBlocks != null
+        ? (def.type == s.enemy.guardBlocks
+              ? t.previewGuardHit
+              : t.previewGuardMiss)
+        : null;
     final parts = <String>[
       if (parried)
-        t.previewParried(data.enemy(s.enemy.id).parry)
+        t.previewParried(enemyDef.parry)
       else if (p.damage > 0)
         t.previewDamage(p.damage),
+      ?guardNote,
+      if (p.damage > 0 && !parried && enemyDef.thorns > 0 && !s.enemy.staggered)
+        t.previewThorns(enemyDef.thorns),
       if (p.structure > 0) t.previewStructure(p.structure),
       if (p.guard > 0) '${t.guard} ${p.guard} ${t.heightLabel(p.height)}',
       if (p.stanceAfter != s.player.stance)
@@ -3544,6 +3664,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
     context.go(switch (run.phase) {
       RunPhase.talisman => '/talisman',
       RunPhase.reward => '/reward',
+      RunPhase.stageClear => '/stage',
       RunPhase.victory || RunPhase.defeat => '/result',
       _ => '/map',
     });

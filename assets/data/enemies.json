@@ -85,7 +85,7 @@
         { "kind": "attack", "height": "high", "damage": 10, "structure": 3 },
         { "kind": "attack", "labelKey": "fan_edge", "height": "mid", "damage": 12, "structure": 3 }
       ] } ] },
-    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 193, "structure": 18, "scales": 4,
+    { "id": "dragon", "hanzi": "龙音", "pinyin": "Lóng Yīn", "rank": "boss", "hp": 150, "structure": 18, "scales": 4,
       "phases": [
         { "pattern": [
           { "kind": "attack", "height": "high", "damage": 10, "structure": 2 },
@@ -95,10 +95,116 @@
         { "hpThreshold": 0.5, "pattern": [
           { "kind": "attack", "height": "high", "damage": 13, "structure": 3 },
           { "kind": "attack", "height": "low", "damage": 13, "structure": 3 },
-          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 31, "structure": 9, "countdown": true }
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 28, "structure": 9, "countdown": true }
         ] },
         { "hpThreshold": 0.3, "scales": 2, "pattern": [
           { "kind": "attack", "height": "low", "damage": 6, "structure": 2, "hits": 2 },
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 26, "structure": 8, "countdown": true }
+        ] }
+      ] },
+    { "id": "bell_bat", "art": "bat_bronze", "rank": "common", "hp": 62, "structure": 13,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "toll", "height": "high", "damage": 4, "hits": 2, "structure": 1, "drain": 1 },
+        { "kind": "attack", "height": "high", "damage": 8, "structure": 2 },
+        { "kind": "discard", "labelKey": "screech", "count": 1 }
+      ] } ] },
+    { "id": "bronze_man", "hanzi": "铜人", "pinyin": "Tóng Rén", "art": "golem_bronze", "rank": "common", "hp": 78, "structure": 17,
+      "immovable": true, "thorns": 1,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 13, "structure": 4 },
+        { "kind": "guard", "labelKey": "bronze_skin", "value": 9 },
+        { "kind": "attack", "height": "low", "damage": 11, "structure": 4 }
+      ] } ] },
+    { "id": "temple_guard", "art": "disciple_saffron", "rank": "common", "hp": 82, "structure": 19,
+      "phases": [ { "pattern": [
+        { "kind": "guard", "labelKey": "fist_gate", "blocks": "fist", "value": 12 },
+        { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
+        { "kind": "guard", "labelKey": "kick_gate", "blocks": "kick", "value": 12 },
+        { "kind": "attack", "height": "high", "damage": 10, "structure": 3 }
+      ] } ] },
+    { "id": "ash_salamander", "art": "salamander_ash", "rank": "common", "hp": 70, "structure": 15, "regen": 4,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "low", "damage": 9, "structure": 2 },
+        { "kind": "guard", "labelKey": "burrow", "value": 8 },
+        { "kind": "attack", "height": "low", "damage": 11, "structure": 3 }
+      ] } ] },
+    { "id": "iron_abbot", "hanzi": "铁僧", "pinyin": "Tiě Sēng", "art": "monk_iron", "rank": "elite", "hp": 130, "structure": 23, "thorns": 1,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
+        { "kind": "attack", "labelKey": "interrupt", "height": "high", "damage": 7, "structure": 0, "interrupt": true },
+        { "kind": "guard", "labelKey": "iron_shirt", "blocks": "fist", "value": 14 },
+        { "kind": "attack", "height": "low", "damage": 15, "structure": 4 }
+      ] } ] },
+    { "id": "jade_lion", "hanzi": "玉狮", "pinyin": "Yù Shī", "art": "lion_jade", "rank": "elite", "hp": 146, "structure": 22, "wrath": 3, "regen": 3,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 10, "structure": 3 },
+        { "kind": "guard", "labelKey": "stone_skin", "value": 9 },
+        { "kind": "attack", "labelKey": "pounce", "height": "high", "damage": 12, "structure": 4 }
+      ] } ] },
+    { "id": "bell_abbot", "hanzi": "钟师", "pinyin": "Zhōng Shī", "art": "monk_gold", "rank": "boss", "hp": 215, "structure": 21,
+      "phases": [
+        { "pattern": [
+          { "kind": "guard", "labelKey": "fist_gate", "blocks": "fist", "value": 14 },
+          { "kind": "attack", "height": "mid", "damage": 12, "structure": 3 },
+          { "kind": "attack", "labelKey": "toll", "height": "low", "damage": 10, "structure": 3, "drain": 1 }
+        ] },
+        { "hpThreshold": 0.5, "pattern": [
+          { "kind": "guard", "labelKey": "kick_gate", "blocks": "kick", "value": 14 },
+          { "kind": "attack", "height": "high", "damage": 13, "structure": 3 },
+          { "kind": "attack", "labelKey": "great_bell", "height": "mid", "damage": 30, "structure": 8, "drain": 2, "countdown": true }
+        ] }
+      ] },
+    { "id": "snow_ape", "art": "monkey_snow", "rank": "common", "hp": 74, "structure": 15, "wrath": 2,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "high", "damage": 5, "hits": 2, "structure": 1 },
+        { "kind": "attack", "height": "low", "damage": 6, "hits": 2, "structure": 2 },
+        { "kind": "attack", "height": "mid", "damage": 12, "structure": 3 }
+      ] } ] },
+    { "id": "ice_golem", "art": "golem_ice", "rank": "common", "hp": 84, "structure": 19, "immovable": true,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "frost", "height": "mid", "damage": 12, "structure": 4, "freeze": 1 },
+        { "kind": "charge", "labelKey": "charge", "value": 6 },
+        { "kind": "attack", "height": "mid", "damage": 13, "structure": 4 }
+      ] } ] },
+    { "id": "wind_disciple", "art": "disciple_wind", "rank": "common", "hp": 86, "structure": 20,
+      "sameStancePunish": { "damage": 6, "structure": 2 },
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "high", "damage": 9, "structure": 2 },
+        { "kind": "guard", "labelKey": "palm_gate", "blocks": "palm", "value": 12 },
+        { "kind": "attack", "labelKey": "frost", "height": "low", "damage": 9, "structure": 4, "freeze": 1 }
+      ] } ] },
+    { "id": "frost_bat", "art": "bat_frost", "rank": "common", "hp": 68, "structure": 14,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "frost", "height": "high", "damage": 4, "hits": 2, "structure": 1, "freeze": 1 },
+        { "kind": "attack", "labelKey": "toll", "height": "high", "damage": 9, "structure": 2, "drain": 1 },
+        { "kind": "discard", "labelKey": "screech", "count": 1 }
+      ] } ] },
+    { "id": "wind_lady", "hanzi": "风扇", "pinyin": "Fēng Shàn", "art": "fan_wind", "rank": "elite", "hp": 122, "structure": 22, "parry": 4,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "fan_gust", "height": "low", "damage": 6, "hits": 2, "structure": 2, "freeze": 1 },
+        { "kind": "attack", "height": "high", "damage": 12, "structure": 3 },
+        { "kind": "attack", "labelKey": "fan_edge", "height": "mid", "damage": 14, "structure": 3 }
+      ] } ] },
+    { "id": "snow_lion", "hanzi": "雪狮", "pinyin": "Xuě Shī", "art": "lion_snow", "rank": "elite", "hp": 156, "structure": 24, "wrath": 3, "thorns": 1,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
+        { "kind": "guard", "labelKey": "stone_skin", "value": 10 },
+        { "kind": "attack", "labelKey": "pounce", "height": "high", "damage": 13, "structure": 4 }
+      ] } ] },
+    { "id": "sleeping_dragon", "hanzi": "卧龙", "pinyin": "Wò Lóng", "art": "dragon_azure", "rank": "boss", "hp": 205, "structure": 21, "scales": 4,
+      "phases": [
+        { "pattern": [
+          { "kind": "attack", "labelKey": "frost", "height": "high", "damage": 10, "structure": 3, "freeze": 1 },
+          { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
+          { "kind": "attack", "height": "low", "damage": 10, "structure": 4 }
+        ] },
+        { "hpThreshold": 0.5, "pattern": [
+          { "kind": "attack", "height": "high", "damage": 15, "structure": 3 },
+          { "kind": "attack", "labelKey": "toll", "height": "low", "damage": 14, "structure": 3, "drain": 1 },
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 28, "structure": 9, "countdown": true }
+        ] },
+        { "hpThreshold": 0.3, "scales": 3, "pattern": [
+          { "kind": "attack", "labelKey": "frost", "height": "low", "damage": 7, "structure": 2, "hits": 2, "freeze": 1 },
           { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 26, "structure": 8, "countdown": true }
         ] }
       ] }

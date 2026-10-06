@@ -1,13 +1,85 @@
 {
   "stages": {
-    "qianyunshan": "Montaña de las Mil Nubes"
+    "qianyunshan": "Montaña de las Mil Nubes",
+    "xuankongsi": "Monasterio Colgado",
+    "wolongding": "Cumbre del Dragón Dormido"
   },
   "paths": {
-    "terraza": { "alba": "Terraza del alba", "niebla": "Terraza entre nubes", "ocaso": "Terraza del ocaso" },
-    "bambu": { "alba": "Bambú del rocío", "niebla": "Bambú en la niebla", "ocaso": "Bambú al atardecer" },
-    "cristales": { "alba": "Senda de cristal", "niebla": "Cristales en la bruma", "ocaso": "Cristales del ocaso" },
-    "campanas": { "alba": "Patio de las campanas", "niebla": "Campanas en la bruma", "ocaso": "Campanas del ocaso" },
-    "cumbre": { "alba": "La cumbre", "niebla": "Cumbre entre nubes", "ocaso": "Cumbre del ocaso" }
+    "terraza": {
+      "alba": "Terraza del alba",
+      "niebla": "Terraza entre nubes",
+      "ocaso": "Terraza del ocaso"
+    },
+    "bambu": {
+      "alba": "Bambú del rocío",
+      "niebla": "Bambú en la niebla",
+      "ocaso": "Bambú al atardecer"
+    },
+    "cristales": {
+      "alba": "Senda de cristal",
+      "niebla": "Cristales en la bruma",
+      "ocaso": "Cristales del ocaso"
+    },
+    "campanas": {
+      "alba": "Patio de las campanas",
+      "niebla": "Campanas en la bruma",
+      "ocaso": "Campanas del ocaso"
+    },
+    "cumbre": {
+      "alba": "La cumbre",
+      "niebla": "Cumbre entre nubes",
+      "ocaso": "Cumbre del ocaso"
+    },
+    "pasarela": {
+      "alba": "Pasarela del alba",
+      "niebla": "Pasarela sobre la bruma",
+      "ocaso": "Pasarela del ocaso"
+    },
+    "escalera": {
+      "alba": "Escalera colgante",
+      "niebla": "Escalera en la niebla",
+      "ocaso": "Escalera al atardecer"
+    },
+    "patio_colgado": {
+      "alba": "Patio sobre el abismo",
+      "niebla": "Patio entre nubes",
+      "ocaso": "Patio dorado"
+    },
+    "campanario": {
+      "alba": "Campanario del monasterio",
+      "niebla": "Campanario velado",
+      "ocaso": "Campanario del ocaso"
+    },
+    "gran_campana": {
+      "alba": "Salón de la Gran Campana",
+      "niebla": "Salón de la Gran Campana",
+      "ocaso": "Salón de la Gran Campana"
+    },
+    "ventisquero": {
+      "alba": "Ventisquero del alba",
+      "niebla": "Ventisquero blanco",
+      "ocaso": "Ventisquero rosado"
+    },
+    "glaciar": {
+      "alba": "Glaciar dormido",
+      "niebla": "Glaciar en la ventisca",
+      "ocaso": "Glaciar del ocaso"
+    },
+    "paso_nevado": {
+      "alba": "Paso nevado",
+      "niebla": "Paso entre la nieve",
+      "ocaso": "Paso del último sol"
+    },
+    "templo_helado": {
+      "alba": "Templo de hielo",
+      "niebla": "Templo en la ventisca",
+      "ocaso": "Templo helado al ocaso"
+    },
+    "lecho_dragon": {
+      "alba": "Lecho del Dragón",
+      "niebla": "Lecho del Dragón",
+      "ocaso": "Lecho del Dragón"
+    }
   },
   "styles": {
     "tiger": "Tigre",
@@ -129,6 +201,62 @@
     "fan": {
       "name": "Dama del Abanico",
       "rule": "Abanico: el primer golpe con daño de cada turno no le hace daño y te devuelve 3. La Estructura sí entra. Abrí el turno con una carta barata o una palma; Desequilibrada no puede usar el abanico."
+    },
+    "bell_bat": {
+      "name": "Murciélago del Campanario",
+      "rule": "Repique: si no desviás su golpe doble, el próximo turno tenés 1 de Aliento menos. Su chillido te hace descartar una carta."
+    },
+    "bronze_man": {
+      "name": "Hombre de Bronce",
+      "rule": "Inamovible: recibe la mitad del daño. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Desequilibrado no tiene espinas y recibe el doble."
+    },
+    "temple_guard": {
+      "name": "Guardián del Pasadizo",
+      "rule": "Su Guardia frena un solo tipo de golpe: primero los puños, después las patadas. Golpeá con otro tipo y la esquivás entera (las formas sí las frena)."
+    },
+    "ash_salamander": {
+      "name": "Salamandra de Ceniza",
+      "rule": "Antes de cada acción recupera 4 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido."
+    },
+    "iron_abbot": {
+      "name": "Abad de Hierro",
+      "rule": "Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Interrumpe tus formas y su Camisa de hierro solo frena los puños: usá palmas o patadas."
+    },
+    "jade_lion": {
+      "name": "León de Jade",
+      "rule": "Despierta: después de cada acción sus golpes suman 3 más. Antes de actuar recupera 3 de Vida. Desequilibrarlo lo calma y le quita la acción."
+    },
+    "bell_abbot": {
+      "name": "Abad de la Gran Campana",
+      "rule": "Su Guardia frena un solo tipo de golpe (puños o patadas): usá otro. Su repique te quita Aliento si no lo desviás. Fase 2 al 50%: anuncia la Gran Campanada, un golpe MEDIO enorme con cuenta regresiva que además te quita 2 de Aliento."
+    },
+    "snow_ape": {
+      "name": "Simio de las Nieves",
+      "rule": "Despierta: después de cada acción sus golpes suman 2 más. Desequilibrarlo lo calma."
+    },
+    "ice_golem": {
+      "name": "Gólem de Escarcha",
+      "rule": "Inamovible: recibe la mitad del daño. Escarcha: si no desviás su golpe, el próximo turno robás una carta menos."
+    },
+    "wind_disciple": {
+      "name": "Discípulo del Viento",
+      "rule": "Si terminás dos turnos seguidos en la misma postura, su próximo golpe pega más fuerte. Su Guardia solo frena palmas y su barrido trae escarcha (robás una carta menos)."
+    },
+    "frost_bat": {
+      "name": "Murciélago de Escarcha",
+      "rule": "Escarcha: si no desviás su golpe doble, robás una carta menos. Repique: si no lo desviás, tenés 1 de Aliento menos. Su chillido te hace descartar."
+    },
+    "wind_lady": {
+      "name": "Dama del Viento",
+      "rule": "Desvía el primer golpe con daño de cada turno y te devuelve 4. No desvía mientras está Desequilibrada. Su ráfaga trae escarcha."
+    },
+    "snow_lion": {
+      "name": "León de las Nieves",
+      "rule": "Despierta: después de cada acción sus golpes suman 3 más; desequilibrarlo lo calma. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no)."
+    },
+    "sleeping_dragon": {
+      "name": "Dragón Dormido",
+      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos. Fase 2 al 50%: Aliento del Dragón con cuenta regresiva. Fase 3 al 30%: le crecen escamas hasta 3 y alterna escarcha y Aliento."
     }
   },
   "intents": {
@@ -145,7 +273,15 @@
     "fan_gust": "Ráfaga del abanico",
     "fan_edge": "Filo de hierro",
     "staff_jab": "Tanteo",
-    "staff_smash": "Bastonazo"
+    "staff_smash": "Bastonazo",
+    "toll": "Repique",
+    "bronze_skin": "Piel de bronce",
+    "fist_gate": "Cierra el paso a los puños",
+    "kick_gate": "Cierra el paso a las patadas",
+    "palm_gate": "Cierra el paso a las palmas",
+    "iron_shirt": "Camisa de hierro",
+    "great_bell": "Gran Campanada",
+    "frost": "Escarcha"
   },
   "talismans": {
     "arco": "Cuerda del Arco",
@@ -257,12 +393,32 @@
     },
     "fell_dragon": {
       "title": "El eco",
-      "text": "Lo que te venció en la cumbre no era el dragón: era su eco, aliento dorado que tomó forma. Si el eco pelea así, ¿qué es lo que duerme debajo? Nadie en la escuela quiere responder.",
+      "text": "Lo que te venció en lo alto de las Mil Nubes no era el dragón: era su eco, aliento dorado que tomó forma. Si el eco pelea así, ¿qué es lo que duerme debajo? Nadie en la escuela quiere responder.",
       "hint": "Caé ante el Eco del Dragón."
+    },
+    "reach_monastery": {
+      "title": "El monasterio colgado",
+      "text": "Más arriba del eco, un monasterio cuelga de la pared como un nido. Sus monjes no bajan nunca: dicen que cuidan el paso para que nadie despierte lo que duerme arriba. A vos te miraron como si te estuvieran esperando.",
+      "hint": "Vencé al Eco del Dragón y seguí subiendo."
+    },
+    "fell_abbot": {
+      "title": "La campana que no suena",
+      "text": "El Abad de la Gran Campana no peleaba para ganar: peleaba para que no siguieras. Antes de que caigas, te pareció oírlo rezar por vos. La campana del salón está rajada desde la última vez que alguien pasó.",
+      "hint": "Caé ante el Abad de la Gran Campana."
+    },
+    "reach_peak": {
+      "title": "Donde duerme",
+      "text": "Pasado el monasterio ya no hay sendero, solo nieve y viento. Las nubes no vienen de abajo: nacen acá, de una respiración enorme y lenta. El Dragón Dormido existe.",
+      "hint": "Vencé al Abad de la Gran Campana y seguí subiendo."
+    },
+    "fell_sleeping_dragon": {
+      "title": "Un ojo abierto",
+      "text": "El dragón abrió un solo ojo para mirarte. No había enojo en él, solo cansancio, como el de un maestro que ya vio subir a muchos. Volvió a dormir antes de que tocaras la nieve.",
+      "hint": "Caé ante el Dragón Dormido."
     },
     "summit": {
       "title": "La cumbre",
-      "text": "Arriba no había un dragón despierto: solo nubes que nacían de la roca, lentas como una respiración. En la piedra estaban tallados los nombres de todos los discípulos que la escuela mandó a subir. El tuyo ya estaba. Alguien lo había escrito antes de que llegaras.",
+      "text": "Cuando el Dragón Dormido cerró los ojos, las nubes volvieron a nacer de la roca, lentas como una respiración. En la piedra de la cumbre estaban tallados los nombres de todos los discípulos que la escuela mandó a subir. El tuyo ya estaba. Alguien lo había escrito antes de que llegaras.",
       "hint": "Llegá a la cumbre."
     },
     "fallen_5": {
@@ -275,5 +431,10 @@
       "text": "Diez caídos. Una noche ves al maestro escribir en un cuaderno que no muestra a nadie: no anota nombres, anota hasta qué piso llegó cada uno. Como si estuviera midiendo algo.",
       "hint": "Que caigan 10 discípulos."
     }
+  },
+  "stageIntros": {
+    "qianyunshan": "Senderos de piedra entre nubes bajas. Acá empieza toda subida.",
+    "xuankongsi": "Un monasterio clavado en la pared del abismo, sostenido por vigas y fe. Sus guardianes no dejan pasar a nadie sin probarlo.",
+    "wolongding": "Nieve, viento y silencio. Arriba, algo enorme respira despacio entre las nubes."
   }
 }

@@ -25,6 +25,9 @@ class IntentDef {
     this.count = 0,
     this.interrupt = false,
     this.countdown = false,
+    this.drain = 0,
+    this.freeze = 0,
+    this.blocks,
   });
 
   final IntentKind kind;
@@ -46,6 +49,16 @@ class IntentDef {
   /// Ataque con cuenta regresiva visible (Aliento del Dragón).
   final bool countdown;
 
+  /// Si el ataque no se desvía: el próximo turno tenés esto menos de Aliento.
+  final int drain;
+
+  /// Si el ataque no se desvía: el próximo turno robás esto menos.
+  final int freeze;
+
+  /// Guardia que frena un solo tipo de golpe (puño, palma o patada); los
+  /// otros la esquivan. null = frena todo.
+  final CardType? blocks;
+
   factory IntentDef.fromJson(Map<String, dynamic> j) => IntentDef(
     kind: IntentKind.parse(j['kind'] as String),
     labelKey: j['labelKey'] as String?,
@@ -57,6 +70,12 @@ class IntentDef {
     count: j['count'] as int? ?? 0,
     interrupt: j['interrupt'] as bool? ?? false,
     countdown: j['countdown'] as bool? ?? false,
+    drain: j['drain'] as int? ?? 0,
+    freeze: j['freeze'] as int? ?? 0,
+    blocks: switch (j['blocks']) {
+      final String b => CardType.parse(b),
+      _ => null,
+    },
   );
 }
 
@@ -98,6 +117,8 @@ class EnemyDef {
     this.wrath = 0,
     this.parry = 0,
     this.steal = 0,
+    this.thorns = 0,
+    this.regen = 0,
   }) : _art = art;
 
   final String id;
@@ -131,6 +152,14 @@ class EnemyDef {
   /// se lo lleva; si lo vencés, lo recuperás.
   final int steal;
 
+  /// Espinas: cada carta tuya que le hace daño te quita esta Vida (las
+  /// formas no). No funciona mientras está Desequilibrado.
+  final int thorns;
+
+  /// Antes de cada acción recupera esta Vida. Si está Desequilibrado y
+  /// pierde la acción, tampoco se cura.
+  final int regen;
+
   factory EnemyDef.fromJson(Map<String, dynamic> j) {
     final ssp = j['sameStancePunish'] as Map<String, dynamic>?;
     return EnemyDef(
@@ -152,6 +181,8 @@ class EnemyDef {
       wrath: j['wrath'] as int? ?? 0,
       parry: j['parry'] as int? ?? 0,
       steal: j['steal'] as int? ?? 0,
+      thorns: j['thorns'] as int? ?? 0,
+      regen: j['regen'] as int? ?? 0,
     );
   }
 }

@@ -40,19 +40,56 @@
     { "enemyHp": 8, "enemyStructure": 5 }
   ],
   "run": {
-    "stage": { "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān" },
-    "floors": [
-      { "width": 2, "types": { "combat": 1 }, "enemies": ["bat", "salamander"] },
-      { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1 }, "enemies": ["bat", "salamander", "disciple", "monkey"] },
-      { "width": 1, "types": { "shrine": 1 } },
-      { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
-      { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey"] },
-      { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
-      { "width": 1, "types": { "fountain": 1 } },
-      { "width": 1, "types": { "combat": 1 }, "enemies": ["monk", "lion", "fan"], "scene": "campanas" },
-      { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"], "scene": "cumbre" }
-    ],
-    "scenes": ["terraza", "bambu", "cristales", "campanas"],
-    "lights": ["alba", "niebla", "ocaso"]
+    "stageClear": { "heal": 100, "jade": 25 },
+    "stages": [
+      {
+        "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān",
+        "floors": [
+          { "width": 2, "types": { "combat": 1 }, "enemies": ["bat", "salamander"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1 }, "enemies": ["bat", "salamander", "disciple", "monkey"] },
+          { "width": 1, "types": { "shrine": 1 } },
+          { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey"] },
+          { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["monk", "lion", "fan"], "scene": "campanas" },
+          { "width": 1, "types": { "fountain": 1 } },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"], "scene": "cumbre" }
+        ],
+        "scenes": ["terraza", "bambu", "cristales", "campanas"],
+        "lights": ["alba", "niebla", "ocaso"]
+      },
+      {
+        "id": "xuankongsi", "hanzi": "悬空寺", "pinyin": "Xuán Kōng Sì",
+        "floors": [
+          { "width": 2, "types": { "combat": 1 }, "enemies": ["bell_bat", "ash_salamander"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1 }, "enemies": ["bell_bat", "ash_salamander", "temple_guard", "monkey"] },
+          { "width": [2, 3], "types": { "combat": 2, "event": 2, "master": 1, "merchant": 1 }, "enemies": ["bell_bat", "temple_guard", "bronze_man"] },
+          { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "bandit"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["bronze_man", "bell_bat", "temple_guard"] },
+          { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["iron_abbot", "jade_lion"], "scene": "campanario" },
+          { "width": 1, "types": { "fountain": 1 } },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["bell_abbot"], "scene": "gran_campana" }
+        ],
+        "scenes": ["pasarela", "escalera", "patio_colgado"],
+        "lights": ["alba", "niebla", "ocaso"]
+      },
+      {
+        "id": "wolongding", "hanzi": "卧龙顶", "pinyin": "Wò Lóng Dǐng",
+        "floors": [
+          { "width": 2, "types": { "combat": 1 }, "enemies": ["frost_bat", "snow_ape"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1 }, "enemies": ["frost_bat", "snow_ape", "wind_disciple"] },
+          { "width": [2, 3], "types": { "combat": 2, "event": 2, "master": 1, "merchant": 1 }, "enemies": ["frost_bat", "wind_disciple", "ice_golem"] },
+          { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["ice_golem", "wind_disciple", "snow_ape", "frost_bat"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["ice_golem", "snow_ape", "wind_disciple"] },
+          { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["wind_lady", "snow_lion"], "scene": "templo_helado" },
+          { "width": 1, "types": { "fountain": 1 } },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["sleeping_dragon"], "scene": "lecho_dragon" }
+        ],
+        "scenes": ["ventisquero", "glaciar", "paso_nevado"],
+        "lights": ["alba", "niebla", "ocaso"]
+      }
+    ]
   }
 }

@@ -152,6 +152,13 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Nodos:** cada etapa tiene entre 12 y 15 nodos, con bifurcaciones reales (2 o 3 caminos por piso, no uno solo).
 - **Prototipo simulado** (`balance.md`, sección 5): con 3 etapas de 13 pisos, una subida ganada dura unos 55 minutos. Lo que mata es el desgaste: hacen falta fuentes frecuentes y curar al vencer al jefe. Las etapas 2 y 3 necesitan **enemigos con reglas nuevas**, no números más grandes.
 - **Arte:** 1 fondo por etapa, o sea 2 fondos nuevos.
+- **Hecho (06/10/2026):** 3 etapas de 9 pisos: Montaña de las Mil Nubes 千云山, **Monasterio Colgado** 悬空寺 y **Cumbre del Dragón Dormido** 卧龙顶. Arriba de cada etapa: élite → fuente → jefe. El jefe intermedio da talismán, recompensa y 25 de jade, y una pantalla de "etapa superada" cura toda la Vida antes de subir. 14 enemigos nuevos (variantes recoloreadas con `tool/recolor_enemies.py`) con 5 reglas nuevas: espinas, regeneración, repique (−Aliento), escarcha (−cartas) y guardia de un solo tipo de golpe. Fondos de combate: los de la etapa 1 teñidos; el mapa cambia de colores y el jefe del monasterio tiene su campana. Promedio en Normal: 59%, unos 39 minutos por subida ganada (`balance.md` §3h).
+- **Falta:**
+  - Arte propio: 2 fondos de combate por etapa, los sprites definitivos de los 14 enemigos (prompts en `docs/arte/prompts.md`) y los jefes con silueta propia (hoy el abad es el monje dorado y el Dragón Dormido, el eco recoloreado).
+  - Eventos propios de cada etapa (hoy se comparten los 8).
+  - Recalibrar Fácil, Difícil, Shifu y los Picos para 3 etapas (Fácil quedó en 99% para el promedio y Difícil en 15%).
+  - Precios del mercader por etapa (sobran ~43 de jade al final).
+  - Duración: 39 minutos, por debajo de la meta de 45 a 75; se puede subir a 11 a 13 pisos por etapa cuando haya más eventos.
 
 ### 3.2 Mapa generado
 - **En el juego** (02/10/2026) para la etapa 1: 9 pisos con pesos por tipo, mercader y maestro garantizados. Falta: más pisos por etapa cuando haya 3 etapas, élites opcionales en pisos intermedios.

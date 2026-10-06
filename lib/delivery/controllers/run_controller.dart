@@ -60,11 +60,17 @@ class RunController extends Notifier<RunState?> {
   void _record(RunState run) {
     final rows = mapRows(run);
     final node = run.currentNode == null ? null : run.node(run.currentNode!);
+    // El piso se cuenta en toda la subida: las etapas anteriores suman.
+    final stages = ref.read(dataProvider).balance.stages;
+    final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);
     final ascent = Ascent(
       n: 0,
       fell: run.phase == RunPhase.defeat,
-      floor: rows.indexWhere((r) => r.any((n) => n.id == run.currentNode)) + 1,
-      floors: rows.length,
+      floor: below +
+          rows.indexWhere((r) => r.any((n) => n.id == run.currentNode)) +
+          1,
+      floors: ref.read(dataProvider).balance.totalFloors,
+      stage: run.stage,
       difficulty: run.difficulty,
       pico: run.pico,
       enemy: node?.enemy,
@@ -83,6 +89,9 @@ class RunController extends Notifier<RunState?> {
         ..invalidate(loreProvider);
     });
   }
+
+  /// Subir a la etapa siguiente después de vencer a su jefe.
+  void advanceStage() => _set(_engine.advanceStage(state!));
 
   void chooseReward(String? cardId) =>
       _set(_engine.chooseReward(state!, cardId));

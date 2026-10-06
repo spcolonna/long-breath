@@ -59,18 +59,45 @@ enum NodeType {
   static NodeType parse(String s) => NodeType.values.byName(s);
 }
 
+/// Una etapa de la subida: su nombre, sus pisos (el último es su jefe) y los
+/// escenarios y luces que se reparten entre sus combates.
 class StageDef {
-  const StageDef({required this.id, required this.hanzi, required this.pinyin});
+  const StageDef({
+    required this.id,
+    required this.hanzi,
+    required this.pinyin,
+    this.floors = const [],
+    this.scenes = const ['terraza'],
+    this.lights = const ['alba'],
+  });
 
   final String id;
   final String hanzi;
   final String pinyin;
+  final List<FloorDef> floors;
+  final List<String> scenes;
+  final List<String> lights;
 
-  factory StageDef.fromJson(Map<String, dynamic> j) => StageDef(
-        id: j['id'] as String,
-        hanzi: j['hanzi'] as String,
-        pinyin: j['pinyin'] as String,
-      );
+  /// [run] aporta pisos, escenas y luces cuando la etapa no los trae
+  /// (formato viejo: una sola etapa con `run.floors`).
+  factory StageDef.fromJson(
+    Map<String, dynamic> j, [
+    Map<String, dynamic> run = const {},
+  ]) {
+    List<String>? strings(String k) =>
+        ((j[k] ?? run[k]) as List?)?.cast<String>();
+    return StageDef(
+      id: j['id'] as String,
+      hanzi: j['hanzi'] as String,
+      pinyin: j['pinyin'] as String,
+      floors: [
+        for (final f in ((j['floors'] ?? run['floors']) as List?) ?? const [])
+          FloorDef.fromJson(f as Map<String, dynamic>),
+      ],
+      scenes: strings('scenes') ?? const ['terraza'],
+      lights: strings('lights') ?? const ['alba'],
+    );
+  }
 }
 
 class MapNodeDef {
@@ -288,11 +315,10 @@ class GameBalance {
     this.talismanChoices = 3,
     required this.fountainHeal,
     required this.fountainUpgrade,
-    required this.stage,
+    required this.stages,
     this.fixedMap,
-    this.floors = const [],
-    this.scenes = const ['terraza'],
-    this.lights = const ['alba'],
+    this.stageHeal = 100,
+    this.stageJade = 0,
     this.jadeCommon = 0,
     this.jadeElite = 0,
     this.jadeSpread = 0,
@@ -325,18 +351,28 @@ class GameBalance {
   final int talismanChoices;
   final int fountainHeal;
   final int fountainUpgrade;
-  /// Etapa que recorre la run (nombre visible en el mapa).
-  final StageDef stage;
+  /// Etapas de la subida, de abajo hacia arriba. Vencer al jefe de una
+  /// lleva a la siguiente; vencer al de la última es la cumbre.
+  final List<StageDef> stages;
+
+  /// Primera etapa (y la única con el formato viejo).
+  StageDef get stage => stages.first;
+
+  /// Pisos de la primera etapa.
+  List<FloorDef> get floors => stage.floors;
+  List<String> get scenes => stage.scenes;
+  List<String> get lights => stage.lights;
+
+  /// Pisos de toda la subida (para el registro: "piso 14 de 27").
+  int get totalFloors => stages.fold(0, (a, s) => a + s.floors.length);
 
   /// Mapa fijo (solo para el simulador); si no hay, se genera por run.
   final List<MapNodeDef>? fixedMap;
 
-  /// Pisos del mapa generado, de abajo hacia arriba.
-  final List<FloorDef> floors;
-
-  /// Escenarios y luces que se reparten entre los combates del mapa.
-  final List<String> scenes;
-  final List<String> lights;
+  /// Al vencer al jefe de una etapa intermedia: porcentaje de la Vida que
+  /// falta que se recupera y jade para gastar en la etapa siguiente.
+  final int stageHeal;
+  final int stageJade;
 
   /// Jade que se gana al vencer a un común o a un élite (más 0..spread).
   final int jadeCommon;
@@ -391,19 +427,20 @@ class GameBalance {
       talismanChoices: rewards['talismanChoices'] as int? ?? 3,
       fountainHeal: fountain['heal'] as int,
       fountainUpgrade: fountain['upgrade'] as int,
-      stage: StageDef.fromJson(run['stage'] as Map<String, dynamic>),
+      stages: switch (run['stages']) {
+        final List stages => [
+            for (final st in stages) StageDef.fromJson(st as Map<String, dynamic>),
+          ],
+        _ => [StageDef.fromJson(run['stage'] as Map<String, dynamic>, run)],
+      },
+      stageHeal: (run['stageClear'] as Map<String, dynamic>?)?['heal'] as int? ?? 100,
+      stageJade: (run['stageClear'] as Map<String, dynamic>?)?['jade'] as int? ?? 0,
       fixedMap: switch (run['nodes']) {
         final List nodes => [
             for (final n in nodes) MapNodeDef.fromJson(n as Map<String, dynamic>),
           ],
         _ => null,
       },
-      scenes: ((run['scenes'] as List?) ?? const ['terraza']).cast<String>(),
-      lights: ((run['lights'] as List?) ?? const ['alba']).cast<String>(),
-      floors: [
-        for (final f in (run['floors'] as List?) ?? const [])
-          FloorDef.fromJson(f as Map<String, dynamic>),
-      ],
       jadeCommon: jade['common'] as int? ?? 0,
       jadeElite: jade['elite'] as int? ?? 0,
       jadeSpread: jade['spread'] as int? ?? 0,

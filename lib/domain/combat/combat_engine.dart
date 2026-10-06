@@ -533,7 +533,9 @@ class CombatEngine {
     if (dmg > 0 && d.enemy.parryReady && !d.enemy.staggered) {
       _parry(d, str, events);
     } else if (dmg > 0 || str > 0) {
-      _hitEnemy(d, dmg, str, events);
+      final staggered = d.enemy.staggered;
+      _hitEnemy(d, dmg, str, events, def.type);
+      if (dmg > 0 && !staggered && !d.isOver) _thorns(d, events);
     }
     if (d.isOver) return;
 
@@ -620,13 +622,24 @@ class CombatEngine {
     }
   }
 
-  void _hitEnemy(_Draft d, int dmg, int str, List<CombatEvent> events) {
+  /// [type]: tipo de la carta; una Guardia que frena un solo tipo deja
+  /// pasar los otros (las formas y los desvíos, sin tipo, sí los frena).
+  void _hitEnemy(
+    _Draft d,
+    int dmg,
+    int str,
+    List<CombatEvent> events, [
+    CardType? type,
+  ]) {
     final e = d.enemy;
     final def = data.enemy(e.id);
     var taken = dmg == 0
         ? 0
         : _enemyDamageTaken(def, e.staggered, e.scales, dmg);
-    final absorbed = math.min(e.guard, taken);
+    final covers =
+        e.guardBlocks == null || type == null || type == e.guardBlocks;
+    if (!covers && e.guard > 0 && taken > 0) events.add(const GuardBypassed());
+    final absorbed = covers ? math.min(e.guard, taken) : 0;
     e.guard -= absorbed;
     taken -= absorbed;
     e.hp = math.max(0, e.hp - taken);
@@ -640,6 +653,18 @@ class CombatEngine {
     }
     if (!e.staggered && e.structure == 0) _breakEnemy(d, events);
     _checkEnemyPhase(d, events);
+  }
+
+  /// Espinas: golpearlo con una carta te lastima.
+  void _thorns(_Draft d, List<CombatEvent> events) {
+    final n = data.enemy(d.enemy.id).thorns;
+    if (n <= 0) return;
+    d.hp = math.max(0, d.hp - n);
+    events.add(ThornsHurt(n));
+    if (d.hp == 0) {
+      d.phase = CombatPhase.lost;
+      events.add(const Defeat());
+    }
   }
 
   void _breakEnemy(_Draft d, List<CombatEvent> events) {
@@ -728,18 +753,25 @@ class CombatEngine {
     final e = d.enemy;
     final def = data.enemy(e.id);
     e.guard = 0;
+    e.guardBlocks = null;
     final phaseBefore = e.phaseIndex;
     if (e.skipNextAction) {
       e.skipNextAction = false;
       events.add(const EnemyActionSkipped());
     } else {
+      final healed = math.min(def.regen, e.maxHp - e.hp);
+      if (healed > 0) {
+        e.hp += healed;
+        events.add(EnemyRegenerated(healed));
+      }
       final intent = currentIntent(e.freeze());
       switch (intent.kind) {
         case IntentKind.attack:
           _enemyAttack(d, def, intent, events);
         case IntentKind.guard:
           e.guard = intent.value;
-          events.add(EnemyGuarded(intent.value));
+          e.guardBlocks = intent.blocks;
+          events.add(EnemyGuarded(intent.value, intent.blocks));
         case IntentKind.charge:
           e.chargeBonus += intent.value;
           events.add(EnemyCharged(intent.value));
@@ -832,6 +864,14 @@ class CombatEngine {
       d.formProgress.updateAll((_, _) => 0);
       events.add(const FormsResetByEnemy());
     }
+    if (intent.drain > 0) {
+      d.nextTurnBreathMod -= intent.drain;
+      events.add(BreathDrained(intent.drain));
+    }
+    if (intent.freeze > 0) {
+      d.drawPenalty += intent.freeze;
+      events.add(HandFrozen(intent.freeze));
+    }
   }
 
   void _startPlayerTurn(_Draft d, List<CombatEvent> events) {
@@ -846,8 +886,10 @@ class CombatEngine {
     d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
     d.nextTurnBreathMod = 0;
     events.add(TurnStarted(d.turn, d.breath));
-    // Las cartas retenidas son extra: siempre se roba la mano completa.
-    _draw(d, d.handSize, events);
+    // Las cartas retenidas son extra: siempre se roba la mano completa
+    // (menos la escarcha, pero nunca menos de una carta).
+    _draw(d, math.max(1, d.handSize - d.drawPenalty), events);
+    d.drawPenalty = 0;
     if (d.pendingDiscard > 0 && d.hand.isNotEmpty) {
       d.pendingDiscard = math.min(d.pendingDiscard, d.hand.length);
       d.phase = CombatPhase.discarding;
@@ -896,6 +938,7 @@ class _EnemyDraft {
     this.parryReady = false,
     this.stolen = 0,
     this.fled = false,
+    this.guardBlocks,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -916,6 +959,7 @@ class _EnemyDraft {
     parryReady: e.parryReady,
     stolen: e.stolen,
     fled: e.fled,
+    guardBlocks: e.guardBlocks,
   );
 
   final String id;
@@ -935,6 +979,7 @@ class _EnemyDraft {
   bool parryReady;
   int stolen;
   bool fled;
+  CardType? guardBlocks;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -954,6 +999,7 @@ class _EnemyDraft {
     parryReady: parryReady,
     stolen: stolen,
     fled: fled,
+    guardBlocks: guardBlocks,
   );
 }
 
@@ -997,6 +1043,7 @@ class _Draft {
     this.chain = 0,
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
+    this.drawPenalty = 0,
     List<int>? retained,
   }) : formsCompleted = formsCompleted ?? {},
        retained = retained ?? [];
@@ -1040,6 +1087,7 @@ class _Draft {
     chain: s.chain,
     retainedDiscount: s.retainedDiscount,
     attacksThisTurn: s.attacksThisTurn,
+    drawPenalty: s.drawPenalty,
     retained: [...s.retained],
   );
 
@@ -1081,6 +1129,7 @@ class _Draft {
   final int chain;
   final int retainedDiscount;
   int attacksThisTurn;
+  int drawPenalty;
   final List<int> retained;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
@@ -1127,5 +1176,6 @@ class _Draft {
     retainedDiscount: retainedDiscount,
     attacksThisTurn: attacksThisTurn,
     retained: List.unmodifiable(retained),
+    drawPenalty: drawPenalty,
   );
 }

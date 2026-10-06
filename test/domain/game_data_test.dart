@@ -45,7 +45,8 @@ void main() {
         expect(data.cards.containsKey(step), isTrue, reason: step);
       }
     }
-    expect(data.enemies.length, 16); // 10 de la run + 6 muñecos de práctica
+    // 10 de la etapa 1, 7 del monasterio, 7 de la cumbre y 6 muñecos.
+    expect(data.enemies.length, 30);
     expect(data.enemy('dragon').phases.length, 3);
   });
 
@@ -59,11 +60,38 @@ void main() {
       expect(f.minWidth, lessThanOrEqualTo(f.maxWidth));
     }
     expect(floors[2].types.keys, [NodeType.shrine]);
-    expect(floors[6].types.keys, [NodeType.fountain]);
-    expect(floors[7].enemies, ['monk', 'lion', 'fan']);
+    // Élite, después la fuente y arriba el jefe.
+    expect(floors[6].enemies, ['monk', 'lion', 'fan']);
+    expect(floors[7].types.keys, [NodeType.fountain]);
     expect(floors.last.enemies, ['dragon']);
     expect(data.balance.jadeElite, 0, reason: 'la élite paga con un talismán');
     expect(floors[1].types.keys, contains(NodeType.merchant));
+  });
+
+  test('tres etapas de 9 pisos, cada una con élite, fuente y jefe', () {
+    final stages = data.balance.stages;
+    expect(stages.map((s) => s.id), ['qianyunshan', 'xuankongsi', 'wolongding']);
+    expect(data.balance.totalFloors, 27);
+    for (final st in stages) {
+      expect(st.floors, hasLength(9), reason: st.id);
+      expect(st.floors[7].types.keys, [NodeType.fountain], reason: st.id);
+      for (final e in st.floors[6].enemies) {
+        expect(data.enemy(e).rank, EnemyRank.elite, reason: e);
+      }
+      expect(data.enemy(st.floors.last.enemies.single).rank, EnemyRank.boss);
+      for (final f in st.floors) {
+        for (final e in f.enemies) {
+          expect(data.enemies.containsKey(e), isTrue, reason: e);
+        }
+      }
+    }
+    // Solo la primera etapa tiene santuario: el camino se elige una vez.
+    expect(
+      stages.skip(1).expand((s) => s.floors).any(
+            (f) => f.types.containsKey(NodeType.shrine),
+          ),
+      isFalse,
+    );
   });
 
   test('talismanes y eventos', () {

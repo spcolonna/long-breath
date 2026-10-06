@@ -289,6 +289,38 @@ Las pasivas subieron el promedio de Normal de 59% a 68%. Para volver a ~60% se s
 
 Ojo: los bots eligen cartas por sus números base, así que casi no toman Mano de serpiente ni Serpiente dorada (su valor depende de la cadena). Un jugador que arme la cadena puede sacarles más que el bot.
 
+## 3h. Etapas 2 y 3 en el juego (06/10/2026)
+
+La subida pasa a tener 3 etapas reales de 9 pisos (27 en total): Montaña de las Mil Nubes, Monasterio Colgado y Cumbre del Dragón Dormido. El simulador corre las etapas reales por defecto (`--stages 1` para la etapa 1 sola; el prototipo viejo quedó en `--proto`).
+
+**Cambios para llegar al objetivo:**
+- **Fuente antes del jefe:** en cada etapa el orden de arriba es élite → fuente → jefe (antes era fuente → élite → jefe). Fue lo que más movió: el promedio llega al jefe con ~52 de Vida en vez de ~31.
+- **Entre etapas:** el jefe intermedio da talismán, recompensa y 25 de jade, y después se recupera toda la Vida.
+- **Eco del Dragón** (ahora jefe de la etapa 1): Vida 193 → 150, Aliento 31 → 28.
+- **Espinas en 1** (Hombre de Bronce, Abad de Hierro, León de las Nieves): con 2 se perdían 25 a 28 de Vida por pelea.
+- **Dragón Dormido:** Vida 205, golpes 10/11/10 y Aliento 28/26.
+
+**Resultado (1500 runs, Normal):**
+
+| Perfil | Llega a la etapa 2 | Llega a la etapa 3 | Gana | Minutos (victorias) |
+|---|---|---|---|---|
+| Novato | 18% | 4% | 0% | — |
+| Promedio | 83% | 76% | 59% | 39 |
+| Experto | 96% | 92% | 83% | 37 |
+
+La etapa 1 sola queda más fácil que antes (promedio 84%, experto 95%) porque ya no es el final.
+
+**Por dificultad (600 runs):**
+
+| Dificultad | Novato | Promedio | Experto |
+|---|---|---|---|
+| Fácil | 13% | 99% | 100% |
+| Normal | 0% | 60% | 82% |
+| Difícil | 0% | 15% | 45% |
+| Shifu | 0% | 1% | 6% |
+
+Pendiente: Fácil quedó demasiado fácil para el promedio y Difícil demasiado duro; recalibrar las dificultades y los Picos para 3 etapas.
+
 ## 4. Dificultades (implementadas)
 
 **Implementado:** al empezar cada subida se elige **Fácil, Normal, Difícil o Shifu** (`game_balance.json` → `difficulties`). Afecta la Vida inicial, la curación de la fuente y la Vida, Estructura y daño de los enemigos de la subida (los muñecos de las lecciones no cambian).

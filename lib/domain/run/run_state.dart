@@ -21,6 +21,10 @@ enum RunPhase {
 
   /// Maestro errante.
   master,
+
+  /// Se venció al jefe de una etapa intermedia: descanso antes de subir a
+  /// la siguiente.
+  stageClear,
   victory,
   defeat,
 }
@@ -123,7 +127,11 @@ class RunState {
     this.shopSale,
     this.shopTea = false,
     this.masterForms = const [],
+    this.stage = 0,
   });
+
+  /// Etapa de la subida (0 = la primera). El [map] es el de esta etapa.
+  final int stage;
 
   /// Camino animal; null mientras sea novicio (antes del santuario).
   final Style? style;
@@ -225,6 +233,7 @@ class RunState {
     bool? shopTea,
     List<String>? masterForms,
     List<MapNodeDef>? map,
+    int? stage,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -258,6 +267,7 @@ class RunState {
         shopSale: clearShopSale ? null : shopSale ?? this.shopSale,
         shopTea: shopTea ?? this.shopTea,
         masterForms: masterForms ?? this.masterForms,
+        stage: stage ?? this.stage,
       );
 
   /// Nodo del mapa por id.
@@ -300,6 +310,7 @@ class RunState {
         'shopSale': shopSale,
         'shopTea': shopTea,
         'masterForms': masterForms,
+        'stage': stage,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -350,5 +361,6 @@ class RunState {
         shopSale: j['shopSale'] as String?,
         shopTea: j['shopTea'] as bool? ?? false,
         masterForms: ((j['masterForms'] as List?) ?? const []).cast<String>(),
+        stage: j['stage'] as int? ?? 0,
       );
 }

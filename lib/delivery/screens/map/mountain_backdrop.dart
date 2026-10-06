@@ -10,14 +10,70 @@ const _inkFar = Color(0xFFA9C2BA);
 const _inkMid = Color(0xFF86A597);
 const _pine = Color(0xFF5F8E7C);
 
+/// Colores de la montaña en cada etapa: las Mil Nubes en jade, el
+/// Monasterio Colgado en piedra tibia y la Cumbre del Dragón Dormido nevada.
+class MountainTint {
+  const MountainTint({
+    required this.skyLow,
+    required this.skyHigh,
+    required this.far,
+    required this.mid,
+    required this.pine,
+  });
+
+  /// Arriba del cielo al pie y al llegar a lo alto de la etapa.
+  final Color skyLow;
+  final Color skyHigh;
+  final Color far;
+  final Color mid;
+  final Color pine;
+
+  static const stages = [
+    MountainTint(
+      skyLow: Color(0xFFEAF3EE),
+      skyHigh: Color(0xFFFFE1C9),
+      far: _inkFar,
+      mid: _inkMid,
+      pine: _pine,
+    ),
+    MountainTint(
+      skyLow: Color(0xFFF6EBDC),
+      skyHigh: Color(0xFFFFD6B0),
+      far: Color(0xFFC7B49C),
+      mid: Color(0xFFA88F72),
+      pine: Color(0xFF7F8A66),
+    ),
+    MountainTint(
+      skyLow: Color(0xFFEEF3FA),
+      skyHigh: Color(0xFFFFE2EC),
+      far: Color(0xFFBFD0E0),
+      mid: Color(0xFF9DB4C9),
+      pine: Color(0xFF86A0B4),
+    ),
+  ];
+
+  static MountainTint of(int stage) => stages[stage.clamp(0, stages.length - 1)];
+}
+
 /// Cielo y cordilleras fijos a la pantalla. Se corren más despacio que el
 /// sendero (parallax): las montañas lejanas casi no se mueven y eso da la
 /// profundidad. Arriba el cielo se vuelve dorado y rosa, como la cumbre.
 class SkyPainter extends CustomPainter {
-  SkyPainter({required this.scroll, required this.maxScroll});
+  SkyPainter({
+    required this.scroll,
+    required this.maxScroll,
+    this.tint = const MountainTint(
+      skyLow: Color(0xFFEAF3EE),
+      skyHigh: Color(0xFFFFE1C9),
+      far: _inkFar,
+      mid: _inkMid,
+      pine: _pine,
+    ),
+  });
 
   final double scroll;
   final double maxScroll;
+  final MountainTint tint;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -30,7 +86,7 @@ class SkyPainter extends CustomPainter {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.lerp(const Color(0xFFEAF3EE), const Color(0xFFFFE1C9), p)!,
+            Color.lerp(tint.skyLow, tint.skyHigh, p)!,
             Color.lerp(Palette.bg, const Color(0xFFFCEAE0), p)!,
             Color.lerp(Palette.bgAlt, Palette.bg, p)!,
           ],
@@ -61,7 +117,7 @@ class SkyPainter extends CustomPainter {
       factor: 0.25,
       spacing: 260,
       salt: 11,
-      ink: _inkFar,
+      ink: tint.far,
       alpha: 0.34,
       peak: 120,
     );
@@ -71,7 +127,7 @@ class SkyPainter extends CustomPainter {
       factor: 0.55,
       spacing: 340,
       salt: 29,
-      ink: _inkMid,
+      ink: tint.mid,
       alpha: 0.30,
       peak: 80,
       pines: true,
@@ -141,7 +197,7 @@ class SkyPainter extends CustomPainter {
   }
 
   void _pines(Canvas canvas, Path ridge, math.Random rnd, double alpha) {
-    final paint = Paint()..color = _pine.withValues(alpha: alpha * 1.4);
+    final paint = Paint()..color = tint.pine.withValues(alpha: alpha * 1.4);
     for (final m in ridge.computeMetrics()) {
       for (
         var d = rnd.nextDouble() * 40;
@@ -168,15 +224,19 @@ class SkyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(SkyPainter old) =>
-      old.scroll != scroll || old.maxScroll != maxScroll;
+      old.scroll != scroll || old.maxScroll != maxScroll || old.tint != tint;
 }
 
 /// Los hitos de la subida, dibujados detrás de su lugar: el arco del
 /// santuario, el estanque de la fuente, la pagoda del élite y la cumbre.
 class LandmarkPainter extends CustomPainter {
-  LandmarkPainter(this.layout);
+  LandmarkPainter(this.layout, {this.stage = 0});
 
   final MapLayout layout;
+
+  /// Etapa del mapa: sobre el jefe del monasterio cuelga la Gran Campana;
+  /// en las demás, la silueta del dragón.
+  final int stage;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -286,6 +346,35 @@ class LandmarkPainter extends CustomPainter {
     );
   }
 
+  /// La Gran Campana del monasterio, colgada de su viga sobre la cumbre.
+  void _bell(Canvas canvas, Offset at) {
+    final c = Offset(at.dx, at.dy - 132);
+    final ink = Paint()..color = Palette.gold.withValues(alpha: 0.3);
+    canvas.drawRect(
+      Rect.fromCenter(center: c.translate(0, -34), width: 120, height: 5),
+      ink,
+    );
+    canvas.drawRect(
+      Rect.fromCenter(center: c.translate(0, -26), width: 3, height: 14),
+      ink,
+    );
+    final bell = Path()
+      ..moveTo(c.dx - 14, c.dy - 20)
+      ..quadraticBezierTo(c.dx - 24, c.dy - 18, c.dx - 26, c.dy + 4)
+      ..quadraticBezierTo(c.dx - 28, c.dy + 18, c.dx - 34, c.dy + 22)
+      ..lineTo(c.dx + 34, c.dy + 22)
+      ..quadraticBezierTo(c.dx + 28, c.dy + 18, c.dx + 26, c.dy + 4)
+      ..quadraticBezierTo(c.dx + 24, c.dy - 18, c.dx + 14, c.dy - 20)
+      ..close();
+    canvas.drawPath(bell, ink);
+    final band = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4
+      ..color = Palette.gold.withValues(alpha: 0.45);
+    canvas.drawLine(c.translate(-27, 8), c.translate(27, 8), band);
+    canvas.drawLine(c.translate(-30, 16), c.translate(30, 16), band);
+  }
+
   /// La cumbre entre nubes y, apenas, la silueta del dragón dormido.
   void _summit(Canvas canvas, Offset at) {
     final peak = Path()
@@ -332,6 +421,7 @@ class LandmarkPainter extends CustomPainter {
               Rect.fromLTRB(at.dx - 230, at.dy - 110, at.dx + 230, at.dy + 110),
             ),
     );
+    if (stage == 1) return _bell(canvas, at);
     // El dragón: un cuerpo que ondula entre las nubes y se afina hacia la
     // cola, en un solo trazo (sin superposiciones que lo manchen).
     const segs = 48;
@@ -362,7 +452,8 @@ class LandmarkPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(LandmarkPainter old) => old.layout != layout;
+  bool shouldRepaint(LandmarkPainter old) =>
+      old.layout != layout || old.stage != stage;
 }
 
 /// Nubes que flotan entre los pisos y van y vienen despacio.

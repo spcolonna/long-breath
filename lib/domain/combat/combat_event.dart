@@ -68,8 +68,11 @@ class EnemyActionSkipped extends CombatEvent {
 }
 
 class EnemyGuarded extends CombatEvent {
-  const EnemyGuarded(this.amount);
+  const EnemyGuarded(this.amount, [this.blocks]);
   final int amount;
+
+  /// Tipo de golpe que frena (null = todos).
+  final CardType? blocks;
 }
 
 class EnemyCharged extends CombatEvent {
@@ -181,4 +184,33 @@ class Victory extends CombatEvent {
 
 class Defeat extends CombatEvent {
   const Defeat();
+}
+
+/// Espinas: te lastimaste al golpearlo.
+class ThornsHurt extends CombatEvent {
+  const ThornsHurt(this.damage);
+  final int damage;
+}
+
+/// Recuperó Vida antes de actuar.
+class EnemyRegenerated extends CombatEvent {
+  const EnemyRegenerated(this.amount);
+  final int amount;
+}
+
+/// El próximo turno tenés [amount] menos de Aliento.
+class BreathDrained extends CombatEvent {
+  const BreathDrained(this.amount);
+  final int amount;
+}
+
+/// El próximo turno robás [amount] cartas menos.
+class HandFrozen extends CombatEvent {
+  const HandFrozen(this.amount);
+  final int amount;
+}
+
+/// El golpe era de otro tipo y esquivó su Guardia.
+class GuardBypassed extends CombatEvent {
+  const GuardBypassed();
 }

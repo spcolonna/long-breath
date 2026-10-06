@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_print
 // Simulador de balance sin interfaz. Imprime tablas en markdown.
 //
-//   dart run tool/simulate.dart                      # runs de la etapa 1, 3 perfiles
+//   dart run tool/simulate.dart                      # la subida entera (3 etapas)
+//   dart run tool/simulate.dart --stages 1           # solo la etapa 1
 //   dart run tool/simulate.dart --runs 400 --profile promedio --style all
 //   dart run tool/simulate.dart --hp common=1.8,boss=1.5 --dmg 1.2   # palancas
-//   dart run tool/simulate.dart --stages 3 --talismans               # prototipo
-//   dart run tool/simulate.dart --section picos --stages 3
-//   dart run tool/simulate.dart --section talismans --stages 3
+//   dart run tool/simulate.dart --proto --stages 3 --talismans       # prototipo viejo
+//   dart run tool/simulate.dart --section picos
+//   dart run tool/simulate.dart --section talismans
 //   dart run tool/simulate.dart --section cards          # poder de cada carta
 //   dart run tool/simulate.dart --data otra/carpeta      # comparar con otros datos
 //
@@ -29,6 +30,10 @@ String opt(String name, String def) {
 }
 
 bool flag(String name) => _args.contains('--$name');
+
+/// Prototipo viejo de 3 etapas (enemigos de la etapa 1 escalados) en vez
+/// de las etapas reales.
+var proto = false;
 
 class Config {
   Config({
@@ -60,6 +65,7 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
   ];
   final sloppy = sloppiness;
   final curve = (stageHp, stageDmg, stageStr, fountainRate, bossHeal);
+  final useProto = proto;
   final parts = await Future.wait([
     for (final chunk in chunks)
       Isolate.run(() {
@@ -70,8 +76,13 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
         fountainRate = curve.$4;
         bossHeal = curve.$5;
         final base = c.raw.copy();
-        if (c.stages > 1) addStageEnemies(base);
-        final fixed = c.stages > 1 ? null : base.build();
+        if (useProto) addStageEnemies(base);
+        // Etapas reales: se recorta la subida a las primeras [c.stages].
+        final run = base.balance['run'] as Map<String, dynamic>;
+        if (!useProto && run['stages'] is List) {
+          run['stages'] = (run['stages'] as List).take(c.stages).toList();
+        }
+        final fixed = useProto ? null : base.build();
         return [
           for (final i in chunk)
             playRun(
@@ -113,7 +124,6 @@ Future<void> main(List<String> args) async {
   _args = args;
   final runs = int.parse(opt('runs', '300'));
   final seed = int.parse(opt('seed', '1'));
-  final stages = int.parse(opt('stages', '1'));
   final section = opt('section', 'runs');
   final profileArg = opt('profile', 'novato,promedio,experto');
   final selected = profileArg == 'all' ? profiles.keys.toList() : profileArg.split(',');
@@ -121,6 +131,9 @@ Future<void> main(List<String> args) async {
   final style = styleArg == 'all' ? null : Style.parse(styleArg);
 
   final raw = RawData.load(opt('data', 'assets/data'));
+  proto = flag('proto');
+  final real = (raw.balance['run'] as Map<String, dynamic>)['stages'] as List?;
+  final stages = int.parse(opt('stages', proto ? '3' : '${real?.length ?? 1}'));
   final levers = Levers(
     hp: Levers.parse(_args.contains('--hp') ? opt('hp', '') : null),
     dmg: Levers.parse(_args.contains('--dmg') ? opt('dmg', '') : null),
@@ -147,7 +160,7 @@ Future<void> main(List<String> args) async {
   bossHeal = double.parse(opt('boss-heal', '$bossHeal'));
 
   final sw = Stopwatch()..start();
-  print('# Long Breath — simulación ($section, ${stages == 1 ? 'etapa 1 real' : '$stages etapas (prototipo)'}, '
+  print('# Long Breath — simulación ($section, ${proto ? '$stages etapas (prototipo)' : stages == 1 ? 'etapa 1' : '$stages etapas'}, '
       '$runs runs por perfil, semilla $seed${levers.isEmpty ? '' : ', con palancas'})\n');
 
   switch (section) {
@@ -180,7 +193,7 @@ Future<void> _difficulties(
   final rows = <List<String>>[];
   for (final d in Difficulty.values) {
     final cfg = Config(
-        raw: raw, stages: stages, talismans: stages > 1, difficulty: d);
+        raw: raw, stages: stages, talismans: proto, difficulty: d);
     final row = [d.name];
     for (final p in profilesSel) {
       final l = await simulate(cfg, p, runs, seed);
@@ -216,6 +229,18 @@ void _report(Map<String, List<RunLog>> logs) {
         f1(mean([for (final r in l) r.masters])),
         f1(mean([for (final r in l) r.jadeSpent])),
         f1(mean([for (final r in l) r.jadeLeft])),
+      ],
+  ]);
+
+  print('## Hasta dónde llega');
+  final maxStage = logs.values.expand((l) => l).fold(0, (a, r) => math.max(a, r.stage));
+  table(['perfil', for (var st = 1; st <= maxStage; st++) 'llega a la etapa ${st + 1}', 'gana'], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      [
+        p,
+        for (var st = 1; st <= maxStage; st++)
+          pct(l.where((r) => r.stage >= st).length, l.length),
+        pct(l.where((r) => r.won).length, l.length),
       ],
   ]);
 
