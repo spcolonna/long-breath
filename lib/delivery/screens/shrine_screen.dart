@@ -12,6 +12,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/scene_backdrop.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 
@@ -42,152 +43,157 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
     final stats = data.balance.statsOf(picked);
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-          child: Column(
-            children: [
-              Text(t.shrineTitle, style: const TextStyle(fontSize: 24)),
-              const SizedBox(height: 6),
-              Text(
-                t.shrineHint,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Palette.textDim),
-              ),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, box) => Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 450),
-                        transitionBuilder: (child, anim) => FadeTransition(
-                          opacity: anim,
-                          child: ScaleTransition(
-                            scale: Tween(begin: 0.94, end: 1.0).animate(anim),
-                            child: child,
-                          ),
-                        ),
-                        child: HeroSprite(
-                          key: ValueKey(picked),
-                          style: picked,
-                          height: math.min(box.maxHeight, box.maxWidth * 1.3),
-                          glyph: stats.hanzi,
-                          victory: _sworn,
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: InkBurst(
-                          trigger: _burst,
-                          colors: [
-                            styleColor(picked),
-                            Palette.gold,
-                            Colors.white,
-                          ],
-                          count: 40,
-                          radius: box.maxWidth * 0.55,
-                          duration: const Duration(milliseconds: 1000),
-                        ),
-                      ),
-                    ],
-                  ),
+      body: SceneBackdrop(
+        assets: stageArt(data.balance.stages[run.stage].id, 'shrine_bg.png'),
+        veil: 0.58,
+        alignment: Alignment.topCenter,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            child: Column(
+              children: [
+                Text(t.shrineTitle, style: const TextStyle(fontSize: 24)),
+                const SizedBox(height: 6),
+                Text(
+                  t.shrineHint,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Palette.textDim),
                 ),
-              ),
-              Row(
-                children: [
-                  for (final s in run.pathOptions)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
-                        child: _PathTile(
-                          name: text.style(s),
-                          hanzi: data.balance.styles[s]!.hanzi,
-                          motto: text.styleMotto(s),
-                          stats: t.styleTileStats(
-                            data.balance.styles[s]!.draw,
-                            data.balance.styles[s]!.retain,
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, box) => Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 450),
+                          transitionBuilder: (child, anim) => FadeTransition(
+                            opacity: anim,
+                            child: ScaleTransition(
+                              scale: Tween(begin: 0.94, end: 1.0).animate(anim),
+                              child: child,
+                            ),
                           ),
-                          color: styleColor(s),
-                          selected: s == picked,
-                          onTap: () {
-                            if (_sworn) return;
-                            HapticFeedback.selectionClick();
-                            ref.read(audioProvider).play(Sfx.cardSelect);
-                            setState(() => _picked = s);
-                          },
+                          child: HeroSprite(
+                            key: ValueKey(picked),
+                            style: picked,
+                            height: math.min(box.maxHeight, box.maxWidth * 1.3),
+                            glyph: stats.hanzi,
+                            victory: _sworn,
+                          ),
                         ),
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 54,
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  transitionBuilder: (child, anim) => FadeTransition(
-                    opacity: anim,
-                    child: SlideTransition(
-                      position: Tween(
-                        begin: const Offset(0, 0.15),
-                        end: Offset.zero,
-                      ).animate(anim),
-                      child: child,
-                    ),
-                  ),
-                  child: Text(
-                    picked == null
-                        ? t.styleBenefitPick
-                        : '${t.styleBenefit(picked)}\n'
-                              '${t.styleSummary(stats.draw, stats.breath, stats.retain)}',
-                    key: ValueKey(picked),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 13,
-                      height: 1.3,
-                      color: picked == null ? Palette.textDim : Palette.text,
+                        Positioned.fill(
+                          child: InkBurst(
+                            trigger: _burst,
+                            colors: [
+                              styleColor(picked),
+                              Palette.gold,
+                              Colors.white,
+                            ],
+                            count: 40,
+                            radius: box.maxWidth * 0.55,
+                            duration: const Duration(milliseconds: 1000),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: FilledButton(
-                  style: picked == null
-                      ? null
-                      : FilledButton.styleFrom(
-                          backgroundColor: styleColor(picked),
-                        ),
-                  onPressed: picked == null
-                      ? null
-                      : () {
-                          if (_sworn) return;
-                          HapticFeedback.heavyImpact();
-                          ref.read(audioProvider).play(Sfx.shrineOath);
-                          setState(() {
-                            _sworn = true;
-                            _burst++;
-                          });
-                          Future.delayed(
-                            const Duration(milliseconds: 1000),
-                            () {
-                              if (!context.mounted) return;
-                              ref
-                                  .read(runControllerProvider.notifier)
-                                  .choosePath(picked);
-                              context.go('/map');
+                Row(
+                  children: [
+                    for (final s in run.pathOptions)
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: _PathTile(
+                            name: text.style(s),
+                            hanzi: data.balance.styles[s]!.hanzi,
+                            motto: text.styleMotto(s),
+                            stats: t.styleTileStats(
+                              data.balance.styles[s]!.draw,
+                              data.balance.styles[s]!.retain,
+                            ),
+                            color: styleColor(s),
+                            selected: s == picked,
+                            onTap: () {
+                              if (_sworn) return;
+                              HapticFeedback.selectionClick();
+                              ref.read(audioProvider).play(Sfx.cardSelect);
+                              setState(() => _picked = s);
                             },
-                          );
-                        },
-                  child: Text(
-                    t.shrineConfirm,
-                    style: const TextStyle(fontSize: 17),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 54,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, anim) => FadeTransition(
+                      opacity: anim,
+                      child: SlideTransition(
+                        position: Tween(
+                          begin: const Offset(0, 0.15),
+                          end: Offset.zero,
+                        ).animate(anim),
+                        child: child,
+                      ),
+                    ),
+                    child: Text(
+                      picked == null
+                          ? t.styleBenefitPick
+                          : '${t.styleBenefit(picked)}\n'
+                                '${t.styleSummary(stats.draw, stats.breath, stats.retain)}',
+                      key: ValueKey(picked),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        height: 1.3,
+                        color: picked == null ? Palette.textDim : Palette.text,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: FilledButton(
+                    style: picked == null
+                        ? null
+                        : FilledButton.styleFrom(
+                            backgroundColor: styleColor(picked),
+                          ),
+                    onPressed: picked == null
+                        ? null
+                        : () {
+                            if (_sworn) return;
+                            HapticFeedback.heavyImpact();
+                            ref.read(audioProvider).play(Sfx.shrineOath);
+                            setState(() {
+                              _sworn = true;
+                              _burst++;
+                            });
+                            Future.delayed(
+                              const Duration(milliseconds: 1000),
+                              () {
+                                if (!context.mounted) return;
+                                ref
+                                    .read(runControllerProvider.notifier)
+                                    .choosePath(picked);
+                                context.go('/map');
+                              },
+                            );
+                          },
+                    child: Text(
+                      t.shrineConfirm,
+                      style: const TextStyle(fontSize: 17),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

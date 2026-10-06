@@ -323,6 +323,8 @@ Se buscaron las mismas referencias que en la etapa 1: novato ~40% en Fácil, pro
 | Difícil | 0% | 27% · 40 min | **60%** · 38 min |
 | Shifu | 0% | 4% · 41 min | **17%** · 39 min |
 
+**Hongo Lingzhi (mismo día):** común nuevo de los pisos 5 y 6 de la etapa 1 (52 de Vida, regeneración 3). Es una pelea liviana (novato 3,9 de Vida perdida, 3,4 turnos) que presenta la regeneración antes de la etapa 2. Normal queda en novato 0%, promedio 57%, experto 86% (1000 runs).
+
 (1000 runs por perfil.) Los Picos no se tocaron: encima de Normal bajan parejo, del 80% al 3% para el experto y del 50% al 1% para el promedio (400 runs):
 
 | Pico | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |

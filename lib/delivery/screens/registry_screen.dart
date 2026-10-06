@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/scene_backdrop.dart';
 import '../widgets/lore_scroll.dart';
 
 /// 名册: el registro de la escuela. Una tablilla por cada discípulo que
@@ -42,7 +43,10 @@ class RegistryScreen extends ConsumerWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: SceneBackdrop(
+          assets: stageArt('qianyunshan', 'school_wall.png'),
+          veil: 0.7,
+          child: TabBarView(
           children: [
             ascents.isEmpty
                 ? Center(
@@ -91,6 +95,7 @@ class RegistryScreen extends ConsumerWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

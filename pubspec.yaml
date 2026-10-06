@@ -34,6 +34,9 @@ flutter:
     - assets/audio/sfx/
     - assets/audio/music/
     - assets/art/stages/qianyunshan/
+    - assets/art/stages/xuankongsi/
+    - assets/art/stages/wolongding/
+    - assets/art/ui/
     # hero.png es la fuente de tool/recolor_hero.py; el juego usa las variantes.
     - assets/art/player/hero_novice.png
     - assets/art/player/hero_tiger.png

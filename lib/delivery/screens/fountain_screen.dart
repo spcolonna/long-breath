@@ -8,6 +8,7 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/scene_backdrop.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/juice.dart';
 
@@ -71,6 +72,10 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
         height: 56,
         child: OutlinedButton.icon(
           onPressed: onTap,
+          // Papel translúcido: se lee sobre el fondo pintado.
+          style: OutlinedButton.styleFrom(
+            backgroundColor: Palette.surface.withValues(alpha: 0.82),
+          ),
           icon: Icon(icon),
           label: Text(label, style: const TextStyle(fontSize: 16)),
         ),
@@ -78,7 +83,10 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
     );
 
     return Scaffold(
-      body: SafeArea(
+      body: SceneBackdrop(
+        assets: stageArt(data.balance.stages[run.stage].id, 'fountain_bg.png'),
+        veil: 0.55,
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -178,6 +186,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

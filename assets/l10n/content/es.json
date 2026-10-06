@@ -194,6 +194,10 @@
       "name": "Bandido del Paso",
       "rule": "Bastón: un turno tantea con un golpe ALTO y al siguiente descarga un bastonazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe."
     },
+    "lingzhi": {
+      "name": "Hongo Lingzhi",
+      "rule": "Antes de cada acción recupera 3 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido."
+    },
     "lion": {
       "name": "León de Piedra",
       "rule": "Despierta: después de cada acción sus golpes hacen +3 de daño, y se acumula. Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0."
@@ -281,7 +285,10 @@
     "palm_gate": "Cierra el paso a las palmas",
     "iron_shirt": "Camisa de hierro",
     "great_bell": "Gran Campanada",
-    "frost": "Escarcha"
+    "frost": "Escarcha",
+    "spores": "Nube de esporas",
+    "cap_shield": "Sombrero de laca",
+    "root_lash": "Latigazo de raíz"
   },
   "talismans": {
     "arco": "Cuerda del Arco",

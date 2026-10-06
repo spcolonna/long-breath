@@ -49,8 +49,8 @@
           { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1 }, "enemies": ["bat", "salamander", "disciple", "monkey"] },
           { "width": 1, "types": { "shrine": 1 } },
           { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
-          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey"] },
-          { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey", "lingzhi"] },
+          { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit", "lingzhi"] },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["monk", "lion", "fan"], "scene": "campanas" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"], "scene": "cumbre" }
