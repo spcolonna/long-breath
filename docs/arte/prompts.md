@@ -143,7 +143,7 @@ backgrounds, no photorealism, no text, no watermark.
 Fondo del mapa (`map_bg.png`, opcional, **1080×4000**, vertical, se dibuja al 85% sobre las capas pintadas). Que no tenga sendero ni escalones propios (los pone el código) y que el centro quede despejado:
 
 ```
-Tall vertical map background of an ascending mountain path: stone stairs zig-zagging up a green
+Tall vertical map background, 1080x4000 pixels (aspect ratio 27:100, very tall and narrow), of an ascending mountain path: stone stairs zig-zagging up a green
 mountain through layers of fluffy pastel clouds, small pagodas, pine trees and waterfalls, the
 bottom in fresh morning jade tones gradually shifting to warm gold and pink near the summit,
 lots of empty space along the path for UI nodes.
@@ -950,7 +950,7 @@ backgrounds, no photorealism, no text, no watermark.
 `assets/art/stages/qianyunshan/fountain_bg.png`. 1080×1920 vertical, sin transparencia. Pantalla de descanso del nodo 泉; centro despejado para la UI.
 
 ```
-Vertical background of a peaceful mountain spring: a small clear turquoise pond fed by a
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a peaceful mountain spring: a small clear turquoise pond fed by a
 thin waterfall over mossy rocks, lotus leaves and a few pink lotus flowers, a flat stone
 ledge to sit and rest, bamboo and a leaning pine framing the sides, soft morning mist and
 sunbeams, ripples and light reflections on the water, the middle of the image calm and open
@@ -968,7 +968,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 `assets/art/stages/qianyunshan/shrine_bg.png`. 1080×1920 vertical, sin transparencia. Donde los espíritus eligen camino; las 3 estatuas van atrás y chicas, la UI va adelante.
 
 ```
-Vertical background of a small open-air mountain shrine at dawn: a stone courtyard with
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a small open-air mountain shrine at dawn: a stone courtyard with
 three weathered statues on pedestals in the back, a tiger on the left, a crane in the middle
 and a coiled snake on the right, each with a faint glow of its own color (vermilion, cobalt,
 jade), incense smoke curling up, red paper lanterns and prayer ribbons tied to a pine branch,
@@ -986,7 +986,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 `assets/art/school/school_wall.png`. 1080×1920 vertical, sin transparencia. Fondo del Registro y de la escena de derrota: donde la escuela recuerda a los que no volvieron.
 
 ```
-Vertical background of a quiet courtyard wall at the Sleeping Dragon school, warm
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a quiet courtyard wall at the Sleeping Dragon school, warm
 plastered wall with a small tiled roof on top, rows of small wooden name tablets hanging from
 red cords (no readable writing), a few faded headbands and ribbons tied among them moving in
 the breeze, a stone incense burner with a thin line of smoke, fallen plum blossoms on the
@@ -1011,7 +1011,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 Monasterio Colgado (`xuankongsi/combat_bg.png`):
 
 ```
-Square game battle background: a wooden walkway of the Hanging Monastery (Xuankong Si) clinging to
+Square game battle background, 1:1 aspect ratio: a wooden walkway of the Hanging Monastery (Xuankong Si) clinging to
 a sheer cliff, red lacquered pillars and curved roofs, bronze bells, prayer flags, a deep misty
 abyss with soft clouds below, warm saffron morning light, flat clear wooden floor in the lower third.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
@@ -1025,7 +1025,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 Cumbre del Dragón Dormido (`wolongding/combat_bg.png`):
 
 ```
-Square game battle background: a snowy mountain summit above a sea of clouds, wind-carved snow
+Square game battle background, 1:1 aspect ratio: a snowy mountain summit above a sea of clouds, wind-carved snow
 ridges, a small frozen shrine, pale blue sky with pink dawn light, gentle falling snow, the vague
 coil of a sleeping dragon's body hidden in the clouds far behind, flat clear snowy ground in the lower third.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
@@ -1215,7 +1215,7 @@ backgrounds, no photorealism, no text, no watermark.
 1080×4000 vertical, sin sendero propio (lo dibuja el código) y con el centro despejado.
 
 ```
-Tall vertical map background of the Hanging Monastery: red lacquered halls and wooden walkways
+Tall vertical map background, 1080x4000 pixels (aspect ratio 27:100, very tall and narrow), of the Hanging Monastery: red lacquered halls and wooden walkways
 pinned to a sheer cliff face, rising level after level, bronze bells and prayer flags, thin
 waterfalls and soft clouds drifting between the buildings, the bottom in warm saffron stone tones
 shifting to bright gold and pale sky near a great bell tower at the top, lots of empty space
@@ -1233,7 +1233,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 1080×4000 vertical, sin sendero propio y con el centro despejado.
 
 ```
-Tall vertical map background of a snowy summit above the clouds: wind-carved snow ridges, ice
+Tall vertical map background, 1080x4000 pixels (aspect ratio 27:100, very tall and narrow), of a snowy summit above the clouds: wind-carved snow ridges, ice
 crystals and a few frosted pines at the bottom, a sea of pastel clouds in the middle, pale blue
 sky turning pink and gold near the peak, where the huge calm coil of a sleeping azure dragon rests
 half hidden in the clouds, lots of empty space along the middle for UI nodes.
@@ -1250,7 +1250,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 1080×1920 vertical, sin transparencia; centro despejado para la UI.
 
 ```
-Vertical background of a quiet tea terrace inside a cliffside monastery: a bamboo pipe pouring
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a quiet tea terrace inside a cliffside monastery: a bamboo pipe pouring
 clear water into a round stone basin, a low wooden table with a clay teapot and steaming cups,
 red lacquered railings, hanging lanterns, a view of soft clouds below the cliff, warm saffron
 afternoon light, the middle of the image calm and open for interface elements.
@@ -1267,7 +1267,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 1080×1920 vertical, sin transparencia; centro despejado para la UI.
 
 ```
-Vertical background of a hot spring high on a snowy mountain: a turquoise steaming pool among
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a hot spring high on a snowy mountain: a turquoise steaming pool among
 smooth snow-covered rocks, warm vapor curling up, small icicles shining, a red-ribboned prayer
 rope on a stone, pale blue sky and pink dawn light over a sea of clouds, the middle of the image
 calm and open for interface elements.
@@ -1284,7 +1284,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 `assets/art/ui/stage_clear_bg.png`. 1080×1920 vertical, sin transparencia. Fondo de la pantalla de etapa superada: el hanzi y la Vida van encima, así que el centro tiene que quedar muy limpio.
 
 ```
-Vertical background of a mountain gate (paifang) of red lacquered wood standing on a stone
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a mountain gate (paifang) of red lacquered wood standing on a stone
 stairway that climbs from green misty slopes at the bottom, through a sea of clouds, toward a
 far snowy peak glowing in gold and pink light at the top, a few cranes flying, very soft and
 airy composition with a wide clean empty area in the center for large text.
