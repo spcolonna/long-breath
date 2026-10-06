@@ -290,6 +290,28 @@ void main() {
     expect(container.read(runControllerProvider)!.knownForms, contains(taught));
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
 
+    // Vencer al jefe de la etapa: se sella, se respira hondo y se sube
+    // al Monasterio Colgado.
+    final atBoss = container.read(runControllerProvider)!;
+    runs.resume(
+      atBoss.copyWith(
+        phase: RunPhase.stageClear,
+        currentNode: atBoss.map.firstWhere((n) => n.enemy == 'dragon').id,
+        hp: 10,
+      ),
+    );
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/stage');
+    await settle();
+    await settle();
+    expect(find.text('ETAPA SUPERADA'), findsOneWidget);
+    expect(find.text('Monasterio Colgado'), findsOneWidget);
+    await tester.tap(find.text('Seguir subiendo'));
+    await settle();
+    final up = container.read(runControllerProvider)!;
+    expect(up.stage, 1);
+    expect(up.hp, up.maxHp);
+    expect(find.text('Monasterio Colgado · 悬空寺'), findsOneWidget);
+
     // Perder: el discípulo no vuelve, queda en el registro y sube otro.
     final lost = container.read(runControllerProvider)!;
     final combat = lost.map.firstWhere(

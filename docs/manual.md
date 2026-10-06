@@ -45,7 +45,15 @@ Antes de subir, los novicios practican en el patio con el **muñeco de madera** 
 - **Monje sin Rostro** (élite): un maestro con máscara de porcelana que interrumpe las formas a medio ejecutar.
 - **León de Piedra** 石狮 (élite): el guardián del arco, que se despierta de a poco y pega cada vez más fuerte hasta que lo desequilibrás.
 - **Dama del Abanico** 铁扇 (élite): con su abanico de hierro desvía el primer golpe de cada turno y te lo devuelve.
-- **Eco del Dragón** 龙音 (guardián): en la cumbre no espera un dragón, sino su eco, un espíritu de aliento dorado y nubes. Al quedar herido despierta y prepara el **Aliento del Dragón**.
+- **Eco del Dragón** 龙音 (guardián): en lo alto de las Mil Nubes no espera un dragón, sino su eco, un espíritu de aliento dorado y nubes. Al quedar herido despierta y prepara el **Aliento del Dragón**.
+
+Pasado el eco, la subida sigue en tres etapas:
+
+1. **Montaña de las Mil Nubes** 千云山: la de arriba.
+2. **Monasterio Colgado** 悬空寺: un monasterio clavado en la pared del abismo. Sus guardianes prueban a quien sube: el **Murciélago del Campanario** (su repique te quita Aliento), el **Hombre de Bronce** 铜人 (inamovible y con espinas), el **Guardián del Pasadizo** (frena un solo tipo de golpe), la **Salamandra de Ceniza** (se cura al actuar), y los élites **Abad de Hierro** 铁僧 y **León de Jade** 玉狮. Arriba, el **Abad de la Gran Campana** 钟师.
+3. **Cumbre del Dragón Dormido** 卧龙顶: nieve, viento y silencio. El **Simio de las Nieves**, el **Gólem de Escarcha**, el **Discípulo del Viento** y el **Murciélago de Escarcha** (la escarcha te hace robar menos), los élites **Dama del Viento** 风扇 y **León de las Nieves** 雪狮, y en la cumbre el **Dragón Dormido** 卧龙.
+
+Los enemigos de las etapas 2 y 3 son, por ahora, variantes recoloreadas de los de la etapa 1, con reglas propias.
 
 El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que cayeron antes que vos. Esa pista prepara la historia completa: qué le pasó a los que no volvieron y qué quiere el maestro de la escuela.
 
@@ -89,9 +97,11 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | 2 | Combates, eventos o un mercader (aparece el Mono Ladrón) |
    | 3 | **Santuario** (siempre) |
    | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** (en 4 y 6 aparece el Bandido del Paso) |
-   | 7 | Fuente (siempre) |
-   | 8 | Élite: Monje sin Rostro, León de Piedra o Dama del Abanico (al azar) |
-   | 9 | Eco del Dragón (jefe) |
+   | 7 | Élite: Monje sin Rostro, León de Piedra o Dama del Abanico (al azar) |
+   | 8 | Fuente (siempre): se descansa antes del jefe |
+   | 9 | Eco del Dragón (jefe de la etapa) |
+
+   Las etapas 2 y 3 tienen la misma forma (9 pisos: élite, fuente y jefe arriba), sin santuario: el camino se elige una sola vez. El mapa se tiñe según la etapa (jade, piedra tibia, nieve) y el título dice "Etapa 2 de 3".
 
    Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un mercader y un maestro.
 
@@ -130,7 +140,8 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
 9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. Puede aparecer desde el piso 2. Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
 10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
-11. **Fin:** ganás al vencer al Eco del Dragón. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial.
+11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera toda la Vida)** y aparece la siguiente.
+12. **Fin:** ganás al vencer al **Dragón Dormido**, jefe de la tercera etapa. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial. El registro cuenta el piso de toda la subida (por ejemplo "Piso 14 de 27").
 
 ### Caer y volver a subir
 
@@ -150,6 +161,10 @@ Cada subida la hace **un discípulo distinto, con número** (Discípulo nº 1, n
 | La cinta desteñida | al caer ante el Discípulo Perdido |
 | El rostro borrado | al caer ante el Monje sin Rostro |
 | El eco | al caer ante el Eco del Dragón |
+| El monasterio colgado | al llegar a la etapa 2 |
+| La campana que no suena | al caer ante el Abad de la Gran Campana |
+| Donde duerme | al llegar a la etapa 3 |
+| Un ojo abierto | al caer ante el Dragón Dormido |
 | La cumbre | al llegar a la cumbre |
 | Cinco varillas / Lo que el maestro anota | con 5 y 10 caídos |
 
@@ -322,7 +337,26 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
 | León de Piedra | Élite | 134 | 20 | Medio 9 → Piel de piedra (Guardia 8) → Zarpazo alto 11 | **Despierta:** después de cada acción sus golpes suman +3, y se acumula (se ve en su placa). Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0 |
 | Dama del Abanico | Élite | 100 | 19 | Ráfaga baja 5×2 → Alto 10 → Filo de hierro medio 12 | **Abanico:** el primer golpe con daño de cada turno no le hace daño y te devuelve 3; la Estructura sí entra. Abrí el turno con una carta barata o una palma. Desequilibrada no puede usarlo |
-| Eco del Dragón | Guardián | 175 | 18 | Tres fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 29, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Al 30% entra en la última fase: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento (medio 24, E8) cada dos acciones, con un barrido bajo doble (2 × 6) entre medio |
+| Eco del Dragón | Guardián (etapa 1) | 150 | 18 | Tres fases | **Escamas 4:** cada golpe le hace 1 menos por escama, salvo Desequilibrado; cada Desequilibrio le arranca una para siempre. Al 50% de Vida cambia de fase y prepara el Aliento del Dragón (medio 28, E9), con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Al 30% entra en la última fase: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento (medio 24, E8) cada dos acciones, con un barrido bajo doble (2 × 6) entre medio |
+
+### Etapas 2 y 3
+
+| Enemigo | Rango | Vida | Estructura | Patrón | Regla especial |
+|---|---|---|---|---|---|
+| Murciélago del Campanario | Común (2) | 62 | 13 | Repique alto 4×2 → Alto 8 → Chillido | **Repique:** si no lo desviás, el próximo turno tenés 1 de Aliento menos |
+| Hombre de Bronce 铜人 | Común (2) | 78 | 17 | Medio 13 → Piel de bronce (Guardia 9) → Bajo 11 | Inamovible. **Espinas 1:** cada carta que le hace daño te quita 1 de Vida (las formas no; Desequilibrado no tiene espinas) |
+| Guardián del Pasadizo | Común (2) | 82 | 19 | Cierra los puños (Guardia 12) → Medio 11 → Cierra las patadas (Guardia 12) → Alto 10 | **Guardia de un tipo:** frena solo puños o solo patadas; golpeá con otro tipo y la esquivás entera |
+| Salamandra de Ceniza | Común (2) | 70 | 15 | Bajo 9 → Se entierra (Guardia 8) → Bajo 11 | **Regeneración 4:** se cura antes de cada acción, salvo que la pierda por Desequilibrio |
+| Abad de Hierro 铁僧 | Élite (2) | 130 | 23 | Medio 11 → Interrumpir → Camisa de hierro (Guardia 14, solo puños) → Bajo 15 | Espinas 1, interrumpe formas y su Guardia solo frena puños |
+| León de Jade 玉狮 | Élite (2) | 146 | 22 | Como el León de Piedra | Despierta (+3) y regeneración 3 |
+| Abad de la Gran Campana 钟师 | Jefe (2) | 215 | 21 | Dos fases | Guardia de un tipo y repique. Al 50%: **Gran Campanada** (medio 30, −2 Aliento) con cuenta regresiva |
+| Simio de las Nieves | Común (3) | 74 | 15 | Alto 5×2 → Bajo 6×2 → Medio 12 | Despierta (+2) |
+| Gólem de Escarcha | Común (3) | 84 | 19 | Escarcha medio 12 → Carga → Medio 13 | Inamovible. **Escarcha:** si no la desviás, el próximo turno robás 1 carta menos |
+| Discípulo del Viento | Común (3) | 86 | 20 | Alto 9 → Cierra las palmas (Guardia 12) → Barrido bajo 9 con escarcha | Castiga la misma postura (+6) |
+| Murciélago de Escarcha | Común (3) | 68 | 14 | Escarcha alto 4×2 → Repique alto 9 → Chillido | Escarcha y repique |
+| Dama del Viento 风扇 | Élite (3) | 122 | 22 | Ráfaga baja 6×2 con escarcha → Alto 12 → Medio 14 | Abanico: devuelve 4 |
+| León de las Nieves 雪狮 | Élite (3) | 156 | 24 | Como el León de Piedra | Despierta (+3) y espinas 1 |
+| Dragón Dormido 卧龙 | Jefe final | 205 | 21 | Tres fases | Escamas 4, escarcha. Al 50%: Aliento del Dragón (medio 28). Al 30%: escamas hasta 3, escarcha doble y Aliento (medio 26) |
 
 En la bifurcación conviene elegir según el mazo: el **Gólem** premia romper Estructura; la **Salamandra**, palmas y empujes.
 

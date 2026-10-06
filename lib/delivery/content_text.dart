@@ -31,6 +31,9 @@ class ContentText {
   String intent(String key) => _get('intents', key);
   String stage(String id) => _get('stages', id);
 
+  /// Lo que se ve al llegar a una etapa.
+  String stageIntro(String id) => _get('stageIntros', id);
+
   /// Nombre del camino de un combate según su escenario y su luz.
   String path(String scene, String light) => _get('paths', scene, light);
   String style(Style a) => _get('styles', a.name);

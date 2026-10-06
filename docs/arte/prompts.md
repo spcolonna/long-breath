@@ -1000,6 +1000,212 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
+## 7. Etapas 2 y 3
+
+**Estado:** los 14 enemigos ya están en el juego como **variantes recoloreadas** de los de la etapa 1 (`tool/recolor_enemies.py`). Cuando llegue el arte propio de uno, se guarda con el mismo nombre en `assets/art/enemies/` y **se borra su entrada de `VARIANTS`** en el script (si no, volver a correrlo lo pisa). Los fondos de combate de estas etapas hoy son los de la etapa 1 teñidos (`_stageTint` en `combat_screen.dart`).
+
+### Fondos de combate
+
+**Destino:** `assets/art/stages/xuankongsi/` y `assets/art/stages/wolongding/` (hay que agregar las carpetas en `pubspec.yaml`). Mismo formato que la etapa 1: cuadrados 1:1, suelo plano y despejado en el tercio inferior. Con `combat_bg.png` alcanza; las variantes por tramo usan los nombres de la etapa 1 (`combat_bg_ladera`, `_bifurcacion`, `_templo`, `_cumbre`), según `_sceneFiles`.
+
+Monasterio Colgado (`xuankongsi/combat_bg.png`):
+
+```
+Square game battle background: a wooden walkway of the Hanging Monastery (Xuankong Si) clinging to
+a sheer cliff, red lacquered pillars and curved roofs, bronze bells, prayer flags, a deep misty
+abyss with soft clouds below, warm saffron morning light, flat clear wooden floor in the lower third.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+Cumbre del Dragón Dormido (`wolongding/combat_bg.png`):
+
+```
+Square game battle background: a snowy mountain summit above a sea of clouds, wind-carved snow
+ridges, a small frozen shrine, pale blue sky with pink dawn light, gentle falling snow, the vague
+coil of a sleeping dragon's body hidden in the clouds far behind, flat clear snowy ground in the lower third.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no characters, no text, no watermark.
+```
+
+### Enemigos
+
+### Murciélago del Campanario (`bat_bronze`, común, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a bat spirit that nests in a temple bell tower, bronze-and-copper wings engraved like an old bell, a tiny bronze bell hanging from its neck, sound rings rippling from its wings, wide round eyes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Hombre de Bronce 铜人 (`golem_bronze`, común, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a Shaolin bronze man training statue come alive, polished bronze body with acupuncture-point markings, short sharp bronze spikes on shoulders and forearms, solid wide stance, faint gold glow in its eyes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Guardián del Pasadizo (`disciple_saffron`, común, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a young monk guardian in deep maroon and saffron robes, wooden prayer beads, one palm raised forward like a closed gate, standing on a narrow wooden walkway.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Salamandra de Ceniza (`salamander_ash`, común, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a lavender-grey salamander made of cooled ash with glowing pale embers along its back, small wisps of incense smoke curling from its tail, wounds closing with soft light.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Abad de Hierro 铁僧 (`monk_iron`, élite, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a towering faceless abbot in steel-blue robes with an iron-scaled undershirt visible at the chest, iron prayer beads, short spikes on its bracers, calm menacing posture.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### León de Jade 玉狮 (`lion_jade`, élite, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a guardian lion carved from translucent green jade, gold cracks of light along the mane, red silk ribbon, cracks slowly healing with green glow.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Abad de la Gran Campana 钟师 (`monk_gold`, jefe, etapa 2)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: the old abbot of the hanging monastery, golden robes, a huge cracked bronze temple bell floating behind him, a heavy wooden striker in his hands, rings of sound around him, sad wise expression.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Simio de las Nieves (`monkey_snow`, común, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a white snow ape with frosty fur, icy blue scarf, breath visible in the cold, wild playful crouch ready to pounce.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Gólem de Escarcha (`golem_ice`, común, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a golem of packed snow and pale blue ice blocks, frost crystals growing on its shoulders, cold mist pouring from its fists.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Discípulo del Viento (`disciple_wind`, común, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a lost disciple in sky-blue tattered robes whipping in the wind, snow on his shoulders, faded headband, one leg raised for a sweeping kick trailing frost.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Murciélago de Escarcha (`bat_frost`, común, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a pale ice-blue bat spirit with frosted translucent wings, snowflakes trailing behind it, icicle fangs.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Dama del Viento 风扇 (`fan_wind`, élite, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: an elegant warrior woman in teal and white layered robes, a large white iron fan releasing a gust of snow, hair and sleeves blown by the wind.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### León de las Nieves 雪狮 (`lion_snow`, élite, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a guardian lion of snow-white marble covered in frost and icicles, small ice spikes along its mane, red ribbon, roaring.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Dragón Dormido 卧龙 (`dragon_azure`, jefe final, etapa 3)
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: an immense azure-and-gold Chinese dragon coiled around the snowy summit, only partly awake, one huge eye half open, clouds being born from its slow breath, ancient and majestic, fills the frame.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
 ---
 
 ## Pendiente

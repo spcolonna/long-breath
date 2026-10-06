@@ -125,11 +125,58 @@ void main() {
     expect(rm.deck.length, 11);
   });
 
-  test('derrota termina la run; victoria en el guardián', () {
+  test('derrota termina la run; victoria en el jefe de la última etapa', () {
     var r = run.enter(fresh(1), 'n1');
     expect(run.finishCombat(r, won: false, hp: 0).phase, RunPhase.defeat);
-    r = r.copyWith(currentNode: 'n6');
+    r = r.copyWith(currentNode: 'n6', stage: 2);
     expect(run.finishCombat(r, won: true, hp: 5).phase, RunPhase.victory);
+  });
+
+  test('el jefe de una etapa intermedia lleva a la siguiente', () {
+    var r = fresh(1).copyWith(currentNode: 'n6', jade: 3, hp: 20);
+    r = run.finishCombat(r, won: true, hp: 10);
+    // Talismán, recompensa y jade para la etapa que viene.
+    expect(r.phase, RunPhase.talisman);
+    expect(r.jade, 3 + run.data.balance.stageJade);
+    r = run.chooseTalisman(r, r.talismanOptions.first);
+    r = run.chooseReward(r, null);
+    expect(r.phase, RunPhase.stageClear);
+    expect(run.stageHealOf(r), r.maxHp - r.hp, reason: 'cura todo');
+    final up = run.advanceStage(r);
+    expect(up.stage, 1);
+    expect(up.phase, RunPhase.map);
+    expect(up.hp, up.maxHp);
+    expect(up.currentNode, isNull);
+    expect(up.visited, isEmpty);
+    expect(run.available(up), up.starts);
+    // El mapa nuevo es el del monasterio: su jefe es el abad.
+    expect(up.map.singleWhere((n) => n.next.isEmpty).enemy, 'bell_abbot');
+    expect(RunState.fromJson(up.toJson()).toJson(), up.toJson());
+    expect(() => run.advanceStage(up), throwsStateError);
+  });
+
+  test('cada etapa genera su mapa con su jefe', () {
+    final bosses = ['dragon', 'bell_abbot', 'sleeping_dragon'];
+    final stages = run.data.balance.stages;
+    expect(stages, hasLength(3));
+    for (var seed = 1; seed <= 40; seed++) {
+      var r = run.newRun(seed: seed);
+      for (var st = 0; st < stages.length; st++) {
+        expect(r.stage, st);
+        expect(r.map.singleWhere((n) => n.next.isEmpty).enemy, bosses[st]);
+        for (final n in r.map) {
+          if (n.enemy != null) {
+            expect(stages[st].floors.any((f) => f.enemies.contains(n.enemy)),
+                isTrue, reason: n.enemy);
+          }
+        }
+        if (st == stages.length - 1) break;
+        r = run.advanceStage(r.copyWith(
+          phase: RunPhase.stageClear,
+          currentNode: r.map.singleWhere((n) => n.next.isEmpty).id,
+        ));
+      }
+    }
   });
 
   test('el santuario solo acepta los caminos que ofrece', () {
@@ -351,10 +398,12 @@ void main() {
         expect(boss, hasLength(1));
         expect(boss.single.enemy, 'dragon');
         expect(r.starts, hasLength(2));
-        // Un solo santuario y una sola fuente, que es lo previo al élite.
+        // Un solo santuario y una sola fuente, entre el élite y el jefe.
         expect(map.where((n) => n.type == NodeType.shrine), hasLength(1));
         final fountain = map.singleWhere((n) => n.type == NodeType.fountain);
-        expect(['monk', 'lion', 'fan'], contains(r.node(fountain.next.single).enemy));
+        expect(r.node(fountain.next.single).enemy, 'dragon');
+        final elite = map.singleWhere((n) => n.next.contains(fountain.id));
+        expect(['monk', 'lion', 'fan'], contains(elite.enemy));
         // Siempre hay mercader y maestro.
         expect(map.any((n) => n.type == NodeType.merchant), isTrue);
         expect(map.any((n) => n.type == NodeType.master), isTrue);

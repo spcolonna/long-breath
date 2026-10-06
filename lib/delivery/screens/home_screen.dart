@@ -29,6 +29,7 @@ String routeFor(RunState r) => switch (r.phase) {
   RunPhase.master => '/master',
   RunPhase.fountain => '/fountain',
   RunPhase.shrine => '/shrine',
+  RunPhase.stageClear => '/stage',
   RunPhase.victory || RunPhase.defeat => '/result',
 };
 

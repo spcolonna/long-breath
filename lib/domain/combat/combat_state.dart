@@ -79,6 +79,7 @@ class EnemyCombat {
     this.parryReady = false,
     this.stolen = 0,
     this.fled = false,
+    this.guardBlocks,
   });
 
   final String id;
@@ -115,6 +116,9 @@ class EnemyCombat {
   /// Se escapó (el combate termina sin vencerlo).
   final bool fled;
 
+  /// Tipo de golpe que frena su Guardia (null = todos). Los otros la esquivan.
+  final CardType? guardBlocks;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -140,6 +144,7 @@ class EnemyCombat {
         parryReady: parryReady,
         stolen: stolen,
         fled: fled,
+        guardBlocks: guardBlocks,
       );
 }
 
@@ -178,6 +183,7 @@ class CombatState {
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
     this.retained = const [],
+    this.drawPenalty = 0,
   });
 
   final int turn;
@@ -231,6 +237,9 @@ class CombatState {
   /// Cartas que vienen retenidas del turno anterior (Grulla).
   final List<int> retained;
 
+  /// Cartas menos que se roban el próximo turno (escarcha).
+  final int drawPenalty;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -266,6 +275,7 @@ class CombatState {
         retainedDiscount: retainedDiscount,
         attacksThisTurn: attacksThisTurn,
         retained: retained,
+        drawPenalty: drawPenalty,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

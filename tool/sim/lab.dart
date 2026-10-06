@@ -225,6 +225,9 @@ class RunLog {
   bool won = false;
   int nodes = 0, fountains = 0, shrines = 0, events = 0;
   int merchants = 0, masters = 0, jadeSpent = 0, jadeLeft = 0;
+
+  /// Etapa a la que llegó (0 = la primera).
+  int stage = 0;
   int? hpAtBoss;
   Style? style;
   final fights = <FightLog>[];
@@ -341,18 +344,24 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final (cs, next) = runEngine.combatSeed(r);
         r = next;
         final enemy = runEngine.enemyOf(r);
-        if (r.node(r.currentNode!).next.isEmpty) log.hpAtBoss = r.hp;
+        if (r.node(r.currentNode!).next.isEmpty &&
+            runEngine.isLastStage(r)) {
+          log.hpAtBoss = r.hp;
+        }
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
-        if (f.won && f.rank == EnemyRank.boss) {
+        // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
+        // acá; con las etapas reales lo hace el motor de la run.
+        final proto = data.balance.fixedMap != null;
+        if (proto && f.won && f.rank == EnemyRank.boss) {
           hp = math.min(r.maxHp, hp + (r.maxHp * bossHeal).round());
         }
         r = runEngine.finishCombat(r, won: f.won, hp: hp);
         // Prototipo de 3 etapas: los jefes intermedios también dejan un
         // talismán (el élite ya lo da el motor de la run).
-        if (f.won && withTalismans && f.rank == EnemyRank.boss &&
+        if (proto && f.won && withTalismans && f.rank == EnemyRank.boss &&
             r.phase != RunPhase.victory) {
           final pool = runEngine
               .missingTalismans(r)
@@ -401,6 +410,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
             wanted != null && r.pathOptions.contains(wanted)
                 ? wanted
                 : r.pathOptions[tRng.nextInt(r.pathOptions.length)]);
+      case RunPhase.stageClear:
+        r = runEngine.advanceStage(r);
       case RunPhase.victory || RunPhase.defeat:
         break;
     }
@@ -409,6 +420,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
   log.style = r.style;
   log.deckSize = r.deck.length;
   log.jadeLeft = r.jade;
+  log.stage = r.stage;
   return log;
 }
 

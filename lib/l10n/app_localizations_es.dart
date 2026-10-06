@@ -1790,4 +1790,84 @@ class AppLocalizationsEs extends AppLocalizations {
   String jadeLost(int n) {
     return '−$n de jade · se lo llevó';
   }
+
+  @override
+  String get stageCleared => 'ETAPA SUPERADA';
+
+  @override
+  String get stageBreath => 'Respirás hondo antes de seguir';
+
+  @override
+  String get stageClimb => 'Seguir subiendo';
+
+  @override
+  String mapStage(int n, int total) {
+    return 'Etapa $n de $total';
+  }
+
+  @override
+  String thornsChip(int n) {
+    return 'Espinas · −$n por carta';
+  }
+
+  @override
+  String get thornsHurt => 'Espinas';
+
+  @override
+  String regenChip(int n) {
+    return 'Se cura $n al actuar';
+  }
+
+  @override
+  String guardOnly(String type, int n) {
+    return 'Guardia $n · solo frena $type';
+  }
+
+  @override
+  String guardOnlyChip(int n, String type) {
+    return 'Guardia $n · solo $type';
+  }
+
+  @override
+  String get guardBypassed => '¡Esquivaste su guardia!';
+
+  @override
+  String get guardBypassedDetail => 'Era otro tipo de golpe';
+
+  @override
+  String intentDrain(int n) {
+    return 'Si no lo desviás: −$n Aliento';
+  }
+
+  @override
+  String intentFreeze(int n) {
+    return 'Si no lo desviás: robás $n menos';
+  }
+
+  @override
+  String get breathDrained => 'Repique';
+
+  @override
+  String breathDrainedDetail(int n) {
+    return '−$n Aliento el próximo turno';
+  }
+
+  @override
+  String get handFrozen => 'Escarcha';
+
+  @override
+  String handFrozenDetail(int n) {
+    return 'Robás $n carta menos';
+  }
+
+  @override
+  String previewThorns(int n) {
+    return 'Espinas: te quita $n';
+  }
+
+  @override
+  String get previewGuardMiss => 'Esquiva su guardia';
+
+  @override
+  String get previewGuardHit => 'Su guardia lo frena';
 }

@@ -30,12 +30,7 @@ class RunEngine {
     final fixed = data.balance.fixedMap;
     final (map, rng) = fixed != null
         ? (fixed, Rng.seeded(seed))
-        : generateMap(
-            data.balance.floors,
-            Rng.seeded(seed),
-            scenes: data.balance.scenes,
-            lights: data.balance.lights,
-          );
+        : _stageMap(0, Rng.seeded(seed));
     return RunState(
       difficulty: difficulty,
       pico: pico,
@@ -53,6 +48,45 @@ class RunEngine {
       rewardOptions: const [],
       rng: rng,
       map: map,
+    );
+  }
+
+  (List<MapNodeDef>, Rng) _stageMap(int stage, Rng rng) {
+    final st = data.balance.stages[stage];
+    return generateMap(st.floors, rng, scenes: st.scenes, lights: st.lights);
+  }
+
+  /// Etapa que recorre la run.
+  StageDef stageOf(RunState r) => data.balance.stages[r.stage];
+
+  /// La run está en la última etapa: su jefe es la cumbre.
+  bool isLastStage(RunState r) => r.stage >= data.balance.stages.length - 1;
+
+  /// El nodo actual es el jefe de la etapa (no tiene nada después).
+  bool _atStageBoss(RunState r) =>
+      r.currentNode != null && r.node(r.currentNode!).next.isEmpty;
+
+  /// Después de la recompensa: al mapa, o al descanso si se venció al jefe
+  /// de una etapa intermedia.
+  RunPhase _afterReward(RunState r) =>
+      _atStageBoss(r) && !isLastStage(r) ? RunPhase.stageClear : RunPhase.map;
+
+  /// Vida que se recupera al pasar a la etapa siguiente.
+  int stageHealOf(RunState r) =>
+      ((r.maxHp - r.hp) * data.balance.stageHeal / 100).round();
+
+  /// Subir a la etapa siguiente: cura, mapa nuevo y se empieza desde abajo.
+  RunState advanceStage(RunState r) {
+    if (r.phase != RunPhase.stageClear) throw StateError('No hay etapa vencida');
+    final (map, rng) = _stageMap(r.stage + 1, r.rng);
+    return r.copyWith(
+      stage: r.stage + 1,
+      hp: r.hp + stageHealOf(r),
+      map: map,
+      rng: rng,
+      visited: const [],
+      clearCurrentNode: true,
+      phase: RunPhase.map,
     );
   }
 
@@ -130,10 +164,17 @@ class RunEngine {
     int? fledWith,
   }) {
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
-    if (r.node(r.currentNode!).next.isEmpty) {
+    final boss = _atStageBoss(r);
+    if (boss && isLastStage(r)) {
       return r.copyWith(hp: hp, phase: RunPhase.victory);
     }
-    if (fledWith != null) {
+    if (boss) {
+      // Jefe de una etapa intermedia: jade para la etapa que viene.
+      r = r.copyWith(
+        jade: r.jade + data.balance.stageJade,
+        jadeGained: data.balance.stageJade,
+      );
+    } else if (fledWith != null) {
       final lost = math.min(r.jade, fledWith);
       r = r.copyWith(jade: r.jade - lost, jadeGained: -lost);
     } else {
@@ -144,8 +185,8 @@ class RunEngine {
     final (options, rng) =
         _rollRewards(r.rng, r.style, data.balance.rewardChoices);
     final (form, rng2) = _rollForm(rng, r);
-    // El élite deja elegir un talismán antes de la recompensa.
-    final elite = data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    // El élite y el jefe dejan elegir un talismán antes de la recompensa.
+    final elite = boss || data.enemy(enemyOf(r)).rank == EnemyRank.elite;
     final (talismans, rng3) = elite
         ? _rollTalismans(rng2, r, data.balance.talismanChoices)
         : (const <String>[], rng2);
@@ -362,7 +403,7 @@ class RunEngine {
       nextUid: cardId == null ? r.nextUid : r.nextUid + 1,
       rewardOptions: const [],
       clearRewardForm: true,
-      phase: RunPhase.map,
+      phase: _afterReward(r),
     );
   }
 
@@ -376,7 +417,7 @@ class RunEngine {
       knownForms: [...r.knownForms, formId],
       rewardOptions: const [],
       clearRewardForm: true,
-      phase: RunPhase.map,
+      phase: _afterReward(r),
     );
   }
 

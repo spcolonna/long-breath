@@ -15,6 +15,7 @@ import '../widgets/card_widget.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import 'home_screen.dart';
 
 class RewardScreen extends ConsumerStatefulWidget {
   const RewardScreen({super.key});
@@ -44,7 +45,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
       if (_taking) return;
       if (id == null) {
         ref.read(runControllerProvider.notifier).chooseReward(null);
-        context.go('/map');
+        context.go(routeFor(ref.read(runControllerProvider)!));
         return;
       }
       HapticFeedback.mediumImpact();
@@ -56,7 +57,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
       Future.delayed(const Duration(milliseconds: 650), () {
         if (!context.mounted) return;
         ref.read(runControllerProvider.notifier).chooseReward(id);
-        context.go('/map');
+        context.go(routeFor(ref.read(runControllerProvider)!));
       });
     }
 
@@ -71,7 +72,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
       Future.delayed(const Duration(milliseconds: 1400), () {
         if (!context.mounted) return;
         ref.read(runControllerProvider.notifier).chooseForm(formId);
-        context.go('/map');
+        context.go(routeFor(ref.read(runControllerProvider)!));
       });
     }
 

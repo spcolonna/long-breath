@@ -484,7 +484,7 @@ void main() {
 
     test('Eco del Dragón: fase 2 al 50% con cuenta regresiva', () {
       var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
-      s = s.copyWith(enemy: s.enemy.copyWith(hp: 88));
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 78));
       final r = play(s, 'gongbu_chongquan');
       s = r.state;
       expect(r.events.whereType<EnemyPhaseChanged>(), hasLength(1));
@@ -498,9 +498,9 @@ void main() {
       'Eco del Dragón: fase 3 al 30%, le crecen escamas y el Aliento llega antes',
       () {
         var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
-        // En fase 2, sin escamas y apenas arriba del 30% (52,5 de 175).
+        // En fase 2, sin escamas y apenas arriba del 30% (45 de 150).
         s = s.copyWith(
-          enemy: s.enemy.copyWith(hp: 55, phaseIndex: 1, scales: 0),
+          enemy: s.enemy.copyWith(hp: 52, phaseIndex: 1, scales: 0),
         );
         final r = play(s, 'gongbu_chongquan');
         s = r.state;
@@ -583,7 +583,7 @@ void main() {
       // Pico 10 sobre las reglas anteriores: jefe +10 +10 +8.
       expect(
         start(Difficulty.normal, pico: 10, enemy: 'dragon').enemy.maxHp,
-        (193 * 1.28).round(),
+        (150 * 1.28).round(),
       );
     });
 
@@ -772,6 +772,67 @@ void main() {
       expect(r.events.whereType<EnemyFled>().single.stolen, 16);
       expect(r.state.phase, CombatPhase.won);
       expect(r.state.enemy.fled, isTrue);
+    });
+  });
+
+  group('reglas de las etapas 2 y 3', () {
+    test('Espinas: cada carta que le hace daño te lastima', () {
+      final s = setup(['tan_tui', ...filler], enemy: 'bronze_man');
+      final r = play(s, 'tan_tui');
+      expect(r.events.whereType<ThornsHurt>().single.damage, 1);
+      expect(r.state.player.hp, 49);
+      // Una defensa no lo toca: no hay espinas.
+      final g = play(s, 'ge_dang');
+      expect(g.events.whereType<ThornsHurt>(), isEmpty);
+    });
+
+    test('Regeneración: se cura antes de actuar', () {
+      var s = setup(['tan_tui', ...filler, ...filler], enemy: 'ash_salamander');
+      s = play(s, 'tan_tui').state;
+      final hurt = s.enemy.hp;
+      final r = endTurn(s);
+      expect(r.events.whereType<EnemyRegenerated>().single.amount, 4);
+      expect(r.state.enemy.hp, hurt + 4);
+    });
+
+    test('Guardia de un tipo: frena puños y deja pasar patadas', () {
+      var s = setup(
+        [...filler, 'tan_tui', 'gongbu_chongquan', ...filler],
+        enemy: 'temple_guard',
+      );
+      // Turno 1: el guardián cierra el paso a los puños.
+      s = endTurn(s).state;
+      expect(s.enemy.guardBlocks, CardType.fist);
+      expect(s.enemy.guard, 12);
+      final fist = play(s, 'gongbu_chongquan');
+      expect(fist.events.whereType<EnemyDamaged>().first.absorbed, greaterThan(0));
+      final kick = play(s, 'tan_tui');
+      expect(kick.events.whereType<GuardBypassed>(), hasLength(1));
+      expect(kick.events.whereType<EnemyDamaged>().first.absorbed, 0);
+      expect(kick.state.enemy.guard, 12, reason: 'la guardia sigue ahí');
+    });
+
+    test('Repique y escarcha: si no se desvía, menos Aliento y menos cartas', () {
+      var s = setup([...filler, ...filler, ...filler], enemy: 'frost_bat');
+      final r = endTurn(s);
+      expect(r.events.whereType<HandFrozen>().single.amount, 1);
+      s = r.state;
+      expect(s.hand.length, s.handSize - 1);
+      final r2 = endTurn(s);
+      expect(r2.events.whereType<BreathDrained>().single.amount, 1);
+      expect(r2.state.player.breath, r2.state.breathPerTurn - 1);
+    });
+
+    test('Repique desviado: no quita Aliento', () {
+      // El murciélago del campanario pega ALTO doble con repique.
+      var s = setup(
+        ['xubu_liangzhang', ...filler, ...filler],
+        enemy: 'bell_bat',
+      );
+      s = play(s, 'xubu_liangzhang').state;
+      final r = endTurn(s);
+      expect(r.events.whereType<Deflected>(), hasLength(1));
+      expect(r.events.whereType<BreathDrained>(), isEmpty);
     });
   });
 }

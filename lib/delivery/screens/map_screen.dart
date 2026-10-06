@@ -45,13 +45,25 @@ class MapScreen extends ConsumerWidget {
         title: Column(
           children: [
             Text(
-              '${ref.watch(textProvider).stage(data.balance.stage.id)} · ${data.balance.stage.hanzi}',
+              '${ref.watch(textProvider).stage(data.balance.stages[run.stage].id)} · ${data.balance.stages[run.stage].hanzi}',
               style: const TextStyle(fontSize: 18),
             ),
-            Text(
-              run.pico > 0
-                  ? '${t.difficultyName(run.difficulty)} · ${t.picoName(run.pico)}'
-                  : t.difficultyName(run.difficulty),
+            Text.rich(
+              TextSpan(
+                children: [
+                  if (data.balance.stages.length > 1)
+                    TextSpan(
+                      text:
+                          '${t.mapStage(run.stage + 1, data.balance.stages.length)} · ',
+                      style: const TextStyle(color: Palette.textDim),
+                    ),
+                  TextSpan(
+                    text: run.pico > 0
+                        ? '${t.difficultyName(run.difficulty)} · ${t.picoName(run.pico)}'
+                        : t.difficultyName(run.difficulty),
+                  ),
+                ],
+              ),
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
@@ -283,6 +295,7 @@ class _MapViewState extends ConsumerState<_MapView>
                             ? scroll.offset
                             : scroll.initialScrollOffset,
                         maxScroll: size.height - view.height,
+                        tint: MountainTint.of(widget.run.stage),
                       ),
                     ),
                   ),
@@ -307,7 +320,12 @@ class _MapViewState extends ConsumerState<_MapView>
                       ),
                       Positioned.fill(
                         child: RepaintBoundary(
-                          child: CustomPaint(painter: LandmarkPainter(layout)),
+                          child: CustomPaint(
+                            painter: LandmarkPainter(
+                              layout,
+                              stage: widget.run.stage,
+                            ),
+                          ),
                         ),
                       ),
                       Positioned.fill(

@@ -2961,6 +2961,126 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'−{n} de jade · se lo llevó'**
   String jadeLost(int n);
+
+  /// No description provided for @stageCleared.
+  ///
+  /// In es, this message translates to:
+  /// **'ETAPA SUPERADA'**
+  String get stageCleared;
+
+  /// No description provided for @stageBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Respirás hondo antes de seguir'**
+  String get stageBreath;
+
+  /// No description provided for @stageClimb.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir subiendo'**
+  String get stageClimb;
+
+  /// No description provided for @mapStage.
+  ///
+  /// In es, this message translates to:
+  /// **'Etapa {n} de {total}'**
+  String mapStage(int n, int total);
+
+  /// No description provided for @thornsChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Espinas · −{n} por carta'**
+  String thornsChip(int n);
+
+  /// No description provided for @thornsHurt.
+  ///
+  /// In es, this message translates to:
+  /// **'Espinas'**
+  String get thornsHurt;
+
+  /// No description provided for @regenChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Se cura {n} al actuar'**
+  String regenChip(int n);
+
+  /// No description provided for @guardOnly.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardia {n} · solo frena {type}'**
+  String guardOnly(String type, int n);
+
+  /// No description provided for @guardOnlyChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardia {n} · solo {type}'**
+  String guardOnlyChip(int n, String type);
+
+  /// No description provided for @guardBypassed.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Esquivaste su guardia!'**
+  String get guardBypassed;
+
+  /// No description provided for @guardBypassedDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Era otro tipo de golpe'**
+  String get guardBypassedDetail;
+
+  /// No description provided for @intentDrain.
+  ///
+  /// In es, this message translates to:
+  /// **'Si no lo desviás: −{n} Aliento'**
+  String intentDrain(int n);
+
+  /// No description provided for @intentFreeze.
+  ///
+  /// In es, this message translates to:
+  /// **'Si no lo desviás: robás {n} menos'**
+  String intentFreeze(int n);
+
+  /// No description provided for @breathDrained.
+  ///
+  /// In es, this message translates to:
+  /// **'Repique'**
+  String get breathDrained;
+
+  /// No description provided for @breathDrainedDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} Aliento el próximo turno'**
+  String breathDrainedDetail(int n);
+
+  /// No description provided for @handFrozen.
+  ///
+  /// In es, this message translates to:
+  /// **'Escarcha'**
+  String get handFrozen;
+
+  /// No description provided for @handFrozenDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {n} carta menos'**
+  String handFrozenDetail(int n);
+
+  /// No description provided for @previewThorns.
+  ///
+  /// In es, this message translates to:
+  /// **'Espinas: te quita {n}'**
+  String previewThorns(int n);
+
+  /// No description provided for @previewGuardMiss.
+  ///
+  /// In es, this message translates to:
+  /// **'Esquiva su guardia'**
+  String get previewGuardMiss;
+
+  /// No description provided for @previewGuardHit.
+  ///
+  /// In es, this message translates to:
+  /// **'Su guardia lo frena'**
+  String get previewGuardHit;
 }
 
 class _AppLocalizationsDelegate
