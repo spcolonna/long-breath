@@ -155,7 +155,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Hecho (06/10/2026):** 3 etapas de 9 pisos: Montaña de las Mil Nubes 千云山, **Monasterio Colgado** 悬空寺 y **Cumbre del Dragón Dormido** 卧龙顶. Arriba de cada etapa: élite → fuente → jefe. El jefe intermedio da talismán, recompensa y 25 de jade, y una pantalla de "etapa superada" cura toda la Vida antes de subir. 14 enemigos nuevos (variantes recoloreadas con `tool/recolor_enemies.py`) con 5 reglas nuevas: espinas, regeneración, repique (−Aliento), escarcha (−cartas) y guardia de un solo tipo de golpe. Fondos de combate: los de la etapa 1 teñidos; el mapa cambia de colores y el jefe del monasterio tiene su campana. Promedio en Normal: 59%, unos 39 minutos por subida ganada (`balance.md` §3h).
 - **Falta:**
   - Arte propio: 2 fondos de combate por etapa, los sprites definitivos de los 14 enemigos (prompts en `docs/arte/prompts.md`) y los jefes con silueta propia (hoy el abad es el monje dorado y el Dragón Dormido, el eco recoloreado).
-  - Eventos propios de cada etapa (hoy se comparten los 8).
+  - Eventos propios de cada etapa: **hecho (07/10/2026)**, 8 nuevos (ver `manual.md`).
   - Dificultades recalibradas para 3 etapas (06/10/2026, `balance.md` §3i). Falta confirmarlas con personas.
   - Precios del mercader por etapa: **hecho (07/10/2026)**, más caro arriba, 4 cartas desde la etapa 2 y talismán raro en la Cumbre. Sobran ~52 de jade al final, pero es estructural: se gana después del último mercader (pisos 9 a 11).
   - Duración: **hecho (07/10/2026)**, 11 pisos por etapa; una subida ganada dura unos 44 minutos en el modelo del simulador (un jugador real tarda más). Eventos propios por etapa: **hecho (07/10/2026)**, 2 en la etapa 1 y 3 en las etapas 2 y 3 (16 en total).
