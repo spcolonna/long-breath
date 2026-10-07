@@ -236,6 +236,10 @@
       "name": "León de Jade",
       "rule": "Despierta: después de cada acción sus golpes suman 3 más. Antes de actuar recupera 3 de Vida. Desequilibrarlo lo calma y le quita la acción."
     },
+    "bell_keeper": {
+      "name": "Guardián de la Campana",
+      "rule": "Su Guardia solo frena las palmas: usá puños o patadas. Repique: si no lo desviás, tenés 1 de Aliento menos. Anuncia el Golpe de campana, un golpe ALTO fuerte con cuenta regresiva que también te quita Aliento."
+    },
     "bell_abbot": {
       "name": "Abad de la Gran Campana",
       "rule": "Su Guardia frena un solo tipo de golpe (puños o patadas): usá otro. Su repique te quita Aliento si no lo desviás. Fase 2 al 50%: anuncia la Gran Campanada, un golpe MEDIO enorme con cuenta regresiva que además te quita 2 de Aliento."
@@ -264,6 +268,10 @@
       "name": "León de las Nieves",
       "rule": "Despierta: después de cada acción sus golpes suman 3 más; desequilibrarlo lo calma. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no)."
     },
+    "dragon_dream": {
+      "name": "Sueño del Dragón",
+      "rule": "Lo que el Dragón Dormido sueña antes de despertar. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos y su bruma te hace descartar. Anuncia el Aliento del Dragón con cuenta regresiva."
+    },
     "sleeping_dragon": {
       "name": "Dragón Dormido",
       "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos. Fase 2 al 50%: Aliento del Dragón con cuenta regresiva. Fase 3 al 30%: le crecen escamas hasta 3 y alterna escarcha y Aliento."
@@ -291,6 +299,8 @@
     "palm_gate": "Cierra el paso a las palmas",
     "iron_shirt": "Camisa de hierro",
     "great_bell": "Gran Campanada",
+    "bell_strike": "Golpe de campana",
+    "dream_haze": "Bruma del sueño",
     "frost": "Escarcha",
     "spores": "Nube de esporas",
     "cap_shield": "Sombrero de laca",
