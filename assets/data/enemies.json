@@ -147,6 +147,12 @@
         { "kind": "guard", "labelKey": "stone_skin", "value": 9 },
         { "kind": "attack", "labelKey": "pounce", "height": "high", "damage": 12, "structure": 4 }
       ] } ] },
+    { "id": "bell_keeper", "hanzi": "守钟人", "pinyin": "Shǒu Zhōng Rén", "art": "bell_keeper", "rank": "elite", "hp": 148, "structure": 23,
+      "phases": [ { "pattern": [
+        { "kind": "guard", "labelKey": "palm_gate", "blocks": "palm", "value": 14 },
+        { "kind": "attack", "labelKey": "toll", "height": "low", "damage": 11, "structure": 3, "drain": 1 },
+        { "kind": "attack", "labelKey": "bell_strike", "height": "high", "damage": 26, "structure": 6, "drain": 1, "countdown": true }
+      ] } ] },
     { "id": "bell_abbot", "hanzi": "钟师", "pinyin": "Zhōng Shī", "art": "monk_gold", "rank": "boss", "hp": 215, "structure": 21,
       "phases": [
         { "pattern": [
@@ -196,6 +202,12 @@
         { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
         { "kind": "guard", "labelKey": "stone_skin", "value": 10 },
         { "kind": "attack", "labelKey": "pounce", "height": "high", "damage": 13, "structure": 4 }
+      ] } ] },
+    { "id": "dragon_dream", "hanzi": "龙梦", "pinyin": "Lóng Mèng", "art": "dragon_dream", "rank": "elite", "hp": 134, "structure": 23, "scales": 3,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "frost", "height": "high", "damage": 7, "hits": 2, "structure": 2, "freeze": 1 },
+        { "kind": "discard", "labelKey": "dream_haze", "count": 1 },
+        { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 25, "structure": 7, "countdown": true }
       ] } ] },
     { "id": "sleeping_dragon", "hanzi": "卧龙", "pinyin": "Wò Lóng", "art": "dragon_azure", "rank": "boss", "hp": 205, "structure": 21, "scales": 4,
       "phases": [

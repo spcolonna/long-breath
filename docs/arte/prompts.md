@@ -1,5 +1,7 @@
 # Prompts de arte
 
+> Antes de pasar un prompt, mirar `relevamiento.md`: ahí está qué existe, qué es recoloreo y qué falta.
+
 Prompts para generar la identidad visual de Long Breath. **Cada bloque es un prompt completo** (con el estilo y la paleta ya incluidos): se copia entero con el botón del bloque y se pega en el generador. Sirven para cualquier generador (Midjourney, DALL·E, Imagen, SD). Están en inglés porque los generadores responden mejor así.
 
 **Regla general:** nada de fondos negros, marrones ni "versión dark". Es una pintura china vista a plena luz: papel claro, color saturado y mucho aire.
@@ -1003,7 +1005,7 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 
 ## 7. Etapas 2 y 3
 
-**Estado:** los 14 enemigos ya están en el juego como **variantes recoloreadas** de los de la etapa 1 (`tool/recolor_enemies.py`). Cuando llegue el arte propio de uno, se guarda con el mismo nombre en `assets/art/enemies/` y **se borra su entrada de `VARIANTS`** en el script (si no, volver a correrlo lo pisa). Los fondos de combate de estas etapas hoy son los de la etapa 1 teñidos (`_stageTint` en `combat_screen.dart`).
+**Estado:** los 14 enemigos ya están en el juego como **variantes recoloreadas** de los de la etapa 1 (`tool/recolor_enemies.py`). Cuando llegue el arte propio de uno, se guarda con el mismo nombre en `assets/art/enemies/` y **se borra su entrada de `VARIANTS`** en el script (si no, volver a correrlo lo pisa). Las dos etapas ya tienen su `combat_bg.png`; faltan los tramos (ver `relevamiento.md`).
 
 ### Fondos de combate
 
@@ -1112,7 +1114,9 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Abad de la Gran Campana 钟师 (`monk_gold`, jefe, etapa 2)
+### Guardián de la Campana 守钟人 (`bell_keeper`, élite, etapa 2) — hecho
+
+Este prompt se escribió para `monk_gold`, pero la imagen salió distinta y se usó para un élite nuevo. El arte propio del Abad de la Gran Campana queda pendiente, con un prompt que no se parezca a este.
 
 ```
 Game boss character, full body, facing the viewer, centered, transparent background: the old abbot
@@ -1201,7 +1205,9 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Dragón Dormido 卧龙 (`dragon_azure`, jefe final, etapa 3)
+### Sueño del Dragón 龙梦 (`dragon_dream`, élite, etapa 3) — hecho
+
+Este prompt se escribió para `dragon_azure`, pero se usó para un élite nuevo. El arte propio del Dragón Dormido queda pendiente, con un prompt que no se parezca a este (ni al Eco).
 
 ```
 Game boss character, full body, facing the viewer, centered, transparent background: an immense
@@ -1222,7 +1228,7 @@ photorealism, no text, no watermark.
 
 ### Tanda 3: mapas, fuentes y paso entre etapas
 
-**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Ya están los fondos de combate de las dos etapas. Faltan el manantial de la cumbre y el paso entre etapas; se cargan apenas se guarden. Estos tres llevan paleta, luz y encuadre propios (no el bloque de estilo común) para que no se vean iguales a los demás.
+**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Ya están los fondos de combate de las dos etapas. Ya está el paso entre etapas. Falta el manantial de la cumbre. Estos tres llevan paleta, luz y encuadre propios (no el bloque de estilo común) para que no se vean iguales a los demás.
 
 #### Mapa del Monasterio Colgado (`xuankongsi/map_bg.png`)
 

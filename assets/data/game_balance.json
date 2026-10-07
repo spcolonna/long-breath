@@ -90,7 +90,7 @@
           { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
           { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
           { "width": [2, 3], "types": { "combat": 2, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
-          { "width": 1, "types": { "combat": 1 }, "enemies": ["iron_abbot", "jade_lion"], "scene": "campanario" },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["iron_abbot", "jade_lion", "bell_keeper"], "scene": "campanario" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["bell_abbot"], "scene": "gran_campana" }
         ],
@@ -110,7 +110,7 @@
           { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
           { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
           { "width": [2, 3], "types": { "combat": 2, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
-          { "width": 1, "types": { "combat": 1 }, "enemies": ["wind_lady", "snow_lion"], "scene": "templo_helado" },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["wind_lady", "snow_lion", "dragon_dream"], "scene": "templo_helado" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["sleeping_dragon"], "scene": "lecho_dragon" }
         ],

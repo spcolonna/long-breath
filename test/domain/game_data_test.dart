@@ -48,8 +48,10 @@ void main() {
         expect(data.cards.containsKey(step), isTrue, reason: step);
       }
     }
-    // 10 de la etapa 1, 7 del monasterio, 7 de la cumbre y 6 muñecos.
-    expect(data.enemies.length, 31);
+    // 10 de la etapa 1, 8 del monasterio, 8 de la cumbre y 6 muñecos.
+    expect(data.enemies.length, 33);
+    expect(data.enemy('bell_keeper').rank, EnemyRank.elite);
+    expect(data.enemy('dragon_dream').scales, 3);
     expect(data.enemy('dragon').phases.length, 3);
   });
 
