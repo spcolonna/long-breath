@@ -1026,14 +1026,15 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 Cumbre del Dragón Dormido (`wolongding/combat_bg.png`):
 
 ```
-Square game battle background, 1:1 aspect ratio: a snowy mountain summit above a sea of clouds, wind-carved snow
-ridges, a small frozen shrine, pale blue sky with pink dawn light, gentle falling snow, the vague
-coil of a sleeping dragon's body hidden in the clouds far behind, flat clear snowy ground in the lower third.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+Square game battle background, 1:1 aspect ratio, low camera close to the ground: a narrow wind-swept snow ridge
+at the very top of the world, strong wind blowing fine snow diagonally across the frame, torn
+blue prayer flags snapping on a leaning pole, sharp ice crystals catching the light, the sky
+almost all a cold gradient from cobalt blue to soft violet with one thin golden line of sun at
+the horizon, flat clear snowy ground in the lower third.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, COOL palette
+dominated by cobalt blue (#3E7BE0), violet (#9B5DE5) and white, only tiny touches of gold
+(#E59A12), almost no green and no red, crisp dry-brush strokes for the wind, energetic and
+tense mood, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
@@ -1209,7 +1210,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 ### Tanda 3: mapas, fuentes y paso entre etapas
 
-**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Faltan el manantial de la cumbre y el paso entre etapas; los dos ya se cargan apenas se guarden.
+**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Faltan el combate y el manantial de la cumbre y el paso entre etapas; se cargan apenas se guarden. Estos tres llevan paleta, luz y encuadre propios (no el bloque de estilo común) para que no se vean iguales a los demás.
 
 #### Mapa del Monasterio Colgado (`xuankongsi/map_bg.png`)
 
@@ -1268,16 +1269,15 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 1080×1920 vertical, sin transparencia; centro despejado para la UI.
 
 ```
-Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a hot spring high on a snowy mountain: a turquoise steaming pool among
-smooth snow-covered rocks, warm vapor curling up, small icicles shining, a red-ribboned prayer
-rope on a stone, pale blue sky and pink dawn light over a sea of clouds, the middle of the image
-calm and open for interface elements.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no characters, no text, no watermark.
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), seen from INSIDE a small rock alcove looking out: a hot spring in the
+foreground with turquoise water and thick warm steam rising in soft spirals, smooth rounded
+stones dusted with snow framing the left and right edges, a few red plum blossoms on a bare
+branch, outside the alcove a bright snowy slope in late afternoon light, the middle of the image
+filled only with soft steam, calm and open for interface elements.
+Style: intimate modern Chinese ink-and-watercolor illustration, WARM-AND-COOL contrast: turquoise
+(#1FA38A) water and pale peach-pink steam, accents of plum red (#E8453C), very wet watercolor
+bleeds, soft edges, cozy and restful mood, high readability on a small phone screen. NOT dark,
+NOT gloomy, no black or brown backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
 #### Paso entre etapas (`stage_clear_bg.png`)
@@ -1285,15 +1285,14 @@ backgrounds, no photorealism, no characters, no text, no watermark.
 `assets/art/ui/stage_clear_bg.png`. 1080×1920 vertical, sin transparencia. Fondo de la pantalla de etapa superada: el hanzi y la Vida van encima, así que el centro tiene que quedar muy limpio.
 
 ```
-Vertical background, 1080x1920 pixels (aspect ratio 9:16), of a mountain gate (paifang) of red lacquered wood standing on a stone
-stairway that climbs from green misty slopes at the bottom, through a sea of clouds, toward a
-far snowy peak glowing in gold and pink light at the top, a few cranes flying, very soft and
-airy composition with a wide clean empty area in the center for large text.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, calm and luminous mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+Vertical background, 1080x1920 pixels (aspect ratio 9:16), extremely minimal composition: almost the whole image is empty glowing
+sky in a vertical gradient from pale gold at the top to warm cream in the middle, at the very
+bottom a single small red lacquered gate (paifang) on the last steps of a stone stairway seen
+from below, a thin line of distant peaks and two tiny cranes flying high, huge negative space
+in the center for large text.
+Style: sparse traditional Chinese ink painting with a single watercolor wash, lots of untouched
+rice paper (#F6EEDC), only gold (#E59A12) and one vermilion (#E8453C) accent, few confident
+brush strokes, serene and triumphant mood. NOT dark, NOT busy, no clouds sea, no black or brown
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
