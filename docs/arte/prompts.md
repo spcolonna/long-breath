@@ -1115,13 +1115,18 @@ backgrounds, no photorealism, no text, no watermark.
 ### Abad de la Gran Campana 钟师 (`monk_gold`, jefe, etapa 2)
 
 ```
-Game enemy character, full body, facing the viewer, centered, transparent background: the old abbot of the hanging monastery, golden robes, a huge cracked bronze temple bell floating behind him, a heavy wooden striker in his hands, rings of sound around him, sad wise expression.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+Game boss character, full body, facing the viewer, centered, transparent background: the old abbot
+of the Hanging Monastery, a kind wrinkled face with a long white beard and calm closed eyes (a
+clearly visible human face, not hooded, not faceless), saffron and gold layered robes with a
+vermilion sash, standing firm with a heavy wooden bell striker held across his body, a huge
+bronze temple bell with a thin crack floating behind him like a halo, three golden rings of sound
+spreading out from the bell, falling golden leaves, wise, sad and powerful, fills most of the
+frame, wide triangular silhouette readable at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, fully transparent
+background, WARM palette dominated by saffron, gold (#E59A12) and bronze, accents of vermilion
+(#E8453C) and a little jade (#1FA38A) on the bell patina, almost no blue or violet, clean confident
+brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen.
+NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
 ```
 
 ### Simio de las Nieves (`monkey_snow`, común, etapa 3)
@@ -1199,18 +1204,25 @@ backgrounds, no photorealism, no text, no watermark.
 ### Dragón Dormido 卧龙 (`dragon_azure`, jefe final, etapa 3)
 
 ```
-Game enemy character, full body, facing the viewer, centered, transparent background: an immense azure-and-gold Chinese dragon coiled around the snowy summit, only partly awake, one huge eye half open, clouds being born from its slow breath, ancient and majestic, fills the frame.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+Game boss character, full body, facing the viewer, centered, transparent background: an immense
+azure Chinese dragon with a solid body (not made of clouds), coiled in a near-perfect circle like an
+ensō brush ring, snow resting on its back and mane, slowly waking: one huge golden eye half open,
+the other still closed, horns like clear ice crystals, a row of large frosted scales of pale blue
+and silver across its chest and forearms like a natural breastplate, a calm cold mist breathing
+out of its nostrils, small snowflakes floating around it, ancient, serene and majestic, fills most
+of the frame, iconic round silhouette readable at small size, clearly different from a golden
+cloud dragon.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, fully transparent
+background, COOL palette dominated by cobalt blue (#3E7BE0), ice white and soft violet (#9B5DE5),
+gold (#E59A12) only in the eye and the pearl-like scale edges, a single vermilion (#E8453C) touch
+on the tip of the tongue, crisp brush strokes, flat shading with watercolor bleeds, high
+readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown, no
+photorealism, no text, no watermark.
 ```
 
 ### Tanda 3: mapas, fuentes y paso entre etapas
 
-**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Faltan el combate y el manantial de la cumbre y el paso entre etapas; se cargan apenas se guarden. Estos tres llevan paleta, luz y encuadre propios (no el bloque de estilo común) para que no se vean iguales a los demás.
+**Estado:** ya están en el juego los dos mapas y la fuente del Monasterio. El mapa y la fuente buscan su archivo por `stageId` y, si falta, usan el de la etapa 1 (`stageArt` en `widgets/scene_backdrop.dart`). Ya están los fondos de combate de las dos etapas. Faltan el manantial de la cumbre y el paso entre etapas; se cargan apenas se guarden. Estos tres llevan paleta, luz y encuadre propios (no el bloque de estilo común) para que no se vean iguales a los demás.
 
 #### Mapa del Monasterio Colgado (`xuankongsi/map_bg.png`)
 
