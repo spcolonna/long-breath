@@ -39,6 +39,18 @@
   "jade": { "common": 14, "elite": 0, "spread": 6 },
   "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25 },
   "master": { "forms": 2 },
+  "cultivation": {
+    "perFloor": 2, "perStage": 10, "win": 25, "perPico": 10,
+    "difficulty": { "easy": 50, "normal": 100, "hard": 130, "shifu": 160 },
+    "realms": [
+      { "id": "lianqi", "hanzi": "炼气", "breath": 0 },
+      { "id": "zhuji", "hanzi": "筑基", "breath": 90, "unlocks": ["crane"] },
+      { "id": "kaimai", "hanzi": "开脉", "breath": 250, "unlocks": ["hu_wei", "she_wei", "he_xi"] },
+      { "id": "ningshen", "hanzi": "凝神", "breath": 460, "unlocks": ["hu_quan", "she_quan", "he_quan"] },
+      { "id": "tongxuan", "hanzi": "通玄", "breath": 720, "unlocks": ["xia_shan_hu", "she_shan", "he_ming"] },
+      { "id": "guizhen", "hanzi": "归真", "breath": 1050, "unlocks": ["da_hong_quan"] }
+    ]
+  },
   "difficulties": {
     "easy":   { "hanzi": "易", "playerHp": 70, "fountainHeal": 30, "enemyHp": 88, "enemyDamage": 80 },
     "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20 },

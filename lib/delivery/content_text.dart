@@ -41,6 +41,22 @@ class ContentText {
   String talisman(String id) => _get('talismans', id);
   String awakening(String id) => _get('awakenings', id, 'name');
   String awakeningText(String id) => _get('awakenings', id, 'text');
+
+  /// Nombre del reino del cultivo y su frase.
+  String realm(String id) => _get('realms', id, 'name');
+  String realmText(String id) => _get('realms', id, 'text');
+
+  /// Nombre de algo que abre el cultivo: un camino, una carta, un talismán o
+  /// una forma (los ids no se repiten entre sí).
+  String unlockName(String id) {
+    for (final s in Style.values) {
+      if (s.name == id) return style(s);
+    }
+    for (final section in const ['cards', 'talismans', 'forms']) {
+      if (has(section, id)) return _get(section, id);
+    }
+    return id;
+  }
   String event(String id) => _get('events', id, 'name');
   String eventText(String id) => _get('events', id, 'text');
   String eventOption(String id, String option) => _get('events', id, option);

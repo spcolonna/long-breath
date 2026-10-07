@@ -59,9 +59,11 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
     ref.read(audioProvider).play(Sfx.uiButton);
     final choice = await pickDifficulty(context);
     if (choice == null || !mounted) return;
+    final locked = (await ref.read(cultivationProvider.future)).locked;
+    if (!mounted) return;
     ref
         .read(runControllerProvider.notifier)
-        .newRun(choice.difficulty, pico: choice.pico);
+        .newRun(choice.difficulty, pico: choice.pico, locked: locked);
     context.go('/map');
   }
 

@@ -328,12 +328,14 @@ RunLog playRun(GameData data, Bot bot, int seed,
     List<String> startTalismans = const [],
     List<String> startCards = const [],
     Difficulty difficulty = Difficulty.normal,
-    int pico = 0}) {
+    int pico = 0,
+    List<String> locked = const []}) {
   final engine = CombatEngine(data);
   final runEngine = RunEngine(data);
   final log = RunLog();
   final tRng = math.Random(seed * 13 + 5);
-  var r = runEngine.newRun(seed: seed, difficulty: difficulty, pico: pico);
+  var r = runEngine.newRun(
+      seed: seed, difficulty: difficulty, pico: pico, locked: locked);
   for (final id in startCards) {
     r = r.copyWith(
         deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: id)],

@@ -187,6 +187,28 @@ Cada subida la hace **un discípulo distinto, con número** (Discípulo nº 1, n
 
 La Vida **no** se recupera entre combates (solo en la fuente, algunos eventos y talismanes). La Estructura sí, completa.
 
+## Cultivo del aliento 境界
+
+Cada subida, se gane o se pierda, deja **aliento** a la escuela. Con aliento acumulado la escuela sube de **reino** y les abre a los próximos discípulos caminos, cartas y formas. Caer nunca resta.
+
+- **Cuánto aliento:** 2 por piso alcanzado, 10 por etapa superada y 25 por llegar a la cumbre. Se multiplica por la dificultad (Fácil 50%, Normal 100%, Difícil 130%, Shifu 160%) y suma 10% por cada Pico.
+- **Variedad, no poder:** lo que se abre son opciones nuevas. Los talismanes raros y las cartas generales están abiertos desde el principio, y la dificultad es la misma en cualquier reino.
+- **Lo cerrado se fija al empezar la subida:** si subís de reino a mitad de una subida guardada, lo nuevo aparece en la próxima.
+
+| Reino | Aliento | Abre |
+|---|---|---|
+| 炼气 Aliento templado | 0 | Tigre y Serpiente, cartas generales, todos los talismanes |
+| 筑基 Cimientos | 90 | El camino de la Grulla |
+| 开脉 Meridianos abiertos | 250 | Cola de tigre, Cola de serpiente, Rodilla de grulla |
+| 凝神 Espíritu sereno | 460 | Puño del Tigre, de la Serpiente y de la Grulla (formas) |
+| 通玄 Lo profundo | 720 | Tigre que baja de la montaña, Serpiente que se escurre, Canto de la grulla |
+| 归真 Volver a lo verdadero | 1050 | Gran Puño Rojo (forma) |
+
+- **Dónde se ve:**
+  - en el inicio, bajo el número de discípulo, el sello del reino y una barra hasta el siguiente; el aura dorada del héroe crece con cada reino;
+  - al terminar una subida, "+N de aliento para la escuela", la barra que se llena y, si alcanza, el sello del reino nuevo con lo que se abrió;
+  - en el Registro de la escuela, la pestaña **Cultivo**, con los seis reinos (los de arriba lacrados).
+
 ## Dificultad
 
 Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cura la fuente y la fuerza de los enemigos de la subida (las lecciones no cambian).

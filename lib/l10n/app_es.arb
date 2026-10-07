@@ -930,5 +930,20 @@
   "previewThorns": "Espinas: te quita {n}",
   "@previewThorns": {"placeholders": {"n": {"type": "int"}}},
   "previewGuardMiss": "Esquiva su guardia",
-  "previewGuardHit": "Su guardia lo frena"
+  "previewGuardHit": "Su guardia lo frena",
+  "realmLabel": "Reino",
+  "breathTotal": "{n} de aliento",
+  "@breathTotal": {"placeholders": {"n": {"type": "int"}}},
+  "breathToNext": "{n} para el próximo reino",
+  "@breathToNext": {"placeholders": {"n": {"type": "int"}}},
+  "breathMax": "Reino más alto",
+  "breathEarned": "+{n} de aliento para la escuela",
+  "@breathEarned": {"placeholders": {"n": {"type": "int"}}},
+  "breathEarnedHint": "Gane o caiga, cada discípulo deja su aliento.",
+  "realmUp": "La escuela sube de reino",
+  "realmOpened": "Se abrió",
+  "realmLocked": "Cerrado",
+  "realmNeeds": "Con {n} de aliento",
+  "@realmNeeds": {"placeholders": {"n": {"type": "int"}}},
+  "registryTabCultivation": "Cultivo"
 }

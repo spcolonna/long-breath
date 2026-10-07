@@ -37,6 +37,8 @@ void main() {
 
     // Arranca el Discípulo nº 1; todavía no hay registro.
     expect(find.text('Discípulo nº 1'), findsOneWidget);
+    // El cultivo arranca en el primer reino.
+    expect(find.textContaining('Aliento templado'), findsOneWidget);
     expect(find.text('Registro de la escuela'), findsNothing);
 
     await tester.tap(find.text('La subida'));
@@ -333,6 +335,8 @@ void main() {
     );
     expect(find.text('Los que no vuelven'), findsOneWidget);
     expect(find.text('Subir como Discípulo nº 2'), findsOneWidget);
+    // El caído deja su aliento a la escuela.
+    expect(find.textContaining('de aliento para la escuela'), findsOneWidget);
     await tester.tap(find.text('Volver a la escuela'));
     await settle();
     expect(find.text('Discípulo nº 2'), findsOneWidget);

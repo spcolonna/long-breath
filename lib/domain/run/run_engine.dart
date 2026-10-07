@@ -22,6 +22,7 @@ class RunEngine {
     required int seed,
     Difficulty difficulty = Difficulty.normal,
     int pico = 0,
+    List<String> locked = const [],
   }) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp +
@@ -48,6 +49,7 @@ class RunEngine {
       rewardOptions: const [],
       rng: rng,
       map: map,
+      locked: locked,
     );
   }
 
@@ -159,7 +161,10 @@ class RunEngine {
     if (n.type == NodeType.merchant) return _rollShop(entered);
     if (n.type == NodeType.master) return _rollMaster(entered);
     if (n.type != NodeType.shrine) return entered;
-    final (shuffled, rng) = entered.rng.shuffle(Style.values);
+    final (shuffled, rng) = entered.rng.shuffle([
+      for (final s in Style.values)
+        if (!entered.locked.contains(s.name)) s,
+    ]);
     return entered.copyWith(
       pathOptions: shuffled.take(data.balance.pathChoices).toList(),
       rng: rng,
@@ -211,7 +216,7 @@ class RunEngine {
     }
     final healed = math.min(r.maxHp, hp + talismanSum(r, (e) => e.winHeal));
     final (options, rng) =
-        _rollRewards(r.rng, r.style, data.balance.rewardChoices);
+        _rollRewards(r.rng, r, data.balance.rewardChoices);
     final (form, rng2) = _rollForm(rng, r);
     // El élite y el jefe dejan elegir un talismán antes de la recompensa.
     final elite = boss || data.enemy(enemyOf(r)).rank == EnemyRank.elite;
@@ -238,7 +243,9 @@ class RunEngine {
   /// Talismanes que todavía no se tienen ([rare]: null = cualquiera).
   List<String> missingTalismans(RunState r, {bool? rare}) => [
         for (final t in data.talismans.values)
-          if (!r.talismans.contains(t.id) && (rare == null || t.rare == rare))
+          if (!r.talismans.contains(t.id) &&
+              !r.locked.contains(t.id) &&
+              (rare == null || t.rare == rare))
             t.id,
       ];
 
@@ -386,7 +393,9 @@ class RunEngine {
   }
 
   (RunState, String) _gainCard(RunState r) {
-    final pool = [for (final c in data.rewardPoolFor(r.style)) c.id];
+    final pool = [
+      for (final c in data.rewardPoolFor(r.style, locked: r.locked)) c.id,
+    ];
     final (id, rng) = _pick(r.rng, pool);
     return (
       r.copyWith(
@@ -407,6 +416,7 @@ class RunEngine {
   List<String> learnableForms(RunState r) => [
         for (final f in data.forms)
           if (!r.knownForms.contains(f.id) &&
+              !r.locked.contains(f.id) &&
               (f.pool == null || f.pool == r.style))
             f.id,
       ];
@@ -418,8 +428,10 @@ class RunEngine {
     return (shuffled.first, next);
   }
 
-  (List<String>, Rng) _rollRewards(Rng rng, Style? style, int n) {
-    final pool = [for (final c in data.rewardPoolFor(style)) c.id];
+  (List<String>, Rng) _rollRewards(Rng rng, RunState r, int n) {
+    final pool = [
+      for (final c in data.rewardPoolFor(r.style, locked: r.locked)) c.id,
+    ];
     final (shuffled, next) = rng.shuffle(pool);
     return (shuffled.take(n).toList(), next);
   }
@@ -518,7 +530,7 @@ class RunEngine {
 
   RunState _rollShop(RunState r) {
     final m = merchantOf(r);
-    final (cards, rng) = _rollRewards(r.rng, r.style, m.cards);
+    final (cards, rng) = _rollRewards(r.rng, r, m.cards);
     // Más arriba se venden raros; si no queda ninguno, uno común.
     final rares = m.rareTalisman ? missingTalismans(r, rare: true) : <String>[];
     final (talismans, rng2) = rng.shuffle(

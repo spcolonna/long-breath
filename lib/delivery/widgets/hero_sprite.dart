@@ -25,6 +25,7 @@ class HeroSprite extends StatefulWidget {
     this.victory = false,
     this.defeated = false,
     this.glyph,
+    this.aura = 0,
   });
 
   final Style? style;
@@ -37,6 +38,10 @@ class HeroSprite extends StatefulWidget {
 
   /// Carácter del animal detrás del héroe (solo en la pantalla de inicio).
   final String? glyph;
+
+  /// Cuánto creció el aura con el cultivo (0 = recién llegado, 1 = el
+  /// reino más alto). Solo en la pantalla de inicio.
+  final double aura;
 
   @override
   State<HeroSprite> createState() => _HeroSpriteState();
@@ -116,6 +121,21 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
             alignment: Alignment.center,
             clipBehavior: Clip.none,
             children: [
+              // Halo dorado del cultivo: crece con cada reino.
+              if (widget.aura > 0)
+                Container(
+                  width: w * (1.3 + 0.45 * widget.aura + 0.04 * idle),
+                  height: w * (1.3 + 0.45 * widget.aura + 0.04 * idle),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(colors: [
+                      Palette.gold.withValues(alpha: 0),
+                      Palette.gold.withValues(
+                          alpha: (0.1 + 0.08 * idle) * widget.aura),
+                      Palette.gold.withValues(alpha: 0),
+                    ], stops: const [0.55, 0.8, 1]),
+                  ),
+                ),
               // Aura del camino.
               Opacity(
                 opacity: 1 - fall * 0.8,

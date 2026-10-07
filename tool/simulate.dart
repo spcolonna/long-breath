@@ -44,6 +44,7 @@ class Config {
     this.startTalismans = const [],
     this.startCards = const [],
     this.difficulty = Difficulty.normal,
+    this.locked = const [],
   });
 
   final RawData raw;
@@ -53,6 +54,9 @@ class Config {
   final List<String> startTalismans;
   final List<String> startCards;
   final Difficulty difficulty;
+
+  /// Lo que el cultivo todavía no abrió (vacío = todo abierto).
+  final List<String> locked;
 }
 
 /// Corre [runs] runs de un perfil repartidas en varios isolates.
@@ -95,6 +99,7 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
               startCards: c.startCards,
               difficulty: c.difficulty,
               pico: c.pico,
+              locked: c.locked,
             ),
         ];
       }),
@@ -172,12 +177,18 @@ Future<void> main(List<String> args) async {
       await _talismans(raw, stages, runs, seed);
     case 'difficulty':
       await _difficulties(raw, stages, runs, seed, selected);
+    case 'cultivation':
+      await _cultivation(raw, stages, runs, seed, selected);
     default:
       final cfg = Config(
           raw: raw,
           stages: stages,
           talismans: flag('talismans'),
-          difficulty: Difficulty.parse(opt('difficulty', 'normal')));
+          difficulty: Difficulty.parse(opt('difficulty', 'normal')),
+          locked: [
+            for (final id in opt('locked', '').split(','))
+              if (id.isNotEmpty) id,
+          ]);
       final logs = <String, List<RunLog>>{};
       for (final p in selected) {
         logs[p] = await simulate(cfg, p, runs, seed, style: style);
@@ -204,6 +215,58 @@ Future<void> _difficulties(
     rows.add(row);
   }
   table(['Dificultad', ...profilesSel], rows);
+}
+
+/// El cultivo: victoria y aliento por reino (lo que se abre es variedad, no
+/// poder: el % no debería moverse) y cuántas subidas lleva cada reino.
+Future<void> _cultivation(
+    RawData raw, int stages, int runs, int seed, List<String> profilesSel) async {
+  final def = raw.copy().build().balance.cultivation;
+  final rows = <List<String>>[];
+  final gain = <String, List<double>>{for (final p in profilesSel) p: []};
+  for (var realm = 0; realm < def.realms.length; realm++) {
+    final cfg = Config(
+        raw: raw,
+        stages: stages,
+        talismans: proto,
+        locked: def.lockedAt(realm));
+    final row = ['${realm + 1} ${def.realms[realm].hanzi}'];
+    for (final p in profilesSel) {
+      final l = await simulate(cfg, p, runs, seed);
+      final b = mean([
+        for (final r in l)
+          def.breathFor(
+              fell: !r.won,
+              floor: r.nodes,
+              stage: r.stage,
+              diff: Difficulty.normal),
+      ]);
+      gain[p]!.add(b);
+      row.add('${pct(l.where((r) => r.won).length, l.length)} · ${f1(b)}');
+    }
+    rows.add(row);
+  }
+  print('## Victoria y aliento por subida en Normal, por reino');
+  table(['Reino', ...profilesSel], rows);
+  print('## Subidas para llegar a cada reino (Normal)');
+  table([
+    'Reino',
+    ...profilesSel
+  ], [
+    for (var realm = 1; realm < def.realms.length; realm++)
+      [
+        '${realm + 1} ${def.realms[realm].hanzi} (${def.realms[realm].breath})',
+        for (final p in profilesSel)
+          () {
+            var runsSum = 0.0;
+            for (var k = 0; k < realm; k++) {
+              final need = def.realms[k + 1].breath - def.realms[k].breath;
+              runsSum += need / math.max(1, gain[p]![k]);
+            }
+            return f1(runsSum);
+          }(),
+      ],
+  ]);
 }
 
 void _report(Map<String, List<RunLog>> logs) {

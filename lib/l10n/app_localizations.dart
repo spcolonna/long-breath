@@ -3201,6 +3201,72 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Su guardia lo frena'**
   String get previewGuardHit;
+
+  /// No description provided for @realmLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Reino'**
+  String get realmLabel;
+
+  /// No description provided for @breathTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de aliento'**
+  String breathTotal(int n);
+
+  /// No description provided for @breathToNext.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} para el próximo reino'**
+  String breathToNext(int n);
+
+  /// No description provided for @breathMax.
+  ///
+  /// In es, this message translates to:
+  /// **'Reino más alto'**
+  String get breathMax;
+
+  /// No description provided for @breathEarned.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de aliento para la escuela'**
+  String breathEarned(int n);
+
+  /// No description provided for @breathEarnedHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Gane o caiga, cada discípulo deja su aliento.'**
+  String get breathEarnedHint;
+
+  /// No description provided for @realmUp.
+  ///
+  /// In es, this message translates to:
+  /// **'La escuela sube de reino'**
+  String get realmUp;
+
+  /// No description provided for @realmOpened.
+  ///
+  /// In es, this message translates to:
+  /// **'Se abrió'**
+  String get realmOpened;
+
+  /// No description provided for @realmLocked.
+  ///
+  /// In es, this message translates to:
+  /// **'Cerrado'**
+  String get realmLocked;
+
+  /// No description provided for @realmNeeds.
+  ///
+  /// In es, this message translates to:
+  /// **'Con {n} de aliento'**
+  String realmNeeds(int n);
+
+  /// No description provided for @registryTabCultivation.
+  ///
+  /// In es, this message translates to:
+  /// **'Cultivo'**
+  String get registryTabCultivation;
 }
 
 class _AppLocalizationsDelegate

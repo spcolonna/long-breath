@@ -1961,4 +1961,46 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get previewGuardHit => 'Su guardia lo frena';
+
+  @override
+  String get realmLabel => 'Reino';
+
+  @override
+  String breathTotal(int n) {
+    return '$n de aliento';
+  }
+
+  @override
+  String breathToNext(int n) {
+    return '$n para el próximo reino';
+  }
+
+  @override
+  String get breathMax => 'Reino más alto';
+
+  @override
+  String breathEarned(int n) {
+    return '+$n de aliento para la escuela';
+  }
+
+  @override
+  String get breathEarnedHint =>
+      'Gane o caiga, cada discípulo deja su aliento.';
+
+  @override
+  String get realmUp => 'La escuela sube de reino';
+
+  @override
+  String get realmOpened => 'Se abrió';
+
+  @override
+  String get realmLocked => 'Cerrado';
+
+  @override
+  String realmNeeds(int n) {
+    return 'Con $n de aliento';
+  }
+
+  @override
+  String get registryTabCultivation => 'Cultivo';
 }
