@@ -10,6 +10,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/lore_scroll.dart';
+import '../widgets/cultivation_view.dart';
 
 /// 名册: el registro de la escuela. Una tablilla por cada discípulo que
 /// subió (los que cayeron y los que llegaron) y los pergaminos que se
@@ -24,7 +25,7 @@ class RegistryScreen extends ConsumerWidget {
     final lore = ref.watch(loreProvider).value ?? const <String>{};
     final fallen = ascents.where((a) => a.fell).length;
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -38,8 +39,14 @@ class RegistryScreen extends ConsumerWidget {
             unselectedLabelColor: Palette.textDim,
             onTap: (_) => HapticFeedback.selectionClick(),
             tabs: [
-              Tab(text: t.registryAscents),
-              Tab(text: '${t.registryScrolls} ${lore.length}/${loreOrder.length}'),
+              for (final label in [
+                t.registryAscents,
+                '${t.registryScrolls} ${lore.length}/${loreOrder.length}',
+                t.registryTabCultivation,
+              ])
+                Tab(
+                  child: FittedBox(fit: BoxFit.scaleDown, child: Text(label)),
+                ),
             ],
           ),
         ),
@@ -93,6 +100,7 @@ class RegistryScreen extends ConsumerWidget {
                 ],
               ],
             ),
+            const RealmList(),
           ],
         ),
       ),

@@ -12,6 +12,7 @@ class ProgressStorage {
   static const _discipleKey = 'long_breath.disciple';
   static const _ascentsKey = 'long_breath.ascents';
   static const _loreKey = 'long_breath.lore';
+  static const _breathKey = 'long_breath.breath';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -87,15 +88,38 @@ extension SchoolRecord on ProgressStorage {
     return true;
   }
 
+  /// Aliento acumulado por la escuela. La primera vez (guardados de antes
+  /// del cultivo) se calcula con las subidas del registro usando [migrate].
+  Future<int> breath({int Function(Ascent)? migrate}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getInt(ProgressStorage._breathKey);
+    if (saved != null) return saved;
+    final past = await ascents();
+    final total = migrate == null
+        ? 0
+        : past.fold(0, (a, x) => a + migrate(x));
+    await prefs.setInt(ProgressStorage._breathKey, total);
+    return total;
+  }
+
   /// Anota la subida con el número del discípulo actual, abre los
   /// pergaminos que corresponden y pasa al siguiente discípulo. Devuelve la
   /// subida tal como quedó (con su número y sus pergaminos nuevos).
-  Future<Ascent> recordAscent(Ascent a) async {
+  /// También suma su aliento ([Ascent.breath]) al de la escuela.
+  Future<Ascent> recordAscent(
+    Ascent a, {
+    int Function(Ascent)? migrate,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
     final n = await discipleNumber();
+    final had = await breath(migrate: migrate);
     final before = await ascents();
     final have = await lore();
-    final numbered = Ascent.fromJson({...a.toJson(), 'n': n});
+    final numbered = Ascent.fromJson({
+      ...a.toJson(),
+      'n': n,
+      'breathBefore': had,
+    });
     final done = numbered.withLore(earnedLore(numbered, before, have));
     final all = [...before, done];
     await prefs.setStringList(ProgressStorage._ascentsKey, [
@@ -111,6 +135,7 @@ extension SchoolRecord on ProgressStorage {
       ...done.lore,
     ]);
     await prefs.setInt(ProgressStorage._discipleKey, n + 1);
+    await prefs.setInt(ProgressStorage._breathKey, had + done.breath);
     return done;
   }
 }

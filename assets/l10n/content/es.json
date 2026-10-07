@@ -318,6 +318,14 @@
     "grieta": "Sello de la Grieta",
     "victoria": "Cinta de la Victoria"
   },
+  "realms": {
+    "lianqi": { "name": "Aliento templado", "text": "La escuela recién aprende a respirar con vos." },
+    "zhuji": { "name": "Cimientos", "text": "Los que cayeron dejaron una base firme. La Grulla baja a enseñar." },
+    "kaimai": { "name": "Meridianos abiertos", "text": "El aliento ya corre por toda la escuela." },
+    "ningshen": { "name": "Espíritu sereno", "text": "Los caminos animales comparten sus formas." },
+    "tongxuan": { "name": "Lo profundo", "text": "Se recuerdan técnicas que nadie había vuelto a usar." },
+    "guizhen": { "name": "Volver a lo verdadero", "text": "Todo lo que la escuela sabe, ya es tuyo." }
+  },
   "awakenings": {
     "hu_nu": {
       "name": "Furia",

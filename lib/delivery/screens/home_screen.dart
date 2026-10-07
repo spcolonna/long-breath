@@ -16,6 +16,7 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/npc_portrait.dart';
+import '../widgets/cultivation_view.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../domain/model/enums.dart';
 
@@ -52,6 +53,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final t = AppLocalizations.of(context);
     final saved = ref.watch(savedRunProvider).value;
     final stats = ref.watch(dataProvider).balance.novice;
+    final cultivation = ref.watch(cultivationProvider).value;
     final done = ref.watch(lessonsDoneProvider).value ?? const <String>{};
     final fresh = done.isEmpty;
     final resumable =
@@ -103,9 +105,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         initialPico: saved?.pico ?? 0,
       );
       if (choice == null || !context.mounted) return;
+      final locked = (await ref.read(cultivationProvider.future)).locked;
+      if (!context.mounted) return;
       ref
           .read(runControllerProvider.notifier)
-          .newRun(choice.difficulty, pico: choice.pico);
+          .newRun(choice.difficulty, pico: choice.pico, locked: locked);
       context.go('/map');
     }
 
@@ -164,6 +168,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     style: null,
                     height: math.min(box.maxHeight, box.maxWidth * 1.3),
                     glyph: stats.hanzi,
+                    aura: cultivation == null || !cultivation.active
+                        ? 0
+                        : cultivation.realm /
+                              (cultivation.def.realms.length - 1),
                   ),
                 ),
               ),
@@ -178,7 +186,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               const SizedBox(height: 8),
               const _SchoolLine(),
-              const SizedBox(height: 14),
+              const SizedBox(height: 6),
+              const RealmLine(),
+              const SizedBox(height: 10),
               _MenuButton(
                 icon: Icons.school_rounded,
                 title: t.menuLearn,

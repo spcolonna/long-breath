@@ -4,6 +4,7 @@ import '../../domain/model/enums.dart';
 import '../../domain/run/run_engine.dart';
 import '../../domain/run/run_state.dart';
 import '../../domain/run/ascent.dart';
+import '../../domain/run/cultivation.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../providers.dart';
 import '../screens/map/map_layout.dart';
@@ -22,10 +23,15 @@ class RunController extends Notifier<RunState?> {
 
   void resume(RunState r) => state = r;
 
-  void newRun(Difficulty difficulty, {int pico = 0}) => _set(_engine.newRun(
+  /// Sube un discípulo nuevo. [locked]: lo que el cultivo todavía no abrió
+  /// (si no se pasa, se toma del reino ya cargado).
+  void newRun(Difficulty difficulty, {int pico = 0, List<String>? locked}) =>
+      _set(_engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
         difficulty: difficulty,
         pico: pico,
+        locked:
+            locked ?? ref.read(cultivationProvider).value?.locked ?? const [],
       ));
 
   void abandon() => _set(null);
@@ -63,7 +69,8 @@ class RunController extends Notifier<RunState?> {
     // El piso se cuenta en toda la subida: las etapas anteriores suman.
     final stages = ref.read(dataProvider).balance.stages;
     final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);
-    final ascent = Ascent(
+    final cultivation = ref.read(dataProvider).balance.cultivation;
+    var ascent = Ascent(
       n: 0,
       fell: run.phase == RunPhase.defeat,
       floor: below +
@@ -80,13 +87,21 @@ class RunController extends Notifier<RunState?> {
       maxHp: run.maxHp,
       deck: run.deck.length,
     );
+    ascent = Ascent.fromJson({
+      ...ascent.toJson(),
+      'breath': ascentBreath(cultivation, ascent),
+    });
     ref.read(lastAscentProvider.notifier).set(null);
-    ref.read(progressStorageProvider).recordAscent(ascent).then((done) {
+    ref
+        .read(progressStorageProvider)
+        .recordAscent(ascent, migrate: (a) => ascentBreath(cultivation, a))
+        .then((done) {
       ref.read(lastAscentProvider.notifier).set(done);
       ref
         ..invalidate(discipleProvider)
         ..invalidate(ascentsProvider)
-        ..invalidate(loreProvider);
+        ..invalidate(loreProvider)
+        ..invalidate(cultivationProvider);
     });
   }
 

@@ -1,4 +1,5 @@
 import 'awakening_def.dart';
+import 'cultivation_def.dart';
 import 'enums.dart';
 
 /// Cómo se juega la mano: el del novicio o el del camino animal elegido.
@@ -351,6 +352,7 @@ class GameBalance {
     required this.difficulties,
     this.picos = const [],
     this.awakeningChoices = 3,
+    this.cultivation = CultivationDef.none,
   });
 
   final int playerHp;
@@ -444,6 +446,9 @@ class GameBalance {
   /// Cuántos despertares se ofrecen al superar una etapa.
   final int awakeningChoices;
 
+  /// Reinos del cultivo y cuánto aliento deja cada subida.
+  final CultivationDef cultivation;
+
   factory GameBalance.fromJson(Map<String, dynamic> j) {
     final player = j['player'] as Map<String, dynamic>;
     final styles = j['styles'] as Map<String, dynamic>;
@@ -517,6 +522,10 @@ class GameBalance {
         for (final p in (j['picos'] as List?) ?? const [])
           PicoDef.fromJson(p as Map<String, dynamic>),
       ],
+      cultivation: switch (j['cultivation']) {
+        final Map<String, dynamic> c => CultivationDef.fromJson(c),
+        _ => CultivationDef.none,
+      },
     );
   }
 }

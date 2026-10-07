@@ -10,6 +10,7 @@ import 'audio/game_audio.dart';
 import 'content_text.dart';
 import '../domain/model/enums.dart';
 import '../domain/run/ascent.dart';
+import '../domain/run/cultivation.dart';
 import '../infrastructure/progress_storage.dart';
 import '../infrastructure/run_storage.dart';
 import '../infrastructure/tutorial_storage.dart';
@@ -81,6 +82,15 @@ final ascentsProvider = FutureProvider<List<Ascent>>(
 final loreProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(progressStorageProvider).lore(),
 );
+
+/// Aliento de la escuela y reino del cultivo.
+final cultivationProvider = FutureProvider<Cultivation>((ref) async {
+  final def = ref.watch(dataProvider).balance.cultivation;
+  final breath = await ref
+      .watch(progressStorageProvider)
+      .breath(migrate: (a) => ascentBreath(def, a));
+  return Cultivation(def, breath);
+});
 
 /// La subida que acaba de terminar, ya anotada (con su número y sus
 /// pergaminos nuevos), para la pantalla final.

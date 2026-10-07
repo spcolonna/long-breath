@@ -56,10 +56,14 @@ class GameData {
       .toList();
 
   /// Recompensas que puede ver quien sigue [style]: las cartas de un camino
-  /// (pool con el nombre del camino) solo le salen a ese camino.
-  List<CardDef> rewardPoolFor(Style? style) => [
+  /// (pool con el nombre del camino) solo le salen a ese camino, y las que
+  /// el cultivo todavía no abrió ([locked]) no salen.
+  List<CardDef> rewardPoolFor(Style? style, {List<String> locked = const []}) => [
         for (final c in rewardPool)
-          if (!Style.values.any((s) => s.name == c.pool) || c.pool == style?.name) c,
+          if ((!Style.values.any((s) => s.name == c.pool) ||
+                  c.pool == style?.name) &&
+              !locked.contains(c.id))
+            c,
       ];
 
   /// Construye GameData desde los JSON ya decodificados (sin Flutter).

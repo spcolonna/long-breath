@@ -116,6 +116,7 @@ class RunState {
     this.talismanOptions = const [],
     this.awakenings = const [],
     this.awakeningOptions = const [],
+    this.locked = const [],
     this.eventId,
     this.seenEvents = const [],
     this.lastEvent,
@@ -173,6 +174,10 @@ class RunState {
 
   /// Despertares que se ofrecen (solo en la fase stageClear).
   final List<String> awakeningOptions;
+
+  /// Lo que la escuela todavía no abrió cuando empezó la subida (caminos,
+  /// cartas, talismanes y formas del cultivo). Queda fijo toda la run.
+  final List<String> locked;
 
   /// Evento del nodo actual (solo en la fase event).
   final String? eventId;
@@ -265,6 +270,7 @@ class RunState {
         talismanOptions: talismanOptions ?? this.talismanOptions,
         awakenings: awakenings ?? this.awakenings,
         awakeningOptions: awakeningOptions ?? this.awakeningOptions,
+        locked: locked,
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
         lastEvent: lastEvent ?? this.lastEvent,
@@ -311,6 +317,7 @@ class RunState {
         'talismanOptions': talismanOptions,
         'awakenings': awakenings,
         'awakeningOptions': awakeningOptions,
+        'locked': locked,
         'eventId': eventId,
         'seenEvents': seenEvents,
         'lastEvent': lastEvent?.toJson(),
@@ -357,6 +364,7 @@ class RunState {
         awakenings: ((j['awakenings'] as List?) ?? const []).cast<String>(),
         awakeningOptions:
             ((j['awakeningOptions'] as List?) ?? const []).cast<String>(),
+        locked: ((j['locked'] as List?) ?? const []).cast<String>(),
         eventId: j['eventId'] as String?,
         seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),
         lastEvent: switch (j['lastEvent']) {

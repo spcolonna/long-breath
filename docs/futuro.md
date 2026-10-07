@@ -203,15 +203,8 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Arte:** ninguno.
 
 ### 3.7 Progresión entre partidas: el cultivo del aliento
-- **Reinos de cultivo** 境界: cada subida, gane o pierda, suma aliento.
-- **Cada reino desbloquea:**
-  - Cartas nuevas en el mazo de recompensas.
-  - Talismanes.
-  - El tercer camino.
-  - Formas.
-- Morir hace perder parte del aliento acumulado, pero nunca se baja de reino.
-- **Visual:** solo crece el aura del héroe, dibujada por código.
-- **Arte:** ninguno.
+- **Hecho (07/10/2026):** 6 reinos 境界 con aliento por subida (gane o pierda, caer no resta). Abren la Grulla, 6 cartas de camino y 4 formas; el aura del héroe crece en el inicio, la pantalla final muestra el aliento y el reino nuevo, y el registro tiene la pestaña Cultivo. Solo variedad: cerrar raros y cartas generales bajaba el promedio a 44% (ver `balance.md` §3m). El último reino llega en ~12 subidas.
+- **Siguiente:** que algunos reinos dejen elegir 1 de 2 desbloqueos (el "árbol" sin sistema aparte), y desbloqueos que no sean contenido de combate (fondos del inicio, títulos del discípulo).
 
 ### 3.8 Historia y legado
 - **Hecho (base):** cada subida la hace un discípulo con número; al caer se narra qué pasó y "la escuela envía a otro novicio"; registro de la escuela 名册 con tablillas y 9 pergaminos de lore que se abren por hitos (prólogo, santuario, caer ante cada rival, cumbre, 5 y 10 caídos). Sin efecto mecánico.
@@ -232,6 +225,20 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 ---
 
 ## 4. Orden sugerido
+
+**Hoja de ruta (07/10/2026), por prioridad:**
+1. Cultivo del aliento: **hecho**.
+2. Hitos 功 (logros): dan aliento extra la primera vez y empujan a probar caminos y mecánicas.
+3. Menú principal vivo: reino, aura, último caído e hitos.
+4. Narrativa:
+   - pergaminos de las etapas 2 y 3;
+   - el Discípulo Perdido con el nombre de un caído;
+   - el giro del maestro;
+   - finales por camino.
+5. Armas 兵器.
+6. Pasada de feel en mercader, evento, recompensa y maestro.
+7. Optimización: peso de los PNG y rendimiento medido.
+
 
 | Fase | Contenido | Resultado |
 | --- | --- | --- |

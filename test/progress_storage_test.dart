@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/run/ascent.dart';
@@ -133,5 +135,34 @@ void main() {
     expect(a.style, Style.crane);
     expect(a.scene, 'campanas');
     expect(a.lore, contains('fell_monk'));
+  });
+
+  test('cada subida suma su aliento a la escuela, se caiga o se gane', () async {
+    SharedPreferences.setMockInitialValues({});
+    final storage = ProgressStorage();
+    expect(await storage.breath(), 0);
+    final a = await storage.recordAscent(
+      Ascent.fromJson({...fell('bat').toJson(), 'breath': 12}),
+    );
+    expect(a.breathBefore, 0);
+    final b = await storage.recordAscent(
+      Ascent.fromJson({...fell('monk').toJson(), 'fell': false, 'breath': 40}),
+    );
+    expect(b.breathBefore, 12);
+    expect(await storage.breath(), 52);
+    expect((await storage.ascents()).map((x) => x.breath), [12, 40]);
+  });
+
+  test('el aliento de antes del cultivo sale del registro', () async {
+    SharedPreferences.setMockInitialValues({
+      'long_breath.ascents': [
+        jsonEncode(fell('bat').toJson()),
+        jsonEncode(fell('golem').toJson()),
+      ],
+    });
+    final storage = ProgressStorage();
+    expect(await storage.breath(migrate: (a) => a.floor * 10), 60);
+    // Ya migrado: no se vuelve a calcular.
+    expect(await storage.breath(migrate: (a) => 999), 60);
   });
 }

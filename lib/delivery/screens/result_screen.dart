@@ -18,6 +18,7 @@ import '../widgets/scene_backdrop.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
+import '../widgets/cultivation_view.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
@@ -35,11 +36,13 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   late final _c =
       AnimationController(
           vsync: this,
-          duration: const Duration(milliseconds: 6400),
+          duration: const Duration(milliseconds: 7600),
         )
         ..addListener(_onTick)
         ..forward();
-  static const _landAt = 0.14;
+  static const _landAt = 0.12;
+  static const _stampAt = 0.72;
+  bool _stamped = false;
   int _burst = 0;
   final _lines = <double>[];
 
@@ -51,6 +54,16 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         audio.jingle(Music.runWon);
       }
       setState(() => _burst++);
+    }
+    // El reino nuevo se estampa con un golpe.
+    final a = ref.read(lastAscentProvider);
+    if (!_stamped && a != null && _c.value >= _stampAt) {
+      final def = ref.read(dataProvider).balance.cultivation;
+      if (def.realmOf(a.breathBefore + a.breath) > def.realmOf(a.breathBefore)) {
+        _stamped = true;
+        HapticFeedback.heavyImpact();
+        ref.read(audioProvider).play(Sfx.victoryStamp);
+      }
     }
     // Cada línea de la narración llega con un toque suave.
     for (final at in const [0.26, 0.36, 0.46]) {
@@ -98,9 +111,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       initialPico: run.pico,
     );
     if (choice == null || !mounted) return;
+    final locked = (await ref.read(cultivationProvider.future)).locked;
+    if (!mounted) return;
     ref
         .read(runControllerProvider.notifier)
-        .newRun(choice.difficulty, pico: choice.pico);
+        .newRun(choice.difficulty, pico: choice.pico, locked: locked);
     context.go('/map');
   }
 
@@ -256,13 +271,30 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           const SizedBox(height: 14),
                           _enter(0.6, 0.68, _PicoPill(run: run)),
                         ],
+                        // Lo que el discípulo deja a la escuela.
+                        if (ascent != null && ascent.breath > 0) ...[
+                          const SizedBox(height: 14),
+                          _enter(
+                            0.58,
+                            0.64,
+                            AnimatedBuilder(
+                              animation: _c,
+                              builder: (_, _) => BreathGain(
+                                breath: ascent.breath,
+                                before: ascent.breathBefore,
+                                fill: _span(0.62, 0.72, Curves.easeInOutCubic),
+                                stamp: _span(_stampAt, 0.78),
+                              ),
+                            ),
+                          ),
+                        ],
                         for (final (i, id)
                             in (ascent?.lore ?? const <String>[]).indexed) ...[
                           const SizedBox(height: 16),
                           AnimatedBuilder(
                             animation: _c,
                             builder: (_, _) {
-                              final v = _span(0.66 + i * 0.06, 0.78 + i * 0.06);
+                              final v = _span(0.74 + i * 0.05, 0.84 + i * 0.05);
                               return Opacity(
                                 opacity: math.min(1, v * 3),
                                 child: LoreScroll(id: id, fresh: true, open: v),

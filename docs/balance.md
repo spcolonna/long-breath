@@ -508,3 +508,17 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
 - Normal (1000 runs): novato 0%, promedio 62%, experto 81%, ~45 min. Por camino (promedio): Tigre 67%, Serpiente 59%, Grulla 59%.
 - Dificultades (600 runs): Fácil 43 / 100 / 100, Normal 0 / 62 / 80, Difícil 0 / 34 / 61, Shifu 0 / 6 / 26.
 - Victoria del promedio por despertar (runs que llegaron a la etapa 2, base 73%): los más fuertes son Garra que quiebra (93%), Alas abiertas (87%), Salto (86%) y Abrazo (85%); los más flojos, Quietud (58%) y Veneno lento (69%). Robar 1 más por turno es lo más fuerte; si hace falta, es lo primero que se toca. Quietud depende de retener ataques, que los bots hacen poco.
+
+### 3m. Cultivo del aliento (07/10/2026)
+- `cultivation` en `game_balance.json`. Aliento por subida: 2 por piso + 10 por etapa + 25 por ganar, × dificultad (50/100/130/160%) × (1 + 10% por Pico). `RunState.locked` congela lo cerrado al crear la run. El simulador acepta `--locked id,id` y tiene `--section cultivation`.
+- **Primer intento: cerrar raros y cartas generales.** En el reino 1 el promedio bajaba a 44% (con todo abierto, 59%). Por grupos (800 runs): los 3 raros cerrados, 52%; las cartas, 54%; la Grulla, 63%; las formas, 62%. Por separado cada raro casi no mueve nada; juntos sí.
+- **Quedó: solo variedad.** Cerrados al inicio: la Grulla, 6 cartas de camino y 4 formas. Victoria del promedio por reino (800 runs): 58 / 58 / 56 / 61 / 61 / 60%; experto 80–86%. Aliento medio por subida en Normal: novato ~22, promedio ~85, experto ~101.
+- **Ritmo** (umbrales 90 / 250 / 460 / 720 / 1050). Subidas para llegar a cada reino:
+
+  | Perfil | Reino 2 | Reino 3 | Reino 4 | Reino 5 | Reino 6 |
+  |---|---|---|---|---|---|
+  | Promedio | 1,1 | 2,9 | 5,4 | 8,5 | 12,3 |
+  | Experto | 0,9 | 2,5 | 4,6 | 7,1 | 10,3 |
+
+  A unos 40 minutos por subida, el último reino llega en unas 8 horas de juego para el promedio.
+
