@@ -13,6 +13,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/scene_backdrop.dart';
 import '../widgets/talisman_widgets.dart';
 
 /// Evento del mapa: una escena, dos opciones y lo que pasó.
@@ -74,7 +75,11 @@ class _EventScreenState extends ConsumerState<EventScreen> {
     final text = ref.watch(textProvider);
     final event = data.event(id);
     return Scaffold(
-      body: SafeArea(
+      // El paisaje de la etapa detrás: cada encuentro pasa en su montaña.
+      body: SceneBackdrop(
+        assets: stageArt(data.balance.stages[run.stage].id, 'map_bg.png'),
+        veil: 0.72,
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
           child: Column(
@@ -207,6 +212,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

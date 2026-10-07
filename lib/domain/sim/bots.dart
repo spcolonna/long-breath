@@ -197,7 +197,7 @@ class PlannerBot extends Bot {
   /// con lo que sobre, quitar la carta inicial más floja.
   @override
   RunState shop(RunEngine run, RunState r) {
-    final m = run.data.balance.merchant;
+    final m = run.merchantOf(r);
     if (!r.shopTea && r.hp <= r.maxHp * 0.6 && run.canAfford(r, m.tea)) {
       r = run.buyTea(r);
     }

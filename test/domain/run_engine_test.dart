@@ -465,6 +465,46 @@ void main() {
       expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
     });
 
+    test('más arriba el mercader cobra más, ofrece 4 cartas y raros', () {
+      final base = run.merchantOf(fresh(5));
+      RunState up(int stage) => run.enter(
+        fresh(5).copyWith(
+          stage: stage,
+          jade: 200,
+          map: [const MapNodeDef(id: 'm', type: NodeType.merchant, next: [])],
+        ),
+        'm',
+      );
+      final r2 = up(1), r3 = up(2);
+      expect(run.merchantOf(r2).card, greaterThan(base.card));
+      expect(r2.shopCards, hasLength(4));
+      expect(run.data.talisman(r2.shopTalisman!).rare, isFalse);
+      expect(run.merchantOf(r3).talisman, greaterThan(run.merchantOf(r2).talisman));
+      expect(run.data.talisman(r3.shopTalisman!).rare, isTrue);
+      final bought = run.buyTalisman(r3);
+      expect(bought.jade, 200 - run.merchantOf(r3).talisman);
+    });
+
+    test('cada etapa tiene sus eventos y prefiere los propios', () {
+      for (final (i, st) in run.data.balance.stages.indexed) {
+        final own = [
+          for (final e in run.data.events)
+            if (e.stages?.contains(st.id) ?? false) e.id,
+        ];
+        expect(own.length, greaterThanOrEqualTo(2), reason: st.id);
+        for (var seed = 0; seed < 10; seed++) {
+          final r = run.enter(
+            fresh(seed).copyWith(
+              stage: i,
+              map: [const MapNodeDef(id: 'x', type: NodeType.event, next: [])],
+            ),
+            'x',
+          );
+          expect(own, contains(r.eventId), reason: st.id);
+        }
+      }
+    });
+
     test('comprar descuenta jade y suma lo comprado', () {
       final m = run.data.balance.merchant;
       var r = shop();

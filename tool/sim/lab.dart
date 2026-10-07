@@ -451,7 +451,7 @@ String _route(RunEngine run, Bot bot, RunState r) {
     final n = r.node(id);
     if (n.type == NodeType.fountain) return ratio < 0.6 ? 3 : 0.5;
     if (n.type == NodeType.merchant) {
-      return r.jade >= run.data.balance.merchant.card ? 1.5 : 0.5;
+      return r.jade >= run.merchantOf(r).card ? 1.5 : 0.5;
     }
     if (n.type == NodeType.master) return 1.2;
     if (n.type != NodeType.combat) return 1;

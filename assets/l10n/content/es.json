@@ -376,6 +376,76 @@
       "guideResult": "El camino es empinado y resbaloso, pero llegan. Te da su bolsa con una reverencia larga.",
       "point": "Señalarle el camino",
       "pointResult": "Le mostrás el rumbo con la mano. Te agradece y se pierde entre la niebla."
+    },
+    "nest": {
+      "name": "El nido en el bambú",
+      "text": "Un pichón de grulla cayó del nido y pía entre las hojas secas. Arriba, en lo alto del bambú, la madre da vueltas sin animarse a bajar.",
+      "climb": "Subirlo al nido",
+      "climbResult": "El bambú se dobla y te raspás las manos, pero llegás. La madre se posa a tu lado y estira el ala: copiás su postura y un golpe te sale más limpio.",
+      "watch": "Quedarte a mirar",
+      "watchResult": "La madre baja por fin y lo cubre con el ala. Respirás despacio mirándolas y el cansancio se afloja."
+    },
+    "woodcutter": {
+      "name": "El leñador viejo",
+      "text": "Un leñador de barba blanca sube con un atado de leña más grande que él. Se detiene a tomar aire y te mira las manos vendadas.",
+      "carry": "Cargarle la leña",
+      "carryResult": "La leña pesa y el sendero no ayuda. Arriba, te pone unas monedas de jade en la mano y no acepta un no.",
+      "listen": "Escuchar su historia",
+      "listenResult": "De joven peleaba en esta misma montaña. Te muestra, con el hacha, el golpe que nunca le falló."
+    },
+    "bell_monk": {
+      "name": "El monje de la campana",
+      "text": "En el patio colgado, un monje empuja el tronco de la campana del alba. Antes de golpear, te invita a sentarte con él.",
+      "meditate": "Meditar con él",
+      "meditateResult": "El bronce vibra largo sobre el abismo. Cuando se apaga, tu respiración es más honda y el cuerpo pesa menos.",
+      "strike": "Pedirle golpear la campana",
+      "strikeResult": "El tronco rebota y te sacude hasta los hombros. El monje sonríe: así se encadena un golpe al siguiente. Aprendés una forma."
+    },
+    "beam": {
+      "name": "La viga quebrada",
+      "text": "La pasarela termina en una viga partida sobre el vacío. Del otro lado, una caja de ofrendas olvidada brilla con jade.",
+      "jump": "Saltar",
+      "jumpResult": "Caés del otro lado con los pies justos. La caja guarda el jade de muchos peregrinos.",
+      "jumpFail": "La viga cede bajo tu talón. Te agarrás de una cuerda y volvés a subir, golpeado.",
+      "plank": "Buscar otra tabla",
+      "plankResult": "Arrastrás una tabla de un andamio y cruzás despacio. La caja ya estaba vacía."
+    },
+    "library": {
+      "name": "La biblioteca colgada",
+      "text": "Un monje bibliotecario cuida pergaminos que nadie lee desde hace siglos. Entre ellos, un amuleto envuelto en seda.",
+      "study": "Estudiar toda la noche",
+      "studyResult": "Los ojos te arden al amanecer, pero entendiste por qué tu golpe se quedaba corto.",
+      "donate": "Donar para el templo",
+      "donateResult": "El monje acepta el jade con una reverencia y te ata el amuleto a la muñeca.",
+      "leave": "Seguir de largo",
+      "leaveResult": "Lo saludás con una inclinación. Él no levanta la vista del pergamino."
+    },
+    "snowbound": {
+      "name": "El ermitaño en la nieve",
+      "text": "Un brazo asoma de un montón de nieve fresca. Abajo, un viejo ermitaño respira apenas, abrazado a un amuleto.",
+      "dig": "Desenterrarlo",
+      "digResult": "Cavás con las manos hasta que no las sentís. Ya a salvo, te pone el amuleto en la palma: «a mí ya me cuidó bastante».",
+      "fire": "Compartir tu fuego",
+      "fireResult": "Le comprás leña seca a un pastor que baja del paso. El fuego los calienta a los dos hasta que el viento cede."
+    },
+    "scale": {
+      "name": "La escama en el hielo",
+      "text": "En la pared de hielo hay una escama enorme, verde y dorada. Si apoyás la oreja se oye algo lento, como una respiración.",
+      "pry": "Arrancarla",
+      "pryResult": "La escama se suelta con un crujido. Al tenerla, tu pecho se ensancha como si respiraras con ella.",
+      "pryFail": "El hielo se quiebra y te arrastra pendiente abajo. Volvés a subir con la escama todavía en su lugar.",
+      "listen": "Escuchar la respiración",
+      "listenResult": "Respirás al ritmo de lo que duerme en la montaña. Cuando te separás, el frío ya no te muerde."
+    },
+    "prayer_flags": {
+      "name": "Las banderas del viento",
+      "text": "En el paso nevado, banderas de oración rasgadas golpean contra las piedras. Las de los que subieron antes.",
+      "mend": "Coserlas",
+      "mendResult": "Los dedos se te entumecen con cada puntada. Cuando terminás, flamean derechas y te sentís más firme.",
+      "let_go": "Soltar una técnica vieja",
+      "let_goResult": "Escribís en un jirón algo que ya no te sirve y lo dejás ir con el viento. El mazo pesa menos.",
+      "leave": "Seguir subiendo",
+      "leaveResult": "Pasás entre las banderas sin detenerte. El viento te empuja la espalda."
     }
   },
   "lore": {

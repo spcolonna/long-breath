@@ -56,6 +56,64 @@
         { "id": "guide", "hp": 6, "jade": 30 },
         { "id": "point" }
       ]
+    },
+    {
+      "id": "nest", "hanzi": "巢", "stages": ["qianyunshan"],
+      "options": [
+        { "id": "climb", "hp": 6, "gain": "upgrade" },
+        { "id": "watch", "heal": 8 }
+      ]
+    },
+    {
+      "id": "woodcutter", "hanzi": "樵", "stages": ["qianyunshan"],
+      "options": [
+        { "id": "carry", "hp": 5, "jade": 25 },
+        { "id": "listen", "gain": "card" }
+      ]
+    },
+    {
+      "id": "bell_monk", "hanzi": "钟", "stages": ["xuankongsi"],
+      "options": [
+        { "id": "meditate", "heal": 14 },
+        { "id": "strike", "hp": 6, "gain": "form" }
+      ]
+    },
+    {
+      "id": "beam", "hanzi": "梁", "stages": ["xuankongsi"],
+      "options": [
+        { "id": "jump", "chance": 60, "success": { "jade": 40 }, "failure": { "hp": 12 } },
+        { "id": "plank", "hp": 3 }
+      ]
+    },
+    {
+      "id": "library", "hanzi": "经", "stages": ["xuankongsi"],
+      "options": [
+        { "id": "study", "hp": 4, "gain": "upgrade" },
+        { "id": "donate", "price": 40, "gain": "rareTalisman" },
+        { "id": "leave" }
+      ]
+    },
+    {
+      "id": "snowbound", "hanzi": "雪", "stages": ["wolongding"],
+      "options": [
+        { "id": "dig", "hp": 8, "gain": "rareTalisman" },
+        { "id": "fire", "price": 15, "heal": 16 }
+      ]
+    },
+    {
+      "id": "scale", "hanzi": "鳞", "stages": ["wolongding"],
+      "options": [
+        { "id": "pry", "chance": 50, "success": { "maxHp": 8 }, "failure": { "hp": 10 } },
+        { "id": "listen", "heal": 10 }
+      ]
+    },
+    {
+      "id": "prayer_flags", "hanzi": "幡", "stages": ["wolongding"],
+      "options": [
+        { "id": "mend", "hp": 5, "gain": "upgrade" },
+        { "id": "let_go", "heal": 6, "gain": "loseStarter" },
+        { "id": "leave" }
+      ]
     }
   ]
 }
