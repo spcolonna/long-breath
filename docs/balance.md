@@ -496,3 +496,8 @@ Para acercar la duración a la meta (45 a 75 minutos) cada etapa suma dos pisos 
 | experto | 82% · 36 min | 79% · 40 min | 82% · 42,5 min |
 
 Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dificultades (400 runs, novato / promedio / experto): Fácil 46% / 100% / 100% (Vida 65 → 70 para devolver al novato al ~45%), Normal 0 / 60 / 82, Difícil 0 / 31 / 60 y Shifu 0 / 5 / 16. Picos: el experto va de 84% a 5% y el promedio de 59% a 0%. Al final sobran ~56 de jade: el mercader por etapa (precios y surtido) queda pendiente.
+
+### 3k. Eventos por etapa y mercader por etapa (07/10/2026)
+- **Eventos:** 8 nuevos con `stages` (2 de la etapa 1, 3 de la 2 y 3 de la 3). En cada etapa salen primero los propios sin ver, después los generales sin ver y, al final, cualquiera de la etapa. Usan los mismos efectos de siempre. Normal (600 runs): promedio 61%, experto 80%.
+- **Mercader** (`merchant` dentro de cada etapa pisa el base): Monasterio 4 cartas a 25, talismán 60, quitar 35, mejorar 30, té 20 (+20); Cumbre 4 cartas a 30, talismán **raro** a 85, quitar 40, mejorar 35, té 25 (+25). Normal: promedio 59%, experto 79%, ~44 min. Dificultades (400 runs): Fácil 45 / 100 / 100, Normal 0 / 61 / 79, Difícil 0 / 33 / 60, Shifu 0 / 6 / 19.
+- Sobran ~52 de jade al final: casi todo se gana después del último mercader (élite, fuente y jefe), así que no es un problema de precios.

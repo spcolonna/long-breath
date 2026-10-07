@@ -241,12 +241,18 @@ class RunEngine {
 
   // --------------------------------------------------------------- eventos
 
+  /// Primero los eventos propios de la etapa que no viste, después los
+  /// generales que no viste y, si ya viste todo, cualquiera de la etapa.
   RunState _rollEvent(RunState r) {
-    final fresh = [
-      for (final e in data.events)
-        if (!r.seenEvents.contains(e.id)) e.id,
-    ];
-    final pool = fresh.isEmpty ? [for (final e in data.events) e.id] : fresh;
+    final stageId = stageOf(r).id;
+    final here = [for (final e in data.events) if (e.fitsStage(stageId)) e];
+    final fresh = [for (final e in here) if (!r.seenEvents.contains(e.id)) e];
+    final own = [for (final e in fresh) if (e.stages != null) e.id];
+    final pool = own.isNotEmpty
+        ? own
+        : fresh.isNotEmpty
+            ? [for (final e in fresh) e.id]
+            : [for (final e in here) e.id];
     final (shuffled, rng) = r.rng.shuffle(pool);
     return r.copyWith(eventId: shuffled.first, rng: rng);
   }
@@ -481,9 +487,17 @@ class RunEngine {
 
   // ------------------------------------------------------------- mercader
 
+  /// Mercader de la etapa en la que está la run.
+  MerchantDef merchantOf(RunState r) => data.balance.merchantAt(r.stage);
+
   RunState _rollShop(RunState r) {
-    final (cards, rng) = _rollRewards(r.rng, r.style, data.balance.merchant.cards);
-    final (talismans, rng2) = rng.shuffle(missingTalismans(r, rare: false));
+    final m = merchantOf(r);
+    final (cards, rng) = _rollRewards(r.rng, r.style, m.cards);
+    // Más arriba se venden raros; si no queda ninguno, uno común.
+    final rares = m.rareTalisman ? missingTalismans(r, rare: true) : <String>[];
+    final (talismans, rng2) = rng.shuffle(
+      rares.isNotEmpty ? rares : missingTalismans(r, rare: false),
+    );
     final (sale, rng3) = rng2.nextInt(math.max(1, cards.length));
     return r.copyWith(
       shopCards: cards,
@@ -501,9 +515,8 @@ class RunEngine {
   bool canAfford(RunState r, int price) => r.jade >= price;
 
   /// Precio de una carta de la tienda (la de oferta sale más barata).
-  int cardPrice(RunState r, String cardId) => cardId == r.shopSale
-      ? data.balance.merchant.salePrice
-      : data.balance.merchant.card;
+  int cardPrice(RunState r, String cardId) =>
+      cardId == r.shopSale ? merchantOf(r).salePrice : merchantOf(r).card;
 
   RunState buyCard(RunState r, String cardId) {
     final price = cardPrice(r, cardId);
@@ -518,7 +531,7 @@ class RunEngine {
   }
 
   RunState buyTalisman(RunState r) {
-    final price = data.balance.merchant.talisman;
+    final price = merchantOf(r).talisman;
     _checkShop(r, price);
     if (r.shopTalisman == null) throw StateError('No hay talismán');
     return addTalisman(r, r.shopTalisman!)
@@ -526,7 +539,7 @@ class RunEngine {
   }
 
   RunState buyRemove(RunState r, int uid) {
-    final price = data.balance.merchant.remove;
+    final price = merchantOf(r).remove;
     _checkShop(r, price);
     if (r.shopRemoved) throw StateError('Ya se usó');
     return r.copyWith(
@@ -537,7 +550,7 @@ class RunEngine {
   }
 
   RunState buyUpgrade(RunState r, int uid) {
-    final price = data.balance.merchant.upgrade;
+    final price = merchantOf(r).upgrade;
     _checkShop(r, price);
     if (r.shopUpgraded) throw StateError('Ya se usó');
     return _upgrade(r, uid).copyWith(jade: r.jade - price, shopUpgraded: true);
@@ -545,7 +558,7 @@ class RunEngine {
 
   /// Té de jengibre: cura un poco, una vez por tienda.
   RunState buyTea(RunState r) {
-    final m = data.balance.merchant;
+    final m = merchantOf(r);
     _checkShop(r, m.tea);
     if (r.shopTea) throw StateError('Ya se usó');
     return r.copyWith(

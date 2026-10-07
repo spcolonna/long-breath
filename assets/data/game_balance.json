@@ -76,7 +76,8 @@
           { "width": 1, "types": { "combat": 1 }, "enemies": ["bell_abbot"], "scene": "gran_campana" }
         ],
         "scenes": ["pasarela", "escalera", "patio_colgado"],
-        "lights": ["alba", "niebla", "ocaso"]
+        "lights": ["alba", "niebla", "ocaso"],
+        "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20 }
       },
       {
         "id": "wolongding", "hanzi": "卧龙顶", "pinyin": "Wò Lóng Dǐng",
@@ -94,7 +95,8 @@
           { "width": 1, "types": { "combat": 1 }, "enemies": ["sleeping_dragon"], "scene": "lecho_dragon" }
         ],
         "scenes": ["ventisquero", "glaciar", "paso_nevado"],
-        "lights": ["alba", "niebla", "ocaso"]
+        "lights": ["alba", "niebla", "ocaso"],
+        "merchant": { "cards": 4, "card": 30, "talisman": 85, "rareTalisman": true, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25 }
       }
     ]
   }

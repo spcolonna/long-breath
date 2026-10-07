@@ -101,11 +101,17 @@ class EventDef {
     required this.id,
     required this.hanzi,
     required this.options,
+    this.stages,
   });
 
   final String id;
   final String hanzi;
   final List<EventOptionDef> options;
+
+  /// Etapas donde puede salir (ids); `null` = en cualquiera.
+  final List<String>? stages;
+
+  bool fitsStage(String stageId) => stages == null || stages!.contains(stageId);
 
   EventOptionDef option(String id) => options.firstWhere((o) => o.id == id);
 
@@ -116,5 +122,6 @@ class EventDef {
       for (final o in j['options'] as List)
         EventOptionDef.fromJson(o as Map<String, dynamic>),
     ],
+    stages: (j['stages'] as List?)?.cast<String>(),
   );
 }

@@ -190,6 +190,7 @@ class MerchantDef {
     this.sale = 40,
     this.tea = 15,
     this.teaHeal = 15,
+    this.rareTalisman = false,
   });
 
   /// Cartas en venta.
@@ -206,6 +207,9 @@ class MerchantDef {
   final int tea;
   final int teaHeal;
 
+  /// Si el talismán en venta es raro (los mercaderes de más arriba).
+  final bool rareTalisman;
+
   /// Precio de una carta en oferta.
   int get salePrice => (card * (100 - sale) / 100).round();
 
@@ -218,6 +222,7 @@ class MerchantDef {
         sale: j['sale'] as int? ?? 40,
         tea: j['tea'] as int? ?? 15,
         teaHeal: j['teaHeal'] as int? ?? 15,
+        rareTalisman: j['rareTalisman'] as bool? ?? false,
       );
 }
 
@@ -323,6 +328,7 @@ class GameBalance {
     this.jadeElite = 0,
     this.jadeSpread = 0,
     this.merchant = const MerchantDef(),
+    this.stageMerchants = const [],
     this.masterForms = 2,
     required this.difficulties,
     this.picos = const [],
@@ -379,6 +385,13 @@ class GameBalance {
   final int jadeElite;
   final int jadeSpread;
   final MerchantDef merchant;
+
+  /// Mercader de cada etapa: el base con lo que la etapa cambia (`merchant`
+  /// dentro de la etapa). Más arriba, todo cuesta más y hay otras cosas.
+  final List<MerchantDef> stageMerchants;
+
+  MerchantDef merchantAt(int stage) =>
+      stage < stageMerchants.length ? stageMerchants[stage] : merchant;
 
   /// Formas que ofrece el maestro errante.
   final int masterForms;
@@ -447,6 +460,15 @@ class GameBalance {
       merchant: MerchantDef.fromJson(
         (j['merchant'] as Map<String, dynamic>?) ?? const {},
       ),
+      stageMerchants: [
+        for (final st in (run['stages'] as List?) ?? const [])
+          MerchantDef.fromJson({
+            ...(j['merchant'] as Map<String, dynamic>?) ?? const {},
+            ...((st as Map<String, dynamic>)['merchant']
+                    as Map<String, dynamic>?) ??
+                const {},
+          }),
+      ],
       masterForms:
           ((j['master'] as Map<String, dynamic>?) ?? const {})['forms'] as int? ??
               2,

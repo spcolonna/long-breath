@@ -88,7 +88,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. Al llegar, el rival se presenta.
 
-   **Cómo se ve:** una montaña pintada en capas (las cordilleras lejanas se mueven más despacio al desplazar, el cielo se vuelve dorado y rosa cerca de la cumbre) con nubes que van y vienen. Cada lugar es un **sello de piedra con su carácter tallado**: 武 combate (精 élite con aro dorado, 龙 jefe), 泉 fuente, 庙 santuario, 缘 evento, 商 mercader, 师 maestro. Los que podés tomar flotan y laten; los ya andados llevan el sello rojo 印. Los une un **sendero de escalones**: lo recorrido queda en tinta dorada y el último tramo se pinta al volver al mapa. Los pisos a más de 2 del tuyo quedan bajo la niebla y se despejan al subir. El santuario tiene su arco, la fuente su estanque, el élite su pagoda y en la cumbre se adivina el dragón entre las nubes. Arriba a la derecha, una regla marca el piso (por ejemplo 3/9).
+   **Cómo se ve:** una montaña pintada en capas (las cordilleras lejanas se mueven más despacio al desplazar, el cielo se vuelve dorado y rosa cerca de la cumbre) con nubes que van y vienen. Cada lugar es un **sello de piedra con su carácter tallado**: 武 combate (精 élite con aro dorado, 龙 jefe), 泉 fuente, 庙 santuario, 缘 evento, 商 mercader, 师 maestro. Los que podés tomar flotan y laten; los ya andados llevan el sello rojo 印. Los une un **sendero de escalones**: lo recorrido queda en tinta dorada y el último tramo se pinta al volver al mapa. Los pisos a más de 2 del tuyo quedan bajo la niebla y se despejan al subir. El santuario tiene su arco, la fuente su estanque, el élite su pagoda y en la cumbre se adivina el dragón entre las nubes. Arriba a la derecha, una regla marca el piso (por ejemplo 3/11).
 
    Al tocar un lugar, tu discípulo (de espaldas, con la ropa de su camino) **camina el sendero** hasta él, la cámara lo sigue y la pantalla nueva entra con una **mancha de tinta** del color del lugar.
 
@@ -109,7 +109,15 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
 4. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
-5. **Eventos** (ícono rosa ?): una escena con dos o tres opciones. Algunas se pagan con jade o lo dan. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida, o que cuesta más jade del que tenés, aparece apagada y dice por qué. En una subida no se repite ningún evento.
+5. **Eventos** (ícono rosa ?): una escena con dos o tres opciones. Algunas se pagan con jade o lo dan. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida, o que cuesta más jade del que tenés, aparece apagada y dice por qué. En una subida no se repite ningún evento. Detrás de la escena se ve el paisaje de la etapa.
+
+   Cada etapa tiene **eventos propios**, que salen antes que los generales (el ermitaño, el puente, la fuente, el mono, el té, el altar, los dados y el peregrino pueden salir en cualquiera):
+
+   | Etapa | Eventos propios |
+   |---|---|
+   | Montaña de las Mil Nubes | El nido en el bambú 巢 (subir el pichón: −6 Vida, mejorás una carta; o mirar: +8 Vida) · El leñador viejo 樵 (cargarle la leña: −5 Vida, +25 jade; o escucharlo: una carta) |
+   | Monasterio Colgado | El monje de la campana 钟 (meditar: +14 Vida; o golpear la campana: −6 Vida, una forma) · La viga quebrada 梁 (saltar: 60%, +40 jade o −12 Vida; o buscar otra tabla: −3 Vida) · La biblioteca colgada 经 (estudiar: −4 Vida, mejorás una carta; donar 40 jade: talismán raro; o seguir) |
+   | Cumbre del Dragón Dormido | El ermitaño en la nieve 雪 (desenterrarlo: −8 Vida, talismán raro; o compartir tu fuego: 15 jade, +16 Vida) · La escama en el hielo 鳞 (arrancarla: 50%, +8 Vida máxima o −10 Vida; o escuchar: +10 Vida) · Las banderas del viento 幡 (coserlas: −5 Vida, mejorás una carta; soltar una técnica vieja: +6 Vida y perdés una carta inicial; o seguir) |
 
    | Evento | Opciones |
    |---|---|
@@ -139,7 +147,15 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
-9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. Puede aparecer desde el piso 2. Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
+9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. Puede aparecer desde el piso 2. **Más arriba cobra más y trae otras cosas:**
+
+   | Etapa | Cartas | Carta | Talismán | Quitar | Mejorar | Té |
+   |---|---|---|---|---|---|---|
+   | Montaña de las Mil Nubes | 3 | 20 | común, 50 | 30 | 25 | 15 (+15 Vida) |
+   | Monasterio Colgado | 4 | 25 | común, 60 | 35 | 30 | 20 (+20 Vida) |
+   | Cumbre del Dragón Dormido | 4 | 30 | **raro**, 85 | 40 | 35 | 25 (+25 Vida) |
+
+   Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
 10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
 11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera toda la Vida)** y aparece la siguiente.
 12. **Fin:** ganás al vencer al **Dragón Dormido**, jefe de la tercera etapa. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial. El registro cuenta el piso de toda la subida (por ejemplo "Piso 14 de 27").

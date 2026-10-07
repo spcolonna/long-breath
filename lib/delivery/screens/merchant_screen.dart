@@ -72,7 +72,10 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
   String? _sale;
 
   int _price(_Item i) {
-    final m = ref.read(dataProvider).balance.merchant;
+    final run = ref.read(runControllerProvider);
+    final m = run == null
+        ? ref.read(dataProvider).balance.merchant
+        : ref.read(runEngineProvider).merchantOf(run);
     return switch (i) {
       _CardItem(:final id) => id == _sale ? m.salePrice : m.card,
       _TeaItem() => m.tea,
@@ -131,7 +134,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     final data = ref.watch(dataProvider);
     final engine = ref.watch(runEngineProvider);
     final text = ref.watch(textProvider);
-    final m = data.balance.merchant;
+    final m = engine.merchantOf(run);
     _cards ??= run.shopCards;
     _talisman ??= run.shopTalisman;
     _sale ??= run.shopSale;
