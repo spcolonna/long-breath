@@ -2728,6 +2728,18 @@ abstract class AppLocalizations {
   /// **'Si la retuviste, +{n} de daño'**
   String effRetained(int n);
 
+  /// No description provided for @effChainStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Estructura por cada ataque que ya jugaste en el turno'**
+  String effChainStructure(int n);
+
+  /// No description provided for @effRetainedStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la retuviste, +{n} de Estructura'**
+  String effRetainedStructure(int n);
+
   /// No description provided for @styleChipFirstStrike.
   ///
   /// In es, this message translates to:

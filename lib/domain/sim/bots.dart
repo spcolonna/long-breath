@@ -154,7 +154,9 @@ class PlannerBot extends Bot {
   List<int> _retainOrder(CombatEngine engine, CombatState s) {
     final data = engine.data;
     int value(CombatCard c) {
-      var v = data.card(c.cardId).damage + data.card(c.cardId).structure;
+      final d = data.card(c.cardId);
+      var v = d.damage + d.structure + d.retainedDamage + d.retainedStructure;
+      if (d.cost > 0) v += 2;
       for (final f in engine.knownForms(s)) {
         final p = s.formProgress[f.id]!;
         if (p > 0 && f.steps[p] == c.cardId) v += 30;
@@ -409,6 +411,9 @@ double cardValue(CardDef d) {
   v += d.draw * 2.5 + d.gainBreath * 3 + d.turnStructureBonus * 2;
   v += d.bonusDamageIfStaggered * 0.4 + d.onDeflectDamage * 0.4;
   v += d.onDeflectStructure * 0.4;
+  // Cadena: se cuentan ~1,5 ataques previos; retenida: la mitad de las veces.
+  v += d.chainDamage * 1.5 + d.chainStructure * 1.2;
+  v += d.retainedDamage * 0.5 + d.retainedStructure * 0.4;
   return v / (d.cost == 0 ? 0.8 : d.cost);
 }
 

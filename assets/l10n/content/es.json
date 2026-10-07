@@ -135,7 +135,13 @@
     "he_chi": "Ala de grulla",
     "du_li": "Grulla en una pata",
     "he_zui": "Pico de grulla",
-    "he_wu": "Danza de la grulla"
+    "he_wu": "Danza de la grulla",
+    "hu_wei": "Cola de tigre",
+    "xia_shan_hu": "Tigre que baja de la montaña",
+    "she_wei": "Cola de serpiente",
+    "she_shan": "Serpiente que se escurre",
+    "he_xi": "Rodilla de grulla",
+    "he_ming": "Canto de la grulla"
   },
   "enemies": {
     "dummy": {

@@ -706,6 +706,23 @@ void main() {
       expect(s.retained, isEmpty);
     });
 
+    test('Cola de serpiente: +2 de Estructura por cada ataque anterior', () {
+      var s = setup(['tan_tui', 'tan_tui', 'she_wei', ...filler],
+          style: Style.snake);
+      final alone = engine.preview(s, uidOf(s, 'she_wei')).structure;
+      s = play(s, 'tan_tui').state;
+      s = play(s, 'tan_tui').state;
+      expect(engine.preview(s, uidOf(s, 'she_wei')).structure, alone + 4);
+    });
+
+    test('Rodilla de grulla: +5 de Estructura si la retuviste', () {
+      var s = setup(['he_xi', ...filler, ...filler], style: Style.crane);
+      final xi = uidOf(s, 'he_xi');
+      final fresh = engine.preview(s, xi).structure;
+      s = endTurn(s, [xi]).state;
+      expect(engine.preview(s, xi).structure, fresh + 5);
+    });
+
     test('Respirar borra las retenidas', () {
       var s = setup(['he_zui', ...filler, ...filler], style: Style.crane);
       s = endTurn(s, [uidOf(s, 'he_zui')]).state;
