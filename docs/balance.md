@@ -486,3 +486,13 @@ Están en `game_balance.json` → `picos` y se acumulan: el Pico N incluye las r
 4. **Recompensas:** probar rareza (comunes y raras) cuando haya más cartas, y dar alguna señal de que saltear es una buena jugada.
 5. **Calibrar el tiempo** cronometrando a alguien que juegue por primera vez.
 6. **Repetir esta pasada** después de cada cambio de reglas, contenido o enemigos, con `dart run tool/simulate.dart`.
+
+### 3j. Once pisos por etapa (07/10/2026)
+Para acercar la duración a la meta (45 a 75 minutos) cada etapa suma dos pisos antes del élite: uno con 3 combates, 2 eventos, mercader y maestro, y otro con 2 combates. Los enemigos son los del piso de abajo. El élite queda en el piso 9, la fuente en el 10 y el jefe en el 11 (33 pisos en total).
+
+| Normal, 600 runs | 9 pisos | +1 piso | +2 pisos (elegido) |
+|---|---|---|---|
+| promedio | 58% · 38 min | 55% · 41,5 min | 58% · 44 min |
+| experto | 82% · 36 min | 79% · 40 min | 82% · 42,5 min |
+
+Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dificultades (400 runs, novato / promedio / experto): Fácil 46% / 100% / 100% (Vida 65 → 70 para devolver al novato al ~45%), Normal 0 / 60 / 82, Difícil 0 / 31 / 60 y Shifu 0 / 5 / 16. Picos: el experto va de 84% a 5% y el promedio de 59% a 0%. Al final sobran ~56 de jade: el mercader por etapa (precios y surtido) queda pendiente.

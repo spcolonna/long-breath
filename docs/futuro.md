@@ -158,7 +158,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - Eventos propios de cada etapa (hoy se comparten los 8).
   - Dificultades recalibradas para 3 etapas (06/10/2026, `balance.md` §3i). Falta confirmarlas con personas.
   - Precios del mercader por etapa (sobran ~43 de jade al final).
-  - Duración: 39 minutos, por debajo de la meta de 45 a 75; se puede subir a 11 a 13 pisos por etapa cuando haya más eventos.
+  - Duración: **hecho (07/10/2026)**, 11 pisos por etapa; una subida ganada dura unos 44 minutos en el modelo del simulador (un jugador real tarda más). Próximo paso para llegar al centro de la meta: más eventos propios de cada etapa.
 
 ### 3.2 Mapa generado
 - **En el juego** (02/10/2026) para la etapa 1: 9 pisos con pesos por tipo, mercader y maestro garantizados. Falta: más pisos por etapa cuando haya 3 etapas, élites opcionales en pisos intermedios.

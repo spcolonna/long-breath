@@ -52,7 +52,7 @@ void main() {
 
   test('pisos del mapa: enemigos válidos, santuario, fuente, élite y jefe', () {
     final floors = data.balance.floors;
-    expect(floors, hasLength(9));
+    expect(floors, hasLength(11));
     for (final f in floors) {
       for (final e in f.enemies) {
         expect(data.enemies.containsKey(e), isTrue, reason: e);
@@ -61,21 +61,21 @@ void main() {
     }
     expect(floors[2].types.keys, [NodeType.shrine]);
     // Élite, después la fuente y arriba el jefe.
-    expect(floors[6].enemies, ['monk', 'lion', 'fan']);
-    expect(floors[7].types.keys, [NodeType.fountain]);
+    expect(floors[8].enemies, ['monk', 'lion', 'fan']);
+    expect(floors[9].types.keys, [NodeType.fountain]);
     expect(floors.last.enemies, ['dragon']);
     expect(data.balance.jadeElite, 0, reason: 'la élite paga con un talismán');
     expect(floors[1].types.keys, contains(NodeType.merchant));
   });
 
-  test('tres etapas de 9 pisos, cada una con élite, fuente y jefe', () {
+  test('tres etapas de 11 pisos, cada una con élite, fuente y jefe', () {
     final stages = data.balance.stages;
     expect(stages.map((s) => s.id), ['qianyunshan', 'xuankongsi', 'wolongding']);
-    expect(data.balance.totalFloors, 27);
+    expect(data.balance.totalFloors, 33);
     for (final st in stages) {
-      expect(st.floors, hasLength(9), reason: st.id);
-      expect(st.floors[7].types.keys, [NodeType.fountain], reason: st.id);
-      for (final e in st.floors[6].enemies) {
+      expect(st.floors, hasLength(11), reason: st.id);
+      expect(st.floors[9].types.keys, [NodeType.fountain], reason: st.id);
+      for (final e in st.floors[8].enemies) {
         expect(data.enemy(e).rank, EnemyRank.elite, reason: e);
       }
       expect(data.enemy(st.floors.last.enemies.single).rank, EnemyRank.boss);

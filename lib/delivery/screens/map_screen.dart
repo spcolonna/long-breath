@@ -551,14 +551,18 @@ class _RunHeader extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           JadeCount(jade: run.jade),
-          TextButton.icon(
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              visualDensity: VisualDensity.compact,
+          // Solo el número: el ícono ya dice "mazo" y deja lugar a la altura.
+          Tooltip(
+            message: t.deckCount(run.deck.length),
+            child: TextButton.icon(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                visualDensity: VisualDensity.compact,
+              ),
+              onPressed: () => showDeckSheet(context, run.deck),
+              icon: const Icon(Icons.style, size: 18),
+              label: Text('${run.deck.length}'),
             ),
-            onPressed: () => showDeckSheet(context, run.deck),
-            icon: const Icon(Icons.style, size: 18),
-            label: Text(t.deckCount(run.deck.length)),
           ),
           // Los talismanes de la subida; tocarlos explica qué hace cada uno.
           Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
