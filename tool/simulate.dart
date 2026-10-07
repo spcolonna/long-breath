@@ -256,6 +256,24 @@ void _report(Map<String, List<RunLog>> logs) {
       ],
   ]);
 
+  print('## Victoria por despertar (runs que llegaron a la etapa 2)');
+  final awIds = {
+    for (final l in logs.values)
+      for (final r in l) ...r.awakenings,
+  }.toList()..sort();
+  table(['perfil', 'base', ...awIds], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      if (l.any((r) => r.awakenings.isNotEmpty))
+        [
+          p,
+          pct(l.where((r) => r.awakenings.isNotEmpty && r.won).length,
+              l.where((r) => r.awakenings.isNotEmpty).length),
+          for (final id in awIds)
+            pct(l.where((r) => r.awakenings.contains(id) && r.won).length,
+                l.where((r) => r.awakenings.contains(id)).length),
+        ],
+  ]);
+
   print('## Combates (dentro de las runs: mazo y Vida reales)');
   for (final MapEntry(key: p, value: l) in logs.entries) {
     print('### $p');

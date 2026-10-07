@@ -21,6 +21,7 @@ CombatState setup(
   int hp = 50,
   List<String>? forms,
   List<String> talismans = const [],
+  List<String> awakenings = const [],
 }) => engine
     .start(
       deck: [
@@ -33,6 +34,7 @@ CombatState setup(
       shuffle: false,
       forms: forms,
       talismans: talismans,
+      awakenings: awakenings,
     )
     .state;
 
@@ -850,6 +852,62 @@ void main() {
       final r = endTurn(s);
       expect(r.events.whereType<Deflected>(), hasLength(1));
       expect(r.events.whereType<BreathDrained>(), isEmpty);
+    });
+  });
+
+  group('despertares', () {
+    test('se suman a la pasiva del camino', () {
+      final tiger = setup([...filler], style: Style.tiger, awakenings: ['hu_nu']);
+      expect(tiger.firstStrike, 3 + 3);
+      final snake = setup([...filler, ...filler],
+          style: Style.snake, awakenings: ['she_tui']);
+      expect(snake.handSize, 4 + 1);
+      expect(snake.hand, hasLength(5));
+    });
+
+    test('Garra que quiebra y Salto: el primer ataque quiebra más y cuesta menos',
+        () {
+      final ids = ['tan_tui', 'tan_tui', ...filler];
+      final base = setup(ids, style: Style.tiger);
+      var s = setup(ids, style: Style.tiger, awakenings: ['hu_po', 'hu_yue']);
+      final b = engine.preview(base, uidOf(base, 'tan_tui'));
+      final p = engine.preview(s, uidOf(s, 'tan_tui'));
+      expect(p.structure, b.structure + 4);
+      expect(p.cost, b.cost - 1);
+      final breath = s.player.breath;
+      s = play(s, 'tan_tui').state;
+      expect(s.player.breath, breath - p.cost);
+      expect(s.enemy.structure, base.enemy.structure - p.structure);
+      // El segundo ataque ya no es el primero.
+      final second = engine.preview(s, uidOf(s, 'tan_tui'));
+      expect(second.cost, b.cost);
+    });
+
+    test('Lengua bífida: el tercer ataque del turno roba', () {
+      final ids = ['tui_zhang', 'tui_zhang', 'tui_zhang', 'ge_dang', ...filler];
+      var s = setup(ids, style: Style.snake, awakenings: ['she_xin']);
+      s = play(s, 'tui_zhang').state;
+      s = play(s, 'tui_zhang').state;
+      final before = s.hand.length;
+      s = play(s, 'tui_zhang').state;
+      expect(s.hand, hasLength(before - 1 + 1));
+    });
+
+    test('Equilibrio: las defensas dan +3 de Guardia', () {
+      final base = setup([...filler], style: Style.crane);
+      final s = setup([...filler], style: Style.crane, awakenings: ['he_ping']);
+      expect(engine.preview(s, uidOf(s, 'ge_dang')).guard,
+          engine.preview(base, uidOf(base, 'ge_dang')).guard + 3);
+    });
+
+    test('Quietud: los ataques retenidos pegan +6', () {
+      final ids = ['tan_tui', 'ge_dang', 'ge_dang', 'an_zhang', ...filler];
+      var s = setup(ids, style: Style.crane, awakenings: ['he_jing']);
+      int dmg(CombatState s, String id) =>
+          engine.preview(s, uidOf(s, id)).damage;
+      final fresh = dmg(s, 'tan_tui');
+      s = endTurn(s, [uidOf(s, 'tan_tui')]).state;
+      expect(dmg(s, 'tan_tui'), fresh + 6);
     });
   });
 }

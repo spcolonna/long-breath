@@ -155,6 +155,30 @@ void main() {
     expect(() => run.advanceStage(up), throwsStateError);
   });
 
+  test('superar una etapa ofrece despertares del camino', () {
+    var r = fresh(1).copyWith(currentNode: 'n6', style: Style.crane);
+    r = run.finishCombat(r, won: true, hp: 10);
+    r = run.chooseTalisman(r, r.talismanOptions.first);
+    r = run.chooseReward(r, null);
+    expect(r.phase, RunPhase.stageClear);
+    final crane = [
+      for (final a in run.data.balance.styles[Style.crane]!.awakenings) a.id,
+    ];
+    expect(r.awakeningOptions, hasLength(3));
+    expect(crane, containsAll(r.awakeningOptions));
+    expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
+    // Hay que elegir uno de los ofrecidos.
+    expect(() => run.advanceStage(r), throwsStateError);
+    expect(() => run.advanceStage(r, awakening: 'hu_nu'), throwsStateError);
+    final picked = r.awakeningOptions.first;
+    final up = run.advanceStage(r, awakening: picked);
+    expect(up.awakenings, [picked]);
+    expect(up.awakeningOptions, isEmpty);
+    // La etapa siguiente no vuelve a ofrecer el que ya aprendió.
+    expect(run.missingAwakenings(up), isNot(contains(picked)));
+    expect(run.missingAwakenings(up), hasLength(crane.length - 1));
+  });
+
   test('cada etapa genera su mapa con su jefe', () {
     final bosses = ['dragon', 'bell_abbot', 'sleeping_dragon'];
     final stages = run.data.balance.stages;

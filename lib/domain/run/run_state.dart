@@ -114,6 +114,8 @@ class RunState {
     this.rewardForm,
     this.talismans = const [],
     this.talismanOptions = const [],
+    this.awakenings = const [],
+    this.awakeningOptions = const [],
     this.eventId,
     this.seenEvents = const [],
     this.lastEvent,
@@ -166,6 +168,12 @@ class RunState {
   /// Talismanes que ofrece el élite (solo en la fase talisman).
   final List<String> talismanOptions;
 
+  /// Despertares del camino aprendidos al superar etapas.
+  final List<String> awakenings;
+
+  /// Despertares que se ofrecen (solo en la fase stageClear).
+  final List<String> awakeningOptions;
+
   /// Evento del nodo actual (solo en la fase event).
   final String? eventId;
 
@@ -217,6 +225,8 @@ class RunState {
     bool clearRewardForm = false,
     List<String>? talismans,
     List<String>? talismanOptions,
+    List<String>? awakenings,
+    List<String>? awakeningOptions,
     String? eventId,
     bool clearEventId = false,
     List<String>? seenEvents,
@@ -253,6 +263,8 @@ class RunState {
         rewardForm: clearRewardForm ? null : rewardForm ?? this.rewardForm,
         talismans: talismans ?? this.talismans,
         talismanOptions: talismanOptions ?? this.talismanOptions,
+        awakenings: awakenings ?? this.awakenings,
+        awakeningOptions: awakeningOptions ?? this.awakeningOptions,
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
         lastEvent: lastEvent ?? this.lastEvent,
@@ -297,6 +309,8 @@ class RunState {
         'rewardForm': rewardForm,
         'talismans': talismans,
         'talismanOptions': talismanOptions,
+        'awakenings': awakenings,
+        'awakeningOptions': awakeningOptions,
         'eventId': eventId,
         'seenEvents': seenEvents,
         'lastEvent': lastEvent?.toJson(),
@@ -340,6 +354,9 @@ class RunState {
         talismans: ((j['talismans'] as List?) ?? const []).cast<String>(),
         talismanOptions:
             ((j['talismanOptions'] as List?) ?? const []).cast<String>(),
+        awakenings: ((j['awakenings'] as List?) ?? const []).cast<String>(),
+        awakeningOptions:
+            ((j['awakeningOptions'] as List?) ?? const []).cast<String>(),
         eventId: j['eventId'] as String?,
         seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),
         lastEvent: switch (j['lastEvent']) {

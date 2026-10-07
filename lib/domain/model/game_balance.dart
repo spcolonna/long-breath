@@ -1,3 +1,4 @@
+import 'awakening_def.dart';
 import 'enums.dart';
 
 /// Cómo se juega la mano: el del novicio o el del camino animal elegido.
@@ -11,6 +12,7 @@ class StyleStats {
     this.firstStrike = 0,
     this.chain = 0,
     this.retainedDiscount = 0,
+    this.awakenings = const [],
   });
 
   final String hanzi;
@@ -28,6 +30,9 @@ class StyleStats {
   /// Grulla: las cartas retenidas cuestan esto menos el turno siguiente.
   final int retainedDiscount;
 
+  /// Despertares que el camino puede enseñar al superar una etapa.
+  final List<AwakeningDef> awakenings;
+
   factory StyleStats.fromJson(Map<String, dynamic> j) => StyleStats(
         hanzi: j['hanzi'] as String,
         pinyin: j['pinyin'] as String,
@@ -37,6 +42,10 @@ class StyleStats {
         firstStrike: j['firstStrike'] as int? ?? 0,
         chain: j['chain'] as int? ?? 0,
         retainedDiscount: j['retainedDiscount'] as int? ?? 0,
+        awakenings: [
+          for (final a in (j['awakenings'] as List?) ?? const [])
+            AwakeningDef.fromJson(a as Map<String, dynamic>),
+        ],
       );
 }
 
@@ -69,6 +78,7 @@ class StageDef {
     this.floors = const [],
     this.scenes = const ['terraza'],
     this.lights = const ['alba'],
+    this.enemyMods = const PicoDef(),
   });
 
   final String id;
@@ -77,6 +87,10 @@ class StageDef {
   final List<FloorDef> floors;
   final List<String> scenes;
   final List<String> lights;
+
+  /// Rivales más duros en esta etapa (mismas reglas que un Pico): compensan
+  /// los despertares que se aprenden al subir.
+  final PicoDef enemyMods;
 
   /// [run] aporta pisos, escenas y luces cuando la etapa no los trae
   /// (formato viejo: una sola etapa con `run.floors`).
@@ -96,6 +110,10 @@ class StageDef {
       ],
       scenes: strings('scenes') ?? const ['terraza'],
       lights: strings('lights') ?? const ['alba'],
+      enemyMods: switch (j['enemyMods']) {
+        final Map<String, dynamic> m => PicoDef.fromJson(m),
+        _ => const PicoDef(),
+      },
     );
   }
 }
@@ -332,6 +350,7 @@ class GameBalance {
     this.masterForms = 2,
     required this.difficulties,
     this.picos = const [],
+    this.awakeningChoices = 3,
   });
 
   final int playerHp;
@@ -409,6 +428,22 @@ class GameBalance {
   /// Estadísticas del camino, o las del novicio si todavía no eligió.
   StyleStats statsOf(Style? s) => s == null ? novice : styles[s]!;
 
+  /// Un despertar de cualquier camino.
+  AwakeningDef awakening(String id) =>
+      styles.values.expand((s) => s.awakenings).firstWhere(
+            (a) => a.id == id,
+            orElse: () => throw ArgumentError('Despertar desconocido: $id'),
+          );
+
+  /// Suma de los despertares de una run.
+  AwakeningEffect awakeningsEffect(Iterable<String> ids) => ids.fold(
+        AwakeningEffect.none,
+        (a, id) => a + awakening(id).effect,
+      );
+
+  /// Cuántos despertares se ofrecen al superar una etapa.
+  final int awakeningChoices;
+
   factory GameBalance.fromJson(Map<String, dynamic> j) {
     final player = j['player'] as Map<String, dynamic>;
     final styles = j['styles'] as Map<String, dynamic>;
@@ -469,6 +504,7 @@ class GameBalance {
                 const {},
           }),
       ],
+      awakeningChoices: run['awakeningChoices'] as int? ?? 3,
       masterForms:
           ((j['master'] as Map<String, dynamic>?) ?? const {})['forms'] as int? ??
               2,

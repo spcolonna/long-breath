@@ -2518,6 +2518,114 @@ abstract class AppLocalizations {
   /// **'Cada forma completa cura {n}.'**
   String talEffFormHeal(int n);
 
+  /// No description provided for @awEffFirstStrike.
+  ///
+  /// In es, this message translates to:
+  /// **'El primer ataque del turno pega +{n}.'**
+  String awEffFirstStrike(int n);
+
+  /// No description provided for @awEffChain.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada ataque pega +{n} por cada ataque anterior del turno.'**
+  String awEffChain(int n);
+
+  /// No description provided for @awEffRetain.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés retener {n} carta más.'**
+  String awEffRetain(int n);
+
+  /// No description provided for @awEffDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {n} carta más por turno.'**
+  String awEffDraw(int n);
+
+  /// No description provided for @awEffRetainedDiscount.
+  ///
+  /// In es, this message translates to:
+  /// **'Las cartas retenidas cuestan {n} menos.'**
+  String awEffRetainedDiscount(int n);
+
+  /// No description provided for @awEffFirstStrikeStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'El primer ataque del turno quita +{n} de Estructura.'**
+  String awEffFirstStrikeStructure(int n);
+
+  /// No description provided for @awEffFirstStrikeDiscount.
+  ///
+  /// In es, this message translates to:
+  /// **'El primer ataque del turno cuesta {n} menos.'**
+  String awEffFirstStrikeDiscount(int n);
+
+  /// No description provided for @awEffBreakDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Al desequilibrar al rival, robás {n}.'**
+  String awEffBreakDraw(int n);
+
+  /// No description provided for @awEffChainStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada ataque quita +{n} de Estructura por cada ataque anterior del turno.'**
+  String awEffChainStructure(int n);
+
+  /// No description provided for @awEffThirdAttackDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Al jugar el tercer ataque del turno, robás {n}.'**
+  String awEffThirdAttackDraw(int n);
+
+  /// No description provided for @awEffRetainedDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'Los ataques retenidos pegan +{n}.'**
+  String awEffRetainedDamage(int n);
+
+  /// No description provided for @awEffDeflectBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada desvío da +{n} de Aliento.'**
+  String awEffDeflectBreath(int n);
+
+  /// No description provided for @awEffGuardBonus.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus defensas dan +{n} de Guardia.'**
+  String awEffGuardBonus(int n);
+
+  /// No description provided for @awakeningTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'DESPERTAR'**
+  String get awakeningTitle;
+
+  /// No description provided for @awakeningHint.
+  ///
+  /// In es, this message translates to:
+  /// **'El espíritu de tu camino te enseña algo más. Elegí uno: te acompaña el resto de la subida.'**
+  String get awakeningHint;
+
+  /// No description provided for @awakeningPick.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un despertar'**
+  String get awakeningPick;
+
+  /// No description provided for @awakeningConfirm.
+  ///
+  /// In es, this message translates to:
+  /// **'Despertar y seguir subiendo'**
+  String get awakeningConfirm;
+
+  /// No description provided for @awakeningsLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Despertares'**
+  String get awakeningsLabel;
+
   /// No description provided for @lesClimbSlideEventsTitle.
   ///
   /// In es, this message translates to:

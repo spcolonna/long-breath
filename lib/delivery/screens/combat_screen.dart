@@ -1196,41 +1196,6 @@ class _Arena extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                left: 12,
-                top: 8,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TutorialAnchor(
-                      id: 'turn',
-                      child: Bounce(
-                        trigger: turn,
-                        child: _Chip(
-                          icon: Icons.hourglass_bottom,
-                          text: t.turn(turn),
-                          color: Palette.text,
-                        ),
-                      ),
-                    ),
-                    if (style != null) ...[
-                      const SizedBox(height: 6),
-                      _StyleChip(style: style!),
-                    ],
-                    if (talismans.isNotEmpty) ...[
-                      const SizedBox(height: 6),
-                      SizedBox(
-                        width: 100,
-                        child: TalismanRow(
-                          ids: talismans,
-                          size: 26,
-                          triggers: fx.talismanHits,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.fromLTRB(heroW * 0.8, 8, 16, 16),
                 child: Row(
@@ -1278,6 +1243,43 @@ class _Arena extends StatelessWidget {
                 left: heroLeft + heroW * 0.62,
                 bottom: heroBottom + heroH * 0.62,
                 child: IgnorePointer(child: _PopStack(pops: fx.heroPops)),
+              ),
+              // Turno, camino y talismanes: encima de todo, para que su
+              // globo de ayuda no quede tapado por el héroe ni el rival.
+              Positioned(
+                left: 12,
+                top: 8,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TutorialAnchor(
+                      id: 'turn',
+                      child: Bounce(
+                        trigger: turn,
+                        child: _Chip(
+                          icon: Icons.hourglass_bottom,
+                          text: t.turn(turn),
+                          color: Palette.text,
+                        ),
+                      ),
+                    ),
+                    if (style != null) ...[
+                      const SizedBox(height: 6),
+                      _StyleChip(style: style!),
+                    ],
+                    if (talismans.isNotEmpty) ...[
+                      const SizedBox(height: 6),
+                      SizedBox(
+                        width: 100,
+                        child: TalismanRow(
+                          ids: talismans,
+                          size: 26,
+                          triggers: fx.talismanHits,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ),
               Positioned.fill(
                 child: IgnorePointer(
@@ -3126,15 +3128,23 @@ class _StyleChipState extends ConsumerState<_StyleChip> {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    final stats = ref.watch(dataProvider).balance.styles[widget.style]!;
+    final balance = ref.watch(dataProvider).balance;
+    final stats = balance.styles[widget.style]!;
+    final text = ref.watch(textProvider);
+    final awakenings =
+        ref.watch(runControllerProvider)?.awakenings ?? const <String>[];
+    final aw = balance.awakeningsEffect(awakenings);
     final color = styleColor(widget.style);
-    // El chip muestra la pasiva propia del camino.
+    // El chip muestra la pasiva propia del camino (con sus despertares).
     final edge = stats.firstStrike > 0
-        ? t.styleChipFirstStrike(stats.hanzi, stats.firstStrike)
+        ? t.styleChipFirstStrike(stats.hanzi, stats.firstStrike + aw.firstStrike)
         : stats.chain > 0
-        ? t.styleChipChain(stats.hanzi, stats.chain)
+        ? t.styleChipChain(stats.hanzi, stats.chain + aw.chain)
         : stats.retainedDiscount > 0
-        ? t.styleChipRetained(stats.hanzi, stats.retainedDiscount)
+        ? t.styleChipRetained(
+            stats.hanzi,
+            stats.retainedDiscount + aw.retainedDiscount,
+          )
         : stats.retain > 0
         ? t.styleChipRetain(stats.hanzi, stats.retain)
         : t.styleChipDraw(stats.hanzi, stats.draw);
@@ -3168,13 +3178,45 @@ class _StyleChipState extends ConsumerState<_StyleChip> {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: color, width: 1.5),
                     ),
-                    child: Text(
-                      t.styleBenefit(widget.style),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        height: 1.25,
-                        color: Palette.text,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          t.styleBenefit(widget.style),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            height: 1.25,
+                            color: Palette.text,
+                          ),
+                        ),
+                        for (final id in awakenings) ...[
+                          const SizedBox(height: 6),
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      '${balance.awakening(id).hanzi} ${text.awakening(id)}. ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: color,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: t.awakeningEffect(
+                                    balance.awakening(id).effect,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              height: 1.25,
+                              color: Palette.text,
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ),
                 ),

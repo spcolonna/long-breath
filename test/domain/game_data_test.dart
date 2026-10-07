@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
@@ -92,6 +95,24 @@ void main() {
           ),
       isFalse,
     );
+  });
+
+  test('cada camino tiene 4 despertares con nombre', () {
+    final content = jsonDecode(
+      File('assets/l10n/content/es.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final names = content['awakenings'] as Map<String, dynamic>;
+    final ids = <String>{};
+    for (final s in Style.values) {
+      final aw = data.balance.styles[s]!.awakenings;
+      expect(aw, hasLength(4), reason: s.name);
+      for (final a in aw) {
+        expect(ids.add(a.id), isTrue, reason: 'repetido: ${a.id}');
+        expect(names.containsKey(a.id), isTrue, reason: a.id);
+        expect(data.balance.awakening(a.id), same(a));
+      }
+    }
+    expect(data.balance.awakeningChoices, 3);
   });
 
   test('talismanes y eventos', () {
