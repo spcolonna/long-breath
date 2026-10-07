@@ -238,6 +238,9 @@ class RunLog {
   final learned = <String>[];
   final talismans = <String>[];
 
+  /// Despertares del camino aprendidos en la run.
+  final awakenings = <String>[];
+
   /// Modelo de tiempo: 5 s por carta, 6 s por turno (incluye la animación
   /// del rival), 15 s por pantalla de mapa/recompensa/fuente, 30 s el santuario
   /// 30 s cada evento (leer la escena y decidir), 40 s el mercader y 25 s
@@ -274,8 +277,10 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     String enemy, Style? style, int hp, int seed, List<String> talismans,
     {Difficulty difficulty = Difficulty.normal,
     int pico = 0,
+    int stage = 0,
     int? maxHp,
-    Iterable<String>? forms}) {
+    Iterable<String>? forms,
+    List<String> awakenings = const []}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank);
   var s = engine
       .start(
@@ -286,9 +291,11 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           seed: seed,
           difficulty: difficulty,
           pico: pico,
+          stage: stage,
           maxHp: maxHp,
           forms: forms,
-          talismans: talismans)
+          talismans: talismans,
+          awakenings: awakenings)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
@@ -349,7 +356,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
           log.hpAtBoss = r.hp;
         }
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
-            difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms);
+            difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
+            awakenings: r.awakenings, stage: r.stage);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
@@ -411,13 +419,16 @@ RunLog playRun(GameData data, Bot bot, int seed,
                 ? wanted
                 : r.pathOptions[tRng.nextInt(r.pathOptions.length)]);
       case RunPhase.stageClear:
-        r = runEngine.advanceStage(r);
+        final aw = r.awakeningOptions;
+        r = runEngine.advanceStage(r,
+            awakening: aw.isEmpty ? null : aw[tRng.nextInt(aw.length)]);
       case RunPhase.victory || RunPhase.defeat:
         break;
     }
   }
   log.won = r.phase == RunPhase.victory;
   log.style = r.style;
+  log.awakenings.addAll(r.awakenings);
   log.deckSize = r.deck.length;
   log.jadeLeft = r.jade;
   log.stage = r.stage;

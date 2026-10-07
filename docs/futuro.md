@@ -32,6 +32,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - Tigre: romper Estructura.
   - Serpiente: veneno, golpes encadenados y retener.
   - Grulla: desvíos y contraataques.
+  - **Hecho (07/10/2026), primera parte: despertares.** Al superar la etapa 1 y la 2 se elige 1 de 3 despertares del camino (4 por camino) que cambian su regla. Siguiente paso posible: un tercer despertar más fuerte en la cumbre, o despertares que pidan un estilo de juego ("si no retuviste nada, …").
 - **Leopardo** como cuarto camino (velocidad: cartas de costo 0 y robar). El Dragón queda sellado por la historia.
 
 ### Armas (bīngqì 兵器)

@@ -244,6 +244,27 @@ En la simulación los tres caminos quedan parejos (ver `balance.md`).
 
 Como el santuario ofrece solo dos, no siempre vas a poder jugar tu camino favorito: parte de la gracia es adaptarse al que te toca.
 
+### Despertares 觉醒
+
+Al superar la Montaña y el Monasterio, el espíritu de tu camino te ofrece **3 despertares** y elegís uno. Cambia la regla del camino por el resto de la subida, así que dos subidas con el mismo animal pueden jugarse muy distinto. No se repiten: en la segunda etapa superada salen los que todavía no aprendiste.
+
+| Camino | Despertar | Qué cambia |
+|---|---|---|
+| Tigre | 怒 Furia | El primer ataque del turno pega +3 más (6 en total). |
+| | 破 Garra que quiebra | El primer ataque del turno quita +4 de Estructura. |
+| | 跃 Salto | El primer ataque del turno cuesta 1 menos. |
+| | 噬 Hambre | Al desequilibrar al rival, robás 2. |
+| Serpiente | 毒 Veneno lento | La cadena pega +1 más por ataque anterior (+2 en total). |
+| | 缠 Abrazo | Cada ataque quita +1 de Estructura por cada ataque anterior del turno. |
+| | 信 Lengua bífida | Al jugar el tercer ataque del turno, robás 1. |
+| | 蜕 Muda | Robás 1 carta más por turno. |
+| Grulla | 静 Quietud | Los ataques retenidos pegan +6 y retenés 1 más. |
+| | 羽 Pluma | Las retenidas cuestan 1 menos más (2 en total) y robás 1 más. |
+| | 平 Equilibrio | Tus defensas dan +3 de Guardia y cada desvío da +1 de Aliento. |
+| | 展 Alas abiertas | Robás 1 carta más por turno. |
+
+En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista tus despertares. Para compensar, los rivales del Monasterio tienen +14% de Vida y +9% de daño, y los de la Cumbre +22% y +16%.
+
 ## Valores del jugador
 
 | Valor | Base | Nota |

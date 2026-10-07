@@ -1514,6 +1514,87 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String awEffFirstStrike(int n) {
+    return 'El primer ataque del turno pega +$n.';
+  }
+
+  @override
+  String awEffChain(int n) {
+    return 'Cada ataque pega +$n por cada ataque anterior del turno.';
+  }
+
+  @override
+  String awEffRetain(int n) {
+    return 'Podés retener $n carta más.';
+  }
+
+  @override
+  String awEffDraw(int n) {
+    return 'Robás $n carta más por turno.';
+  }
+
+  @override
+  String awEffRetainedDiscount(int n) {
+    return 'Las cartas retenidas cuestan $n menos.';
+  }
+
+  @override
+  String awEffFirstStrikeStructure(int n) {
+    return 'El primer ataque del turno quita +$n de Estructura.';
+  }
+
+  @override
+  String awEffFirstStrikeDiscount(int n) {
+    return 'El primer ataque del turno cuesta $n menos.';
+  }
+
+  @override
+  String awEffBreakDraw(int n) {
+    return 'Al desequilibrar al rival, robás $n.';
+  }
+
+  @override
+  String awEffChainStructure(int n) {
+    return 'Cada ataque quita +$n de Estructura por cada ataque anterior del turno.';
+  }
+
+  @override
+  String awEffThirdAttackDraw(int n) {
+    return 'Al jugar el tercer ataque del turno, robás $n.';
+  }
+
+  @override
+  String awEffRetainedDamage(int n) {
+    return 'Los ataques retenidos pegan +$n.';
+  }
+
+  @override
+  String awEffDeflectBreath(int n) {
+    return 'Cada desvío da +$n de Aliento.';
+  }
+
+  @override
+  String awEffGuardBonus(int n) {
+    return 'Tus defensas dan +$n de Guardia.';
+  }
+
+  @override
+  String get awakeningTitle => 'DESPERTAR';
+
+  @override
+  String get awakeningHint =>
+      'El espíritu de tu camino te enseña algo más. Elegí uno: te acompaña el resto de la subida.';
+
+  @override
+  String get awakeningPick => 'Elegí un despertar';
+
+  @override
+  String get awakeningConfirm => 'Despertar y seguir subiendo';
+
+  @override
+  String get awakeningsLabel => 'Despertares';
+
+  @override
   String get lesClimbSlideEventsTitle => 'Eventos y talismanes';
 
   @override

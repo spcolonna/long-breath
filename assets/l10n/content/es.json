@@ -308,6 +308,56 @@
     "grieta": "Sello de la Grieta",
     "victoria": "Cinta de la Victoria"
   },
+  "awakenings": {
+    "hu_nu": {
+      "name": "Furia",
+      "text": "El tigre no avisa dos veces."
+    },
+    "hu_po": {
+      "name": "Garra que quiebra",
+      "text": "Lo que el tigre toca, se agrieta."
+    },
+    "hu_yue": {
+      "name": "Salto",
+      "text": "Cae sobre vos antes de que lo veas moverse."
+    },
+    "hu_shi": {
+      "name": "Hambre",
+      "text": "Un rival que tambalea le despierta el hambre."
+    },
+    "she_du": {
+      "name": "Veneno lento",
+      "text": "Cada mordida se suma a la anterior."
+    },
+    "she_chan": {
+      "name": "Abrazo",
+      "text": "Con cada vuelta, la serpiente aprieta un poco más."
+    },
+    "she_xin": {
+      "name": "Lengua bífida",
+      "text": "Al tercer golpe ya sabe por dónde seguir."
+    },
+    "she_tui": {
+      "name": "Muda",
+      "text": "Deja la piel vieja y se mueve más liviana."
+    },
+    "he_jing": {
+      "name": "Quietud",
+      "text": "Lo que se espera cae con más peso."
+    },
+    "he_yu": {
+      "name": "Pluma",
+      "text": "Lo guardado no pesa más que una pluma."
+    },
+    "he_ping": {
+      "name": "Equilibrio",
+      "text": "Sobre una pata, nada la mueve."
+    },
+    "he_zhan": {
+      "name": "Alas abiertas",
+      "text": "Con las alas abiertas ve todo el campo."
+    }
+  },
   "events": {
     "hermit": {
       "name": "El ermitaño del pino",

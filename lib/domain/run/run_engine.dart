@@ -71,15 +71,43 @@ class RunEngine {
   RunPhase _afterReward(RunState r) =>
       _atStageBoss(r) && !isLastStage(r) ? RunPhase.stageClear : RunPhase.map;
 
+  /// Termina la recompensa: al mapa, o al descanso de la etapa vencida, donde
+  /// el camino ofrece sus despertares.
+  RunState _leaveReward(RunState r) {
+    final phase = _afterReward(r);
+    if (phase != RunPhase.stageClear) return r.copyWith(phase: phase);
+    final (options, rng) = _rollAwakenings(r);
+    return r.copyWith(phase: phase, awakeningOptions: options, rng: rng);
+  }
+
+  /// Despertares del camino que la run todavía no aprendió.
+  List<String> missingAwakenings(RunState r) => [
+        for (final a in data.balance.statsOf(r.style).awakenings)
+          if (!r.awakenings.contains(a.id)) a.id,
+      ];
+
+  (List<String>, Rng) _rollAwakenings(RunState r) {
+    final (shuffled, rng) = r.rng.shuffle(missingAwakenings(r));
+    return (shuffled.take(data.balance.awakeningChoices).toList(), rng);
+  }
+
   /// Vida que se recupera al pasar a la etapa siguiente.
   int stageHealOf(RunState r) =>
       ((r.maxHp - r.hp) * data.balance.stageHeal / 100).round();
 
   /// Subir a la etapa siguiente: cura, mapa nuevo y se empieza desde abajo.
-  RunState advanceStage(RunState r) {
+  /// Si el camino ofreció despertares, hay que elegir uno ([awakening]).
+  RunState advanceStage(RunState r, {String? awakening}) {
     if (r.phase != RunPhase.stageClear) throw StateError('No hay etapa vencida');
+    if (awakening != null
+        ? !r.awakeningOptions.contains(awakening)
+        : r.awakeningOptions.isNotEmpty) {
+      throw StateError('Despertar no ofrecido: $awakening');
+    }
     final (map, rng) = _stageMap(r.stage + 1, r.rng);
     return r.copyWith(
+      awakenings: [...r.awakenings, ?awakening],
+      awakeningOptions: const [],
       stage: r.stage + 1,
       hp: r.hp + stageHealOf(r),
       map: map,
@@ -402,15 +430,14 @@ class RunEngine {
     if (cardId != null && !r.rewardOptions.contains(cardId)) {
       throw StateError('Recompensa inválida: $cardId');
     }
-    return r.copyWith(
+    return _leaveReward(r.copyWith(
       deck: cardId == null
           ? r.deck
           : [...r.deck, CombatCard(uid: r.nextUid, cardId: cardId)],
       nextUid: cardId == null ? r.nextUid : r.nextUid + 1,
       rewardOptions: const [],
       clearRewardForm: true,
-      phase: _afterReward(r),
-    );
+    ));
   }
 
   /// Aprender la forma ofrecida en vez de sumar una carta.
@@ -419,12 +446,11 @@ class RunEngine {
     if (r.rewardForm != formId) {
       throw StateError('Forma no ofrecida: $formId');
     }
-    return r.copyWith(
+    return _leaveReward(r.copyWith(
       knownForms: [...r.knownForms, formId],
       rewardOptions: const [],
       clearRewardForm: true,
-      phase: _afterReward(r),
-    );
+    ));
   }
 
   /// Vida que cura la fuente en la dificultad de la run.

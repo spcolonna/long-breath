@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 
+import '../model/awakening_def.dart';
 import '../model/card_def.dart';
 import '../model/enemy_def.dart';
 import '../model/enums.dart';
 import '../model/form_def.dart';
+import '../model/game_balance.dart';
 import '../model/game_data.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
@@ -127,16 +129,20 @@ class CombatEngine {
     bool shuffle = true,
     Difficulty difficulty = Difficulty.normal,
     int pico = 0,
+    int stage = 0,
     int? maxHp,
     Iterable<String>? forms,
     List<String> talismans = const [],
+    List<String> awakenings = const [],
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
+    final aw = b.awakeningsEffect(awakenings);
     final enemy = data.enemy(enemyId);
     final dif = b.difficulty(difficulty);
     // Los Picos se suman encima de la dificultad.
-    final pm = b.picoMods(pico);
+    final pm = b.picoMods(pico) +
+        (stage < b.stages.length ? b.stages[stage].enemyMods : const PicoDef());
     final rankHp = pm.enemyHp +
         switch (enemy.rank) {
           EnemyRank.common => pm.commonHp,
@@ -163,9 +169,9 @@ class CombatEngine {
     final d = _Draft(
       turn: 0,
       phase: CombatPhase.playerTurn,
-      handSize: styleStats.draw,
+      handSize: styleStats.draw + aw.draw,
       breathPerTurn: styleStats.breath,
-      retainMax: styleStats.retain,
+      retainMax: styleStats.retain + aw.retain,
       hp: playerHp,
       maxHp: maxHp ?? b.playerHp,
       structure: b.playerStructure + extraStructure,
@@ -196,9 +202,10 @@ class CombatEngine {
       enemyDamagePct: pct(dif.enemyDamage, 100, pm.enemyDamage),
       talismans: talismans,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath),
-      firstStrike: styleStats.firstStrike,
-      chain: styleStats.chain,
-      retainedDiscount: styleStats.retainedDiscount,
+      firstStrike: styleStats.firstStrike + aw.firstStrike,
+      chain: styleStats.chain + aw.chain,
+      retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,
+      awakened: aw,
     );
     final events = <CombatEvent>[
       for (final id in talismans)
@@ -308,8 +315,13 @@ class CombatEngine {
   int costOf(CombatState s, CardDef def, [int? uid]) => _cost(
     def,
     s.player.stance,
-    uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0,
+    (uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0) +
+        _firstStrikeDiscount(def, s.attacksThisTurn, s.awakened),
   );
+
+  /// Despertar del Tigre: el primer ataque del turno cuesta menos.
+  int _firstStrikeDiscount(CardDef def, int attacks, AwakeningEffect aw) =>
+      def.type.isAttack && attacks == 0 ? aw.firstStrikeDiscount : 0;
 
   int _cost(CardDef def, Stance stance, [int discount = 0]) => math.max(
     0,
@@ -324,11 +336,12 @@ class CombatEngine {
     required bool retained,
     required int firstStrike,
     required int chain,
+    AwakeningEffect awakened = AwakeningEffect.none,
   }) {
     if (!def.type.isAttack || def.damage == 0) return 0;
     return (attacks == 0 ? firstStrike : 0) +
         (chain + def.chainDamage) * attacks +
-        (retained ? def.retainedDamage : 0);
+        (retained ? def.retainedDamage + awakened.retainedDamage : 0);
   }
 
   /// Estructura extra de la carta según el turno: cadena (Serpiente) y
@@ -337,10 +350,12 @@ class CombatEngine {
     CardDef def, {
     required int attacks,
     required bool retained,
+    AwakeningEffect awakened = AwakeningEffect.none,
   }) {
     if (!def.type.isAttack) return 0;
-    return def.chainStructure * attacks +
-        (retained ? def.retainedStructure : 0);
+    return (def.chainStructure + awakened.chainStructure) * attacks +
+        (retained ? def.retainedStructure : 0) +
+        (attacks == 0 ? awakened.firstStrikeStructure : 0);
   }
 
   /// Daño y Estructura de la carta antes de los modificadores del enemigo.
@@ -387,11 +402,11 @@ class CombatEngine {
     return (dmg, str, guard, _cost(def, stance) - def.cost);
   }
 
-  int _guardOf(CardDef def, int upgrades, Stance stance) {
+  int _guardOf(CardDef def, int upgrades, Stance stance, [int bonus = 0]) {
     if (def.guard == 0) return 0;
     return math.max(
       0,
-      def.guard + upgrades + data.stance(stance).guardModifier,
+      def.guard + upgrades + data.stance(stance).guardModifier + bonus,
     );
   }
 
@@ -419,6 +434,7 @@ class CombatEngine {
       retained: s.retained.contains(uid),
       firstStrike: s.firstStrike,
       chain: s.chain,
+      awakened: s.awakened,
     );
     final (dmg, str) = _cardHit(
       def,
@@ -432,6 +448,7 @@ class CombatEngine {
         def,
         attacks: s.attacksThisTurn,
         retained: s.retained.contains(uid),
+        awakened: s.awakened,
       ),
     );
     final dealt = _enemyDamageTaken(
@@ -459,7 +476,7 @@ class CombatEngine {
       reason: validate(s, PlayCard(uid)),
       damage: dealt,
       structure: s.enemy.staggered ? 0 : str,
-      guard: _guardOf(def, c.upgrades, stance),
+      guard: _guardOf(def, c.upgrades, stance, s.awakened.guardBonus),
       height: def.height,
       stanceAfter: stanceAfter,
       advancesForms: advances,
@@ -519,11 +536,16 @@ class CombatEngine {
     final card = d.hand.firstWhere((c) => c.uid == uid);
     final def = data.card(card.cardId);
     final wasRetained = d.retained.remove(uid);
-    d.breath -= _cost(def, d.stance, wasRetained ? d.retainedDiscount : 0);
+    d.breath -= _cost(
+      def,
+      d.stance,
+      (wasRetained ? d.retainedDiscount : 0) +
+          _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened),
+    );
     d.hand.remove(card);
     events.add(CardPlayed(def.id));
 
-    final g = _guardOf(def, card.upgrades, d.stance);
+    final g = _guardOf(def, card.upgrades, d.stance, d.awakened.guardBonus);
     if (def.type == CardType.defense) {
       d.guard += g;
       d.guardHeight = def.height;
@@ -545,10 +567,22 @@ class CombatEngine {
         retained: wasRetained,
         firstStrike: d.firstStrike,
         chain: d.chain,
+        awakened: d.awakened,
       ),
-      _styleStructure(def, attacks: d.attacksThisTurn, retained: wasRetained),
+      _styleStructure(
+        def,
+        attacks: d.attacksThisTurn,
+        retained: wasRetained,
+        awakened: d.awakened,
+      ),
     );
-    if (def.type.isAttack) d.attacksThisTurn++;
+    if (def.type.isAttack) {
+      d.attacksThisTurn++;
+      // Despertar de la Serpiente: el tercer ataque del turno roba.
+      if (d.attacksThisTurn == 3 && d.awakened.thirdAttackDraw > 0) {
+        _draw(d, d.awakened.thirdAttackDraw, events);
+      }
+    }
     if (dmg > 0 && d.enemy.parryReady && !d.enemy.staggered) {
       _parry(d, str, events);
     } else if (dmg > 0 || str > 0) {
@@ -692,6 +726,8 @@ class CombatEngine {
     e.skipNextAction = true;
     e.staggerEndsTurn = d.turn + 1;
     events.add(const EnemyBroken());
+    // Despertar del Tigre: desequilibrar roba.
+    if (d.awakened.breakDraw > 0) _draw(d, d.awakened.breakDraw, events);
     if (e.wrath > 0) {
       e.wrath = 0;
       events.add(const WrathCalmed());
@@ -837,8 +873,9 @@ class CombatEngine {
     if (match && d.guard >= damage) {
       d.deflects++;
       events.add(const Deflected());
-      d.nextTurnBreathMod +=
-          data.balance.deflectBreathBonus + stance.deflectBreathBonus;
+      d.nextTurnBreathMod += data.balance.deflectBreathBonus +
+          stance.deflectBreathBonus +
+          d.awakened.deflectBreath;
       for (final id in d.talismans) {
         final extra = data.talisman(id).effect.deflectBreath;
         if (extra > 0) {
@@ -1063,6 +1100,7 @@ class _Draft {
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
     this.drawPenalty = 0,
+    this.awakened = AwakeningEffect.none,
     List<int>? retained,
   }) : formsCompleted = formsCompleted ?? {},
        retained = retained ?? [];
@@ -1107,6 +1145,7 @@ class _Draft {
     retainedDiscount: s.retainedDiscount,
     attacksThisTurn: s.attacksThisTurn,
     drawPenalty: s.drawPenalty,
+    awakened: s.awakened,
     retained: [...s.retained],
   );
 
@@ -1149,6 +1188,7 @@ class _Draft {
   final int retainedDiscount;
   int attacksThisTurn;
   int drawPenalty;
+  final AwakeningEffect awakened;
   final List<int> retained;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
@@ -1196,5 +1236,6 @@ class _Draft {
     attacksThisTurn: attacksThisTurn,
     retained: List.unmodifiable(retained),
     drawPenalty: drawPenalty,
+    awakened: awakened,
   );
 }

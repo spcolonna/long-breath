@@ -39,6 +39,8 @@ class ContentText {
   String style(Style a) => _get('styles', a.name);
   String styleMotto(Style a) => _get('styleMottos', a.name);
   String talisman(String id) => _get('talismans', id);
+  String awakening(String id) => _get('awakenings', id, 'name');
+  String awakeningText(String id) => _get('awakenings', id, 'text');
   String event(String id) => _get('events', id, 'name');
   String eventText(String id) => _get('events', id, 'text');
   String eventOption(String id, String option) => _get('events', id, option);

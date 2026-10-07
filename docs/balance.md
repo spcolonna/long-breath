@@ -501,3 +501,10 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
 - **Eventos:** 8 nuevos con `stages` (2 de la etapa 1, 3 de la 2 y 3 de la 3). En cada etapa salen primero los propios sin ver, después los generales sin ver y, al final, cualquiera de la etapa. Usan los mismos efectos de siempre. Normal (600 runs): promedio 61%, experto 80%.
 - **Mercader** (`merchant` dentro de cada etapa pisa el base): Monasterio 4 cartas a 25, talismán 60, quitar 35, mejorar 30, té 20 (+20); Cumbre 4 cartas a 30, talismán **raro** a 85, quitar 40, mejorar 35, té 25 (+25). Normal: promedio 59%, experto 79%, ~44 min. Dificultades (400 runs): Fácil 45 / 100 / 100, Normal 0 / 61 / 79, Difícil 0 / 33 / 60, Shifu 0 / 6 / 19.
 - Sobran ~52 de jade al final: casi todo se gana después del último mercader (élite, fuente y jefe), así que no es un problema de precios.
+
+### 3l. Despertares del camino (07/10/2026)
+- Al superar la etapa 1 y la 2 se elige 1 de 3 despertares del camino (4 por camino, en `styles.*.awakenings`; `run.awakeningChoices`). Efectos en `AwakeningEffect`: los numéricos se suman a la pasiva (golpe primero, cadena, retener, robar, descuento retenido) y los nuevos son Estructura y descuento del primer golpe, robar al desequilibrar, Estructura en cadena, robar en el tercer ataque, daño retenido, Guardia extra y Aliento por desvío.
+- Sin compensar suben al promedio de 59% a 77%. Se compensa con `enemyMods` por etapa (mismas reglas que un Pico): Monasterio +14% Vida / +9% daño, Cumbre +22% / +16%.
+- Normal (1000 runs): novato 0%, promedio 62%, experto 81%, ~45 min. Por camino (promedio): Tigre 67%, Serpiente 59%, Grulla 59%.
+- Dificultades (600 runs): Fácil 43 / 100 / 100, Normal 0 / 62 / 80, Difícil 0 / 34 / 61, Shifu 0 / 6 / 26.
+- Victoria del promedio por despertar (runs que llegaron a la etapa 2, base 73%): los más fuertes son Garra que quiebra (93%), Alas abiertas (87%), Salto (86%) y Abrazo (85%); los más flojos, Quietud (58%) y Veneno lento (69%). Robar 1 más por turno es lo más fuerte; si hace falta, es lo primero que se toca. Quietud depende de retener ataques, que los bots hacen poco.

@@ -78,9 +78,11 @@ class CombatController extends Notifier<CombatView?> {
       maxHp: run.maxHp,
       difficulty: run.difficulty,
       pico: run.pico,
+      stage: run.stage,
       seed: seed,
       forms: run.knownForms,
       talismans: run.talismans,
+      awakenings: run.awakenings,
     );
     state = CombatView(
       state: r.state,

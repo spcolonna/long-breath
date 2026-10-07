@@ -1,3 +1,4 @@
+import '../model/awakening_def.dart';
 import '../model/enums.dart';
 import '../rng.dart';
 
@@ -184,6 +185,7 @@ class CombatState {
     this.attacksThisTurn = 0,
     this.retained = const [],
     this.drawPenalty = 0,
+    this.awakened = AwakeningEffect.none,
   });
 
   final int turn;
@@ -240,6 +242,9 @@ class CombatState {
   /// Cartas menos que se roban el próximo turno (escarcha).
   final int drawPenalty;
 
+  /// Despertares del camino sumados (los que cambian la regla en combate).
+  final AwakeningEffect awakened;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -276,6 +281,7 @@ class CombatState {
         attacksThisTurn: attacksThisTurn,
         retained: retained,
         drawPenalty: drawPenalty,
+        awakened: awakened,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

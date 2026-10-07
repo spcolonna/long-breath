@@ -1,4 +1,5 @@
 import '../domain/combat/combat_engine.dart';
+import '../domain/model/awakening_def.dart';
 import '../domain/model/card_def.dart';
 import '../domain/model/enums.dart';
 import '../domain/model/event_def.dart';
@@ -117,6 +118,25 @@ extension Labels on AppLocalizations {
     if (e.draw > 0) effDraw(e.draw),
     if (e.fistBonus > 0) effFistBonus(e.fistBonus),
   ].join(' · ');
+
+  /// Lo que enseña un despertar, una frase por efecto.
+  String awakeningEffect(AwakeningEffect e) => [
+    if (e.firstStrike > 0) awEffFirstStrike(e.firstStrike),
+    if (e.firstStrikeStructure > 0)
+      awEffFirstStrikeStructure(e.firstStrikeStructure),
+    if (e.firstStrikeDiscount > 0)
+      awEffFirstStrikeDiscount(e.firstStrikeDiscount),
+    if (e.breakDraw > 0) awEffBreakDraw(e.breakDraw),
+    if (e.chain > 0) awEffChain(e.chain),
+    if (e.chainStructure > 0) awEffChainStructure(e.chainStructure),
+    if (e.thirdAttackDraw > 0) awEffThirdAttackDraw(e.thirdAttackDraw),
+    if (e.retainedDamage > 0) awEffRetainedDamage(e.retainedDamage),
+    if (e.retainedDiscount > 0) awEffRetainedDiscount(e.retainedDiscount),
+    if (e.guardBonus > 0) awEffGuardBonus(e.guardBonus),
+    if (e.deflectBreath > 0) awEffDeflectBreath(e.deflectBreath),
+    if (e.draw > 0) awEffDraw(e.draw),
+    if (e.retain > 0) awEffRetain(e.retain),
+  ].join(' ');
 
   /// Lo que hace un talismán, una frase por efecto.
   String talismanEffect(TalismanEffect e, ContentText text) => [

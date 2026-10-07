@@ -8,9 +8,27 @@
   },
   "novice": { "hanzi": "徒", "pinyin": "Tú", "draw": 5, "breath": 3, "retain": 0 },
   "styles": {
-    "tiger": { "hanzi": "虎", "pinyin": "Hǔ", "draw": 5, "breath": 4, "retain": 0, "firstStrike": 3 },
-    "snake": { "hanzi": "蛇", "pinyin": "Shé", "draw": 4, "breath": 4, "retain": 2, "chain": 1 },
-    "crane": { "hanzi": "鹤", "pinyin": "Hè", "draw": 4, "breath": 4, "retain": 3, "retainedDiscount": 1 }
+    "tiger": { "hanzi": "虎", "pinyin": "Hǔ", "draw": 5, "breath": 4, "retain": 0, "firstStrike": 3,
+      "awakenings": [
+        { "id": "hu_nu", "hanzi": "怒", "effect": { "firstStrike": 3 } },
+        { "id": "hu_po", "hanzi": "破", "effect": { "firstStrikeStructure": 4 } },
+        { "id": "hu_yue", "hanzi": "跃", "effect": { "firstStrikeDiscount": 1 } },
+        { "id": "hu_shi", "hanzi": "噬", "effect": { "breakDraw": 2 } }
+      ] },
+    "snake": { "hanzi": "蛇", "pinyin": "Shé", "draw": 4, "breath": 4, "retain": 2, "chain": 1,
+      "awakenings": [
+        { "id": "she_du", "hanzi": "毒", "effect": { "chain": 1 } },
+        { "id": "she_chan", "hanzi": "缠", "effect": { "chainStructure": 1 } },
+        { "id": "she_xin", "hanzi": "信", "effect": { "thirdAttackDraw": 1 } },
+        { "id": "she_tui", "hanzi": "蜕", "effect": { "draw": 1 } }
+      ] },
+    "crane": { "hanzi": "鹤", "pinyin": "Hè", "draw": 4, "breath": 4, "retain": 3, "retainedDiscount": 1,
+      "awakenings": [
+        { "id": "he_jing", "hanzi": "静", "effect": { "retainedDamage": 6, "retain": 1 } },
+        { "id": "he_yu", "hanzi": "羽", "effect": { "retainedDiscount": 1, "draw": 1 } },
+        { "id": "he_ping", "hanzi": "平", "effect": { "guardBonus": 3, "deflectBreath": 1 } },
+        { "id": "he_zhan", "hanzi": "展", "effect": { "draw": 1 } }
+      ] }
   },
   "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
   "playerBreak": { "breathPenalty": 2 },
@@ -41,6 +59,7 @@
   ],
   "run": {
     "stageClear": { "heal": 100, "jade": 25 },
+    "awakeningChoices": 3,
     "stages": [
       {
         "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān",
@@ -77,6 +96,7 @@
         ],
         "scenes": ["pasarela", "escalera", "patio_colgado"],
         "lights": ["alba", "niebla", "ocaso"],
+        "enemyMods": { "enemyHp": 14, "enemyDamage": 9 },
         "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20 }
       },
       {
@@ -96,6 +116,7 @@
         ],
         "scenes": ["ventisquero", "glaciar", "paso_nevado"],
         "lights": ["alba", "niebla", "ocaso"],
+        "enemyMods": { "enemyHp": 22, "enemyDamage": 16 },
         "merchant": { "cards": 4, "card": 30, "talisman": 85, "rareTalisman": true, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25 }
       }
     ]
