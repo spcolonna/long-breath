@@ -331,6 +331,18 @@ class CombatEngine {
         (retained ? def.retainedDamage : 0);
   }
 
+  /// Estructura extra de la carta según el turno: cadena (Serpiente) y
+  /// carta retenida (Grulla).
+  int _styleStructure(
+    CardDef def, {
+    required int attacks,
+    required bool retained,
+  }) {
+    if (!def.type.isAttack) return 0;
+    return def.chainStructure * attacks +
+        (retained ? def.retainedStructure : 0);
+  }
+
   /// Daño y Estructura de la carta antes de los modificadores del enemigo.
   (int, int) _cardHit(
     CardDef def,
@@ -340,6 +352,7 @@ class CombatEngine {
     int turnStructureBonus,
     int fistBonus, [
     int styleDamage = 0,
+    int styleStructure = 0,
   ]) {
     if (def.damage == 0 && def.structure == 0) return (0, 0);
     final st = data.stance(stance);
@@ -354,7 +367,7 @@ class CombatEngine {
     if (staggered) dmg += def.bonusDamageIfStaggered;
     final ssb = def.stanceStructureBonus;
     if (ssb != null && ssb.$1 == stance) str += ssb.$2;
-    str += turnStructureBonus;
+    str += turnStructureBonus + styleStructure;
     return (dmg, str);
   }
 
@@ -415,6 +428,11 @@ class CombatEngine {
       s.turnStructureBonus,
       s.fistBonus,
       style,
+      _styleStructure(
+        def,
+        attacks: s.attacksThisTurn,
+        retained: s.retained.contains(uid),
+      ),
     );
     final dealt = _enemyDamageTaken(
       enemyDef,
@@ -528,6 +546,7 @@ class CombatEngine {
         firstStrike: d.firstStrike,
         chain: d.chain,
       ),
+      _styleStructure(def, attacks: d.attacksThisTurn, retained: wasRetained),
     );
     if (def.type.isAttack) d.attacksThisTurn++;
     if (dmg > 0 && d.enemy.parryReady && !d.enemy.staggered) {

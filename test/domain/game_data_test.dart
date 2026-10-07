@@ -6,21 +6,21 @@ import 'package:long_breath/infrastructure/file_game_data_loader.dart';
 void main() {
   final data = loadGameDataFromDir();
 
-  test('32 cartas: 12 iniciales, 8 generales y 4 por cada camino', () {
-    expect(data.cards.length, 28); // definiciones únicas
+  test('38 cartas: 12 iniciales, 8 generales y 6 por cada camino', () {
+    expect(data.cards.length, 34); // definiciones únicas
     expect(data.starterDeck.length, 12);
     expect(data.cards.values.where((c) => c.pool == 'reward').length, 8);
     for (final s in Style.values) {
-      expect(data.cards.values.where((c) => c.pool == s.name).length, 4,
+      expect(data.cards.values.where((c) => c.pool == s.name).length, 6,
           reason: s.name);
     }
-    expect(data.rewardPool.length, 20);
+    expect(data.rewardPool.length, 26);
   });
 
   test('las cartas de cada camino solo le salen a ese camino', () {
     for (final s in Style.values) {
       final pool = data.rewardPoolFor(s);
-      expect(pool.length, 12, reason: s.name);
+      expect(pool.length, 14, reason: s.name);
       expect(
         pool.where((c) => Style.values.any((o) => o.name == c.pool)),
         everyElement(predicate((c) => (c as dynamic).pool == s.name)),

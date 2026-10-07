@@ -25,6 +25,8 @@ class CardDef {
     this.turnStructureBonus = 0,
     this.chainDamage = 0,
     this.retainedDamage = 0,
+    this.chainStructure = 0,
+    this.retainedStructure = 0,
     this.pool = 'starter',
     this.copies = 1,
   });
@@ -55,6 +57,12 @@ class CardDef {
 
   /// Daño extra si la carta viene retenida del turno anterior (Grulla).
   final int retainedDamage;
+
+  /// Estructura extra por cada ataque jugado antes en el turno (Serpiente).
+  final int chainStructure;
+
+  /// Estructura extra si la carta viene retenida del turno anterior (Grulla).
+  final int retainedStructure;
   final String pool;
   final int copies;
 
@@ -85,6 +93,8 @@ class CardDef {
       turnStructureBonus: j['turnStructureBonus'] as int? ?? 0,
       chainDamage: j['chainDamage'] as int? ?? 0,
       retainedDamage: j['retainedDamage'] as int? ?? 0,
+      chainStructure: j['chainStructure'] as int? ?? 0,
+      retainedStructure: j['retainedStructure'] as int? ?? 0,
       pool: j['pool'] as String? ?? 'starter',
       copies: j['copies'] as int? ?? 1,
     );

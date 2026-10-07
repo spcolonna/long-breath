@@ -1642,6 +1642,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String effChainStructure(int n) {
+    return '+$n de Estructura por cada ataque que ya jugaste en el turno';
+  }
+
+  @override
+  String effRetainedStructure(int n) {
+    return 'Si la retuviste, +$n de Estructura';
+  }
+
+  @override
   String styleChipFirstStrike(String hanzi, int n) {
     return '$hanzi Primer golpe +$n';
   }

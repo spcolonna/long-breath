@@ -287,7 +287,11 @@ Las pasivas subieron el promedio de Normal de 59% a 68%. Para volver a ~60% se s
 | Promedio | 61% | 61% | 63% | **62%** |
 | Experto | 79% | 81% | 85% | **82%** |
 
-Ojo: los bots eligen cartas por sus números base, así que casi no toman Mano de serpiente ni Serpiente dorada (su valor depende de la cadena). Un jugador que arme la cadena puede sacarles más que el bot.
+Los bots valoran la cadena (~1,5 ataques previos) y lo retenido (la mitad de las veces) en `cardValue`, y retienen primero las cartas con bonus de retenida.
+
+### Cartas nuevas de camino (6 por camino)
+Tigre: Cola de tigre (patada 2 · 9/5, +7 con Desequilibrio) y Tigre que baja de la montaña (palma 1 · 5/6, → Caballo). Serpiente: Cola de serpiente (patada 1 · 3/2, +2 E por ataque previo) y Serpiente que se escurre (técnica 0, roba 2, se agota). Grulla: Rodilla de grulla (patada 1 · 3/3, +5 E retenida) y Canto de la grulla (defensa 2, Guardia 11 media, desvío 4/3).
+Poder medido (pp de victoria al sumarla, promedio): entre −0 y +6; ninguna se dispara. Normal, 600 runs: novato 0%, promedio 58%, experto 82%; por camino el promedio queda entre 58% y 64%.
 
 ## 3h. Etapas 2 y 3 en el juego (06/10/2026)
 
