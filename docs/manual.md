@@ -84,7 +84,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 ## Una partida (run)
 
 1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
-2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 9 pisos de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso).
+2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 11 pisos por etapa, de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso). Arriba a la derecha, la regla de altura marca tu piso sobre el total; el número junto al ícono del mazo es la cantidad de cartas (tocalo para verlas).
 
    Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. Al llegar, el rival se presenta.
 
@@ -102,7 +102,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | 8 | Fuente (siempre): se descansa antes del jefe |
    | 9 | Eco del Dragón (jefe de la etapa) |
 
-   Las etapas 2 y 3 tienen la misma forma (9 pisos: élite, fuente y jefe arriba), sin santuario: el camino se elige una sola vez. El mapa se tiñe según la etapa (jade, piedra tibia, nieve) y el título dice "Etapa 2 de 3".
+   Las etapas 2 y 3 tienen la misma forma (11 pisos: élite, fuente y jefe arriba), sin santuario: el camino se elige una sola vez. El mapa se tiñe según la etapa (jade, piedra tibia, nieve) y el título dice "Etapa 2 de 3".
 
    Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un mercader y un maestro.
 
@@ -122,7 +122,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Los dados del arriero 骰 | Apostar: pagás 15, 50% +35 jade · Seguir de largo: nada |
    | El peregrino perdido 旅 | Acompañarlo: −6 Vida, +30 jade · Señalarle el camino: nada |
 
-6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** del piso 8: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
+6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** del piso 9 de cada etapa: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
 
    | Talismán | Efecto | Rareza |
    |---|---|---|
@@ -177,7 +177,7 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 
 | Dificultad | Vida | Fuente | Enemigos |
 |---|---|---|---|
-| Fácil 易 | 65 | +30 | 88% de Vida, 80% de daño |
+| Fácil 易 | 70 | +30 | 88% de Vida, 80% de daño |
 | Normal 常 | 50 | +20 | Como están en la tabla de enemigos |
 | Difícil 难 | 50 | +15 | 106% de Vida, 107% de daño |
 | Shifu 师 | 45 | +15 | 114% de Vida y daño, 106% de Estructura |

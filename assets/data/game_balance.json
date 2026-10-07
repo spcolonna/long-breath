@@ -22,7 +22,7 @@
   "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25 },
   "master": { "forms": 2 },
   "difficulties": {
-    "easy":   { "hanzi": "易", "playerHp": 65, "fountainHeal": 30, "enemyHp": 88, "enemyDamage": 80 },
+    "easy":   { "hanzi": "易", "playerHp": 70, "fountainHeal": 30, "enemyHp": 88, "enemyDamage": 80 },
     "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20 },
     "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 106, "enemyDamage": 107 },
     "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 114, "enemyDamage": 114, "enemyStructure": 106 }
@@ -51,6 +51,8 @@
           { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit"] },
           { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["golem", "disciple", "monkey", "lingzhi"] },
           { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["golem", "disciple", "salamander", "bandit", "lingzhi"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit", "lingzhi"] },
+          { "width": [2, 3], "types": { "combat": 2, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["golem", "disciple", "salamander", "bandit", "lingzhi"] },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["monk", "lion", "fan"], "scene": "campanas" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["dragon"], "scene": "cumbre" }
@@ -67,6 +69,8 @@
           { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "bandit"] },
           { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["bronze_man", "bell_bat", "temple_guard"] },
           { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
+          { "width": [2, 3], "types": { "combat": 2, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey"] },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["iron_abbot", "jade_lion"], "scene": "campanario" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["bell_abbot"], "scene": "gran_campana" }
@@ -83,6 +87,8 @@
           { "width": 3, "types": { "combat": 3, "event": 2, "merchant": 2, "master": 1 }, "enemies": ["ice_golem", "wind_disciple", "snow_ape", "frost_bat"] },
           { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 2 }, "enemies": ["ice_golem", "snow_ape", "wind_disciple"] },
           { "width": 3, "types": { "combat": 3, "event": 1, "merchant": 3, "master": 2 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
+          { "width": [2, 3], "types": { "combat": 3, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
+          { "width": [2, 3], "types": { "combat": 2, "event": 2, "merchant": 1, "master": 1 }, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape"] },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["wind_lady", "snow_lion"], "scene": "templo_helado" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["sleeping_dragon"], "scene": "lecho_dragon" }
