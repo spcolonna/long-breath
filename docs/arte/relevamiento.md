@@ -73,7 +73,7 @@ Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en 
 | `stages/xuankongsi/combat_bg_ladera.png`, `_bifurcacion.png` | combates comunes de la etapa 2 | el `combat_bg` de la etapa 2 |
 | `stages/wolongding/combat_bg_ladera.png`, `_bifurcacion.png` | combates comunes de la etapa 3 | el `combat_bg` de la etapa 3 |
 
-Los tramos de las etapas 2 y 3 todavía no tienen prompt.
+Prompts listos en `prompts.md` §7: `xuankongsi/combat_bg_templo` y `wolongding/combat_bg_cumbre`. Los demás tramos de las etapas 2 y 3 todavía no tienen prompt.
 
 ### 3. Opcional
 
