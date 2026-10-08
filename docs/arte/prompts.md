@@ -1040,6 +1040,24 @@ tense mood, high readability on a small phone screen. NOT dark, NOT gloomy, no b
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
+#### Tramos de las etapas 2 y 3
+
+Mismo formato que los tramos de la etapa 1: vertical 9:19.5, sin transparencia.
+
+Gran Campanario (`xuankongsi/combat_bg_templo.png`, élite y jefe de la etapa 2):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, symmetrical view looking slightly up: the inside of the Great Bell Pavilion of the Hanging Monastery, an enormous pale bronze bell with soft jade-green patina hanging from massive celadon-lacquered beams in the center top, open sides showing bright sky and floating clouds, thin golden rings of sound drifting through the air, a smooth polished stone floor reflecting light. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, cool afternoon daylight, FRESH palette dominated by celadon, jade green (#1FA38A) and pale bronze, accents of cinnabar vermilion (#E8453C) on the beam joints, very little saffron, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+Lecho del Dragón (`wolongding/combat_bg_cumbre.png`, jefe final):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, wide high view: the dragon's bed at the very top of the mountain, a huge round hollow of smooth turquoise ice shaped like a nest, giant curved ice ridges around it like the imprint of a coiled body, a few enormous shed scales of white jade lying on the ice, the sun rising behind in a sky of peach, coral and pale gold, soft pink light glowing through the ice. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, sunrise light, DAWN palette of turquoise ice, peach, coral pink and white jade, small touches of gold (#E59A12), almost no cobalt or violet, soft gradients, clean brush strokes, watercolor bleeds, luminous final-battle feeling, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
 ### Enemigos
 
 ### Murciélago del Campanario (`bat_bronze`, común, etapa 2)
