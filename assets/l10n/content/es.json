@@ -268,6 +268,10 @@
       "name": "León de las Nieves",
       "rule": "Despierta: después de cada acción sus golpes suman 3 más; desequilibrarlo lo calma. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no)."
     },
+    "dragon_reflection": {
+      "name": "Reflejo del Dragón",
+      "rule": "El Dragón Dormido, visto en el estanque del monasterio. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Se cubre con escamas de espejo y anuncia el Aliento del Dragón con cuenta regresiva."
+    },
     "dragon_dream": {
       "name": "Sueño del Dragón",
       "rule": "Lo que el Dragón Dormido sueña antes de despertar. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos y su bruma te hace descartar. Anuncia el Aliento del Dragón con cuenta regresiva."
@@ -301,6 +305,7 @@
     "great_bell": "Gran Campanada",
     "bell_strike": "Golpe de campana",
     "dream_haze": "Bruma del sueño",
+    "mirror_scale": "Escama de espejo",
     "frost": "Escarcha",
     "spores": "Nube de esporas",
     "cap_shield": "Sombrero de laca",

@@ -51,7 +51,7 @@ Antes de subir, los novicios practican en el patio con el **muñeco de madera** 
 Pasado el eco, la subida sigue en tres etapas:
 
 1. **Montaña de las Mil Nubes** 千云山: la de arriba.
-2. **Monasterio Colgado** 悬空寺: un monasterio clavado en la pared del abismo. Sus guardianes prueban a quien sube: el **Murciélago del Campanario** (su repique te quita Aliento), el **Hombre de Bronce** 铜人 (inamovible y con espinas), el **Guardián del Pasadizo** (frena un solo tipo de golpe), la **Salamandra de Ceniza** (se cura al actuar), y los élites **Abad de Hierro** 铁僧, **León de Jade** 玉狮 y **Guardián de la Campana** 守钟人. Arriba, el **Abad de la Gran Campana** 钟师.
+2. **Monasterio Colgado** 悬空寺: un monasterio clavado en la pared del abismo. Sus guardianes prueban a quien sube: el **Murciélago del Campanario** (su repique te quita Aliento), el **Hombre de Bronce** 铜人 (inamovible y con espinas), el **Guardián del Pasadizo** (frena un solo tipo de golpe), la **Salamandra de Ceniza** (se cura al actuar), y los élites **Abad de Hierro** 铁僧, **León de Jade** 玉狮, **Guardián de la Campana** 守钟人 y **Reflejo del Dragón** 龙影 (el dragón de la cumbre, visto en el estanque). Arriba, el **Abad de la Gran Campana** 钟师.
 3. **Cumbre del Dragón Dormido** 卧龙顶: nieve, viento y silencio. El **Simio de las Nieves**, el **Gólem de Escarcha**, el **Discípulo del Viento** y el **Murciélago de Escarcha** (la escarcha te hace robar menos), los élites **Dama del Viento** 风扇, **León de las Nieves** 雪狮 y **Sueño del Dragón** 龙梦 (lo que el dragón sueña antes de despertar), y en la cumbre el **Dragón Dormido** 卧龙.
 
 Los enemigos de las etapas 2 y 3 son, por ahora, variantes recoloreadas de los de la etapa 1, con reglas propias.
@@ -411,6 +411,7 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Abad de Hierro 铁僧 | Élite (2) | 130 | 23 | Medio 11 → Interrumpir → Camisa de hierro (Guardia 14, solo puños) → Bajo 15 | Espinas 1, interrumpe formas y su Guardia solo frena puños |
 | León de Jade 玉狮 | Élite (2) | 146 | 22 | Como el León de Piedra | Despierta (+3) y regeneración 3 |
 | Guardián de la Campana 守钟人 | Élite (2) | 148 | 23 | Cierra las palmas (Guardia 14) → Repique bajo 11 → **Golpe de campana** alto 26 (−1 Aliento) con cuenta regresiva | Guardia de un tipo y repique |
+| Reflejo del Dragón 龙影 | Élite (2) | 128 | 22 | Zarpazo alto 6×2 → Escama de espejo (guardia 12) → Medio 12 → Aliento del Dragón medio 22 con cuenta regresiva | Escamas 2 |
 | Abad de la Gran Campana 钟师 | Jefe (2) | 215 | 21 | Dos fases | Guardia de un tipo y repique. Al 50%: **Gran Campanada** (medio 30, −2 Aliento) con cuenta regresiva |
 | Simio de las Nieves | Común (3) | 74 | 15 | Alto 5×2 → Bajo 6×2 → Medio 12 | Despierta (+2) |
 | Gólem de Escarcha | Común (3) | 84 | 19 | Escarcha medio 12 → Carga → Medio 13 | Inamovible. **Escarcha:** si no la desviás, el próximo turno robás 1 carta menos |
