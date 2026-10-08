@@ -49,7 +49,7 @@ Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en 
 
 | Orden | Archivo | Enemigo | Rol | Sale de |
 |---|---|---|---|---|
-| 1 | `dragon_azure.png` | Dragón Dormido | jefe final | dragon |
+| 1 | `dragon_azure.png` | Dragón Dormido | jefe final | dragon (prompt nuevo listo) |
 | 2 | `monk_gold.png` | Abad de la Gran Campana | jefe etapa 2 | monk |
 | 3 | `monk_iron.png` | Abad de Hierro | élite etapa 2 | monk |
 | 4 | `lion_jade.png` | León de Jade | élite etapa 2 | lion |

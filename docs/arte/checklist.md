@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 58 · ✅ 35 · 🎨 14 · ❌ 9
+Total: 58 · ✅ 38 · 🎨 14 · ❌ 6
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -27,8 +27,8 @@ Total: 58 · ✅ 35 · 🎨 14 · ❌ 9
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
 | ✅ propio | `assets/art/stages/xuankongsi/combat_bg.png` | combate (fondo general) | cielo dibujado | — |
-| ❌ falta | `assets/art/stages/xuankongsi/combat_bg_bifurcacion.png` | combate: pasarela | stages/xuankongsi/combat_bg.png | no |
-| ❌ falta | `assets/art/stages/xuankongsi/combat_bg_ladera.png` | combate: escalera | stages/xuankongsi/combat_bg.png | listo |
+| ❌ falta | `assets/art/stages/xuankongsi/combat_bg_bifurcacion.png` | combate: pasarela | stages/xuankongsi/combat_bg.png | listo |
+| ✅ propio | `assets/art/stages/xuankongsi/combat_bg_ladera.png` | combate: escalera | stages/xuankongsi/combat_bg.png | — |
 | ❌ falta | `assets/art/stages/xuankongsi/combat_bg_templo.png` | combate: campanario, gran_campana | stages/xuankongsi/combat_bg.png | listo |
 | ✅ propio | `assets/art/stages/xuankongsi/map_bg.png` | mapa y evento | stages/qianyunshan/map_bg.png | — |
 | ✅ propio | `assets/art/stages/xuankongsi/fountain_bg.png` | fuente | stages/qianyunshan/fountain_bg.png | — |
@@ -38,10 +38,10 @@ Total: 58 · ✅ 35 · 🎨 14 · ❌ 9
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
 | ✅ propio | `assets/art/stages/wolongding/combat_bg.png` | combate (fondo general) | cielo dibujado | — |
-| ❌ falta | `assets/art/stages/wolongding/combat_bg_bifurcacion.png` | combate: glaciar | stages/wolongding/combat_bg.png | no |
+| ❌ falta | `assets/art/stages/wolongding/combat_bg_bifurcacion.png` | combate: glaciar | stages/wolongding/combat_bg.png | listo |
 | ❌ falta | `assets/art/stages/wolongding/combat_bg_cumbre.png` | combate: lecho_dragon | stages/wolongding/combat_bg.png | listo |
-| ❌ falta | `assets/art/stages/wolongding/combat_bg_ladera.png` | combate: ventisquero | stages/wolongding/combat_bg.png | listo |
-| ❌ falta | `assets/art/stages/wolongding/combat_bg_templo.png` | combate: templo_helado | stages/wolongding/combat_bg.png | listo |
+| ✅ propio | `assets/art/stages/wolongding/combat_bg_ladera.png` | combate: ventisquero | stages/wolongding/combat_bg.png | — |
+| ✅ propio | `assets/art/stages/wolongding/combat_bg_templo.png` | combate: templo_helado | stages/wolongding/combat_bg.png | — |
 | ✅ propio | `assets/art/stages/wolongding/map_bg.png` | mapa y evento | stages/qianyunshan/map_bg.png | — |
 | ❌ falta | `assets/art/stages/wolongding/fountain_bg.png` | fuente | stages/qianyunshan/fountain_bg.png | listo |
 
@@ -74,7 +74,7 @@ Total: 58 · ✅ 35 · 🎨 14 · ❌ 9
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
 | ✅ propio | `assets/art/enemies/dragon.png` | dragon (boss) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_azure.png` | sleeping_dragon (boss) | enemies/placeholder.png | no |
+| 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_azure.png` | sleeping_dragon (boss) | enemies/placeholder.png | listo |
 | 🎨 recoloreo de `monk` | `assets/art/enemies/monk_gold.png` | bell_abbot (boss) | enemies/placeholder.png | no |
 | ✅ propio | `assets/art/enemies/bell_keeper.png` | bell_keeper (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/dragon_dream.png` | dragon_dream (elite) | enemies/placeholder.png | — |

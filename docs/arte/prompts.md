@@ -1079,6 +1079,20 @@ Mobile game combat background, vertical 9:19.5, no characters, framed through a 
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright sunny winter light, palette of crystal white, icy aqua and silver with strong vermilion (#E8453C) pillars glowing under the ice and small rainbow glints, little violet, crisp clean brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
+Puente Colgante (`xuankongsi/combat_bg_bifurcacion.png`, combates comunes de la etapa 2):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, looking along the length of a bridge: a long rope-and-plank suspension bridge stretched between two small cliffside pavilions with curved roofs, rows of round red paper lanterns hanging from the ropes, soft clouds drifting below and between the planks, the far pavilion small in the distance, warm late-afternoon sky in rose and lavender, the near end of the bridge as a flat wooden platform in the lower part. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, late-afternoon glow, palette of rose pink, lavender (#9B5DE5) and cream clouds with bright red lanterns (#E8453C), very little gold, no saffron, strong one-point perspective, clean brush strokes, watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+Glaciar (`wolongding/combat_bg_bifurcacion.png`, combates comunes de la etapa 3):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, wide view at eye level: a glacier field with huge natural ice arches of mint and emerald ice, a still glacial lake of bright green-turquoise water in the middle distance, smooth wind-carved ice shapes like frozen waves, a high white sun in a clear pale sky, flat frosted ice ground in the lower part. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, high clear noon light, palette of mint, emerald and jade green (#1FA38A) ice with white and touches of pale gold (#E59A12) sunlight, almost no cobalt, no violet, no pink, glassy layered washes, clean brush strokes, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
 ### Enemigos
 
 ### Murciélago del Campanario (`bat_bronze`, común, etapa 2)
@@ -1242,6 +1256,15 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
+
+### Dragón Dormido 卧龙 (`dragon_azure`, jefe final, etapa 3)
+
+Hoy es un recoloreo del Eco del Dragón; esta imagen lo reemplaza (y hay que sacar `dragon_azure` de `VARIANTS` en `tool/recolor_enemies.py`). No tiene que parecerse al Eco (dorado de nubes) ni al Sueño del Dragón (azul enroscado), y tiene que leerse sobre el Lecho del Dragón (turquesa y durazno).
+
+```
+Game boss character, full body, centered, transparent background, low-angle view from below: the Sleeping Dragon fully awake, rearing straight up in a tall vertical pose, chest forward, head at the top looking down at the viewer, a solid body of porcelain-white scales, a flowing mane, whiskers and fin crests of bright vermilion red, golden antler horns, exactly four large armored chest scales like polished white-jade discs with fine gold edges, front claws open at shoulder height holding a glowing frost pearl, the tail spiraling around the bottom of the frame, a few snowflakes and red petals drifting, majestic and final, fills the whole frame, tall narrow silhouette readable at small size, clearly different from a golden cloud dragon and from a blue coiled dragon.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, fully transparent background, palette of porcelain white and strong vermilion (#E8453C) with gold (#E59A12) horns and scale edges, a little ice blue only in the pearl, no turquoise, no peach, no violet, bold clean brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
 ```
 
 ### Sueño del Dragón 龙梦 (`dragon_dream`, élite, etapa 3) — hecho
