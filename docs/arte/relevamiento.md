@@ -2,7 +2,9 @@
 
 Qué hay, qué es prestado y qué falta, en orden de prioridad. **Antes de pedir o pasar un prompt, se mira acá**: si el archivo ya existe con arte propio, no se vuelve a generar. Cuando llega un archivo nuevo se actualiza esta tabla.
 
-Actualizado: 2026-10-07.
+Actualizado: 2026-10-08.
+
+**La lista exacta, archivo por archivo, está en [`checklist.md`](checklist.md)**, que genera `python3 tool/art_status.py` comparando lo que el código busca con lo que hay en `assets/art`. Ante cualquier duda, manda la checklist: se corre antes de pasar prompts y cada vez que llega arte.
 
 ## Cómo busca cada imagen el juego
 
@@ -73,7 +75,7 @@ Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en 
 | `stages/xuankongsi/combat_bg_ladera.png`, `_bifurcacion.png` | combates comunes de la etapa 2 | el `combat_bg` de la etapa 2 |
 | `stages/wolongding/combat_bg_ladera.png`, `_bifurcacion.png` | combates comunes de la etapa 3 | el `combat_bg` de la etapa 3 |
 
-Prompts listos en `prompts.md` §7: `xuankongsi/combat_bg_templo` y `wolongding/combat_bg_cumbre`. Los demás tramos de las etapas 2 y 3 todavía no tienen prompt.
+Hay prompt en `prompts.md` §7 para todos menos las dos bifurcaciones (`pasarela` y `glaciar`). El santuario solo aparece en la etapa 1, así que las etapas 2 y 3 no necesitan `shrine_bg`.
 
 ### 3. Opcional
 
