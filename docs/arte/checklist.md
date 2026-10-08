@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 59 · ✅ 40 · 🎨 15 · ❌ 4
+Total: 59 · ✅ 41 · 🎨 14 · ❌ 4
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -74,8 +74,8 @@ Total: 59 · ✅ 40 · 🎨 15 · ❌ 4
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
 | ✅ propio | `assets/art/enemies/dragon.png` | dragon (boss) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_azure.png` | sleeping_dragon (boss) | enemies/placeholder.png | listo |
-| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_gold.png` | bell_abbot (boss) | enemies/placeholder.png | no |
+| ✅ propio | `assets/art/enemies/dragon_azure.png` | sleeping_dragon (boss) | enemies/placeholder.png | — |
+| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_gold.png` | bell_abbot (boss) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/bell_keeper.png` | bell_keeper (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/dragon_dream.png` | dragon_dream (elite) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_reflection.png` | dragon_reflection (elite) | enemies/placeholder.png | no |
