@@ -153,6 +153,13 @@
         { "kind": "attack", "labelKey": "toll", "height": "low", "damage": 11, "structure": 3, "drain": 1 },
         { "kind": "attack", "labelKey": "bell_strike", "height": "high", "damage": 26, "structure": 6, "drain": 1, "countdown": true }
       ] } ] },
+    { "id": "dragon_reflection", "hanzi": "龙影", "pinyin": "Lóng Yǐng", "art": "dragon_reflection", "rank": "elite", "hp": 128, "structure": 22, "scales": 2,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "high", "damage": 6, "hits": 2, "structure": 2 },
+        { "kind": "guard", "labelKey": "mirror_scale", "value": 12 },
+        { "kind": "attack", "height": "mid", "damage": 12, "structure": 3 },
+        { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 22, "structure": 6, "countdown": true }
+      ] } ] },
     { "id": "bell_abbot", "hanzi": "钟师", "pinyin": "Zhōng Shī", "art": "monk_gold", "rank": "boss", "hp": 215, "structure": 21,
       "phases": [
         { "pattern": [

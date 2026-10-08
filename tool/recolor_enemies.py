@@ -55,6 +55,9 @@ VARIANTS = {
         ("hue", 60, 140, 205, 0.25, 0.15),
     ]),
     "dragon_azure": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),
+    # Reflejo del Dragón (élite de la etapa 2): se queda con este recoloreo
+    # cuando el Dragón Dormido tenga arte propio.
+    "dragon_reflection": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),
 }
 
 
