@@ -1145,26 +1145,29 @@ backgrounds, no photorealism, no text, no watermark.
 
 ### Abad de Hierro 铁僧 (`monk_iron`, élite, etapa 2)
 
+Reemplaza el recoloreo (que queda guardado como `monk_slate.png`). Pelea sobre el Gran Campanario (celadón), por eso va en acero y naranja.
+
 ```
-Game enemy character, full body, facing the viewer, centered, transparent background: a towering faceless abbot in steel-blue robes with an iron-scaled undershirt visible at the chest, iron prayer beads, short spikes on its bracers, calm menacing posture.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+Game enemy character, full body, slightly high camera angle looking down, close framing, transparent background: a broad, stocky iron-shirt monk, bare-chested with skin that has the polished sheen of bright steel reflecting the blue sky, a big confident grin, thick arms crossed in front of the chest, heavy iron rings stacked on both forearms, a necklace of large iron prayer beads, wide orange-tangerine trousers and sash knotted at the waist, small sparks bouncing off his chest as if a strike just hit him, rooted wide stance, tough and a little playful, very wide square silhouette readable at small size, clearly different from a masked violet monk.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright noon daylight, fully transparent background, palette of polished steel blue, silver and cobalt (#3E7BE0) with bold tangerine orange and a touch of gold (#E59A12) on the sparks, no violet, clean confident brush strokes, metallic highlights painted as flat white strokes, watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
 ```
 
 ### León de Jade 玉狮 (`lion_jade`, élite, etapa 2)
 
+Reemplaza el recoloreo (que queda guardado como `lion_celadon.png`). Jade lavanda para que no se pierda sobre el fondo celadón del campanario.
+
 ```
-Game enemy character, full body, facing the viewer, centered, transparent background: a guardian lion carved from translucent green jade, gold cracks of light along the mane, red silk ribbon, cracks slowly healing with green glow.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+Game enemy character, full body, three-quarter side view in mid-pounce, front paws raised and mouth open in a roar, transparent background: a temple guardian lion carved from translucent lavender jade, its curly mane made of carved spirals with thin gold inlay, a bright vermilion silk ribbon and a small bronze bell tied around its neck, a few hairline cracks glowing with soft golden light, small jade chips flying from the leap, dynamic and powerful, long diagonal silhouette readable at small size, clearly different from a stone lion and from a green jade statue.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, fully transparent background, palette of lavender and lilac jade (#9B5DE5) with ivory highlights, gold (#E59A12) inlay and a strong vermilion (#E8453C) ribbon, no green, glassy translucent washes, clean confident brush strokes, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
+```
+
+### Abad de la Gran Campana 钟师 (`monk_gold`, jefe, etapa 2)
+
+Reemplaza el recoloreo (que queda guardado como `monk_amber.png`). No tiene que parecerse al Guardián de la Campana (viejo barbudo en azafrán) ni al Monje sin Rostro, y tiene que leerse sobre el Gran Campanario (celadón).
+
+```
+Game boss character, full body, facing the viewer, perfectly symmetrical frontal composition at eye level, transparent background: the abbot of the Great Bell, a strong middle-aged monk with a shaved head marked by nine small ordination dots, clean-shaven stern face with sharp focused eyes, standing in a wide firm horse stance with both palms pressed forward, wearing white inner robes and a bright cinnabar-red kasaya with a gold patchwork pattern across one shoulder, two medium polished golden temple bells floating at his left and right sides like shields, concentric rings of golden sound rippling outward from both bells, a long string of white prayer beads swinging in the air, disciplined and imposing, fills most of the frame, wide symmetrical silhouette readable at small size, clearly different from an old bearded abbot in saffron and from a faceless masked monk.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, fully transparent background, palette of pure white and cinnabar vermilion (#E8453C) with bright gold (#E59A12) bells and trims, no saffron, no green, no violet, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
 ```
 
 ### Guardián de la Campana 守钟人 (`bell_keeper`, élite, etapa 2) — hecho

@@ -37,6 +37,14 @@ VARIANTS = {
         ("hue", 60, 140, 160, 1.0, -0.06),
     ]),
     "monk_gold": ("monk", [("hue", 240, 310, 34, 1.35, 0.14)]),
+    # Reserva: copias de los recoloreos que van a recibir arte propio, para
+    # no perderlos y usarlos en enemigos secundarios más adelante.
+    "monk_amber": ("monk", [("hue", 240, 310, 34, 1.35, 0.14)]),
+    "monk_slate": ("monk", [("hue", 240, 310, 212, 0.3, -0.06)]),
+    "lion_celadon": ("lion", [
+        ("gray", 160, 0.38, -0.06),
+        ("hue", 60, 140, 160, 1.0, -0.06),
+    ]),
     # Etapa 3: Cumbre del Dragón Dormido (nieve, escarcha, viento).
     "monkey_snow": ("monkey", [
         ("hue", 25, 60, 40, 0.12, 0.18),
@@ -54,9 +62,8 @@ VARIANTS = {
         ("gray", 210, 0.14, 0.1),
         ("hue", 60, 140, 205, 0.25, 0.15),
     ]),
-    "dragon_azure": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),
-    # Reflejo del Dragón (élite de la etapa 2): se queda con este recoloreo
-    # cuando el Dragón Dormido tenga arte propio.
+    # Reflejo del Dragón (élite de la etapa 2): el recoloreo que tenía el
+    # Dragón Dormido antes de tener arte propio.
     "dragon_reflection": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),
 }
 

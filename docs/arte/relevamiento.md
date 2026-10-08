@@ -41,6 +41,10 @@ Tramos (`_sceneFiles` en `combat_screen.dart`):
   - etapa 1: dummy, bat, salamander, golem, disciple, bandit, lingzhi, monkey, monk, lion, fan y dragon;
   - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3).
 
+## Reserva de recoloreos
+
+Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda en `VARIANTS` con otro nombre para usarla en un enemigo secundario. Hoy: `dragon_reflection` (en uso, Reflejo del Dragón), `monk_amber`, `monk_slate` y `lion_celadon` (sin usar todavía).
+
 ## Pendiente, por prioridad
 
 ### 1. Enemigos de las etapas 2 y 3: hoy son recoloreos
