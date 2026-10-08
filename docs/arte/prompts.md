@@ -1058,6 +1058,27 @@ Mobile game combat background, vertical 9:19.5, no characters, wide high view: t
 Style: vibrant modern Chinese ink-and-watercolor illustration, sunrise light, DAWN palette of turquoise ice, peach, coral pink and white jade, small touches of gold (#E59A12), almost no cobalt or violet, soft gradients, clean brush strokes, watercolor bleeds, luminous final-battle feeling, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
+Escalera del Acantilado (`xuankongsi/combat_bg_ladera.png`, combates comunes de la etapa 2):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, view from the side of a steep climb: a narrow stone stairway carved into a pale apricot sandstone cliff, polished iron chains running along the steps as handrails, small jade-green pines growing sideways out of the rock, a few strips of red cloth tied to the chains fluttering in the wind, a wide clear blue midday sky with small white clouds, a flat stone landing in the lower part. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright midday light, palette of apricot and peach sandstone, sky blue (#3E7BE0), jade green (#1FA38A) pines and small vermilion (#E8453C) cloth accents, no saffron, no gold, sharp dry-brush rock texture, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+Ventisquero (`wolongding/combat_bg_ladera.png`, combates comunes de la etapa 3):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, calm wide view: a sheltered snowy slope just after a snowfall, soft rounded snowdrifts like waves, three old stone lanterns half buried in snow with tiny warm lights inside, a few snow-laden pines on one side, the air perfectly still with big slow snowflakes, a pastel morning sky of pale pink and lilac, flat smooth snow in the lower part. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, soft morning light, PASTEL palette of snow white, pale pink, lilac and mint, small warm gold (#E59A12) lantern lights, almost no cobalt, quiet and gentle mood, very soft wet watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+Templo Helado (`wolongding/combat_bg_templo.png`, élite de la etapa 3):
+
+```
+Mobile game combat background, vertical 9:19.5, no characters, framed through a round moon gate in the foreground: a small mountain temple completely frozen, vermilion pillars and curved roofs coated in clear glassy ice, long icicles hanging from the eaves like crystal bells, a frozen pond in the courtyard reflecting the sky, bright sun making the ice sparkle with tiny rainbow glints, a smooth icy courtyard floor in the lower part. Upper third open and uncluttered for a character, lower half soft and low-contrast so cards remain readable. No people, no animals, no text.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright sunny winter light, palette of crystal white, icy aqua and silver with strong vermilion (#E8453C) pillars glowing under the ice and small rainbow glints, little violet, crisp clean brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
 ### Enemigos
 
 ### Murciélago del Campanario (`bat_bronze`, común, etapa 2)
