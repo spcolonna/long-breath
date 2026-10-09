@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 59 · ✅ 43 · 🎨 12 · ❌ 4
+Total: 61 · ✅ 43 · 🎨 12 · ❌ 6
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -51,6 +51,8 @@ Total: 59 · ✅ 43 · 🎨 12 · ❌ 4
 |---|---|---|---|---|
 | ✅ propio | `assets/art/stages/qianyunshan/school_wall.png` | registro y derrota | papel | — |
 | ✅ propio | `assets/art/ui/stage_clear_bg.png` | etapa superada | papel | — |
+| ❌ falta | `assets/art/ui/lotus_seed.png` | semilla de loto (botín, contador y árbol) | sello 莲 | listo |
+| ❌ falta | `assets/art/ui/reward_chest.png` | cofre del botín | cofre dibujado con 赏 | listo |
 | ❌ falta | `assets/art/stages/qianyunshan/map_node_stone.png` | textura de los sellos del mapa (opcional) | disco con degradado | no |
 
 ## npc

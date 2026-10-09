@@ -89,6 +89,9 @@ def main():
 
     add("ui", "stages/qianyunshan/school_wall.png", "registro y derrota", "papel")
     add("ui", "ui/stage_clear_bg.png", "etapa superada", "papel")
+    add("ui", "ui/lotus_seed.png", "semilla de loto (botín, contador y árbol)",
+        "sello 莲")
+    add("ui", "ui/reward_chest.png", "cofre del botín", "cofre dibujado con 赏")
     add("ui", "stages/qianyunshan/map_node_stone.png",
         "textura de los sellos del mapa (opcional)", "disco con degradado")
     add("npc", "npc/master.png", "maestro", "vacío")
