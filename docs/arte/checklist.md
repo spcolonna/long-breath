@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 59 · ✅ 41 · 🎨 14 · ❌ 4
+Total: 59 · ✅ 43 · 🎨 12 · ❌ 4
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -75,7 +75,7 @@ Total: 59 · ✅ 41 · 🎨 14 · ❌ 4
 |---|---|---|---|---|
 | ✅ propio | `assets/art/enemies/dragon.png` | dragon (boss) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/dragon_azure.png` | sleeping_dragon (boss) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_gold.png` | bell_abbot (boss) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/monk_gold.png` | bell_abbot (boss) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/bell_keeper.png` | bell_keeper (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/dragon_dream.png` | dragon_dream (elite) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_reflection.png` | dragon_reflection (elite) | enemies/placeholder.png | no |
@@ -85,7 +85,7 @@ Total: 59 · ✅ 41 · 🎨 14 · ❌ 4
 | 🎨 recoloreo de `lion` | `assets/art/enemies/lion_jade.png` | jade_lion (elite) | enemies/placeholder.png | listo |
 | 🎨 recoloreo de `lion` | `assets/art/enemies/lion_snow.png` | snow_lion (elite) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/monk.png` | monk (elite) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_iron.png` | iron_abbot (elite) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/monk_iron.png` | iron_abbot (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/bandit.png` | bandit (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/bat.png` | bat (common) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `bat` | `assets/art/enemies/bat_bronze.png` | bell_bat (common) | enemies/placeholder.png | listo |

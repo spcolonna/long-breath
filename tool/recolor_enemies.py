@@ -31,12 +31,10 @@ VARIANTS = {
     ]),
     "disciple_saffron": ("disciple", [("hue", 120, 200, 352, 0.85, -0.02)]),
     "salamander_ash": ("salamander", [("hue", 0, 50, 265, 0.18, -0.08)]),
-    "monk_iron": ("monk", [("hue", 240, 310, 212, 0.3, -0.06)]),
     "lion_jade": ("lion", [
         ("gray", 160, 0.38, -0.06),
         ("hue", 60, 140, 160, 1.0, -0.06),
     ]),
-    "monk_gold": ("monk", [("hue", 240, 310, 34, 1.35, 0.14)]),
     # Reserva: copias de los recoloreos que van a recibir arte propio, para
     # no perderlos y usarlos en enemigos secundarios más adelante.
     "monk_amber": ("monk", [("hue", 240, 310, 34, 1.35, 0.14)]),
