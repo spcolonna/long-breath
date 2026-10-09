@@ -33,8 +33,8 @@ def recolors():
 
 
 def scene_files():
-    """{escena: tramo} según _sceneFiles en combat_screen.dart."""
-    src = read("lib/delivery/screens/combat_screen.dart")
+    """{escena: tramo} según _sceneFiles en stage_scene.dart."""
+    src = read("lib/delivery/widgets/stage_scene.dart")
     block = src[src.index("const _sceneFiles = {"):]
     block = block[: block.index("};")]
     return dict(re.findall(r"'(\w+)': '(\w+)'", block))
