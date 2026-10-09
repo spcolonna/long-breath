@@ -28,8 +28,8 @@ class RealmDef {
 
 /// El cultivo del aliento: cada subida, se gane o se pierda, suma aliento a
 /// la escuela; con aliento se sube de reino y se abren caminos, cartas,
-/// talismanes y formas. Caer nunca resta. Lo que se abre da variedad, no
-/// poder: la dificultad es la misma en cualquier reino.
+/// talismanes y formas. Caer nunca resta. Cada reino además regala un don
+/// (ver `MeridianDef.realmPerks`) y abre filas del árbol de meridianos.
 class CultivationDef {
   const CultivationDef({
     this.realms = const [],

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/model/enums.dart';
+import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
 
 /// Recuerda en qué dificultades ganó el jugador una subida completa.
@@ -13,6 +14,8 @@ class ProgressStorage {
   static const _ascentsKey = 'long_breath.ascents';
   static const _loreKey = 'long_breath.lore';
   static const _breathKey = 'long_breath.breath';
+  static const _lotusKey = 'long_breath.lotus';
+  static const _meridiansKey = 'long_breath.meridians';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -113,12 +116,14 @@ extension SchoolRecord on ProgressStorage {
     final prefs = await SharedPreferences.getInstance();
     final n = await discipleNumber();
     final had = await breath(migrate: migrate);
+    final seeds = await lotus();
     final before = await ascents();
     final have = await lore();
     final numbered = Ascent.fromJson({
       ...a.toJson(),
       'n': n,
       'breathBefore': had,
+      'lotusBefore': seeds,
     });
     final done = numbered.withLore(earnedLore(numbered, before, have));
     final all = [...before, done];
@@ -136,7 +141,31 @@ extension SchoolRecord on ProgressStorage {
     ]);
     await prefs.setInt(ProgressStorage._discipleKey, n + 1);
     await prefs.setInt(ProgressStorage._breathKey, had + done.breath);
+    await prefs.setInt(ProgressStorage._lotusKey, seeds + done.lotus);
     return done;
+  }
+
+  /// Semillas de loto de la escuela (para el árbol de meridianos).
+  Future<int> lotus() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(ProgressStorage._lotusKey) ?? 0;
+  }
+
+  /// Puntos del árbol de meridianos ya abiertos.
+  Future<List<String>> meridians() async {
+    final prefs = await SharedPreferences.getInstance();
+    return [...?prefs.getStringList(ProgressStorage._meridiansKey)];
+  }
+
+  /// Abre un punto del árbol si se puede y alcanza el loto.
+  Future<bool> openMeridian(MeridianDef def, MeridianNode n, int realm) async {
+    final prefs = await SharedPreferences.getInstance();
+    final owned = await meridians();
+    final seeds = await lotus();
+    if (!def.canOpen(n, realm, owned) || seeds < n.cost) return false;
+    await prefs.setInt(ProgressStorage._lotusKey, seeds - n.cost);
+    await prefs.setStringList(ProgressStorage._meridiansKey, [...owned, n.id]);
+    return true;
   }
 }
 

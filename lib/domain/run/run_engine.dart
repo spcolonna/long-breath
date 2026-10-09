@@ -6,6 +6,7 @@ import '../model/enums.dart';
 import '../model/event_def.dart';
 import '../model/game_balance.dart';
 import '../model/game_data.dart';
+import '../model/meta_bonus.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'map_gen.dart';
@@ -19,21 +20,24 @@ class RunEngine {
   final GameData data;
 
   /// La run empieza como novicio; el camino se elige en el santuario.
+  /// [meta]: los dones de la escuela (reinos y meridianos).
   RunState newRun({
     required int seed,
     Difficulty difficulty = Difficulty.normal,
     int pico = 0,
     List<String> locked = const [],
+    MetaBonus meta = MetaBonus.none,
   }) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp +
-        data.balance.picoMods(pico).playerHp;
+        data.balance.picoMods(pico).playerHp +
+        meta.maxHp;
     // El mapa sale de la misma semilla: la subida entera es reproducible.
     final fixed = data.balance.fixedMap;
     final (map, rng) = fixed != null
         ? (fixed, Rng.seeded(seed))
         : _stageMap(0, Rng.seeded(seed));
-    return RunState(
+    var r = RunState(
       difficulty: difficulty,
       pico: pico,
       style: null,
@@ -51,7 +55,31 @@ class RunEngine {
       rng: rng,
       map: map,
       locked: locked,
+      meta: meta,
+      jade: meta.startJade,
+      rerollsLeft: meta.rerolls,
     );
+    if (meta.upgradedStarters > 0) {
+      final (pool, rng2) =
+          r.rng.shuffle([for (final c in r.deck) if (canUpgrade(c)) c.uid]);
+      r = r.copyWith(rng: rng2);
+      for (final uid in pool.take(meta.upgradedStarters)) {
+        r = _upgrade(r, uid);
+      }
+    }
+    if (meta.startTalisman > 0) {
+      // Un talismán a elección antes del primer nodo.
+      final (shuffled, rng3) = r.rng.shuffle(missingTalismans(r, rare: false));
+      final options = shuffled.take(data.balance.talismanChoices).toList();
+      if (options.isNotEmpty) {
+        r = r.copyWith(
+          phase: RunPhase.talisman,
+          talismanOptions: options,
+          rng: rng3,
+        );
+      }
+    }
+    return r;
   }
 
   (List<MapNodeDef>, Rng) _stageMap(int stage, Rng rng) {
@@ -161,6 +189,9 @@ class RunEngine {
       awakeningOptions: const [],
       stage: r.stage + 1,
       stageMerchants: 0,
+      stageWins: 0,
+      stageJade: 0,
+      stageLotus: 0,
       hp: r.hp + stageHealOf(r),
       map: map,
       rng: rng,
@@ -253,7 +284,7 @@ class RunEngine {
   }
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
-  /// lo venciste). Escapado no deja jade.
+  /// lo venciste). Escapado no deja jade ni loto.
   RunState finishCombat(
     RunState r, {
     required bool won,
@@ -261,45 +292,216 @@ class RunEngine {
     int? fledWith,
   }) {
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
+    final b = data.balance;
+    final lotus = b.meridians.lotus;
     final boss = _atStageBoss(r);
+    final elite = !boss && data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    final fled = fledWith != null;
+    final lotusBase = fled
+        ? 0
+        : lotus.perCombat +
+            (elite ? lotus.elite : 0) +
+            (boss ? lotus.boss : 0);
     if (boss && isLastStage(r)) {
-      return r.copyWith(hp: hp, phase: RunPhase.victory);
+      final gained = lotusOf(r, lotusBase + lotus.victory);
+      return r.copyWith(
+        hp: hp,
+        phase: RunPhase.victory,
+        lotus: r.lotus + gained,
+        lotusGained: gained,
+      );
     }
     if (boss) {
       // Jefe de una etapa intermedia: jade para la etapa que viene.
-      r = r.copyWith(
-        jade: r.jade + data.balance.stageJade,
-        jadeGained: data.balance.stageJade,
-      );
-    } else if (fledWith != null) {
+      r = r.copyWith(jade: r.jade + b.stageJade, jadeGained: b.stageJade);
+    } else if (fled) {
       final lost = math.min(r.jade, fledWith);
       r = r.copyWith(jade: r.jade - lost, jadeGained: -lost);
     } else {
       final (rolled, rngJ) = _rollJade(r);
       // Cada enemigo de más en el grupo suma jade.
-      final jade = rolled +
-          data.balance.packJade * r.node(r.currentNode!).waves.length;
+      final jade =
+          rolled + b.packJade * r.node(r.currentNode!).waves.length;
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
-    r = r.copyWith(combatsSinceMerchant: r.combatsSinceMerchant + 1);
-    final healed = math.min(r.maxHp, hp + talismanSum(r, (e) => e.winHeal));
-    final (options, rng) =
-        _rollRewards(r.rng, r, data.balance.rewardChoices);
-    final (form, rng2) = _rollForm(rng, r);
-    // El élite y el jefe dejan elegir un talismán antes de la recompensa.
-    final elite = boss || data.enemy(enemyOf(r)).rank == EnemyRank.elite;
-    final (talismans, rng3) = elite
-        ? _rollTalismans(rng2, r, data.balance.talismanChoices)
-        : (const <String>[], rng2);
-    return r.copyWith(
-      hp: healed,
+    final gained = lotusOf(r, lotusBase);
+    r = r.copyWith(
+      combatsSinceMerchant: r.combatsSinceMerchant + 1,
+      lotus: r.lotus + gained,
+      lotusGained: gained,
+      stageWins: r.stageWins + 1,
+      stageJade: r.stageJade + math.max(0, r.jadeGained),
+      stageLotus: r.stageLotus + gained,
+    );
+    final healed = math.min(
+      r.maxHp,
+      hp + talismanSum(r, (e) => e.winHeal) + r.meta.winHeal,
+    );
+    r = r.copyWith(hp: healed);
+    // El élite y el jefe dejan elegir un talismán antes del premio.
+    final (talismans, rngT) = elite || boss
+        ? _rollTalismans(
+            r.rng, r, b.talismanChoices + r.meta.talismanChoices)
+        : (const <String>[], r.rng);
+    r = r.copyWith(rng: rngT);
+    // El jefe deja cartas; el que se escapó, también (no hay otro premio).
+    final (kind, rngK) = boss || fled
+        ? (RewardKind.cards, r.rng)
+        : _rollRewardKind(r, allowTalisman: !elite);
+    return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
+      talismanOptions: kind == RewardKind.talisman ? null : talismans,
+      cardlessStreak: kind == RewardKind.cards ? 0 : r.cardlessStreak + 1,
+    );
+  }
+
+  /// Semillas de loto con el extra del árbol.
+  int lotusOf(RunState r, int base) =>
+      (base * (100 + r.meta.lotusPct) / 100).round();
+
+  /// Sorteo del premio de un combate común o de élite.
+  (RewardKind, Rng) _rollRewardKind(RunState r, {required bool allowTalisman}) {
+    final def = data.balance.combatRewards;
+    if (r.cardlessStreak >= def.maxWithoutCards) return (RewardKind.cards, r.rng);
+    final weights = {
+      for (final e in def.weightsAt(r.stage).entries)
+        if (e.value > 0 && (allowTalisman || e.key != RewardKind.talisman))
+          e.key: e.value,
+    };
+    final total = weights.values.fold(0, (a, w) => a + w);
+    if (total == 0) return (RewardKind.cards, r.rng);
+    var (roll, rng) = r.rng.nextInt(total);
+    var kind = RewardKind.cards;
+    for (final e in weights.entries) {
+      if (roll < e.value) {
+        kind = e.key;
+        break;
+      }
+      roll -= e.value;
+    }
+    // Si el premio no sirve de nada, se cambia por otro.
+    kind = switch (kind) {
+      RewardKind.tea when r.hp >= r.maxHp => RewardKind.jade,
+      RewardKind.upgrade when !r.deck.any(canUpgrade) => RewardKind.cards,
+      RewardKind.talisman when missingTalismans(r).isEmpty => RewardKind.jade,
+      _ => kind,
+    };
+    return (kind, rng);
+  }
+
+  /// Prepara el premio [kind]: cartas y forma, talismanes o una cantidad.
+  RunState _offer(RunState r, RewardKind kind) {
+    final def = data.balance.combatRewards;
+    final cleared = r.copyWith(
+      rewardKind: kind,
+      rewardOptions: const [],
+      clearRewardForm: true,
+      rewardAmount: 0,
+    );
+    switch (kind) {
+      case RewardKind.cards:
+        return _rollCardReward(cleared);
+      case RewardKind.talisman:
+        final (options, rng) =
+            _rollTalismans(r.rng, r, def.talismanChoices);
+        return cleared.copyWith(talismanOptions: options, rng: rng);
+      case RewardKind.jade:
+        return cleared.copyWith(rewardAmount: def.jadeAt(r.stage));
+      case RewardKind.lotus:
+        return cleared.copyWith(
+          rewardAmount:
+              lotusOf(r, data.balance.meridians.lotus.rewardAt(r.stage)),
+        );
+      case RewardKind.tea:
+        return cleared.copyWith(
+          rewardAmount: math.max(
+            1,
+            (r.maxHp * def.teaPctAt(r.stage) / 100).round(),
+          ),
+        );
+      case RewardKind.upgrade:
+        return cleared.copyWith(rewardAmount: data.balance.fountainUpgrade);
+    }
+  }
+
+  RunState _rollCardReward(RunState r) {
+    final (options, rng) = _rollRewards(
+      r.rng,
+      r,
+      data.balance.rewardChoices + r.meta.rewardChoices,
+    );
+    final (form, rng2) = _rollForm(rng, r);
+    return r.copyWith(
       rewardOptions: options,
       rewardForm: form,
       clearRewardForm: form == null,
-      talismanOptions: talismans,
-      rng: rng3,
+      rng: rng2,
     );
+  }
+
+  /// Vida que curaría el té del premio (no pasa del máximo).
+  int teaHealOf(RunState r) => math.min(r.rewardAmount, r.maxHp - r.hp);
+
+  /// Tomar el premio que no se elige (jade, loto o té) o dejar pasar el que
+  /// se elige (mejora o talismán).
+  RunState collectReward(RunState r) {
+    _checkReward(r);
+    final n = r.rewardAmount;
+    return _leaveReward(
+      switch (r.rewardKind) {
+        RewardKind.jade => r.copyWith(
+            jade: r.jade + n,
+            jadeGained: r.jadeGained + n,
+            stageJade: r.stageJade + n,
+          ),
+        RewardKind.lotus => r.copyWith(
+            lotus: r.lotus + n,
+            lotusGained: r.lotusGained + n,
+            stageLotus: r.stageLotus + n,
+          ),
+        RewardKind.tea => r.copyWith(hp: r.hp + teaHealOf(r)),
+        _ => r,
+      }
+          .copyWith(
+        rewardOptions: const [],
+        clearRewardForm: true,
+        talismanOptions: const [],
+        rewardAmount: 0,
+      ),
+    );
+  }
+
+  /// Premio de mejora: una carta del mazo gana +N.
+  RunState chooseRewardUpgrade(RunState r, int uid) {
+    _checkReward(r, RewardKind.upgrade);
+    final card = r.deck.firstWhere((c) => c.uid == uid);
+    if (!canUpgrade(card)) throw StateError('No se puede mejorar');
+    return _leaveReward(_upgrade(r, uid).copyWith(rewardAmount: 0));
+  }
+
+  /// Premio de talismán: uno de los que se ofrecen.
+  RunState chooseRewardTalisman(RunState r, String id) {
+    _checkReward(r, RewardKind.talisman);
+    if (!r.talismanOptions.contains(id)) {
+      throw StateError('Talismán no ofrecido: $id');
+    }
+    return _leaveReward(
+      addTalisman(r, id).copyWith(talismanOptions: const []),
+    );
+  }
+
+  /// Volver a tirar las cartas del premio (los del árbol de meridianos).
+  RunState rerollReward(RunState r) {
+    _checkReward(r, RewardKind.cards);
+    if (r.rerollsLeft <= 0) throw StateError('No quedan');
+    return _rollCardReward(r.copyWith(rerollsLeft: r.rerollsLeft - 1));
+  }
+
+  void _checkReward(RunState r, [RewardKind? kind]) {
+    if (r.phase != RunPhase.reward) throw StateError('No hay recompensa');
+    if (kind != null && r.rewardKind != kind) {
+      throw StateError('El premio es ${r.rewardKind.name}');
+    }
   }
 
   // ------------------------------------------------------------ talismanes
@@ -338,8 +540,11 @@ class RunEngine {
     if (!r.talismanOptions.contains(id)) {
       throw StateError('Talismán no ofrecido: $id');
     }
-    return addTalisman(r, id)
-        .copyWith(talismanOptions: const [], phase: RunPhase.reward);
+    // Al empezar la subida (meridianos) se vuelve al mapa.
+    return addTalisman(r, id).copyWith(
+      talismanOptions: const [],
+      phase: r.currentNode == null ? RunPhase.map : RunPhase.reward,
+    );
   }
 
   // --------------------------------------------------------------- eventos
@@ -506,7 +711,7 @@ class RunEngine {
 
   /// Elegir una recompensa o saltear (cardId null).
   RunState chooseReward(RunState r, String? cardId) {
-    if (r.phase != RunPhase.reward) throw StateError('No hay recompensa');
+    _checkReward(r);
     if (cardId != null && !r.rewardOptions.contains(cardId)) {
       throw StateError('Recompensa inválida: $cardId');
     }
@@ -537,7 +742,8 @@ class RunEngine {
   int healOf(RunState r) =>
       data.balance.difficulty(r.difficulty).fountainHeal +
       data.balance.picoMods(r.pico).fountainHeal +
-      talismanSum(r, (e) => e.fountainHeal);
+      talismanSum(r, (e) => e.fountainHeal) +
+      r.meta.fountainHeal;
 
   RunState fountainHeal(RunState r) {
     _checkFountain(r);
@@ -594,7 +800,9 @@ class RunEngine {
   // ------------------------------------------------------------- mercader
 
   /// Mercader de la etapa en la que está la run.
-  MerchantDef merchantOf(RunState r) => data.balance.merchantAt(r.stage);
+  MerchantDef merchantOf(RunState r) => data.balance
+      .merchantAt(r.stage)
+      .discounted(r.meta.merchantDiscountPct);
 
   RunState _rollShop(RunState r) {
     final m = merchantOf(r);

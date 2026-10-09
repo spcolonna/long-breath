@@ -225,7 +225,7 @@ class PlannerBot extends Bot {
     if (!r.shopUpgraded &&
         run.canAfford(r, m.upgrade) &&
         r.deck.any((c) => run.canUpgrade(c))) {
-      r = run.buyUpgrade(r, _bestUpgrade(run, r));
+      r = run.buyUpgrade(r, bestUpgrade(run, r));
     }
     return run.leaveShop(r);
   }
@@ -244,7 +244,7 @@ class PlannerBot extends Bot {
     }
     return best != null
         ? run.masterTeach(r, best)
-        : run.masterUpgrade(r, _bestUpgrade(run, r));
+        : run.masterUpgrade(r, bestUpgrade(run, r));
   }
 
   @override
@@ -514,7 +514,7 @@ class AverageBot extends PlannerBot {
   @override
   RunState useFountain(RunEngine run, RunState r) {
     if (r.hp <= r.maxHp - 12) return run.fountainHeal(r);
-    return run.fountainUpgrade(r, _bestUpgrade(run, r));
+    return run.fountainUpgrade(r, bestUpgrade(run, r));
   }
 }
 
@@ -543,12 +543,12 @@ class ExpertBot extends PlannerBot {
   @override
   RunState useFountain(RunEngine run, RunState r) {
     if (r.hp <= r.maxHp - 15) return run.fountainHeal(r);
-    return run.fountainUpgrade(r, _bestUpgrade(run, r));
+    return run.fountainUpgrade(r, bestUpgrade(run, r));
   }
 }
 
 /// El ataque más barato y frecuente del mazo es el que más rinde mejorado.
-int _bestUpgrade(RunEngine run, RunState r) {
+int bestUpgrade(RunEngine run, RunState r) {
   final counts = <String, int>{};
   for (final c in r.deck) {
     counts[c.cardId] = (counts[c.cardId] ?? 0) + 1;

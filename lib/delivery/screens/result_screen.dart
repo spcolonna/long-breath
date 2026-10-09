@@ -13,12 +13,14 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
+import 'home_screen.dart' show routeFor;
 import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
+import '../widgets/lotus.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
@@ -112,11 +114,18 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     );
     if (choice == null || !mounted) return;
     final locked = (await ref.read(cultivationProvider.future)).locked;
+    final meta = await ref.read(metaBonusProvider.future);
     if (!mounted) return;
     ref
         .read(runControllerProvider.notifier)
-        .newRun(choice.difficulty, pico: choice.pico, locked: locked);
-    context.go('/map');
+        .newRun(
+          choice.difficulty,
+          pico: choice.pico,
+          locked: locked,
+          meta: meta,
+        );
+    // Con el talismán de los meridianos se elige antes del mapa.
+    context.go(routeFor(ref.read(runControllerProvider)!));
   }
 
   @override
@@ -288,6 +297,18 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                             ),
                           ),
                         ],
+                        // Las semillas de loto vuelven a la escuela, aunque caiga.
+                        if (ascent != null && ascent.lotus > 0) ...[
+                          const SizedBox(height: 12),
+                          _enter(
+                            0.66,
+                            0.74,
+                            _LotusLine(
+                              lotus: ascent.lotus,
+                              total: ascent.lotusBefore + ascent.lotus,
+                            ),
+                          ),
+                        ],
                         for (final (i, id)
                             in (ascent?.lore ?? const <String>[]).indexed) ...[
                           const SizedBox(height: 16),
@@ -352,13 +373,29 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                       _enter(
                         0.9,
                         1,
-                        TextButton(
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () {
+                                ref
+                                    .read(runControllerProvider.notifier)
+                                    .abandon();
+                                ref.invalidate(savedRunProvider);
+                                context.go('/meridians');
+                              },
+                              icon: const LotusSeed(size: 16),
+                              label: Text(t.resultToMeridians),
+                            ),
+                            TextButton(
                           onPressed: () {
                             ref.read(runControllerProvider.notifier).abandon();
                             ref.invalidate(savedRunProvider);
                             context.go('/');
                           },
                           child: Text(t.backSchool),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -544,4 +581,40 @@ class _BrushPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_BrushPainter old) => old.p != p;
+}
+
+/// "+N semillas de loto · la escuela tiene M", con la semilla que rebota.
+class _LotusLine extends StatelessWidget {
+  const _LotusLine({required this.lotus, required this.total});
+
+  final int lotus;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: Palette.blossom.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Bounce(trigger: lotus, scale: 1.3, child: const LotusSeed(size: 22)),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              t.resultLotus(lotus, total),
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Palette.blossom,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

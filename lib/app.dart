@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'delivery/providers.dart';
+import 'delivery/screens/meridian_screen.dart';
 import 'delivery/screens/climb_lesson_screen.dart';
 import 'delivery/screens/combat_screen.dart';
 import 'delivery/screens/event_screen.dart';
@@ -84,6 +85,7 @@ final _router = GoRouter(
     _route('/stage', const StageClearScreen()),
     _route('/result', const ResultScreen()),
     _route('/registry', const RegistryScreen()),
+    _route('/meridians', const MeridianScreen()),
   ],
 );
 

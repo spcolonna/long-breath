@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
+import 'home_screen.dart' show routeFor;
 import '../theme.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/hero_sprite.dart';
@@ -60,11 +61,18 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
     final choice = await pickDifficulty(context);
     if (choice == null || !mounted) return;
     final locked = (await ref.read(cultivationProvider.future)).locked;
+    final meta = await ref.read(metaBonusProvider.future);
     if (!mounted) return;
     ref
         .read(runControllerProvider.notifier)
-        .newRun(choice.difficulty, pico: choice.pico, locked: locked);
-    context.go('/map');
+        .newRun(
+          choice.difficulty,
+          pico: choice.pico,
+          locked: locked,
+          meta: meta,
+        );
+    // Con el talismán de los meridianos se elige antes del mapa.
+    context.go(routeFor(ref.read(runControllerProvider)!));
   }
 
   @override

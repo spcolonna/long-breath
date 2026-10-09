@@ -9,6 +9,7 @@ import '../infrastructure/content_text_loader.dart';
 import 'audio/game_audio.dart';
 import 'content_text.dart';
 import '../domain/model/enums.dart';
+import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
 import '../domain/run/cultivation.dart';
 import '../infrastructure/progress_storage.dart';
@@ -90,6 +91,21 @@ final cultivationProvider = FutureProvider<Cultivation>((ref) async {
       .watch(progressStorageProvider)
       .breath(migrate: (a) => ascentBreath(def, a));
   return Cultivation(def, breath);
+});
+
+/// Loto de la escuela y puntos abiertos del árbol de meridianos.
+final meridianProvider =
+    FutureProvider<({int lotus, List<String> owned})>((ref) async {
+  final storage = ref.watch(progressStorageProvider);
+  return (lotus: await storage.lotus(), owned: await storage.meridians());
+});
+
+/// Dones de la escuela para la próxima subida (reinos y meridianos).
+final metaBonusProvider = FutureProvider<MetaBonus>((ref) async {
+  final balance = ref.watch(dataProvider).balance;
+  final c = await ref.watch(cultivationProvider.future);
+  final m = await ref.watch(meridianProvider.future);
+  return balance.meridians.bonusOf(c.def, c.realm, m.owned);
 });
 
 /// La subida que acaba de terminar, ya anotada (con su número y sus

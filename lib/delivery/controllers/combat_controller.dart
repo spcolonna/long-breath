@@ -84,6 +84,7 @@ class CombatController extends Notifier<CombatView?> {
       forms: run.knownForms,
       talismans: run.talismans,
       awakenings: run.awakenings,
+      meta: run.meta,
     );
     state = CombatView(
       state: r.state,

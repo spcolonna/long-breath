@@ -149,6 +149,18 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
+   - **Botín sorpresa 赏:** al ganar un combate aparece un cofre de laca que se abre solo (o al tocarlo) y estampa qué trae. No se sabe antes de pelear:
+
+     | Premio | Qué da | Etapa 1 / 2 / 3 |
+     |---|---|---|
+     | 卷 Pergaminos | Elegís 1 de 3 cartas o la forma, o salteás (lo de siempre) | 55% / 50% / 45% |
+     | 玉 Bolsa de jade | Jade extra, que vuela al contador | 20 / 30 / 40 · 15% / 14% / 14% |
+     | 莲 Semillas de loto | Loto para la escuela (ver Árbol de meridianos) | 6 / 8 / 10 · 12% / 14% / 15% |
+     | 炼 Temple | Una carta del mazo a elección gana +3 | 8% / 10% / 12% |
+     | 茶 Té de montaña | Cura 15% / 20% / 25% de la Vida máxima | 8% / 9% / 10% |
+     | 符 Talismán | Elegís 1 de 2 | 2% / 3% / 4% |
+
+     Reglas: el jefe y el enemigo que se escapa siempre dejan pergaminos; el élite da su talismán y después un botín que no es talismán; con la Vida llena el té se cambia por jade, y sin cartas para templar el temple se cambia por pergaminos; nunca hay más de 2 botines seguidos sin pergaminos. El jade de siempre del combate y su loto se muestran arriba, aparte del cofre.
 9. **Mercader ambulante** 商: no tiene lugar en el mapa. Se cruza en el camino después de la recompensa, más o menos cada 3 combates ganados (2 a 4), y si en la etapa todavía no apareció, después del élite. Nunca después del jefe. Vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. **Más arriba cobra más y trae otras cosas:**
 
    | Etapa | Cartas | Carta | Talismán | Quitar | Mejorar | Té |
@@ -159,7 +171,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
 10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
-11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera toda la Vida)** y aparece la siguiente.
+11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera toda la Vida)** y aparece la siguiente. Antes de los despertares se ve el **Botín de la etapa**: combates ganados, jade y semillas de loto, contados de a uno.
 12. **Fin:** ganás al vencer al **Dragón Dormido**, jefe de la tercera etapa. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial. El registro cuenta el piso de toda la subida (por ejemplo "Piso 14 de 27").
 
 ### Caer y volver a subir
@@ -194,7 +206,7 @@ La Vida **no** se recupera entre combates (solo en la fuente, algunos eventos y 
 Cada subida, se gane o se pierda, deja **aliento** a la escuela. Con aliento acumulado la escuela sube de **reino** y les abre a los próximos discípulos caminos, cartas y formas. Caer nunca resta.
 
 - **Cuánto aliento:** 2 por piso alcanzado, 10 por etapa superada y 25 por llegar a la cumbre. Se multiplica por la dificultad (Fácil 50%, Normal 100%, Difícil 130%, Shifu 160%) y suma 10% por cada Pico.
-- **Variedad, no poder:** lo que se abre son opciones nuevas. Los talismanes raros y las cartas generales están abiertos desde el principio, y la dificultad es la misma en cualquier reino.
+- **Variedad y un don:** lo que se abre son opciones nuevas (los talismanes raros y las cartas generales están abiertos desde el principio) y cada reino regala además un **don** permanente y abre una fila del **árbol de meridianos** (ver abajo).
 - **Lo cerrado se fija al empezar la subida:** si subís de reino a mitad de una subida guardada, lo nuevo aparece en la próxima.
 
 | Reino | Aliento | Abre |
@@ -211,16 +223,37 @@ Cada subida, se gane o se pierda, deja **aliento** a la escuela. Con aliento acu
   - al terminar una subida, "+N de aliento para la escuela", la barra que se llena y, si alcanza, el sello del reino nuevo con lo que se abrió;
   - en el Registro de la escuela, la pestaña **Cultivo**, con los seis reinos (los de arriba lacrados).
 
+## Semillas de loto 莲 y árbol de meridianos 经络
+
+La segunda moneda de la escuela, la que **no se pierde al caer**. Hace que cada subida, aunque termine mal, deje al próximo discípulo un poco más fuerte.
+
+- **Cómo se gana:** 1 por combate ganado, +4 el élite, +8 cada jefe y +15 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10. Se ve arriba en el mapa (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
+- **Dónde se gasta:** en el inicio, el botón **Meridianos** (con un punto que late cuando alcanza para algo) abre el árbol. También se llega desde la pantalla final.
+- **El árbol:** tres canales de tinta, **Cuerpo 身**, **Espíritu 神** y **Técnica 技**, de cinco puntos de acupuntura cada uno. Cada punto pide el anterior de su canal y un reino del cultivo. Al abrirlo, la tinta corre por el canal. Vale desde la próxima subida (la que está guardada no cambia).
+
+  | Fila (reino) | Costo | Cuerpo 身 | Espíritu 神 | Técnica 技 |
+  |---|---|---|---|---|
+  | 1 炼气 | 25 | 足三里 +2 Vida máxima | 合谷 Empezás con 10 de jade | 劳宫 Una carta inicial empieza templada (+3) |
+  | 2 筑基 | 50 | 涌泉 La fuente cura 3 más | 神门 +20% de loto | 曲池 Volver a tirar los pergaminos 1 vez por subida |
+  | 3 开脉 | 75 | 气海 +1 de Estructura | 内关 El mercader cobra 10% menos | 风池 +1 carta para elegir en los pergaminos |
+  | 4 凝神 | 110 | 命门 +2 Vida máxima | 膻中 Empezás con 10 de jade más | 太冲 +1 talismán para elegir en el élite |
+  | 5 归真 | 160 | 丹田 La fuente cura 4 más | 百会 El mercader cobra 10% menos | 印堂 Elegís un talismán al empezar la subida |
+
+  En total cuesta 1260 semillas.
+
+- **Dones de los reinos** (gratis, al llegar): 筑基 +2 Vida máxima · 开脉 empezás con 10 de jade · 凝神 la fuente cura 3 más · 通玄 el mercader cobra 5% menos · 归真 empezás con 10 de jade más. Se ven arriba en el árbol.
+- **Cuánto pesa** (simulador, Normal): el bot promedio gana 25% sin nada y ~58% con todo; el experto, 55% y ~80%. Una escuela que juega como el promedio completa el árbol hacia la subida 22.
+
 ## Dificultad
 
 Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cura la fuente y la fuerza de los enemigos de la subida (las lecciones no cambian).
 
 | Dificultad | Vida | Fuente | Enemigos |
 |---|---|---|---|
-| Fácil 易 | 60 | +25 | 104% de Vida y daño |
-| Normal 常 | 50 | +20 | 106% de Vida, 105% de daño |
-| Difícil 难 | 50 | +15 | 111% de Vida y daño |
-| Shifu 师 | 45 | +15 | 112% de Vida, 111% de daño, 106% de Estructura |
+| Fácil 易 | 60 | +25 | 105% de Vida y daño |
+| Normal 常 | 50 | +20 | 111% de Vida, 110% de daño |
+| Difícil 难 | 50 | +15 | 116% de Vida, 115% de daño |
+| Shifu 师 | 45 | +15 | 115% de Vida, 114% de daño, 106% de Estructura |
 
 Los porcentajes se aplican sobre la tabla de enemigos.
 

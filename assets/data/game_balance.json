@@ -51,11 +51,46 @@
       { "id": "guizhen", "hanzi": "归真", "breath": 1050, "unlocks": ["da_hong_quan"] }
     ]
   },
+  "combatRewards": {
+    "weights": [
+      { "cards": 55, "jade": 15, "lotus": 12, "upgrade": 8, "tea": 8, "talisman": 2 },
+      { "cards": 50, "jade": 14, "lotus": 14, "upgrade": 10, "tea": 9, "talisman": 3 },
+      { "cards": 45, "jade": 14, "lotus": 15, "upgrade": 12, "tea": 10, "talisman": 4 }
+    ],
+    "jade": [20, 30, 40], "teaPct": [15, 20, 25], "talismanChoices": 2, "maxWithoutCards": 2
+  },
+  "meridians": {
+    "lotus": { "perCombat": 1, "elite": 4, "boss": 8, "victory": 15, "reward": [6, 8, 10] },
+    "realmPerks": {
+      "zhuji": { "maxHp": 2 },
+      "kaimai": { "startJade": 10 },
+      "ningshen": { "fountainHeal": 3 },
+      "tongxuan": { "merchantDiscountPct": 5 },
+      "guizhen": { "startJade": 10 }
+    },
+    "nodes": [
+      { "id": "body_1", "branch": "body", "realm": 0, "cost": 25, "effect": { "maxHp": 2 } },
+      { "id": "body_2", "branch": "body", "realm": 1, "cost": 50, "requires": "body_1", "effect": { "fountainHeal": 3 } },
+      { "id": "body_3", "branch": "body", "realm": 2, "cost": 75, "requires": "body_2", "effect": { "structure": 1 } },
+      { "id": "body_4", "branch": "body", "realm": 3, "cost": 110, "requires": "body_3", "effect": { "maxHp": 2 } },
+      { "id": "body_5", "branch": "body", "realm": 5, "cost": 160, "requires": "body_4", "effect": { "fountainHeal": 4 } },
+      { "id": "spirit_1", "branch": "spirit", "realm": 0, "cost": 25, "effect": { "startJade": 10 } },
+      { "id": "spirit_2", "branch": "spirit", "realm": 1, "cost": 50, "requires": "spirit_1", "effect": { "lotusPct": 20 } },
+      { "id": "spirit_3", "branch": "spirit", "realm": 2, "cost": 75, "requires": "spirit_2", "effect": { "merchantDiscountPct": 10 } },
+      { "id": "spirit_4", "branch": "spirit", "realm": 3, "cost": 110, "requires": "spirit_3", "effect": { "startJade": 10 } },
+      { "id": "spirit_5", "branch": "spirit", "realm": 5, "cost": 160, "requires": "spirit_4", "effect": { "merchantDiscountPct": 10 } },
+      { "id": "tech_1", "branch": "technique", "realm": 0, "cost": 25, "effect": { "upgradedStarters": 1 } },
+      { "id": "tech_2", "branch": "technique", "realm": 1, "cost": 50, "requires": "tech_1", "effect": { "rerolls": 1 } },
+      { "id": "tech_3", "branch": "technique", "realm": 2, "cost": 75, "requires": "tech_2", "effect": { "rewardChoices": 1 } },
+      { "id": "tech_4", "branch": "technique", "realm": 3, "cost": 110, "requires": "tech_3", "effect": { "talismanChoices": 1 } },
+      { "id": "tech_5", "branch": "technique", "realm": 5, "cost": 160, "requires": "tech_4", "effect": { "startTalisman": 1 } }
+    ]
+  },
   "difficulties": {
-    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 104, "enemyDamage": 104 },
-    "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20, "enemyHp": 106, "enemyDamage": 105 },
-    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 111, "enemyDamage": 111 },
-    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 112, "enemyDamage": 111, "enemyStructure": 106 }
+    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 105, "enemyDamage": 105 },
+    "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20, "enemyHp": 111, "enemyDamage": 110 },
+    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 116, "enemyDamage": 115 },
+    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 115, "enemyDamage": 114, "enemyStructure": 106 }
   },
   "picos": [
     { "eliteHp": 15 },

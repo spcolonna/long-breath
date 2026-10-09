@@ -11,7 +11,9 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/lotus.dart';
 import '../widgets/scene_backdrop.dart';
 
 /// Se venció al jefe de una etapa: la etapa queda sellada, el discípulo
@@ -356,6 +358,14 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(height: 16),
+                                  // Lo que dejó la etapa, contado de a uno.
+                                  _StageLoot(
+                                    t: healed,
+                                    wins: run.stageWins,
+                                    jade: run.stageJade,
+                                    lotus: run.stageLotus,
+                                  ),
                                   const Spacer(),
                                 ],
                               ),
@@ -676,4 +686,92 @@ class _TrailPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_TrailPainter old) => old.progress != progress;
+}
+
+/// Botín de la etapa: combates ganados, jade y semillas de loto, que suben
+/// con [t] (0..1) uno detrás del otro.
+class _StageLoot extends StatelessWidget {
+  const _StageLoot({
+    required this.t,
+    required this.wins,
+    required this.jade,
+    required this.lotus,
+  });
+
+  final double t;
+  final int wins;
+  final int jade;
+  final int lotus;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    Widget cell(int i, Widget icon, int value, String label, Color color) {
+      final v = ((t - i * 0.2) / 0.6).clamp(0.0, 1.0);
+      return Expanded(
+        child: Opacity(
+          opacity: v,
+          child: Transform.scale(
+            scale: 0.8 + 0.2 * Curves.easeOutBack.transform(v),
+            child: Column(
+              children: [
+                icon,
+                const SizedBox(height: 4),
+                Text(
+                  '${(value * v).round()}',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                    color: color,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  ),
+                ),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 11, color: Palette.textDim),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Opacity(
+      opacity: t > 0 ? 1 : 0,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
+        decoration: BoxDecoration(
+          color: Palette.surface.withValues(alpha: 0.85),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Palette.gold.withValues(alpha: 0.5)),
+        ),
+        child: Column(
+          children: [
+            Text(
+              l.stageLootTitle,
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                cell(
+                  0,
+                  const InkSeal(hanzi: '武', color: Palette.lacquer, size: 26),
+                  wins,
+                  l.stageLootWins,
+                  Palette.lacquer,
+                ),
+                cell(1, const JadeCoin(size: 26), jade, l.stageLootJade,
+                    Palette.jade),
+                cell(2, const LotusSeed(size: 26), lotus, l.stageLootLotus,
+                    Palette.blossom),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

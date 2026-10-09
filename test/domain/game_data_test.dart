@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
+import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
 
 void main() {
@@ -133,5 +134,39 @@ void main() {
     for (final e in data.events) {
       expect(e.options.length, inInclusiveRange(2, 3), reason: e.id);
     }
+  });
+
+  test('árbol de meridianos: 3 ramas de 5, cada punto pide el anterior', () {
+    final m = data.balance.meridians;
+    final c = data.balance.cultivation;
+    final content = jsonDecode(
+      File('assets/l10n/content/es.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final names = content['meridians'] as Map<String, dynamic>;
+    expect(m.nodes, hasLength(15));
+    expect({for (final n in m.nodes) n.id}, hasLength(15));
+    for (final b in MeridianBranch.values) {
+      final branch = [for (final n in m.nodes) if (n.branch == b) n];
+      expect(branch, hasLength(5), reason: b.name);
+      expect(branch.first.requires, isNull);
+      for (var i = 1; i < branch.length; i++) {
+        expect(branch[i].requires, branch[i - 1].id);
+        expect(branch[i].realm, greaterThanOrEqualTo(branch[i - 1].realm));
+        expect(branch[i].cost, greaterThan(branch[i - 1].cost));
+      }
+    }
+    for (final n in m.nodes) {
+      expect(n.effect.isNone, isFalse, reason: n.id);
+      expect(n.realm, lessThan(c.realms.length), reason: n.id);
+      expect(names.containsKey(n.id), isTrue, reason: n.id);
+    }
+    for (final id in m.realmPerks.keys) {
+      expect(c.realms.any((r) => r.id == id), isTrue, reason: id);
+    }
+    expect(data.balance.combatRewards.weights, hasLength(3));
+    // Todo abierto suma los dones de todos los reinos y puntos.
+    final all = m.bonusOf(c, c.realms.length - 1, [for (final n in m.nodes) n.id]);
+    expect(all.maxHp, greaterThan(0));
+    expect(m.bonusOf(c, 0, const []).isNone, isTrue);
   });
 }

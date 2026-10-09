@@ -592,5 +592,22 @@
     "qianyunshan": "Senderos de piedra entre nubes bajas. Acá empieza toda subida.",
     "xuankongsi": "Un monasterio clavado en la pared del abismo, sostenido por vigas y fe. Sus guardianes no dejan pasar a nadie sin probarlo.",
     "wolongding": "Nieve, viento y silencio. Arriba, algo enorme respira despacio entre las nubes."
+  },
+  "meridians": {
+    "body_1": { "name": "Zúsānlǐ", "hanzi": "足三里", "text": "El punto de las piernas que no se cansan." },
+    "body_2": { "name": "Yǒngquán", "hanzi": "涌泉", "text": "Fuente que brota bajo los pies." },
+    "body_3": { "name": "Qìhǎi", "hanzi": "气海", "text": "El mar del aliento, debajo del ombligo." },
+    "body_4": { "name": "Mìngmén", "hanzi": "命门", "text": "La puerta de la vida, en la espalda." },
+    "body_5": { "name": "Dāntián", "hanzi": "丹田", "text": "El centro: de ahí sale cada golpe." },
+    "spirit_1": { "name": "Hégǔ", "hanzi": "合谷", "text": "El valle donde se juntan los dedos." },
+    "spirit_2": { "name": "Shénmén", "hanzi": "神门", "text": "La puerta del espíritu, en la muñeca." },
+    "spirit_3": { "name": "Nèiguān", "hanzi": "内关", "text": "El paso interior: calma para negociar." },
+    "spirit_4": { "name": "Dànzhōng", "hanzi": "膻中", "text": "El centro del pecho, donde se guarda la alegría." },
+    "spirit_5": { "name": "Bǎihuì", "hanzi": "百会", "text": "Las cien reuniones, en la coronilla." },
+    "tech_1": { "name": "Láogōng", "hanzi": "劳宫", "text": "El palacio del trabajo, en la palma." },
+    "tech_2": { "name": "Qūchí", "hanzi": "曲池", "text": "El estanque del codo doblado." },
+    "tech_3": { "name": "Fēngchí", "hanzi": "风池", "text": "El estanque del viento, en la nuca." },
+    "tech_4": { "name": "Tàichōng", "hanzi": "太冲", "text": "El gran paso del pie." },
+    "tech_5": { "name": "Yìntáng", "hanzi": "印堂", "text": "El sello entre las cejas." }
   }
 }

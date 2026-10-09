@@ -19,6 +19,8 @@ import 'dart:isolate';
 import 'dart:math' as math;
 
 import 'package:long_breath/domain/model/enums.dart';
+import 'package:long_breath/domain/model/game_data.dart';
+import 'package:long_breath/domain/model/meta_bonus.dart';
 
 import 'sim/lab.dart';
 
@@ -45,6 +47,7 @@ class Config {
     this.startCards = const [],
     this.difficulty = Difficulty.normal,
     this.locked = const [],
+    this.meta = MetaBonus.none,
   });
 
   final RawData raw;
@@ -57,6 +60,9 @@ class Config {
 
   /// Lo que el cultivo todavía no abrió (vacío = todo abierto).
   final List<String> locked;
+
+  /// Dones de la escuela (reinos y meridianos).
+  final MetaBonus meta;
 }
 
 /// Corre [runs] runs de un perfil repartidas en varios isolates.
@@ -100,6 +106,7 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
               difficulty: c.difficulty,
               pico: c.pico,
               locked: c.locked,
+              meta: c.meta,
             ),
         ];
       }),
@@ -179,6 +186,14 @@ Future<void> main(List<String> args) async {
       await _difficulties(raw, stages, runs, seed, selected);
     case 'cultivation':
       await _cultivation(raw, stages, runs, seed, selected);
+    case 'perks':
+      await _perks(raw, stages, runs, seed, selected);
+    case 'nodes':
+      await _nodes(raw, stages, runs, seed, selected);
+    case 'meta':
+      await _meta(raw, stages, int.parse(opt('schools', '60')),
+          int.parse(opt('ascents', '40')), seed, selected,
+          Difficulty.parse(opt('difficulty', 'normal')));
     default:
       final cfg = Config(
           raw: raw,
@@ -216,6 +231,157 @@ Future<void> _difficulties(
   }
   table(['Dificultad', ...profilesSel], rows);
 }
+
+/// Victoria sin dones, con los de los reinos y con el árbol completo.
+Future<void> _perks(
+    RawData raw, int stages, int runs, int seed, List<String> profilesSel) async {
+  final b = raw.copy().build().balance;
+  final c = b.cultivation;
+  final top = math.max(0, c.realms.length - 1);
+  final all = [for (final n in b.meridians.nodes) n.id];
+  final rows = <List<String>>[];
+  for (final (name, meta) in [
+    ('sin dones', MetaBonus.none),
+    ('solo reinos', b.meridians.bonusOf(c, top, const [])),
+    ('árbol completo', b.meridians.bonusOf(c, top, all)),
+  ]) {
+    final cfg = Config(raw: raw, stages: stages, talismans: proto, meta: meta);
+    final row = [name];
+    for (final p in profilesSel) {
+      final l = await simulate(cfg, p, runs, seed);
+      row.add('${pct(l.where((r) => r.won).length, l.length)} · '
+          '${f1(mean([for (final r in l) r.lotus]))} 莲');
+    }
+    rows.add(row);
+  }
+  print('## Victoria y loto por subida en Normal (todo abierto)');
+  table(['Dones', ...profilesSel], rows);
+}
+
+/// Cuánto mueve la victoria cada punto del árbol por separado.
+Future<void> _nodes(
+    RawData raw, int stages, int runs, int seed, List<String> profilesSel) async {
+  final b = raw.copy().build().balance;
+  final rows = <List<String>>[];
+  // --loo: el árbol completo menos cada punto (cuánto aporta en conjunto).
+  final loo = flag('loo');
+  final all = b.meridians.nodes.fold(MetaBonus.none, (a, n) => a + n.effect);
+  for (final n in [null, ...b.meridians.nodes]) {
+    final meta = !loo
+        ? n?.effect ?? MetaBonus.none
+        : b.meridians.nodes
+            .where((x) => x != n)
+            .fold(MetaBonus.none, (a, x) => a + x.effect);
+    final cfg = Config(
+        raw: raw,
+        stages: stages,
+        talismans: proto,
+        meta: n == null && loo ? all : meta);
+    final row = [n == null ? 'ninguno' : '${n.id} ${n.effect.toJson()}'];
+    for (final p in profilesSel) {
+      final l = await simulate(cfg, p, runs, seed);
+      row.add(pct(l.where((r) => r.won).length, l.length));
+    }
+    rows.add(row);
+  }
+  print('## Victoria con un solo punto del árbol (Normal)');
+  table(['Punto', ...profilesSel], rows);
+}
+
+/// Escuelas que empiezan de cero y juegan [ascents] subidas seguidas:
+/// depositan aliento y loto, suben de reino y abren el punto más barato.
+Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
+    List<String> profilesSel, Difficulty diff) async {
+  print('## Progresión de $schools escuelas, $ascents subidas cada una '
+      '(${diff.name})');
+  for (final p in profilesSel) {
+    final workers = math.min(Platform.numberOfProcessors, schools);
+    final parts = await Future.wait([
+      for (var w = 0; w < workers; w++)
+        Isolate.run(() {
+          final base = raw.copy();
+          final run = base.balance['run'] as Map<String, dynamic>;
+          if (run['stages'] is List) {
+            run['stages'] = (run['stages'] as List).take(stages).toList();
+          }
+          final data = base.build();
+          final b = data.balance;
+          final c = b.cultivation;
+          final out = <List<(bool, int, int, int)>>[];
+          for (var sc = w; sc < schools; sc += workers) {
+            var breath = 0, bank = 0;
+            final owned = <String>[];
+            final hist = <(bool, int, int, int)>[];
+            for (var i = 0; i < ascents; i++) {
+              final realm = c.realmOf(breath);
+              final s = seed * 1000003 + sc * 997 + i;
+              final log = playRun(data, profiles[p]!(s * 31), s,
+                  wanted: Style.values[(sc + i) % 3],
+                  difficulty: diff,
+                  locked: c.lockedAt(realm),
+                  meta: b.meridians.bonusOf(c, realm, owned));
+              breath += c.breathFor(
+                  fell: !log.won,
+                  floor: log.nodes,
+                  stage: log.stage,
+                  diff: diff);
+              bank += log.lotus;
+              // Abre los puntos más baratos que pueda.
+              while (true) {
+                final open = [
+                  for (final n in b.meridians.nodes)
+                    if (b.meridians.canOpen(n, c.realmOf(breath), owned) &&
+                        n.cost <= bank)
+                      n,
+                ]..sort((a, b) => a.cost.compareTo(b.cost));
+                if (open.isEmpty) break;
+                bank -= open.first.cost;
+                owned.add(open.first.id);
+              }
+              hist.add((log.won, c.realmOf(breath), owned.length, log.lotus));
+            }
+            out.add(hist);
+          }
+          return out;
+        }),
+    ]);
+    final hist = [for (final part in parts) ...part];
+    final total = data0(raw).balance.meridians.nodes.length;
+    final firstWin = [
+      for (final h in hist)
+        h.indexWhere((e) => e.$1) + 1,
+    ];
+    final wins = firstWin.where((x) => x > 0).toList()..sort();
+    final full = [
+      for (final h in hist)
+        h.indexWhere((e) => e.$3 >= total) + 1,
+    ].where((x) => x > 0).toList()
+      ..sort();
+    num q(List<int> xs, double f) =>
+        xs.isEmpty ? 0 : xs[((xs.length - 1) * f).round()];
+    print('### $p');
+    print('- Primera victoria: ${pct(wins.length, hist.length)} de las escuelas; '
+        'subida p25/mediana/p75 = ${q(wins, .25)}/${q(wins, .5)}/${q(wins, .75)}');
+    print('- Árbol completo ($total puntos): ${pct(full.length, hist.length)}; '
+        'mediana en la subida ${q(full, .5)}');
+    final rows = <List<String>>[];
+    for (var from = 0; from < ascents; from += 5) {
+      final slice = [
+        for (final h in hist) ...h.skip(from).take(5),
+      ];
+      rows.add([
+        '${from + 1}–${math.min(ascents, from + 5)}',
+        pct(slice.where((e) => e.$1).length, slice.length),
+        f1(mean([for (final e in slice) e.$2 + 1])),
+        f1(mean([for (final e in slice) e.$3])),
+        f1(mean([for (final e in slice) e.$4])),
+      ]);
+    }
+    table(['Subidas', 'victoria', 'reino', 'puntos', 'loto/subida'], rows);
+  }
+}
+
+GameData data0(RawData raw) => raw.copy().build();
 
 /// El cultivo: victoria y aliento por reino (lo que se abre es variedad, no
 /// poder: el % no debería moverse) y cuántas subidas lleva cada reino.

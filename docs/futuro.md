@@ -207,7 +207,13 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ### 3.7 Progresión entre partidas: el cultivo del aliento
 - **Hecho (07/10/2026):** 6 reinos 境界 con aliento por subida (gane o pierda, caer no resta). Abren la Grulla, 6 cartas de camino y 4 formas; el aura del héroe crece en el inicio, la pantalla final muestra el aliento y el reino nuevo, y el registro tiene la pestaña Cultivo. Solo variedad: cerrar raros y cartas generales bajaba el promedio a 44% (ver `balance.md` §3m). El último reino llega en ~12 subidas.
-- **Siguiente:** que algunos reinos dejen elegir 1 de 2 desbloqueos (el "árbol" sin sistema aparte), y desbloqueos que no sean contenido de combate (fondos del inicio, títulos del discípulo).
+- **Hecho (09/10/2026):** semillas de loto 莲 (se ganan en cada subida y no se pierden) y árbol de meridianos 经络 de 15 puntos en 3 canales; cada reino regala un don. Botín sorpresa al ganar (pergaminos, jade, loto, temple, té o talismán) con cofre que se abre. Ver `balance.md` §3o.
+- **Siguiente:**
+  - Reiniciar el árbol (devolver el loto) para probar otras ramas.
+  - En Difícil o más, mostrar en el mapa qué botín trae cada combate (como las puertas de Hades) para elegir el camino.
+  - Más puntos: una cuarta rama por camino animal (Tigre, Serpiente, Grulla) que se abre al ganar con ese camino.
+  - Desbloqueos que no sean de combate (fondos del inicio, títulos del discípulo, ropa del héroe) pagados con loto.
+  - Arte opcional: ícono pintado de la semilla de loto y del cofre del botín (hoy son sellos con carácter).
 
 ### 3.8 Historia y legado
 - **Hecho (base):** cada subida la hace un discípulo con número; al caer se narra qué pasó y "la escuela envía a otro novicio"; registro de la escuela 名册 con tablillas y 9 pergaminos de lore que se abren por hitos (prólogo, santuario, caer ante cada rival, cumbre, 5 y 10 caídos). Sin efecto mecánico.

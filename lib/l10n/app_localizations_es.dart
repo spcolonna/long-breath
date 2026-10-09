@@ -2011,4 +2011,236 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get registryTabCultivation => 'Cultivo';
+
+  @override
+  String get lootTitle => 'Botín';
+
+  @override
+  String get lootOpenHint => 'Tocá el cofre para abrirlo';
+
+  @override
+  String get lootKindCards => 'Pergaminos';
+
+  @override
+  String get lootKindJade => 'Bolsa de jade';
+
+  @override
+  String get lootKindLotus => 'Semillas de loto';
+
+  @override
+  String get lootKindUpgrade => 'Temple';
+
+  @override
+  String get lootKindTea => 'Té de montaña';
+
+  @override
+  String get lootKindTalisman => 'Talismán';
+
+  @override
+  String get lootHintCards =>
+      'Sumá una técnica a tu mazo o aprendé la forma. Un mazo chico es más predecible.';
+
+  @override
+  String lootHintJade(int n) {
+    return '$n de jade para el mercader del camino.';
+  }
+
+  @override
+  String lootHintLotus(int n) {
+    return '$n semillas que vuelven con vos a la escuela, aunque caigas. Abren puntos del árbol de meridianos.';
+  }
+
+  @override
+  String lootHintUpgrade(int n) {
+    return 'Elegí una carta: gana +$n para toda la subida.';
+  }
+
+  @override
+  String lootHintTea(int n) {
+    return 'Recuperás $n de Vida.';
+  }
+
+  @override
+  String get lootHintTalisman => 'Elegí uno: vale para toda la subida.';
+
+  @override
+  String get lootTake => 'Tomar';
+
+  @override
+  String get lootDrink => 'Beber';
+
+  @override
+  String get lootTemper => 'Templar';
+
+  @override
+  String lootReroll(int n) {
+    return 'Volver a tirar ($n)';
+  }
+
+  @override
+  String lotusGained(int n) {
+    return '+$n de loto';
+  }
+
+  @override
+  String get talismanStartTitle => 'Don de la escuela';
+
+  @override
+  String get talismanStartHint =>
+      'Los meridianos te acompañan: elegí un talismán para esta subida.';
+
+  @override
+  String get stageLootTitle => 'Botín de la etapa';
+
+  @override
+  String get stageLootWins => 'Combates ganados';
+
+  @override
+  String get stageLootJade => 'Jade ganado';
+
+  @override
+  String get stageLootLotus => 'Semillas de loto';
+
+  @override
+  String get meridiansTitle => 'Árbol de meridianos';
+
+  @override
+  String get meridiansButton => 'Meridianos';
+
+  @override
+  String get meridiansHint =>
+      'Cada subida trae semillas de loto, ganes o caigas. Con ellas la escuela abre puntos que ayudan a todos los discípulos que vienen.';
+
+  @override
+  String meridiansBalance(int n) {
+    return '$n semillas';
+  }
+
+  @override
+  String get meridiansRealmGifts => 'Dones del reino';
+
+  @override
+  String get meridiansRealmGiftsHint =>
+      'Cada reino del cultivo regala un don, sin gastar loto.';
+
+  @override
+  String get meridianBranchBody => 'Cuerpo';
+
+  @override
+  String get meridianBranchSpirit => 'Espíritu';
+
+  @override
+  String get meridianBranchTechnique => 'Técnica';
+
+  @override
+  String meridianOpen(int n) {
+    return 'Abrir punto · $n';
+  }
+
+  @override
+  String get meridianOpened => 'Abierto';
+
+  @override
+  String meridianNeedsRealm(String realm) {
+    return 'Requiere $realm';
+  }
+
+  @override
+  String get meridianNeedsPrev => 'Primero abrí el punto anterior';
+
+  @override
+  String meridianNeedsLotus(int n) {
+    return 'Faltan $n semillas';
+  }
+
+  @override
+  String get meridianNextRun => 'Vale desde la próxima subida.';
+
+  @override
+  String bonusMaxHp(int n) {
+    return '+$n de Vida máxima';
+  }
+
+  @override
+  String bonusFountainHeal(int n) {
+    return 'La fuente cura $n más';
+  }
+
+  @override
+  String bonusWinHeal(int n) {
+    return 'Curás $n al ganar cada combate';
+  }
+
+  @override
+  String bonusStructure(int n) {
+    return '+$n de Estructura en cada combate';
+  }
+
+  @override
+  String bonusStartJade(int n) {
+    return 'Empezás con $n de jade';
+  }
+
+  @override
+  String bonusUpgradedStarters(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartas iniciales empiezan templadas',
+      one: 'Una carta inicial empieza templada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bonusStartTalisman => 'Elegís un talismán al empezar';
+
+  @override
+  String bonusMerchantDiscount(int n) {
+    return 'El mercader cobra $n% menos';
+  }
+
+  @override
+  String bonusRewardChoices(int n) {
+    return '+$n carta para elegir en los pergaminos';
+  }
+
+  @override
+  String bonusTalismanChoices(int n) {
+    return '+$n talismán para elegir en el élite';
+  }
+
+  @override
+  String bonusRerolls(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Podés volver a tirar los pergaminos $n veces por subida',
+      one: 'Podés volver a tirar los pergaminos una vez por subida',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bonusLotusPct(int n) {
+    return '+$n% de semillas de loto';
+  }
+
+  @override
+  String bonusFirstTurnBreath(int n) {
+    return '+$n de Aliento en el primer turno';
+  }
+
+  @override
+  String bonusBreathes(int n) {
+    return '+$n Respirar por combate';
+  }
+
+  @override
+  String resultLotus(int n, int total) {
+    return '+$n semillas de loto · la escuela tiene $total';
+  }
+
+  @override
+  String get resultToMeridians => 'Abrir meridianos';
 }

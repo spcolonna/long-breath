@@ -20,6 +20,8 @@ class Ascent {
     this.stage = 0,
     this.breath = 0,
     this.breathBefore = 0,
+    this.lotus = 0,
+    this.lotusBefore = 0,
   });
 
   /// Número del discípulo que subió.
@@ -50,6 +52,10 @@ class Ascent {
   final int breath;
   final int breathBefore;
 
+  /// Semillas de loto que depositó, y las que la escuela tenía antes.
+  final int lotus;
+  final int lotusBefore;
+
   Ascent withLore(List<String> ids) => Ascent(
     n: n,
     fell: fell,
@@ -67,6 +73,8 @@ class Ascent {
     stage: stage,
     breath: breath,
     breathBefore: breathBefore,
+    lotus: lotus,
+    lotusBefore: lotusBefore,
   );
 
   Map<String, dynamic> toJson() => {
@@ -86,6 +94,8 @@ class Ascent {
     'stage': stage,
     'breath': breath,
     'breathBefore': breathBefore,
+    'lotus': lotus,
+    'lotusBefore': lotusBefore,
   };
 
   factory Ascent.fromJson(Map<String, dynamic> j) => Ascent(
@@ -108,6 +118,8 @@ class Ascent {
     stage: j['stage'] as int? ?? 0,
     breath: j['breath'] as int? ?? 0,
     breathBefore: j['breathBefore'] as int? ?? 0,
+    lotus: j['lotus'] as int? ?? 0,
+    lotusBefore: j['lotusBefore'] as int? ?? 0,
   );
 }
 

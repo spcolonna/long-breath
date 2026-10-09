@@ -11,6 +11,7 @@ import 'package:long_breath/domain/combat/combat_state.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/game_data.dart';
+import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/domain/sim/bots.dart';
@@ -229,8 +230,13 @@ class RunLog {
   int nodes = 0, fountains = 0, shrines = 0, events = 0;
   int merchants = 0, masters = 0, jadeSpent = 0, jadeLeft = 0;
 
-  /// Etapa a la que llegó (0 = la primera).
+  /// Etapa a la que llegó (0 = la primera) y piso dentro de ella.
   int stage = 0;
+  int floor = 0;
+
+  /// Semillas de loto ganadas y premios que salieron.
+  int lotus = 0;
+  final kinds = <RewardKind>[];
   int? hpAtBoss;
   Style? style;
   final fights = <FightLog>[];
@@ -284,7 +290,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     int? maxHp,
     Iterable<String>? forms,
     List<String> awakenings = const [],
-    List<String> waves = const []}) {
+    List<String> waves = const [],
+    MetaBonus meta = MetaBonus.none}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length;
   var s = engine
@@ -301,7 +308,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           forms: forms,
           talismans: talismans,
           awakenings: awakenings,
-          waves: waves)
+          waves: waves,
+          meta: meta)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
@@ -335,13 +343,18 @@ RunLog playRun(GameData data, Bot bot, int seed,
     List<String> startCards = const [],
     Difficulty difficulty = Difficulty.normal,
     int pico = 0,
-    List<String> locked = const []}) {
+    List<String> locked = const [],
+    MetaBonus meta = MetaBonus.none}) {
   final engine = CombatEngine(data);
   final runEngine = RunEngine(data);
   final log = RunLog();
   final tRng = math.Random(seed * 13 + 5);
   var r = runEngine.newRun(
-      seed: seed, difficulty: difficulty, pico: pico, locked: locked);
+      seed: seed,
+      difficulty: difficulty,
+      pico: pico,
+      locked: locked,
+      meta: meta);
   for (final id in startCards) {
     r = r.copyWith(
         deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: id)],
@@ -366,7 +379,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
         }
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
-            awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1));
+            awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1),
+            meta: r.meta);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
@@ -399,7 +413,19 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final before = r.jade;
         r = runEngine.resolveEvent(r, bot.pickEventOption(runEngine, r));
         if (r.jade < before) log.jadeSpent += before - r.jade;
+      case RunPhase.reward when r.rewardKind == RewardKind.upgrade:
+        log.kinds.add(r.rewardKind);
+        r = runEngine.chooseRewardUpgrade(r, bestUpgrade(runEngine, r));
+      case RunPhase.reward when r.rewardKind == RewardKind.talisman:
+        log.kinds.add(r.rewardKind);
+        final t = bot.pickTalisman(runEngine, r);
+        log.talismans.add(t);
+        r = runEngine.chooseRewardTalisman(r, t);
+      case RunPhase.reward when r.rewardKind != RewardKind.cards:
+        log.kinds.add(r.rewardKind);
+        r = runEngine.collectReward(r);
       case RunPhase.reward:
+        log.kinds.add(r.rewardKind);
         log.offered.addAll(r.rewardOptions);
         final pick = bot.pickReward(runEngine, r);
         if (bot.learnForm(runEngine, r, pick)) {
@@ -441,6 +467,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
   log.deckSize = r.deck.length;
   log.jadeLeft = r.jade;
   log.stage = r.stage;
+  log.lotus = r.lotus;
+  log.floor = r.visited.length;
   return log;
 }
 

@@ -3279,6 +3279,342 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cultivo'**
   String get registryTabCultivation;
+
+  /// No description provided for @lootTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Botín'**
+  String get lootTitle;
+
+  /// No description provided for @lootOpenHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá el cofre para abrirlo'**
+  String get lootOpenHint;
+
+  /// No description provided for @lootKindCards.
+  ///
+  /// In es, this message translates to:
+  /// **'Pergaminos'**
+  String get lootKindCards;
+
+  /// No description provided for @lootKindJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Bolsa de jade'**
+  String get lootKindJade;
+
+  /// No description provided for @lootKindLotus.
+  ///
+  /// In es, this message translates to:
+  /// **'Semillas de loto'**
+  String get lootKindLotus;
+
+  /// No description provided for @lootKindUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'Temple'**
+  String get lootKindUpgrade;
+
+  /// No description provided for @lootKindTea.
+  ///
+  /// In es, this message translates to:
+  /// **'Té de montaña'**
+  String get lootKindTea;
+
+  /// No description provided for @lootKindTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'Talismán'**
+  String get lootKindTalisman;
+
+  /// No description provided for @lootHintCards.
+  ///
+  /// In es, this message translates to:
+  /// **'Sumá una técnica a tu mazo o aprendé la forma. Un mazo chico es más predecible.'**
+  String get lootHintCards;
+
+  /// No description provided for @lootHintJade.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de jade para el mercader del camino.'**
+  String lootHintJade(int n);
+
+  /// No description provided for @lootHintLotus.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} semillas que vuelven con vos a la escuela, aunque caigas. Abren puntos del árbol de meridianos.'**
+  String lootHintLotus(int n);
+
+  /// No description provided for @lootHintUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí una carta: gana +{n} para toda la subida.'**
+  String lootHintUpgrade(int n);
+
+  /// No description provided for @lootHintTea.
+  ///
+  /// In es, this message translates to:
+  /// **'Recuperás {n} de Vida.'**
+  String lootHintTea(int n);
+
+  /// No description provided for @lootHintTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí uno: vale para toda la subida.'**
+  String get lootHintTalisman;
+
+  /// No description provided for @lootTake.
+  ///
+  /// In es, this message translates to:
+  /// **'Tomar'**
+  String get lootTake;
+
+  /// No description provided for @lootDrink.
+  ///
+  /// In es, this message translates to:
+  /// **'Beber'**
+  String get lootDrink;
+
+  /// No description provided for @lootTemper.
+  ///
+  /// In es, this message translates to:
+  /// **'Templar'**
+  String get lootTemper;
+
+  /// No description provided for @lootReroll.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver a tirar ({n})'**
+  String lootReroll(int n);
+
+  /// No description provided for @lotusGained.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de loto'**
+  String lotusGained(int n);
+
+  /// No description provided for @talismanStartTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Don de la escuela'**
+  String get talismanStartTitle;
+
+  /// No description provided for @talismanStartHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Los meridianos te acompañan: elegí un talismán para esta subida.'**
+  String get talismanStartHint;
+
+  /// No description provided for @stageLootTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Botín de la etapa'**
+  String get stageLootTitle;
+
+  /// No description provided for @stageLootWins.
+  ///
+  /// In es, this message translates to:
+  /// **'Combates ganados'**
+  String get stageLootWins;
+
+  /// No description provided for @stageLootJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Jade ganado'**
+  String get stageLootJade;
+
+  /// No description provided for @stageLootLotus.
+  ///
+  /// In es, this message translates to:
+  /// **'Semillas de loto'**
+  String get stageLootLotus;
+
+  /// No description provided for @meridiansTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Árbol de meridianos'**
+  String get meridiansTitle;
+
+  /// No description provided for @meridiansButton.
+  ///
+  /// In es, this message translates to:
+  /// **'Meridianos'**
+  String get meridiansButton;
+
+  /// No description provided for @meridiansHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada subida trae semillas de loto, ganes o caigas. Con ellas la escuela abre puntos que ayudan a todos los discípulos que vienen.'**
+  String get meridiansHint;
+
+  /// No description provided for @meridiansBalance.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} semillas'**
+  String meridiansBalance(int n);
+
+  /// No description provided for @meridiansRealmGifts.
+  ///
+  /// In es, this message translates to:
+  /// **'Dones del reino'**
+  String get meridiansRealmGifts;
+
+  /// No description provided for @meridiansRealmGiftsHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada reino del cultivo regala un don, sin gastar loto.'**
+  String get meridiansRealmGiftsHint;
+
+  /// No description provided for @meridianBranchBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuerpo'**
+  String get meridianBranchBody;
+
+  /// No description provided for @meridianBranchSpirit.
+  ///
+  /// In es, this message translates to:
+  /// **'Espíritu'**
+  String get meridianBranchSpirit;
+
+  /// No description provided for @meridianBranchTechnique.
+  ///
+  /// In es, this message translates to:
+  /// **'Técnica'**
+  String get meridianBranchTechnique;
+
+  /// No description provided for @meridianOpen.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir punto · {n}'**
+  String meridianOpen(int n);
+
+  /// No description provided for @meridianOpened.
+  ///
+  /// In es, this message translates to:
+  /// **'Abierto'**
+  String get meridianOpened;
+
+  /// No description provided for @meridianNeedsRealm.
+  ///
+  /// In es, this message translates to:
+  /// **'Requiere {realm}'**
+  String meridianNeedsRealm(String realm);
+
+  /// No description provided for @meridianNeedsPrev.
+  ///
+  /// In es, this message translates to:
+  /// **'Primero abrí el punto anterior'**
+  String get meridianNeedsPrev;
+
+  /// No description provided for @meridianNeedsLotus.
+  ///
+  /// In es, this message translates to:
+  /// **'Faltan {n} semillas'**
+  String meridianNeedsLotus(int n);
+
+  /// No description provided for @meridianNextRun.
+  ///
+  /// In es, this message translates to:
+  /// **'Vale desde la próxima subida.'**
+  String get meridianNextRun;
+
+  /// No description provided for @bonusMaxHp.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Vida máxima'**
+  String bonusMaxHp(int n);
+
+  /// No description provided for @bonusFountainHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'La fuente cura {n} más'**
+  String bonusFountainHeal(int n);
+
+  /// No description provided for @bonusWinHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'Curás {n} al ganar cada combate'**
+  String bonusWinHeal(int n);
+
+  /// No description provided for @bonusStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Estructura en cada combate'**
+  String bonusStructure(int n);
+
+  /// No description provided for @bonusStartJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezás con {n} de jade'**
+  String bonusStartJade(int n);
+
+  /// No description provided for @bonusUpgradedStarters.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Una carta inicial empieza templada} other{{n} cartas iniciales empiezan templadas}}'**
+  String bonusUpgradedStarters(int n);
+
+  /// No description provided for @bonusStartTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegís un talismán al empezar'**
+  String get bonusStartTalisman;
+
+  /// No description provided for @bonusMerchantDiscount.
+  ///
+  /// In es, this message translates to:
+  /// **'El mercader cobra {n}% menos'**
+  String bonusMerchantDiscount(int n);
+
+  /// No description provided for @bonusRewardChoices.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} carta para elegir en los pergaminos'**
+  String bonusRewardChoices(int n);
+
+  /// No description provided for @bonusTalismanChoices.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} talismán para elegir en el élite'**
+  String bonusTalismanChoices(int n);
+
+  /// No description provided for @bonusRerolls.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Podés volver a tirar los pergaminos una vez por subida} other{Podés volver a tirar los pergaminos {n} veces por subida}}'**
+  String bonusRerolls(int n);
+
+  /// No description provided for @bonusLotusPct.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n}% de semillas de loto'**
+  String bonusLotusPct(int n);
+
+  /// No description provided for @bonusFirstTurnBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Aliento en el primer turno'**
+  String bonusFirstTurnBreath(int n);
+
+  /// No description provided for @bonusBreathes.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Respirar por combate'**
+  String bonusBreathes(int n);
+
+  /// No description provided for @resultLotus.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} semillas de loto · la escuela tiene {total}'**
+  String resultLotus(int n, int total);
+
+  /// No description provided for @resultToMeridians.
+  ///
+  /// In es, this message translates to:
+  /// **'Abrir meridianos'**
+  String get resultToMeridians;
 }
 
 class _AppLocalizationsDelegate
