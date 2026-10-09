@@ -78,7 +78,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
       // El paisaje de la etapa detrás: cada encuentro pasa en su montaña.
       body: SceneBackdrop(
         assets: stageArt(data.balance.stages[run.stage].id, 'map_bg.png'),
-        veil: 0.72,
+        veil: 0.45,
         child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
@@ -128,19 +128,31 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                 ),
               ),
               const SizedBox(height: 14),
-              Text(
-                text.event(id),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w800,
+              // Una nube de papel: el paisaje se ve y el texto se lee.
+              Container(
+                padding: const EdgeInsets.fromLTRB(18, 14, 18, 16),
+                decoration: BoxDecoration(
+                  color: Palette.surface.withValues(alpha: 0.82),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                text.eventText(id),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, height: 1.4),
+                child: Column(
+                  children: [
+                    Text(
+                      text.event(id),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      text.eventText(id),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 16, height: 1.4),
+                    ),
+                  ],
+                ),
               ),
               const Spacer(),
               AnimatedSwitcher(

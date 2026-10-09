@@ -467,7 +467,7 @@ class CloudPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final t = drift.value * 2 * math.pi;
-    final paint = Paint()..color = Colors.white.withValues(alpha: 0.62);
+    final paint = Paint()..color = Colors.white.withValues(alpha: 0.45);
     final ys = layout.rowY;
     for (var r = 0; r < ys.length; r++) {
       if (mapHash('cloud$r') < 0.35) continue;
@@ -524,7 +524,7 @@ class FogPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (edge <= 0) return;
-    final fog = Palette.surface.withValues(alpha: 0.62);
+    final fog = Palette.surface.withValues(alpha: 0.4);
     canvas.drawRect(
       Rect.fromLTRB(0, 0, size.width, edge - 90),
       Paint()..color = fog,

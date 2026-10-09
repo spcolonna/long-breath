@@ -27,9 +27,11 @@ import '../tutorial/lessons.dart';
 import '../tutorial/tutorial_anchor.dart';
 import '../tutorial/tutorial_overlay.dart';
 import '../widgets/card_widget.dart';
+import '../widgets/cinematic.dart';
 import '../widgets/enemy_sprite.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/stage_scene.dart';
 import '../widgets/stat_bar.dart';
 import '../widgets/talisman_widgets.dart';
 
@@ -161,6 +163,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   GameAudio get _audio => ref.read(audioProvider);
 
+  /// Presentación de la élite o el jefe antes de la arena.
+  bool _intro = false;
+
   @override
   void initState() {
     super.initState();
@@ -168,6 +173,12 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final live = ref.read(combatControllerProvider);
     if (live == null) return;
     final rank = ref.read(dataProvider).enemy(live.state.enemy.id).rank;
+    _intro =
+        !live.tutorial &&
+        rank != EnemyRank.common &&
+        live.state.turn <= 1 &&
+        live.state.wave == 0 &&
+        ref.read(cinematicsProvider);
     _audio.music(
       live.tutorial
           ? Music.training
@@ -177,6 +188,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               _ => Music.combat,
             },
     );
+    if (!_intro) _begin();
+  }
+
+  /// La arena aparece: cae el enemigo, cartel, reparto y talismanes.
+  void _begin() {
+    final live = ref.read(combatControllerProvider);
+    if (live == null) return;
     _after(120, () => _audio.play(Sfx.enemyDrop));
     _after(300, () => _audio.play(Sfx.fightStart));
     _dealSounds(450, live.state.hand.length);
@@ -811,14 +829,39 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     );
     final run = live.tutorial ? null : ref.watch(runControllerProvider);
     final node = run?.currentNode == null ? null : run!.node(run.currentNode!);
+    final stageId = run == null
+        ? data.balance.stage.id
+        : data.balance.stages[run.stage].id;
+
+    if (_intro) {
+      final def = data.enemy(s.enemy.id);
+      return Scaffold(
+        body: CinematicGate(
+          id: 'foe_${def.id}',
+          // Los jefes se presentan enteros la primera vez; las élites, cortas.
+          fullFirstTime: def.rank == EnemyRank.boss,
+          builder: (full) => FoeIntro(
+            def: def,
+            name: ref.watch(textProvider).enemy(def.id),
+            stageId: stageId,
+            scene: node?.scene,
+            light: node?.light,
+            style: run?.style,
+            full: full,
+            onDone: () {
+              setState(() => _intro = false);
+              _begin();
+            },
+          ),
+        ),
+      );
+    }
 
     final column = Column(
       children: [
         Expanded(
           child: _Arena(
-            stageId: run == null
-                ? data.balance.stage.id
-                : data.balance.stages[run.stage].id,
+            stageId: stageId,
             scene: node?.scene,
             light: node?.light,
             turn: s.turn,
@@ -889,6 +932,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     return Scaffold(
       body: SafeArea(
         child: Stack(
+          // El escenario sube detrás de la barra de estado.
+          clipBehavior: Clip.none,
           children: [
             // Al perder, la escena se apaga hacia el gris del papel.
             TweenAnimationBuilder<double>(
@@ -982,191 +1027,6 @@ class _EnemySlot {
   final GlobalKey key;
 }
 
-/// Archivo de cada escenario (`combat_bg_<archivo>.png`); la terraza es el
-/// fondo común de la etapa.
-const _sceneFiles = {
-  'bambu': 'ladera',
-  'cristales': 'bifurcacion',
-  'campanas': 'templo',
-  'cumbre': 'cumbre',
-  // Monasterio Colgado y Cumbre del Dragón Dormido: mientras no tengan arte
-  // propio, usan el fondo de la etapa 1 más parecido, teñido (_stageTint).
-  'pasarela': 'bifurcacion',
-  'escalera': 'ladera',
-  'campanario': 'templo',
-  'gran_campana': 'templo',
-  'ventisquero': 'ladera',
-  'glaciar': 'bifurcacion',
-  'templo_helado': 'templo',
-  'lecho_dragon': 'cumbre',
-};
-
-/// Tinte del fondo prestado de la etapa 1 en las etapas sin arte propio:
-/// el monasterio, tibio y azafrán; la cumbre, nevada y clara.
-const _stageTint = <String, List<double>>{
-  'xuankongsi': [
-    1.06, 0.04, 0, 0, 10, //
-    0.02, 0.98, 0, 0, 4,
-    0, 0.02, 0.86, 0, 0,
-    0, 0, 0, 1, 0,
-  ],
-  'wolongding': [
-    0.62, 0.3, 0.06, 0, 26, //
-    0.18, 0.74, 0.06, 0, 30,
-    0.18, 0.3, 0.52, 0, 46,
-    0, 0, 0, 1, 0,
-  ],
-};
-
-/// Altura de la franja visible de cada fondo (-1 arriba, 1 abajo): el suelo
-/// tiene que quedar bajo los pies.
-const _variantFocus = {'templo': 0.45};
-
-/// Fondo de la etapa: prueba la variante del tramo y cae al común.
-class _StageBackground extends StatelessWidget {
-  const _StageBackground({
-    required this.stageId,
-    required this.variant,
-    required this.fallback,
-  });
-
-  final String stageId;
-  final String? variant;
-  final Widget fallback;
-
-  @override
-  Widget build(BuildContext context) {
-    final base = Image.asset(
-      'assets/art/stages/$stageId/combat_bg.png',
-      fit: BoxFit.cover,
-      errorBuilder: (_, _, _) => fallback,
-    );
-    if (variant == null) return base;
-    return Image.asset(
-      'assets/art/stages/$stageId/combat_bg_$variant.png',
-      fit: BoxFit.cover,
-      // La arena es casi cuadrada: se elige qué franja del fondo vertical se ve.
-      alignment: Alignment(0, _variantFocus[variant] ?? 0),
-      errorBuilder: (_, _, _) => base,
-    );
-  }
-}
-
-/// La luz del momento sobre el fondo: el mismo lugar se siente distinto al
-/// alba, entre la niebla o al caer la tarde. Siempre claro, nunca de noche.
-class _LightWash extends StatelessWidget {
-  const _LightWash({required this.light});
-
-  final String? light;
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: switch (light) {
-        'niebla' => Stack(
-          fit: StackFit.expand,
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Colors.white.withValues(alpha: 0.55),
-                    Colors.white.withValues(alpha: 0.18),
-                    Colors.white.withValues(alpha: 0.28),
-                  ],
-                  stops: const [0, 0.55, 1],
-                ),
-              ),
-            ),
-            const _MistDrift(),
-          ],
-        ),
-        'ocaso' => DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                const Color(0xFFFF9A62).withValues(alpha: 0.34),
-                const Color(0xFFF7A8C4).withValues(alpha: 0.16),
-                const Color(0xFFFFD9A0).withValues(alpha: 0.10),
-              ],
-            ),
-          ),
-        ),
-        // Alba: un brillo tibio que entra por un costado.
-        _ => DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: const Alignment(-0.9, -0.9),
-              radius: 1.3,
-              colors: [
-                const Color(0xFFFFE6C2).withValues(alpha: 0.40),
-                const Color(0xFFFFE6C2).withValues(alpha: 0),
-              ],
-            ),
-          ),
-        ),
-      },
-    );
-  }
-}
-
-/// Bancos de niebla que cruzan despacio la arena.
-class _MistDrift extends StatefulWidget {
-  const _MistDrift();
-
-  @override
-  State<_MistDrift> createState() => _MistDriftState();
-}
-
-class _MistDriftState extends State<_MistDrift>
-    with SingleTickerProviderStateMixin {
-  late final _c = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 24),
-  )..repeat();
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return RepaintBoundary(child: CustomPaint(painter: _MistPainter(_c)));
-  }
-}
-
-class _MistPainter extends CustomPainter {
-  _MistPainter(this.t) : super(repaint: t);
-
-  final Animation<double> t;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.6)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28);
-    // Tres bancos a distintas alturas y velocidades; dan la vuelta al salir.
-    const banks = [(0.30, 1.0, 0.9), (0.55, 0.6, 1.2), (0.78, 1.4, 1.0)];
-    for (final (i, (y, speed, scale)) in banks.indexed) {
-      final w = size.width * 0.8 * scale;
-      final x = ((t.value * speed + i / 3) % 1) * (size.width + w) - w;
-      canvas.drawOval(
-        Rect.fromLTWH(x, size.height * y, w, size.height * 0.12 * scale),
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(_MistPainter old) => false;
-}
-
 /// Escenario del combate: fondo de la etapa, suelo, los enemigos al frente y
 /// el héroe de espaldas en primer plano.
 class _Arena extends StatelessWidget {
@@ -1199,166 +1059,190 @@ class _Arena extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    const fallback = DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFBFE3F2), Color(0xFFE8F4EA), Color(0xFFF3E7C9)],
-        ),
-      ),
-    );
-    return ClipRRect(
-      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
-      child: LayoutBuilder(
-        builder: (context, box) {
-          final heroH = math.min(box.maxHeight * 0.62, box.maxWidth * 0.54);
-          final heroW = heroH * 2 / 3;
-          final heroLeft = -heroW * 0.12;
-          final heroBottom = -heroH * 0.12;
-          return Stack(
-            fit: StackFit.expand,
-            children: [
-              _StageBackground(
-                stageId: stageId,
-                variant: _sceneFiles[scene],
-                fallback: _stageTint[stageId] == null
-                    ? fallback
-                    : ColorFiltered(
-                        colorFilter: ColorFilter.matrix(_stageTint[stageId]!),
-                        child: _StageBackground(
-                          stageId: 'qianyunshan',
-                          variant: _sceneFiles[scene],
-                          fallback: fallback,
-                        ),
-                      ),
-              ),
-              _LightWash(light: light),
-              // Suelo.
-              Align(
-                alignment: const Alignment(0, 0.62),
-                child: FractionallySizedBox(
-                  widthFactor: 0.75,
-                  child: Container(
-                    height: 34,
+    // Dentro del SafeArea el padding ya es 0: se mide el de la pantalla.
+    final top = MediaQueryData.fromView(View.of(context)).padding.top;
+    return LayoutBuilder(
+      builder: (context, box) {
+        final heroH = math.min(box.maxHeight * 0.62, box.maxWidth * 0.54);
+        final heroW = heroH * 2 / 3;
+        final heroLeft = -heroW * 0.12;
+        final heroBottom = -heroH * 0.12;
+        // El escenario sigue debajo de la mano y llega hasta el borde de
+        // arriba: los paneles de abajo lo tapan con papel de a poco.
+        final sceneH = top + box.maxHeight * 1.55;
+        return Stack(
+          fit: StackFit.expand,
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: -top,
+              left: 0,
+              right: 0,
+              height: sceneH,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  StageScene(stageId: stageId, scene: scene, light: light),
+                  DecoratedBox(
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.elliptical(200, 34),
-                      ),
-                      gradient: RadialGradient(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
                         colors: [
-                          Palette.text.withValues(alpha: 0.22),
-                          Palette.text.withValues(alpha: 0),
+                          Palette.bg.withValues(alpha: 0),
+                          Palette.bg.withValues(alpha: 0),
+                          Palette.bg.withValues(alpha: 0.78),
+                          Palette.bg,
+                        ],
+                        stops: [
+                          0,
+                          (top + box.maxHeight * 0.86) / sceneH,
+                          (top + box.maxHeight * 1.04) / sceneH,
+                          1,
                         ],
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(heroW * 0.8, 8, 16, 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (final slot in slots)
-                      Expanded(
-                        child: _EnemyStage(slot: slot, fx: fx),
-                      ),
-                  ],
-                ),
-              ),
-              // Héroe de espaldas, cortado por el borde inferior.
-              Positioned(
-                left: heroLeft,
-                bottom: heroBottom,
-                child: IgnorePointer(
-                  child: HeroSprite(
-                    key: heroKey,
-                    style: style,
-                    height: heroH,
-                    strikeKey: fx.strikeKey,
-                    hurtKey: fx.hurtKey,
-                    guardKey: fx.guardKey,
-                    victory: fx.victory,
-                    defeated: fx.defeated,
+            ),
+          // Suelo.
+          Align(
+            alignment: const Alignment(0, 0.62),
+            child: FractionallySizedBox(
+              widthFactor: 0.75,
+              child: Container(
+                height: 34,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.elliptical(200, 34),
+                  ),
+                  gradient: RadialGradient(
+                    colors: [
+                      Palette.text.withValues(alpha: 0.22),
+                      Palette.text.withValues(alpha: 0),
+                    ],
                   ),
                 ),
               ),
-              // Desvío: destello de jade sobre el héroe.
-              Positioned(
-                left: heroLeft,
-                bottom: heroBottom + heroH * 0.25,
-                width: heroW,
-                height: heroH * 0.6,
-                child: InkBurst(
-                  trigger: fx.deflectKey,
-                  colors: const [Palette.jade, Palette.sky, Colors.white],
-                  count: 18,
-                  radius: heroW * 0.6,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(heroW * 0.8, 8, 16, 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final slot in slots)
+                  Expanded(
+                    child: _EnemyStage(slot: slot, fx: fx),
+                  ),
+              ],
+            ),
+          ),
+          // Héroe de espaldas, cortado por el borde inferior.
+          Positioned(
+            left: heroLeft,
+            bottom: heroBottom,
+            child: IgnorePointer(
+              // Entra desde la izquierda al empezar el combate.
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: 1),
+                duration: const Duration(milliseconds: 650),
+                curve: Curves.easeOutCubic,
+                builder: (_, v, child) => Opacity(
+                  opacity: v.clamp(0, 1),
+                  child: Transform.translate(
+                    offset: Offset(-heroW * 0.7 * (1 - v), heroH * 0.06 * (1 - v)),
+                    child: child,
+                  ),
+                ),
+                child: HeroSprite(
+                  key: heroKey,
+                  style: style,
+                  height: heroH,
+                  strikeKey: fx.strikeKey,
+                  hurtKey: fx.hurtKey,
+                  guardKey: fx.guardKey,
+                  victory: fx.victory,
+                  defeated: fx.defeated,
                 ),
               ),
-              // Números sobre el héroe.
-              Positioned(
-                left: heroLeft + heroW * 0.62,
-                bottom: heroBottom + heroH * 0.62,
-                child: IgnorePointer(child: _PopStack(pops: fx.heroPops)),
-              ),
-              // Turno, camino y talismanes: encima de todo, para que su
-              // globo de ayuda no quede tapado por el héroe ni el rival.
-              Positioned(
-                left: 12,
-                top: 8,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TutorialAnchor(
-                      id: 'turn',
-                      child: Bounce(
-                        trigger: turn,
-                        child: _Chip(
-                          icon: Icons.hourglass_bottom,
-                          text: t.turn(turn),
-                          color: Palette.text,
-                        ),
-                      ),
+            ),
+          ),
+          // Desvío: destello de jade sobre el héroe.
+          Positioned(
+            left: heroLeft,
+            bottom: heroBottom + heroH * 0.25,
+            width: heroW,
+            height: heroH * 0.6,
+            child: InkBurst(
+              trigger: fx.deflectKey,
+              colors: const [Palette.jade, Palette.sky, Colors.white],
+              count: 18,
+              radius: heroW * 0.6,
+            ),
+          ),
+          // Números sobre el héroe.
+          Positioned(
+            left: heroLeft + heroW * 0.62,
+            bottom: heroBottom + heroH * 0.62,
+            child: IgnorePointer(child: _PopStack(pops: fx.heroPops)),
+          ),
+          // Turno, camino y talismanes: encima de todo, para que su
+          // globo de ayuda no quede tapado por el héroe ni el rival.
+          Positioned(
+            left: 12,
+            top: 8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TutorialAnchor(
+                  id: 'turn',
+                  child: Bounce(
+                    trigger: turn,
+                    child: _Chip(
+                      icon: Icons.hourglass_bottom,
+                      text: t.turn(turn),
+                      color: Palette.text,
                     ),
-                    if (style != null) ...[
-                      const SizedBox(height: 6),
-                      _StyleChip(style: style!),
-                    ],
-                    if (talismans.isNotEmpty) ...[
-                      const SizedBox(height: 6),
-                      SizedBox(
-                        width: 100,
-                        child: TalismanRow(
-                          ids: talismans,
-                          size: 26,
-                          triggers: fx.talismanHits,
-                        ),
-                      ),
-                    ],
-                  ],
+                  ),
                 ),
-              ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: fx.turnKey == 0
-                      ? _Ribbon(
-                          title: introTitle,
-                          subtitle: t.fightStart,
-                          delayMs: 250,
-                        )
-                      : _Ribbon(
-                          key: ValueKey(fx.turnKey),
-                          title: t.yourTurn,
-                          subtitle: t.turn(turn),
-                        ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                if (style != null) ...[
+                  const SizedBox(height: 6),
+                  _StyleChip(style: style!),
+                ],
+                if (talismans.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  SizedBox(
+                    width: 100,
+                    child: TalismanRow(
+                      ids: talismans,
+                      size: 26,
+                      triggers: fx.talismanHits,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          Positioned.fill(
+            child: IgnorePointer(
+              child: fx.turnKey == 0
+                  ? _Ribbon(
+                      title: introTitle,
+                      subtitle: t.fightStart,
+                      delayMs: 250,
+                    )
+                  : _Ribbon(
+                      key: ValueKey(fx.turnKey),
+                      title: t.yourTurn,
+                      subtitle: t.turn(turn),
+                    ),
+            ),
+          ),
+          ],
+        );
+      },
     );
   }
 }

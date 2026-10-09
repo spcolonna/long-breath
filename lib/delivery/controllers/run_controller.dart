@@ -136,6 +136,9 @@ class RunController extends Notifier<RunState?> {
 
   void rerollReward() => _set(_engine.rerollReward(state!));
 
+  /// La presentación de la etapa ya se vio: no se repite al volver al mapa.
+  void introSeen() => _set(state!.copyWith(introShown: state!.stage));
+
   void chooseTalisman(String id) =>
       _set(_engine.chooseTalisman(state!, id));
 

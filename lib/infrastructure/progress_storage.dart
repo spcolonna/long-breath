@@ -16,6 +16,7 @@ class ProgressStorage {
   static const _breathKey = 'long_breath.breath';
   static const _lotusKey = 'long_breath.lotus';
   static const _meridiansKey = 'long_breath.meridians';
+  static const _cinematicsKey = 'long_breath.cinematics';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -166,6 +167,21 @@ extension SchoolRecord on ProgressStorage {
     await prefs.setInt(ProgressStorage._lotusKey, seeds - n.cost);
     await prefs.setStringList(ProgressStorage._meridiansKey, [...owned, n.id]);
     return true;
+  }
+
+  /// Presentaciones (etapas y jefes) que ya se vieron completas: después
+  /// se muestran en versión corta.
+  Future<bool> cinematicSeen(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(ProgressStorage._cinematicsKey)?.contains(id) ??
+        false;
+  }
+
+  Future<void> markCinematicSeen(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final seen = prefs.getStringList(ProgressStorage._cinematicsKey) ?? [];
+    if (seen.contains(id)) return;
+    await prefs.setStringList(ProgressStorage._cinematicsKey, [...seen, id]);
   }
 }
 

@@ -334,11 +334,18 @@ En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista 
 | Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, por 1 de Aliento |
 | Postura inicial | Caballo (马步) | |
 
+## Presentaciones
+
+- **Etapa:** al pisar una etapa nueva, la cámara sube por la montaña pintada mientras tu héroe la mira de espaldas, y cae el sello con su nombre. La primera vez se ve entera (unos 4 s); después, en versión corta. No se repite en la misma subida.
+- **Jefe:** antes del combate, la cámara se acerca al rival en su escenario: primero es una sombra de tinta, después toma color con su aura y aparece su nombre; al final entra tu héroe. La primera vez se ve entera; después, corta.
+- **Élite:** siempre la versión corta.
+- Cualquier presentación se salta con un toque.
+
 ## Cómo leer la pantalla de combate
 
 De arriba hacia abajo:
 
-1. **Arena.** El enemigo al frente y tu héroe de espaldas, abajo a la izquierda.
+1. **Arena.** El escenario ocupa toda la pantalla y se mueve despacio; debajo de la mano se funde en papel. El enemigo va al frente y tu héroe de espaldas, abajo a la izquierda; al empezar, el héroe entra desde el costado.
    - **Globo sobre el enemigo:** lo que va a hacer en su próxima acción. La flecha indica la altura (↑ alto, → medio, ↓ bajo), el número es el daño y **E** es el daño a tu Estructura.
    - **Placa con el nombre:** su color indica el rango (jade común, violeta élite, bermellón jefe). Tocala para leer su regla especial.
    - **Barras:** Vida (rojo) y Estructura (violeta). Debajo aparecen su Guardia y si está Desequilibrado.

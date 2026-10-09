@@ -27,7 +27,12 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
     }
 
-    await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [cinematicsProvider.overrideWithValue(false)],
+        child: const LongBreathApp(),
+      ),
+    );
     await settle();
     // Menú principal: aprender (marcado la primera vez) o subir.
     expect(find.text('Aprender a jugar'), findsOneWidget);

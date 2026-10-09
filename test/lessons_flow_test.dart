@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/app.dart';
+import 'package:long_breath/delivery/providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Recorre las lecciones 2 a 6 como las jugaría alguien que sigue al maestro.
@@ -43,7 +44,12 @@ void main() {
 
     void sees(String text) => expect(find.textContaining(text), findsOneWidget, reason: text);
 
-    await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [cinematicsProvider.overrideWithValue(false)],
+        child: const LongBreathApp(),
+      ),
+    );
     await settle();
     await tap('Aprender a jugar');
 
