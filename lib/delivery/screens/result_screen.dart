@@ -156,7 +156,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         assets: won
             ? stageArt('wolongding', 'map_bg.png')
             : stageArt('qianyunshan', 'school_wall.png'),
-        veil: 0.62,
+        veil: 0.4,
         alignment: won ? Alignment.topCenter : Alignment.center,
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,

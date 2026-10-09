@@ -15,7 +15,12 @@ void main() {
     tester.view.physicalSize = const Size(1206, 2622);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [cinematicsProvider.overrideWithValue(false)],
+        child: const LongBreathApp(),
+      ),
+    );
     await tester.pump(const Duration(seconds: 1));
     await tester.pump(const Duration(seconds: 1));
     return ProviderScope.containerOf(

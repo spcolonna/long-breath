@@ -2243,4 +2243,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get resultToMeridians => 'Abrir meridianos';
+
+  @override
+  String get cinematicSkip => 'Tocá para saltar';
+
+  @override
+  String get introBoss => 'Guardián de la etapa';
+
+  @override
+  String get introElite => 'Élite del camino';
 }

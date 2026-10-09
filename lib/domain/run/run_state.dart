@@ -142,6 +142,7 @@ class RunState {
     this.rewardAmount = 0,
     this.rerollsLeft = 0,
     this.cardlessStreak = 0,
+    this.introShown = -1,
     this.stageWins = 0,
     this.stageJade = 0,
     this.stageLotus = 0,
@@ -252,6 +253,9 @@ class RunState {
   /// Premios seguidos sin cartas.
   final int cardlessStreak;
 
+  /// Última etapa cuya presentación ya se vio en esta subida (-1: ninguna).
+  final int introShown;
+
   /// Botín de la etapa: combates ganados, jade y loto.
   final int stageWins;
   final int stageJade;
@@ -303,6 +307,7 @@ class RunState {
     int? rewardAmount,
     int? rerollsLeft,
     int? cardlessStreak,
+    int? introShown,
     int? stageWins,
     int? stageJade,
     int? stageLotus,
@@ -353,6 +358,7 @@ class RunState {
         rewardAmount: rewardAmount ?? this.rewardAmount,
         rerollsLeft: rerollsLeft ?? this.rerollsLeft,
         cardlessStreak: cardlessStreak ?? this.cardlessStreak,
+        introShown: introShown ?? this.introShown,
         stageWins: stageWins ?? this.stageWins,
         stageJade: stageJade ?? this.stageJade,
         stageLotus: stageLotus ?? this.stageLotus,
@@ -412,6 +418,7 @@ class RunState {
         'rewardAmount': rewardAmount,
         'rerollsLeft': rerollsLeft,
         'cardlessStreak': cardlessStreak,
+        'introShown': introShown,
         'stageWins': stageWins,
         'stageJade': stageJade,
         'stageLotus': stageLotus,
@@ -486,6 +493,7 @@ class RunState {
         rewardAmount: j['rewardAmount'] as int? ?? 0,
         rerollsLeft: j['rerollsLeft'] as int? ?? 0,
         cardlessStreak: j['cardlessStreak'] as int? ?? 0,
+        introShown: j['introShown'] as int? ?? -1,
         stageWins: j['stageWins'] as int? ?? 0,
         stageJade: j['stageJade'] as int? ?? 0,
         stageLotus: j['stageLotus'] as int? ?? 0,

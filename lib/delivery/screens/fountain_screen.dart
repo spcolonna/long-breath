@@ -85,7 +85,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
     return Scaffold(
       body: SceneBackdrop(
         assets: stageArt(data.balance.stages[run.stage].id, 'fountain_bg.png'),
-        veil: 0.55,
+        veil: 0.38,
         child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),

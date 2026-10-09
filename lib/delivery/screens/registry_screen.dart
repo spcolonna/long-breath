@@ -52,7 +52,7 @@ class RegistryScreen extends ConsumerWidget {
         ),
         body: SceneBackdrop(
           assets: stageArt('qianyunshan', 'school_wall.png'),
-          veil: 0.7,
+          veil: 0.45,
           child: TabBarView(
           children: [
             ascents.isEmpty

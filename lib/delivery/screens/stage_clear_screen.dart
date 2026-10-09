@@ -118,7 +118,7 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
     return Scaffold(
       body: SceneBackdrop(
         assets: const ['assets/art/ui/stage_clear_bg.png'],
-        veil: 0.6,
+        veil: 0.4,
         child: SafeArea(
           child: AnimatedBuilder(
             animation: _c,

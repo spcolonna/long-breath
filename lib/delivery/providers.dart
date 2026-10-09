@@ -127,3 +127,7 @@ final lessonsDoneProvider = FutureProvider<Set<String>>(
 
 /// En `main` se reemplaza por el motor real; en tests queda en silencio.
 final audioProvider = Provider<GameAudio>((ref) => SilentAudio());
+
+/// Presentaciones de etapa y de jefe. Los tests de flujo la apagan para no
+/// esperar la animación.
+final cinematicsProvider = Provider<bool>((ref) => true);

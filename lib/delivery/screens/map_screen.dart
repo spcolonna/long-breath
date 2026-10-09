@@ -13,6 +13,7 @@ import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/cinematic.dart';
 import '../widgets/deck_sheet.dart';
 import '../labels.dart';
 import '../widgets/difficulty_sheet.dart';
@@ -40,8 +41,15 @@ class MapScreen extends ConsumerWidget {
     final data = ref.watch(dataProvider);
     final engine = ref.watch(runEngineProvider);
     final available = engine.available(run).toSet();
+    final stage = data.balance.stages[run.stage];
+    // Al pisar una etapa nueva, su presentación (una sola vez por subida).
+    final intro =
+        ref.watch(cinematicsProvider) &&
+        run.introShown < run.stage &&
+        run.visited.isEmpty &&
+        run.phase == RunPhase.map;
 
-    return Scaffold(
+    final scaffold = Scaffold(
       appBar: AppBar(
         title: Column(
           children: [
@@ -128,6 +136,29 @@ class MapScreen extends ConsumerWidget {
           ],
         ),
       ),
+    );
+    if (!intro) return scaffold;
+    return Stack(
+      children: [
+        scaffold,
+        Positioned.fill(
+          child: CinematicGate(
+            id: 'stage_${stage.id}',
+            builder: (full) => StageIntro(
+              stageId: stage.id,
+              hanzi: stage.hanzi,
+              name: ref.watch(textProvider).stage(stage.id),
+              subtitle: data.balance.stages.length > 1
+                  ? t.mapStage(run.stage + 1, data.balance.stages.length)
+                  : t.difficultyName(run.difficulty),
+              style: run.style,
+              full: full,
+              onDone: () =>
+                  ref.read(runControllerProvider.notifier).introSeen(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -317,7 +348,6 @@ class _MapViewState extends ConsumerState<_MapView>
                         child: Image.asset(
                           'assets/art/stages/${data.balance.stages[run.stage].id}/map_bg.png',
                           fit: BoxFit.cover,
-                          opacity: const AlwaysStoppedAnimation(0.85),
                           errorBuilder: (_, _, _) => RepaintBoundary(
                             child: CustomPaint(
                               painter: LandmarkPainter(

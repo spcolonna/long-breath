@@ -3615,6 +3615,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Abrir meridianos'**
   String get resultToMeridians;
+
+  /// No description provided for @cinematicSkip.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá para saltar'**
+  String get cinematicSkip;
+
+  /// No description provided for @introBoss.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardián de la etapa'**
+  String get introBoss;
+
+  /// No description provided for @introElite.
+  ///
+  /// In es, this message translates to:
+  /// **'Élite del camino'**
+  String get introElite;
 }
 
 class _AppLocalizationsDelegate

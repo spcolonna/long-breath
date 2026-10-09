@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:long_breath/app.dart';
+import 'package:long_breath/delivery/providers.dart';
 import 'package:long_breath/delivery/controllers/combat_controller.dart';
 import 'package:long_breath/delivery/controllers/run_controller.dart';
 import 'package:long_breath/domain/model/enums.dart';
@@ -20,7 +21,12 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
     }
 
-    await tester.pumpWidget(const ProviderScope(child: LongBreathApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [cinematicsProvider.overrideWithValue(false)],
+        child: const LongBreathApp(),
+      ),
+    );
     await settle();
     final container = ProviderScope.containerOf(
       tester.element(find.byType(Scaffold).first),

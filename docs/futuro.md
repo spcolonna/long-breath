@@ -227,6 +227,15 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Legado:** lo que un discípulo deja para el siguiente, por ejemplo una carta heredada.
 - **Arte:** pocas ilustraciones fijas, con texto encima.
 
+### 3.8b Presentaciones y escenarios (hecho)
+- Escenarios a pantalla completa en combate, con movimiento lento; menos velo en el mapa y las pantallas tranquilas.
+- Presentación de etapa (paneo por la montaña) y de jefe/élite (silueta → color, sello y héroe). Completa la primera vez, corta después, se saltan con un toque.
+- **Siguiente:**
+  - fondos propios para los jefes que hoy usan el común de su etapa: `xuankongsi/combat_bg_templo.png` (piso 9 y Abad de la Gran Campana) y `wolongding/combat_bg_cumbre.png` (Dragón Dormido);
+  - un ajuste "Reducir movimiento" en Opciones (hoy se respeta el del sistema);
+  - un epílogo corto al vencer al Dragón Dormido;
+  - capas de nubes en PNG para parallax en el combate.
+
 ### 3.9 Modos extra
 - **Desafío diario:** la misma semilla para todos y una tabla de resultados.
 - **Combate libre contra cualquier enemigo ya vencido**, para practicar.

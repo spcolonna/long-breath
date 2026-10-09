@@ -1037,5 +1037,8 @@
   "@bonusBreathes": {"placeholders": {"n": {"type": "int"}}},
   "resultLotus": "+{n} semillas de loto · la escuela tiene {total}",
   "@resultLotus": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
-  "resultToMeridians": "Abrir meridianos"
+  "resultToMeridians": "Abrir meridianos",
+  "cinematicSkip": "Tocá para saltar",
+  "introBoss": "Guardián de la etapa",
+  "introElite": "Élite del camino"
 }
