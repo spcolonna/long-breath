@@ -5,9 +5,34 @@ import '../../domain/model/meta_bonus.dart';
 import '../theme.dart';
 import 'juice.dart';
 
-/// Semilla de loto dibujada con su carácter (莲): no hace falta arte.
+/// Semilla de loto: el cáliz pintado (`ui/lotus_seed.png`). Si falta el
+/// arte, el sello 莲.
 class LotusSeed extends StatelessWidget {
   const LotusSeed({super.key, this.size = 18});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final px = MediaQuery.devicePixelRatioOf(context) * size * 1.3;
+    return SizedBox.square(
+      dimension: size,
+      // El dibujo deja aire alrededor: se agranda sin ocupar más lugar.
+      child: Transform.scale(
+        scale: 1.3,
+        child: Image.asset(
+          'assets/art/ui/lotus_seed.png',
+          cacheWidth: px.ceil(),
+          filterQuality: FilterQuality.medium,
+          errorBuilder: (_, _, _) => _LotusSeal(size: size / 1.3),
+        ),
+      ),
+    );
+  }
+}
+
+class _LotusSeal extends StatelessWidget {
+  const _LotusSeal({required this.size});
 
   final double size;
 

@@ -1152,7 +1152,7 @@ Game enemy character, full body, slightly high camera angle looking down, close 
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright noon daylight, fully transparent background, palette of polished steel blue, silver and cobalt (#3E7BE0) with bold tangerine orange and a touch of gold (#E59A12) on the sparks, no violet, clean confident brush strokes, metallic highlights painted as flat white strokes, watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
 ```
 
-### León de Jade 玉狮 (`lion_jade`, élite, etapa 2)
+### León de Jade 玉狮 (`lion_jade`, élite, etapa 2) — hecho
 
 Reemplaza el recoloreo (que queda guardado como `lion_celadon.png`). Jade lavanda para que no se pierda sobre el fondo celadón del campanario.
 
@@ -1379,7 +1379,7 @@ brush strokes, serene and triumphant mood. NOT dark, NOT busy, no clouds sea, no
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
-#### Semilla de loto (`ui/lotus_seed.png`)
+#### Semilla de loto (`ui/lotus_seed.png`) — hecho
 
 `assets/art/ui/lotus_seed.png`. 512×512 cuadrado, fondo transparente. Ícono de la moneda permanente: se ve a 16–40 px en el contador y a ~120 px en el botín, así que la silueta tiene que leerse chiquita. Paleta propia rosa loto y verde semilla, para no confundirse con el jade.
 
@@ -1396,7 +1396,7 @@ sparkle, cream highlights (#F6EEDC). Bright, cute and precious. NOT dark, no bla
 heavy shadows, no background, no frame, no text, no watermark, no photorealism.
 ```
 
-#### Cofre del botín (`ui/reward_chest.png`)
+#### Cofre del botín (`ui/reward_chest.png`) — hecho
 
 `assets/art/ui/reward_chest.png`. 1024×1024 cuadrado, fondo transparente. Se muestra a ~200 px y el juego lo hace temblar y abrirse con un destello, así que va cerrado y de frente. El centro de la tapa queda liso: el juego estampa encima el sello 赏.
 

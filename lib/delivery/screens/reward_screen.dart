@@ -324,61 +324,70 @@ class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
   }
 }
 
-/// Cofre dibujado: caja de laca con borde de oro y el sello 赏.
+/// El cofre de laca pintado (`ui/reward_chest.png`) con el sello 赏 en la
+/// tapa. Si falta el arte, una caja dibujada.
 class _ChestArt extends StatelessWidget {
   const _ChestArt();
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: 168,
-    height: 132,
+    width: 250,
+    height: 240,
     child: Stack(
       alignment: Alignment.center,
       children: [
         Positioned(
-          bottom: 0,
+          bottom: 26,
           child: Container(
-            width: 150,
-            height: 14,
+            width: 200,
+            height: 16,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Palette.text.withValues(alpha: 0.12),
             ),
           ),
         ),
-        Positioned(
-          top: 6,
-          child: Container(
-            width: 156,
-            height: 116,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFFF0625A), Palette.lacquer],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Palette.gold, width: 5),
-              boxShadow: [
-                BoxShadow(
-                  color: Palette.lacquer.withValues(alpha: 0.35),
-                  blurRadius: 18,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
+        Positioned.fill(
+          child: Image.asset(
+            'assets/art/ui/reward_chest.png',
+            cacheWidth: (MediaQuery.devicePixelRatioOf(context) * 250).ceil(),
+            fit: BoxFit.cover,
+            errorBuilder: (_, _, _) => const _DrawnChest(),
           ),
         ),
-        // La tapa: una franja de oro.
-        Positioned(
-          top: 40,
-          child: Container(width: 156, height: 6, color: Palette.gold),
-        ),
         const Positioned(
-          top: 22,
-          child: InkSeal(hanzi: '赏', color: Palette.gold, size: 58),
+          top: 40,
+          child: InkSeal(hanzi: '赏', color: Palette.gold, size: 40),
         ),
       ],
+    ),
+  );
+}
+
+class _DrawnChest extends StatelessWidget {
+  const _DrawnChest();
+
+  @override
+  Widget build(BuildContext context) => Center(
+    child: Container(
+      width: 156,
+      height: 116,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFFF0625A), Palette.lacquer],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Palette.gold, width: 5),
+        boxShadow: [
+          BoxShadow(
+            color: Palette.lacquer.withValues(alpha: 0.35),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
     ),
   );
 }

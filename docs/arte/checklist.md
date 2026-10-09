@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 61 · ✅ 43 · 🎨 12 · ❌ 6
+Total: 61 · ✅ 46 · 🎨 11 · ❌ 4
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -51,8 +51,8 @@ Total: 61 · ✅ 43 · 🎨 12 · ❌ 6
 |---|---|---|---|---|
 | ✅ propio | `assets/art/stages/qianyunshan/school_wall.png` | registro y derrota | papel | — |
 | ✅ propio | `assets/art/ui/stage_clear_bg.png` | etapa superada | papel | — |
-| ❌ falta | `assets/art/ui/lotus_seed.png` | semilla de loto (botín, contador y árbol) | sello 莲 | listo |
-| ❌ falta | `assets/art/ui/reward_chest.png` | cofre del botín | cofre dibujado con 赏 | listo |
+| ✅ propio | `assets/art/ui/lotus_seed.png` | semilla de loto (botín, contador y árbol) | sello 莲 | — |
+| ✅ propio | `assets/art/ui/reward_chest.png` | cofre del botín | cofre dibujado con 赏 | — |
 | ❌ falta | `assets/art/stages/qianyunshan/map_node_stone.png` | textura de los sellos del mapa (opcional) | disco con degradado | no |
 
 ## npc
@@ -84,7 +84,7 @@ Total: 61 · ✅ 43 · 🎨 12 · ❌ 6
 | ✅ propio | `assets/art/enemies/fan.png` | fan (elite) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `fan` | `assets/art/enemies/fan_wind.png` | wind_lady (elite) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/lion.png` | lion (elite) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `lion` | `assets/art/enemies/lion_jade.png` | jade_lion (elite) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/lion_jade.png` | jade_lion (elite) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `lion` | `assets/art/enemies/lion_snow.png` | snow_lion (elite) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/monk.png` | monk (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/monk_iron.png` | iron_abbot (elite) | enemies/placeholder.png | — |

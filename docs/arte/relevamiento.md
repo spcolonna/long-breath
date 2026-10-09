@@ -2,7 +2,7 @@
 
 Qué hay, qué es prestado y qué falta, en orden de prioridad. **Antes de pedir o pasar un prompt, se mira acá**: si el archivo ya existe con arte propio, no se vuelve a generar. Cuando llega un archivo nuevo se actualiza esta tabla.
 
-Actualizado: 2026-10-08.
+Actualizado: 2026-10-09.
 
 **La lista exacta, archivo por archivo, está en [`checklist.md`](checklist.md)**, que genera `python3 tool/art_status.py` comparando lo que el código busca con lo que hay en `assets/art`. Ante cualquier duda, manda la checklist: se corre antes de pasar prompts y cada vez que llega arte.
 
@@ -20,7 +20,7 @@ Actualizado: 2026-10-08.
 | Enemigo | `enemies/<art>.png` | `placeholder.png` |
 | Héroe | `player/hero_<camino>.png` | vacío |
 
-Tramos (`_sceneFiles` en `combat_screen.dart`):
+Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 
 | Tramo | Etapa 1 | Etapa 2 | Etapa 3 |
 |---|---|---|---|
@@ -34,12 +34,13 @@ Tramos (`_sceneFiles` en `combat_screen.dart`):
 - **Etapa 1:** `combat_bg` más sus 4 tramos, `map_bg`, `fountain_bg`, `shrine_bg` y `school_wall`.
 - **Etapa 2:** `combat_bg`, `map_bg` y `fountain_bg`.
 - **Etapa 3:** `combat_bg` y `map_bg`.
-- **UI:** `stage_clear_bg`.
+- **UI:** `stage_clear_bg`, `lotus_seed` (semilla de loto) y `reward_chest` (cofre del botín).
 - **NPC:** `master` y `merchant`.
 - **Héroe:** `hero.png`. Los 4 caminos salen de él por recoloreo, que es así por diseño (`tool/recolor_hero.py`).
 - **Enemigos:**
   - etapa 1: dummy, bat, salamander, golem, disciple, bandit, lingzhi, monkey, monk, lion, fan y dragon;
-  - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3).
+  - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3);
+  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade) y `dragon_azure` (Dragón Dormido).
 
 ## Reserva de recoloreos
 
@@ -49,24 +50,20 @@ Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda 
 
 ### 1. Enemigos de las etapas 2 y 3: hoy son recoloreos
 
-Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en `tool/recolor_enemies.py`). El arte propio **reemplaza el archivo con el mismo nombre**, y después hay que borrar su entrada de `VARIANTS` para que el script no lo pise. Los prompts están en `prompts.md` §7. **Ojo:** el Dragón Dormido y el Abad necesitan un prompt nuevo, porque los anteriores dieron `dragon_dream` y `bell_keeper`.
+Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en `tool/recolor_enemies.py`). El arte propio **reemplaza el archivo con el mismo nombre**, y después hay que borrar su entrada de `VARIANTS` para que el script no lo pise. Los prompts están en `prompts.md` §7.
 
 | Orden | Archivo | Enemigo | Rol | Sale de |
 |---|---|---|---|---|
-| 1 | `dragon_azure.png` | Dragón Dormido | jefe final | dragon (prompt nuevo listo; el recoloreo actual ya está copiado como `dragon_reflection.png`, el élite Reflejo del Dragón) |
-| 2 | `monk_gold.png` | Abad de la Gran Campana | jefe etapa 2 | monk |
-| 3 | `monk_iron.png` | Abad de Hierro | élite etapa 2 | monk |
-| 4 | `lion_jade.png` | León de Jade | élite etapa 2 | lion |
-| 5 | `fan_wind.png` | Dama del Viento | élite etapa 3 | fan |
-| 6 | `lion_snow.png` | León de las Nieves | élite etapa 3 | lion |
-| 7 | `disciple_saffron.png` | Guardián del Pasadizo | común etapa 2 | disciple |
-| 8 | `golem_bronze.png` | Hombre de Bronce | común etapa 2 | golem |
-| 9 | `bat_bronze.png` | Murciélago del Campanario | común etapa 2 | bat |
-| 10 | `salamander_ash.png` | Salamandra de Ceniza | común etapa 2 | salamander |
-| 11 | `disciple_wind.png` | Discípulo del Viento | común etapa 3 | disciple |
-| 12 | `golem_ice.png` | Gólem de Escarcha | común etapa 3 | golem |
-| 13 | `monkey_snow.png` | Simio de las Nieves | común etapa 3 | monkey |
-| 14 | `bat_frost.png` | Murciélago de Escarcha | común etapa 3 | bat |
+| 1 | `fan_wind.png` | Dama del Viento | élite etapa 3 | fan |
+| 2 | `lion_snow.png` | León de las Nieves | élite etapa 3 | lion |
+| 3 | `disciple_saffron.png` | Guardián del Pasadizo | común etapa 2 | disciple |
+| 4 | `golem_bronze.png` | Hombre de Bronce | común etapa 2 | golem |
+| 5 | `bat_bronze.png` | Murciélago del Campanario | común etapa 2 | bat |
+| 6 | `salamander_ash.png` | Salamandra de Ceniza | común etapa 2 | salamander |
+| 7 | `disciple_wind.png` | Discípulo del Viento | común etapa 3 | disciple |
+| 8 | `golem_ice.png` | Gólem de Escarcha | común etapa 3 | golem |
+| 9 | `monkey_snow.png` | Simio de las Nieves | común etapa 3 | monkey |
+| 10 | `bat_frost.png` | Murciélago de Escarcha | común etapa 3 | bat |
 
 ### 2. Fondos que el juego ya busca y no existen
 
