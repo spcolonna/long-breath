@@ -1379,6 +1379,42 @@ brush strokes, serene and triumphant mood. NOT dark, NOT busy, no clouds sea, no
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
+#### Semilla de loto (`ui/lotus_seed.png`)
+
+`assets/art/ui/lotus_seed.png`. 512×512 cuadrado, fondo transparente. Ícono de la moneda permanente: se ve a 16–40 px en el contador y a ~120 px en el botín, así que la silueta tiene que leerse chiquita. Paleta propia rosa loto y verde semilla, para no confundirse con el jade.
+
+```
+Single game currency icon, square 1:1, centered, transparent background: one open lotus seed pod
+seen at a gentle three-quarter angle from above, a round flat-topped pod in fresh celadon green
+with five plump seeds peeking out of its holes, two soft pink lotus petals curling around the
+base like a cradle, one tiny dewdrop catching light. Chunky simple shape, thick clean outline,
+bold readable silhouette even at 24 pixels, soft top-left morning light with a small warm
+highlight, gentle rim glow.
+Style: polished mobile game icon painted in Chinese watercolor, pastel pink (#F4A6B8) and lotus
+rose (#E26D8F) petals, celadon (#9CCFA8) and fresh green (#4FAE6B) pod, tiny gold (#E59A12)
+sparkle, cream highlights (#F6EEDC). Bright, cute and precious. NOT dark, no black outline
+heavy shadows, no background, no frame, no text, no watermark, no photorealism.
+```
+
+#### Cofre del botín (`ui/reward_chest.png`)
+
+`assets/art/ui/reward_chest.png`. 1024×1024 cuadrado, fondo transparente. Se muestra a ~200 px y el juego lo hace temblar y abrirse con un destello, así que va cerrado y de frente. El centro de la tapa queda liso: el juego estampa encima el sello 赏.
+
+```
+Single treasure chest object, square 1:1, centered, transparent background: a small closed
+Chinese lacquered treasure box seen straight from the front and slightly above, rounded
+domed lid, glossy vermilion lacquer body with soft gold corner caps and a gold lotus-shaped
+clasp at the front, thin gold cloud-pattern trim along the edges, the flat center of the lid
+left plain and empty, a red silk tassel hanging from the clasp, a faint warm golden glow
+leaking from the seam under the lid as if something precious waits inside. Compact chunky
+proportions, clean bold silhouette, soft bright daylight from the top-left.
+Style: polished mobile game prop painted in Chinese watercolor and ink, vermilion (#E8453C),
+gold (#E59A12) and warm cream highlights (#F6EEDC), one small jade green (#1FA38A) gem on the
+clasp, soft gradients, gentle watercolor bleeds, cheerful and premium. NOT dark, NOT wooden
+brown, no black shadows, no background, no characters, no text or characters on the lid, no
+watermark, no photorealism.
+```
+
 ---
 
 ## Pendiente
