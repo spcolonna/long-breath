@@ -70,7 +70,14 @@ void main() {
     expect(floors[9].types.keys, [NodeType.fountain]);
     expect(floors.last.enemies, ['dragon']);
     expect(data.balance.jadeElite, 0, reason: 'la élite paga con un talismán');
-    expect(floors[1].types.keys, contains(NodeType.merchant));
+    // El mercader aparece en el camino, no en el mapa.
+    for (final st in data.balance.stages) {
+      for (final f in st.floors) {
+        expect(f.types.keys, isNot(contains(NodeType.merchant)));
+      }
+    }
+    expect(data.balance.merchantEvery, greaterThan(0));
+    expect(floors[3].packs.keys, contains(2));
   });
 
   test('tres etapas de 11 pisos, cada una con élite, fuente y jefe', () {

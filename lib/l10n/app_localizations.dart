@@ -724,6 +724,18 @@ abstract class AppLocalizations {
   /// **'Guardián'**
   String get rankBoss;
 
+  /// No description provided for @waveOf.
+  ///
+  /// In es, this message translates to:
+  /// **'{index} de {total}'**
+  String waveOf(int index, int total);
+
+  /// No description provided for @merchantWandering.
+  ///
+  /// In es, this message translates to:
+  /// **'Un mercader ambulante se cruza en el camino'**
+  String get merchantWandering;
+
   /// No description provided for @fountainNode.
   ///
   /// In es, this message translates to:
@@ -2209,7 +2221,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el mercader y el maestro errante.'**
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos y el maestro errante. Algunos combates traen un grupo: cuando cae uno, entra el siguiente.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.
@@ -2821,7 +2833,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlideShop.
   ///
   /// In es, this message translates to:
-  /// **'Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.'**
+  /// **'Cada combate ganado te da jade (玉); el élite, más. Cada tantos combates se cruza un mercader ambulante: ahí lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.'**
   String get lesClimbSlideShop;
 
   /// No description provided for @effChain.

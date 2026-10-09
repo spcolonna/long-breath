@@ -218,6 +218,9 @@ class FightLog {
   final EnemyRank rank;
   bool won = false;
   int turns = 0, hpLost = 0, forms = 0, deflects = 0, staggers = 0, plays = 0;
+
+  /// Enemigos del combate (1 = solo; más = grupo que entra de a uno).
+  int pack = 1;
   final stanceUse = <Stance, int>{};
 }
 
@@ -280,8 +283,10 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     int stage = 0,
     int? maxHp,
     Iterable<String>? forms,
-    List<String> awakenings = const []}) {
-  final log = FightLog(enemy, engine.data.enemy(enemy).rank);
+    List<String> awakenings = const [],
+    List<String> waves = const []}) {
+  final log = FightLog(enemy, engine.data.enemy(enemy).rank)
+    ..pack = 1 + waves.length;
   var s = engine
       .start(
           deck: deck,
@@ -295,7 +300,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           maxHp: maxHp,
           forms: forms,
           talismans: talismans,
-          awakenings: awakenings)
+          awakenings: awakenings,
+          waves: waves)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
@@ -352,14 +358,15 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.combat:
         final (cs, next) = runEngine.combatSeed(r);
         r = next;
-        final enemy = runEngine.enemyOf(r);
+        final pack = runEngine.packOf(r);
+        final enemy = pack.first;
         if (r.node(r.currentNode!).next.isEmpty &&
             runEngine.isLastStage(r)) {
           log.hpAtBoss = r.hp;
         }
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
-            awakenings: r.awakenings, stage: r.stage);
+            awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1));
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán

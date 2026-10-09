@@ -155,6 +155,21 @@ class _MapNodeState extends ConsumerState<MapNode>
                     ),
                   ),
                 ),
+                // Grupo: un punto por enemigo, colgado del sello.
+                if (widget.node.waves.isNotEmpty)
+                  Positioned(
+                    top:
+                        sealCenter.dy -
+                        look.size / 2 -
+                        6 +
+                        (available ? -3 - 3 * math.sin(phase) : 0),
+                    left: sealCenter.dx + look.size / 2 - 12,
+                    child: _PackPips(
+                      count: 1 + widget.node.waves.length,
+                      color: look.color,
+                      dim: !available,
+                    ),
+                  ),
                 Positioned(
                   top: sealCenter.dy + look.size / 2 + 6,
                   child: child!,
@@ -164,6 +179,44 @@ class _MapNodeState extends ConsumerState<MapNode>
           },
           child: _Ribbon(label: label, strong: available, color: look.color),
         ),
+      ),
+    );
+  }
+}
+
+/// Cuántos enemigos trae el combate: puntos de tinta en una plaquita.
+class _PackPips extends StatelessWidget {
+  const _PackPips({
+    required this.count,
+    required this.color,
+    required this.dim,
+  });
+
+  final int count;
+  final Color color;
+  final bool dim;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = dim ? color.withValues(alpha: 0.5) : color;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+      decoration: BoxDecoration(
+        color: Palette.surface,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: c, width: 1.4),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < count; i++)
+            Container(
+              margin: EdgeInsets.only(left: i == 0 ? 0 : 3),
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: c),
+            ),
+        ],
       ),
     );
   }

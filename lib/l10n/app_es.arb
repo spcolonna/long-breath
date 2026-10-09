@@ -276,6 +276,18 @@
   "heightLow": "bajo",
   "rankElite": "Élite",
   "rankBoss": "Guardián",
+  "waveOf": "{index} de {total}",
+  "@waveOf": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "merchantWandering": "Un mercader ambulante se cruza en el camino",
   "fountainNode": "Fuente",
   "intentAttack": "Ataque {height}",
   "@intentAttack": {
@@ -692,7 +704,7 @@
   "lesClimbSlide1Title": "La montaña",
   "lesClimbSlide1": "La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre, decidís vos. Cada subida arma un mapa distinto: deslizá para verlo entero.",
   "lesClimbSlide2Title": "Los lugares del mapa",
-  "lesClimbSlide2": "Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el mercader y el maestro errante.",
+  "lesClimbSlide2": "Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos y el maestro errante. Algunos combates traen un grupo: cuando cae uno, entra el siguiente.",
   "lesClimbSlide3Title": "Después de cada combate",
   "lesClimbSlide3": "Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.",
   "lesClimbSlide4Title": "Vida y Estructura",
@@ -837,7 +849,7 @@
   "masterUpgraded": "¡{name} +{n}!",
   "@masterUpgraded": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
   "lesClimbSlideShopTitle": "Jade, mercader y maestro",
-  "lesClimbSlideShop": "Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.",
+  "lesClimbSlideShop": "Cada combate ganado te da jade (玉); el élite, más. Cada tantos combates se cruza un mercader ambulante: ahí lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.",
   "effChain": "+{n} de daño por cada ataque que ya jugaste en el turno",
   "@effChain": {"placeholders": {"n": {"type": "int"}}},
   "effRetained": "Si la retuviste, +{n} de daño",

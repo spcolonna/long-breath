@@ -539,7 +539,7 @@ void main() {
 
   group('dificultad', () {
     CombatState start(
-      Difficulty d, {
+      Difficulty? d, {
       int pico = 0,
       String enemy = 'salamander',
     }) => engine
@@ -558,8 +558,8 @@ void main() {
         )
         .state;
 
-    test('Normal deja los números de los datos', () {
-      final s = start(Difficulty.normal);
+    test('sin dificultad (lecciones) quedan los números de los datos', () {
+      final s = start(null);
       expect(s.enemy.maxHp, 63);
       expect(
         engine.intentView(s).damage,
@@ -567,36 +567,48 @@ void main() {
       );
     });
 
+    test('Normal aplica sus porcentajes', () {
+      final n = data.balance.difficulty(Difficulty.normal);
+      final s = start(Difficulty.normal);
+      expect(s.enemy.maxHp, (63 * n.enemyHp / 100).round());
+      expect(
+        engine.intentView(s).damage,
+        (engine.intentView(start(null)).damage * n.enemyDamage / 100).round(),
+      );
+    });
+
     test('los Picos se acumulan y separan por rango', () {
       // Pico 1: solo las élites.
-      expect(start(Difficulty.normal, pico: 1).enemy.maxHp, 63);
+      expect(start(null, pico: 1).enemy.maxHp, 63);
       expect(
-        start(Difficulty.normal, pico: 1, enemy: 'monk').enemy.maxHp,
+        start(null, pico: 1, enemy: 'monk').enemy.maxHp,
         (128 * 1.15).round(),
       );
       // Pico 6: daño del 4 y Estructura del 6, sin tocar la Vida común.
-      final s = start(Difficulty.normal, pico: 6);
+      final s = start(null, pico: 6);
       expect(s.enemy.maxHp, 63);
       expect(s.enemy.maxStructure, (14 * 1.1).round());
       expect(
         engine.intentView(s).damage,
-        (engine.intentView(start(Difficulty.normal)).damage * 1.05).round(),
+        (engine.intentView(start(null)).damage * 1.05).round(),
       );
       // Pico 10 sobre las reglas anteriores: jefe +10 +10 +8.
       expect(
-        start(Difficulty.normal, pico: 10, enemy: 'dragon').enemy.maxHp,
+        start(null, pico: 10, enemy: 'dragon').enemy.maxHp,
         (150 * 1.28).round(),
       );
     });
 
     test('Shifu sube Vida, Estructura y daño enemigos', () {
-      final normal = start(Difficulty.normal);
+      final base = start(null);
+      final d = data.balance.difficulty(Difficulty.shifu);
       final s = start(Difficulty.shifu);
-      expect(s.enemy.maxHp, (63 * 1.14).round());
-      expect(s.enemy.maxStructure, (14 * 1.06).round());
+      expect(s.enemy.maxHp, (63 * d.enemyHp / 100).round());
+      expect(s.enemy.maxStructure, (14 * d.enemyStructure / 100).round());
+      expect(d.enemyHp, greaterThan(100));
       expect(
         engine.intentView(s).damage,
-        (engine.intentView(normal).damage * 1.14).round(),
+        (engine.intentView(base).damage * d.enemyDamage / 100).round(),
       );
     });
   });
@@ -908,6 +920,75 @@ void main() {
       final fresh = dmg(s, 'tan_tui');
       s = endTurn(s, [uidOf(s, 'tan_tui')]).state;
       expect(dmg(s, 'tan_tui'), fresh + 6);
+    });
+  });
+
+  group('oleadas', () {
+    CombatState pack(List<String> waves, {String lead = 'salamander'}) =>
+        engine
+            .start(
+              deck: [
+                for (final (i, id)
+                    in ['gongbu_chongquan', 'gongbu_chongquan', ...filler]
+                        .indexed)
+                  CombatCard(uid: i, cardId: id),
+              ],
+              enemyId: lead,
+              waves: waves,
+              style: Style.crane,
+              playerHp: 50,
+              seed: 1,
+              shuffle: false,
+            )
+            .state;
+
+    test('sin grupo es igual que siempre', () {
+      final s = pack(const []);
+      expect(s.enemy.hp, 63);
+      expect(s.reserve, isEmpty);
+      expect(s.waveCount, 1);
+    });
+
+    test('en grupo cada uno trae menos Vida', () {
+      final s = pack(['bat']);
+      expect(s.waveCount, 2);
+      expect(s.enemy.maxHp, (63 * 0.7).round());
+      expect(s.reserve.single.maxHp, (53 * 0.7).round());
+      expect(pack(['bat', 'golem']).enemy.maxHp, (63 * 0.58).round());
+    });
+
+    test('al caer uno entra el siguiente; la victoria es con el último', () {
+      var s = pack(['bat']);
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 1));
+      final hand = s.hand.length;
+      final r = play(s, 'gongbu_chongquan');
+      s = r.state;
+      expect(r.events.whereType<Victory>(), isEmpty);
+      expect(r.events.whereType<EnemyDefeated>().single.enemyId, 'salamander');
+      final w = r.events.whereType<WaveStarted>().single;
+      expect((w.enemyId, w.index, w.total), ('bat', 2, 2));
+      expect(s.isOver, isFalse);
+      expect(s.enemy.id, 'bat');
+      expect(s.enemy.hp, s.enemy.maxHp, reason: 'el que entra no recibe el resto');
+      expect(s.wave, 1);
+      expect(s.reserve, isEmpty);
+      // El jugador conserva todo: Vida, mano, postura y Aliento.
+      expect(s.player.hp, 50);
+      expect(s.hand.length, hand - 1);
+      expect(s.player.stance, Stance.gongbu);
+      expect(s.discard.map((c) => c.cardId), contains('gongbu_chongquan'));
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 1));
+      final last = play(s, 'gongbu_chongquan');
+      expect(last.events.whereType<Victory>(), hasLength(1));
+      expect(last.state.phase, CombatPhase.won);
+    });
+
+    test('las espinas del que cae no lastiman en el recambio', () {
+      var s = pack(['bat'], lead: 'bronze_man');
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 1));
+      final r = play(s, 'gongbu_chongquan');
+      expect(r.events.whereType<ThornsHurt>(), isEmpty);
+      expect(r.state.player.hp, 50);
     });
   });
 }

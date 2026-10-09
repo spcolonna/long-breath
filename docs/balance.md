@@ -522,3 +522,20 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
 
   A unos 40 minutos por subida, el último reino llega en unas 8 horas de juego para el promedio.
 
+### 3n. Grupos, mercader ambulante y Normal para el experto (09/10/2026)
+- **Por qué:** en la primera subida real el usuario pasó la etapa 1 sin conocer combos. Un nodo era un solo enemigo, de 11 pisos solo 3 obligaban a pelear y se podían encadenar mercaderes. El bot promedio juega peor que una persona que lee las intenciones.
+- **Cambios:**
+  - Pisos 2 a 8: combate 4–5 / evento 2 / maestro 1, sin mercader.
+  - Grupos (`floors[].packs`): E1 `{1:3, 2:2}`, E2 `{1:2, 2:2, 3:1}`, E3 `{1:1, 2:2, 3:1}`. Solo comunes que no huyen. `run.packs.hpPct` [100, 70, 58] y `jadePerExtra` 5.
+  - Mercader ambulante (`run.wanderingMerchant`): cada 3 ± 1 combates ganados, o tras el élite si la etapa no tuvo ninguno. Sale ~4 veces por run para el promedio y ~5 para el experto.
+- **Calibración nueva:** Normal se mide con el **experto ~60%**, no con el promedio. Las lecciones (y los tests) corren sin dificultad: `difficulty: null`.
+- **Resultados (1000 runs):**
+
+  | Dificultad | Vida | Fuente | Enemigos (Vida/daño) | novato | promedio | experto |
+  |---|---|---|---|---|---|---|
+  | Fácil | 60 | 25 | 104 / 104 | 0% | 64% | 86% |
+  | Normal | 50 | 20 | 106 / 105 | 0% | 33% | 62% |
+  | Difícil | 50 | 15 | 111 / 111 | 0% | 16% | 43% |
+  | Shifu | 45 | 15 | 112 / 111 (+6% Estructura) | 0% | 7% | 24% |
+
+  Una subida completa dura ~55 min (antes ~45).

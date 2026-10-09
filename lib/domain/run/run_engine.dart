@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import '../combat/combat_state.dart';
+import '../model/enemy_def.dart';
 import '../model/enums.dart';
 import '../model/event_def.dart';
 import '../model/game_balance.dart';
@@ -55,7 +56,20 @@ class RunEngine {
 
   (List<MapNodeDef>, Rng) _stageMap(int stage, Rng rng) {
     final st = data.balance.stages[stage];
-    return generateMap(st.floors, rng, scenes: st.scenes, lights: st.lights);
+    return generateMap(
+      st.floors,
+      rng,
+      scenes: st.scenes,
+      lights: st.lights,
+      packable: packable,
+    );
+  }
+
+  /// Puede ir en grupo: los comunes que no se escapan.
+  bool packable(String id) {
+    final e = data.enemy(id);
+    return e.rank == EnemyRank.common &&
+        !e.phases.any((p) => p.pattern.any((i) => i.kind == IntentKind.flee));
   }
 
   /// Etapa que recorre la run.
@@ -77,10 +91,45 @@ class RunEngine {
   /// el camino ofrece sus despertares.
   RunState _leaveReward(RunState r) {
     final phase = _afterReward(r);
+    if (phase == RunPhase.map && _merchantDue(r)) return _wanderingMerchant(r);
     if (phase != RunPhase.stageClear) return r.copyWith(phase: phase);
     final (options, rng) = _rollAwakenings(r);
     return r.copyWith(phase: phase, awakeningOptions: options, rng: rng);
   }
+
+  /// Toca el mercader ambulante: se ganaron sus combates, o se venció al
+  /// élite y en la etapa todavía no hubo ninguno. Nunca después del jefe.
+  bool _merchantDue(RunState r) {
+    final every = data.balance.merchantEvery;
+    if (every <= 0 || r.currentNode == null || _atStageBoss(r)) return false;
+    if (r.node(r.currentNode!).type != NodeType.combat) return false;
+    final due = r.nextMerchantAt > 0 ? r.nextMerchantAt : every;
+    if (r.combatsSinceMerchant >= due) return true;
+    return r.stageMerchants == 0 &&
+        data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+  }
+
+  /// Un mercader en el camino: la tienda se abre sin nodo propio y, al
+  /// salir, se vuelve al mapa.
+  RunState _wanderingMerchant(RunState r) {
+    final b = data.balance;
+    final (roll, rng) = r.rng.nextInt(b.merchantSpread * 2 + 1);
+    return _rollShop(
+      r.copyWith(
+        phase: RunPhase.merchant,
+        combatsSinceMerchant: 0,
+        nextMerchantAt: math.max(1, b.merchantEvery - b.merchantSpread + roll),
+        stageMerchants: r.stageMerchants + 1,
+        rng: rng,
+      ),
+    );
+  }
+
+  /// El mercader actual está en el camino (no es un nodo del mapa).
+  bool isWanderingMerchant(RunState r) =>
+      r.phase == RunPhase.merchant &&
+      (r.currentNode == null ||
+          r.node(r.currentNode!).type != NodeType.merchant);
 
   /// Despertares del camino que la run todavía no aprendió.
   List<String> missingAwakenings(RunState r) => [
@@ -111,6 +160,7 @@ class RunEngine {
       awakenings: [...r.awakenings, ?awakening],
       awakeningOptions: const [],
       stage: r.stage + 1,
+      stageMerchants: 0,
       hp: r.hp + stageHealOf(r),
       map: map,
       rng: rng,
@@ -158,7 +208,15 @@ class RunEngine {
       },
     );
     if (n.type == NodeType.event) return _rollEvent(entered);
-    if (n.type == NodeType.merchant) return _rollShop(entered);
+    if (n.type == NodeType.merchant) {
+      // Mapas guardados antes del mercader ambulante: cuenta como uno.
+      return _rollShop(
+        entered.copyWith(
+          combatsSinceMerchant: 0,
+          stageMerchants: entered.stageMerchants + 1,
+        ),
+      );
+    }
     if (n.type == NodeType.master) return _rollMaster(entered);
     if (n.type != NodeType.shrine) return entered;
     final (shuffled, rng) = entered.rng.shuffle([
@@ -188,6 +246,12 @@ class RunEngine {
 
   String enemyOf(RunState r) => r.node(r.currentNode!).enemy!;
 
+  /// Enemigos del combate actual, en el orden en que entran.
+  List<String> packOf(RunState r) {
+    final n = r.node(r.currentNode!);
+    return [n.enemy!, ...n.waves];
+  }
+
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
   /// lo venciste). Escapado no deja jade.
   RunState finishCombat(
@@ -211,9 +275,13 @@ class RunEngine {
       final lost = math.min(r.jade, fledWith);
       r = r.copyWith(jade: r.jade - lost, jadeGained: -lost);
     } else {
-      final (jade, rngJ) = _rollJade(r);
+      final (rolled, rngJ) = _rollJade(r);
+      // Cada enemigo de más en el grupo suma jade.
+      final jade = rolled +
+          data.balance.packJade * r.node(r.currentNode!).waves.length;
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
+    r = r.copyWith(combatsSinceMerchant: r.combatsSinceMerchant + 1);
     final healed = math.min(r.maxHp, hp + talismanSum(r, (e) => e.winHeal));
     final (options, rng) =
         _rollRewards(r.rng, r, data.balance.rewardChoices);

@@ -10,19 +10,23 @@ const _oncePerFloor = {
 };
 
 /// Tipos que tienen que aparecer al menos una vez en el mapa si algún piso
-/// los permite (así toda subida tiene mercader y maestro).
-const _required = [NodeType.merchant, NodeType.master];
+/// los permite (así toda subida tiene maestro). El mercader ya no va en el
+/// mapa: aparece en el camino cada tantos combates (ver RunEngine).
+const _required = [NodeType.master];
 
 /// Arma el mapa de una subida con la semilla de la run, piso por piso.
 ///
 /// Reglas: cada piso que permite combates tiene al menos uno; los
 /// enemigos no se repiten dentro de un piso; los caminos no se cruzan.
 /// Cada combate lleva un escenario (sin repetir en el piso) y una luz.
+/// Los combates pueden traer un grupo (`packs` del piso) de los enemigos
+/// [packable]: los que esperan entran de a uno cuando cae el anterior.
 (List<MapNodeDef>, Rng) generateMap(
   List<FloorDef> floors,
   Rng rng, {
   List<String> scenes = const [],
   List<String> lights = const [],
+  bool Function(String enemy)? packable,
 }) {
   final types = <List<NodeType>>[];
   for (final f in floors) {
@@ -70,17 +74,25 @@ const _required = [NodeType.merchant, NodeType.master];
 
   // Mezcla las posiciones y reparte enemigos y escenarios sin repetir
   // dentro del piso.
-  final rows = <List<(NodeType, String?, String?, String?)>>[];
+  final rows = <List<(NodeType, String?, String?, String?, List<String>)>>[];
   for (var f = 0; f < floors.length; f++) {
     final (shuffled, r1) = rng.shuffle(types[f]);
     final (enemies, r2) = r1.shuffle(floors[f].enemies);
     final (places, r3) = r2.shuffle(scenes);
     rng = r3;
     var e = 0;
-    final row = <(NodeType, String?, String?, String?)>[];
+    final row = <(NodeType, String?, String?, String?, List<String>)>[];
+    final packs = {
+      for (final p in floors[f].packs.entries)
+        if (p.value > 0) p.key: p.value,
+    };
+    final followers = [
+      for (final id in floors[f].enemies)
+        if (packable?.call(id) ?? false) id,
+    ];
     for (final t in shuffled) {
       if (t != NodeType.combat) {
-        row.add((t, null, null, null));
+        row.add((t, null, null, null, const []));
         continue;
       }
       String? light;
@@ -92,12 +104,24 @@ const _required = [NodeType.merchant, NodeType.master];
       final scene =
           floors[f].scene ??
           (places.isEmpty ? null : places[e % places.length]);
-      row.add((
-        t,
-        enemies.isEmpty ? null : enemies[e % enemies.length],
-        scene,
-        light,
-      ));
+      final lead = enemies.isEmpty ? null : enemies[e % enemies.length];
+      final waves = <String>[];
+      if (lead != null &&
+          packs.length > 1 &&
+          followers.isNotEmpty &&
+          (packable?.call(lead) ?? false)) {
+        final (size, r5) = _weighted(rng, packs);
+        rng = r5;
+        // Los que acompañan: sin repetir al que encabeza si se puede.
+        final others = followers.where((x) => x != lead).toList();
+        final from = others.isEmpty ? followers : others;
+        for (var k = 1; k < size; k++) {
+          final (pick, r6) = rng.nextInt(from.length);
+          rng = r6;
+          waves.add(from[pick]);
+        }
+      }
+      row.add((t, lead, scene, light, waves));
       e++;
     }
     rows.add(row);
@@ -115,6 +139,7 @@ const _required = [NodeType.merchant, NodeType.master];
           id: _id(f, i),
           type: rows[f][i].$1,
           enemy: rows[f][i].$2,
+          waves: rows[f][i].$5,
           scene: rows[f][i].$3,
           light: rows[f][i].$4,
           next: [for (final j in next.$1[i]) _id(f + 1, j)],
@@ -137,7 +162,7 @@ int _slot(List<NodeType> row) {
 
 String _id(int floor, int i) => 'f${floor + 1}${String.fromCharCode(97 + i)}';
 
-(NodeType, Rng) _weighted(Rng rng, Map<NodeType, int> pool) {
+(T, Rng) _weighted<T>(Rng rng, Map<T, int> pool) {
   final total = pool.values.fold(0, (a, b) => a + b);
   final (roll, next) = rng.nextInt(total);
   var acc = 0;

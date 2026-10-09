@@ -186,6 +186,8 @@ class CombatState {
     this.retained = const [],
     this.drawPenalty = 0,
     this.awakened = AwakeningEffect.none,
+    this.reserve = const [],
+    this.wave = 0,
   });
 
   final int turn;
@@ -245,6 +247,15 @@ class CombatState {
   /// Despertares del camino sumados (los que cambian la regla en combate).
   final AwakeningEffect awakened;
 
+  /// Enemigos que esperan su turno en este nodo (oleadas), en orden.
+  final List<EnemyCombat> reserve;
+
+  /// Oleada actual (0 = el primero del grupo).
+  final int wave;
+
+  /// Enemigos del grupo: los caídos, el actual y los que esperan.
+  int get waveCount => wave + 1 + reserve.length;
+
   /// Copia con jugador o enemigo reemplazados (tests y herramientas).
   CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
       CombatState(
@@ -282,6 +293,8 @@ class CombatState {
         retained: retained,
         drawPenalty: drawPenalty,
         awakened: awakened,
+        reserve: reserve,
+        wave: wave,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

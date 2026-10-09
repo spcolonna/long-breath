@@ -397,6 +397,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rankBoss => 'Guardián';
 
   @override
+  String waveOf(int index, int total) {
+    return '$index de $total';
+  }
+
+  @override
+  String get merchantWandering => 'Un mercader ambulante se cruza en el camino';
+
+  @override
   String get fountainNode => 'Fuente';
 
   @override
@@ -1305,7 +1313,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el mercader y el maestro errante.';
+      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos y el maestro errante. Algunos combates traen un grupo: cuando cae uno, entra el siguiente.';
 
   @override
   String get lesClimbSlide3Title => 'Después de cada combate';
@@ -1710,7 +1718,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlideShop =>
-      'Cada combate ganado te da jade (玉); el élite, más. En el mercader lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.';
+      'Cada combate ganado te da jade (玉); el élite, más. Cada tantos combates se cruza un mercader ambulante: ahí lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.';
 
   @override
   String effChain(int n) {

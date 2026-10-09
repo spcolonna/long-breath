@@ -127,36 +127,52 @@ class CombatEngine {
     required int playerHp,
     required int seed,
     bool shuffle = true,
-    Difficulty difficulty = Difficulty.normal,
+    // Null = sin ajustes de dificultad: lecciones, muñecos y tests.
+    Difficulty? difficulty,
     int pico = 0,
     int stage = 0,
     int? maxHp,
     Iterable<String>? forms,
     List<String> talismans = const [],
     List<String> awakenings = const [],
+    List<String> waves = const [],
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
     final aw = b.awakeningsEffect(awakenings);
-    final enemy = data.enemy(enemyId);
-    final dif = b.difficulty(difficulty);
+    final dif = difficulty == null
+        ? const DifficultyDef(hanzi: '', playerHp: 0, fountainHeal: 0)
+        : b.difficulty(difficulty);
     // Los Picos se suman encima de la dificultad.
     final pm = b.picoMods(pico) +
         (stage < b.stages.length ? b.stages[stage].enemyMods : const PicoDef());
-    final rankHp = pm.enemyHp +
-        switch (enemy.rank) {
-          EnemyRank.common => pm.commonHp,
-          EnemyRank.elite => pm.eliteHp,
-          EnemyRank.boss => pm.bossHp,
-        };
     int pct(int v, int p, [int extra = 0]) =>
         (v * p * (100 + extra) / 10000).round();
-    final enemyHp = pct(enemy.hp, dif.enemyHp, rankHp);
-    final enemyStructure =
-        pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
     final effects = [for (final id in talismans) data.talisman(id).effect];
     int sum(int Function(TalismanEffect e) of) =>
         effects.fold(0, (a, e) => a + of(e));
+    // En un grupo cada enemigo trae menos Vida: si no, el nodo dura el doble.
+    final packHp = b.packHpPct(1 + waves.length);
+    _EnemyDraft spawn(String id) {
+      final enemy = data.enemy(id);
+      final rankHp = pm.enemyHp +
+          switch (enemy.rank) {
+            EnemyRank.common => pm.commonHp,
+            EnemyRank.elite => pm.eliteHp,
+            EnemyRank.boss => pm.bossHp,
+          };
+      final hp = pct(pct(enemy.hp, dif.enemyHp, rankHp), packHp);
+      final structure =
+          pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
+      return _EnemyDraft(
+        id: enemy.id,
+        hp: math.max(1, hp - sum((e) => e.enemyHp)),
+        maxHp: hp,
+        structure: math.max(1, structure - sum((e) => e.enemyStructure)),
+        maxStructure: structure,
+        scales: enemy.scales,
+      );
+    }
     final extraStructure = sum((e) => e.structure);
     final startStance = effects
             .map((e) => e.startStance)
@@ -180,14 +196,8 @@ class CombatEngine {
       guardHeight: null,
       stance: startStance,
       breath: 0,
-      enemy: _EnemyDraft(
-        id: enemy.id,
-        hp: math.max(1, enemyHp - sum((e) => e.enemyHp)),
-        maxHp: enemyHp,
-        structure: math.max(1, enemyStructure - sum((e) => e.enemyStructure)),
-        maxStructure: enemyStructure,
-        scales: enemy.scales,
-      ),
+      enemy: spawn(enemyId),
+      reserve: [for (final id in waves) spawn(id).freeze()],
       drawPile: [...shuffled],
       hand: [],
       discard: [],
@@ -248,7 +258,21 @@ class CombatEngine {
         d.pendingDiscard--;
         if (d.pendingDiscard == 0) d.phase = CombatPhase.playerTurn;
     }
+    if (d.enemyDown && !d.isOver) _nextWave(d, events);
     return CombatResult(d.freeze(), events);
+  }
+
+  /// Cayó un enemigo del grupo: entra el siguiente. El jugador conserva todo
+  /// (Vida, mano, postura, formas); se borra lo que dependía del caído.
+  void _nextWave(_Draft d, List<CombatEvent> events) {
+    final next = d.reserve.removeAt(0);
+    d.enemy = _EnemyDraft.of(next)
+      ..parryReady = data.enemy(next.id).parry > 0;
+    d.wave++;
+    d.enemyDown = false;
+    d.punishPending = false;
+    d.lastTurnEndStance = null;
+    events.add(WaveStarted(next.id, d.wave + 1, d.wave + 1 + d.reserve.length));
   }
 
   /// Devuelve el motivo por el que la acción no es válida, o null.
@@ -588,7 +612,7 @@ class CombatEngine {
     } else if (dmg > 0 || str > 0) {
       final staggered = d.enemy.staggered;
       _hitEnemy(d, dmg, str, events, def.type);
-      if (dmg > 0 && !staggered && !d.isOver) _thorns(d, events);
+      if (dmg > 0 && !staggered && !d.halted) _thorns(d, events);
     }
     if (d.isOver) return;
 
@@ -684,6 +708,9 @@ class CombatEngine {
     List<CombatEvent> events, [
     CardType? type,
   ]) {
+    // El enemigo ya cayó y el siguiente todavía no entró: el resto de la
+    // carta no le pega a nadie.
+    if (d.enemyDown) return;
     final e = d.enemy;
     final def = data.enemy(e.id);
     var taken = dmg == 0
@@ -700,6 +727,11 @@ class CombatEngine {
     e.structure -= strTaken;
     events.add(EnemyDamaged(taken, strTaken, absorbed: absorbed));
     if (e.hp == 0) {
+      if (d.reserve.isNotEmpty) {
+        d.enemyDown = true;
+        events.add(EnemyDefeated(e.id));
+        return;
+      }
       d.phase = CombatPhase.won;
       events.add(const Victory());
       return;
@@ -838,7 +870,7 @@ class CombatEngine {
           events.add(EnemyFled(e.stolen));
           return;
       }
-      if (def.wrath > 0 && !d.isOver) {
+      if (def.wrath > 0 && !d.halted) {
         e.wrath += def.wrath;
         events.add(EnemyEnraged(e.wrath));
       }
@@ -1082,6 +1114,8 @@ class _Draft {
     required this.breathesLeft,
     required this.formProgress,
     required this.rng,
+    List<EnemyCombat>? reserve,
+    this.wave = 0,
     this.nextTurnBreathMod = 0,
     this.dingbuUsed = false,
     this.turnStructureBonus = 0,
@@ -1103,7 +1137,8 @@ class _Draft {
     this.awakened = AwakeningEffect.none,
     List<int>? retained,
   }) : formsCompleted = formsCompleted ?? {},
-       retained = retained ?? [];
+       retained = retained ?? [],
+       reserve = reserve ?? [];
 
   factory _Draft.of(CombatState s) => _Draft(
     turn: s.turn,
@@ -1127,6 +1162,8 @@ class _Draft {
     breathesLeft: s.breathesLeft,
     formProgress: {...s.formProgress},
     rng: s.rng,
+    reserve: [...s.reserve],
+    wave: s.wave,
     nextTurnBreathMod: s.nextTurnBreathMod,
     dingbuUsed: s.dingbuUsed,
     turnStructureBonus: s.turnStructureBonus,
@@ -1162,7 +1199,12 @@ class _Draft {
   Height? guardHeight;
   Stance stance;
   int breath;
-  final _EnemyDraft enemy;
+  _EnemyDraft enemy;
+  final List<EnemyCombat> reserve;
+  int wave;
+
+  /// El enemigo cayó en esta acción y queda otro esperando.
+  bool enemyDown = false;
   final List<CombatCard> drawPile;
   final List<CombatCard> hand;
   final List<CombatCard> discard;
@@ -1192,6 +1234,9 @@ class _Draft {
   final List<int> retained;
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;
+
+  /// Ya no hay a quién pegarle en esta acción.
+  bool get halted => isOver || enemyDown;
 
   CombatState freeze() => CombatState(
     turn: turn,
@@ -1237,5 +1282,7 @@ class _Draft {
     retained: List.unmodifiable(retained),
     drawPenalty: drawPenalty,
     awakened: awakened,
+    reserve: List.unmodifiable(reserve),
+    wave: wave,
   );
 }

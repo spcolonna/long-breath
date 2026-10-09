@@ -68,11 +68,12 @@ class CombatController extends Notifier<CombatView?> {
 
   void start() {
     final runCtl = ref.read(runControllerProvider.notifier);
-    final (seed, enemy) = runCtl.beginCombat();
+    final (seed, pack) = runCtl.beginCombat();
     final run = ref.read(runControllerProvider)!;
     final r = engine.start(
       deck: run.deck,
-      enemyId: enemy,
+      enemyId: pack.first,
+      waves: pack.sublist(1),
       style: run.style,
       playerHp: run.hp,
       maxHp: run.maxHp,
