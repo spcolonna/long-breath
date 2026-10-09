@@ -60,6 +60,12 @@ void main() {
     r = run.enter(r, 'n3b');
     r = run.finishCombat(r, won: true, hp: 30);
     r = run.chooseReward(r, null);
+    // Tercer combate ganado: un mercader en el camino, sin nodo propio.
+    expect(r.phase, RunPhase.merchant);
+    expect(run.isWanderingMerchant(r), isTrue);
+    expect(r.shopCards, isNotEmpty);
+    r = run.leaveShop(r);
+    expect(r.combatsSinceMerchant, 0);
     expect(run.available(r), ['e2']);
     r = run.enter(r, 'e2');
     expect(r.phase, RunPhase.event);
@@ -237,9 +243,11 @@ void main() {
 
   test('la dificultad fija la Vida, la fuente y se guarda', () {
     var r = fresh(1, difficulty: Difficulty.easy);
-    expect(r.hp, 70);
-    expect(r.maxHp, 70);
-    expect(run.healOf(r), 30);
+    final easy = run.data.balance.difficulty(Difficulty.easy);
+    expect(easy.playerHp, greaterThan(50));
+    expect(r.hp, easy.playerHp);
+    expect(r.maxHp, easy.playerHp);
+    expect(run.healOf(r), easy.fountainHeal);
     r = RunState.fromJson(r.toJson());
     expect(r.difficulty, Difficulty.easy);
     // Las runs guardadas antes de las dificultades se leen como Normal.
@@ -428,14 +436,22 @@ void main() {
         expect(r.node(fountain.next.single).enemy, 'dragon');
         final elite = map.singleWhere((n) => n.next.contains(fountain.id));
         expect(['monk', 'lion', 'fan'], contains(elite.enemy));
-        // Siempre hay mercader y maestro.
-        expect(map.any((n) => n.type == NodeType.merchant), isTrue);
+        // Siempre hay maestro; el mercader ya no es un nodo del mapa.
+        expect(map.any((n) => n.type == NodeType.merchant), isFalse);
         expect(map.any((n) => n.type == NodeType.master), isTrue);
         for (final n in map) {
           if (n.type == NodeType.combat) {
             expect(run.data.enemies.containsKey(n.enemy), isTrue);
+            // Los grupos: solo comunes que no se escapan, de 2 o 3.
+            if (n.waves.isNotEmpty) {
+              expect(n.waves.length, lessThanOrEqualTo(2));
+              for (final id in [n.enemy!, ...n.waves]) {
+                expect(run.packable(id), isTrue, reason: id);
+              }
+            }
           } else {
             expect(n.enemy, isNull);
+            expect(n.waves, isEmpty);
           }
         }
         // Se puede llegar al jefe sin pasar dos veces por el mismo piso.
@@ -610,6 +626,74 @@ void main() {
       final all = run.learnableForms(fresh(4));
       final r = master(fresh(4).copyWith(knownForms: all));
       expect(r.masterForms, isEmpty);
+    });
+  });
+
+  group('mercader ambulante', () {
+    RunState winAt(RunState r, String node) {
+      r = run.enter(r, node);
+      r = run.finishCombat(r, won: true, hp: r.hp);
+      if (r.phase == RunPhase.talisman) {
+        r = run.chooseTalisman(r, r.talismanOptions.first);
+      }
+      return run.chooseReward(r, null);
+    }
+
+    test('el élite lo garantiza si la etapa no tuvo ninguno', () {
+      var r = fresh(5);
+      r = r.copyWith(currentNode: 'n4', visited: ['n1', 'n4']);
+      expect(r.stageMerchants, 0);
+      r = winAt(r, 'n5');
+      expect(r.phase, RunPhase.merchant);
+      expect(r.stageMerchants, 1);
+    });
+
+    test('nunca después del jefe', () {
+      var r = fresh(5).copyWith(combatsSinceMerchant: 9, stageMerchants: 1);
+      r = r.copyWith(currentNode: 'n5', visited: ['n1', 'n5']);
+      r = winAt(r, 'n6');
+      expect(r.phase, isNot(RunPhase.merchant));
+    });
+
+    test('un guardado viejo sin contadores carga, y su nodo de mercader anda',
+        () {
+      final old = fresh(5).copyWith(map: [
+        const MapNodeDef(id: 'm', type: NodeType.merchant, next: ['b']),
+        const MapNodeDef(
+            id: 'b', type: NodeType.combat, enemy: 'dragon', next: []),
+      ]);
+      final json = old.toJson()
+        ..remove('combatsSinceMerchant')
+        ..remove('nextMerchantAt')
+        ..remove('stageMerchants');
+      var r = RunState.fromJson(json);
+      expect(r.combatsSinceMerchant, 0);
+      expect(r.map.first.waves, isEmpty);
+      r = run.enter(r, 'm');
+      expect(r.phase, RunPhase.merchant);
+      expect(run.isWanderingMerchant(r), isFalse);
+      r = run.leaveShop(r);
+      expect(run.available(r), ['b']);
+    });
+
+    test('un grupo paga jade extra por cada enemigo de más', () {
+      final base = fresh(5).copyWith(map: [
+        const MapNodeDef(
+            id: 'g', type: NodeType.combat, enemy: 'bat', next: ['x']),
+        const MapNodeDef(
+            id: 'h',
+            type: NodeType.combat,
+            enemy: 'bat',
+            waves: ['golem'],
+            next: ['x']),
+        const MapNodeDef(
+            id: 'x', type: NodeType.combat, enemy: 'dragon', next: []),
+      ]);
+      final solo = run.finishCombat(run.enter(base, 'g'), won: true, hp: 40);
+      final group = run.finishCombat(run.enter(base, 'h'), won: true, hp: 40);
+      expect(run.packOf(run.enter(base, 'h')), ['bat', 'golem']);
+      expect(group.jadeGained - solo.jadeGained,
+          run.data.balance.packJade);
     });
   });
 }

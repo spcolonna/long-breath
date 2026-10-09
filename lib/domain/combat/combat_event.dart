@@ -178,6 +178,20 @@ class EnemyFled extends CombatEvent {
   final int stolen;
 }
 
+/// Cayó un enemigo del grupo y todavía quedan otros esperando.
+class EnemyDefeated extends CombatEvent {
+  const EnemyDefeated(this.enemyId);
+  final String enemyId;
+}
+
+/// Entra el siguiente enemigo del grupo ([index] de [total], desde 1).
+class WaveStarted extends CombatEvent {
+  const WaveStarted(this.enemyId, this.index, this.total);
+  final String enemyId;
+  final int index;
+  final int total;
+}
+
 class Victory extends CombatEvent {
   const Victory();
 }

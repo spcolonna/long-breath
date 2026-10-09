@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/model/game_balance.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
@@ -239,6 +240,21 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
+                    // Aparece en el camino, no en un lugar del mapa.
+                    if (run.currentNode == null ||
+                        run.node(run.currentNode!).type != NodeType.merchant)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          t.merchantWandering,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontStyle: FontStyle.italic,
+                            color: Palette.textDim,
+                          ),
+                        ),
+                      ),
                     _Section(t.merchantCards),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -26,6 +26,9 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 - **Bonus de "postura preparada":** un extra para las cartas que se juegan estando ya en la postura que indican. Recompensa todavía más el orden de la mano. Antes de sumarlo hay que medirlo en el simulador.
 - **Nuevas posturas:** Pūbù 仆步 (barrido bajo), Xiēbù 歇步 (cruzada, giro) y Dúlìbù 独立步 (grulla, sobre una pierna). Cada una con su ventaja y su costo, y con cartas que lleven a ella.
 
+### Combates
+- **Dos enemigos a la vez (1 contra 2).** Hoy un grupo entra de a uno (oleadas). El siguiente paso es que algunos nodos (élite con escolta, por ejemplo) traigan dos enemigos en escena: se elige a quién pegarle, se ven dos intenciones y las formas de área tienen sentido. La arena ya recibe una lista de `slots` (`combat_screen.dart`); falta apuntar, el turno enemigo doble y el balance.
+
 ### Caminos y cartas
 - **Cartas propias de la Serpiente y la Grulla.** Hoy solo el Tigre tiene cartas.
 - **Árbol por camino:** cada animal es una rama con cartas, formas y una mecánica propia:

@@ -38,11 +38,12 @@ class RunController extends Notifier<RunState?> {
 
   void enter(String nodeId) => _set(_engine.enter(state!, nodeId));
 
-  /// Devuelve la semilla y el enemigo del combate del nodo actual.
-  (int, String) beginCombat() {
+  /// Devuelve la semilla y los enemigos del combate del nodo actual (el
+  /// primero y los que entran después).
+  (int, List<String>) beginCombat() {
     final (seed, next) = _engine.combatSeed(state!);
     _set(next);
-    return (seed, _engine.enemyOf(next));
+    return (seed, _engine.packOf(next));
   }
 
   void finishCombat({required bool won, required int hp, int? fledWith}) {

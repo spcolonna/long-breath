@@ -125,6 +125,7 @@ class MapNodeDef {
     required this.type,
     required this.next,
     this.enemy,
+    this.waves = const [],
     this.scene,
     this.light,
   });
@@ -132,6 +133,9 @@ class MapNodeDef {
   final String id;
   final NodeType type;
   final String? enemy;
+
+  /// Enemigos que entran después de [enemy], uno por vez (grupo).
+  final List<String> waves;
   final List<String> next;
 
   /// Escenario del combate y la luz del momento (alba, niebla, ocaso): de
@@ -143,6 +147,7 @@ class MapNodeDef {
         id: j['id'] as String,
         type: NodeType.parse(j['type'] as String),
         enemy: j['enemy'] as String?,
+        waves: ((j['waves'] as List?) ?? const []).cast<String>(),
         next: (j['next'] as List).cast<String>(),
         scene: j['scene'] as String?,
         light: j['light'] as String?,
@@ -152,6 +157,7 @@ class MapNodeDef {
         'id': id,
         'type': type.name,
         if (enemy != null) 'enemy': enemy,
+        if (waves.isNotEmpty) 'waves': waves,
         'next': next,
         if (scene != null) 'scene': scene,
         if (light != null) 'light': light,
@@ -166,6 +172,7 @@ class FloorDef {
     required this.maxWidth,
     required this.types,
     this.enemies = const [],
+    this.packs = const {1: 1},
     this.scene,
   });
 
@@ -173,6 +180,9 @@ class FloorDef {
   final int maxWidth;
   final Map<NodeType, int> types;
   final List<String> enemies;
+
+  /// Peso de cada tamaño de grupo en los combates comunes ({1: 3, 2: 2}).
+  final Map<int, int> packs;
 
   /// Escenario fijo de los combates del piso (la cumbre del jefe); si no,
   /// sale al azar de [GameBalance.scenes].
@@ -193,6 +203,12 @@ class FloorDef {
           NodeType.parse(e.key): e.value as int,
       },
       enemies: ((j['enemies'] as List?) ?? const []).cast<String>(),
+      packs: switch (j['packs']) {
+        final Map<String, dynamic> m => {
+            for (final e in m.entries) int.parse(e.key): e.value as int,
+          },
+        _ => const {1: 1},
+      },
       scene: j['scene'] as String?,
     );
   }
@@ -349,6 +365,10 @@ class GameBalance {
     this.merchant = const MerchantDef(),
     this.stageMerchants = const [],
     this.masterForms = 2,
+    this.packHp = const [100],
+    this.packJade = 0,
+    this.merchantEvery = 0,
+    this.merchantSpread = 0,
     required this.difficulties,
     this.picos = const [],
     this.awakeningChoices = 3,
@@ -410,6 +430,20 @@ class GameBalance {
   /// Mercader de cada etapa: el base con lo que la etapa cambia (`merchant`
   /// dentro de la etapa). Más arriba, todo cuesta más y hay otras cosas.
   final List<MerchantDef> stageMerchants;
+
+  /// Vida (%) de cada enemigo según el tamaño del grupo: [100, 70, 58].
+  final List<int> packHp;
+
+  /// Jade extra por cada enemigo de más en el grupo.
+  final int packJade;
+
+  int packHpPct(int size) =>
+      packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
+
+  /// El mercader ambulante aparece cada [merchantEvery] combates ganados
+  /// (± [merchantSpread]); 0 = solo en sus nodos del mapa.
+  final int merchantEvery;
+  final int merchantSpread;
 
   MerchantDef merchantAt(int stage) =>
       stage < stageMerchants.length ? stageMerchants[stage] : merchant;
@@ -510,6 +544,18 @@ class GameBalance {
           }),
       ],
       awakeningChoices: run['awakeningChoices'] as int? ?? 3,
+      packHp: ((run['packs'] as Map<String, dynamic>?)?['hpPct'] as List?)
+              ?.cast<int>() ??
+          const [100],
+      packJade:
+          (run['packs'] as Map<String, dynamic>?)?['jadePerExtra'] as int? ?? 0,
+      merchantEvery:
+          (run['wanderingMerchant'] as Map<String, dynamic>?)?['every'] as int? ??
+              0,
+      merchantSpread:
+          (run['wanderingMerchant'] as Map<String, dynamic>?)?['spread']
+                  as int? ??
+              0,
       masterForms:
           ((j['master'] as Map<String, dynamic>?) ?? const {})['forms'] as int? ??
               2,

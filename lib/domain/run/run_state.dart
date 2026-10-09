@@ -123,6 +123,9 @@ class RunState {
     required this.map,
     this.jade = 0,
     this.jadeGained = 0,
+    this.combatsSinceMerchant = 0,
+    this.nextMerchantAt = 0,
+    this.stageMerchants = 0,
     this.shopCards = const [],
     this.shopTalisman,
     this.shopRemoved = false,
@@ -197,6 +200,12 @@ class RunState {
   /// Jade ganado en el último combate (para mostrarlo en la recompensa).
   final int jadeGained;
 
+  /// Mercader ambulante: combates ganados desde el último, a cuántos
+  /// aparece el próximo (0 = el valor base) y cuántos hubo en la etapa.
+  final int combatsSinceMerchant;
+  final int nextMerchantAt;
+  final int stageMerchants;
+
   /// Cartas y talismán en venta (solo en la fase merchant).
   final List<String> shopCards;
   final String? shopTalisman;
@@ -238,6 +247,9 @@ class RunState {
     EventResult? lastEvent,
     int? jade,
     int? jadeGained,
+    int? combatsSinceMerchant,
+    int? nextMerchantAt,
+    int? stageMerchants,
     List<String>? shopCards,
     String? shopTalisman,
     bool clearShopTalisman = false,
@@ -277,6 +289,9 @@ class RunState {
         map: map ?? this.map,
         jade: jade ?? this.jade,
         jadeGained: jadeGained ?? this.jadeGained,
+        combatsSinceMerchant: combatsSinceMerchant ?? this.combatsSinceMerchant,
+        nextMerchantAt: nextMerchantAt ?? this.nextMerchantAt,
+        stageMerchants: stageMerchants ?? this.stageMerchants,
         shopCards: shopCards ?? this.shopCards,
         shopTalisman:
             clearShopTalisman ? null : shopTalisman ?? this.shopTalisman,
@@ -324,6 +339,9 @@ class RunState {
         'map': [for (final n in map) n.toJson()],
         'jade': jade,
         'jadeGained': jadeGained,
+        'combatsSinceMerchant': combatsSinceMerchant,
+        'nextMerchantAt': nextMerchantAt,
+        'stageMerchants': stageMerchants,
         'shopCards': shopCards,
         'shopTalisman': shopTalisman,
         'shopRemoved': shopRemoved,
@@ -379,6 +397,9 @@ class RunState {
         ],
         jade: j['jade'] as int? ?? 0,
         jadeGained: j['jadeGained'] as int? ?? 0,
+        combatsSinceMerchant: j['combatsSinceMerchant'] as int? ?? 0,
+        nextMerchantAt: j['nextMerchantAt'] as int? ?? 0,
+        stageMerchants: j['stageMerchants'] as int? ?? 0,
         shopCards: ((j['shopCards'] as List?) ?? const []).cast<String>(),
         shopTalisman: j['shopTalisman'] as String?,
         shopRemoved: j['shopRemoved'] as bool? ?? false,

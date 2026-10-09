@@ -175,7 +175,10 @@ class PlannerBot extends Bot {
     if (s.phase == CombatPhase.won) return 1e6 + s.player.hp;
     if (s.phase == CombatPhase.lost) return -1e6;
     final e = s.enemy;
-    var v = -e.hp * 3.0 + s.player.hp * 2.0;
+    // En un grupo cuenta la Vida de los que esperan: si no, voltear al
+    // primero (y que entre otro entero) parecería empeorar.
+    final waiting = s.reserve.fold(0, (a, x) => a + x.hp);
+    var v = -(e.hp + waiting) * 3.0 + s.player.hp * 2.0;
     if (e.staggered) {
       v += 14;
     } else {
@@ -298,7 +301,7 @@ class _Search {
   String _key(CombatState s) {
     final hand = [for (final c in s.hand) c.uid]..sort();
     return '${hand.join(',')}|${s.player.stance.index}|${s.player.breath}|'
-        '${s.dingbuUsed}|${s.formProgress.values.join(',')}|${s.enemy.hp}|'
+        '${s.dingbuUsed}|${s.formProgress.values.join(',')}|${s.wave}|${s.enemy.hp}|'
         '${s.enemy.structure}|${s.player.guard}|${s.player.guardHeight?.index}';
   }
 

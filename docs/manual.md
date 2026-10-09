@@ -88,23 +88,25 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. Al llegar, el rival se presenta.
 
-   **Cómo se ve:** una montaña pintada en capas (las cordilleras lejanas se mueven más despacio al desplazar, el cielo se vuelve dorado y rosa cerca de la cumbre) con nubes que van y vienen. Cada lugar es un **sello de piedra con su carácter tallado**: 武 combate (精 élite con aro dorado, 龙 jefe), 泉 fuente, 庙 santuario, 缘 evento, 商 mercader, 师 maestro. Los que podés tomar flotan y laten; los ya andados llevan el sello rojo 印. Los une un **sendero de escalones**: lo recorrido queda en tinta dorada y el último tramo se pinta al volver al mapa. Los pisos a más de 2 del tuyo quedan bajo la niebla y se despejan al subir. El santuario tiene su arco, la fuente su estanque, el élite su pagoda y en la cumbre se adivina el dragón entre las nubes. Arriba a la derecha, una regla marca el piso (por ejemplo 3/11).
+   **Cómo se ve:** una montaña pintada en capas (las cordilleras lejanas se mueven más despacio al desplazar, el cielo se vuelve dorado y rosa cerca de la cumbre) con nubes que van y vienen. Cada lugar es un **sello de piedra con su carácter tallado**: 武 combate (精 élite con aro dorado, 龙 jefe), 泉 fuente, 庙 santuario, 缘 evento, 师 maestro (商 mercader solo en subidas guardadas antes del mercader ambulante). Los que podés tomar flotan y laten; los ya andados llevan el sello rojo 印. Los une un **sendero de escalones**: lo recorrido queda en tinta dorada y el último tramo se pinta al volver al mapa. Los pisos a más de 2 del tuyo quedan bajo la niebla y se despejan al subir. El santuario tiene su arco, la fuente su estanque, el élite su pagoda y en la cumbre se adivina el dragón entre las nubes. Arriba a la derecha, una regla marca el piso (por ejemplo 3/11).
 
    Al tocar un lugar, tu discípulo (de espaldas, con la ropa de su camino) **camina el sendero** hasta él, la cámara lo sigue y la pantalla nueva entra con una **mancha de tinta** del color del lugar.
 
    | Piso | Qué puede salir |
    |---|---|
    | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
-   | 2 | Combates, eventos o un mercader (aparece el Mono Ladrón) |
+   | 2 | Combates o eventos (aparece el Mono Ladrón) |
    | 3 | **Santuario** (siempre) |
-   | 4 a 6 | Combates, eventos, **mercader** y **maestro errante** (en 4 y 6 aparece el Bandido del Paso; en 5 y 6, el Hongo Lingzhi) |
+   | 4 a 6 | Sobre todo combates, algún evento y el **maestro errante** (en 4 y 6 aparece el Bandido del Paso; en 5 y 6, el Hongo Lingzhi) |
    | 7 | Élite: Monje sin Rostro, León de Piedra o Dama del Abanico (al azar) |
    | 8 | Fuente (siempre): se descansa antes del jefe |
    | 9 | Eco del Dragón (jefe de la etapa) |
 
    Las etapas 2 y 3 tienen la misma forma (11 pisos: élite, fuente y jefe arriba), sin santuario: el camino se elige una sola vez. El mapa se tiñe según la etapa (jade, piedra tibia, nieve) y el título dice "Etapa 2 de 3".
 
-   Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un mercader y un maestro.
+   Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un maestro. El mercader no está en el mapa: aparece en el camino (ver 9).
+
+   **Grupos:** muchos combates comunes traen 2 enemigos (en la etapa 2 y 3, hasta 3). Se pelean de a uno: cuando cae uno, entra el siguiente y vos seguís con tu Vida, tu mano, tu postura y tus formas a medio hacer; no hay recompensa ni descanso en el medio. Para que el nodo no dure el doble, cada uno trae menos Vida (70% si son 2, 58% si son 3), y cada enemigo de más suma 5 de jade. En el mapa, el sello del combate lleva una plaquita con un punto por enemigo; en el combate, unos puntos bajo el nombre marcan cuál va.
 
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
@@ -147,7 +149,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
-9. **Mercader de pergaminos** (ícono verde de tienda): vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. Puede aparecer desde el piso 2. **Más arriba cobra más y trae otras cosas:**
+9. **Mercader ambulante** 商: no tiene lugar en el mapa. Se cruza en el camino después de la recompensa, más o menos cada 3 combates ganados (2 a 4), y si en la etapa todavía no apareció, después del élite. Nunca después del jefe. Vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. **Más arriba cobra más y trae otras cosas:**
 
    | Etapa | Cartas | Carta | Talismán | Quitar | Mejorar | Té |
    |---|---|---|---|---|---|---|
@@ -215,10 +217,12 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 
 | Dificultad | Vida | Fuente | Enemigos |
 |---|---|---|---|
-| Fácil 易 | 70 | +30 | 88% de Vida, 80% de daño |
-| Normal 常 | 50 | +20 | Como están en la tabla de enemigos |
-| Difícil 难 | 50 | +15 | 106% de Vida, 107% de daño |
-| Shifu 师 | 45 | +15 | 114% de Vida y daño, 106% de Estructura |
+| Fácil 易 | 60 | +25 | 104% de Vida y daño |
+| Normal 常 | 50 | +20 | 106% de Vida, 105% de daño |
+| Difícil 难 | 50 | +15 | 111% de Vida y daño |
+| Shifu 师 | 45 | +15 | 112% de Vida, 111% de daño, 106% de Estructura |
+
+Los porcentajes se aplican sobre la tabla de enemigos.
 
 Shifu arranca bloqueada: se ve en blanco con un candado y, al tocarla, avisa que se desbloquea al ganar una subida en Difícil.
 

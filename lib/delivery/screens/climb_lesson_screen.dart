@@ -243,7 +243,6 @@ class _NodeLegend extends StatelessWidget {
       (Icons.water_drop, Palette.sky, t.fountainNode),
       (Icons.temple_buddhist, Palette.gold, t.shrineNode),
       (Icons.question_mark_rounded, Palette.blossom, t.eventNode),
-      (Icons.storefront_rounded, Palette.jade, t.merchantNode),
       (Icons.self_improvement_rounded, Palette.structure, t.masterNode),
     ];
     return Wrap(

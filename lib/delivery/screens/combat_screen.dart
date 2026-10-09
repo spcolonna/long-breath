@@ -290,18 +290,62 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       if (hits.isNotEmpty) _strikeKey++;
     });
     _audio.play(Sfx.cardPlay);
+    final wave = ev.whereType<WaveStarted>().firstOrNull;
     _after(hits.isEmpty ? 150 : 240, () {
-      _impactOnEnemy(next, ev);
+      _impactOnEnemy(wave == null ? next : _fallen(prev, next), ev);
       _banners(ev);
       if (ev.any((e) => e is Victory)) {
         _win();
       } else if (ev.any((e) => e is Defeat)) {
         _lose();
+      } else if (wave != null) {
+        _nextWave(next, wave);
       } else {
         setState(() => _busy = false);
       }
     });
   }
+
+  /// El estado nuevo, pero con el enemigo que acaba de caer todavía en
+  /// escena: así se lo ve caer antes de que entre el siguiente.
+  CombatView _fallen(CombatView prev, CombatView next) => next.copyWith(
+    state: next.state.copyWith(enemy: prev.state.enemy.copyWith(hp: 0)),
+  );
+
+  /// Cae el enemigo del grupo (estallido, sin el cartel de victoria) y, ya
+  /// despejada la arena, entra el siguiente con su nombre y "2/3".
+  void _nextWave(CombatView next, WaveStarted w, {bool unlock = true}) {
+    HapticFeedback.heavyImpact();
+    _audio.play(Sfx.enemyDeath);
+    setState(() {
+      _queue.clear();
+      _current = null;
+      _dying = true;
+      _burstKey++;
+      _shake(12);
+    });
+    _after(_waveGap, () {
+      setState(() {
+        _dying = false;
+        _shown = next;
+      });
+      HapticFeedback.mediumImpact();
+      _audio.play(Sfx.enemyDrop);
+      final t = AppLocalizations.of(context);
+      _queue.add(
+        _Fx(
+          ref.read(textProvider).enemy(w.enemyId),
+          t.waveOf(w.index, w.total),
+          Palette.lacquer,
+        ),
+      );
+      _pump();
+    });
+    if (unlock) _after(_waveGap + 500, () => setState(() => _busy = false));
+  }
+
+  /// Lo que tarda en despejarse la arena entre un enemigo del grupo y otro.
+  static const _waveGap = 950;
 
   void _impactOnEnemy(CombatView next, List<CombatEvent> ev) {
     final hits = ev.whereType<EnemyDamaged>();
@@ -392,6 +436,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   void _enemyTurn(CombatView prev, CombatView next) {
     final ev = next.events;
     final t = AppLocalizations.of(context);
+    // Si un desvío voltea al enemigo de un grupo, se lo ve caer al final.
+    final wave = ev.whereType<WaveStarted>().firstOrNull;
+    final view = wave == null ? next : _fallen(prev, next);
     final nowUids = {for (final c in next.state.hand) c.uid};
     setState(() {
       _busy = true;
@@ -417,7 +464,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         final last = i == outcomes.length - 1;
         _after(at + i * 240, () {
           setState(() {
-            _shown = next;
+            _shown = view;
             switch (o) {
               case PlayerHit(:final damage, :final structure, :final blocked):
                 _hurtKey++;
@@ -469,7 +516,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       // Guardia, carga o turno perdido: el enemigo se infla o tambalea.
       _after(at, () {
         setState(() {
-          _shown = next;
+          _shown = view;
           for (final e in ev) {
             switch (e) {
               case EnemyGuarded(:final amount):
@@ -512,6 +559,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     if (ev.any((e) => e is EnemyFled)) {
       _after(at - 300, _fled);
       return;
+    }
+    if (wave != null) {
+      _after(at, () => _nextWave(next, wave, unlock: false));
+      at += _waveGap + 200;
     }
     _after(at, () {
       setState(() {
@@ -785,6 +836,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                 enemy: s.enemy,
                 intent: engine.intentView(s),
                 key: _enemyKey,
+                wave: s.wave,
+                waveCount: s.waveCount,
               ),
             ],
           ),
@@ -913,11 +966,17 @@ class _EnemySlot {
     required this.enemy,
     required this.intent,
     required this.key,
+    this.wave = 0,
+    this.waveCount = 1,
   });
 
   final EnemyDef def;
   final EnemyCombat enemy;
   final IntentView intent;
+
+  /// Lugar en el grupo (0 = el primero) y cuántos son.
+  final int wave;
+  final int waveCount;
 
   /// Marca dónde está la figura, para que las cartas vuelen hacia ella.
   final GlobalKey key;
@@ -1459,7 +1518,7 @@ class _EnemyStage extends ConsumerWidget {
             child: fx.dying
                 ? const SizedBox(key: ValueKey('none'), height: 50)
                 : _IntentBubble(
-                    key: ValueKey('${e.patternIndex}-${e.phaseIndex}'),
+                    key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
                     iv: slot.intent,
                   ),
           ),
@@ -1473,6 +1532,8 @@ class _EnemyStage extends ConsumerWidget {
                 clipBehavior: Clip.none,
                 children: [
                   _Entrance(
+                    // El que entra en un grupo también cae desde arriba.
+                    key: ValueKey(slot.wave),
                     child: EnemySprite(
                       key: slot.key,
                       def: def,
@@ -1584,6 +1645,8 @@ class _EnemyStage extends ConsumerWidget {
                   ),
                 ),
               ),
+              if (slot.waveCount > 1)
+                _WavePips(index: slot.wave, total: slot.waveCount),
               const SizedBox(height: 6),
               _MiniBar(
                 value: e.hp,
@@ -1704,9 +1767,45 @@ class _EnemyStage extends ConsumerWidget {
   }
 }
 
+/// Grupo de enemigos: uno por punto; los caídos, tachados en tinta.
+class _WavePips extends StatelessWidget {
+  const _WavePips({required this.index, required this.total});
+
+  final int index;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < total; i++)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 350),
+              curve: Curves.easeOut,
+              margin: const EdgeInsets.symmetric(horizontal: 3),
+              width: i == index ? 18 : 8,
+              height: 8,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                color: i < index
+                    ? Palette.textDim.withValues(alpha: 0.35)
+                    : i == index
+                    ? Palette.lacquer
+                    : Palette.lacquer.withValues(alpha: 0.3),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 /// Entrada del enemigo al empezar el combate: cae desde arriba y se asienta.
 class _Entrance extends StatefulWidget {
-  const _Entrance({required this.child});
+  const _Entrance({super.key, required this.child});
 
   final Widget child;
 
