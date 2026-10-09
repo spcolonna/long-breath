@@ -539,3 +539,28 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
   | Shifu | 45 | 15 | 112 / 111 (+6% Estructura) | 0% | 7% | 24% |
 
   Una subida completa dura ~55 min (antes ~45).
+
+### 3o. Botín sorpresa, semillas de loto y árbol de meridianos (09/10/2026)
+- **Por qué:** el usuario pidió que haga falta jugar varias subidas (progresión con poder, no solo contenido) y premios variados como en Hades/Absolum. Ver `manual.md` (Botín sorpresa, Semillas de loto y árbol de meridianos).
+- **Botín** (`combatRewards`): pesos por etapa cards/jade/lotus/upgrade/tea/talisman = 55/15/12/8/8/2, 50/14/14/10/9/3, 45/14/15/12/10/4. Jade 20/30/40, té 15/20/25% de la Vida máxima, talismán 1 de 2, a lo sumo 2 seguidos sin cartas. Jefe y huida: cartas. Élite: no talismán (ya da uno).
+- **Loto** (`meridians.lotus`): 1 por combate, +4 élite, +8 jefe, +15 cumbre, botín 6/8/10.
+- **Árbol** (`meridians.nodes`): 15 puntos (3 canales × 5), costos 25/50/75/110/160 (1260 en total); dones de los reinos en `meridians.realmPerks`. Los dones de combate fuerte (Aliento en el turno 1, Respirar extra, Vida +4/+6, curar al ganar) se sacaron: con ellos el árbol completo llevaba al promedio a 94%.
+- **Medición por punto** (`--section nodes`, y `--loo` para sacar de a uno): lo que más pesa es la Vida, el talismán inicial y las cartas templadas; jade, loto y descuentos casi no mueven la victoria.
+- **Las dificultades se rehicieron** porque el botín por sí solo subió al promedio de 33% a 40%:
+
+  | Dificultad | Enemigos (Vida/daño) | promedio | experto |
+  |---|---|---|---|
+  | Fácil | 105 / 105 | 65% | 87% |
+  | Normal | 111 / 110 | 25% | 55% |
+  | Difícil | 116 / 115 | 10% | 39% |
+  | Shifu | 115 / 114 (+6% Estructura) | 5% | 25% |
+
+- **Con dones** (Normal, `--section perks`, 500 runs):
+
+  | Dones | promedio | experto |
+  |---|---|---|
+  | ninguno (escuela nueva) | 25% | 55% |
+  | solo los de los reinos | 33% | 63% |
+  | árbol completo | 58% | 80% |
+
+- **Progresión** (`--section meta`, 40 escuelas × 40 subidas en Normal): el promedio gana 29% en las subidas 1–5, 40% en las 6–10 y ~60% desde la 16; completa el árbol hacia la subida 22 (~75 de loto por subida al final). El experto pasa de 58% a ~85% y completa el árbol hacia la 16. El novato sigue en 0% (el bot no lee intenciones): para alguien que recién empieza, Fácil.

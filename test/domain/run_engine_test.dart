@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
+import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/domain/rng.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
@@ -24,7 +28,10 @@ final _legacy = [
 ];
 
 void main() {
-  final run = RunEngine(loadGameDataFromDir());
+  // Las reglas de siempre: el premio de los combates es siempre de cartas.
+  final run = RunEngine(
+    loadGameDataFromDir('assets/data', const {'combatRewards': null}),
+  );
 
   RunState fresh(int seed, {Difficulty difficulty = Difficulty.normal}) => run
       .newRun(seed: seed, difficulty: difficulty)
@@ -694,6 +701,161 @@ void main() {
       expect(run.packOf(run.enter(base, 'h')), ['bat', 'golem']);
       expect(group.jadeGained - solo.jadeGained,
           run.data.balance.packJade);
+    });
+  });
+
+  group('premios variados y dones de la escuela', () {
+    final real = RunEngine(loadGameDataFromDir());
+    final def = real.data.balance.combatRewards;
+
+    RunState at(int seed, {MetaBonus meta = MetaBonus.none}) => real
+        .newRun(seed: seed, meta: meta)
+        .copyWith(map: _legacy);
+
+    RunState won(RunState r, String node, {int? hp}) =>
+        real.finishCombat(real.enter(r, node), won: true, hp: hp ?? r.hp - 10);
+
+    test('el premio sale con los pesos de la etapa y es reproducible', () {
+      final counts = <RewardKind, int>{};
+      for (var seed = 0; seed < 2000; seed++) {
+        final r = won(at(seed), 'n1');
+        expect(r.phase, RunPhase.reward);
+        counts[r.rewardKind] = (counts[r.rewardKind] ?? 0) + 1;
+        expect(won(at(seed), 'n1').rewardKind, r.rewardKind);
+        expect(r.rewardOptions.isNotEmpty, r.rewardKind == RewardKind.cards);
+      }
+      final w = def.weightsAt(0);
+      final total = w.values.fold(0, (a, b) => a + b);
+      for (final k in RewardKind.values) {
+        expect(counts[k] ?? 0, closeTo(2000 * w[k]! / total, 70),
+            reason: k.name);
+      }
+    });
+
+    test('el jefe y el que se escapa dejan cartas; el élite no da otro '
+        'talismán', () {
+      for (var seed = 0; seed < 200; seed++) {
+        final boss = won(at(seed).copyWith(currentNode: 'n5', visited: ['n5']),
+            'n6');
+        expect(boss.rewardKind, RewardKind.cards);
+        final fled = real.finishCombat(real.enter(at(seed), 'n1'),
+            won: true, hp: 30, fledWith: 0);
+        expect(fled.rewardKind, RewardKind.cards);
+        expect(fled.lotusGained, 0);
+        final elite = won(
+            at(seed).copyWith(currentNode: 'n4', visited: ['n4']), 'n5');
+        expect(elite.phase, RunPhase.talisman);
+        expect(elite.rewardKind, isNot(RewardKind.talisman));
+      }
+    });
+
+    test('con la Vida llena no sale té, y nunca más de 2 sin cartas', () {
+      for (var seed = 0; seed < 400; seed++) {
+        final full = won(at(seed), 'n1', hp: 50);
+        expect(full.rewardKind, isNot(RewardKind.tea));
+        final streak = won(at(seed).copyWith(cardlessStreak: 2), 'n1');
+        expect(streak.rewardKind, RewardKind.cards);
+        expect(streak.cardlessStreak, 0);
+      }
+    });
+
+    RunState kindAt(RewardKind kind, {MetaBonus meta = MetaBonus.none}) {
+      for (var seed = 0;; seed++) {
+        final r = won(at(seed, meta: meta), 'n1');
+        if (r.rewardKind == kind) return r;
+      }
+    }
+
+    test('jade, loto y té se cobran al tomarlos', () {
+      final jade = kindAt(RewardKind.jade);
+      expect(jade.rewardAmount, def.jadeAt(0));
+      final j = real.collectReward(jade);
+      expect(j.jade, jade.jade + def.jadeAt(0));
+      expect(j.phase, RunPhase.map);
+      final lotus = kindAt(RewardKind.lotus);
+      final l = real.collectReward(lotus);
+      expect(l.lotus,
+          lotus.lotus + real.data.balance.meridians.lotus.rewardAt(0));
+      expect(l.stageLotus, l.lotus);
+      final tea = kindAt(RewardKind.tea);
+      final t = real.collectReward(tea);
+      expect(t.hp, math.min(tea.maxHp, tea.hp + tea.rewardAmount));
+      expect(() => real.chooseRewardUpgrade(tea, 0), throwsStateError);
+    });
+
+    test('temple y talismán se eligen; el temple también se puede saltear',
+        () {
+      final up = kindAt(RewardKind.upgrade);
+      final card = up.deck.firstWhere(real.canUpgrade);
+      final u = real.chooseRewardUpgrade(up, card.uid);
+      expect(u.deck.firstWhere((c) => c.uid == card.uid).upgrades,
+          card.upgrades + real.data.balance.fountainUpgrade);
+      expect(real.collectReward(up).deck, up.deck);
+      final tal = kindAt(RewardKind.talisman);
+      expect(tal.talismanOptions, hasLength(def.talismanChoices));
+      final id = tal.talismanOptions.first;
+      final t = real.chooseRewardTalisman(tal, id);
+      expect(t.talismans, contains(id));
+      expect(t.phase, RunPhase.map);
+    });
+
+    test('cada combate deja loto; la cumbre deja más', () {
+      final lotus = real.data.balance.meridians.lotus;
+      final r = won(at(1), 'n1');
+      expect(r.lotus, lotus.perCombat);
+      final summit = won(
+          at(1).copyWith(currentNode: 'n5', visited: ['n5'], stage: 2), 'n6');
+      expect(summit.phase, RunPhase.victory);
+      expect(summit.lotus, lotus.perCombat + lotus.boss + lotus.victory);
+      final more = won(at(1, meta: const MetaBonus(lotusPct: 100)), 'n1');
+      expect(more.lotus, lotus.perCombat * 2);
+    });
+
+    test('los dones se aplican al empezar y quedan guardados', () {
+      const meta = MetaBonus(
+        maxHp: 4,
+        startJade: 15,
+        upgradedStarters: 2,
+        rerolls: 1,
+        startTalisman: 1,
+        merchantDiscountPct: 10,
+        fountainHeal: 5,
+      );
+      final base = real.newRun(seed: 9);
+      var r = real.newRun(seed: 9, meta: meta);
+      expect(r.maxHp, base.maxHp + 4);
+      expect(r.jade, 15);
+      expect(r.rerollsLeft, 1);
+      expect(r.deck.where((c) => c.upgrades > 0), hasLength(2));
+      expect(r.phase, RunPhase.talisman, reason: 'el don de la escuela');
+      r = real.chooseTalisman(r, r.talismanOptions.first);
+      expect(r.phase, RunPhase.map);
+      expect(r.talismans, hasLength(1));
+      expect(real.merchantOf(r).card,
+          (real.merchantOf(base).card * 0.9).round());
+      expect(real.healOf(r), real.healOf(base) + 5);
+      final back = RunState.fromJson(
+          jsonDecode(jsonEncode(r.toJson())) as Map<String, dynamic>);
+      expect(back.meta.toJson(), meta.toJson());
+    });
+
+    test('volver a tirar cambia las cartas y gasta uno', () {
+      final r = kindAt(RewardKind.cards, meta: const MetaBonus(rerolls: 1));
+      final again = real.rerollReward(r);
+      expect(again.rerollsLeft, 0);
+      expect(again.rewardOptions, hasLength(r.rewardOptions.length));
+      expect(() => real.rerollReward(again), throwsStateError);
+    });
+
+    test('un guardado sin los campos nuevos carga con premio de cartas', () {
+      final j = at(1).toJson()
+        ..remove('meta')
+        ..remove('rewardKind')
+        ..remove('lotus');
+      final r = RunState.fromJson(j);
+      expect(r.rewardKind, RewardKind.cards);
+      expect(r.meta.isNone, isTrue);
+      expect(r.lotus, 0);
     });
   });
 }

@@ -1,6 +1,7 @@
 import 'awakening_def.dart';
 import 'cultivation_def.dart';
 import 'enums.dart';
+import 'meta_bonus.dart';
 
 /// Cómo se juega la mano: el del novicio o el del camino animal elegido.
 class StyleStats {
@@ -248,6 +249,23 @@ class MerchantDef {
   /// Precio de una carta en oferta.
   int get salePrice => (card * (100 - sale) / 100).round();
 
+  /// Los mismos precios con [pct] % de descuento (meridianos).
+  MerchantDef discounted(int pct) {
+    if (pct <= 0) return this;
+    int off(int v) => (v * (100 - pct) / 100).round();
+    return MerchantDef(
+      cards: cards,
+      card: off(card),
+      talisman: off(talisman),
+      remove: off(remove),
+      upgrade: off(upgrade),
+      sale: sale,
+      tea: off(tea),
+      teaHeal: teaHeal,
+      rareTalisman: rareTalisman,
+    );
+  }
+
   factory MerchantDef.fromJson(Map<String, dynamic> j) => MerchantDef(
         cards: j['cards'] as int? ?? 3,
         card: j['card'] as int? ?? 25,
@@ -336,6 +354,56 @@ class PicoDef {
       );
 }
 
+/// Tipos de premio de un combate ganado (se revela al ganar).
+enum RewardKind { cards, jade, lotus, upgrade, tea, talisman }
+
+/// Qué premio deja un combate común: pesos por etapa y cuánto da cada uno.
+class CombatRewardsDef {
+  const CombatRewardsDef({
+    this.weights = const [],
+    this.jade = const [],
+    this.teaPct = const [],
+    this.talismanChoices = 2,
+    this.maxWithoutCards = 2,
+  });
+
+  /// Sin datos: siempre cartas (datos viejos y pruebas).
+  static const none = CombatRewardsDef();
+
+  final List<Map<RewardKind, int>> weights;
+  final List<int> jade;
+
+  /// Vida máxima (%) que cura el té.
+  final List<int> teaPct;
+  final int talismanChoices;
+
+  /// Premios seguidos sin cartas como máximo.
+  final int maxWithoutCards;
+
+  static T _at<T>(List<T> l, int stage, T fallback) =>
+      l.isEmpty ? fallback : l[stage.clamp(0, l.length - 1)];
+
+  Map<RewardKind, int> weightsAt(int stage) =>
+      _at(weights, stage, const {RewardKind.cards: 1});
+  int jadeAt(int stage) => _at(jade, stage, 0);
+  int teaPctAt(int stage) => _at(teaPct, stage, 0);
+
+  factory CombatRewardsDef.fromJson(Map<String, dynamic> j) =>
+      CombatRewardsDef(
+        weights: [
+          for (final w in (j['weights'] as List?) ?? const [])
+            {
+              for (final e in (w as Map<String, dynamic>).entries)
+                RewardKind.values.byName(e.key): e.value as int,
+            },
+        ],
+        jade: ((j['jade'] as List?) ?? const []).cast<int>(),
+        teaPct: ((j['teaPct'] as List?) ?? const []).cast<int>(),
+        talismanChoices: j['talismanChoices'] as int? ?? 2,
+        maxWithoutCards: j['maxWithoutCards'] as int? ?? 2,
+      );
+}
+
 class GameBalance {
   const GameBalance({
     required this.playerHp,
@@ -373,6 +441,8 @@ class GameBalance {
     this.picos = const [],
     this.awakeningChoices = 3,
     this.cultivation = CultivationDef.none,
+    this.meridians = MeridianDef.none,
+    this.combatRewards = CombatRewardsDef.none,
   });
 
   final int playerHp;
@@ -483,6 +553,12 @@ class GameBalance {
   /// Reinos del cultivo y cuánto aliento deja cada subida.
   final CultivationDef cultivation;
 
+  /// Árbol de meridianos, dones de los reinos y semillas de loto.
+  final MeridianDef meridians;
+
+  /// Premios variados de los combates.
+  final CombatRewardsDef combatRewards;
+
   factory GameBalance.fromJson(Map<String, dynamic> j) {
     final player = j['player'] as Map<String, dynamic>;
     final styles = j['styles'] as Map<String, dynamic>;
@@ -571,6 +647,14 @@ class GameBalance {
       cultivation: switch (j['cultivation']) {
         final Map<String, dynamic> c => CultivationDef.fromJson(c),
         _ => CultivationDef.none,
+      },
+      meridians: switch (j['meridians']) {
+        final Map<String, dynamic> m => MeridianDef.fromJson(m),
+        _ => MeridianDef.none,
+      },
+      combatRewards: switch (j['combatRewards']) {
+        final Map<String, dynamic> m => CombatRewardsDef.fromJson(m),
+        _ => CombatRewardsDef.none,
       },
     );
   }

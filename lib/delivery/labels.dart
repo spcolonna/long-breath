@@ -4,12 +4,48 @@ import '../domain/model/card_def.dart';
 import '../domain/model/enums.dart';
 import '../domain/model/event_def.dart';
 import '../domain/model/form_def.dart';
+import '../domain/model/game_balance.dart';
+import '../domain/model/meta_bonus.dart';
 import '../domain/model/talisman_def.dart';
 import '../l10n/app_localizations.dart';
 import 'content_text.dart';
 
 /// Traducciones de enums del dominio a texto de interfaz.
 extension Labels on AppLocalizations {
+  /// Una línea por cada cosa que hace un don de la escuela.
+  List<String> bonusLines(MetaBonus b) => [
+    if (b.maxHp != 0) bonusMaxHp(b.maxHp),
+    if (b.fountainHeal != 0) bonusFountainHeal(b.fountainHeal),
+    if (b.winHeal != 0) bonusWinHeal(b.winHeal),
+    if (b.structure != 0) bonusStructure(b.structure),
+    if (b.startJade != 0) bonusStartJade(b.startJade),
+    if (b.upgradedStarters != 0) bonusUpgradedStarters(b.upgradedStarters),
+    if (b.startTalisman != 0) bonusStartTalisman,
+    if (b.merchantDiscountPct != 0)
+      bonusMerchantDiscount(b.merchantDiscountPct),
+    if (b.rewardChoices != 0) bonusRewardChoices(b.rewardChoices),
+    if (b.talismanChoices != 0) bonusTalismanChoices(b.talismanChoices),
+    if (b.rerolls != 0) bonusRerolls(b.rerolls),
+    if (b.lotusPct != 0) bonusLotusPct(b.lotusPct),
+    if (b.firstTurnBreath != 0) bonusFirstTurnBreath(b.firstTurnBreath),
+    if (b.breathes != 0) bonusBreathes(b.breathes),
+  ];
+
+  String branchName(MeridianBranch b) => switch (b) {
+    MeridianBranch.body => meridianBranchBody,
+    MeridianBranch.spirit => meridianBranchSpirit,
+    MeridianBranch.technique => meridianBranchTechnique,
+  };
+
+  String lootKind(RewardKind k) => switch (k) {
+    RewardKind.cards => lootKindCards,
+    RewardKind.jade => lootKindJade,
+    RewardKind.lotus => lootKindLotus,
+    RewardKind.upgrade => lootKindUpgrade,
+    RewardKind.tea => lootKindTea,
+    RewardKind.talisman => lootKindTalisman,
+  };
+
   String typeLabel(CardType type) => switch (type) {
     CardType.fist => typeFist,
     CardType.palm => typePalm,

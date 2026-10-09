@@ -17,6 +17,7 @@ import '../widgets/difficulty_sheet.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/npc_portrait.dart';
 import '../widgets/cultivation_view.dart';
+import '../widgets/lotus.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../domain/model/enums.dart';
 
@@ -106,11 +107,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
       if (choice == null || !context.mounted) return;
       final locked = (await ref.read(cultivationProvider.future)).locked;
+      final meta = await ref.read(metaBonusProvider.future);
       if (!context.mounted) return;
       ref
           .read(runControllerProvider.notifier)
-          .newRun(choice.difficulty, pico: choice.pico, locked: locked);
-      context.go('/map');
+          .newRun(
+            choice.difficulty,
+            pico: choice.pico,
+            locked: locked,
+            meta: meta,
+          );
+      // Con el talismán de los meridianos se elige antes del mapa.
+      context.go(routeFor(ref.read(runControllerProvider)!));
     }
 
     void resume() {
@@ -188,7 +196,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const _SchoolLine(),
               const SizedBox(height: 6),
               const RealmLine(),
-              const SizedBox(height: 10),
+              const _MeridianLine(),
+              const SizedBox(height: 6),
               _MenuButton(
                 icon: Icons.school_rounded,
                 title: t.menuLearn,
@@ -229,6 +238,104 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
+}
+
+/// Semillas de loto de la escuela y el acceso al árbol de meridianos; un
+/// punto late si hay algo para abrir.
+class _MeridianLine extends ConsumerWidget {
+  const _MeridianLine();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final c = ref.watch(cultivationProvider).value;
+    final m = ref.watch(meridianProvider).value;
+    final def = ref.watch(dataProvider).balance.meridians;
+    final seen = (ref.watch(ascentsProvider).value ?? const []).isNotEmpty;
+    if (c == null || m == null || def.nodes.isEmpty || !seen) {
+      return const SizedBox(height: 4);
+    }
+    final ready = def.nodes.any(
+      (n) => def.canOpen(n, c.realm, m.owned) && m.lotus >= n.cost,
+    );
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          HapticFeedback.selectionClick();
+          ref.read(audioProvider).play(Sfx.uiButton);
+          context.go('/meridians');
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          decoration: BoxDecoration(
+            color: Palette.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: (ready ? Palette.jade : Palette.blossom).withValues(
+                alpha: 0.6,
+              ),
+              width: ready ? 2 : 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              LotusCount(lotus: m.lotus, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                t.meridiansButton,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              if (ready) ...[
+                const SizedBox(width: 6),
+                const _Dot(),
+              ],
+              const Icon(Icons.chevron_right, size: 18, color: Palette.textDim),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Punto que late: hay algo nuevo para hacer.
+class _Dot extends StatefulWidget {
+  const _Dot();
+
+  @override
+  State<_Dot> createState() => _DotState();
+}
+
+class _DotState extends State<_Dot> with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ScaleTransition(
+    scale: Tween(begin: 0.7, end: 1.15).animate(_c),
+    child: Container(
+      width: 9,
+      height: 9,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Palette.jade,
+      ),
+    ),
+  );
 }
 
 /// Quién sube ahora y, si ya hubo subidas, el registro de la escuela.

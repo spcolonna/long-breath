@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/model/enums.dart';
+import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/domain/run/ascent.dart';
 import 'package:long_breath/infrastructure/progress_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -164,5 +165,53 @@ void main() {
     expect(await storage.breath(migrate: (a) => a.floor * 10), 60);
     // Ya migrado: no se vuelve a calcular.
     expect(await storage.breath(migrate: (a) => 999), 60);
+  });
+
+  test('el loto se deposita al caer y abre puntos del árbol', () async {
+    SharedPreferences.setMockInitialValues({});
+    final storage = ProgressStorage();
+    expect(await storage.lotus(), 0);
+    final done = await storage.recordAscent(
+      const Ascent(
+        n: 0,
+        fell: true,
+        floor: 5,
+        floors: 33,
+        difficulty: Difficulty.normal,
+        lotus: 30,
+      ),
+    );
+    expect(done.lotusBefore, 0);
+    expect(await storage.lotus(), 30);
+    const def = MeridianDef(
+      nodes: [
+        MeridianNode(
+          id: 'a',
+          branch: MeridianBranch.body,
+          realm: 0,
+          cost: 20,
+          effect: MetaBonus(maxHp: 2),
+        ),
+        MeridianNode(
+          id: 'b',
+          branch: MeridianBranch.body,
+          realm: 1,
+          cost: 5,
+          effect: MetaBonus(maxHp: 2),
+          requires: 'a',
+        ),
+      ],
+    );
+    expect(await storage.openMeridian(def, def.node('b'), 1), isFalse,
+        reason: 'falta el anterior');
+    expect(await storage.openMeridian(def, def.node('a'), 0), isTrue);
+    expect(await storage.lotus(), 10);
+    expect(await storage.openMeridian(def, def.node('b'), 0), isFalse,
+        reason: 'falta el reino');
+    expect(await storage.openMeridian(def, def.node('b'), 1), isTrue);
+    expect(await storage.openMeridian(def, def.node('b'), 1), isFalse,
+        reason: 'ya está abierto');
+    expect(await storage.meridians(), ['a', 'b']);
+    expect(await storage.lotus(), 5);
   });
 }

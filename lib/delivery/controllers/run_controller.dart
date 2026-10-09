@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/model/enums.dart';
+import '../../domain/model/meta_bonus.dart';
 import '../../domain/run/run_engine.dart';
 import '../../domain/run/run_state.dart';
 import '../../domain/run/ascent.dart';
@@ -25,13 +26,19 @@ class RunController extends Notifier<RunState?> {
 
   /// Sube un discípulo nuevo. [locked]: lo que el cultivo todavía no abrió
   /// (si no se pasa, se toma del reino ya cargado).
-  void newRun(Difficulty difficulty, {int pico = 0, List<String>? locked}) =>
+  void newRun(
+    Difficulty difficulty, {
+    int pico = 0,
+    List<String>? locked,
+    MetaBonus? meta,
+  }) =>
       _set(_engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
         difficulty: difficulty,
         pico: pico,
         locked:
             locked ?? ref.read(cultivationProvider).value?.locked ?? const [],
+        meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
       ));
 
   void abandon() => _set(null);
@@ -91,6 +98,7 @@ class RunController extends Notifier<RunState?> {
     ascent = Ascent.fromJson({
       ...ascent.toJson(),
       'breath': ascentBreath(cultivation, ascent),
+      'lotus': run.lotus,
     });
     ref.read(lastAscentProvider.notifier).set(null);
     ref
@@ -102,7 +110,9 @@ class RunController extends Notifier<RunState?> {
         ..invalidate(discipleProvider)
         ..invalidate(ascentsProvider)
         ..invalidate(loreProvider)
-        ..invalidate(cultivationProvider);
+        ..invalidate(cultivationProvider)
+        ..invalidate(meridianProvider)
+        ..invalidate(metaBonusProvider);
     });
   }
 
@@ -115,6 +125,16 @@ class RunController extends Notifier<RunState?> {
 
   void chooseForm(String formId) =>
       _set(_engine.chooseForm(state!, formId));
+
+  void collectReward() => _set(_engine.collectReward(state!));
+
+  void chooseRewardUpgrade(int uid) =>
+      _set(_engine.chooseRewardUpgrade(state!, uid));
+
+  void chooseRewardTalisman(String id) =>
+      _set(_engine.chooseRewardTalisman(state!, id));
+
+  void rerollReward() => _set(_engine.rerollReward(state!));
 
   void chooseTalisman(String id) =>
       _set(_engine.chooseTalisman(state!, id));

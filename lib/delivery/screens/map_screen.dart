@@ -17,6 +17,7 @@ import '../widgets/deck_sheet.dart';
 import '../labels.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/jade.dart';
+import '../widgets/lotus.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/ink_reveal.dart';
 import '../widgets/juice.dart';
@@ -551,6 +552,10 @@ class _RunHeader extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           JadeCount(jade: run.jade),
+          if (run.lotus > 0) ...[
+            const SizedBox(width: 6),
+            LotusCount(lotus: run.lotus),
+          ],
           // Solo el número: el ícono ya dice "mazo" y deja lugar a la altura.
           Tooltip(
             message: t.deckCount(run.deck.length),

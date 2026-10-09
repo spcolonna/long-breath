@@ -46,6 +46,11 @@ class ContentText {
   String realm(String id) => _get('realms', id, 'name');
   String realmText(String id) => _get('realms', id, 'text');
 
+  /// Punto del árbol de meridianos: nombre (pinyin), carácter y una línea.
+  String meridian(String id) => _get('meridians', id, 'name');
+  String meridianHanzi(String id) => _get('meridians', id, 'hanzi');
+  String meridianText(String id) => _get('meridians', id, 'text');
+
   /// Nombre de algo que abre el cultivo: un camino, una carta, un talismán o
   /// una forma (los ids no se repiten entre sí).
   String unlockName(String id) {

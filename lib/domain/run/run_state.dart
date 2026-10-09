@@ -1,6 +1,7 @@
 import '../combat/combat_state.dart';
 import '../model/enums.dart';
 import '../model/game_balance.dart';
+import '../model/meta_bonus.dart';
 import '../rng.dart';
 
 enum RunPhase {
@@ -134,6 +135,16 @@ class RunState {
     this.shopTea = false,
     this.masterForms = const [],
     this.stage = 0,
+    this.meta = MetaBonus.none,
+    this.lotus = 0,
+    this.lotusGained = 0,
+    this.rewardKind = RewardKind.cards,
+    this.rewardAmount = 0,
+    this.rerollsLeft = 0,
+    this.cardlessStreak = 0,
+    this.stageWins = 0,
+    this.stageJade = 0,
+    this.stageLotus = 0,
   });
 
   /// Etapa de la subida (0 = la primera). El [map] es el de esta etapa.
@@ -221,6 +232,31 @@ class RunState {
   /// Formas que ofrece el maestro errante (solo en la fase master).
   final List<String> masterForms;
 
+  /// Dones de la escuela con los que empezó la subida (reinos y meridianos).
+  final MetaBonus meta;
+
+  /// Semillas de loto ganadas en la subida (se depositan al terminarla).
+  final int lotus;
+
+  /// Loto ganado en el último combate (para mostrarlo en el botín).
+  final int lotusGained;
+
+  /// Premio del último combate y cuánto da (jade, loto o Vida del té).
+  /// Se cobra al tomarlo; con cartas, [rewardOptions] y [rewardForm].
+  final RewardKind rewardKind;
+  final int rewardAmount;
+
+  /// Veces que todavía se pueden volver a tirar las cartas.
+  final int rerollsLeft;
+
+  /// Premios seguidos sin cartas.
+  final int cardlessStreak;
+
+  /// Botín de la etapa: combates ganados, jade y loto.
+  final int stageWins;
+  final int stageJade;
+  final int stageLotus;
+
   RunState copyWith({
     Style? style,
     int? hp,
@@ -261,6 +297,15 @@ class RunState {
     List<String>? masterForms,
     List<MapNodeDef>? map,
     int? stage,
+    int? lotus,
+    int? lotusGained,
+    RewardKind? rewardKind,
+    int? rewardAmount,
+    int? rerollsLeft,
+    int? cardlessStreak,
+    int? stageWins,
+    int? stageJade,
+    int? stageLotus,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -301,6 +346,16 @@ class RunState {
         shopTea: shopTea ?? this.shopTea,
         masterForms: masterForms ?? this.masterForms,
         stage: stage ?? this.stage,
+        meta: meta,
+        lotus: lotus ?? this.lotus,
+        lotusGained: lotusGained ?? this.lotusGained,
+        rewardKind: rewardKind ?? this.rewardKind,
+        rewardAmount: rewardAmount ?? this.rewardAmount,
+        rerollsLeft: rerollsLeft ?? this.rerollsLeft,
+        cardlessStreak: cardlessStreak ?? this.cardlessStreak,
+        stageWins: stageWins ?? this.stageWins,
+        stageJade: stageJade ?? this.stageJade,
+        stageLotus: stageLotus ?? this.stageLotus,
       );
 
   /// Nodo del mapa por id.
@@ -350,6 +405,16 @@ class RunState {
         'shopTea': shopTea,
         'masterForms': masterForms,
         'stage': stage,
+        'meta': meta.toJson(),
+        'lotus': lotus,
+        'lotusGained': lotusGained,
+        'rewardKind': rewardKind.name,
+        'rewardAmount': rewardAmount,
+        'rerollsLeft': rerollsLeft,
+        'cardlessStreak': cardlessStreak,
+        'stageWins': stageWins,
+        'stageJade': stageJade,
+        'stageLotus': stageLotus,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -408,5 +473,21 @@ class RunState {
         shopTea: j['shopTea'] as bool? ?? false,
         masterForms: ((j['masterForms'] as List?) ?? const []).cast<String>(),
         stage: j['stage'] as int? ?? 0,
+        meta: switch (j['meta']) {
+          final Map<String, dynamic> m => MetaBonus.fromJson(m),
+          _ => MetaBonus.none,
+        },
+        lotus: j['lotus'] as int? ?? 0,
+        lotusGained: j['lotusGained'] as int? ?? 0,
+        rewardKind: switch (j['rewardKind']) {
+          final String k => RewardKind.values.byName(k),
+          _ => RewardKind.cards,
+        },
+        rewardAmount: j['rewardAmount'] as int? ?? 0,
+        rerollsLeft: j['rerollsLeft'] as int? ?? 0,
+        cardlessStreak: j['cardlessStreak'] as int? ?? 0,
+        stageWins: j['stageWins'] as int? ?? 0,
+        stageJade: j['stageJade'] as int? ?? 0,
+        stageLotus: j['stageLotus'] as int? ?? 0,
       );
 }

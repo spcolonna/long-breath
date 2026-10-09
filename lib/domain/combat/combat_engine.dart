@@ -7,6 +7,7 @@ import '../model/enums.dart';
 import '../model/form_def.dart';
 import '../model/game_balance.dart';
 import '../model/game_data.dart';
+import '../model/meta_bonus.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'combat_action.dart';
@@ -136,6 +137,8 @@ class CombatEngine {
     List<String> talismans = const [],
     List<String> awakenings = const [],
     List<String> waves = const [],
+    // Dones de la escuela (reinos y meridianos).
+    MetaBonus meta = MetaBonus.none,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -173,7 +176,7 @@ class CombatEngine {
         scales: enemy.scales,
       );
     }
-    final extraStructure = sum((e) => e.structure);
+    final extraStructure = sum((e) => e.structure) + meta.structure;
     final startStance = effects
             .map((e) => e.startStance)
             .whereType<Stance>()
@@ -202,7 +205,7 @@ class CombatEngine {
       hand: [],
       discard: [],
       exhausted: [],
-      breathesLeft: b.breathesPerCombat,
+      breathesLeft: b.breathesPerCombat + meta.breathes,
       // Solo las formas que conoce (null = todas: tests y herramientas).
       formProgress: {
         for (final f in data.forms)
@@ -211,7 +214,7 @@ class CombatEngine {
       rng: rng,
       enemyDamagePct: pct(dif.enemyDamage, 100, pm.enemyDamage),
       talismans: talismans,
-      nextTurnBreathMod: sum((e) => e.firstTurnBreath),
+      nextTurnBreathMod: sum((e) => e.firstTurnBreath) + meta.firstTurnBreath,
       firstStrike: styleStats.firstStrike + aw.firstStrike,
       chain: styleStats.chain + aw.chain,
       retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,
