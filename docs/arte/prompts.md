@@ -1107,7 +1107,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Hombre de Bronce 铜人 (`golem_bronze`, común, etapa 2)
+### Hombre de Bronce 铜人 (`golem_bronze`, común, etapa 2) — hecho
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: a Shaolin bronze man training statue come alive, polished bronze body with acupuncture-point markings, short sharp bronze spikes on shoulders and forearms, solid wide stance, faint gold glow in its eyes.
@@ -1237,7 +1237,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Dama del Viento 风扇 (`fan_wind`, élite, etapa 3)
+### Dama del Viento 风扇 (`fan_wind`, élite, etapa 3) — hecho
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: an elegant warrior woman in teal and white layered robes, a large white iron fan releasing a gust of snow, hair and sleeves blown by the wind.
@@ -1249,7 +1249,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### León de las Nieves 雪狮 (`lion_snow`, élite, etapa 3)
+### León de las Nieves 雪狮 (`lion_snow`, élite, etapa 3) — hecho
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: a guardian lion of snow-white marble covered in frost and icicles, small ice spikes along its mane, red ribbon, roaring.

@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 61 · ✅ 46 · 🎨 11 · ❌ 4
+Total: 61 · ✅ 52 · 🎨 8 · ❌ 1
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -29,7 +29,7 @@ Total: 61 · ✅ 46 · 🎨 11 · ❌ 4
 | ✅ propio | `assets/art/stages/xuankongsi/combat_bg.png` | combate (fondo general) | cielo dibujado | — |
 | ✅ propio | `assets/art/stages/xuankongsi/combat_bg_bifurcacion.png` | combate: pasarela | stages/xuankongsi/combat_bg.png | — |
 | ✅ propio | `assets/art/stages/xuankongsi/combat_bg_ladera.png` | combate: escalera | stages/xuankongsi/combat_bg.png | — |
-| ❌ falta | `assets/art/stages/xuankongsi/combat_bg_templo.png` | combate: campanario, gran_campana | stages/xuankongsi/combat_bg.png | listo |
+| ✅ propio | `assets/art/stages/xuankongsi/combat_bg_templo.png` | combate: campanario, gran_campana | stages/xuankongsi/combat_bg.png | — |
 | ✅ propio | `assets/art/stages/xuankongsi/map_bg.png` | mapa y evento | stages/qianyunshan/map_bg.png | — |
 | ✅ propio | `assets/art/stages/xuankongsi/fountain_bg.png` | fuente | stages/qianyunshan/fountain_bg.png | — |
 
@@ -39,11 +39,11 @@ Total: 61 · ✅ 46 · 🎨 11 · ❌ 4
 |---|---|---|---|---|
 | ✅ propio | `assets/art/stages/wolongding/combat_bg.png` | combate (fondo general) | cielo dibujado | — |
 | ✅ propio | `assets/art/stages/wolongding/combat_bg_bifurcacion.png` | combate: glaciar | stages/wolongding/combat_bg.png | — |
-| ❌ falta | `assets/art/stages/wolongding/combat_bg_cumbre.png` | combate: lecho_dragon | stages/wolongding/combat_bg.png | listo |
+| ✅ propio | `assets/art/stages/wolongding/combat_bg_cumbre.png` | combate: lecho_dragon | stages/wolongding/combat_bg.png | — |
 | ✅ propio | `assets/art/stages/wolongding/combat_bg_ladera.png` | combate: ventisquero | stages/wolongding/combat_bg.png | — |
 | ✅ propio | `assets/art/stages/wolongding/combat_bg_templo.png` | combate: templo_helado | stages/wolongding/combat_bg.png | — |
 | ✅ propio | `assets/art/stages/wolongding/map_bg.png` | mapa y evento | stages/qianyunshan/map_bg.png | — |
-| ❌ falta | `assets/art/stages/wolongding/fountain_bg.png` | fuente | stages/qianyunshan/fountain_bg.png | listo |
+| ✅ propio | `assets/art/stages/wolongding/fountain_bg.png` | fuente | stages/qianyunshan/fountain_bg.png | — |
 
 ## ui
 
@@ -82,10 +82,10 @@ Total: 61 · ✅ 46 · 🎨 11 · ❌ 4
 | ✅ propio | `assets/art/enemies/dragon_dream.png` | dragon_dream (elite) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_reflection.png` | dragon_reflection (elite) | enemies/placeholder.png | no |
 | ✅ propio | `assets/art/enemies/fan.png` | fan (elite) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `fan` | `assets/art/enemies/fan_wind.png` | wind_lady (elite) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/fan_wind.png` | wind_lady (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/lion.png` | lion (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/lion_jade.png` | jade_lion (elite) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `lion` | `assets/art/enemies/lion_snow.png` | snow_lion (elite) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/lion_snow.png` | snow_lion (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/monk.png` | monk (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/monk_iron.png` | iron_abbot (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/bandit.png` | bandit (common) | enemies/placeholder.png | — |
@@ -97,7 +97,7 @@ Total: 61 · ✅ 46 · 🎨 11 · ❌ 4
 | 🎨 recoloreo de `disciple` | `assets/art/enemies/disciple_wind.png` | wind_disciple (common) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/dummy.png` | dummy (common), dummy_basic (common), dummy_heights (common), dummy_light (common), dummy_guard (common), dummy_forms (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/golem.png` | golem (common) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `golem` | `assets/art/enemies/golem_bronze.png` | bronze_man (common) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/golem_bronze.png` | bronze_man (common) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `golem` | `assets/art/enemies/golem_ice.png` | ice_golem (common) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/lingzhi.png` | lingzhi (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/monkey.png` | monkey (common) | enemies/placeholder.png | — |
