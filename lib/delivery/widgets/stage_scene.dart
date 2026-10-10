@@ -21,8 +21,8 @@ const _sceneFiles = {
 };
 
 /// Altura de la franja visible de cada fondo (-1 arriba, 1 abajo): el suelo
-/// tiene que quedar bajo los pies.
-const _variantFocus = {'templo': 0.45};
+/// tiene que quedar bajo los pies. Primero se busca `<etapa>/<archivo>`.
+const _variantFocus = {'templo': 0.45, 'xuankongsi/templo': -0.3};
 
 /// Rutas del fondo de combate de un escenario, de la variante al común.
 List<String> combatBgAssets(String stageId, String? scene) => [
@@ -62,13 +62,18 @@ class StageScene extends StatelessWidget {
     ),
   );
 
+  /// En el Gran Campanario la campana cuelga arriba: se ve desde ella.
+  double get _focus {
+    final file = _sceneFiles[scene];
+    return _variantFocus['$stageId/$file'] ?? _variantFocus[file] ?? 0;
+  }
+
   Widget _image(List<String> assets, int i) {
     if (i >= assets.length) return _sky;
     return Image.asset(
       assets[i],
       fit: BoxFit.cover,
-      alignment:
-          alignment ?? Alignment(0, _variantFocus[_sceneFiles[scene]] ?? 0),
+      alignment: alignment ?? Alignment(0, _focus),
       gaplessPlayback: true,
       errorBuilder: (_, _, _) => _image(assets, i + 1),
     );

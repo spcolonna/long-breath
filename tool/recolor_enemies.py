@@ -24,11 +24,6 @@ DIR = ROOT / "assets/art/enemies"
 VARIANTS = {
     # Etapa 2: Monasterio Colgado (bronce, azafrán, ceniza, hierro, jade, oro).
     "bat_bronze": ("bat", [("hue", 150, 215, 30, 1.5, -0.1)]),
-    "golem_bronze": ("golem", [
-        ("gray", 30, 0.5, -0.1),
-        ("hue", 60, 150, 40, 0.9, -0.08),
-        ("hue", 160, 210, 18, 1.0, 0.0),
-    ]),
     "disciple_saffron": ("disciple", [("hue", 120, 200, 352, 0.85, -0.02)]),
     "salamander_ash": ("salamander", [("hue", 0, 50, 265, 0.18, -0.08)]),
     # Reserva: copias de los recoloreos que van a recibir arte propio, para
@@ -51,11 +46,6 @@ VARIANTS = {
     ]),
     "disciple_wind": ("disciple", [("hue", 120, 200, 205, 0.9, 0.02)]),
     "bat_frost": ("bat", [("hue", 150, 215, 212, 0.45, 0.1)]),
-    "fan_wind": ("fan", [("hue", 250, 360, 188, 0.85, 0.0)]),
-    "lion_snow": ("lion", [
-        ("gray", 210, 0.14, 0.1),
-        ("hue", 60, 140, 205, 0.25, 0.15),
-    ]),
     # Reflejo del Dragón (élite de la etapa 2): el recoloreo que tenía el
     # Dragón Dormido antes de tener arte propio.
     "dragon_reflection": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),

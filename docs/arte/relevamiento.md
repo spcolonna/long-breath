@@ -2,7 +2,7 @@
 
 Qué hay, qué es prestado y qué falta, en orden de prioridad. **Antes de pedir o pasar un prompt, se mira acá**: si el archivo ya existe con arte propio, no se vuelve a generar. Cuando llega un archivo nuevo se actualiza esta tabla.
 
-Actualizado: 2026-10-09.
+Actualizado: 2026-10-10.
 
 **La lista exacta, archivo por archivo, está en [`checklist.md`](checklist.md)**, que genera `python3 tool/art_status.py` comparando lo que el código busca con lo que hay en `assets/art`. Ante cualquier duda, manda la checklist: se corre antes de pasar prompts y cada vez que llega arte.
 
@@ -32,15 +32,15 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 ## Hecho, con arte propio
 
 - **Etapa 1:** `combat_bg` más sus 4 tramos, `map_bg`, `fountain_bg`, `shrine_bg` y `school_wall`.
-- **Etapa 2:** `combat_bg`, `map_bg` y `fountain_bg`.
-- **Etapa 3:** `combat_bg` y `map_bg`.
+- **Etapa 2:** `combat_bg` más sus 3 tramos (`ladera`, `bifurcacion` y `templo`, el Gran Campanario), `map_bg` y `fountain_bg`.
+- **Etapa 3:** `combat_bg` más sus 4 tramos (con `cumbre`, el Lecho del Dragón), `map_bg` y `fountain_bg`.
 - **UI:** `stage_clear_bg`, `lotus_seed` (semilla de loto) y `reward_chest` (cofre del botín).
 - **NPC:** `master` y `merchant`.
 - **Héroe:** `hero.png`. Los 4 caminos salen de él por recoloreo, que es así por diseño (`tool/recolor_hero.py`).
 - **Enemigos:**
   - etapa 1: dummy, bat, salamander, golem, disciple, bandit, lingzhi, monkey, monk, lion, fan y dragon;
   - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3);
-  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade) y `dragon_azure` (Dragón Dormido).
+  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) y `golem_bronze` (Hombre de Bronce).
 
 ## Reserva de recoloreos
 
@@ -54,29 +54,17 @@ Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en 
 
 | Orden | Archivo | Enemigo | Rol | Sale de |
 |---|---|---|---|---|
-| 1 | `fan_wind.png` | Dama del Viento | élite etapa 3 | fan |
-| 2 | `lion_snow.png` | León de las Nieves | élite etapa 3 | lion |
-| 3 | `disciple_saffron.png` | Guardián del Pasadizo | común etapa 2 | disciple |
-| 4 | `golem_bronze.png` | Hombre de Bronce | común etapa 2 | golem |
-| 5 | `bat_bronze.png` | Murciélago del Campanario | común etapa 2 | bat |
-| 6 | `salamander_ash.png` | Salamandra de Ceniza | común etapa 2 | salamander |
-| 7 | `disciple_wind.png` | Discípulo del Viento | común etapa 3 | disciple |
-| 8 | `golem_ice.png` | Gólem de Escarcha | común etapa 3 | golem |
-| 9 | `monkey_snow.png` | Simio de las Nieves | común etapa 3 | monkey |
-| 10 | `bat_frost.png` | Murciélago de Escarcha | común etapa 3 | bat |
+| 1 | `disciple_saffron.png` | Guardián del Pasadizo | común etapa 2 | disciple |
+| 2 | `bat_bronze.png` | Murciélago del Campanario | común etapa 2 | bat |
+| 3 | `salamander_ash.png` | Salamandra de Ceniza | común etapa 2 | salamander |
+| 4 | `disciple_wind.png` | Discípulo del Viento | común etapa 3 | disciple |
+| 5 | `golem_ice.png` | Gólem de Escarcha | común etapa 3 | golem |
+| 6 | `monkey_snow.png` | Simio de las Nieves | común etapa 3 | monkey |
+| 7 | `bat_frost.png` | Murciélago de Escarcha | común etapa 3 | bat |
 
-### 2. Fondos que el juego ya busca y no existen
+### 2. Fondos
 
-| Archivo | Se ve en | Hoy muestra |
-|---|---|---|
-| `stages/wolongding/fountain_bg.png` | fuente de la etapa 3 | la fuente de la etapa 1 (prompt listo en §7 Tanda 3) |
-| `stages/wolongding/combat_bg_cumbre.png` | pelea contra el jefe final | el `combat_bg` de la etapa 3 |
-| `stages/xuankongsi/combat_bg_templo.png` | élite y jefe de la etapa 2 | el `combat_bg` de la etapa 2 |
-| `stages/wolongding/combat_bg_templo.png` | élite de la etapa 3 | el `combat_bg` de la etapa 3 |
-| `stages/xuankongsi/combat_bg_ladera.png`, `_bifurcacion.png` | combates comunes de la etapa 2 | el `combat_bg` de la etapa 2 |
-| `stages/wolongding/combat_bg_ladera.png`, `_bifurcacion.png` | combates comunes de la etapa 3 | el `combat_bg` de la etapa 3 |
-
-Hay prompt en `prompts.md` §7 para todos menos las dos bifurcaciones (`pasarela` y `glaciar`). El santuario solo aparece en la etapa 1, así que las etapas 2 y 3 no necesitan `shrine_bg`.
+Ya existen todos los que busca el juego: los 4 tramos de combate y la fuente de las tres etapas. El santuario solo aparece en la etapa 1, así que las etapas 2 y 3 no necesitan `shrine_bg`.
 
 ### 3. Opcional
 
