@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 61 · ✅ 52 · 🎨 8 · ❌ 1
+Total: 61 · ✅ 55 · 🎨 5 · ❌ 1
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -90,10 +90,10 @@ Total: 61 · ✅ 52 · 🎨 8 · ❌ 1
 | ✅ propio | `assets/art/enemies/monk_iron.png` | iron_abbot (elite) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/bandit.png` | bandit (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/bat.png` | bat (common) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `bat` | `assets/art/enemies/bat_bronze.png` | bell_bat (common) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/bat_bronze.png` | bell_bat (common) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `bat` | `assets/art/enemies/bat_frost.png` | frost_bat (common) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/disciple.png` | disciple (common) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `disciple` | `assets/art/enemies/disciple_saffron.png` | temple_guard (common) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/disciple_saffron.png` | temple_guard (common) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `disciple` | `assets/art/enemies/disciple_wind.png` | wind_disciple (common) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/dummy.png` | dummy (common), dummy_basic (common), dummy_heights (common), dummy_light (common), dummy_guard (common), dummy_forms (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/golem.png` | golem (common) | enemies/placeholder.png | — |
@@ -103,4 +103,4 @@ Total: 61 · ✅ 52 · 🎨 8 · ❌ 1
 | ✅ propio | `assets/art/enemies/monkey.png` | monkey (common) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `monkey` | `assets/art/enemies/monkey_snow.png` | snow_ape (common) | enemies/placeholder.png | listo |
 | ✅ propio | `assets/art/enemies/salamander.png` | salamander (common) | enemies/placeholder.png | — |
-| 🎨 recoloreo de `salamander` | `assets/art/enemies/salamander_ash.png` | ash_salamander (common) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/salamander_ash.png` | ash_salamander (common) | enemies/placeholder.png | — |

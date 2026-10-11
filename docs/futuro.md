@@ -196,6 +196,14 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Arte:** entre 4 y 6 sprites nuevos por etapa. El resto son variantes.
 - **Hecho (05/10/2026):** élites con regla propia en la etapa 1: el piso 8 sale al azar entre Monje sin Rostro, León de Piedra (despierta, se calma al desequilibrarlo) y Dama del Abanico (desvía el primer golpe de cada turno). Común nuevo: Mono Ladrón (roba jade y se escapa en su tercera acción). Promedio en Normal: 59%. El mercader y el maestro tienen retrato. Falta: el Bandido del Paso y el Hongo Lingzhi (arte pendiente), y élites opcionales en pisos intermedios.
 
+- **Familias nuevas (propuesta, 11/10/2026):** ya hay varias variantes de bat, golem, salamander, disciple, monk, lion y dragon. El arte nuevo va a conceptos distintos, no a reemplazar recoloreos que ya funcionan:
+  - teatro y arte: Ópera de las Mil Caras 变脸 (cambia de guardia cada turno), títeres de linterna 皮影, músico de guqin que marca el ritmo;
+  - bestias míticas: Pixiu 貔貅 (devora jade), qilin, zorro de nueve colas (ilusiones: descartes);
+  - objetos encantados: grullas de papel 纸鹤 (en bandada), espada voladora, buey de madera de los mohistas (autómata);
+  - en marcha: `opera_mask`, `pixiu` y `paper_crane` (prompts en `docs/arte/prompts.md` §8).
+- **Reserva sin usar:** `monk_amber`, `monk_slate` y `lion_celadon` ya están dibujados; darles un enemigo secundario cuesta solo datos.
+- **Recoloreos que quedan** (`golem_ice`, `monkey_snow`, `disciple_wind`, `bat_frost`): no hace falta reemplazarlos.
+
 ### 3.6 Dificultad creciente: los Picos
 - Después de ganar se habilita el **Pico 1**, y así hasta el 10. Cada pico suma un modificador acumulativo. Por ejemplo:
   - Enemigos con +10% de Vida.
