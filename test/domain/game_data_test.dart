@@ -49,8 +49,11 @@ void main() {
         expect(data.cards.containsKey(step), isTrue, reason: step);
       }
     }
-    // 10 de la etapa 1, 8 del monasterio, 8 de la cumbre y 6 muñecos.
-    expect(data.enemies.length, 34);
+    // 10 de la etapa 1, 8 del monasterio, 8 de la cumbre, 6 muñecos y 3 de
+    // concepto nuevo (la grulla, la ópera y el pixiu).
+    expect(data.enemies.length, 37);
+    expect(data.enemy('pixiu').steal, 5);
+    expect(data.enemy('opera_mask').phases.single.pattern.length, 6);
     expect(data.enemy('bell_keeper').rank, EnemyRank.elite);
     expect(data.enemy('dragon_dream').scales, 3);
     expect(data.enemy('dragon').phases.length, 3);

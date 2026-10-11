@@ -1419,27 +1419,27 @@ watermark, no photorealism.
 
 Para que la montaña no sea solo "el mismo animal en otro material": cada uno trae una familia nueva (teatro, bestia mítica, papel encantado) y una forma distinta de jugarle, con reglas que el motor ya tiene. Son archivos nuevos, no recoloreos.
 
-### Ópera de las Mil Caras 变脸 (`opera_mask`, común, etapa 2)
+### Ópera de las Mil Caras 变脸 (`opera_mask`, común, etapa 2) — hecho
 
-Regla prevista: cada turno cambia de máscara y con ella la guardia (puño → palma → patada); enseña a variar el tipo de carta.
+Regla: cada turno cambia de máscara y con ella la guardia (puño → palma → patada); enseña a variar el tipo de carta.
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: a Sichuan opera face-changing performer in a dramatic mid-spin pose, a vivid painted opera mask (vermilion, gold and cobalt patterns) half-turning into a second mask of jade and violet, a tall pheasant-feather headdress, long flowing water sleeves swirling like ribbons, an embroidered silk costume with cloud patterns, one hand sweeping across the face.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Pixiu 貔貅 (`pixiu`, común, etapas 2 y 3)
+### Pixiu 貔貅 (`pixiu`, común, etapas 2 y 3) — hecho
 
-Regla prevista: devora jade al golpear (sin escaparse) y tiene una escama de oro; vencerlo devuelve lo robado.
+Regla: devora jade al golpear (sin escaparse) y tiene una escama de oro; vencerlo devuelve lo robado.
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: a pixiu, the chubby winged lion-dragon of Chinese myth that devours treasure, round jade-green body with gold scales on its back and small curled wings, a single short horn, a huge happy grin with a jade coin between its teeth, a few gold coins and jade beads bouncing around it, crouched ready to pounce.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Bandada de Grullas de Papel 纸鹤 (`paper_crane`, común, etapa 1)
+### Bandada de Grullas de Papel 纸鹤 (`paper_crane`, común, etapa 1) — hecho
 
-Regla prevista: sale en grupos de 2 o 3, poca vida y golpes altos rápidos; enseña a repartir el daño entre varios rivales.
+Regla: sale en grupos de 2 o 3, poca vida y golpes altos rápidos; enseña a repartir el daño entre varios rivales.
 
 ```
 Game enemy character, full body, facing the viewer, centered, transparent background: an enchanted origami crane folded from a large paper talisman, crisp folded paper planes, vermilion talisman brushstroke marks and a small gold seal on its wings, wings spread wide in a swooping attack, tiny paper scraps and a faint gold glow trailing behind it, sharp folded beak.

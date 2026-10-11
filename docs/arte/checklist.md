@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 61 · ✅ 55 · 🎨 5 · ❌ 1
+Total: 64 · ✅ 58 · 🎨 5 · ❌ 1
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -102,5 +102,8 @@ Total: 61 · ✅ 55 · 🎨 5 · ❌ 1
 | ✅ propio | `assets/art/enemies/lingzhi.png` | lingzhi (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/monkey.png` | monkey (common) | enemies/placeholder.png | — |
 | 🎨 recoloreo de `monkey` | `assets/art/enemies/monkey_snow.png` | snow_ape (common) | enemies/placeholder.png | listo |
+| ✅ propio | `assets/art/enemies/opera_mask.png` | opera_mask (common) | enemies/placeholder.png | — |
+| ✅ propio | `assets/art/enemies/paper_crane.png` | paper_crane (common) | enemies/placeholder.png | — |
+| ✅ propio | `assets/art/enemies/pixiu.png` | pixiu (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/salamander.png` | salamander (common) | enemies/placeholder.png | — |
 | ✅ propio | `assets/art/enemies/salamander_ash.png` | ash_salamander (common) | enemies/placeholder.png | — |
