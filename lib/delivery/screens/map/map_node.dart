@@ -316,7 +316,7 @@ class _Seal extends StatelessWidget {
             ),
             child: ClipOval(
               child: Image.asset(
-                'assets/art/stages/qianyunshan/map_node_stone.png',
+                'assets/art/stages/qianyunshan/map_node_stone.webp',
                 fit: BoxFit.cover,
                 opacity: const AlwaysStoppedAnimation(0.9),
                 errorBuilder: (_, _, _) => const SizedBox(),

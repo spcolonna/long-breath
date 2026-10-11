@@ -5,7 +5,7 @@ import '../../domain/model/meta_bonus.dart';
 import '../theme.dart';
 import 'juice.dart';
 
-/// Semilla de loto: el cáliz pintado (`ui/lotus_seed.png`). Si falta el
+/// Semilla de loto: el cáliz pintado (`ui/lotus_seed.webp`). Si falta el
 /// arte, el sello 莲.
 class LotusSeed extends StatelessWidget {
   const LotusSeed({super.key, this.size = 18});
@@ -21,7 +21,7 @@ class LotusSeed extends StatelessWidget {
       child: Transform.scale(
         scale: 1.3,
         child: Image.asset(
-          'assets/art/ui/lotus_seed.png',
+          'assets/art/ui/lotus_seed.webp',
           cacheWidth: px.ceil(),
           filterQuality: FilterQuality.medium,
           errorBuilder: (_, _, _) => _LotusSeal(size: size / 1.3),

@@ -346,7 +346,7 @@ class _MapViewState extends ConsumerState<_MapView>
                       // falta, se dibujan por código.
                       Positioned.fill(
                         child: Image.asset(
-                          'assets/art/stages/${data.balance.stages[run.stage].id}/map_bg.png',
+                          'assets/art/stages/${data.balance.stages[run.stage].id}/map_bg.webp',
                           fit: BoxFit.cover,
                           errorBuilder: (_, _, _) => RepaintBoundary(
                             child: CustomPaint(

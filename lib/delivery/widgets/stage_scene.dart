@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'ken_burns.dart';
 
-/// Archivo de cada escenario (`combat_bg_<archivo>.png`). Lo que no figura
+/// Archivo de cada escenario (`combat_bg_<archivo>.webp`). Lo que no figura
 /// (la terraza, el patio colgado, el paso nevado) usa el fondo común de la
 /// etapa, y también lo usa una variante que la etapa todavía no tiene.
 const _sceneFiles = {
@@ -27,8 +27,8 @@ const _variantFocus = {'templo': 0.45, 'xuankongsi/templo': -0.3};
 /// Rutas del fondo de combate de un escenario, de la variante al común.
 List<String> combatBgAssets(String stageId, String? scene) => [
   if (_sceneFiles[scene] != null)
-    'assets/art/stages/$stageId/combat_bg_${_sceneFiles[scene]}.png',
-  'assets/art/stages/$stageId/combat_bg.png',
+    'assets/art/stages/$stageId/combat_bg_${_sceneFiles[scene]}.webp',
+  'assets/art/stages/$stageId/combat_bg.webp',
 ];
 
 /// Escenario de combate a sangre: el fondo de la etapa con la luz del

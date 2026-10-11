@@ -6,7 +6,7 @@ import '../../domain/model/enums.dart';
 import '../theme.dart';
 import 'juice.dart';
 
-String heroAsset(Style? s) => 'assets/art/player/hero_${s?.name ?? 'novice'}.png';
+String heroAsset(Style? s) => 'assets/art/player/hero_${s?.name ?? 'novice'}.webp';
 
 /// El héroe de espaldas, con la ropa y el aura de su camino (o de lino crudo
 /// si todavía es novicio).

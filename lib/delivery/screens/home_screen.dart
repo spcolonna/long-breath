@@ -431,7 +431,7 @@ Future<bool?> _prologue(BuildContext context) => showModalBottomSheet<bool>(
           children: [
             // El maestro de la escuela despide al novicio.
             NpcPortrait(
-              asset: 'assets/art/npc/master.png',
+              asset: 'assets/art/npc/master.webp',
               color: Palette.gold,
               height: 180,
               badge: Container(

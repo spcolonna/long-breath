@@ -1,5 +1,5 @@
 """Genera las variantes de enemigos de las etapas 2 y 3 recoloreando los
-sprites de la etapa 1 (assets/art/enemies/<base>.png → <variante>.png).
+sprites de la etapa 1 (assets/art/enemies/<base>.webp → <variante>.webp).
 
 Cada variante es una lista de reglas que se aplican en orden sobre los
 píxeles opacos:
@@ -54,7 +54,7 @@ def in_range(h, a, b):
 
 
 def recolor(base, rules):
-    img = Image.open(DIR / f"{base}.png").convert("RGBA")
+    img = Image.open(DIR / f"{base}.webp").convert("RGBA")
     arr = np.asarray(img).astype(np.float64) / 255
     rgb, alpha = arr[..., :3], arr[..., 3:]
     h, s, v = rgb_to_hsv(rgb)
@@ -81,5 +81,5 @@ if __name__ == "__main__":
         # Las variantes salen a 1024 px de alto: alcanza para la pantalla y
         # pesan la mitad que los originales.
         img.thumbnail((1024, 1024), Image.LANCZOS)
-        img.save(DIR / f"{name}.png", optimize=True)
+        img.save(DIR / f"{name}.webp", quality=85, method=6)
         print(name)
