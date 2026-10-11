@@ -1122,7 +1122,7 @@ backgrounds, no photorealism, no text, no watermark.
 ### Guardián del Pasadizo (`disciple_saffron`, común, etapa 2)
 
 ```
-Game enemy character, full body, facing the viewer, centered, transparent background: a young monk guardian in deep maroon and saffron robes, wooden prayer beads, one palm raised forward like a closed gate, standing on a narrow wooden walkway.
+Game enemy character, full body, facing the viewer, centered, transparent background: a young monk guardian in deep maroon and saffron robes, wooden prayer beads, one palm raised forward like a closed gate, feet firmly planted.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
