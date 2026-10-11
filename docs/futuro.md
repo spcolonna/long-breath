@@ -201,6 +201,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - bestias míticas: Pixiu 貔貅 (devora jade), qilin, zorro de nueve colas (ilusiones: descartes);
   - objetos encantados: grullas de papel 纸鹤 (en bandada), espada voladora, buey de madera de los mohistas (autómata);
   - **hecho (11/10/2026):** Grulla de Papel (etapa 1, pisos 2, 5 y 7), Ópera de las Mil Caras (etapa 2) y Pixiu (etapas 2 y 3). El balance de Normal no se movió (experto 58%, promedio 27%).
+  - **pedidos:** Espada Voladora y Buey de Madera (comunes de la etapa 3, para que no sea toda recoloreos) y Qilin (élite de la etapa 3); prompts en `docs/arte/prompts.md` §8.
 - **Reserva sin usar:** `monk_amber`, `monk_slate` y `lion_celadon` ya están dibujados; darles un enemigo secundario cuesta solo datos.
 - **Recoloreos que quedan** (`golem_ice`, `monkey_snow`, `disciple_wind`, `bat_frost`): no hace falta reemplazarlos.
 

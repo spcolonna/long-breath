@@ -1446,6 +1446,33 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
+### Espada Voladora 飞剑 (`flying_sword`, común, etapa 3)
+
+Regla prevista: poca Vida, tres tajos altos seguidos y el último interrumpe la forma; enseña a cerrar formas antes de que llegue.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: an enchanted flying jian sword that moves on its own, a long bright silver blade with a jade-green hilt and a gold guard shaped like clouds, a long vermilion tassel and silk ribbons streaming behind it, three faint ghost-image copies of the blade fanning out to show its speed, a swirl of wind and snowflakes around it, diagonal dynamic pose pointing toward the viewer.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Buey de Madera 木牛 (`wooden_ox`, común, etapa 3)
+
+Regla prevista: autómata mohista; carga dos veces y después pisa bajo con cuenta regresiva; enseña a leer el golpe anunciado.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a Mohist wooden ox automaton, a sturdy ox built from pale lacquered wooden planks, brass gears and pegs visible at the joints, a small spinning brass wheel in its chest, painted cobalt and vermilion cloud patterns on its sides, snow on its back, steam puffing from its nostrils, lowering its head and horns ready to charge, one front hoof raised.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Qilin 麒麟 (`qilin`, élite, etapa 3)
+
+Regla prevista: paso de nube; frena las patadas y desvía el primer golpe de cada turno, y desequilibrarlo le quita las dos defensas.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a majestic qilin, the benevolent unicorn beast of Chinese myth, deer-like body covered in shimmering jade-green and gold scales, a flowing white and vermilion mane like flames, a single elegant antler-like horn, hooves walking on small swirling clouds instead of the ground, soft gold fire curling around its legs, proud rearing pose.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
 ---
 
 ## Pendiente
