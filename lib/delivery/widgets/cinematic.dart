@@ -366,7 +366,7 @@ class StageIntro extends ConsumerWidget {
                 Transform.scale(
                   scale: full ? 1.18 - 0.12 * pan : 1.08 - 0.06 * pan,
                   child: Image.asset(
-                    'assets/art/stages/$stageId/map_bg.png',
+                    'assets/art/stages/$stageId/map_bg.webp',
                     fit: BoxFit.cover,
                     alignment: full
                         ? Alignment(0, 1 - 1.7 * pan)
@@ -547,11 +547,11 @@ class FoeIntro extends ConsumerWidget {
                             BlendMode.srcATop,
                           ),
                           child: Image.asset(
-                            'assets/art/enemies/${def.art}.png',
+                            'assets/art/enemies/${def.art}.webp',
                             height: foeH,
                             fit: BoxFit.contain,
                             errorBuilder: (_, _, _) => Image.asset(
-                              'assets/art/enemies/placeholder.png',
+                              'assets/art/enemies/placeholder.webp',
                               height: foeH,
                               fit: BoxFit.contain,
                               errorBuilder: (_, _, _) => SizedBox(height: foeH),

@@ -9,6 +9,8 @@ Estados:
 - propio:    el archivo existe con arte propio.
 - recoloreo: existe, pero lo genera tool/recolor_enemies.py desde otro.
 - falta:     no existe; el juego muestra el reemplazo indicado.
+
+El juego usa WebP: el arte llega en PNG y `tool/optimize_art.py` lo convierte.
 """
 
 import json
@@ -65,7 +67,7 @@ def main():
 
     for s in stages:
         sid = s["id"]
-        base = f"stages/{sid}/combat_bg.png"
+        base = f"stages/{sid}/combat_bg.webp"
         add(sid, base, "combate (fondo general)", "cielo dibujado")
         scenes = set(s.get("scenes", []))
         types = set()
@@ -75,29 +77,29 @@ def main():
                 scenes.add(floor["scene"])
         for tramo in sorted({tramos[x] for x in scenes if x in tramos}):
             names = sorted(x for x in scenes if tramos.get(x) == tramo)
-            add(sid, f"stages/{sid}/combat_bg_{tramo}.png",
+            add(sid, f"stages/{sid}/combat_bg_{tramo}.webp",
                 f"combate: {', '.join(names)}", base)
-        add(sid, f"stages/{sid}/map_bg.png", "mapa y evento",
+        add(sid, f"stages/{sid}/map_bg.webp", "mapa y evento",
             "montaña dibujada" if sid == "qianyunshan"
-            else "stages/qianyunshan/map_bg.png")
-        for kind, f, use in (("fountain", "fountain_bg.png", "fuente"),
-                             ("shrine", "shrine_bg.png", "santuario")):
+            else "stages/qianyunshan/map_bg.webp")
+        for kind, f, use in (("fountain", "fountain_bg.webp", "fuente"),
+                             ("shrine", "shrine_bg.webp", "santuario")):
             if kind not in types:
                 continue
             add(sid, f"stages/{sid}/{f}", use,
                 "papel" if sid == "qianyunshan" else f"stages/qianyunshan/{f}")
 
-    add("ui", "stages/qianyunshan/school_wall.png", "registro y derrota", "papel")
-    add("ui", "ui/stage_clear_bg.png", "etapa superada", "papel")
-    add("ui", "ui/lotus_seed.png", "semilla de loto (botín, contador y árbol)",
+    add("ui", "stages/qianyunshan/school_wall.webp", "registro y derrota", "papel")
+    add("ui", "ui/stage_clear_bg.webp", "etapa superada", "papel")
+    add("ui", "ui/lotus_seed.webp", "semilla de loto (botín, contador y árbol)",
         "sello 莲")
-    add("ui", "ui/reward_chest.png", "cofre del botín", "cofre dibujado con 赏")
-    add("ui", "stages/qianyunshan/map_node_stone.png",
+    add("ui", "ui/reward_chest.webp", "cofre del botín", "cofre dibujado con 赏")
+    add("ui", "stages/qianyunshan/map_node_stone.webp",
         "textura de los sellos del mapa (opcional)", "disco con degradado")
-    add("npc", "npc/master.png", "maestro", "vacío")
-    add("npc", "npc/merchant.png", "mercader", "vacío")
+    add("npc", "npc/master.webp", "maestro", "vacío")
+    add("npc", "npc/merchant.webp", "mercader", "vacío")
     for p in ("novice", "tiger", "snake", "crane"):
-        add("héroe", f"player/hero_{p}.png", f"héroe ({p})", "vacío")
+        add("héroe", f"player/hero_{p}.webp", f"héroe ({p})", "vacío")
 
     by_art = {}
     for e in enemies:
@@ -107,7 +109,7 @@ def main():
                           key=lambda kv: (min(rank_order.get(e.get("rank"), 3)
                                               for e in kv[1]), kv[0])):
         who = ", ".join(f"{e['id']} ({e.get('rank', '?')})" for e in es)
-        add("enemigos", f"enemies/{art}.png", who, "enemies/placeholder.png")
+        add("enemigos", f"enemies/{art}.webp", who, "enemies/placeholder.webp")
 
     counts = {"propio": 0, "recoloreo": 0, "falta": 0}
     lines = [
@@ -131,7 +133,11 @@ def main():
                       "|---|---|---|---|---|"]
         name = os.path.splitext(os.path.basename(rel))[0]
         exists = os.path.exists(os.path.join(ART, rel))
-        if not exists:
+        raw = os.path.splitext(os.path.join(ART, rel))[0] + ".png"
+        if not exists and os.path.exists(raw):
+            state = "⏳ PNG sin optimizar (correr `tool/optimize_art.py`)"
+            counts["falta"] += 1
+        elif not exists:
             state = "❌ falta"
             counts["falta"] += 1
         elif rel.startswith("enemies/") and name in variants:

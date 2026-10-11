@@ -1,4 +1,4 @@
-"""Genera las variantes del héroe (novicio y un estilo por camino) a partir de assets/art/player/hero.png.
+"""Genera las variantes del héroe (novicio y un estilo por camino) a partir de assets/art/player/hero.webp.
 
 Solo recolorea la tela bermellón (tono rojo muy saturado); piel, pelo, oro y
 blanco quedan igual. Uso: python3 tool/recolor_hero.py
@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "assets/art/player/hero.png"
+SRC = ROOT / "assets/art/player/hero.webp"
 
 # Tono destino (grados), ajuste de saturación y aclarado por estilo.
 STYLES = {
@@ -73,9 +73,9 @@ def main():
     signed = np.where(h > 180, h - 360, h)
     mask = (1 - smooth(dist, 12, 20)) * smooth(s, 0.35, 0.5) * smooth(v, 0.15, 0.3)
     for name, cfg in STYLES.items():
-        out = ROOT / f"assets/art/player/hero_{name}.png"
+        out = ROOT / f"assets/art/player/hero_{name}.webp"
         if cfg is None:
-            im.save(out, optimize=True)
+            im.save(out, quality=85, method=6)
             continue
         hue, sat, lift = cfg
         nh = hue + signed * 0.6
@@ -83,7 +83,7 @@ def main():
         nrgb = hsv_to_rgb(nh, np.clip(s * sat, 0, 1), nv)
         mixed = rgb * (1 - mask[..., None]) + nrgb * mask[..., None]
         res = np.concatenate([mixed, alpha], -1)
-        Image.fromarray((res * 255).round().astype(np.uint8), "RGBA").save(out, optimize=True)
+        Image.fromarray((res * 255).round().astype(np.uint8), "RGBA").save(out, quality=85, method=6)
         print("ok", out.name)
 
 

@@ -226,7 +226,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                   padding: const EdgeInsets.only(top: 12, bottom: 16),
                   children: [
                     NpcPortrait(
-                      asset: 'assets/art/npc/merchant.png',
+                      asset: 'assets/art/npc/merchant.webp',
                       color: Palette.jade,
                       height: 150,
                       badge: _Medallion(hanzi: '商', burst: _burst),

@@ -4,6 +4,8 @@ Qué hay, qué es prestado y qué falta, en orden de prioridad. **Antes de pedir
 
 Actualizado: 2026-10-11.
 
+**El juego usa WebP.** El arte se genera y se guarda en PNG con el nombre del prompt; al integrarlo se commitea el PNG (queda en el historial de git como original) y se corre `python3 tool/optimize_art.py`, que lo pasa a `.webp` del tamaño en que se muestra y borra el PNG. Así las imágenes pasaron de 152 MB a 19 MB (11/10/2026).
+
 **La lista exacta, archivo por archivo, está en [`checklist.md`](checklist.md)**, que genera `python3 tool/art_status.py` comparando lo que el código busca con lo que hay en `assets/art`. Ante cualquier duda, manda la checklist: se corre antes de pasar prompts y cada vez que llega arte.
 
 ## Cómo busca cada imagen el juego

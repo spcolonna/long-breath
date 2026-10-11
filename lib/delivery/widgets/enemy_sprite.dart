@@ -7,7 +7,7 @@ import '../theme.dart';
 
 /// Figura del enemigo en la arena.
 ///
-/// Busca `assets/art/enemies/<id>.png`, después el placeholder común y, si no
+/// Busca `assets/art/enemies/<id>.webp`, después el placeholder común y, si no
 /// hay imágenes, dibuja una silueta. El aura del color del rango distingue a
 /// los enemigos aunque compartan imagen. Reacciona a golpes ([hitKey]), a sus
 /// propios ataques ([attackKey]: amague y embestida), a guardias o cargas
@@ -216,12 +216,12 @@ class _Figure extends StatelessWidget {
   Widget build(BuildContext context) {
     final silhouette = _Silhouette(def: def, size: size, accent: accent);
     return Image.asset(
-      'assets/art/enemies/${def.art}.png',
+      'assets/art/enemies/${def.art}.webp',
       width: size,
       height: size,
       fit: BoxFit.contain,
       errorBuilder: (_, _, _) => Image.asset(
-        'assets/art/enemies/placeholder.png',
+        'assets/art/enemies/placeholder.webp',
         width: size,
         height: size,
         fit: BoxFit.contain,

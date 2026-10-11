@@ -154,8 +154,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       body: SceneBackdrop(
         // Perder frente al muro de la escuela; ganar, frente a la cumbre.
         assets: won
-            ? stageArt('wolongding', 'map_bg.png')
-            : stageArt('qianyunshan', 'school_wall.png'),
+            ? stageArt('wolongding', 'map_bg.webp')
+            : stageArt('qianyunshan', 'school_wall.webp'),
         veil: 0.4,
         alignment: won ? Alignment.topCenter : Alignment.center,
         child: GestureDetector(

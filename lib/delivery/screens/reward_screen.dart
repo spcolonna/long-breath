@@ -324,7 +324,7 @@ class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
   }
 }
 
-/// El cofre de laca pintado (`ui/reward_chest.png`) con el sello 赏 en la
+/// El cofre de laca pintado (`ui/reward_chest.webp`) con el sello 赏 en la
 /// tapa. Si falta el arte, una caja dibujada.
 class _ChestArt extends StatelessWidget {
   const _ChestArt();
@@ -349,7 +349,7 @@ class _ChestArt extends StatelessWidget {
         ),
         Positioned.fill(
           child: Image.asset(
-            'assets/art/ui/reward_chest.png',
+            'assets/art/ui/reward_chest.webp',
             cacheWidth: (MediaQuery.devicePixelRatioOf(context) * 250).ceil(),
             fit: BoxFit.cover,
             errorBuilder: (_, _, _) => const _DrawnChest(),

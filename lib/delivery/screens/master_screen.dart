@@ -108,7 +108,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                   padding: const EdgeInsets.only(top: 12, bottom: 16),
                   children: [
                     NpcPortrait(
-                      asset: 'assets/art/npc/master.png',
+                      asset: 'assets/art/npc/master.webp',
                       color: Palette.structure,
                       height: 150,
                       badge: SizedBox(

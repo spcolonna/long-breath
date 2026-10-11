@@ -44,7 +44,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
 
     return Scaffold(
       body: SceneBackdrop(
-        assets: stageArt(data.balance.stages[run.stage].id, 'shrine_bg.png'),
+        assets: stageArt(data.balance.stages[run.stage].id, 'shrine_bg.webp'),
         veil: 0.4,
         alignment: Alignment.topCenter,
         child: SafeArea(
