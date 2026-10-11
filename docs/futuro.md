@@ -200,7 +200,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - teatro y arte: Ópera de las Mil Caras 变脸 (cambia de guardia cada turno), títeres de linterna 皮影, músico de guqin que marca el ritmo;
   - bestias míticas: Pixiu 貔貅 (devora jade), qilin, zorro de nueve colas (ilusiones: descartes);
   - objetos encantados: grullas de papel 纸鹤 (en bandada), espada voladora, buey de madera de los mohistas (autómata);
-  - en marcha: `opera_mask`, `pixiu` y `paper_crane` (prompts en `docs/arte/prompts.md` §8).
+  - **hecho (11/10/2026):** Grulla de Papel (etapa 1, pisos 2, 5 y 7), Ópera de las Mil Caras (etapa 2) y Pixiu (etapas 2 y 3). El balance de Normal no se movió (experto 58%, promedio 27%).
 - **Reserva sin usar:** `monk_amber`, `monk_slate` y `lion_celadon` ya están dibujados; darles un enemigo secundario cuesta solo datos.
 - **Recoloreos que quedan** (`golem_ice`, `monkey_snow`, `disciple_wind`, `bat_frost`): no hace falta reemplazarlos.
 

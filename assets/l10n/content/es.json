@@ -279,6 +279,18 @@
     "sleeping_dragon": {
       "name": "Dragón Dormido",
       "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos. Fase 2 al 50%: Aliento del Dragón con cuenta regresiva. Fase 3 al 30%: le crecen escamas hasta 3 y alterna escarcha y Aliento."
+    },
+    "paper_crane": {
+      "name": "Grulla de Papel",
+      "rule": "Un talismán plegado que cobró vida: poca Vida y golpes altos y rápidos. Suele llegar en bandada; repartí bien los golpes."
+    },
+    "opera_mask": {
+      "name": "Ópera de las Mil Caras",
+      "rule": "Cambia de máscara en cada guardia: la roja frena los puños, la dorada las palmas y la azul las patadas. Mirá la máscara y golpeá con otro tipo (las formas sí las frena). Ataca alto, medio y bajo, en ese orden."
+    },
+    "pixiu": {
+      "name": "Pixiu",
+      "rule": "Devora jade: cada golpe que te hace daño te roba 5. No se escapa: si lo vencés, lo devuelve todo. Escama de oro: cada golpe tuyo hace 1 menos hasta que lo desequilibres."
     }
   },
   "intents": {
@@ -309,7 +321,13 @@
     "frost": "Escarcha",
     "spores": "Nube de esporas",
     "cap_shield": "Sombrero de laca",
-    "root_lash": "Latigazo de raíz"
+    "root_lash": "Latigazo de raíz",
+    "paper_swoop": "Picada de papel",
+    "mask_red": "Máscara roja: frena los puños",
+    "mask_gold": "Máscara dorada: frena las palmas",
+    "mask_blue": "Máscara azul: frena las patadas",
+    "devour": "Devora jade",
+    "gold_scale": "Escama de oro"
   },
   "talismans": {
     "arco": "Cuerda del Arco",

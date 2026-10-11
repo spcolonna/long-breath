@@ -134,6 +134,26 @@
         { "kind": "guard", "labelKey": "burrow", "value": 8 },
         { "kind": "attack", "height": "low", "damage": 11, "structure": 3 }
       ] } ] },
+    { "id": "paper_crane", "rank": "common", "hp": 30, "structure": 7, "hanzi": "纸鹤", "pinyin": "zhǐ hè",
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "paper_swoop", "height": "high", "damage": 3, "hits": 2, "structure": 1 },
+        { "kind": "attack", "height": "high", "damage": 6, "structure": 2 }
+      ] } ] },
+    { "id": "opera_mask", "rank": "common", "hp": 72, "structure": 16, "hanzi": "变脸", "pinyin": "biàn liǎn",
+      "phases": [ { "pattern": [
+        { "kind": "guard", "labelKey": "mask_red", "blocks": "fist", "value": 11 },
+        { "kind": "attack", "height": "high", "damage": 9, "structure": 3 },
+        { "kind": "guard", "labelKey": "mask_gold", "blocks": "palm", "value": 11 },
+        { "kind": "attack", "height": "mid", "damage": 10, "structure": 3 },
+        { "kind": "guard", "labelKey": "mask_blue", "blocks": "kick", "value": 11 },
+        { "kind": "attack", "height": "low", "damage": 10, "structure": 3 }
+      ] } ] },
+    { "id": "pixiu", "rank": "common", "hp": 64, "structure": 15, "steal": 5, "scales": 1, "hanzi": "貔貅", "pinyin": "pí xiū",
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "devour", "height": "mid", "damage": 5, "hits": 2, "structure": 1 },
+        { "kind": "guard", "labelKey": "gold_scale", "value": 9 },
+        { "kind": "attack", "labelKey": "devour", "height": "high", "damage": 9, "structure": 2 }
+      ] } ] },
     { "id": "iron_abbot", "hanzi": "铁僧", "pinyin": "Tiě Sēng", "art": "monk_iron", "rank": "elite", "hp": 130, "structure": 23, "thorns": 1,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },

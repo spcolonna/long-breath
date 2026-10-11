@@ -40,7 +40,8 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 - **Enemigos:**
   - etapa 1: dummy, bat, salamander, golem, disciple, bandit, lingzhi, monkey, monk, lion, fan y dragon;
   - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3);
-  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza).
+  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza);
+  - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras) y `pixiu` (Pixiu).
 
 ## Reserva de recoloreos
 
