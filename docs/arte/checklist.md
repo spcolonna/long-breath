@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 64 · ✅ 58 · 🎨 5 · ❌ 1
+Total: 70 · ✅ 60 · 🎨 8 · ❌ 2
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -84,10 +84,12 @@ Total: 64 · ✅ 58 · 🎨 5 · ❌ 1
 | ✅ propio | `assets/art/enemies/fan.webp` | fan (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/fan_wind.webp` | wind_lady (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lion.webp` | lion (elite) | enemies/placeholder.webp | — |
+| 🎨 recoloreo de `lion` | `assets/art/enemies/lion_celadon.webp` | celadon_lion (elite) | enemies/placeholder.webp | no |
 | ✅ propio | `assets/art/enemies/lion_jade.webp` | jade_lion (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lion_snow.webp` | snow_lion (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk.webp` | monk (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk_iron.webp` | iron_abbot (elite) | enemies/placeholder.webp | — |
+| ❌ falta | `assets/art/enemies/qilin.webp` | qilin (elite) | enemies/placeholder.webp | listo |
 | ✅ propio | `assets/art/enemies/bandit.webp` | bandit (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat.webp` | bat (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat_bronze.webp` | bell_bat (common) | enemies/placeholder.webp | — |
@@ -96,10 +98,13 @@ Total: 64 · ✅ 58 · 🎨 5 · ❌ 1
 | ✅ propio | `assets/art/enemies/disciple_saffron.webp` | temple_guard (common) | enemies/placeholder.webp | — |
 | 🎨 recoloreo de `disciple` | `assets/art/enemies/disciple_wind.webp` | wind_disciple (common) | enemies/placeholder.webp | listo |
 | ✅ propio | `assets/art/enemies/dummy.webp` | dummy (common), dummy_basic (common), dummy_heights (common), dummy_light (common), dummy_guard (common), dummy_forms (common) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/flying_sword.webp` | flying_sword (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/golem.webp` | golem (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/golem_bronze.webp` | bronze_man (common) | enemies/placeholder.webp | — |
 | 🎨 recoloreo de `golem` | `assets/art/enemies/golem_ice.webp` | ice_golem (common) | enemies/placeholder.webp | listo |
 | ✅ propio | `assets/art/enemies/lingzhi.webp` | lingzhi (common) | enemies/placeholder.webp | — |
+| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_amber.webp` | incense_monk (common) | enemies/placeholder.webp | no |
+| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_slate.webp` | slate_hermit (common) | enemies/placeholder.webp | no |
 | ✅ propio | `assets/art/enemies/monkey.webp` | monkey (common) | enemies/placeholder.webp | — |
 | 🎨 recoloreo de `monkey` | `assets/art/enemies/monkey_snow.webp` | snow_ape (common) | enemies/placeholder.webp | listo |
 | ✅ propio | `assets/art/enemies/opera_mask.webp` | opera_mask (common) | enemies/placeholder.webp | — |
@@ -107,3 +112,4 @@ Total: 64 · ✅ 58 · 🎨 5 · ❌ 1
 | ✅ propio | `assets/art/enemies/pixiu.webp` | pixiu (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/salamander.webp` | salamander (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/salamander_ash.webp` | ash_salamander (common) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/wooden_ox.webp` | wooden_ox (common) | enemies/placeholder.webp | — |

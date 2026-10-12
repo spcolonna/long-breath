@@ -51,7 +51,7 @@ void main() {
     }
     // 10 de la etapa 1, 8 del monasterio, 8 de la cumbre, 6 muñecos y 3 de
     // concepto nuevo (la grulla, la ópera y el pixiu).
-    expect(data.enemies.length, 37);
+    expect(data.enemies.length, 43);
     expect(data.enemy('pixiu').steal, 5);
     expect(data.enemy('opera_mask').phases.single.pattern.length, 6);
     expect(data.enemy('bell_keeper').rank, EnemyRank.elite);

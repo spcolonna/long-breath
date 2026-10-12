@@ -771,6 +771,12 @@ class CombatEngine {
       e.scales--;
       events.add(ScaleShed(e.scales));
     }
+    // Una guardia que frena un solo tipo de golpe (Qilin, máscaras) se cae
+    // al desequilibrarlo.
+    if (e.guardBlocks != null) {
+      e.guard = 0;
+      e.guardBlocks = null;
+    }
   }
 
   /// Abanico: el golpe no hace daño (la Estructura sí entra) y el enemigo

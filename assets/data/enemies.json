@@ -154,6 +154,12 @@
         { "kind": "guard", "labelKey": "gold_scale", "value": 9 },
         { "kind": "attack", "labelKey": "devour", "height": "high", "damage": 9, "structure": 2 }
       ] } ] },
+    { "id": "incense_monk", "hanzi": "香僧", "pinyin": "Xiāng Sēng", "art": "monk_amber", "rank": "common", "hp": 80, "structure": 17, "regen": 4,
+      "phases": [ { "pattern": [
+        { "kind": "guard", "labelKey": "incense", "value": 8 },
+        { "kind": "attack", "labelKey": "incense_palm", "height": "mid", "damage": 13, "structure": 3 },
+        { "kind": "attack", "labelKey": "smoke", "height": "high", "damage": 9, "structure": 2, "drain": 1 }
+      ] } ] },
     { "id": "iron_abbot", "hanzi": "铁僧", "pinyin": "Tiě Sēng", "art": "monk_iron", "rank": "elite", "hp": 130, "structure": 23, "thorns": 1,
       "phases": [ { "pattern": [
         { "kind": "attack", "height": "mid", "damage": 11, "structure": 3 },
@@ -179,6 +185,12 @@
         { "kind": "guard", "labelKey": "mirror_scale", "value": 12 },
         { "kind": "attack", "height": "mid", "damage": 12, "structure": 3 },
         { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 22, "structure": 6, "countdown": true }
+      ] } ] },
+    { "id": "celadon_lion", "hanzi": "青狮", "pinyin": "Qīng Shī", "art": "lion_celadon", "rank": "elite", "hp": 150, "structure": 22, "wrath": 3,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "low", "damage": 13, "structure": 3 },
+        { "kind": "guard", "labelKey": "stone_skin", "value": 10 },
+        { "kind": "attack", "labelKey": "celadon_crush", "height": "low", "damage": 16, "structure": 4 }
       ] } ] },
     { "id": "bell_abbot", "hanzi": "钟师", "pinyin": "Zhōng Shī", "art": "monk_gold", "rank": "boss", "hp": 215, "structure": 21,
       "phases": [
@@ -218,6 +230,25 @@
         { "kind": "attack", "labelKey": "toll", "height": "high", "damage": 9, "structure": 2, "drain": 1 },
         { "kind": "discard", "labelKey": "screech", "count": 1 }
       ] } ] },
+    { "id": "flying_sword", "hanzi": "飞剑", "pinyin": "Fēi Jiàn", "rank": "common", "hp": 54, "structure": 11,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "sword_slash", "height": "high", "damage": 11, "structure": 1 },
+        { "kind": "attack", "labelKey": "sword_slash", "height": "high", "damage": 11, "structure": 1 },
+        { "kind": "attack", "labelKey": "sword_cut", "height": "high", "damage": 11, "structure": 1, "interrupt": true }
+      ] } ] },
+    { "id": "wooden_ox", "hanzi": "木牛", "pinyin": "Mù Niú", "rank": "common", "hp": 96, "structure": 20,
+      "phases": [ { "pattern": [
+        { "kind": "charge", "labelKey": "ox_wind_up", "value": 6 },
+        { "kind": "charge", "labelKey": "ox_wind_up", "value": 6 },
+        { "kind": "attack", "labelKey": "ox_stomp", "height": "low", "damage": 17, "structure": 5, "countdown": true }
+      ] } ] },
+    { "id": "slate_hermit", "hanzi": "石隐", "pinyin": "Shí Yǐn", "art": "monk_slate", "rank": "common", "hp": 86, "structure": 19, "thorns": 1,
+      "sameStancePunish": { "damage": 5, "structure": 2 },
+      "phases": [ { "pattern": [
+        { "kind": "attack", "height": "mid", "damage": 10, "structure": 3 },
+        { "kind": "guard", "labelKey": "slate_skin", "value": 10 },
+        { "kind": "attack", "labelKey": "sweep", "height": "low", "damage": 9, "structure": 3 }
+      ] } ] },
     { "id": "wind_lady", "hanzi": "风扇", "pinyin": "Fēng Shàn", "art": "fan_wind", "rank": "elite", "hp": 122, "structure": 22, "parry": 4,
       "phases": [ { "pattern": [
         { "kind": "attack", "labelKey": "fan_gust", "height": "low", "damage": 6, "hits": 2, "structure": 2, "freeze": 1 },
@@ -235,6 +266,12 @@
         { "kind": "attack", "labelKey": "frost", "height": "high", "damage": 7, "hits": 2, "structure": 2, "freeze": 1 },
         { "kind": "discard", "labelKey": "dream_haze", "count": 1 },
         { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 25, "structure": 7, "countdown": true }
+      ] } ] },
+    { "id": "qilin", "hanzi": "麒麟", "pinyin": "Qí Lín", "rank": "elite", "hp": 150, "structure": 23, "parry": 4,
+      "phases": [ { "pattern": [
+        { "kind": "guard", "labelKey": "cloud_step", "blocks": "kick", "value": 13 },
+        { "kind": "attack", "labelKey": "qilin_horn", "height": "high", "damage": 14, "structure": 3 },
+        { "kind": "attack", "labelKey": "holy_flame", "height": "mid", "damage": 8, "hits": 2, "structure": 2 }
       ] } ] },
     { "id": "sleeping_dragon", "hanzi": "卧龙", "pinyin": "Wò Lóng", "art": "dragon_azure", "rank": "boss", "hp": 205, "structure": 21, "scales": 4,
       "phases": [
