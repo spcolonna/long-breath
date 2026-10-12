@@ -158,8 +158,12 @@ void main() {
       await tap('Siguiente');
     }
     sees('Si perdés toda la Vida');
+    // Al terminar se elige una partida: la primera vez, una nueva.
     await tap('Empezar la subida');
+    await tap('Nueva partida');
     await tap('Fácil');
+    await tap('La subida');
+    await tap('Subir');
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getStringList('long_breath.lessonsDone'), contains('climb'));

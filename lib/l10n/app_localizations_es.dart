@@ -714,7 +714,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get difficultyTitle => '¿Cómo querés subir?';
 
   @override
-  String get difficultySubtitle => 'Podés cambiarla en cada subida nueva.';
+  String get difficultySubtitle =>
+      'Queda fija para esta partida. Para jugar otra, usá otra partida.';
 
   @override
   String get difficultyEasy => 'Fácil';
@@ -2252,4 +2253,103 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get introElite => 'Élite del camino';
+
+  @override
+  String get menuPlay => 'Jugar';
+
+  @override
+  String menuPlaySubtitle(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n partidas guardadas',
+      one: '1 partida guardada',
+      zero: 'Tres partidas, cada una con su dificultad',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slotsTitle => 'Partidas';
+
+  @override
+  String get slotsSubtitle =>
+      'Cada partida tiene su escuela, su registro y una dificultad fija.';
+
+  @override
+  String get slotsChange => 'Cambiar de partida';
+
+  @override
+  String slotName(int n) {
+    return 'Partida $n';
+  }
+
+  @override
+  String get slotNew => 'Nueva partida';
+
+  @override
+  String get slotNewHint =>
+      'Elegís la dificultad una vez y queda para toda la partida.';
+
+  @override
+  String slotAscents(int n, int wins) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n subidas',
+      one: '1 subida',
+      zero: 'sin subidas',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      wins,
+      locale: localeName,
+      other: ' · $wins cumbres',
+      one: ' · 1 cumbre',
+      zero: '',
+    );
+    return '$_temp0$_temp1';
+  }
+
+  @override
+  String slotClimbing(String stage, int floor) {
+    return 'Subiendo: $stage, piso $floor';
+  }
+
+  @override
+  String get slotResting => 'En la escuela, sin subida en curso';
+
+  @override
+  String get slotOptions => 'Opciones de la partida';
+
+  @override
+  String get slotRestart => 'Empezar de cero';
+
+  @override
+  String get slotDelete => 'Borrar partida';
+
+  @override
+  String slotDeleteTitle(int n) {
+    return '¿Borrar la Partida $n?';
+  }
+
+  @override
+  String get slotDeleteBody =>
+      'Se pierde todo lo de esta partida: discípulos, registro, lotos, meridianos y la subida en curso. Las lecciones y el sonido no se tocan.';
+
+  @override
+  String get slotDeleteOk => 'Borrar';
+
+  @override
+  String get slotDeleteSureTitle => '¿Seguro?';
+
+  @override
+  String slotDeleteSureBody(int n) {
+    return 'La Partida $n desaparece para siempre. No se puede deshacer.';
+  }
+
+  @override
+  String get slotDeleteSureOk => 'Sí, borrar para siempre';
+
+  @override
+  String get picoNone => 'Sin Pico';
 }

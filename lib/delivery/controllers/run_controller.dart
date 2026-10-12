@@ -12,8 +12,12 @@ import '../screens/map/map_layout.dart';
 
 /// Run en curso. Cada cambio se guarda localmente.
 class RunController extends Notifier<RunState?> {
+  /// Cambiar de partida deja la subida en memoria vacía.
   @override
-  RunState? build() => null;
+  RunState? build() {
+    ref.watch(activeSlotProvider);
+    return null;
+  }
 
   RunEngine get _engine => ref.read(runEngineProvider);
 
@@ -42,6 +46,17 @@ class RunController extends Notifier<RunState?> {
       ));
 
   void abandon() => _set(null);
+
+  /// Menú de pruebas (solo debug): subida en la etapa y el piso elegidos.
+  void debugStart(Difficulty difficulty, int pico, int stage, int floor) =>
+      _set(_engine.debugStart(
+        seed: DateTime.now().microsecondsSinceEpoch,
+        difficulty: difficulty,
+        pico: pico,
+        stage: stage,
+        floor: floor,
+        meta: ref.read(metaBonusProvider).value ?? MetaBonus.none,
+      ));
 
   void enter(String nodeId) => _set(_engine.enter(state!, nodeId));
 

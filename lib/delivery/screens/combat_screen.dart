@@ -3847,7 +3847,7 @@ class _PauseButton extends ConsumerWidget {
               const SizedBox(height: 8),
               if (lesson == null) ...[
                 OutlinedButton.icon(
-                  onPressed: () => leave('/'),
+                  onPressed: () => leave('/school'),
                   icon: const Icon(Icons.home_rounded),
                   label: Text(t.pauseToMenu),
                 ),

@@ -17,7 +17,9 @@ import 'delivery/screens/map_screen.dart';
 import 'delivery/screens/registry_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
+import 'delivery/screens/school_screen.dart';
 import 'delivery/screens/shrine_screen.dart';
+import 'delivery/screens/slots_screen.dart';
 import 'delivery/screens/stage_clear_screen.dart';
 import 'delivery/screens/talisman_screen.dart';
 import 'delivery/theme.dart';
@@ -71,6 +73,8 @@ GoRoute _route(String path, Widget screen) => GoRoute(
 final _router = GoRouter(
   routes: [
     _route('/', const HomeScreen()),
+    _route('/slots', const SlotsScreen()),
+    _route('/school', const SchoolScreen()),
     _route('/lessons', const LessonsScreen()),
     _route('/lessons/climb', const ClimbLessonScreen()),
     _route('/map', const MapScreen()),

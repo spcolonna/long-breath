@@ -28,7 +28,8 @@ const picoColor = Palette.structure;
 /// Lo que se elige antes de subir: la dificultad y, sobre Normal, un Pico.
 typedef RunChoice = ({Difficulty difficulty, int pico});
 
-/// Pregunta la dificultad de la subida nueva. Null si se cierra sin elegir.
+/// Pregunta la dificultad de una partida nueva. Null si se cierra sin
+/// elegir. Lo bloqueado se abre ganando en cualquier partida.
 Future<RunChoice?> pickDifficulty(
   BuildContext context, {
   Difficulty initial = Difficulty.normal,
@@ -79,8 +80,8 @@ class _DifficultySheetState extends ConsumerState<_DifficultySheet> {
     final t = AppLocalizations.of(context);
     final balance = ref.watch(dataProvider).balance;
     // Mientras carga se asume bloqueada: nunca se muestra Shifu abierta de más.
-    final wins = ref.watch(winsProvider).value ?? const <Difficulty>{};
-    final picos = ref.watch(picoUnlockedProvider).value ?? 0;
+    final wins = ref.watch(anyWinsProvider).value ?? const <Difficulty>{};
+    final picos = ref.watch(bestPicoProvider).value ?? 0;
     final pico = (_pico ??
             (widget.initialPico > 0 ? widget.initialPico : picos))
         .clamp(1, picos < 1 ? 1 : picos);

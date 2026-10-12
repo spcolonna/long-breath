@@ -79,7 +79,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: BackButton(onPressed: () => context.go('/')),
+        leading: BackButton(onPressed: () => context.go('/school')),
         title: Text(t.meridiansTitle),
         actions: [
           if (m != null)
