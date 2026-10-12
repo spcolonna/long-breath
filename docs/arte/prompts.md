@@ -1502,6 +1502,23 @@ Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, 
 
 ---
 
+## 9. Tanda de pulido: efectos y pantallas (un solo prompt, 10 imágenes)
+
+Se piden juntas en un único prompt de ChatGPT (el texto completo se le pasó al usuario el 12/10). Ninguna es recoloreo. Los efectos (`vfx/`) son una sola imagen cada uno: la animación (escala, giro, fundido) la hace el código, así no se suman hojas de cuadros y el peso queda bajo (se achican a 512×512 en `optimize_art.py`). Ninguna está integrada todavía.
+
+| Archivo | Tamaño | Para qué |
+|---|---|---|
+| `assets/art/vfx/hit_ink.png` | 1024×1024, transparente | salpicadura de tinta al golpear |
+| `assets/art/vfx/guard_shield.png` | 1024×1024, transparente | escudo de jade al tener guardia |
+| `assets/art/vfx/break_shatter.png` | 1024×1024, transparente | porcelana rota con oro al desequilibrar |
+| `assets/art/vfx/qi_swirl.png` | 1024×1024, transparente | remolino de aliento (qi) |
+| `assets/art/vfx/lotus_petals.png` | 1024×1024, transparente | pétalos al curarse o ganar loto |
+| `assets/art/ui/title_bg.png` | 1080×1920 | fondo del menú principal |
+| `assets/art/ui/lore_scroll.png` | 1024×1536, transparente | rollo abierto para leer los pergaminos |
+| `assets/art/ui/event_bg.png` | 1080×1920 | fondo de los eventos del camino |
+| `assets/art/ui/victory_bg.png` | 1080×1920 | fondo del triunfo final |
+| `assets/art/ui/epilogue_bg.png` | 1080×1920 | ilustración del epílogo (el maestro entrega el pincel) |
+
 ## Pendiente
 
 - Los nombres de cueva ya se cambiaron por nombres de montaña: Murciélago de Jade, Salamandra de Brasa y Gólem de Cuarzo.
