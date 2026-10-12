@@ -28,6 +28,24 @@ class ContentText {
   String form(String id) => _get('forms', id);
   String enemy(String id) => _get('enemies', id, 'name');
   String enemyRule(String id) => _get('enemies', id, 'rule');
+
+  /// Lo que dice el maestro errante la [n]-ésima vez (desde 1) que se lo
+  /// cruza en la etapa; las líneas se repiten en ronda. Null si no hay.
+  String? masterLine(String stageId, int n) {
+    var count = 0;
+    while (has('masterLines', '${stageId}_${count + 1}')) {
+      count++;
+    }
+    if (count == 0) return null;
+    return _get('masterLines', '${stageId}_${(n - 1) % count + 1}');
+  }
+
+  /// Lo que dice un jefe o una élite: al presentarse (`intro`), lo que le
+  /// contesta el héroe (`reply`), al caer (`defeat`) y si gana (`triumph`).
+  /// Null si no tiene esa línea.
+  String? enemyLine(String id, String field) =>
+      has('enemies', id, field) ? _get('enemies', id, field) : null;
+
   String intent(String key) => _get('intents', key);
   String stage(String id) => _get('stages', id);
 

@@ -166,11 +166,19 @@
     },
     "monk": {
       "name": "Monje sin Rostro",
-      "rule": "Interrumpir: si no lo desviás, tus formas en progreso vuelven a 0."
+      "rule": "Interrumpir: si no lo desviás, tus formas en progreso vuelven a 0.",
+      "intro": "Las campanas no suenan para vos. Suenan para que te des vuelta.",
+      "reply": "Vine a escucharlas de cerca.",
+      "defeat": "Pasá… y no mires la cara que no tengo.",
+      "triumph": "Volvé a la escuela. Las campanas te van a esperar."
     },
     "dragon": {
       "name": "Eco del Dragón",
-      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado. Cada vez que lo desequilibrás, pierde una escama para siempre. Fase 2 al 50% de Vida: anuncia el Aliento del Dragón, un golpe MEDIO enorme con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Fase 3 al 30%: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento cada dos acciones, con un barrido BAJO doble entre medio."
+      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado. Cada vez que lo desequilibrás, pierde una escama para siempre. Fase 2 al 50% de Vida: anuncia el Aliento del Dragón, un golpe MEDIO enorme con cuenta regresiva. Se evita desviándolo o dejándolo Desequilibrado antes. Fase 3 al 30%: le vuelven a crecer escamas hasta tener 2 y lanza el Aliento cada dos acciones, con un barrido BAJO doble entre medio.",
+      "intro": "¿Otro aliento pequeño que quiere tocar las nubes?",
+      "reply": "No vengo a tocarlas. Vengo a ver de dónde salen.",
+      "defeat": "Solo soy el eco… lo que duerme arriba respira más hondo.",
+      "triumph": "Las nubes se tragan a los que corren. Respirá más lento la próxima."
     },
     "dummy_basic": {
       "name": "Muñeco de madera",
@@ -206,11 +214,19 @@
     },
     "lion": {
       "name": "León de Piedra",
-      "rule": "Despierta: después de cada acción sus golpes hacen +3 de daño, y se acumula. Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0."
+      "rule": "Despierta: después de cada acción sus golpes hacen +3 de daño, y se acumula. Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0.",
+      "intro": "Piedra que despierta, piedra que no deja pasar.",
+      "reply": "Entonces voy a ser más paciente que la piedra.",
+      "defeat": "Vuelvo a dormir… cuidá el camino que te abrí.",
+      "triumph": "Otra piedra más en la escalera."
     },
     "fan": {
       "name": "Dama del Abanico",
-      "rule": "Abanico: el primer golpe con daño de cada turno no le hace daño y te devuelve 3. La Estructura sí entra. Abrí el turno con una carta barata o una palma; Desequilibrada no puede usar el abanico."
+      "rule": "Abanico: el primer golpe con daño de cada turno no le hace daño y te devuelve 3. La Estructura sí entra. Abrí el turno con una carta barata o una palma; Desequilibrada no puede usar el abanico.",
+      "intro": "Un golpe por vez, discípulo. El primero siempre es mío.",
+      "reply": "Entonces el segundo va a ser el que cuente.",
+      "defeat": "El viento cambió… y no a mi favor.",
+      "triumph": "Bailaste lindo. Pero el abanico marca el compás."
     },
     "bell_bat": {
       "name": "Murciélago del Campanario",
@@ -230,19 +246,35 @@
     },
     "iron_abbot": {
       "name": "Abad de Hierro",
-      "rule": "Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Interrumpe tus formas y su Camisa de hierro solo frena los puños: usá palmas o patadas."
+      "rule": "Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Interrumpe tus formas y su Camisa de hierro solo frena los puños: usá palmas o patadas.",
+      "intro": "Mi camisa es de hierro y mi paciencia también.",
+      "reply": "La mía es de lino, pero no se rompe.",
+      "defeat": "El hierro se dobla… el voto no.",
+      "triumph": "Bajá, y volvé cuando tu lino aguante un golpe."
     },
     "jade_lion": {
       "name": "León de Jade",
-      "rule": "Despierta: después de cada acción sus golpes suman 3 más. Antes de actuar recupera 3 de Vida. Desequilibrarlo lo calma y le quita la acción."
+      "rule": "Despierta: después de cada acción sus golpes suman 3 más. Antes de actuar recupera 3 de Vida. Desequilibrarlo lo calma y le quita la acción.",
+      "intro": "Cada rugido me despierta un poco más.",
+      "reply": "Entonces terminemos antes de que te despiertes del todo.",
+      "defeat": "El jade se raja… y adentro hay luz.",
+      "triumph": "Dormís en la nieve de abajo, como los otros."
     },
     "bell_keeper": {
       "name": "Guardián de la Campana",
-      "rule": "Su Guardia solo frena las palmas: usá puños o patadas. Repique: si no lo desviás, tenés 1 de Aliento menos. Anuncia el Golpe de campana, un golpe ALTO fuerte con cuenta regresiva que también te quita Aliento."
+      "rule": "Su Guardia solo frena las palmas: usá puños o patadas. Repique: si no lo desviás, tenés 1 de Aliento menos. Anuncia el Golpe de campana, un golpe ALTO fuerte con cuenta regresiva que también te quita Aliento.",
+      "intro": "Cuando la campana suena tres veces, nadie sigue subiendo.",
+      "reply": "Entonces no la voy a dejar sonar la tercera.",
+      "defeat": "Dos campanadas… y el silencio te deja pasar.",
+      "triumph": "Tercera campanada. Bajá con ella en los oídos."
     },
     "bell_abbot": {
       "name": "Abad de la Gran Campana",
-      "rule": "Su Guardia frena un solo tipo de golpe (puños o patadas): usá otro. Su repique te quita Aliento si no lo desviás. Fase 2 al 50%: anuncia la Gran Campanada, un golpe MEDIO enorme con cuenta regresiva que además te quita 2 de Aliento."
+      "rule": "Su Guardia frena un solo tipo de golpe (puños o patadas): usá otro. Su repique te quita Aliento si no lo desviás. Fase 2 al 50%: anuncia la Gran Campanada, un golpe MEDIO enorme con cuenta regresiva que además te quita 2 de Aliento.",
+      "intro": "Rezo por cada uno que sube. Hoy rezo por vos.",
+      "reply": "Rezá por los de abajo. Yo sigo subiendo.",
+      "defeat": "La campana está rajada… ahora entiendo quién la rajó la última vez.",
+      "triumph": "Que la montaña te devuelva. Yo no puedo."
     },
     "snow_ape": {
       "name": "Simio de las Nieves",
@@ -262,23 +294,43 @@
     },
     "wind_lady": {
       "name": "Dama del Viento",
-      "rule": "Desvía el primer golpe con daño de cada turno y te devuelve 4. No desvía mientras está Desequilibrada. Su ráfaga trae escarcha."
+      "rule": "Desvía el primer golpe con daño de cada turno y te devuelve 4. No desvía mientras está Desequilibrada. Su ráfaga trae escarcha.",
+      "intro": "El viento de la cumbre no sopla: decide.",
+      "reply": "Entonces que decida a favor de los que suben.",
+      "defeat": "Pasá. El viento ya te eligió.",
+      "triumph": "El viento te llevó de vuelta a casa. Agradecéselo."
     },
     "snow_lion": {
       "name": "León de las Nieves",
-      "rule": "Despierta: después de cada acción sus golpes suman 3 más; desequilibrarlo lo calma. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no)."
+      "rule": "Despierta: después de cada acción sus golpes suman 3 más; desequilibrarlo lo calma. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no).",
+      "intro": "Cada copo que cae me hace más grande.",
+      "reply": "Y cada paso mío te deja más chico.",
+      "defeat": "La nieve se derrite… vuelve a ser agua.",
+      "triumph": "Tu huella ya se borró. Así es la cumbre."
     },
     "dragon_reflection": {
       "name": "Reflejo del Dragón",
-      "rule": "El Dragón Dormido, visto en el estanque del monasterio. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Se cubre con escamas de espejo y anuncia el Aliento del Dragón con cuenta regresiva."
+      "rule": "El Dragón Dormido, visto en el estanque del monasterio. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Se cubre con escamas de espejo y anuncia el Aliento del Dragón con cuenta regresiva.",
+      "intro": "Soy lo que el dragón ve cuando se mira en el agua.",
+      "reply": "Entonces veamos qué ve cuando me mira a mí.",
+      "defeat": "El agua tiembla… el reflejo se va.",
+      "triumph": "Te miraste en mí y no te reconociste."
     },
     "dragon_dream": {
       "name": "Sueño del Dragón",
-      "rule": "Lo que el Dragón Dormido sueña antes de despertar. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos y su bruma te hace descartar. Anuncia el Aliento del Dragón con cuenta regresiva."
+      "rule": "Lo que el Dragón Dormido sueña antes de despertar. Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos y su bruma te hace descartar. Anuncia el Aliento del Dragón con cuenta regresiva.",
+      "intro": "Estás adentro del sueño del dragón. ¿Querés despertar?",
+      "reply": "No. Quiero llegar hasta el que sueña.",
+      "defeat": "El sueño te deja seguir… pero recordalo.",
+      "triumph": "Dormí, discípulo. Acá nadie se cansa."
     },
     "sleeping_dragon": {
       "name": "Dragón Dormido",
-      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos. Fase 2 al 50%: Aliento del Dragón con cuenta regresiva. Fase 3 al 30%: le crecen escamas hasta 3 y alterna escarcha y Aliento."
+      "rule": "Escamas: cada golpe le hace 1 de daño menos por escama, salvo que esté Desequilibrado; cada vez que lo desequilibrás pierde una. Su escarcha te hace robar una carta menos. Fase 2 al 50%: Aliento del Dragón con cuenta regresiva. Fase 3 al 30%: le crecen escamas hasta 3 y alterna escarcha y Aliento.",
+      "intro": "Llevo siglos respirando para que las nubes sigan naciendo. ¿Vos por qué respirás?",
+      "reply": "Porque la escuela me enseñó a respirar despacio. Vine a ver para qué.",
+      "defeat": "Al fin… alguien con el aliento largo. Ahora podés ver la piedra.",
+      "triumph": "Dormí un poco más vos también. Abajo te espera el próximo."
     },
     "paper_crane": {
       "name": "Grulla de Papel",
@@ -298,7 +350,11 @@
     },
     "celadon_lion": {
       "name": "León de Celadón",
-      "rule": "Guardián de porcelana del patio del monasterio. Despierta: cada acción suma 3 a sus golpes, que van todos abajo. Desequilibrarlo lo vuelve a dormir."
+      "rule": "Guardián de porcelana del patio del monasterio. Despierta: cada acción suma 3 a sus golpes, que van todos abajo. Desequilibrarlo lo vuelve a dormir.",
+      "intro": "Porcelana del patio, guardiana de los que dudan.",
+      "reply": "Hoy no dudo.",
+      "defeat": "Una grieta… como las de las tazas viejas que el maestro no tira.",
+      "triumph": "Lo frágil también sabe pisar fuerte."
     },
     "flying_sword": {
       "name": "Espada Voladora",
@@ -314,7 +370,11 @@
     },
     "qilin": {
       "name": "Qilin",
-      "rule": "La bestia de buen augurio. Pisa nubes: su guardia frena las patadas. Desvía el primer golpe de cada turno y te devuelve 4. Desequilibrado pierde las dos defensas."
+      "rule": "La bestia de buen augurio. Pisa nubes: su guardia frena las patadas. Desvía el primer golpe de cada turno y te devuelve 4. Desequilibrado pierde las dos defensas.",
+      "intro": "El qilin aparece cuando nace alguien que va a cambiar las cosas.",
+      "reply": "¿Y por qué me cerrás el paso?",
+      "defeat": "Porque tenía que estar seguro. Ahora lo estoy.",
+      "triumph": "Todavía no es tu momento. Va a llegar."
     }
   },
   "intents": {
@@ -573,9 +633,66 @@
       "let_goResult": "Escribís en un jirón algo que ya no te sirve y lo dejás ir con el viento. El mazo pesa menos.",
       "leave": "Seguir subiendo",
       "leaveResult": "Pasás entre las banderas sin detenerte. El viento te empuja la espalda."
+    },
+    "beam_names": {
+      "name": "Las vigas con nombres",
+      "text": "En una viga del pasadizo hay nombres tallados a cuchillo, uno debajo del otro, con la fecha en que cada discípulo pasó por acá. Al final queda un hueco limpio.",
+      "carve": "Tallar tu nombre",
+      "carveResult": "La madera es dura y te lastimás los dedos. Cuando terminás, notás que alguien ya había empezado tu nombre: solo faltaba la última letra.",
+      "read": "Leer los nombres",
+      "readResult": "Debajo de cada nombre hay una postura dibujada con tinta. Copiás la que más se repite y la practicás en el borde del abismo. Aprendés una forma.",
+      "leave": "Seguir",
+      "leaveResult": "Pasás la mano por la madera sin leer. Algunos nombres están tibios, como si los hubieran tallado esta mañana."
+    },
+    "shadow_puppets": {
+      "name": "Los títeres de linterna",
+      "text": "Detrás de un papel encerado, un viejo mueve títeres de cuero contra la luz de una linterna. Cuenta la historia de un discípulo que subió hasta las nubes y volvió convertido en maestro.",
+      "watch": "Mirar la función",
+      "watchResult": "El títere del discípulo llega a la cumbre, se inclina ante un dragón dormido y baja con un cuaderno bajo el brazo. Te reís sin saber por qué y respirás mejor.",
+      "tip": "Dejarle una propina",
+      "tipResult": "El viejo te regala uno de sus títeres viejos. Tiene tu túnica y tu cinta. Lo guardás como amuleto."
+    },
+    "ice_sage": {
+      "name": "El sabio en el hielo",
+      "text": "En una cornisa, un monje medita cubierto por una capa fina de hielo transparente. Sonríe. Respira tan despacio que el hielo apenas se empaña.",
+      "share": "Respirar con él",
+      "shareResult": "Te sentás a su lado y acompasás tu aliento al suyo. El frío te muerde, pero al rato tus golpes salen más limpios, como si él te hubiera corregido sin hablar.",
+      "bow": "Inclinarte y seguir",
+      "bowResult": "Al inclinarte, el monje abre un ojo, te guiña y vuelve a meditar. Seguís subiendo con el pecho caliente."
+    },
+    "cloud_spring": {
+      "name": "Donde nacen las nubes",
+      "text": "Una grieta en la roca exhala un aire tibio y lento. Al salir se vuelve nube. Adentro, muy hondo, algo enorme respira.",
+      "breathe": "Respirar a su ritmo",
+      "breatheResult": "Inhalás cuando la montaña inhala y exhalás cuando exhala. Por un momento tu aliento y el del dragón son uno. Te sentís más hondo por dentro.",
+      "gather": "Juntar escarcha de nube",
+      "gatherResult": "La escarcha que deja la nube es jade puro. Llenás la bolsa antes de que el aire cambie.",
+      "gatherFail": "El aliento cambia de golpe y te tira contra las piedras. La montaña no quiere que le saquen nada.",
+      "leave": "Dejarla en paz",
+      "leaveResult": "Te alejás en silencio. Detrás tuyo, una nube nueva sube hacia la cumbre."
     }
   },
   "lore": {
+    "fell_bell_keeper": {
+      "title": "Tres campanadas",
+      "text": "El Guardián de la Campana no te odiaba: contaba. Una campanada por cada discípulo que pasó, dos por los que volvieron, tres por los que se quedaron arriba. Esta vez le alcanzó con tres."
+    },
+    "monastery_beams": {
+      "title": "Las vigas",
+      "text": "Los monjes del Monasterio Colgado fueron discípulos de la escuela. Llegaron hasta acá, miraron hacia arriba y eligieron quedarse a cuidar el paso. En las vigas tallan los nombres de todos los que siguieron subiendo."
+    },
+    "fell_wind_lady": {
+      "title": "El viento que decide",
+      "text": "La Dama del Viento fue la primera discípula que llegó al templo helado. El dragón le dio el viento de la cumbre para que eligiera quién sigue. Dicen que todavía no eligió a nadie con ganas."
+    },
+    "snow_footprints": {
+      "title": "Huellas en la nieve",
+      "text": "En el paso nevado, las huellas suben y ninguna baja. Salvo unas, viejas y profundas, que bajan hasta la escuela. Son del tamaño de las sandalias del maestro."
+    },
+    "epilogue": {
+      "title": "El cuaderno del maestro",
+      "text": "Cuando bajaste, el maestro te esperaba en la puerta. Abrió el cuaderno que no mostraba a nadie: estaban todos los discípulos y el piso al que había llegado cada uno. Al lado de tu nombre escribió «cumbre». «El dragón fue el primer maestro de esta escuela», te dijo. «Sueña con nosotros y nosotros respiramos por él. Algún día me vas a reemplazar: alguien tiene que mandar al próximo». Y te dio el pincel."
+    },
     "prologue": {
       "title": "La escuela del Dragón Dormido",
       "text": "Al pie de la Montaña de las Mil Nubes hay una escuela que respira despacio. Dicen que en la cumbre duerme un dragón y que su aliento hace las nubes. Cada novicio, cuando el maestro lo decide, sube solo. Hoy te toca a vos.",
@@ -641,6 +758,17 @@
       "text": "Diez caídos. Una noche ves al maestro escribir en un cuaderno que no muestra a nadie: no anota nombres, anota hasta qué piso llegó cada uno. Como si estuviera midiendo algo.",
       "hint": "Que caigan 10 discípulos."
     }
+  },
+  "masterLines": {
+    "qianyunshan_1": "Respirá más lento que la montaña. Ella no tiene apuro.",
+    "qianyunshan_2": "Cada piso que subís, alguien lo anota abajo. Algún día vas a saber quién.",
+    "qianyunshan_3": "Las nubes de hoy son el aliento de ayer. Acordate de esto cuando llegues arriba.",
+    "xuankongsi_1": "Los monjes del monasterio subieron como vos. Eligieron cuidar el paso en vez de seguir.",
+    "xuankongsi_2": "La campana del abad está rajada. La rajó alguien que llegó muy lejos… y bajó a contarlo.",
+    "xuankongsi_3": "En la cumbre hay una piedra con nombres. No me preguntes cuál es el mío.",
+    "wolongding_1": "Desde acá la escuela parece un grano de arroz. Ahí empezó todo: un maestro que subió y no quiso bajar.",
+    "wolongding_2": "El dragón no cuida la cumbre: cuida la respiración de todos los que viven abajo.",
+    "wolongding_3": "Si llegás, no tengas miedo de lo que veas tallado. Es una promesa, no una condena."
   },
   "stageIntros": {
     "qianyunshan": "Senderos de piedra entre nubes bajas. Acá empieza toda subida.",

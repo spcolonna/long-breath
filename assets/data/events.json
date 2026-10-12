@@ -114,6 +114,36 @@
         { "id": "let_go", "heal": 6, "gain": "loseStarter" },
         { "id": "leave" }
       ]
+    },
+    {
+      "id": "beam_names", "hanzi": "梁", "stages": ["xuankongsi"],
+      "options": [
+        { "id": "carve", "hp": 4, "maxHp": 6 },
+        { "id": "read", "gain": "form" },
+        { "id": "leave" }
+      ]
+    },
+    {
+      "id": "shadow_puppets", "hanzi": "影", "stages": ["xuankongsi"],
+      "options": [
+        { "id": "watch", "heal": 12 },
+        { "id": "tip", "price": 20, "gain": "talisman" }
+      ]
+    },
+    {
+      "id": "ice_sage", "hanzi": "冰", "stages": ["wolongding"],
+      "options": [
+        { "id": "share", "hp": 6, "gain": "upgrade" },
+        { "id": "bow", "heal": 10 }
+      ]
+    },
+    {
+      "id": "cloud_spring", "hanzi": "云", "stages": ["wolongding"],
+      "options": [
+        { "id": "breathe", "maxHp": 6 },
+        { "id": "gather", "chance": 50, "success": { "jade": 40 }, "failure": { "hp": 8 } },
+        { "id": "leave" }
+      ]
     }
   ]
 }

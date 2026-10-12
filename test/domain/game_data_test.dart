@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:long_breath/domain/run/ascent.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
@@ -133,7 +134,7 @@ void main() {
     expect(data.talismans.values.where((t) => t.rare), hasLength(3));
     expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(10),
         reason: 'cada uno se reconoce por su carácter');
-    expect(data.events, hasLength(16));
+    expect(data.events, hasLength(20));
     for (final e in data.events) {
       expect(e.options.length, inInclusiveRange(2, 3), reason: e.id);
     }
@@ -171,5 +172,42 @@ void main() {
     final all = m.bonusOf(c, c.realms.length - 1, [for (final n in m.nodes) n.id]);
     expect(all.maxHp, greaterThan(0));
     expect(m.bonusOf(c, 0, const []).isNone, isTrue);
+  });
+
+  test('historia: textos de pergaminos, eventos, jefes y maestro', () {
+    final content = jsonDecode(
+      File('assets/l10n/content/es.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final lore = content['lore'] as Map<String, dynamic>;
+    for (final id in loreOrder) {
+      expect(lore.containsKey(id), isTrue, reason: id);
+    }
+    final events = content['events'] as Map<String, dynamic>;
+    for (final e in data.events) {
+      final text = events[e.id] as Map<String, dynamic>?;
+      expect(text, isNotNull, reason: e.id);
+      for (final o in e.options) {
+        expect(text!.containsKey(o.id), isTrue, reason: '${e.id}.${o.id}');
+        expect(text.containsKey('${o.id}Result'), isTrue, reason: o.id);
+        if (o.chance != null) {
+          expect(text.containsKey('${o.id}Fail'), isTrue, reason: o.id);
+        }
+      }
+    }
+    // Cada jefe y cada élite habla al presentarse, al caer y si gana.
+    final enemies = content['enemies'] as Map<String, dynamic>;
+    for (final stage in data.balance.stages) {
+      for (final f in stage.floors) {
+        for (final id in f.enemies) {
+          if (data.enemy(id).rank == EnemyRank.common) continue;
+          final e = enemies[id] as Map<String, dynamic>;
+          for (final k in ['intro', 'reply', 'defeat', 'triumph']) {
+            expect(e.containsKey(k), isTrue, reason: '$id.$k');
+          }
+        }
+      }
+      final master = content['masterLines'] as Map<String, dynamic>;
+      expect(master.containsKey('${stage.id}_1'), isTrue, reason: stage.id);
+    }
   });
 }
