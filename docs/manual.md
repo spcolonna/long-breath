@@ -54,9 +54,17 @@ Pasado el eco, la subida sigue en tres etapas:
 2. **Monasterio Colgado** 悬空寺: un monasterio clavado en la pared del abismo. Sus guardianes prueban a quien sube: el **Murciélago del Campanario** (su repique te quita Aliento), el **Hombre de Bronce** 铜人 (inamovible y con espinas), el **Guardián del Pasadizo** (frena un solo tipo de golpe), la **Salamandra de Ceniza** (se cura al actuar), y los élites **Abad de Hierro** 铁僧, **León de Jade** 玉狮, **Guardián de la Campana** 守钟人 y **Reflejo del Dragón** 龙影 (el dragón de la cumbre, visto en el estanque). Arriba, el **Abad de la Gran Campana** 钟师.
 3. **Cumbre del Dragón Dormido** 卧龙顶: nieve, viento y silencio. El **Simio de las Nieves**, el **Gólem de Escarcha**, el **Discípulo del Viento** y el **Murciélago de Escarcha** (la escarcha te hace robar menos), los élites **Dama del Viento** 风扇, **León de las Nieves** 雪狮 y **Sueño del Dragón** 龙梦 (lo que el dragón sueña antes de despertar), y en la cumbre el **Dragón Dormido** 卧龙.
 
-Los enemigos de las etapas 2 y 3 son, por ahora, variantes recoloreadas de los de la etapa 1, con reglas propias.
+Además de las variantes recoloreadas, hay enemigos de concepto propio: la **Grulla de Papel** 纸鹤 (etapa 1), la **Ópera de las Mil Caras** 变脸, el **Pixiu** 貔貅 y el **Monje del Incienso** 香僧 (etapa 2, con el élite **León de Celadón** 青狮), y la **Espada Voladora** 飞剑, el **Buey de Madera** 木牛 de los mohistas y el **Ermitaño de Pizarra** 石隐 (etapa 3, con el élite **Qilin** 麒麟).
 
-El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que cayeron antes que vos. Esa pista prepara la historia completa: qué le pasó a los que no volvieron y qué quiere el maestro de la escuela.
+El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que cayeron antes que vos.
+
+### La historia
+
+- **Jefes y élites hablan:** al presentarse dicen algo y, la primera vez, tu héroe les contesta. Al caer dejan una última frase (y otra si te vencen).
+- **El maestro errante** dice algo distinto cada vez que te lo cruzás, distinto en cada etapa: va soltando pistas de por qué se sube.
+- **Pergaminos (18):** prólogo, santuario, caídas ante cada rival importante, el monasterio (las vigas con los nombres de los que siguieron), la nieve (las huellas que solo bajan una vez), la cumbre y el **epílogo**.
+- **El giro:** el Dragón Dormido fue el primer maestro de la escuela. Sueña con los discípulos y ellos respiran por él; el maestro anota hasta qué piso llega cada uno. Quien llega a la cumbre encuentra su nombre ya tallado: es una promesa, no una condena. En el epílogo el maestro te da el pincel para mandar al próximo.
+- **Eventos con historia:** las vigas con nombres y los títeres de linterna (monasterio), el sabio en el hielo y donde nacen las nubes (cumbre).
 
 
 ## Lo que viene (fuera del MVP)
@@ -83,7 +91,8 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
 ## Una partida (run)
 
-1. **Inicio:** tocás **Nueva run** y empezás como novicio, sin camino. **Continuar run** retoma la partida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
+1. **Inicio:** el menú principal (común a todas) tiene **Aprender** y **Jugar**. Jugar muestra las **tres partidas**: cada una tiene su escuela, su registro, su loto y una **dificultad fija** que se elige al crearla. Una partida se puede **empezar de cero** o **borrar** (pide confirmación; si tiene progreso, dos veces). Las lecciones y el sonido son comunes. Dentro de la partida, **La subida** empieza como novicio sin preguntar la dificultad (el Pico se ajusta con − y +), y **Continuar run** retoma la subida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
+   - **Pruebas (solo en builds de desarrollo):** el ícono del bicho en la escuela arranca una subida en cualquier etapa y piso, y suma loto.
 2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 11 pisos por etapa, de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso). Arriba a la derecha, la regla de altura marca tu piso sobre el total; el número junto al ícono del mazo es la cantidad de cartas (tocalo para verlas).
 
    Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. Al llegar, el rival se presenta.
@@ -337,7 +346,7 @@ En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista 
 ## Presentaciones
 
 - **Etapa:** al pisar una etapa nueva, la cámara sube por la montaña pintada mientras tu héroe la mira de espaldas, y cae el sello con su nombre. La primera vez se ve entera (unos 4 s); después, en versión corta. No se repite en la misma subida.
-- **Jefe:** antes del combate, la cámara se acerca al rival en su escenario: primero es una sombra de tinta, después toma color con su aura y aparece su nombre; al final entra tu héroe. La primera vez se ve entera; después, corta.
+- **Jefe:** antes del combate, la cámara se acerca al rival en su escenario: primero es una sombra de tinta, después toma color con su aura y aparece su nombre; al final entra tu héroe. Si tiene diálogo, habla y tu héroe le contesta. La primera vez se ve entera; después, corta (solo su frase).
 - **Élite:** siempre la versión corta.
 - Cualquier presentación se salta con un toque.
 

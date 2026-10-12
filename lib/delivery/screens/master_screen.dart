@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/model/form_def.dart';
+import '../../domain/model/game_balance.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
@@ -58,6 +59,12 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
     final data = ref.watch(dataProvider);
     final engine = ref.watch(runEngineProvider);
     final text = ref.watch(textProvider);
+
+    // Cada vez que se lo cruza en la etapa dice otra cosa.
+    final stageId = data.balance.stages[run.stage].id;
+    final visits = run.visited
+        .where((id) => run.node(id).type == NodeType.master)
+        .length;
     final ctl = ref.read(runControllerProvider.notifier);
     _forms ??= run.masterForms;
     final upgrade = data.balance.fountainUpgrade;
@@ -183,6 +190,20 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 15, height: 1.35),
                     ),
+                    if (text.masterLine(stageId, visits) case final line?) ...[
+                      const SizedBox(height: 10),
+                      Text(
+                        '«$line»',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          height: 1.35,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w600,
+                          color: Palette.lacquer,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 18),
                     Text(
                       _forms!.isEmpty ? t.masterNoForms : t.masterTeachHint,

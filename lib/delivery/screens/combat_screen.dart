@@ -843,6 +843,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           builder: (full) => FoeIntro(
             def: def,
             name: ref.watch(textProvider).enemy(def.id),
+            intro: ref.watch(textProvider).enemyLine(def.id, 'intro'),
+            reply: ref.watch(textProvider).enemyLine(def.id, 'reply'),
             stageId: stageId,
             scene: node?.scene,
             light: node?.light,
@@ -979,6 +981,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                 maxHp: live.state.player.maxHp,
                 enemyName: ref.watch(textProvider).enemy(live.state.enemy.id),
                 enemyHp: live.state.enemy.hp,
+                quote: live.lessonId != null
+                    ? null
+                    : ref
+                          .watch(textProvider)
+                          .enemyLine(
+                            live.state.enemy.id,
+                            won ? 'defeat' : 'triumph',
+                          ),
                 fledWith: live.state.enemy.fled
                     ? live.state.enemy.stolen
                     : null,
@@ -3359,10 +3369,14 @@ class _EndOverlay extends ConsumerStatefulWidget {
     required this.maxHp,
     required this.enemyName,
     required this.enemyHp,
+    this.quote,
     this.fledWith,
   });
 
   final bool won;
+
+  /// Últimas palabras del jefe o la élite (o lo que dice si ganó).
+  final String? quote;
 
   /// El enemigo se escapó con este jade (null si lo venciste).
   final int? fledWith;
@@ -3611,6 +3625,22 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
                         ),
                       ),
                     ),
+                    if (widget.quote != null && fled == null)
+                      Opacity(
+                        opacity: summary,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(32, 12, 32, 0),
+                          child: Text(
+                            '«${widget.quote}»',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 14.5,
+                              fontStyle: FontStyle.italic,
+                              color: Palette.text,
+                            ),
+                          ),
+                        ),
+                      ),
                     const SizedBox(height: 28),
                     Opacity(
                       opacity: button.clamp(0, 1),

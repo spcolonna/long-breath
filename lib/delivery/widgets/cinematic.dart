@@ -454,10 +454,17 @@ class FoeIntro extends ConsumerWidget {
     required this.style,
     required this.full,
     required this.onDone,
+    this.intro,
+    this.reply,
   });
 
   final EnemyDef def;
   final String name;
+
+  /// Lo que dice el rival al presentarse y lo que le contesta el héroe
+  /// (solo en la versión entera).
+  final String? intro;
+  final String? reply;
   final String stageId;
   final String? scene;
   final String? light;
@@ -471,9 +478,18 @@ class FoeIntro extends ConsumerWidget {
     final audio = ref.read(audioProvider);
     final boss = def.rank == EnemyRank.boss;
     final color = rankColor(def.rank);
-    final ms = full ? 4000 : 2000;
-    final revealAt = full ? 0.22 : 0.08;
-    final sealAt = full ? 0.5 : 0.36;
+    // Si tiene diálogo, la presentación se estira para leerlo: el rival
+    // habla y, en la versión entera, el héroe le contesta.
+    final intro = this.intro;
+    final reply = full && intro != null ? this.reply : null;
+    final base = full ? 4000 : 2000;
+    final talk = intro == null ? 0 : (reply != null ? 3000 : 1600);
+    final ms = base + talk;
+    final k = base / ms;
+    final revealAt = (full ? 0.22 : 0.08) * k;
+    final sealAt = (full ? 0.5 : 0.36) * k;
+    final talkAt = 0.9 * k;
+    final replyAt = reply == null ? 1.0 : k + (1 - k) * 0.45;
     return Cinematic(
       duration: Duration(milliseconds: ms),
       onDone: onDone,
@@ -482,19 +498,25 @@ class FoeIntro extends ConsumerWidget {
         (ms * revealAt).round(): () =>
             audio.play(boss ? Sfx.phaseTwo : Sfx.enemyDrop),
         (ms * sealAt).round() + 100: () => audio.play(Sfx.fightStart),
-        if (full) (ms * 0.72).round(): () => audio.play(Sfx.stanceChange),
+        if (full) (ms * 0.72 * k).round(): () => audio.play(Sfx.stanceChange),
+        if (intro != null) (ms * talkAt).round(): () =>
+            audio.play(Sfx.uiButton),
+        if (reply != null) (ms * replyAt).round(): () =>
+            audio.play(Sfx.cardSelect),
       },
       builder: (context, v) {
         final cam = span(v, 0, 0.9, Curves.easeInOutSine);
-        final reveal = span(v, revealAt, revealAt + 0.2);
-        final rise = span(v, 0, revealAt + 0.15);
+        final reveal = span(v, revealAt, revealAt + 0.2 * k);
+        final rise = span(v, 0, revealAt + 0.15 * k);
         final seal = span(
           v,
           sealAt,
-          sealAt + (full ? 0.18 : 0.3),
+          sealAt + (full ? 0.18 : 0.3) * k,
           Curves.linear,
         );
-        final hero = full ? span(v, 0.68, 0.86) : 0.0;
+        final hero = full ? span(v, 0.68 * k, 0.86 * k) : 0.0;
+        final says = intro == null ? 0.0 : span(v, talkAt, talkAt + 0.06);
+        final answers = reply == null ? 0.0 : span(v, replyAt, replyAt + 0.06);
         return LayoutBuilder(
           builder: (context, box) {
             final foeH = math.min(box.maxHeight * 0.5, box.maxWidth * 1.05);
@@ -589,6 +611,21 @@ class FoeIntro extends ConsumerWidget {
                       ),
                     ),
                   ),
+                if (intro != null)
+                  Align(
+                    alignment: const Alignment(0, -0.94),
+                    child: _Quote(t: says, text: intro, color: color),
+                  ),
+                if (reply != null)
+                  Align(
+                    alignment: const Alignment(0.85, 0.98),
+                    child: _Quote(
+                      t: answers,
+                      text: reply,
+                      color: Palette.jade,
+                      hero: true,
+                    ),
+                  ),
                 Align(
                   alignment: const Alignment(0, 0.7),
                   child: _TitleSeal(
@@ -605,6 +642,61 @@ class FoeIntro extends ConsumerWidget {
           },
         );
       },
+    );
+  }
+}
+
+/// Una línea de diálogo en un globo de papel: la del rival arriba, la del
+/// héroe abajo, a la derecha de su figura.
+class _Quote extends StatelessWidget {
+  const _Quote({
+    required this.t,
+    required this.text,
+    required this.color,
+    this.hero = false,
+  });
+
+  final double t;
+  final String text;
+  final Color color;
+  final bool hero;
+
+  @override
+  Widget build(BuildContext context) {
+    if (t <= 0) return const SizedBox.shrink();
+    final w = MediaQuery.sizeOf(context).width;
+    return Opacity(
+      opacity: t,
+      child: Transform.translate(
+        offset: Offset(0, (hero ? 14 : -14) * (1 - t)),
+        child: Container(
+          constraints: BoxConstraints(maxWidth: w * (hero ? 0.62 : 0.86)),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+          decoration: BoxDecoration(
+            color: Palette.surface.withValues(alpha: 0.94),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: color, width: 2),
+            boxShadow: [
+              BoxShadow(
+                color: color.withValues(alpha: 0.25),
+                blurRadius: 14,
+              ),
+            ],
+          ),
+          child: Text(
+            '«$text»',
+            textAlign: hero ? TextAlign.right : TextAlign.center,
+            style: TextStyle(
+              fontSize: hero ? 14.5 : 16,
+              height: 1.3,
+              fontStyle: FontStyle.italic,
+              fontWeight: hero ? FontWeight.w600 : FontWeight.w700,
+              color: Palette.text,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

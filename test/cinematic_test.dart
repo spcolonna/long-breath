@@ -67,6 +67,35 @@ void main() {
     expect(done, 2);
   });
 
+  testWidgets('el jefe habla y el héroe le contesta antes de pelear', (
+    tester,
+  ) async {
+    var done = 0;
+    await tester.pumpWidget(
+      host(
+        FoeIntro(
+          def: data.enemy('sleeping_dragon'),
+          name: 'Dragón Dormido',
+          intro: '¿Vos por qué respirás?',
+          reply: 'Vine a ver para qué.',
+          stageId: 'wolongding',
+          scene: 'lecho_dragon',
+          light: null,
+          style: Style.crane,
+          full: true,
+          onDone: () => done++,
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 4200));
+    expect(find.text('«¿Vos por qué respirás?»'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 1600));
+    expect(find.text('«Vine a ver para qué.»'), findsOneWidget);
+    expect(done, 0, reason: 'el diálogo estira la presentación');
+    await tester.pump(const Duration(milliseconds: 1400));
+    expect(done, 1);
+  });
+
   testWidgets('la etapa se presenta entera la primera vez y una sola vez', (
     tester,
   ) async {

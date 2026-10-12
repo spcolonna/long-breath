@@ -228,7 +228,8 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Hecho (base):** cada subida la hace un discípulo con número; al caer se narra qué pasó y "la escuela envía a otro novicio"; registro de la escuela 名册 con tablillas y 9 pergaminos de lore que se abren por hitos (prólogo, santuario, caer ante cada rival, cumbre, 5 y 10 caídos). Sin efecto mecánico.
 - **Pendiente:**
   - Que el Discípulo Perdido lleve algo de un discípulo caído del registro (nombre/número, su camino).
-  - Pergaminos de las etapas 2 y 3, y del giro del maestro (la cumbre ya siembra la duda: tu nombre ya estaba tallado).
+  - ~~Pergaminos de las etapas 2 y 3, y del giro del maestro~~ **hecho (12/10/2026):** 18 pergaminos (vigas, huellas, Guardián de la Campana, Dama del Viento, epílogo con el giro), diálogos de jefes y élites, maestro errante con líneas por etapa y 4 eventos con historia.
+  - Ilustración del epílogo (hoy es un pergamino).
 - **Escenas:**
   - Prólogo en el templo del Dragón Dormido 卧龙门 (hoy es un pergamino; falta la ilustración).
   - Giro del maestro.
@@ -242,8 +243,12 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - Los jefes de las etapas 2 y 3 tienen fondo propio (Gran Campanario y Lecho del Dragón, 10/10/2026).
 - **Siguiente:**
   - un ajuste "Reducir movimiento" en Opciones (hoy se respeta el del sistema);
-  - un epílogo corto al vencer al Dragón Dormido;
+  - ~~un epílogo corto al vencer al Dragón Dormido~~ (hecho como pergamino; falta escena ilustrada);
   - capas de nubes en PNG para parallax en el combate.
+
+### 3.8c Partidas (hecho, 12/10/2026)
+- Tres partidas con dificultad fija; borrar o empezar de cero con confirmación. La partida 1 usa las claves de antes.
+- **Siguiente:** nombre propio para cada partida; exportar/importar una partida; mostrar en la tarjeta el reino del cultivo.
 
 ### 3.9 Modos extra
 - **Desafío diario:** la misma semilla para todos y una tabla de resultados.
