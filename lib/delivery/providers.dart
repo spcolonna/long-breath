@@ -12,8 +12,10 @@ import '../domain/model/enums.dart';
 import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
 import '../domain/run/cultivation.dart';
+import '../domain/run/run_state.dart';
 import '../infrastructure/progress_storage.dart';
 import '../infrastructure/run_storage.dart';
+import '../infrastructure/slot_storage.dart';
 import '../infrastructure/tutorial_storage.dart';
 
 final gameDataProvider = FutureProvider<GameData>(
@@ -45,7 +47,67 @@ final runEngineProvider = Provider<RunEngine>(
   (ref) => RunEngine(ref.watch(dataProvider)),
 );
 
-final runStorageProvider = Provider<RunStorage>((ref) => RunStorage());
+final slotStorageProvider = Provider<SlotStorage>((ref) => SlotStorage());
+
+/// Las partidas creadas (hasta [SlotStorage.count]).
+final slotsProvider = FutureProvider<Map<int, SlotInfo>>(
+  (ref) => ref.watch(slotStorageProvider).slots(),
+);
+
+/// Partida en juego: todo el progreso y la subida se leen y guardan en ella.
+final activeSlotProvider = NotifierProvider<ActiveSlot, int>(ActiveSlot.new);
+
+class ActiveSlot extends Notifier<int> {
+  @override
+  int build() => 1;
+
+  void select(int slot) => state = slot;
+}
+
+/// Datos de la partida en juego (null si todavía no se creó).
+final slotInfoProvider = FutureProvider<SlotInfo?>((ref) async {
+  final slot = ref.watch(activeSlotProvider);
+  return (await ref.watch(slotsProvider.future))[slot];
+});
+
+/// Lo que muestra la tarjeta de una partida en la pantalla de partidas.
+typedef SlotSummary = ({
+  int disciple,
+  int lotus,
+  int ascents,
+  int wins,
+  RunState? run,
+});
+
+final slotSummaryProvider = FutureProvider.family<SlotSummary, int>((
+  ref,
+  slot,
+) async {
+  final store = ref.watch(slotStorageProvider);
+  final progress = store.progress(slot);
+  final past = await progress.ascents();
+  return (
+    disciple: await progress.discipleNumber(),
+    lotus: await progress.lotus(),
+    ascents: past.length,
+    wins: past.where((a) => !a.fell).length,
+    run: await store.runs(slot).load(),
+  );
+});
+
+/// Dificultades ganadas en cualquier partida (abren Shifu al crear otra).
+final anyWinsProvider = FutureProvider<Set<Difficulty>>(
+  (ref) => ref.watch(slotStorageProvider).allWins(),
+);
+
+/// Pico más alto abierto en cualquier partida.
+final bestPicoProvider = FutureProvider<int>(
+  (ref) => ref.watch(slotStorageProvider).bestPico(),
+);
+
+final runStorageProvider = Provider<RunStorage>(
+  (ref) => RunStorage(SlotStorage.prefixOf(ref.watch(activeSlotProvider))),
+);
 
 final savedRunProvider = FutureProvider(
   (ref) => ref.watch(runStorageProvider).load(),
@@ -56,7 +118,7 @@ final tutorialStorageProvider = Provider<TutorialStorage>(
 );
 
 final progressStorageProvider = Provider<ProgressStorage>(
-  (ref) => ProgressStorage(),
+  (ref) => ProgressStorage(SlotStorage.prefixOf(ref.watch(activeSlotProvider))),
 );
 
 /// Dificultades en las que el jugador ya ganó una subida.
@@ -116,7 +178,10 @@ final lastAscentProvider = NotifierProvider<LastAscent, Ascent?>(
 
 class LastAscent extends Notifier<Ascent?> {
   @override
-  Ascent? build() => null;
+  Ascent? build() {
+    ref.watch(activeSlotProvider);
+    return null;
+  }
 
   void set(Ascent? a) => state = a;
 }

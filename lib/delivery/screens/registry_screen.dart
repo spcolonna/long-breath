@@ -30,7 +30,7 @@ class RegistryScreen extends ConsumerWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_rounded),
-            onPressed: () => context.go('/'),
+            onPressed: () => context.go('/school'),
           ),
           title: Text('${t.registryTitle} · 名册'),
           bottom: TabBar(

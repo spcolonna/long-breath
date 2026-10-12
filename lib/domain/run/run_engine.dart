@@ -201,6 +201,43 @@ class RunEngine {
     );
   }
 
+  /// Menú de pruebas: una subida nueva que arranca en la etapa [stage]
+  /// (0 = la primera) con el piso [floor] (1 = el primero) por delante. El
+  /// camino ya elegido ([style]) y los pisos de abajo, recorridos.
+  RunState debugStart({
+    required int seed,
+    required int stage,
+    required int floor,
+    Difficulty difficulty = Difficulty.normal,
+    int pico = 0,
+    Style style = Style.tiger,
+    MetaBonus meta = MetaBonus.none,
+  }) {
+    var r = newRun(
+      seed: seed,
+      difficulty: difficulty,
+      pico: pico,
+      meta: meta,
+    ).copyWith(style: style, jade: 150);
+    final last = data.balance.stages.length - 1;
+    for (var s = 0; s < stage.clamp(0, last); s++) {
+      r = advanceStage(r.copyWith(phase: RunPhase.stageClear));
+    }
+    // Recorre un camino real hasta el piso anterior al pedido.
+    final path = <String>[];
+    var next = r.starts;
+    for (var f = 1; f < floor && next.isNotEmpty; f++) {
+      path.add(next.first);
+      next = r.node(next.first).next;
+    }
+    return r.copyWith(
+      visited: path,
+      currentNode: path.isEmpty ? null : path.last,
+      clearCurrentNode: path.isEmpty,
+      phase: RunPhase.map,
+    );
+  }
+
   /// Nodos a los que se puede avanzar desde la posición actual.
   List<String> available(RunState r) {
     if (r.phase != RunPhase.map) return const [];

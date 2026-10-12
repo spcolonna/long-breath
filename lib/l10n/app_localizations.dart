@@ -1225,7 +1225,7 @@ abstract class AppLocalizations {
   /// No description provided for @difficultySubtitle.
   ///
   /// In es, this message translates to:
-  /// **'Podés cambiarla en cada subida nueva.'**
+  /// **'Queda fija para esta partida. Para jugar otra, usá otra partida.'**
   String get difficultySubtitle;
 
   /// No description provided for @difficultyEasy.
@@ -3633,6 +3633,132 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Élite del camino'**
   String get introElite;
+
+  /// No description provided for @menuPlay.
+  ///
+  /// In es, this message translates to:
+  /// **'Jugar'**
+  String get menuPlay;
+
+  /// No description provided for @menuPlaySubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{Tres partidas, cada una con su dificultad} =1{1 partida guardada} other{{n} partidas guardadas}}'**
+  String menuPlaySubtitle(int n);
+
+  /// No description provided for @slotsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Partidas'**
+  String get slotsTitle;
+
+  /// No description provided for @slotsSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada partida tiene su escuela, su registro y una dificultad fija.'**
+  String get slotsSubtitle;
+
+  /// No description provided for @slotsChange.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar de partida'**
+  String get slotsChange;
+
+  /// No description provided for @slotName.
+  ///
+  /// In es, this message translates to:
+  /// **'Partida {n}'**
+  String slotName(int n);
+
+  /// No description provided for @slotNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva partida'**
+  String get slotNew;
+
+  /// No description provided for @slotNewHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegís la dificultad una vez y queda para toda la partida.'**
+  String get slotNewHint;
+
+  /// No description provided for @slotAscents.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =0{sin subidas} =1{1 subida} other{{n} subidas}}{wins, plural, =0{} =1{ · 1 cumbre} other{ · {wins} cumbres}}'**
+  String slotAscents(int n, int wins);
+
+  /// No description provided for @slotClimbing.
+  ///
+  /// In es, this message translates to:
+  /// **'Subiendo: {stage}, piso {floor}'**
+  String slotClimbing(String stage, int floor);
+
+  /// No description provided for @slotResting.
+  ///
+  /// In es, this message translates to:
+  /// **'En la escuela, sin subida en curso'**
+  String get slotResting;
+
+  /// No description provided for @slotOptions.
+  ///
+  /// In es, this message translates to:
+  /// **'Opciones de la partida'**
+  String get slotOptions;
+
+  /// No description provided for @slotRestart.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezar de cero'**
+  String get slotRestart;
+
+  /// No description provided for @slotDelete.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar partida'**
+  String get slotDelete;
+
+  /// No description provided for @slotDeleteTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar la Partida {n}?'**
+  String slotDeleteTitle(int n);
+
+  /// No description provided for @slotDeleteBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se pierde todo lo de esta partida: discípulos, registro, lotos, meridianos y la subida en curso. Las lecciones y el sonido no se tocan.'**
+  String get slotDeleteBody;
+
+  /// No description provided for @slotDeleteOk.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get slotDeleteOk;
+
+  /// No description provided for @slotDeleteSureTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Seguro?'**
+  String get slotDeleteSureTitle;
+
+  /// No description provided for @slotDeleteSureBody.
+  ///
+  /// In es, this message translates to:
+  /// **'La Partida {n} desaparece para siempre. No se puede deshacer.'**
+  String slotDeleteSureBody(int n);
+
+  /// No description provided for @slotDeleteSureOk.
+  ///
+  /// In es, this message translates to:
+  /// **'Sí, borrar para siempre'**
+  String get slotDeleteSureOk;
+
+  /// No description provided for @picoNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin Pico'**
+  String get picoNone;
 }
 
 class _AppLocalizationsDelegate

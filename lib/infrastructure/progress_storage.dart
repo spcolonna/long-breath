@@ -6,17 +6,37 @@ import '../domain/model/enums.dart';
 import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
 
-/// Recuerda en qué dificultades ganó el jugador una subida completa.
+/// Progreso de una partida: en qué dificultades ganó, la escuela, el
+/// registro, el loto y lo que ya vio. Cada partida guarda sus claves con su
+/// propio [prefix] (la 1 usa las de siempre, sin prefijo de partida).
 class ProgressStorage {
-  static const _key = 'long_breath.winsByDifficulty';
-  static const _picoKey = 'long_breath.picoUnlocked';
-  static const _discipleKey = 'long_breath.disciple';
-  static const _ascentsKey = 'long_breath.ascents';
-  static const _loreKey = 'long_breath.lore';
-  static const _breathKey = 'long_breath.breath';
-  static const _lotusKey = 'long_breath.lotus';
-  static const _meridiansKey = 'long_breath.meridians';
-  static const _cinematicsKey = 'long_breath.cinematics';
+  ProgressStorage([this.prefix = 'long_breath.']);
+
+  final String prefix;
+
+  /// Claves (sin prefijo) que son de una partida; borrarla las quita todas.
+  static const slotKeys = [
+    'winsByDifficulty',
+    'picoUnlocked',
+    'disciple',
+    'ascents',
+    'lore',
+    'breath',
+    'lotus',
+    'meridians',
+    'cinematics',
+    'run',
+  ];
+
+  String get _key => '${prefix}winsByDifficulty';
+  String get _picoKey => '${prefix}picoUnlocked';
+  String get _discipleKey => '${prefix}disciple';
+  String get _ascentsKey => '${prefix}ascents';
+  String get _loreKey => '${prefix}lore';
+  String get _breathKey => '${prefix}breath';
+  String get _lotusKey => '${prefix}lotus';
+  String get _meridiansKey => '${prefix}meridians';
+  String get _cinematicsKey => '${prefix}cinematics';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -64,7 +84,7 @@ extension SchoolRecord on ProgressStorage {
   /// ya había ganado antes del registro arranca después de esas victorias.
   Future<int> discipleNumber() async {
     final prefs = await SharedPreferences.getInstance();
-    final saved = prefs.getInt(ProgressStorage._discipleKey);
+    final saved = prefs.getInt(_discipleKey);
     if (saved != null) return saved;
     return 1 + (await wins()).length;
   }
@@ -72,7 +92,7 @@ extension SchoolRecord on ProgressStorage {
   Future<List<Ascent>> ascents() async {
     final prefs = await SharedPreferences.getInstance();
     return [
-      for (final s in prefs.getStringList(ProgressStorage._ascentsKey) ??
+      for (final s in prefs.getStringList(_ascentsKey) ??
           const <String>[])
         Ascent.fromJson(jsonDecode(s) as Map<String, dynamic>),
     ];
@@ -80,7 +100,7 @@ extension SchoolRecord on ProgressStorage {
 
   Future<Set<String>> lore() async {
     final prefs = await SharedPreferences.getInstance();
-    return {...?prefs.getStringList(ProgressStorage._loreKey)};
+    return {...?prefs.getStringList(_loreKey)};
   }
 
   /// Abre un pergamino; devuelve true si es nuevo.
@@ -88,7 +108,7 @@ extension SchoolRecord on ProgressStorage {
     final prefs = await SharedPreferences.getInstance();
     final have = await lore();
     if (have.contains(id)) return false;
-    await prefs.setStringList(ProgressStorage._loreKey, [...have, id]);
+    await prefs.setStringList(_loreKey, [...have, id]);
     return true;
   }
 
@@ -96,13 +116,13 @@ extension SchoolRecord on ProgressStorage {
   /// del cultivo) se calcula con las subidas del registro usando [migrate].
   Future<int> breath({int Function(Ascent)? migrate}) async {
     final prefs = await SharedPreferences.getInstance();
-    final saved = prefs.getInt(ProgressStorage._breathKey);
+    final saved = prefs.getInt(_breathKey);
     if (saved != null) return saved;
     final past = await ascents();
     final total = migrate == null
         ? 0
         : past.fold(0, (a, x) => a + migrate(x));
-    await prefs.setInt(ProgressStorage._breathKey, total);
+    await prefs.setInt(_breathKey, total);
     return total;
   }
 
@@ -128,7 +148,7 @@ extension SchoolRecord on ProgressStorage {
     });
     final done = numbered.withLore(earnedLore(numbered, before, have));
     final all = [...before, done];
-    await prefs.setStringList(ProgressStorage._ascentsKey, [
+    await prefs.setStringList(_ascentsKey, [
       for (final x in all.skip(
         all.length > ProgressStorage.maxAscents
             ? all.length - ProgressStorage.maxAscents
@@ -136,26 +156,32 @@ extension SchoolRecord on ProgressStorage {
       ))
         jsonEncode(x.toJson()),
     ]);
-    await prefs.setStringList(ProgressStorage._loreKey, [
+    await prefs.setStringList(_loreKey, [
       ...have,
       ...done.lore,
     ]);
-    await prefs.setInt(ProgressStorage._discipleKey, n + 1);
-    await prefs.setInt(ProgressStorage._breathKey, had + done.breath);
-    await prefs.setInt(ProgressStorage._lotusKey, seeds + done.lotus);
+    await prefs.setInt(_discipleKey, n + 1);
+    await prefs.setInt(_breathKey, had + done.breath);
+    await prefs.setInt(_lotusKey, seeds + done.lotus);
     return done;
   }
 
   /// Semillas de loto de la escuela (para el árbol de meridianos).
   Future<int> lotus() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(ProgressStorage._lotusKey) ?? 0;
+    return prefs.getInt(_lotusKey) ?? 0;
+  }
+
+  /// Suma loto a mano (menú de pruebas).
+  Future<void> addLotus(int n) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_lotusKey, await lotus() + n);
   }
 
   /// Puntos del árbol de meridianos ya abiertos.
   Future<List<String>> meridians() async {
     final prefs = await SharedPreferences.getInstance();
-    return [...?prefs.getStringList(ProgressStorage._meridiansKey)];
+    return [...?prefs.getStringList(_meridiansKey)];
   }
 
   /// Abre un punto del árbol si se puede y alcanza el loto.
@@ -164,8 +190,8 @@ extension SchoolRecord on ProgressStorage {
     final owned = await meridians();
     final seeds = await lotus();
     if (!def.canOpen(n, realm, owned) || seeds < n.cost) return false;
-    await prefs.setInt(ProgressStorage._lotusKey, seeds - n.cost);
-    await prefs.setStringList(ProgressStorage._meridiansKey, [...owned, n.id]);
+    await prefs.setInt(_lotusKey, seeds - n.cost);
+    await prefs.setStringList(_meridiansKey, [...owned, n.id]);
     return true;
   }
 
@@ -173,15 +199,15 @@ extension SchoolRecord on ProgressStorage {
   /// se muestran en versión corta.
   Future<bool> cinematicSeen(String id) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getStringList(ProgressStorage._cinematicsKey)?.contains(id) ??
+    return prefs.getStringList(_cinematicsKey)?.contains(id) ??
         false;
   }
 
   Future<void> markCinematicSeen(String id) async {
     final prefs = await SharedPreferences.getInstance();
-    final seen = prefs.getStringList(ProgressStorage._cinematicsKey) ?? [];
+    final seen = prefs.getStringList(_cinematicsKey) ?? [];
     if (seen.contains(id)) return;
-    await prefs.setStringList(ProgressStorage._cinematicsKey, [...seen, id]);
+    await prefs.setStringList(_cinematicsKey, [...seen, id]);
   }
 }
 

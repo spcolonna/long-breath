@@ -6,16 +6,13 @@ import 'package:go_router/go_router.dart';
 import '../../domain/model/enums.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
-import '../controllers/run_controller.dart';
 import '../providers.dart';
-import 'home_screen.dart' show routeFor;
 import '../theme.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/jade.dart';
 import '../widgets/talisman_widgets.dart';
-import '../widgets/difficulty_sheet.dart';
 
 /// Última lección: cómo es la subida, en diapositivas ilustradas con las
 /// mismas piezas del juego (íconos del mapa, cartas, el héroe).
@@ -55,24 +52,11 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
     );
   }
 
-  Future<void> _climb() async {
+  /// Al terminar la lección se elige (o se crea) una partida.
+  void _climb() {
     HapticFeedback.mediumImpact();
     ref.read(audioProvider).play(Sfx.uiButton);
-    final choice = await pickDifficulty(context);
-    if (choice == null || !mounted) return;
-    final locked = (await ref.read(cultivationProvider.future)).locked;
-    final meta = await ref.read(metaBonusProvider.future);
-    if (!mounted) return;
-    ref
-        .read(runControllerProvider.notifier)
-        .newRun(
-          choice.difficulty,
-          pico: choice.pico,
-          locked: locked,
-          meta: meta,
-        );
-    // Con el talismán de los meridianos se elige antes del mapa.
-    context.go(routeFor(ref.read(runControllerProvider)!));
+    context.go('/slots');
   }
 
   @override

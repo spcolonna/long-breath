@@ -89,7 +89,7 @@ class MapScreen extends ConsumerWidget {
           icon: const Icon(Icons.home_rounded),
           onPressed: () {
             ref.invalidate(savedRunProvider);
-            context.go('/');
+            context.go('/school');
           },
         ),
         actions: [
@@ -537,7 +537,7 @@ Future<void> _confirmAbandon(BuildContext context, WidgetRef ref) async {
   if (ok != true || !context.mounted) return;
   ref.read(runControllerProvider.notifier).abandon();
   ref.invalidate(savedRunProvider);
-  context.go('/');
+  context.go('/school');
 }
 
 class _RunHeader extends StatelessWidget {

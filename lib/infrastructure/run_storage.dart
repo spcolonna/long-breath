@@ -4,9 +4,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/run/run_state.dart';
 
-/// Guardado local de la run en curso.
+/// Guardado local de la run en curso de una partida.
 class RunStorage {
-  static const _key = 'long_breath.run';
+  RunStorage([String prefix = 'long_breath.']) : _key = '${prefix}run';
+
+  final String _key;
 
   Future<RunState?> load() async {
     final prefs = await SharedPreferences.getInstance();

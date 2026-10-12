@@ -13,7 +13,7 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
-import 'home_screen.dart' show routeFor;
+import '../controllers/climb.dart';
 import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/difficulty_sheet.dart';
@@ -106,27 +106,8 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     child: child,
   );
 
-  Future<void> _again(RunState run) async {
-    final choice = await pickDifficulty(
-      context,
-      initial: run.difficulty,
-      initialPico: run.pico,
-    );
-    if (choice == null || !mounted) return;
-    final locked = (await ref.read(cultivationProvider.future)).locked;
-    final meta = await ref.read(metaBonusProvider.future);
-    if (!mounted) return;
-    ref
-        .read(runControllerProvider.notifier)
-        .newRun(
-          choice.difficulty,
-          pico: choice.pico,
-          locked: locked,
-          meta: meta,
-        );
-    // Con el talismán de los meridianos se elige antes del mapa.
-    context.go(routeFor(ref.read(runControllerProvider)!));
-  }
+  /// Otra subida en la misma partida, con su dificultad.
+  Future<void> _again(RunState run) => startClimb(context, ref);
 
   @override
   Widget build(BuildContext context) {
@@ -391,7 +372,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           onPressed: () {
                             ref.read(runControllerProvider.notifier).abandon();
                             ref.invalidate(savedRunProvider);
-                            context.go('/');
+                            context.go('/school');
                           },
                           child: Text(t.backSchool),
                             ),

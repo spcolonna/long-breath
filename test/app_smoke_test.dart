@@ -40,21 +40,14 @@ void main() {
     // Se empieza como novicio: el camino no se elige en el inicio.
     expect(find.text('Tigre'), findsNothing);
 
-    // Arranca el Discípulo nº 1; todavía no hay registro.
-    expect(find.text('Discípulo nº 1'), findsOneWidget);
-    // El cultivo arranca en el primer reino.
-    expect(find.textContaining('Aliento templado'), findsOneWidget);
-    expect(find.text('Registro de la escuela'), findsNothing);
-
-    await tester.tap(find.text('La subida'));
+    // Jugar lleva a las partidas: todas libres la primera vez.
+    await tester.tap(find.text('Jugar'));
     await settle();
-    // La primera vez, la escuela cuenta por qué se sube.
-    expect(find.text('La escuela del Dragón Dormido'), findsOneWidget);
-    await tester.tap(find.text('Subir'));
+    expect(find.text('Nueva partida'), findsNWidgets(3));
+    await tester.tap(find.text('Nueva partida').first);
     await settle();
-    // Antes de subir se elige la dificultad.
+    // La dificultad se elige al crear la partida y queda fija.
     expect(find.text('Shifu'), findsOneWidget);
-    // Shifu está bloqueada: tocarla explica cómo se gana y no arranca nada.
     // Shifu y los Picos arrancan bloqueados.
     expect(find.text('Bloqueada'), findsNWidgets(2));
     await tester.tap(find.text('Picos'));
@@ -69,8 +62,23 @@ void main() {
       find.text('Se desbloquea al ganar una subida en Difícil.'),
       findsOneWidget,
     );
-    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsNothing);
     await tester.tap(find.text('Normal'));
+    await settle();
+
+    // La escuela de la partida: arranca el Discípulo nº 1, sin registro.
+    expect(find.text('Partida 1'), findsOneWidget);
+    expect(find.text('Discípulo nº 1'), findsOneWidget);
+    // El cultivo arranca en el primer reino.
+    expect(find.textContaining('Aliento templado'), findsOneWidget);
+    expect(find.text('Registro de la escuela'), findsNothing);
+
+    await tester.tap(find.text('La subida'));
+    await settle();
+    // La primera vez, la escuela cuenta por qué se sube.
+    expect(find.text('La escuela del Dragón Dormido'), findsOneWidget);
+    expect(find.text('Montaña de las Mil Nubes · 千云山'), findsNothing);
+    // La dificultad no se vuelve a preguntar: se sube con la de la partida.
+    await tester.tap(find.text('Subir'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
     final run = ProviderScope.containerOf(

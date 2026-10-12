@@ -858,4 +858,16 @@ void main() {
       expect(r.lotus, 0);
     });
   });
+
+  test('menú de pruebas: arranca en la etapa y el piso pedidos', () {
+    final r = run.debugStart(seed: 5, stage: 2, floor: 9);
+    expect(r.stage, 2);
+    expect(r.phase, RunPhase.map);
+    expect(r.style, isNotNull);
+    expect(r.visited, hasLength(8));
+    // Lo siguiente es el piso 9: el élite de la cumbre.
+    final next = run.available(r).map(r.node).toList();
+    expect(next.single.enemy, isNotNull);
+    expect(next.single.type, NodeType.combat);
+  });
 }

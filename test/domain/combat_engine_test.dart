@@ -843,6 +843,20 @@ void main() {
       expect(kick.state.enemy.guard, 12, reason: 'la guardia sigue ahí');
     });
 
+    test('Qilin: desequilibrarlo tira la guardia que frena patadas', () {
+      var s = setup(
+        [...filler, 'tan_tui', 'gongbu_chongquan', ...filler],
+        enemy: 'qilin',
+      );
+      s = endTurn(s).state;
+      expect(s.enemy.guardBlocks, CardType.kick);
+      s = s.copyWith(enemy: s.enemy.copyWith(structure: 1));
+      final r = play(s, 'gongbu_chongquan');
+      expect(r.events.whereType<EnemyBroken>(), hasLength(1));
+      expect(r.state.enemy.guard, 0);
+      expect(r.state.enemy.guardBlocks, isNull);
+    });
+
     test('Repique y escarcha: si no se desvía, menos Aliento y menos cartas', () {
       var s = setup([...filler, ...filler, ...filler], enemy: 'frost_bat');
       final r = endTurn(s);
