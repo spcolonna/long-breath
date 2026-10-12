@@ -291,6 +291,30 @@
     "pixiu": {
       "name": "Pixiu",
       "rule": "Devora jade: cada golpe que te hace daño te roba 5. No se escapa: si lo vencés, lo devuelve todo. Escama de oro: cada golpe tuyo hace 1 menos hasta que lo desequilibres."
+    },
+    "incense_monk": {
+      "name": "Monje del Incienso",
+      "rule": "Se cura 4 antes de cada acción mientras arde su incienso. Su humo, si no lo desviás, te deja con 1 de Aliento menos. Desequilibralo para cortarle la curación."
+    },
+    "celadon_lion": {
+      "name": "León de Celadón",
+      "rule": "Guardián de porcelana del patio del monasterio. Despierta: cada acción suma 3 a sus golpes, que van todos abajo. Desequilibrarlo lo vuelve a dormir."
+    },
+    "flying_sword": {
+      "name": "Espada Voladora",
+      "rule": "Una espada que vuela sola. Poca Vida y tres tajos altos seguidos; el tercero te corta la forma que estés armando. Guardia alta o terminala rápido."
+    },
+    "wooden_ox": {
+      "name": "Buey de Madera",
+      "rule": "Autómata de los mohistas. Se carga dos veces y después pisa abajo con todo lo acumulado; el pisotón se anuncia con cuenta regresiva."
+    },
+    "slate_hermit": {
+      "name": "Ermitaño de Pizarra",
+      "rule": "Piel de piedra: cada carta que le hace daño te quita 1 de Vida (desequilibrado no). Castiga repetir postura: cambiá de postura entre turnos."
+    },
+    "qilin": {
+      "name": "Qilin",
+      "rule": "La bestia de buen augurio. Pisa nubes: su guardia frena las patadas. Desvía el primer golpe de cada turno y te devuelve 4. Desequilibrado pierde las dos defensas."
     }
   },
   "intents": {
@@ -327,7 +351,19 @@
     "mask_gold": "Máscara dorada: frena las palmas",
     "mask_blue": "Máscara azul: frena las patadas",
     "devour": "Devora jade",
-    "gold_scale": "Escama de oro"
+    "gold_scale": "Escama de oro",
+    "incense": "Incienso",
+    "incense_palm": "Palma de incienso",
+    "smoke": "Humo",
+    "celadon_crush": "Zarpazo de porcelana",
+    "sword_slash": "Tajo",
+    "sword_cut": "Corte de la forma",
+    "ox_wind_up": "Engranajes",
+    "ox_stomp": "Pisotón",
+    "slate_skin": "Piel de pizarra",
+    "cloud_step": "Paso de nube",
+    "qilin_horn": "Cuerno",
+    "holy_flame": "Fuego sagrado"
   },
   "talismans": {
     "arco": "Cuerda del Arco",

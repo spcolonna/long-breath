@@ -1446,7 +1446,7 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Espada Voladora 飞剑 (`flying_sword`, común, etapa 3)
+### Espada Voladora 飞剑 (`flying_sword`, común, etapa 3) — hecho
 
 Regla prevista: poca Vida, tres tajos altos seguidos y el último interrumpe la forma; enseña a cerrar formas antes de que llegue.
 
@@ -1455,7 +1455,7 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Buey de Madera 木牛 (`wooden_ox`, común, etapa 3)
+### Buey de Madera 木牛 (`wooden_ox`, común, etapa 3) — hecho
 
 Regla prevista: autómata mohista; carga dos veces y después pisa bajo con cuenta regresiva; enseña a leer el golpe anunciado.
 
@@ -1464,7 +1464,7 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Qilin 麒麟 (`qilin`, élite, etapa 3)
+### Qilin 麒麟 (`qilin`, élite, etapa 3) — datos listos; falta la imagen (se ve el placeholder)
 
 Regla prevista: paso de nube; frena las patadas y desvía el primer golpe de cada turno, y desequilibrarlo le quita las dos defensas.
 
