@@ -79,7 +79,7 @@ typedef SlotSummary = ({
   RunState? run,
 });
 
-final slotSummaryProvider = FutureProvider.family<SlotSummary, int>((
+final slotSummaryProvider = FutureProvider.autoDispose.family<SlotSummary, int>((
   ref,
   slot,
 ) async {

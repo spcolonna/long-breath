@@ -202,6 +202,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - objetos encantados: grullas de papel 纸鹤 (en bandada), espada voladora, buey de madera de los mohistas (autómata);
   - **hecho (11/10/2026):** Grulla de Papel (etapa 1, pisos 2, 5 y 7), Ópera de las Mil Caras (etapa 2) y Pixiu (etapas 2 y 3). El balance de Normal no se movió (experto 58%, promedio 27%).
   - **hecho (12/10/2026):** Espada Voladora y Buey de Madera (comunes de la etapa 3) y Qilin (élite de la etapa 3, datos listos; falta `qilin.png`). Desequilibrar ahora tira las guardias que frenan un solo tipo de golpe.
+- **Pedidos (12/10/2026):** Zorro de Nueve Colas (élite, etapa 2, ilusiones), Títere de Sombras (común, etapa 2) y Músico del Guqin (común, etapa 3); prompts en `docs/arte/prompts.md` §8. Falta también `qilin.png`.
 - **Reserva en uso (12/10/2026):** `monk_amber` → Monje del Incienso (común, etapa 2), `monk_slate` → Ermitaño de Pizarra (común, etapa 3), `lion_celadon` → León de Celadón (élite, etapa 2). Balance de Normal sin cambios (1000 runs: promedio 30%, experto 55%).
 - **Recoloreos que quedan** (`golem_ice`, `monkey_snow`, `disciple_wind`, `bat_frost`): no hace falta reemplazarlos.
 

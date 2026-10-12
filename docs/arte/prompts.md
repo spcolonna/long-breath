@@ -1473,6 +1473,33 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
+### Zorro de Nueve Colas 九尾狐 (`nine_tail_fox`, élite, etapa 2)
+
+Regla prevista: ilusiones; cada dos turnos te hace descartar y su guardia cambia de lado; desequilibrarlo rompe la ilusión.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: an elegant nine-tailed fox spirit, sleek snow-white fur with soft violet and gold gradients at the tips, nine large flowing tails fanned out behind it like a peacock display, each tail ending in a small floating blue foxfire flame, a gold and vermilion ornament on its forehead, sly playful smile, one paw raised, faint mirror-image afterimages of the fox on both sides showing its illusions.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Títere de Sombras 皮影 (`shadow_puppet`, común, etapa 2)
+
+Regla prevista: teatro de linterna; copia la altura de tu último golpe y se cubre ahí.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a Chinese shadow-puppet warrior come to life, a flat jointed figure made of translucent painted leather in vermilion, jade and gold, intricate cut-out lace patterns on its armor, thin bamboo rods attached to its hands and head, a warm lantern glow shining through its body, mid-swing pose with a painted sword, a few loose paper cut-out sparks around it.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Músico del Guqin 古琴 (`guqin_player`, común, etapa 3)
+
+Regla prevista: marca el ritmo; cada nota suma un golpe al acorde final, que se anuncia con cuenta regresiva.
+
+```
+Game enemy character, full body, facing the viewer, centered, transparent background: a serene mountain hermit musician seated on a floating cloud, playing a long guqin zither across his lap, long white beard and topknot, flowing cobalt and cream robes with snowflake embroidery, visible jade-green and gold musical sound ripples rising from the strings like waves, one hand plucking a string with a confident smile.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
 ---
 
 ## Pendiente
