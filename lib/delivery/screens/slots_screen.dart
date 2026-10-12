@@ -231,10 +231,12 @@ class _SlotCard extends ConsumerWidget {
     String? where;
     if (climbing) {
       final rows = mapRows(run);
-      final floor = rows.indexWhere(
+      final at = rows.indexWhere(
         (r) => r.any((n) => n.id == run.currentNode),
       );
-      where = t.slotClimbing(text.stage(stages[run.stage].id), floor + 2);
+      // En el mapa, el piso que sigue; adentro de un lugar, ese mismo.
+      final floor = at + (run.phase == RunPhase.map ? 2 : 1);
+      where = t.slotClimbing(text.stage(stages[run.stage].id), floor);
     }
     return Material(
       color: Palette.surface,

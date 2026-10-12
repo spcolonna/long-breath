@@ -611,19 +611,30 @@ class FoeIntro extends ConsumerWidget {
                       ),
                     ),
                   ),
+                // Los globos van arriba, dentro del cuadro: el rival habla y
+                // el héroe le contesta debajo, sobre su lado.
                 if (intro != null)
-                  Align(
-                    alignment: const Alignment(0, -0.94),
-                    child: _Quote(t: says, text: intro, color: color),
-                  ),
-                if (reply != null)
-                  Align(
-                    alignment: const Alignment(0.85, 0.98),
-                    child: _Quote(
-                      t: answers,
-                      text: reply,
-                      color: Palette.jade,
-                      hero: true,
+                  Positioned(
+                    top: box.maxHeight * 0.09,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Center(
+                          child: _Quote(t: says, text: intro, color: color),
+                        ),
+                        if (reply != null)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: _Quote(
+                              t: answers,
+                              text: reply,
+                              color: Palette.jade,
+                              hero: true,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 Align(
@@ -646,8 +657,8 @@ class FoeIntro extends ConsumerWidget {
   }
 }
 
-/// Una línea de diálogo en un globo de papel: la del rival arriba, la del
-/// héroe abajo, a la derecha de su figura.
+/// Una línea de diálogo en un globo de papel: la del rival, centrada, y la
+/// del héroe debajo, a la izquierda (de su lado).
 class _Quote extends StatelessWidget {
   const _Quote({
     required this.t,
@@ -668,10 +679,10 @@ class _Quote extends StatelessWidget {
     return Opacity(
       opacity: t,
       child: Transform.translate(
-        offset: Offset(0, (hero ? 14 : -14) * (1 - t)),
+        offset: Offset((hero ? -24 : 0) * (1 - t), (hero ? 0 : -14) * (1 - t)),
         child: Container(
           constraints: BoxConstraints(maxWidth: w * (hero ? 0.62 : 0.86)),
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
           padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
           decoration: BoxDecoration(
             color: Palette.surface.withValues(alpha: 0.94),
@@ -686,7 +697,7 @@ class _Quote extends StatelessWidget {
           ),
           child: Text(
             '«$text»',
-            textAlign: hero ? TextAlign.right : TextAlign.center,
+            textAlign: hero ? TextAlign.left : TextAlign.center,
             style: TextStyle(
               fontSize: hero ? 14.5 : 16,
               height: 1.3,
