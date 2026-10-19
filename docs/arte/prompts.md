@@ -1519,6 +1519,90 @@ Se piden juntas en un único prompt de ChatGPT (el texto completo se le pasó al
 | `assets/art/ui/victory_bg.png` | 1080×1920 | fondo del triunfo final |
 | `assets/art/ui/epilogue_bg.png` | 1080×1920 | ilustración del epílogo (el maestro entrega el pincel) |
 
+## 10. Bloques para ChatGPT (copiar y pegar)
+
+Cada bloque se pega entero en ChatGPT y genera todas sus imágenes de corrido. Cada imagen trae su prompt completo, estilo incluido, así no depende de las otras. La tabla de arriba de cada bloque dice dónde va cada archivo. Al llegar el arte: commitear el PNG, correr `tool/optimize_art.py` y sacar la imagen del bloque. Los prompts nuevos se agregan acá además de en su sección, completando bloques de a 10.
+
+Ninguna imagen es recoloreo. Las que ya están en las secciones 3 (`map_node_stone`), 8 y 9 se repiten acá en formato de bloque.
+
+### Bloque 1 (10 imágenes)
+
+| Imagen | Archivo |
+|---|---|
+| 1 | `assets/art/enemies/qilin.png` |
+| 2 | `assets/art/enemies/nine_tail_fox.png` |
+| 3 | `assets/art/enemies/shadow_puppet.png` |
+| 4 | `assets/art/enemies/guqin_player.png` |
+| 5 | `assets/art/vfx/hit_ink.png` |
+| 6 | `assets/art/vfx/guard_shield.png` |
+| 7 | `assets/art/vfx/break_shatter.png` |
+| 8 | `assets/art/vfx/qi_swirl.png` |
+| 9 | `assets/art/vfx/lotus_petals.png` |
+| 10 | `assets/art/ui/lore_scroll.png` |
+
+```
+Generate exactly 10 separate images. Start generating immediately, without asking questions or requesting confirmation.
+
+Image 1: qilin.png, 1024x1536, vertical 2:3, transparent. Game enemy character, full body, facing the viewer, centered, transparent background: a majestic qilin, the benevolent unicorn beast of Chinese myth, deer-like body covered in shimmering jade-green and gold scales, a flowing white and vermilion mane like flames, a single elegant antler-like horn, hooves walking on small swirling clouds instead of the ground, soft gold fire curling around its legs, proud rearing pose.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 2: nine_tail_fox.png, 1024x1536, vertical 2:3, transparent. Game enemy character, full body, facing the viewer, centered, transparent background: an elegant nine-tailed fox spirit, sleek snow-white fur with soft violet and gold gradients at the tips, nine large flowing tails fanned out behind it like a peacock display, each tail ending in a small floating blue foxfire flame, a gold and vermilion ornament on its forehead, sly playful smile, one paw raised, faint mirror-image afterimages of the fox on both sides showing its illusions.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 3: shadow_puppet.png, 1024x1536, vertical 2:3, transparent. Game enemy character, full body, facing the viewer, centered, transparent background: a Chinese shadow-puppet warrior come to life, a flat jointed figure made of translucent painted leather in vermilion, jade and gold, intricate cut-out lace patterns on its armor, thin bamboo rods attached to its hands and head, a warm lantern glow shining through its body, mid-swing pose with a painted sword, a few loose paper cut-out sparks around it.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 4: guqin_player.png, 1024x1536, vertical 2:3, transparent. Game enemy character, full body, facing the viewer, centered, transparent background: a serene mountain hermit musician seated on a floating cloud, playing a long guqin zither across his lap, long white beard and topknot, flowing cobalt and cream robes with snowflake embroidery, visible jade-green and gold musical sound ripples rising from the strings like waves, one hand plucking a string with a confident smile.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 5: hit_ink.png, 1024x1024, square, transparent. A single explosive impact splash of vermilion and gold ink radiating outward from the center like a starburst, energetic brush flicks and small droplets, a bright cream-white core, symmetric enough to rotate, empty margins around it, no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 6: guard_shield.png, 1024x1024, square, transparent. A round protective shield of translucent jade-green energy, like polished jade glass, with a delicate gold lotus-and-cloud pattern engraved on it and a soft glowing rim, seen straight from the front, centered, semi-transparent inside, no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 7: break_shatter.png, 1024x1024, square, transparent. A burst of shattering celadon porcelain shards flying outward from the center, the cracks filled with shining gold (kintsugi style), small gold sparks between the pieces, front view, centered, no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 8: qi_swirl.png, 1024x1024, square, transparent. A spiral swirl of flowing qi energy made of soft cobalt-blue and jade-green brush ribbons and tiny glowing gold particles, like breath turning into wind, circular and centered so it can spin seamlessly, no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 9: lotus_petals.png, 1024x1024, square, transparent. A gentle burst of pink-and-cream lotus petals and a few small gold sparkles scattering outward from the center, light and airy, each petal clearly separated, centered, no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 10: lore_scroll.png, 1024x1536, vertical 2:3, transparent. An unrolled ancient Chinese paper scroll seen straight from the front, vertical, with carved red-lacquered wooden rollers and gold end caps at top and bottom, the paper blank warm cream with faint watercolor texture and a thin vermilion border, completely empty inside (text is added later), no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Bloque 2 (5 imágenes)
+
+| Imagen | Archivo |
+|---|---|
+| 1 | `assets/art/ui/title_bg.png` |
+| 2 | `assets/art/ui/event_bg.png` |
+| 3 | `assets/art/ui/victory_bg.png` |
+| 4 | `assets/art/ui/epilogue_bg.png` |
+| 5 | `assets/art/stages/qianyunshan/map_node_stone.png` |
+
+```
+Generate exactly 5 separate images. Start generating immediately, without asking questions or requesting confirmation.
+
+Image 1: title_bg.png, 1080x1920, vertical 9:16, full background (not transparent). Epic main-menu background of misty Chinese mountains at sunrise, layered jade peaks fading into cream mist, a long cobalt-and-gold cloud dragon curling softly across the sky at the top, a tiny red temple on a far peak, warm golden light. Keep the center and lower half calm and empty (a hero character and buttons go there), no people.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft gradients, clean confident brush strokes, flat shading with watercolor bleeds, joyful and premium mood, very readable on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 2: event_bg.png, 1080x1920, vertical 9:16, full background (not transparent). A peaceful roadside rest stop on a mountain path, a small wooden pavilion with a red roof and paper lanterns, a stone path, a pine tree, a teapot steaming on a stone table, soft afternoon light and floating petals. Keep the middle area soft and uncluttered (text panels go on top), no people.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft gradients, clean confident brush strokes, flat shading with watercolor bleeds, joyful and premium mood, very readable on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 3: victory_bg.png, 1080x1920, vertical 9:16, full background (not transparent). Triumphant summit at golden sunrise above a sea of clouds, red prayer flags and golden ribbons fluttering, rays of light bursting from behind the peak, a small stone platform at the top, celebratory sparkles and drifting lotus petals. Keep the center open for a hero and a title, no people.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft gradients, clean confident brush strokes, flat shading with watercolor bleeds, joyful and premium mood, very readable on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 4: epilogue_bg.png, 1080x1920, vertical 9:16, full background (not transparent). Story illustration of a wise old master with a long white beard and flowing cream-and-jade robes handing a large calligraphy brush to a young disciple seen from behind, both standing on a mountain summit at sunrise, the soft translucent shape of a friendly cobalt-and-gold dragon formed by clouds watching over them, warm hopeful mood, gold light.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft gradients, clean confident brush strokes, flat shading with watercolor bleeds, joyful and premium mood, very readable on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+
+Image 5: map_node_stone.png, 1024x1024, square, transparent. Top-down view of a single round flat stone disc for a game map node, pale warm granite (#E2D3B6) with subtle mineral speckles and soft worn edges, light coming from the top left, centered, empty center (no carving, no symbol), no characters.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
 ## Pendiente
 
 - Los nombres de cueva ya se cambiaron por nombres de montaña: Murciélago de Jade, Salamandra de Brasa y Gólem de Cuarzo.
