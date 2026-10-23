@@ -28,6 +28,7 @@ class IntentDef {
     this.drain = 0,
     this.freeze = 0,
     this.blocks,
+    this.mirror = false,
   });
 
   final IntentKind kind;
@@ -59,6 +60,9 @@ class IntentDef {
   /// otros la esquivan. null = frena todo.
   final CardType? blocks;
 
+  /// Guardia espejo («blocks": "mirror"): frena el tipo de tu último golpe.
+  final bool mirror;
+
   factory IntentDef.fromJson(Map<String, dynamic> j) => IntentDef(
     kind: IntentKind.parse(j['kind'] as String),
     labelKey: j['labelKey'] as String?,
@@ -73,9 +77,11 @@ class IntentDef {
     drain: j['drain'] as int? ?? 0,
     freeze: j['freeze'] as int? ?? 0,
     blocks: switch (j['blocks']) {
+      'mirror' => null,
       final String b => CardType.parse(b),
       _ => null,
     },
+    mirror: j['blocks'] == 'mirror',
   );
 }
 

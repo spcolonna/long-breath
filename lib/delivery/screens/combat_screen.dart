@@ -1817,9 +1817,9 @@ class _IntentBubble extends ConsumerWidget {
       IntentKind.guard => (
         Icons.shield,
         named ?? t.guard,
-        i.blocks == null
+        iv.guardBlocks == null
             ? '${t.guard} ${i.value}'
-            : t.guardOnly(t.typeLabel(i.blocks!), i.value),
+            : t.guardOnly(t.typeLabel(iv.guardBlocks!), i.value),
       ),
       IntentKind.charge => (
         Icons.bolt,

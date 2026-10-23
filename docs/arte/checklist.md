@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 70 · ✅ 60 · 🎨 8 · ❌ 2
+Total: 72 · ✅ 62 · 🎨 8 · ❌ 2
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -89,6 +89,7 @@ Total: 70 · ✅ 60 · 🎨 8 · ❌ 2
 | ✅ propio | `assets/art/enemies/lion_snow.webp` | snow_lion (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk.webp` | monk (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk_iron.webp` | iron_abbot (elite) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/nine_tail_fox.webp` | nine_tail_fox (elite) | enemies/placeholder.webp | — |
 | ❌ falta | `assets/art/enemies/qilin.webp` | qilin (elite) | enemies/placeholder.webp | listo |
 | ✅ propio | `assets/art/enemies/bandit.webp` | bandit (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat.webp` | bat (common) | enemies/placeholder.webp | — |
@@ -112,4 +113,5 @@ Total: 70 · ✅ 60 · 🎨 8 · ❌ 2
 | ✅ propio | `assets/art/enemies/pixiu.webp` | pixiu (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/salamander.webp` | salamander (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/salamander_ash.webp` | ash_salamander (common) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/shadow_puppet.webp` | shadow_puppet (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/wooden_ox.webp` | wooden_ox (common) | enemies/placeholder.webp | — |
