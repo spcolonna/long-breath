@@ -28,6 +28,12 @@ LIMITS = {
     "ui/stage_clear_bg.png": None,
     "ui/lotus_seed.png": 512,
     "ui/reward_chest.png": 768,
+    "ui/lore_scroll.png": None,
+    "ui/title_bg.png": None,
+    "ui/event_bg.png": None,
+    "ui/victory_bg.png": None,
+    "ui/epilogue_bg.png": None,
+    "vfx": 640,
 }
 SPRITE_QUALITY = 85
 BACKGROUND_QUALITY = 82

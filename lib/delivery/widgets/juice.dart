@@ -308,6 +308,106 @@ class _BurstPainter extends CustomPainter {
   bool shouldRepaint(_BurstPainter old) => old.t != t;
 }
 
+/// Una pintura de efecto (`assets/art/vfx/`) que aparece, crece, gira un poco
+/// y se desvanece cada vez que cambia [trigger]. La imagen queda siempre
+/// cargada (invisible) para que el primer golpe no espere a decodificarla; si
+/// el archivo falta, no se dibuja nada.
+class ArtBurst extends StatefulWidget {
+  const ArtBurst({
+    super.key,
+    required this.trigger,
+    required this.asset,
+    required this.size,
+    this.duration = const Duration(milliseconds: 600),
+    this.from = 0.55,
+    this.to = 1.1,
+    this.spin = 0.35,
+    this.hold = 0.35,
+  });
+
+  final int trigger;
+  final String asset;
+  final double size;
+  final Duration duration;
+
+  /// Escala al aparecer y al terminar.
+  final double from;
+  final double to;
+
+  /// Cuánto gira en total (radianes).
+  final double spin;
+
+  /// Parte de la animación en que se ve entera antes de desvanecerse.
+  final double hold;
+
+  @override
+  State<ArtBurst> createState() => _ArtBurstState();
+}
+
+class _ArtBurstState extends State<ArtBurst>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(vsync: this, duration: widget.duration);
+
+  @override
+  void didUpdateWidget(ArtBurst old) {
+    super.didUpdateWidget(old);
+    if (widget.trigger != old.trigger) _c.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    final image = Image.asset(
+      widget.asset,
+      width: widget.size,
+      height: widget.size,
+      cacheWidth: (widget.size * dpr).ceil(),
+      gaplessPlayback: true,
+      errorBuilder: (_, _, _) => const SizedBox(),
+    );
+    // Centrada en el espacio que le den, sin estirarse ni empujar a nadie.
+    return IgnorePointer(
+      child: AnimatedBuilder(
+        animation: _c,
+        child: Center(
+          child: OverflowBox(
+            minWidth: widget.size,
+            maxWidth: widget.size,
+            minHeight: widget.size,
+            maxHeight: widget.size,
+            child: image,
+          ),
+        ),
+        builder: (_, child) {
+          final t = _c.value;
+          final on = _c.isAnimating;
+          final e = Curves.easeOutCubic.transform(t);
+          final fadeIn = (t / 0.12).clamp(0.0, 1.0);
+          final fadeOut = t < widget.hold
+              ? 1.0
+              : 1 - (t - widget.hold) / (1 - widget.hold);
+          return Opacity(
+            opacity: on ? (fadeIn * fadeOut).clamp(0.0, 1.0) : 0,
+            child: Transform.rotate(
+              angle: widget.spin * e,
+              child: Transform.scale(
+                scale: widget.from + (widget.to - widget.from) * e,
+                child: child,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
 /// Destello de pantalla completa (viñeta de color) cada vez que cambia [trigger].
 class ScreenFlash extends StatefulWidget {
   const ScreenFlash({super.key, required this.trigger, required this.color});

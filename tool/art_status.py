@@ -94,6 +94,18 @@ def main():
     add("ui", "ui/lotus_seed.webp", "semilla de loto (botín, contador y árbol)",
         "sello 莲")
     add("ui", "ui/reward_chest.webp", "cofre del botín", "cofre dibujado con 赏")
+    add("ui", "ui/title_bg.webp", "fondo del menú principal", "papel")
+    add("ui", "ui/event_bg.webp", "fondo de eventos", "mapa de la etapa")
+    add("ui", "ui/victory_bg.webp", "triunfo final", "mapa de la cumbre")
+    add("ui", "ui/lore_scroll.webp", "rollos de lore", "rollo dibujado")
+    add("ui", "ui/epilogue_bg.webp", "ilustración del rollo del epílogo",
+        "sin ilustración")
+    for f, use in (("hit_ink", "golpe al rival"),
+                   ("guard_shield", "el rival se cubre"),
+                   ("break_shatter", "rival desequilibrado"),
+                   ("qi_swirl", "aliento o vida que vuelve"),
+                   ("lotus_petals", "rival vencido y triunfo final")):
+        add("efectos", f"vfx/{f}.webp", use, "gotas de tinta")
     add("ui", "stages/qianyunshan/map_node_stone.webp",
         "textura de los sellos del mapa (opcional)", "disco con degradado")
     add("npc", "npc/master.webp", "maestro", "vacío")

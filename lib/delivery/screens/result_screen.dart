@@ -135,7 +135,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       body: SceneBackdrop(
         // Perder frente al muro de la escuela; ganar, frente a la cumbre.
         assets: won
-            ? stageArt('wolongding', 'map_bg.webp')
+            ? [
+                'assets/art/ui/victory_bg.webp',
+                ...stageArt('wolongding', 'map_bg.webp'),
+              ]
             : stageArt('qianyunshan', 'school_wall.webp'),
         veil: 0.4,
         alignment: won ? Alignment.topCenter : Alignment.center,
@@ -200,6 +203,23 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                                     color: ink,
                                   ),
                                 ),
+                              ),
+                              Positioned.fill(
+                                child: won
+                                    ? ArtBurst(
+                                        trigger: _burst,
+                                        asset:
+                                            'assets/art/vfx/lotus_petals.webp',
+                                        size: 300,
+                                        duration: const Duration(
+                                          milliseconds: 1600,
+                                        ),
+                                        from: 0.3,
+                                        to: 1.3,
+                                        spin: 0.6,
+                                        hold: 0.5,
+                                      )
+                                    : const SizedBox(),
                               ),
                               Positioned.fill(
                                 child: InkBurst(

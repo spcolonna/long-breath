@@ -13,6 +13,7 @@ import '../theme.dart';
 import '../tutorial/lessons.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/menu_button.dart';
+import '../widgets/scene_backdrop.dart';
 
 String routeFor(RunState r) => switch (r.phase) {
   RunPhase.map => '/map',
@@ -57,88 +58,95 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
-          child: Column(
-            children: [
-              const Align(
-                alignment: Alignment.centerRight,
-                child: AudioToggles(),
-              ),
-              const FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      '龙 ',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Palette.lacquer,
-                        height: 1,
-                      ),
-                    ),
-                    Text(
-                      'LONG BREATH',
-                      style: TextStyle(
-                        fontSize: 22,
-                        letterSpacing: 6,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Text(
-                      '  长息',
-                      style: TextStyle(fontSize: 13, color: Palette.textDim),
-                    ),
-                  ],
+      // Montañas al amanecer con el dragón de nubes arriba; el centro queda
+      // libre para el héroe y los botones.
+      body: SceneBackdrop(
+        assets: const ['assets/art/ui/title_bg.webp'],
+        veil: 0.3,
+        alignment: Alignment.topCenter,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.centerRight,
+                  child: AudioToggles(),
                 ),
-              ),
-              // El héroe empieza de lino crudo: el camino se elige en la montaña.
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, box) => HeroSprite(
-                    style: null,
-                    height: math.min(box.maxHeight, box.maxWidth * 1.3),
-                    glyph: stats.hanzi,
+                const FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        '龙 ',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Palette.lacquer,
+                          height: 1,
+                        ),
+                      ),
+                      Text(
+                        'LONG BREATH',
+                        style: TextStyle(
+                          fontSize: 22,
+                          letterSpacing: 6,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      Text(
+                        '  长息',
+                        style: TextStyle(fontSize: 13, color: Palette.textDim),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Text(
-                t.homeTagline,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic,
-                  color: Palette.text,
+                // El héroe empieza de lino crudo: el camino se elige en la montaña.
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, box) => HeroSprite(
+                      style: null,
+                      height: math.min(box.maxHeight, box.maxWidth * 1.3),
+                      glyph: stats.hanzi,
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              MenuButton(
-                icon: Icons.school_rounded,
-                title: t.menuLearn,
-                subtitle: t.menuLearnProgress(done.length, lessons.length),
-                badge: fresh ? t.menuStartHere : null,
-                primary: fresh,
-                onTap: () {
-                  tap();
-                  context.go('/lessons');
-                },
-              ),
-              const SizedBox(height: 12),
-              MenuButton(
-                icon: Icons.landscape_rounded,
-                title: t.menuPlay,
-                subtitle: t.menuPlaySubtitle(slots.length),
-                primary: !fresh,
-                onTap: () {
-                  tap();
-                  context.go('/slots');
-                },
-              ),
-            ],
+                Text(
+                  t.homeTagline,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    color: Palette.text,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                MenuButton(
+                  icon: Icons.school_rounded,
+                  title: t.menuLearn,
+                  subtitle: t.menuLearnProgress(done.length, lessons.length),
+                  badge: fresh ? t.menuStartHere : null,
+                  primary: fresh,
+                  onTap: () {
+                    tap();
+                    context.go('/lessons');
+                  },
+                ),
+                const SizedBox(height: 12),
+                MenuButton(
+                  icon: Icons.landscape_rounded,
+                  title: t.menuPlay,
+                  subtitle: t.menuPlaySubtitle(slots.length),
+                  primary: !fresh,
+                  onTap: () {
+                    tap();
+                    context.go('/slots');
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

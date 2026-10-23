@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 72 · ✅ 62 · 🎨 8 · ❌ 2
+Total: 82 · ✅ 72 · 🎨 8 · ❌ 2
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -53,6 +53,26 @@ Total: 72 · ✅ 62 · 🎨 8 · ❌ 2
 | ✅ propio | `assets/art/ui/stage_clear_bg.webp` | etapa superada | papel | — |
 | ✅ propio | `assets/art/ui/lotus_seed.webp` | semilla de loto (botín, contador y árbol) | sello 莲 | — |
 | ✅ propio | `assets/art/ui/reward_chest.webp` | cofre del botín | cofre dibujado con 赏 | — |
+| ✅ propio | `assets/art/ui/title_bg.webp` | fondo del menú principal | papel | — |
+| ✅ propio | `assets/art/ui/event_bg.webp` | fondo de eventos | mapa de la etapa | — |
+| ✅ propio | `assets/art/ui/victory_bg.webp` | triunfo final | mapa de la cumbre | — |
+| ✅ propio | `assets/art/ui/lore_scroll.webp` | rollos de lore | rollo dibujado | — |
+| ✅ propio | `assets/art/ui/epilogue_bg.webp` | ilustración del rollo del epílogo | sin ilustración | — |
+
+## efectos
+
+| Estado | Archivo | Para qué | Si falta se ve | Prompt |
+|---|---|---|---|---|
+| ✅ propio | `assets/art/vfx/hit_ink.webp` | golpe al rival | gotas de tinta | — |
+| ✅ propio | `assets/art/vfx/guard_shield.webp` | el rival se cubre | gotas de tinta | — |
+| ✅ propio | `assets/art/vfx/break_shatter.webp` | rival desequilibrado | gotas de tinta | — |
+| ✅ propio | `assets/art/vfx/qi_swirl.webp` | aliento o vida que vuelve | gotas de tinta | — |
+| ✅ propio | `assets/art/vfx/lotus_petals.webp` | rival vencido y triunfo final | gotas de tinta | — |
+
+## ui
+
+| Estado | Archivo | Para qué | Si falta se ve | Prompt |
+|---|---|---|---|---|
 | ❌ falta | `assets/art/stages/qianyunshan/map_node_stone.webp` | textura de los sellos del mapa (opcional) | disco con degradado | no |
 
 ## npc
