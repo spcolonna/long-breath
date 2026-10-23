@@ -170,6 +170,7 @@ class CombatState {
     required this.deflectBonusDamage,
     required this.deflectBonusStructure,
     required this.lastTurnEndStance,
+    this.lastAttackType,
     required this.punishPending,
     required this.formProgress,
     required this.pendingDiscard,
@@ -212,6 +213,9 @@ class CombatState {
   final int deflectBonusDamage;
   final int deflectBonusStructure;
   final Stance? lastTurnEndStance;
+
+  /// Tipo del último golpe del jugador (lo copia la guardia espejo).
+  final CardType? lastAttackType;
 
   /// Castigo del Discípulo pendiente para su próximo ataque.
   final bool punishPending;
@@ -277,6 +281,7 @@ class CombatState {
         deflectBonusDamage: deflectBonusDamage,
         deflectBonusStructure: deflectBonusStructure,
         lastTurnEndStance: lastTurnEndStance,
+        lastAttackType: lastAttackType,
         punishPending: punishPending,
         formProgress: formProgress,
         pendingDiscard: pendingDiscard,

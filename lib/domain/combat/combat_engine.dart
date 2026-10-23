@@ -94,9 +94,13 @@ class IntentView {
     required this.countdown,
     required this.punishIfSameStance,
     this.stolen = 0,
+    this.guardBlocks,
   });
 
   final IntentDef intent;
+
+  /// Tipo que frenaría la guardia (resuelve la guardia espejo).
+  final CardType? guardBlocks;
 
   /// Jade que se lleva si se escapa (Mono Ladrón).
   final int stolen;
@@ -275,6 +279,7 @@ class CombatEngine {
     d.enemyDown = false;
     d.punishPending = false;
     d.lastTurnEndStance = null;
+    d.lastAttackType = null;
     events.add(WaveStarted(next.id, d.wave + 1, d.wave + 1 + d.reserve.length));
   }
 
@@ -554,6 +559,7 @@ class CombatEngine {
           s.lastTurnEndStance != null &&
           s.lastTurnEndStance == s.player.stance,
       stolen: e.stolen,
+      guardBlocks: intent.mirror ? s.lastAttackType : intent.blocks,
     );
   }
 
@@ -605,6 +611,7 @@ class CombatEngine {
     );
     if (def.type.isAttack) {
       d.attacksThisTurn++;
+      d.lastAttackType = def.type;
       // Despertar de la Serpiente: el tercer ataque del turno roba.
       if (d.attacksThisTurn == 3 && d.awakened.thirdAttackDraw > 0) {
         _draw(d, d.awakened.thirdAttackDraw, events);
@@ -866,8 +873,8 @@ class CombatEngine {
           _enemyAttack(d, def, intent, events);
         case IntentKind.guard:
           e.guard = intent.value;
-          e.guardBlocks = intent.blocks;
-          events.add(EnemyGuarded(intent.value, intent.blocks));
+          e.guardBlocks = intent.mirror ? d.lastAttackType : intent.blocks;
+          events.add(EnemyGuarded(intent.value, e.guardBlocks));
         case IntentKind.charge:
           e.chargeBonus += intent.value;
           events.add(EnemyCharged(intent.value));
@@ -1131,6 +1138,7 @@ class _Draft {
     this.deflectBonusDamage = 0,
     this.deflectBonusStructure = 0,
     this.lastTurnEndStance,
+    this.lastAttackType,
     this.punishPending = false,
     this.pendingDiscard = 0,
     Map<String, int>? formsCompleted,
@@ -1179,6 +1187,7 @@ class _Draft {
     deflectBonusDamage: s.deflectBonusDamage,
     deflectBonusStructure: s.deflectBonusStructure,
     lastTurnEndStance: s.lastTurnEndStance,
+    lastAttackType: s.lastAttackType,
     punishPending: s.punishPending,
     pendingDiscard: s.pendingDiscard,
     formsCompleted: {...s.formsCompleted},
@@ -1227,6 +1236,7 @@ class _Draft {
   int deflectBonusDamage;
   int deflectBonusStructure;
   Stance? lastTurnEndStance;
+  CardType? lastAttackType;
   bool punishPending;
   int pendingDiscard;
   final Map<String, int> formsCompleted;
@@ -1275,6 +1285,7 @@ class _Draft {
     deflectBonusDamage: deflectBonusDamage,
     deflectBonusStructure: deflectBonusStructure,
     lastTurnEndStance: lastTurnEndStance,
+    lastAttackType: lastAttackType,
     punishPending: punishPending,
     formProgress: Map.unmodifiable(formProgress),
     pendingDiscard: pendingDiscard,

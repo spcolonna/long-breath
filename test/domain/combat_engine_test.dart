@@ -857,6 +857,19 @@ void main() {
       expect(r.state.enemy.guardBlocks, isNull);
     });
 
+    test('Títere de sombras: su guardia copia tu último golpe', () {
+      var s = setup(['tan_tui', ...filler, ...filler], enemy: 'shadow_puppet');
+      expect(s.lastAttackType, isNull);
+      s = play(s, 'tan_tui').state;
+      expect(s.lastAttackType, CardType.kick);
+      // Turno 1 ataca; el próximo anuncia la guardia espejo con la patada.
+      s = endTurn(s).state;
+      expect(engine.intentView(s).guardBlocks, CardType.kick);
+      s = endTurn(s).state;
+      expect(s.enemy.guardBlocks, CardType.kick);
+      expect(s.enemy.guard, 12);
+    });
+
     test('Repique y escarcha: si no se desvía, menos Aliento y menos cartas', () {
       var s = setup([...filler, ...filler, ...filler], enemy: 'frost_bat');
       final r = endTurn(s);

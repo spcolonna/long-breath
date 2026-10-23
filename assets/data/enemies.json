@@ -154,6 +154,12 @@
         { "kind": "guard", "labelKey": "gold_scale", "value": 9 },
         { "kind": "attack", "labelKey": "devour", "height": "high", "damage": 9, "structure": 2 }
       ] } ] },
+    { "id": "shadow_puppet", "hanzi": "皮影", "pinyin": "pí yǐng", "rank": "common", "hp": 70, "structure": 15,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "puppet_slash", "height": "high", "damage": 9, "structure": 3 },
+        { "kind": "guard", "labelKey": "lantern_mirror", "blocks": "mirror", "value": 12 },
+        { "kind": "attack", "labelKey": "puppet_sweep", "height": "low", "damage": 5, "hits": 2, "structure": 2 }
+      ] } ] },
     { "id": "incense_monk", "hanzi": "香僧", "pinyin": "Xiāng Sēng", "art": "monk_amber", "rank": "common", "hp": 80, "structure": 17, "regen": 4,
       "phases": [ { "pattern": [
         { "kind": "guard", "labelKey": "incense", "value": 8 },
@@ -191,6 +197,15 @@
         { "kind": "attack", "height": "low", "damage": 13, "structure": 3 },
         { "kind": "guard", "labelKey": "stone_skin", "value": 10 },
         { "kind": "attack", "labelKey": "celadon_crush", "height": "low", "damage": 16, "structure": 4 }
+      ] } ] },
+    { "id": "nine_tail_fox", "hanzi": "九尾狐", "pinyin": "Jiǔ Wěi Hú", "rank": "elite", "hp": 150, "structure": 22,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "foxfire", "height": "high", "damage": 8, "hits": 2, "structure": 2 },
+        { "kind": "guard", "labelKey": "fox_illusion", "blocks": "palm", "value": 12 },
+        { "kind": "attack", "labelKey": "nine_tails", "height": "mid", "damage": 17, "structure": 4 },
+        { "kind": "discard", "labelKey": "fox_charm", "count": 1 },
+        { "kind": "guard", "labelKey": "tail_veil", "blocks": "kick", "value": 12 },
+        { "kind": "attack", "labelKey": "nine_tails", "height": "low", "damage": 17, "structure": 4 }
       ] } ] },
     { "id": "bell_abbot", "hanzi": "钟师", "pinyin": "Zhōng Shī", "art": "monk_gold", "rank": "boss", "hp": 215, "structure": 21,
       "phases": [

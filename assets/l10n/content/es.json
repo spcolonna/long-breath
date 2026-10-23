@@ -375,6 +375,18 @@
       "reply": "¿Y por qué me cerrás el paso?",
       "defeat": "Porque tenía que estar seguro. Ahora lo estoy.",
       "triumph": "Todavía no es tu momento. Va a llegar."
+    },
+    "nine_tail_fox": {
+      "name": "Zorro de Nueve Colas",
+      "rule": "Espíritu de las ilusiones. Su guardia cambia de lado: primero frena las palmas, después las patadas. En medio de la danza te encanta y te hace descartar una carta. Desequilibrarlo rompe la ilusión y le quita la guardia.",
+      "intro": "¿Cuál de nosotras es la verdadera? Elegí bien.",
+      "reply": "La que no tiembla cuando respiro.",
+      "defeat": "Me viste… Hacía siglos que nadie me veía.",
+      "triumph": "Te perdiste mirando las colas equivocadas."
+    },
+    "shadow_puppet": {
+      "name": "Títere de Sombras",
+      "rule": "Guerrero de cuero pintado que cobra vida con la linterna. Copia tu último golpe: su guardia frena ese mismo tipo. Si terminás con un puño, la próxima vez golpeá con palma o patada."
     }
   },
   "intents": {
@@ -423,7 +435,15 @@
     "slate_skin": "Piel de pizarra",
     "cloud_step": "Paso de nube",
     "qilin_horn": "Cuerno",
-    "holy_flame": "Fuego sagrado"
+    "holy_flame": "Fuego sagrado",
+    "fox_illusion": "Ilusión: frena las palmas",
+    "tail_veil": "Velo de colas: frena las patadas",
+    "foxfire": "Fuego de zorro",
+    "fox_charm": "Encanto",
+    "nine_tails": "Nueve colas",
+    "puppet_slash": "Tajo pintado",
+    "lantern_mirror": "Teatro de linterna",
+    "puppet_sweep": "Barrido de varas"
   },
   "talismans": {
     "arco": "Cuerda del Arco",
