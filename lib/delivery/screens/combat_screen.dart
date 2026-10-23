@@ -97,6 +97,9 @@ class _ArenaFx {
     this.guardKey = 0,
     this.deflectKey = 0,
     this.turnKey = 0,
+    this.enemyGuardKey = 0,
+    this.breakKey = 0,
+    this.qiKey = 0,
     this.dying = false,
     this.victory = false,
     this.defeated = false,
@@ -116,6 +119,9 @@ class _ArenaFx {
   final int guardKey;
   final int deflectKey;
   final int turnKey;
+  final int enemyGuardKey;
+  final int breakKey;
+  final int qiKey;
   final bool dying;
   final bool victory;
   final bool defeated;
@@ -155,6 +161,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _deflectKey = 0,
       _turnKey = 0;
   int _shakeKey = 0, _flashKey = 0, _formBurstKey = 0, _popId = 0;
+  int _enemyGuardKey = 0, _breakKey = 0, _qiKey = 0;
   double _shakeStrength = 8;
   bool _heavy = false, _dying = false, _victory = false, _defeated = false;
   final _enemyPops = <_Pop>[];
@@ -404,6 +411,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             dy: 26,
           );
         }
+        if (broken) _breakKey++;
         if (_heavy) _shake(broken ? 14 : 9);
       }
       if (guard > 0) {
@@ -413,6 +421,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       for (final e in ev) {
         switch (e) {
           case PlayerHealed(:final amount) when amount > 0:
+            _qiKey++;
             _pop(
               _heroPops,
               '+$amount',
@@ -423,6 +432,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               dy: -20,
             );
           case BreathGained(:final amount):
+            _qiKey++;
             _pop(
               _heroPops,
               '+$amount ${t.breath}',
@@ -540,6 +550,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               case EnemyGuarded(:final amount):
                 _audio.play(Sfx.enemyGuard);
                 _pulseKey++;
+                _enemyGuardKey++;
                 _pop(
                   _enemyPops,
                   '+$amount',
@@ -820,6 +831,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       guardKey: _guardKey,
       deflectKey: _deflectKey,
       turnKey: _turnKey,
+      enemyGuardKey: _enemyGuardKey,
+      breakKey: _breakKey,
+      qiKey: _qiKey,
       dying: _dying,
       victory: _victory,
       defeated: _defeated,
@@ -1192,6 +1206,23 @@ class _Arena extends StatelessWidget {
               radius: heroW * 0.6,
             ),
           ),
+          // Aliento o vida que vuelve: un remolino detrás del héroe.
+          Positioned(
+            left: heroLeft - heroW * 0.15,
+            bottom: heroBottom + heroH * 0.1,
+            width: heroW * 1.3,
+            height: heroW * 1.3,
+            child: ArtBurst(
+              trigger: fx.qiKey,
+              asset: 'assets/art/vfx/qi_swirl.webp',
+              size: heroW * 1.3,
+              duration: const Duration(milliseconds: 900),
+              from: 0.4,
+              to: 1,
+              spin: 2.4,
+              hold: 0.4,
+            ),
+          ),
           // Números sobre el héroe.
           Positioned(
             left: heroLeft + heroW * 0.62,
@@ -1438,6 +1469,56 @@ class _EnemyStage extends ConsumerWidget {
                       heavyHit: fx.heavy,
                       dying: fx.dying,
                       size: size,
+                    ),
+                  ),
+                  // Tinta de cada golpe, escudo al cubrirse, porcelana rota al
+                  // desequilibrarlo y pétalos al vencerlo.
+                  Positioned.fill(
+                    child: ArtBurst(
+                      trigger: fx.sparkKey,
+                      asset: 'assets/art/vfx/hit_ink.webp',
+                      size: size * (fx.heavy ? 0.95 : 0.7),
+                      duration: const Duration(milliseconds: 420),
+                      from: 0.5,
+                      to: 1.15,
+                      spin: 0.6,
+                      hold: 0.2,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: ArtBurst(
+                      trigger: fx.enemyGuardKey,
+                      asset: 'assets/art/vfx/guard_shield.webp',
+                      size: size * 0.85,
+                      duration: const Duration(milliseconds: 800),
+                      from: 0.7,
+                      to: 1.05,
+                      spin: 0,
+                      hold: 0.55,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: ArtBurst(
+                      trigger: fx.breakKey,
+                      asset: 'assets/art/vfx/break_shatter.webp',
+                      size: size * 1.1,
+                      duration: const Duration(milliseconds: 700),
+                      from: 0.6,
+                      to: 1.35,
+                      spin: 0.25,
+                      hold: 0.25,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: ArtBurst(
+                      trigger: fx.burstKey,
+                      asset: 'assets/art/vfx/lotus_petals.webp',
+                      size: size * 1.2,
+                      duration: const Duration(milliseconds: 1400),
+                      from: 0.4,
+                      to: 1.4,
+                      spin: 0.5,
+                      hold: 0.45,
                     ),
                   ),
                   // Chispas de cada golpe y estallido final.

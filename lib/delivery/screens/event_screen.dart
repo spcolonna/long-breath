@@ -75,9 +75,13 @@ class _EventScreenState extends ConsumerState<EventScreen> {
     final text = ref.watch(textProvider);
     final event = data.event(id);
     return Scaffold(
-      // El paisaje de la etapa detrás: cada encuentro pasa en su montaña.
+      // El alto en el camino (pabellón, té y faroles); si faltara, el paisaje
+      // de la etapa.
       body: SceneBackdrop(
-        assets: stageArt(data.balance.stages[run.stage].id, 'map_bg.webp'),
+        assets: [
+          'assets/art/ui/event_bg.webp',
+          ...stageArt(data.balance.stages[run.stage].id, 'map_bg.webp'),
+        ],
         veil: 0.45,
         child: SafeArea(
         child: Padding(
