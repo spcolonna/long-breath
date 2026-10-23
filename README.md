@@ -36,3 +36,11 @@ flutter run                                    # app
 - Textos de interfaz: `lib/l10n/app_<idioma>.arb` (Flutter gen-l10n).
 - Textos del contenido (cartas, posturas, formas, enemigos, etapas): `assets/l10n/content/<idioma>.json`, indexados por id. Los JSON de `assets/data/` solo tienen mecánica, hanzi y pinyin.
 - Se usa el idioma del dispositivo; si no existe, español. Para sumar un idioma: copiar ambos archivos de `es` y traducirlos (el test `test/content_text_test.dart` avisa si falta alguna clave).
+
+## Arte
+
+Los prompts de arte están en [docs/arte/prompts.md](docs/arte/prompts.md). Todo archivo de prompts nuevo (o cualquier tanda que se agregue) sigue el **sistema de bloques** de ese archivo:
+
+- Un bloque es **un solo mensaje** para pegar entero en una conversación nueva de ChatGPT, con 10 imágenes como máximo. Arranca con «Generate exactly N separate images…» y lista `Image 1 — <nombre>:`, `Image 2 — …`.
+- Cada imagen repite su descripción completa (formato, estilo, paleta, qué no incluir), así sale igual aunque se corra sola.
+- Arriba va «Para generar ahora» (solo lo que falta, en bloques), después «Estado» (⬜ falta / ✅ hecho) y abajo el prompt individual de cada imagen, con su destino.
