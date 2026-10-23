@@ -40,7 +40,7 @@ claro, color saturado y mucho aire.
 | Bloque | Qué | Carpeta | Imágenes |
 |---|---|---|---|
 | A | Enemigos que faltan y sellos del mapa | `assets/art/enemies/` (el 6.º va en `assets/art/stages/qianyunshan/`) | 7 |
-| D | Ideas: pantalla de inicio, logo e íconos | `assets/art/ui/` (los 2 primeros) y `assets/art/icons/` | 8 |
+| D | Ideas: logo e íconos | `assets/art/ui/` (el 1.º) y `assets/art/icons/` | 7 |
 | E | Ideas: marcos de carta | `assets/art/cards/` | 5 |
 | F | Ideas: ilustraciones de cartas, 1 de 2 | `assets/art/cards/` | 10 |
 | G | Ideas: ilustraciones de cartas, 2 de 2 | `assets/art/cards/` | 10 |
@@ -122,29 +122,15 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-## Bloque D — Ideas: pantalla de inicio, logo e íconos (8)
+## Bloque D — Ideas: logo e íconos (7)
 
-Archivos, en orden: `home_bg.png`, `logo.png`, `breath.png`, `guard.png`, `structure.png`, `deflect.png`, `stagger.png`, `fountain.png`. Carpeta: `assets/art/ui/` (los 2 primeros) y `assets/art/icons/`.
+Archivos, en orden: `logo.png`, `breath.png`, `guard.png`, `structure.png`, `deflect.png`, `stagger.png`, `fountain.png`. Carpeta: `assets/art/ui/` (el 1.º) y `assets/art/icons/`.
 - Ideas: el código todavía no las usa. Antes hay que preparar el código y `pubspec.yaml`.
 
 ```
-Generate exactly 8 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
+Generate exactly 7 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
 
-Image 1 — home_bg:
-Create a tall PORTRAIT image with a 9:19.5 aspect ratio, fully opaque (no transparency).
-
-Vertical mobile splash illustration: a young kung fu student in a flowing jade-and-white robe
-standing on a floating rock at the foot of a colossal mountain wrapped in a thousand swirling
-pastel clouds, dawn light in peach and gold, a faint golden dragon silhouette drawn by the clouds
-themselves, wide empty sky area in the upper-middle for a logo.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-background (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 2 — logo:
+Image 1 — logo:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Logo emblem: the Chinese character 龙 painted in a single energetic vermilion brush stroke, with a
@@ -157,7 +143,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 3 — breath:
+Image 2 — breath:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
 
 Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a swirling cobalt blue (#3E7BE0) breath wisp shaped like the character 气.
@@ -168,7 +154,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 4 — guard:
+Image 3 — guard:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
 
 Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a rounded cobalt blue (#3E7BE0) shield with a cloud pattern.
@@ -179,7 +165,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 5 — structure:
+Image 4 — structure:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
 
 Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a violet (#9B5DE5) hexagonal crystal.
@@ -190,7 +176,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 6 — deflect:
+Image 5 — deflect:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
 
 Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a jade green (#1FA38A) arc slash deflecting a strike, with sparkles.
@@ -201,7 +187,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 7 — stagger:
+Image 6 — stagger:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
 
 Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a gold (#E59A12) starburst with dizzy spirals.
@@ -212,7 +198,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 8 — fountain:
+Image 7 — fountain:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
 
 Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a small cobalt blue (#3E7BE0) spring with a pink lotus.
@@ -570,7 +556,7 @@ backgrounds, no photorealism, no text, no watermark.
 | Efectos | `vfx/hit_ink`, `vfx/guard_shield`, `vfx/break_shatter`, `vfx/qi_swirl`, `vfx/lotus_petals` | ✅ |
 | Rollo de lectura | `ui/lore_scroll` | ✅ |
 | Pantallas | `ui/title_bg`, `ui/event_bg`, `ui/victory_bg`, `ui/epilogue_bg` | ✅ |
-| Inicio (idea) | `ui/home_bg`, `ui/logo` | ⬜ bloque D |
+| Logo (idea) | `ui/logo` | ⬜ bloque D (el fondo del menú ya es `ui/title_bg`) |
 
 ## Cartas e íconos (ideas: el código todavía no los usa)
 
@@ -686,7 +672,9 @@ backgrounds, no photorealism, no text, no watermark.
 
 ## 1. Pantalla de inicio
 
-⬜ **Destino:** `assets/art/ui/home_bg.png`, vertical 9:19.5, con espacio libre en el centro para el logo.
+✅ Reemplazado por `ui/title_bg` (sección 9), que ya es el fondo del menú. No pedir este.
+
+~~**Destino:** `assets/art/ui/home_bg.png`, vertical 9:19.5, con espacio libre en el centro para el logo.~~
 
 ```
 Create ONE single image. Start immediately, without asking questions.
