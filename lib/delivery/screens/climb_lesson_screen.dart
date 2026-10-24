@@ -9,6 +9,7 @@ import '../audio/game_audio.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/card_widget.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/jade.dart';
@@ -183,7 +184,7 @@ Widget _node(IconData icon, Color color, {double size = 50}) => Container(
     shape: BoxShape.circle,
     border: Border.all(color: color, width: 2.5),
   ),
-  child: Icon(icon, color: color, size: size * 0.5),
+  child: GameIcon(icon, color: color, size: size * 0.5),
 );
 
 class _MapPath extends StatelessWidget {

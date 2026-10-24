@@ -74,23 +74,23 @@ Total: 96 · ✅ 92 · 🎨 4 · ❌ 0
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
 | ✅ propio | `assets/art/stages/qianyunshan/map_node_stone.webp` | textura de los sellos del mapa (opcional) | disco con degradado | — |
+| ✅ propio | `assets/art/ui/logo.webp` | logo 龙 del menú | carácter 龙 en texto | — |
+| ✅ propio | `assets/art/icons/breath.webp` | ícono de breath | ícono de Material | — |
+| ✅ propio | `assets/art/icons/guard.webp` | ícono de guard | ícono de Material | — |
+| ✅ propio | `assets/art/icons/structure.webp` | ícono de structure | ícono de Material | — |
+| ✅ propio | `assets/art/icons/deflect.webp` | ícono de deflect | ícono de Material | — |
+| ✅ propio | `assets/art/icons/stagger.webp` | ícono de stagger | ícono de Material | — |
+| ✅ propio | `assets/art/icons/fountain.webp` | ícono de fountain | ícono de Material | — |
+| ✅ propio | `assets/art/cards/frame_fist.webp` | marco de carta fist | papel teñido sin marco | — |
+| ✅ propio | `assets/art/cards/frame_palm.webp` | marco de carta palm | papel teñido sin marco | — |
+| ✅ propio | `assets/art/cards/frame_kick.webp` | marco de carta kick | papel teñido sin marco | — |
+| ✅ propio | `assets/art/cards/frame_defense.webp` | marco de carta defense | papel teñido sin marco | — |
+| ✅ propio | `assets/art/cards/frame_technique.webp` | marco de carta technique | papel teñido sin marco | — |
 
 ## ideas
 
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
-| ✅ propio | `assets/art/ui/logo.webp` | logo 龙 (idea) | título en texto | — |
-| ✅ propio | `assets/art/icons/breath.webp` | ícono de breath (idea) | ícono de Material | — |
-| ✅ propio | `assets/art/icons/guard.webp` | ícono de guard (idea) | ícono de Material | — |
-| ✅ propio | `assets/art/icons/structure.webp` | ícono de structure (idea) | ícono de Material | — |
-| ✅ propio | `assets/art/icons/deflect.webp` | ícono de deflect (idea) | ícono de Material | — |
-| ✅ propio | `assets/art/icons/stagger.webp` | ícono de stagger (idea) | ícono de Material | — |
-| ✅ propio | `assets/art/icons/fountain.webp` | ícono de fountain (idea) | ícono de Material | — |
-| ✅ propio | `assets/art/cards/frame_fist.webp` | marco de carta fist (idea) | carta dibujada | — |
-| ✅ propio | `assets/art/cards/frame_palm.webp` | marco de carta palm (idea) | carta dibujada | — |
-| ✅ propio | `assets/art/cards/frame_kick.webp` | marco de carta kick (idea) | carta dibujada | — |
-| ✅ propio | `assets/art/cards/frame_defense.webp` | marco de carta defense (idea) | carta dibujada | — |
-| ✅ propio | `assets/art/cards/frame_technique.webp` | marco de carta technique (idea) | carta dibujada | — |
 | ✅ propio | `assets/art/cards/gongbu_chongquan.webp` | ilustración de carta (idea) | sin ilustración | — |
 
 ## npc

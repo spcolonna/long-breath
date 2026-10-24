@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import 'game_icon.dart';
 import 'juice.dart';
 
 /// Carta de juego. Con [preview] muestra los valores finales (bonus aplicados).
@@ -50,14 +51,14 @@ class CardWidget extends ConsumerWidget {
     final structure = p?.structure ?? def.structure;
     final guard = p?.guard ?? (def.guard > 0 ? def.guard + upgrades : 0);
 
-    Color border = Palette.line;
-    double borderW = 1.5;
+    // Selección, retenida o forma: un borde encima del marco pintado.
+    Color? border;
+    double borderW = 2.5;
     List<BoxShadow> shadows = const [
       BoxShadow(color: Color(0x33000000), blurRadius: 6, offset: Offset(0, 3)),
     ];
     if (advancesForm) {
       border = Palette.gold;
-      borderW = 2.5;
       shadows = [
         BoxShadow(color: Palette.gold.withValues(alpha: 0.55), blurRadius: 14),
       ];
@@ -71,152 +72,196 @@ class CardWidget extends ConsumerWidget {
       borderW = 3;
     }
 
+    // Medidas del marco (512×768): el círculo del costo y el hueco interior.
+    final badge = 18 * s;
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 200),
       opacity: playable ? 1 : 0.5,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: h,
-        decoration: BoxDecoration(
-          color: Palette.surface,
-          borderRadius: BorderRadius.circular(10 * s),
-          border: Border.all(color: border, width: borderW),
-          boxShadow: shadows,
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [color.withValues(alpha: 0.22), Palette.surface],
-          ),
-        ),
-        padding: EdgeInsets.all(5 * s),
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    _CostBadge(
-                      cost: cost,
-                      base: def.cost,
-                      // Postura o carta retenida: verde si baja, rojo si sube.
-                      stanceDelta: p == null ? 0 : cost - def.cost,
-                      scale: s,
+            // Papel teñido del tipo, dentro del marco.
+            Positioned.fill(
+              child: Padding(
+                padding: EdgeInsets.all(width * 0.035),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Palette.surface,
+                    borderRadius: BorderRadius.circular(8 * s),
+                    border: Border.all(color: color.withValues(alpha: 0.5)),
+                    boxShadow: shadows,
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [color.withValues(alpha: 0.22), Palette.surface],
                     ),
-                    SizedBox(width: 4 * s),
-                    Expanded(
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Image.asset(
+                  'assets/art/cards/frame_${def.type.name}.webp',
+                  fit: BoxFit.fill,
+                  cacheWidth: (width * MediaQuery.devicePixelRatioOf(context))
+                      .ceil(),
+                  filterQuality: FilterQuality.medium,
+                  errorBuilder: (_, _, _) => const SizedBox(),
+                ),
+              ),
+            ),
+            Positioned(
+              left: width * 0.146 - badge / 2,
+              top: h * 0.111 - badge / 2,
+              child: _CostBadge(
+                cost: cost,
+                base: def.cost,
+                // Postura o carta retenida: verde si baja, rojo si sube.
+                stanceDelta: p == null ? 0 : cost - def.cost,
+                scale: s,
+              ),
+            ),
+            Positioned(
+              left: width * 0.3,
+              right: width * 0.17,
+              top: h * 0.095,
+              child: Text(
+                p?.retained == true ? t.retainedTag : t.typeLabel(def.type),
+                textAlign: TextAlign.right,
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                  fontSize: 8.5 * s,
+                  color: p?.retained == true ? Palette.jade : color,
+                  fontWeight: p?.retained == true
+                      ? FontWeight.w800
+                      : FontWeight.w700,
+                ),
+              ),
+            ),
+            Positioned(
+              left: width * 0.11,
+              right: width * 0.11,
+              top: h * 0.185,
+              bottom: h * 0.2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Nombre traducido como título; el hanzi queda de marca de agua.
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned.fill(
+                          child: FittedBox(
+                            child: Text(
+                              def.hanzi,
+                              style: TextStyle(
+                                fontSize: 40 * s,
+                                height: 1,
+                                color: color.withValues(alpha: 0.16),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Con manos grandes la carta se achica: el texto se
+                        // reduce en vez de desbordar.
+                        LayoutBuilder(
+                          builder: (context, box) => FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: SizedBox(
+                              width: box.maxWidth,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    text.card(def.id),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 11.5 * s,
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.1,
+                                      color: Palette.text,
+                                    ),
+                                  ),
+                                  SizedBox(height: 2 * s),
+                                  Text(
+                                    def.pinyin,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 8 * s,
+                                      fontStyle: FontStyle.italic,
+                                      color: Palette.textDim,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 2 * s),
+                  _Stats(
+                    damage: damage,
+                    structure: structure,
+                    guard: guard,
+                    height: def.height,
+                    scale: s,
+                    damageDelta: (p?.stanceDamage ?? 0) + (p?.styleDamage ?? 0),
+                    structureDelta: p?.stanceStructure ?? 0,
+                    guardDelta: p?.stanceGuard ?? 0,
+                  ),
+                  if (def.stance != null || def.exhaust || upgrades > 0)
+                    Padding(
+                      padding: EdgeInsets.only(top: 1 * s),
                       child: Text(
-                        p?.retained == true
-                            ? t.retainedTag
-                            : t.typeLabel(def.type),
-                        textAlign: TextAlign.right,
+                        [
+                          if (def.stance != null)
+                            '→ ${text.stance(def.stance!)}',
+                          if (def.exhaust) t.effExhaust,
+                          if (upgrades > 0) '+$upgrades',
+                        ].join(' · '),
+                        textAlign: TextAlign.center,
                         maxLines: 1,
-                        overflow: TextOverflow.clip,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 9 * s,
-                          color: p?.retained == true ? Palette.jade : color,
-                          fontWeight: p?.retained == true
-                              ? FontWeight.w800
-                              : FontWeight.w600,
+                          fontSize: 7.5 * s,
+                          color: Palette.textDim,
                         ),
                       ),
                     ),
-                  ],
-                ),
-                // Nombre traducido como título; el hanzi queda de marca de agua.
-                Expanded(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned.fill(
-                        child: FittedBox(
-                          child: Text(
-                            def.hanzi,
-                            style: TextStyle(
-                              fontSize: 40 * s,
-                              height: 1,
-                              color: color.withValues(alpha: 0.16),
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Con manos grandes la carta se achica: el texto se reduce
-                      // en vez de desbordar.
-                      LayoutBuilder(
-                        builder: (context, box) => FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: SizedBox(
-                            width: box.maxWidth,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  text.card(def.id),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 12 * s,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.1,
-                                    color: Palette.text,
-                                  ),
-                                ),
-                                SizedBox(height: 2 * s),
-                                Text(
-                                  def.pinyin,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 8 * s,
-                                    fontStyle: FontStyle.italic,
-                                    color: Palette.textDim,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 3 * s),
-                _Stats(
-                  damage: damage,
-                  structure: structure,
-                  guard: guard,
-                  height: def.height,
-                  scale: s,
-                  damageDelta: (p?.stanceDamage ?? 0) + (p?.styleDamage ?? 0),
-                  structureDelta: p?.stanceStructure ?? 0,
-                  guardDelta: p?.stanceGuard ?? 0,
-                ),
-                if (def.stance != null || def.exhaust || upgrades > 0)
-                  Padding(
-                    padding: EdgeInsets.only(top: 2 * s),
-                    child: Text(
-                      [
-                        if (def.stance != null) '→ ${text.stance(def.stance!)}',
-                        if (def.exhaust) t.effExhaust,
-                        if (upgrades > 0) '+$upgrades',
-                      ].join(' · '),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 8 * s, color: Palette.textDim),
-                    ),
-                  ),
-              ],
+                ],
+              ),
             ),
             if (interruptsForm)
               Positioned(
-                right: 0,
-                top: 16 * s,
+                right: width * 0.1,
+                top: h * 0.17,
                 child: Icon(
                   Icons.warning_amber_rounded,
                   size: 16 * s,
                   color: Palette.lacquer,
+                ),
+              ),
+            if (border != null)
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10 * s),
+                      border: Border.all(color: border, width: borderW),
+                    ),
+                  ),
                 ),
               ),
           ],
@@ -261,8 +306,8 @@ class _CostBadge extends StatelessWidget {
       scale: 1.3,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        width: 20 * scale,
-        height: 20 * scale,
+        width: 18 * scale,
+        height: 18 * scale,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -273,7 +318,7 @@ class _CostBadge extends StatelessWidget {
           '$cost',
           textHeightBehavior: _tight,
           style: TextStyle(
-            fontSize: 12 * scale,
+            fontSize: 11 * scale,
             height: 1,
             leadingDistribution: TextLeadingDistribution.even,
             fontWeight: FontWeight.bold,
@@ -348,7 +393,7 @@ class _Stats extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 11 * scale, color: c),
+            GameIcon(icon, size: 11 * scale, color: c),
             Text(
               '$v',
               textHeightBehavior: _tight,

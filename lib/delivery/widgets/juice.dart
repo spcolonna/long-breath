@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
+import 'game_icon.dart';
 
 /// Piezas de "feel" reutilizables: sacudidas, rebotes, números que saltan,
 /// estallidos de tinta y barras con estela.
@@ -186,7 +187,7 @@ class _PopTextState extends State<PopText> with SingleTickerProviderStateMixin {
           if (widget.icon != null)
             Padding(
               padding: const EdgeInsets.only(right: 2),
-              child: Icon(
+              child: GameIcon(
                 widget.icon,
                 size: widget.size * 0.7,
                 color: widget.color,

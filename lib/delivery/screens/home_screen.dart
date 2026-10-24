@@ -73,6 +73,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   alignment: Alignment.centerRight,
                   child: AudioToggles(),
                 ),
+                // El sello pintado del dragón; si faltara, el carácter.
+                Image.asset(
+                  'assets/art/ui/logo.webp',
+                  height: 88,
+                  errorBuilder: (_, _, _) => const Text(
+                    '龙',
+                    style: TextStyle(
+                      fontSize: 44,
+                      color: Palette.lacquer,
+                      height: 1,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
                 const FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Row(
@@ -80,14 +94,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(
-                        '龙 ',
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Palette.lacquer,
-                          height: 1,
-                        ),
-                      ),
                       Text(
                         'LONG BREATH',
                         style: TextStyle(

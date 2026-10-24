@@ -322,15 +322,15 @@ backgrounds, no photorealism, no text, no watermark.
 | Efectos | `vfx/hit_ink`, `vfx/guard_shield`, `vfx/break_shatter`, `vfx/qi_swirl`, `vfx/lotus_petals` | ✅ |
 | Rollo de lectura | `ui/lore_scroll` | ✅ |
 | Pantallas | `ui/title_bg`, `ui/event_bg`, `ui/victory_bg`, `ui/epilogue_bg` | ✅ |
-| Logo (idea) | `ui/logo` | ✅ listo, sin código que lo use |
+| Logo | `ui/logo` (menú principal) | ✅ |
 
-## Cartas e íconos (ideas: el código todavía no los usa)
+## Cartas e íconos
 
 | Qué | Carpeta | Cantidad | Estado |
 |---|---|---|---|
-| Íconos | `assets/art/icons/` | 6 | ✅ listos, sin código |
-| Marcos por tipo | `assets/art/cards/` | 5 | ✅ listos, sin código |
-| Ilustraciones de cartas | `assets/art/cards/` | 20 | ✅ 1 (`gongbu_chongquan`) · ⬜ 19 en bloques A y B |
+| Íconos | `assets/art/icons/` | 6 | ✅ |
+| Marcos por tipo | `assets/art/cards/` | 5 | ✅ |
+| Ilustraciones de cartas (idea: la carta todavía no las muestra) | `assets/art/cards/` | 20 | ✅ 1 (`gongbu_chongquan`) · ⬜ 19 en bloques A y B |
 
 ---
 

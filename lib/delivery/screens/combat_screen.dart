@@ -29,6 +29,7 @@ import '../tutorial/tutorial_overlay.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/cinematic.dart';
 import '../widgets/enemy_sprite.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/stage_scene.dart';
@@ -438,6 +439,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               '+$amount ${t.breath}',
               Palette.gold,
               size: 20,
+              icon: Icons.air,
               dx: 20,
               dy: -40,
             );
@@ -1841,7 +1843,7 @@ class _MiniBar extends StatelessWidget {
     final ratio = max == 0 ? 0.0 : (value / max).clamp(0.0, 1.0);
     return Row(
       children: [
-        Icon(icon, size: 14, color: color),
+        GameIcon(icon, size: 14, color: color),
         const SizedBox(width: 4),
         Expanded(
           child: TrailBar(
@@ -1946,7 +1948,7 @@ class _IntentBubble extends ConsumerWidget {
                 width: 34,
                 height: 34,
                 decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-                child: Icon(icon, size: 22, color: Palette.onColor),
+                child: GameIcon(icon, size: 22, color: Palette.onColor),
               ),
               const SizedBox(width: 8),
               Flexible(
@@ -2130,7 +2132,7 @@ class _PlayerStrip extends ConsumerWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          GameIcon(
                             Icons.shield,
                             size: 16,
                             color: p.guard > 0 ? Palette.onColor : Palette.sky,
@@ -3157,9 +3159,16 @@ class _BreathPips extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 2),
-        Text(
-          '${AppLocalizations.of(context).breath} $breath',
-          style: const TextStyle(fontSize: 10, color: Palette.sky),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const GameIcon(Icons.air, size: 13, color: Palette.sky),
+            const SizedBox(width: 2),
+            Text(
+              '${AppLocalizations.of(context).breath} $breath',
+              style: const TextStyle(fontSize: 10, color: Palette.sky),
+            ),
+          ],
         ),
       ],
     );
@@ -3320,7 +3329,7 @@ class _Chip extends StatelessWidget {
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 13, color: color),
+        GameIcon(icon, size: 13, color: color),
         const SizedBox(width: 4),
         // En columnas angostas (enemigo) el texto se corta en vez de desbordar.
         Flexible(

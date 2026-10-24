@@ -6,6 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/card_widget.dart';
+import '../widgets/game_icon.dart';
 import 'tutorial_steps.dart';
 
 /// Dibujo explicativo del maestro, armado con las mismas piezas que el juego
@@ -126,7 +127,11 @@ class _CardAnatomy extends ConsumerWidget {
         children: [
           const Icon(Icons.bolt, size: 15, color: Palette.lacquer),
           Text('${t.illStatsDamage}  ', style: _small),
-          const Icon(Icons.hexagon_outlined, size: 14, color: Palette.structure),
+          const GameIcon(
+            Icons.hexagon_outlined,
+            size: 14,
+            color: Palette.structure,
+          ),
           Text(' ${t.illStatsStructure}', style: _small),
         ],
       ),
@@ -204,7 +209,7 @@ Widget _chipIcon(IconData icon, Color color) => Container(
   width: 26,
   height: 26,
   decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-  child: Icon(icon, size: 16, color: Palette.onColor),
+  child: GameIcon(icon, size: 16, color: Palette.onColor),
 );
 
 class _IntentLegend extends StatelessWidget {
@@ -384,7 +389,7 @@ class _Line extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 1),
-          child: Icon(icon, size: 13, color: color),
+          child: GameIcon(icon, size: 13, color: color),
         ),
         const SizedBox(width: 4),
         Expanded(child: Text(text, style: _small)),

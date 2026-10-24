@@ -5,8 +5,8 @@ Se corre cada vez que llega arte nuevo (los generadores entregan PNG):
     python3 tool/optimize_art.py
 
 Convierte cada `.png` de assets/art en un `.webp` con el mismo nombre y borra
-el PNG. Los originales quedan en el historial de git (`git log -- <ruta>`),
-así que hay que commitear el PNG antes de correrlo si se quiere conservar.
+el PNG. El PNG no se commitea nunca: en git solo queda el `.webp`, para que
+el repositorio no pese.
 Los fondos no se achican (ya vienen a la medida de la pantalla); los sprites
 sí, hasta el alto que tienen en pantalla a 3x.
 """

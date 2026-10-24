@@ -38,6 +38,13 @@ flutter:
     - assets/art/stages/wolongding/
     - assets/art/ui/
     - assets/art/vfx/
+    - assets/art/icons/
+    # Marcos por tipo; las ilustraciones de cartas se suman cuando haya código.
+    - assets/art/cards/frame_fist.webp
+    - assets/art/cards/frame_palm.webp
+    - assets/art/cards/frame_kick.webp
+    - assets/art/cards/frame_defense.webp
+    - assets/art/cards/frame_technique.webp
     # hero.webp es la fuente de tool/recolor_hero.py; el juego usa las variantes.
     - assets/art/player/hero_novice.webp
     - assets/art/player/hero_tiger.webp

@@ -4,7 +4,7 @@ Qué hay, qué es prestado y qué falta, en orden de prioridad. **Antes de pedir
 
 Actualizado: 2026-10-11.
 
-**El juego usa WebP.** El arte se genera y se guarda en PNG con el nombre del prompt; al integrarlo se commitea el PNG (queda en el historial de git como original) y se corre `python3 tool/optimize_art.py`, que lo pasa a `.webp` del tamaño en que se muestra y borra el PNG. Así las imágenes pasaron de 152 MB a 19 MB (11/10/2026).
+**El juego usa WebP.** El arte se genera y se guarda en PNG con el nombre del prompt; al integrarlo se corre `python3 tool/optimize_art.py`, que lo pasa a `.webp` del tamaño en que se muestra y borra el PNG. El PNG nunca se commitea: en git solo queda el `.webp` (24/10/2026 se sacaron del historial los originales viejos, ~230 MB). Así las imágenes pasaron de 152 MB a 19 MB (11/10/2026).
 
 **La lista exacta, archivo por archivo, está en [`checklist.md`](checklist.md)**, que genera `python3 tool/art_status.py` comparando lo que el código busca con lo que hay en `assets/art`. Ante cualquier duda, manda la checklist: se corre antes de pasar prompts y cada vez que llega arte.
 
@@ -45,7 +45,8 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
   - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza), `disciple_wind` (Discípulo del Viento), `golem_ice` (Gólem de Escarcha), `monkey_snow` (Simio de las Nieves) y `bat_frost` (Murciélago de Escarcha);
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
 - **Mapa:** `map_node_stone` (textura de los sellos).
-- **Listas para cuando haya código:** `ui/logo`, los 6 íconos de `icons/`, los 5 marcos de `cards/` y la ilustración de `gongbu_chongquan`.
+- **UI:** `ui/logo` (menú), los 6 íconos de `icons/` (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
+- **Lista para cuando haya código:** la ilustración de `gongbu_chongquan`.
 
 ## Reserva de recoloreos
 
@@ -66,5 +67,5 @@ Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la 
 
 ### 3. Ideas (el código todavía no las usa)
 
-- Faltan 19 ilustraciones de cartas (bloques F y G de `prompts.md`).
-- El logo, los íconos, los marcos y `gongbu_chongquan` ya están en webp, pero no van en `pubspec.yaml` hasta que el código los use.
+- Faltan 19 ilustraciones de cartas (bloques A y B de `prompts.md`).
+- `gongbu_chongquan` ya está en webp, pero no va en `pubspec.yaml` hasta que la carta muestre ilustraciones.
