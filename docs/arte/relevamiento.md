@@ -42,8 +42,10 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 - **Enemigos:**
   - etapa 1: dummy, bat, salamander, golem, disciple, bandit, lingzhi, monkey, monk, lion, fan y dragon;
   - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3);
-  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza);
-  - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora) y `wooden_ox` (Buey de Madera). Falta `qilin`.
+  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza), `disciple_wind` (Discípulo del Viento), `golem_ice` (Gólem de Escarcha), `monkey_snow` (Simio de las Nieves) y `bat_frost` (Murciélago de Escarcha);
+  - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
+- **Mapa:** `map_node_stone` (textura de los sellos).
+- **Listas para cuando haya código:** `ui/logo`, los 6 íconos de `icons/`, los 5 marcos de `cards/` y la ilustración de `gongbu_chongquan`.
 
 ## Reserva de recoloreos
 
@@ -51,36 +53,18 @@ Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda 
 
 ## Pendiente, por prioridad
 
-### 1. Enemigos de las etapas 2 y 3: hoy son recoloreos
+### 1. Enemigos y fondos
 
-Ya **existen**, pero son el enemigo de la etapa 1 con otro color (`VARIANTS` en `tool/recolor_enemies.py`). El arte propio **reemplaza el archivo con el mismo nombre**, y después hay que borrar su entrada de `VARIANTS` para que el script no lo pise. Los prompts están en `prompts.md` §7.
+Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la reserva, y existen todos los fondos que busca el juego.
 
-| Orden | Archivo | Enemigo | Rol | Sale de |
-|---|---|---|---|---|
-| 1 | `disciple_wind.png` | Discípulo del Viento | común etapa 3 | disciple |
-| 2 | `golem_ice.png` | Gólem de Escarcha | común etapa 3 | golem |
-| 3 | `monkey_snow.png` | Simio de las Nieves | común etapa 3 | monkey |
-| 4 | `bat_frost.png` | Murciélago de Escarcha | común etapa 3 | bat |
-
-### 2. Fondos
-
-Ya existen todos los que busca el juego: los 4 tramos de combate y la fuente de las tres etapas. El santuario solo aparece en la etapa 1, así que las etapas 2 y 3 no necesitan `shrine_bg`.
-
-### 3. Opcional
-
-- `stages/qianyunshan/map_node_stone.png`: textura de los sellos del mapa (512×512, transparente). Sin ella queda el disco con degradado.
-
-### 4. Sonido: no hay ningún archivo
+### 2. Sonido: no hay ningún archivo
 
 `assets/audio/` está vacío, así que hoy el juego no suena. Los prompts están en `docs/arte/sonido.md`.
 
 - Faltan 39 efectos (53 archivos contando variantes) y 8 músicas.
 - La voz de cada enemigo se busca por su **id** (`sfx/enemy_<id>`), no por su arte. Hay prompt solo para 7 de los 33.
 
-### 5. Ideas (el código todavía no las usa)
+### 3. Ideas (el código todavía no las usa)
 
-- Fondo de inicio y logo (§1).
-- Marcos y 20 ilustraciones de cartas (§4).
-- 6 íconos (§5).
-
-Antes de generarlas hay que preparar el código y `pubspec.yaml`.
+- Faltan 19 ilustraciones de cartas (bloques F y G de `prompts.md`).
+- El logo, los íconos, los marcos y `gongbu_chongquan` ya están en webp, pero no van en `pubspec.yaml` hasta que el código los use.

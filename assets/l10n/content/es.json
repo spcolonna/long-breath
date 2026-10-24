@@ -368,6 +368,10 @@
       "name": "Ermitaño de Pizarra",
       "rule": "Piel de piedra: cada carta que le hace daño te quita 1 de Vida (desequilibrado no). Castiga repetir postura: cambiá de postura entre turnos."
     },
+    "guqin_player": {
+      "name": "Músico del Guqin",
+      "rule": "Un ermitaño que pelea tocando. Tres notas altas seguidas, después una disonancia que te hace descartar y un acorde que congela. Guardia alta contra las ondas."
+    },
     "qilin": {
       "name": "Qilin",
       "rule": "La bestia de buen augurio. Pisa nubes: su guardia frena las patadas. Desvía el primer golpe de cada turno y te devuelve 4. Desequilibrado pierde las dos defensas.",
@@ -428,6 +432,9 @@
     "incense_palm": "Palma de incienso",
     "smoke": "Humo",
     "celadon_crush": "Zarpazo de porcelana",
+    "string_ripple": "Ondas de cuerda",
+    "dissonance": "Disonancia",
+    "silk_chord": "Acorde de seda",
     "sword_slash": "Tajo",
     "sword_cut": "Corte de la forma",
     "ox_wind_up": "Engranajes",

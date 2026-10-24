@@ -34,6 +34,10 @@ LIMITS = {
     "ui/victory_bg.png": None,
     "ui/epilogue_bg.png": None,
     "vfx": 640,
+    "stages/qianyunshan/map_node_stone.png": 256,
+    "ui/logo.png": 512,
+    "icons": 256,
+    "cards": 768,
 }
 SPRITE_QUALITY = 85
 BACKGROUND_QUALITY = 82

@@ -39,261 +39,21 @@ claro, color saturado y mucho aire.
 
 | Bloque | Qué | Carpeta | Imágenes |
 |---|---|---|---|
-| A | Enemigos que faltan y sellos del mapa | `assets/art/enemies/` (el 6.º va en `assets/art/stages/qianyunshan/`) | 7 |
-| D | Ideas: logo e íconos | `assets/art/ui/` (el 1.º) y `assets/art/icons/` | 7 |
-| E | Ideas: marcos de carta | `assets/art/cards/` | 5 |
-| F | Ideas: ilustraciones de cartas, 1 de 2 | `assets/art/cards/` | 10 |
-| G | Ideas: ilustraciones de cartas, 2 de 2 | `assets/art/cards/` | 10 |
+| A | Ilustraciones de cartas, 1 de 2 | `assets/art/cards/` | 10 |
+| B | Ilustraciones de cartas, 2 de 2 | `assets/art/cards/` | 9 |
 
-El **A** va primero: salvo el Guqin, es lo único que el código ya busca. **D** a **G** son ideas para más adelante (los
-bloques B y C, la tanda de pulido, ya están entregados e integrados). Ninguna imagen es recoloreo.
+Es lo único que falta, y son ideas: el código todavía no muestra ilustraciones en las cartas. Todo lo que el juego
+busca ya está. `gongbu_chongquan` ya está generada (sirve de referencia de estilo). Ninguna imagen es recoloreo.
 
-## Bloque A — Enemigos que faltan y sellos del mapa (7)
+## Bloque A — Ilustraciones de cartas, 1 de 2 (10)
 
-Archivos, en orden: `qilin.png`, `disciple_wind.png`, `golem_ice.png`, `monkey_snow.png`, `bat_frost.png`, `map_node_stone.png`, `guqin_player.png`. Carpeta: `assets/art/enemies/` (el 6.º va en `assets/art/stages/qianyunshan/`).
-- `qilin` ya tiene datos y hoy se ve el placeholder: es lo primero.
-- `disciple_wind`, `golem_ice`, `monkey_snow` y `bat_frost` reemplazan su recoloreo: guardalos con el mismo nombre y **borrá su entrada de `VARIANTS`** en `tool/recolor_enemies.py` (si no, volver a correrlo los pisa).
-- `map_node_stone` es opcional: sin ella queda el disco con degradado. Se achica a 512×512.
-- `guqin_player` todavía no tiene datos en `enemies.json`: queda guardado hasta que exista el enemigo.
-
-```
-Generate exactly 7 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
-
-Image 1 — qilin:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
-
-Game enemy character, full body, facing the viewer, centered, transparent background: a majestic qilin, the benevolent unicorn beast of Chinese myth, deer-like body covered in shimmering jade-green and gold scales, a flowing white and vermilion mane like flames, a single elegant antler-like horn, hooves walking on small swirling clouds instead of the ground, soft gold fire curling around its legs, proud rearing pose.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
-
-Image 2 — disciple_wind:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
-
-Game enemy character, full body, facing the viewer, centered, transparent background: a lost disciple in sky-blue tattered robes whipping in the wind, snow on his shoulders, faded headband, one leg raised for a sweeping kick trailing frost.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 3 — golem_ice:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
-
-Game enemy character, full body, facing the viewer, centered, transparent background: a golem of packed snow and pale blue ice blocks, frost crystals growing on its shoulders, cold mist pouring from its fists.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 4 — monkey_snow:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
-
-Game enemy character, full body, facing the viewer, centered, transparent background: a white snow ape with frosty fur, icy blue scarf, breath visible in the cold, wild playful crouch ready to pounce.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 5 — bat_frost:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
-
-Game enemy character, full body, facing the viewer, centered, transparent background: a pale ice-blue bat spirit with frosted translucent wings, snowflakes trailing behind it, icicle fangs.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 6 — map_node_stone:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Top-down view of a single round flat stone disc for a game map node, pale warm granite (#E2D3B6) with subtle mineral speckles and soft worn edges, light coming from the top left, centered, empty center (no carving, no symbol), no characters.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background (real transparent PNG, no checkerboard, no paper behind the subject), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
-
-Image 7 — guqin_player:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
-
-Game enemy character, full body, facing the viewer, centered, transparent background: a serene mountain hermit musician seated on a floating cloud, playing a long guqin zither across his lap, long white beard and topknot, flowing cobalt and cream robes with snowflake embroidery, visible jade-green and gold musical sound ripples rising from the strings like waves, one hand plucking a string with a confident smile.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
-```
-
-## Bloque D — Ideas: logo e íconos (7)
-
-Archivos, en orden: `logo.png`, `breath.png`, `guard.png`, `structure.png`, `deflect.png`, `stagger.png`, `fountain.png`. Carpeta: `assets/art/ui/` (el 1.º) y `assets/art/icons/`.
-- Ideas: el código todavía no las usa. Antes hay que preparar el código y `pubspec.yaml`.
-
-```
-Generate exactly 7 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
-
-Image 1 — logo:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Logo emblem: the Chinese character 龙 painted in a single energetic vermilion brush stroke, with a
-thin gold breath-like swirl wrapping around it, on transparent background, bold and readable at
-small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 2 — breath:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
-
-Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a swirling cobalt blue (#3E7BE0) breath wisp shaped like the character 气.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 3 — guard:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
-
-Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a rounded cobalt blue (#3E7BE0) shield with a cloud pattern.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 4 — structure:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
-
-Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a violet (#9B5DE5) hexagonal crystal.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 5 — deflect:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
-
-Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a jade green (#1FA38A) arc slash deflecting a strike, with sparkles.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 6 — stagger:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
-
-Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a gold (#E59A12) starburst with dizzy spirals.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 7 — fountain:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
-
-Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a small cobalt blue (#3E7BE0) spring with a pink lotus.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-```
-
-## Bloque E — Ideas: marcos de carta (5)
-
-Archivos, en orden: `frame_fist.png`, `frame_palm.png`, `frame_kick.png`, `frame_defense.png`, `frame_technique.png`. Carpeta: `assets/art/cards/`.
-- Ideas: el código todavía no los usa.
-
-```
-Generate exactly 5 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
-
-Image 1 — frame_fist:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536), PNG where the center and the area outside the frame are fully transparent (real alpha channel, no checkerboard).
-
-Playing card frame, 2:3 ratio, empty transparent center, ornamental Chinese cloud-pattern border painted in vermilion (#E8453C) with gold accents, rounded corners, a round slot in the top-left corner for the cost number.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 2 — frame_palm:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536), PNG where the center and the area outside the frame are fully transparent (real alpha channel, no checkerboard).
-
-Playing card frame, 2:3 ratio, empty transparent center, ornamental Chinese cloud-pattern border painted in violet (#9B5DE5) with gold accents, rounded corners, a round slot in the top-left corner for the cost number.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 3 — frame_kick:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536), PNG where the center and the area outside the frame are fully transparent (real alpha channel, no checkerboard).
-
-Playing card frame, 2:3 ratio, empty transparent center, ornamental Chinese cloud-pattern border painted in gold (#E59A12) with gold accents, rounded corners, a round slot in the top-left corner for the cost number.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 4 — frame_defense:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536), PNG where the center and the area outside the frame are fully transparent (real alpha channel, no checkerboard).
-
-Playing card frame, 2:3 ratio, empty transparent center, ornamental Chinese cloud-pattern border painted in cobalt blue (#3E7BE0) with gold accents, rounded corners, a round slot in the top-left corner for the cost number.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 5 — frame_technique:
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536), PNG where the center and the area outside the frame are fully transparent (real alpha channel, no checkerboard).
-
-Playing card frame, 2:3 ratio, empty transparent center, ornamental Chinese cloud-pattern border painted in jade green (#1FA38A) with gold accents, rounded corners, a round slot in the top-left corner for the cost number.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-```
-
-## Bloque F — Ideas: ilustraciones de cartas, 1 de 2 (10)
-
-Archivos, en orden: `gongbu_chongquan.png`, `mabu_chongquan.png`, `tan_tui.png`, `tui_zhang.png`, `mabu_jiada.png`, `xubu_liangzhang.png`, `ge_dang.png`, `an_zhang.png`, `deng_tui.png`, `ce_chuai.png`. Carpeta: `assets/art/cards/`.
-- Ideas: el código todavía no las usa. El color de la estela es el del tipo de la carta.
+Archivos, en orden: `mabu_chongquan.png`, `tan_tui.png`, `tui_zhang.png`, `mabu_jiada.png`, `xubu_liangzhang.png`, `ge_dang.png`, `an_zhang.png`, `deng_tui.png`, `ce_chuai.png`, `gongbu_tuizhang.png`. Carpeta: `assets/art/cards/`.
+- El color de la estela es el del tipo de la carta.
 
 ```
 Generate exactly 10 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
 
-Image 1 — gongbu_chongquan:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist in a deep bow stance, front knee bent and back leg straight, driving a straight punch forward at chest height, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 2 — mabu_chongquan:
+Image 1 — mabu_chongquan:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist in a wide low horse stance, thighs parallel to the ground, firing a straight punch to the side, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
@@ -304,7 +64,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 3 — tan_tui:
+Image 2 — tan_tui:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist snapping a fast whip-like front kick at waist height, the kicking foot pointed, arms balanced, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
@@ -315,7 +75,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 4 — tui_zhang:
+Image 3 — tui_zhang:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist pushing forward with an open palm, fingers up, a soft shockwave in front of the hand, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
@@ -326,7 +86,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 5 — mabu_jiada:
+Image 4 — mabu_jiada:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist in horse stance raising one forearm to block overhead while punching with the other hand, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -337,7 +97,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 6 — xubu_liangzhang:
+Image 5 — xubu_liangzhang:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist in an empty stance, weight on the back leg, one open palm raised high above the head like a guard, the other hand hooked behind, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -348,7 +108,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 7 — ge_dang:
+Image 6 — ge_dang:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist sweeping a forearm across the body at chest height to block an incoming strike, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -359,7 +119,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 8 — an_zhang:
+Image 7 — an_zhang:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist pressing both palms downward in front of the hips to smother a low attack, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -370,7 +130,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 9 — deng_tui:
+Image 8 — deng_tui:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist thrusting a straight heel kick forward at stomach height, toes pulled back, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
@@ -381,7 +141,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 10 — ce_chuai:
+Image 9 — ce_chuai:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist delivering a powerful side kick with the body leaning away and the heel leading, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
@@ -391,17 +151,8 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
-```
 
-## Bloque G — Ideas: ilustraciones de cartas, 2 de 2 (10)
-
-Archivos, en orden: `gongbu_tuizhang.png`, `pi_quan.png`, `shang_jia.png`, `ti_xi.png`, `tiao_xi.png`, `baoquan_li.png`, `hu_zhao.png`, `hu_pu.png`, `hu_bao_tou.png`, `hu_xiao.png`. Carpeta: `assets/art/cards/`.
-- Ideas: el código todavía no las usa.
-
-```
-Generate exactly 10 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
-
-Image 1 — gongbu_tuizhang:
+Image 10 — gongbu_tuizhang:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist in a deep bow stance pushing forward with an open palm, the whole body behind the push, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
@@ -411,8 +162,17 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 2 — pi_quan:
+## Bloque B — Ilustraciones de cartas, 2 de 2 (9)
+
+Archivos, en orden: `pi_quan.png`, `shang_jia.png`, `ti_xi.png`, `tiao_xi.png`, `baoquan_li.png`, `hu_zhao.png`, `hu_pu.png`, `hu_bao_tou.png`, `hu_xiao.png`. Carpeta: `assets/art/cards/`.
+- El color de la estela es el del tipo de la carta.
+
+```
+Generate exactly 9 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
+
+Image 1 — pi_quan:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist bringing a fist down in a chopping arc from above like an axe, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
@@ -423,7 +183,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 3 — shang_jia:
+Image 2 — shang_jia:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist raising one forearm horizontally above the head to block a strike from above, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -434,7 +194,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 4 — ti_xi:
+Image 3 — ti_xi:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist balanced on one leg with the other knee lifted high to guard the body, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -445,7 +205,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 5 — tiao_xi:
+Image 4 — tiao_xi:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist standing calmly with palms facing down in front of the belly, eyes closed, a soft swirl of breath rising, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
@@ -456,7 +216,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 6 — baoquan_li:
+Image 5 — baoquan_li:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist bowing slightly with the kung fu salute, right fist pressed into the open left palm in front of the chest, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
@@ -467,7 +227,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 7 — hu_zhao:
+Image 6 — hu_zhao:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist striking with a tiger claw hand, fingers curled like talons, faint tiger stripes in the motion trail, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
@@ -478,7 +238,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 8 — hu_pu:
+Image 7 — hu_pu:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist leaping forward with both tiger-claw hands extended, like a tiger pouncing, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
@@ -489,7 +249,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 9 — hu_bao_tou:
+Image 8 — hu_bao_tou:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist crouching and wrapping both arms around the head like a tiger protecting itself, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -500,7 +260,7 @@ confident brush strokes, flat shading with watercolor bleeds, playful and energe
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
 
-Image 10 — hu_xiao:
+Image 9 — hu_xiao:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist in a low stance releasing a powerful roar, a visible golden roar wave with a faint tiger head shape, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
@@ -526,9 +286,7 @@ backgrounds, no photorealism, no text, no watermark.
 | Etapa 1, con élites, jefe, muñeco y placeholder | `placeholder`, `dummy`, `bat`, `salamander`, `golem`, `disciple`, `monk`, `dragon`, `lion`, `fan`, `monkey`, `bandit`, `lingzhi` | 13 | ✅ |
 | Etapas 2 y 3, arte propio | `bat_bronze`, `golem_bronze`, `disciple_saffron`, `salamander_ash`, `monk_iron`, `lion_jade`, `monk_gold`, `bell_keeper`, `fan_wind`, `lion_snow`, `dragon_azure`, `dragon_dream` | 12 | ✅ |
 | Concepto nuevo | `opera_mask`, `pixiu`, `paper_crane`, `flying_sword`, `wooden_ox`, `nine_tail_fox`, `shadow_puppet` | 7 | ✅ |
-| Qilin | `qilin` | 1 | ⬜ bloque A (datos listos; hoy se ve el placeholder) |
-| Comunes de la etapa 3 | `disciple_wind`, `golem_ice`, `monkey_snow`, `bat_frost` | 4 | ⬜ bloque A (hoy 🎨) |
-| Músico del Guqin | `guqin_player` | 1 | ⬜ bloque A (todavía sin datos) |
+| Etapa 3, arte propio | `qilin`, `disciple_wind`, `golem_ice`, `monkey_snow`, `bat_frost`, `guqin_player` | 6 | ✅ |
 | Reserva de recoloreos | `dragon_reflection`, `monk_amber`, `monk_slate`, `lion_celadon` | 4 | 🎨 por diseño, sin prompt |
 
 ## Héroe y NPC
@@ -543,7 +301,7 @@ backgrounds, no photorealism, no text, no watermark.
 | Etapa | Archivos | Estado |
 |---|---|---|
 | 1 `qianyunshan/` | `combat_bg` y sus 4 tramos, `map_bg`, `fountain_bg`, `shrine_bg`, `school_wall` | ✅ |
-| 1 `qianyunshan/` | `map_node_stone` (opcional) | ⬜ bloque A |
+| 1 `qianyunshan/` | `map_node_stone` (sellos del mapa) | ✅ |
 | 1 `qianyunshan/` | `combat_bg_fuente` (la fuente no tiene combate) | ⏸ |
 | 2 `xuankongsi/` | `combat_bg` y sus 3 tramos, `map_bg`, `fountain_bg` | ✅ |
 | 3 `wolongding/` | `combat_bg` y sus 4 tramos, `map_bg`, `fountain_bg` | ✅ |
@@ -556,15 +314,15 @@ backgrounds, no photorealism, no text, no watermark.
 | Efectos | `vfx/hit_ink`, `vfx/guard_shield`, `vfx/break_shatter`, `vfx/qi_swirl`, `vfx/lotus_petals` | ✅ |
 | Rollo de lectura | `ui/lore_scroll` | ✅ |
 | Pantallas | `ui/title_bg`, `ui/event_bg`, `ui/victory_bg`, `ui/epilogue_bg` | ✅ |
-| Logo (idea) | `ui/logo` | ⬜ bloque D (el fondo del menú ya es `ui/title_bg`) |
+| Logo (idea) | `ui/logo` | ✅ listo, sin código que lo use |
 
 ## Cartas e íconos (ideas: el código todavía no los usa)
 
 | Qué | Carpeta | Cantidad | Estado |
 |---|---|---|---|
-| Íconos | `assets/art/icons/` | 6 | ⬜ bloque D |
-| Marcos por tipo | `assets/art/cards/` | 5 | ⬜ bloque E |
-| Ilustraciones de cartas | `assets/art/cards/` | 20 | ⬜ bloques F y G |
+| Íconos | `assets/art/icons/` | 6 | ✅ listos, sin código |
+| Marcos por tipo | `assets/art/cards/` | 5 | ✅ listos, sin código |
+| Ilustraciones de cartas | `assets/art/cards/` | 20 | ✅ 1 (`gongbu_chongquan`) · ⬜ 19 en bloques A y B |
 
 ---
 
@@ -693,7 +451,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-⬜ **Logo:** `assets/art/ui/logo.png`, cuadrado y transparente.
+✅ **Logo:** `assets/art/ui/logo.png`, cuadrado y transparente.
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -737,7 +495,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no characters, no text, no watermark.
 ```
 
-⬜ Textura de los sellos del mapa (`map_node_stone.png`, opcional, 512×512, PNG con transparencia; se recorta en círculo y se dibuja al 90% debajo del carácter tallado):
+✅ Textura de los sellos del mapa (`map_node_stone.png`, opcional, 512×512, PNG con transparencia; se recorta en círculo y se dibuja al 90% debajo del carácter tallado):
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -991,7 +749,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 **Marcos por tipo.** Proporción 2:3, centro transparente.
 
-#### Marco de Puño ⬜
+#### Marco de Puño ✅
 
 **Destino:** `assets/art/cards/frame_fist.png`, 2:3 (1024×1536), centro transparente.
 
@@ -1009,7 +767,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Marco de Palma ⬜
+#### Marco de Palma ✅
 
 **Destino:** `assets/art/cards/frame_palm.png`, 2:3 (1024×1536), centro transparente.
 
@@ -1027,7 +785,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Marco de Patada ⬜
+#### Marco de Patada ✅
 
 **Destino:** `assets/art/cards/frame_kick.png`, 2:3 (1024×1536), centro transparente.
 
@@ -1045,7 +803,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Marco de Defensa ⬜
+#### Marco de Defensa ✅
 
 **Destino:** `assets/art/cards/frame_defense.png`, 2:3 (1024×1536), centro transparente.
 
@@ -1063,7 +821,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Marco de Técnica ⬜
+#### Marco de Técnica ✅
 
 **Destino:** `assets/art/cards/frame_technique.png`, 2:3 (1024×1536), centro transparente.
 
@@ -1083,7 +841,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 **Ilustración por carta.** Una por carta, cuadrada, mostrando el movimiento. El color de la estela es el del tipo de la carta.
 
-#### Puñetazo a fondo 弓步冲拳 ⬜
+#### Puñetazo a fondo 弓步冲拳 ✅
 
 **Destino:** `assets/art/cards/gongbu_chongquan.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1447,7 +1205,7 @@ backgrounds, no photorealism, no text, no watermark.
 
 Todos transparentes, 256×256 px.
 
-#### Aliento ⬜
+#### Aliento ✅
 
 **Destino:** `assets/art/icons/breath.png`, cuadrado 256×256, fondo transparente.
 
@@ -1465,7 +1223,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Guardia ⬜
+#### Guardia ✅
 
 **Destino:** `assets/art/icons/guard.png`, cuadrado 256×256, fondo transparente.
 
@@ -1483,7 +1241,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Estructura ⬜
+#### Estructura ✅
 
 **Destino:** `assets/art/icons/structure.png`, cuadrado 256×256, fondo transparente.
 
@@ -1501,7 +1259,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Desvío ⬜
+#### Desvío ✅
 
 **Destino:** `assets/art/icons/deflect.png`, cuadrado 256×256, fondo transparente.
 
@@ -1519,7 +1277,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Desequilibrado ⬜
+#### Desequilibrado ✅
 
 **Destino:** `assets/art/icons/stagger.png`, cuadrado 256×256, fondo transparente.
 
@@ -1537,7 +1295,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Fuente ⬜
+#### Fuente ✅
 
 **Destino:** `assets/art/icons/fountain.png`, cuadrado 256×256, fondo transparente.
 
@@ -2043,7 +1801,7 @@ brush strokes, flat shading with watercolor bleeds, high readability on a small 
 NOT dark, NOT gloomy, NOT grim, no black or brown, no photorealism, no text, no watermark.
 ```
 
-### Simio de las Nieves (`monkey_snow`, común, etapa 3) ⬜ (hoy es recoloreo 🎨)
+### Simio de las Nieves (`monkey_snow`, común, etapa 3) ✅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -2059,7 +1817,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Gólem de Escarcha (`golem_ice`, común, etapa 3) ⬜ (hoy es recoloreo 🎨)
+### Gólem de Escarcha (`golem_ice`, común, etapa 3) ✅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -2075,7 +1833,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Discípulo del Viento (`disciple_wind`, común, etapa 3) ⬜ (hoy es recoloreo 🎨)
+### Discípulo del Viento (`disciple_wind`, común, etapa 3) ✅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -2091,7 +1849,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Murciélago de Escarcha (`bat_frost`, común, etapa 3) ⬜ (hoy es recoloreo 🎨)
+### Murciélago de Escarcha (`bat_frost`, común, etapa 3) ✅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -2398,7 +2156,7 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Qilin 麒麟 (`qilin`, élite, etapa 3) ⬜ (datos listos; hoy se ve el placeholder)
+### Qilin 麒麟 (`qilin`, élite, etapa 3) ✅
 
 Regla prevista: paso de nube; frena las patadas y desvía el primer golpe de cada turno, y desequilibrarlo le quita las dos defensas.
 
@@ -2437,9 +2195,9 @@ Game enemy character, full body, facing the viewer, centered, transparent backgr
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Músico del Guqin 古琴 (`guqin_player`, común, etapa 3) ⬜
+### Músico del Guqin 古琴 (`guqin_player`, común, etapa 3) ✅
 
-Regla prevista: marca el ritmo; cada nota suma un golpe al acorde final, que se anuncia con cuenta regresiva.
+Regla: tres notas altas seguidas, una disonancia que hace descartar y un acorde medio que congela. Aparece en los pisos 3, 5 y 7 de la etapa 3.
 
 ```
 Create ONE single image. Start immediately, without asking questions.

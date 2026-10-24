@@ -108,6 +108,15 @@ def main():
         add("efectos", f"vfx/{f}.webp", use, "gotas de tinta")
     add("ui", "stages/qianyunshan/map_node_stone.webp",
         "textura de los sellos del mapa (opcional)", "disco con degradado")
+    # Listos pero sin código que los use todavía (no van en pubspec.yaml).
+    add("ideas", "ui/logo.webp", "logo 龙 (idea)", "título en texto")
+    for f in ("breath", "guard", "structure", "deflect", "stagger", "fountain"):
+        add("ideas", f"icons/{f}.webp", f"ícono de {f} (idea)", "ícono de Material")
+    for f in ("fist", "palm", "kick", "defense", "technique"):
+        add("ideas", f"cards/frame_{f}.webp", f"marco de carta {f} (idea)",
+            "carta dibujada")
+    add("ideas", "cards/gongbu_chongquan.webp", "ilustración de carta (idea)",
+        "sin ilustración")
     add("npc", "npc/master.webp", "maestro", "vacío")
     add("npc", "npc/merchant.webp", "mercader", "vacío")
     for p in ("novice", "tiger", "snake", "crane"):

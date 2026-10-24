@@ -31,18 +31,8 @@ VARIANTS = {
         ("gray", 160, 0.38, -0.06),
         ("hue", 60, 140, 160, 1.0, -0.06),
     ]),
-    # Etapa 3: Cumbre del Dragón Dormido (nieve, escarcha, viento).
-    "monkey_snow": ("monkey", [
-        ("hue", 25, 60, 40, 0.12, 0.18),
-        ("hue", 340, 360, 208, 0.75, 0.0),
-        ("hue", 0, 18, 208, 0.75, 0.0),
-    ]),
-    "golem_ice": ("golem", [
-        ("gray", 205, 0.16, 0.06),
-        ("hue", 60, 150, 200, 0.3, 0.12),
-    ]),
-    "disciple_wind": ("disciple", [("hue", 120, 200, 205, 0.9, 0.02)]),
-    "bat_frost": ("bat", [("hue", 150, 215, 212, 0.45, 0.1)]),
+    # Etapa 3: monkey_snow, golem_ice, disciple_wind y bat_frost ya tienen
+    # arte propio.
     # Reflejo del Dragón (élite de la etapa 2): el recoloreo que tenía el
     # Dragón Dormido antes de tener arte propio.
     "dragon_reflection": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),

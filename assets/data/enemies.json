@@ -264,6 +264,12 @@
         { "kind": "guard", "labelKey": "slate_skin", "value": 10 },
         { "kind": "attack", "labelKey": "sweep", "height": "low", "damage": 9, "structure": 3 }
       ] } ] },
+    { "id": "guqin_player", "hanzi": "琴师", "pinyin": "Qín Shī", "rank": "common", "hp": 72, "structure": 16,
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "string_ripple", "height": "high", "damage": 4, "hits": 3, "structure": 1 },
+        { "kind": "discard", "labelKey": "dissonance", "count": 1 },
+        { "kind": "attack", "labelKey": "silk_chord", "height": "mid", "damage": 11, "structure": 3, "freeze": 1 }
+      ] } ] },
     { "id": "wind_lady", "hanzi": "风扇", "pinyin": "Fēng Shàn", "art": "fan_wind", "rank": "elite", "hp": 122, "structure": 22, "parry": 4,
       "phases": [ { "pattern": [
         { "kind": "attack", "labelKey": "fan_gust", "height": "low", "damage": 6, "hits": 2, "structure": 2, "freeze": 1 },

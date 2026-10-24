@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 82 · ✅ 72 · 🎨 8 · ❌ 2
+Total: 96 · ✅ 92 · 🎨 4 · ❌ 0
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -73,7 +73,25 @@ Total: 82 · ✅ 72 · 🎨 8 · ❌ 2
 
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
-| ❌ falta | `assets/art/stages/qianyunshan/map_node_stone.webp` | textura de los sellos del mapa (opcional) | disco con degradado | no |
+| ✅ propio | `assets/art/stages/qianyunshan/map_node_stone.webp` | textura de los sellos del mapa (opcional) | disco con degradado | — |
+
+## ideas
+
+| Estado | Archivo | Para qué | Si falta se ve | Prompt |
+|---|---|---|---|---|
+| ✅ propio | `assets/art/ui/logo.webp` | logo 龙 (idea) | título en texto | — |
+| ✅ propio | `assets/art/icons/breath.webp` | ícono de breath (idea) | ícono de Material | — |
+| ✅ propio | `assets/art/icons/guard.webp` | ícono de guard (idea) | ícono de Material | — |
+| ✅ propio | `assets/art/icons/structure.webp` | ícono de structure (idea) | ícono de Material | — |
+| ✅ propio | `assets/art/icons/deflect.webp` | ícono de deflect (idea) | ícono de Material | — |
+| ✅ propio | `assets/art/icons/stagger.webp` | ícono de stagger (idea) | ícono de Material | — |
+| ✅ propio | `assets/art/icons/fountain.webp` | ícono de fountain (idea) | ícono de Material | — |
+| ✅ propio | `assets/art/cards/frame_fist.webp` | marco de carta fist (idea) | carta dibujada | — |
+| ✅ propio | `assets/art/cards/frame_palm.webp` | marco de carta palm (idea) | carta dibujada | — |
+| ✅ propio | `assets/art/cards/frame_kick.webp` | marco de carta kick (idea) | carta dibujada | — |
+| ✅ propio | `assets/art/cards/frame_defense.webp` | marco de carta defense (idea) | carta dibujada | — |
+| ✅ propio | `assets/art/cards/frame_technique.webp` | marco de carta technique (idea) | carta dibujada | — |
+| ✅ propio | `assets/art/cards/gongbu_chongquan.webp` | ilustración de carta (idea) | sin ilustración | — |
 
 ## npc
 
@@ -110,24 +128,25 @@ Total: 82 · ✅ 72 · 🎨 8 · ❌ 2
 | ✅ propio | `assets/art/enemies/monk.webp` | monk (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk_iron.webp` | iron_abbot (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/nine_tail_fox.webp` | nine_tail_fox (elite) | enemies/placeholder.webp | — |
-| ❌ falta | `assets/art/enemies/qilin.webp` | qilin (elite) | enemies/placeholder.webp | listo |
+| ✅ propio | `assets/art/enemies/qilin.webp` | qilin (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bandit.webp` | bandit (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat.webp` | bat (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat_bronze.webp` | bell_bat (common) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `bat` | `assets/art/enemies/bat_frost.webp` | frost_bat (common) | enemies/placeholder.webp | listo |
+| ✅ propio | `assets/art/enemies/bat_frost.webp` | frost_bat (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/disciple.webp` | disciple (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/disciple_saffron.webp` | temple_guard (common) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `disciple` | `assets/art/enemies/disciple_wind.webp` | wind_disciple (common) | enemies/placeholder.webp | listo |
+| ✅ propio | `assets/art/enemies/disciple_wind.webp` | wind_disciple (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/dummy.webp` | dummy (common), dummy_basic (common), dummy_heights (common), dummy_light (common), dummy_guard (common), dummy_forms (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/flying_sword.webp` | flying_sword (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/golem.webp` | golem (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/golem_bronze.webp` | bronze_man (common) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `golem` | `assets/art/enemies/golem_ice.webp` | ice_golem (common) | enemies/placeholder.webp | listo |
+| ✅ propio | `assets/art/enemies/golem_ice.webp` | ice_golem (common) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/guqin_player.webp` | guqin_player (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lingzhi.webp` | lingzhi (common) | enemies/placeholder.webp | — |
 | 🎨 recoloreo de `monk` | `assets/art/enemies/monk_amber.webp` | incense_monk (common) | enemies/placeholder.webp | no |
 | 🎨 recoloreo de `monk` | `assets/art/enemies/monk_slate.webp` | slate_hermit (common) | enemies/placeholder.webp | no |
 | ✅ propio | `assets/art/enemies/monkey.webp` | monkey (common) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `monkey` | `assets/art/enemies/monkey_snow.webp` | snow_ape (common) | enemies/placeholder.webp | listo |
+| ✅ propio | `assets/art/enemies/monkey_snow.webp` | snow_ape (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/opera_mask.webp` | opera_mask (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/paper_crane.webp` | paper_crane (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/pixiu.webp` | pixiu (common) | enemies/placeholder.webp | — |
