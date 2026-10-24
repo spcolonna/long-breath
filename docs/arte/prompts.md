@@ -16,9 +16,17 @@ claro, color saturado y mucho aire.
 - ChatGPT no les pone nombre: salen en el orden de la lista. Guardá cada PNG con el nombre que figura en
   `Image N — <nombre>` (más `.png`), en la carpeta que se indica, y pedile a Claude que las integre.
 - Si una sale mal, regenerala sola con su prompt individual (más abajo, mismo nombre).
-- Al integrar: se commitea el PNG (queda en git como original), se corre `python3 tool/optimize_art.py` (lo pasa a
-  `.webp` del tamaño en que se muestra y borra el PNG) y `python3 tool/art_status.py`; después se marca ✅ acá y se
-  saca la imagen de su bloque. Los prompts nuevos van en su sección y en un bloque de hasta 10.
+- Al integrar: se corre `python3 tool/optimize_art.py` (lo pasa a `.webp` del tamaño en que se muestra y borra el
+  PNG) y `python3 tool/art_status.py`; después se marca ✅ acá y se saca la imagen de su bloque. **El PNG nunca se
+  commitea:** en git solo queda el `.webp`, para que el repositorio no pese. Los prompts nuevos van en su sección y en
+  un bloque de hasta 10.
+
+## Resumen: qué está y qué falta
+
+- **Falta (19):** las ilustraciones de cartas de los bloques A y B, justo abajo en «Para generar ahora».
+- **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
+  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
+  `gongbu_chongquan`. El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
 
