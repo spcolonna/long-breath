@@ -641,7 +641,7 @@
   "lesStrike2": "Esto sos vos. La barra verde es tu Vida: si llega a 0, perdés. La violeta es tu Estructura, tu equilibrio: más adelante vas a ver para qué sirve.",
   "lesStrike3": "Este es el rival: su nombre, su Vida (roja) y su Estructura (violeta). Para ganar, llevá su Vida a 0.",
   "lesStrike4": "Estas son tus cartas: tu mano. Cada turno robás 5 cartas nuevas de tu mazo.",
-  "lesStrike5": "Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.",
+  "lesStrike5": "Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español con el dibujo del movimiento (o su nombre chino). Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.",
   "lesStrike6": "Estos puntos son tu Aliento, la energía del turno. Tenés 3 y cada carta cuesta lo que dice su círculo. Lo que no gastes se pierde al terminar el turno.",
   "lesStrike7": "Tocá Puñetazo firme UNA sola vez.",
   "lesStrike8": "Esta es la vista previa: muestra exactamente lo que va a pasar, con todos los bonus ya sumados. Para jugar la carta, tocala otra vez.",

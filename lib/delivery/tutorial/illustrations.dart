@@ -111,11 +111,11 @@ class _CardAnatomy extends ConsumerWidget {
     // Altura relativa de cada parte de la carta (ver CardWidget); el costo se
     // marca a la izquierda y el resto sobre el borde derecho.
     const marks = [
-      (1, 0.05, true),
-      (2, 0.05, false),
-      (3, 0.33, false),
-      (4, 0.74, false),
-      (5, 0.9, false),
+      (1, 0.11, true),
+      (2, 0.12, false),
+      (3, 0.5, false),
+      (4, 0.65, false),
+      (5, 0.74, false),
     ];
     Widget label(String s) => Text(s, style: _small);
     final labels = [

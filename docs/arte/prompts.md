@@ -50,8 +50,9 @@ claro, color saturado y mucho aire.
 | A | Ilustraciones de cartas, 1 de 2 | `assets/art/cards/` | 10 |
 | B | Ilustraciones de cartas, 2 de 2 | `assets/art/cards/` | 9 |
 
-Es lo único que falta, y son ideas: el código todavía no muestra ilustraciones en las cartas. Todo lo que el juego
-busca ya está. `gongbu_chongquan` ya está generada (sirve de referencia de estilo). Ninguna imagen es recoloreo.
+Es lo único que falta. La carta ya muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca
+de agua), así que cada una se integra sola al optimizarla. `gongbu_chongquan` ya está y sirve de referencia de estilo.
+Ninguna imagen es recoloreo.
 
 ## Bloque A — Ilustraciones de cartas, 1 de 2 (10)
 
@@ -330,7 +331,7 @@ backgrounds, no photorealism, no text, no watermark.
 |---|---|---|---|
 | Íconos | `assets/art/icons/` | 6 | ✅ |
 | Marcos por tipo | `assets/art/cards/` | 5 | ✅ |
-| Ilustraciones de cartas (idea: la carta todavía no las muestra) | `assets/art/cards/` | 20 | ✅ 1 (`gongbu_chongquan`) · ⬜ 19 en bloques A y B |
+| Ilustraciones de cartas | `assets/art/cards/` | 20 | ✅ 1 (`gongbu_chongquan`) · ⬜ 19 en bloques A y B |
 
 ---
 

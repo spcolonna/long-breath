@@ -87,11 +87,11 @@ Total: 96 · ✅ 92 · 🎨 4 · ❌ 0
 | ✅ propio | `assets/art/cards/frame_defense.webp` | marco de carta defense | papel teñido sin marco | — |
 | ✅ propio | `assets/art/cards/frame_technique.webp` | marco de carta technique | papel teñido sin marco | — |
 
-## ideas
+## cartas
 
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
-| ✅ propio | `assets/art/cards/gongbu_chongquan.webp` | ilustración de carta (idea) | sin ilustración | — |
+| ✅ propio | `assets/art/cards/gongbu_chongquan.webp` | ilustración de Puñetazo a fondo | hanzi de marca de agua | — |
 
 ## npc
 

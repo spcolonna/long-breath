@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,6 +39,17 @@ final contentTextProvider = FutureProvider<ContentText>(
 final textProvider = Provider<ContentText>(
   (ref) => ref.watch(contentTextProvider).requireValue,
 );
+
+/// Ids de las cartas que tienen ilustración (`assets/art/cards/<id>.webp`).
+/// Las que no, muestran su hanzi de marca de agua.
+final cardArtProvider = FutureProvider<Set<String>>((ref) async {
+  final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+  return {
+    for (final a in manifest.listAssets())
+      if (a.startsWith('assets/art/cards/') && !a.contains('/frame_'))
+        a.split('/').last.replaceAll('.webp', ''),
+  };
+});
 
 final combatEngineProvider = Provider<CombatEngine>(
   (ref) => CombatEngine(ref.watch(dataProvider)),

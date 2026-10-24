@@ -1843,7 +1843,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesStrike5.
   ///
   /// In es, this message translates to:
-  /// **'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español y su nombre chino. Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.'**
+  /// **'Así se lee una carta. Arriba a la izquierda, lo que cuesta; a la derecha, su tipo. En el centro, el nombre en español con el dibujo del movimiento (o su nombre chino). Abajo, lo que hace: el rayo rojo es el daño a la Vida y el hexágono violeta, el daño a la Estructura. Si dice → y una postura, te deja en esa postura después de actuar.'**
   String get lesStrike5;
 
   /// No description provided for @lesStrike6.

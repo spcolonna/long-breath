@@ -46,7 +46,7 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
 - **Mapa:** `map_node_stone` (textura de los sellos).
 - **UI:** `ui/logo` (menú), los 6 íconos de `icons/` (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
-- **Lista para cuando haya código:** la ilustración de `gongbu_chongquan`.
+- **Ilustraciones de cartas:** `gongbu_chongquan`. La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
 
 ## Reserva de recoloreos
 
@@ -65,7 +65,6 @@ Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la 
 - Faltan 39 efectos (53 archivos contando variantes) y 8 músicas.
 - La voz de cada enemigo se busca por su **id** (`sfx/enemy_<id>`), no por su arte. Hay prompt solo para 7 de los 33.
 
-### 3. Ideas (el código todavía no las usa)
+### 3. Ilustraciones de cartas
 
-- Faltan 19 ilustraciones de cartas (bloques A y B de `prompts.md`).
-- `gongbu_chongquan` ya está en webp, pero no va en `pubspec.yaml` hasta que la carta muestre ilustraciones.
+- Faltan 19 (bloques A y B de `prompts.md`). Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px.

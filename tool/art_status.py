@@ -114,9 +114,8 @@ def main():
     for f in ("fist", "palm", "kick", "defense", "technique"):
         add("ui", f"cards/frame_{f}.webp", f"marco de carta {f}",
             "papel teñido sin marco")
-    # Lista pero sin código que la use todavía (no va en pubspec.yaml).
-    add("ideas", "cards/gongbu_chongquan.webp", "ilustración de carta (idea)",
-        "sin ilustración")
+    add("cartas", "cards/gongbu_chongquan.webp", "ilustración de Puñetazo a fondo",
+        "hanzi de marca de agua")
     add("npc", "npc/master.webp", "maestro", "vacío")
     add("npc", "npc/merchant.webp", "mercader", "vacío")
     for p in ("novice", "tiger", "snake", "crane"):

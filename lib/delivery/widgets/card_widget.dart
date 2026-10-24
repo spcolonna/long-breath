@@ -42,6 +42,7 @@ class CardWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
+    final art = ref.watch(cardArtProvider).value?.contains(def.id) ?? false;
     final h = width * 1.5;
     final s = width / 88;
     final color = typeColor(def.type);
@@ -150,23 +151,39 @@ class CardWidget extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Nombre traducido como título; el hanzi queda de marca de agua.
+                  // Nombre traducido como título. Detrás, la ilustración del
+                  // movimiento (y el nombre baja) o el hanzi de marca de agua.
                   Expanded(
                     child: Stack(
-                      alignment: Alignment.center,
+                      alignment: art
+                          ? Alignment.bottomCenter
+                          : Alignment.center,
                       children: [
                         Positioned.fill(
-                          child: FittedBox(
-                            child: Text(
-                              def.hanzi,
-                              style: TextStyle(
-                                fontSize: 40 * s,
-                                height: 1,
-                                color: color.withValues(alpha: 0.16),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
+                          child: art
+                              ? Image.asset(
+                                  'assets/art/cards/${def.id}.webp',
+                                  alignment: Alignment.topCenter,
+                                  cacheWidth:
+                                      (width *
+                                              MediaQuery.devicePixelRatioOf(
+                                                context,
+                                              ))
+                                          .ceil(),
+                                  filterQuality: FilterQuality.medium,
+                                  errorBuilder: (_, _, _) => const SizedBox(),
+                                )
+                              : FittedBox(
+                                  child: Text(
+                                    def.hanzi,
+                                    style: TextStyle(
+                                      fontSize: 40 * s,
+                                      height: 1,
+                                      color: color.withValues(alpha: 0.16),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
                         ),
                         // Con manos grandes la carta se achica: el texto se
                         // reduce en vez de desbordar.
@@ -188,20 +205,24 @@ class CardWidget extends ConsumerWidget {
                                       fontWeight: FontWeight.w700,
                                       height: 1.1,
                                       color: Palette.text,
+                                      shadows: art ? _halo : null,
                                     ),
                                   ),
-                                  SizedBox(height: 2 * s),
-                                  Text(
-                                    def.pinyin,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 8 * s,
-                                      fontStyle: FontStyle.italic,
-                                      color: Palette.textDim,
+                                  // Con ilustración no entra: el dibujo ocupa
+                                  // su lugar.
+                                  if (!art) SizedBox(height: 2 * s),
+                                  if (!art)
+                                    Text(
+                                      def.pinyin,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 8 * s,
+                                        fontStyle: FontStyle.italic,
+                                        color: Palette.textDim,
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -270,6 +291,12 @@ class CardWidget extends ConsumerWidget {
     );
   }
 }
+
+/// Halo de papel para que el nombre se lea encima de la ilustración.
+const _halo = [
+  Shadow(color: Palette.surface, blurRadius: 3),
+  Shadow(color: Palette.surface, blurRadius: 6),
+];
 
 /// Los números van centrados por su caja, sin el aire de arriba y abajo
 /// que la fuente deja por defecto (si no, se ven corridos en los círculos).

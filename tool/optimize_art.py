@@ -44,6 +44,9 @@ BACKGROUND_QUALITY = 82
 
 
 def limit(rel):
+    # Las ilustraciones de cartas se ven a ~70 pt; los marcos ocupan la carta.
+    if rel.startswith("cards/") and not rel.startswith("cards/frame_"):
+        return 384
     if rel in LIMITS:
         return LIMITS[rel]
     return LIMITS.get(rel.split("/")[0], 1024)
