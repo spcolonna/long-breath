@@ -1070,6 +1070,8 @@
   "cinematicSkip": "Tocá para saltar",
   "introBoss": "Guardián de la etapa",
   "introElite": "Élite del camino",
+  "introEscort": "Élite con escolta: {name}",
+  "@introEscort": { "placeholders": { "name": { "type": "String" } } },
   "menuPlay": "Jugar",
   "menuPlaySubtitle": "{n, plural, =0{Tres partidas, cada una con su dificultad} =1{1 partida guardada} other{{n} partidas guardadas}}",
   "@menuPlaySubtitle": {"placeholders": {"n": {"type": "int"}}},

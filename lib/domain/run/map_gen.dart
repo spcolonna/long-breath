@@ -21,7 +21,8 @@ const _required = [NodeType.master];
 /// Cada combate lleva un escenario (sin repetir en el piso) y una luz.
 /// Los combates pueden traer un grupo (`packs` del piso) de los enemigos
 /// [packable]: los que esperan entran de a uno cuando cae el anterior, salvo
-/// que un grupo de dos salga «a la vez» (`together` del piso).
+/// que un grupo de dos salga «a la vez» (`together` del piso). El élite
+/// puede traer escolta (`escort` del piso): uno de `escorts`, a la vez.
 (List<MapNodeDef>, Rng) generateMap(
   List<FloorDef> floors,
   Rng rng, {
@@ -126,6 +127,19 @@ const _required = [NodeType.master];
           final (roll, r7) = rng.nextInt(100);
           rng = r7;
           together = roll < floors[f].together;
+        }
+      } else if (lead != null &&
+          floors[f].escort > 0 &&
+          floors[f].escorts.isNotEmpty &&
+          !(packable?.call(lead) ?? false)) {
+        // Élite con escolta: uno de los comunes de la etapa a su lado.
+        final (roll, r5) = rng.nextInt(100);
+        rng = r5;
+        if (roll < floors[f].escort) {
+          final (pick, r6) = rng.nextInt(floors[f].escorts.length);
+          rng = r6;
+          waves.add(floors[f].escorts[pick]);
+          together = true;
         }
       }
       row.add((t, lead, scene, light, waves, together));

@@ -106,7 +106,7 @@
   ],
   "run": {
     "stageClear": { "heal": 100, "jade": 25 },
-    "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5 },
+    "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5, "escort": { "eliteHpPct": 80, "hpPct": 45, "damagePct": 85 } },
     "wanderingMerchant": { "every": 3, "spread": 1 },
     "awakeningChoices": 3,
     "stages": [
@@ -139,7 +139,7 @@
           { "width": 3, "types": { "combat": 5, "event": 2, "master": 1 }, "packs": { "1": 2, "2": 2, "3": 1 }, "together": 50, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey", "pixiu", "shadow_puppet"] },
           { "width": [2, 3], "types": { "combat": 5, "event": 2, "master": 1 }, "packs": { "1": 2, "2": 2, "3": 1 }, "together": 50, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey", "opera_mask", "incense_monk"] },
           { "width": [2, 3], "types": { "combat": 5, "event": 2, "master": 1 }, "packs": { "1": 2, "2": 2, "3": 1 }, "together": 50, "enemies": ["bronze_man", "temple_guard", "ash_salamander", "monkey", "pixiu", "shadow_puppet"] },
-          { "width": 1, "types": { "combat": 1 }, "enemies": ["iron_abbot", "jade_lion", "bell_keeper", "dragon_reflection", "celadon_lion", "nine_tail_fox"], "scene": "campanario" },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["iron_abbot", "jade_lion", "bell_keeper", "dragon_reflection", "celadon_lion", "nine_tail_fox"], "escort": 40, "escorts": ["temple_guard", "bell_bat", "incense_monk"], "scene": "campanario" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["bell_abbot"], "scene": "gran_campana" }
         ],
@@ -159,7 +159,7 @@
           { "width": 3, "types": { "combat": 5, "event": 2, "master": 1 }, "packs": { "1": 1, "2": 2, "3": 1 }, "together": 60, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape", "pixiu", "flying_sword", "wooden_ox"] },
           { "width": [2, 3], "types": { "combat": 5, "event": 2, "master": 1 }, "packs": { "1": 1, "2": 2, "3": 1 }, "together": 60, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape", "slate_hermit", "wooden_ox", "guqin_player"] },
           { "width": [2, 3], "types": { "combat": 5, "event": 2, "master": 1 }, "packs": { "1": 1, "2": 2, "3": 1 }, "together": 60, "enemies": ["ice_golem", "wind_disciple", "frost_bat", "snow_ape", "pixiu", "flying_sword", "wooden_ox"] },
-          { "width": 1, "types": { "combat": 1 }, "enemies": ["wind_lady", "snow_lion", "dragon_dream", "qilin"], "scene": "templo_helado" },
+          { "width": 1, "types": { "combat": 1 }, "enemies": ["wind_lady", "snow_lion", "dragon_dream", "qilin"], "escort": 60, "escorts": ["frost_bat", "wind_disciple", "flying_sword"], "scene": "templo_helado" },
           { "width": 1, "types": { "fountain": 1 } },
           { "width": 1, "types": { "combat": 1 }, "enemies": ["sleeping_dragon"], "scene": "lecho_dragon" }
         ],

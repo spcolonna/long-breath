@@ -1124,6 +1124,16 @@ void main() {
       expect(s.enemyDamagePct, data.balance.packTogetherDamage);
     });
 
+    test('élite con escolta: el élite casi entero, la escolta liviana', () {
+      final s = duo(lead: 'monk', other: 'bat');
+      final b = data.balance;
+      expect(s.enemies[0].maxHp,
+          (data.enemy('monk').hp * b.escortEliteHp / 100).round());
+      expect(s.enemies[1].maxHp,
+          (data.enemy('bat').hp * b.escortHp / 100).round());
+      expect(s.enemyDamagePct, b.escortDamage);
+    });
+
     test('las cartas le pegan al que apuntás', () {
       var s = duo();
       expect(engine.legalActions(s).whereType<Target>().single.index, 1);

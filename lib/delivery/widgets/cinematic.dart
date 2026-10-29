@@ -456,10 +456,14 @@ class FoeIntro extends ConsumerWidget {
     required this.onDone,
     this.intro,
     this.reply,
+    this.escort,
   });
 
   final EnemyDef def;
   final String name;
+
+  /// Nombre del que acompaña al élite, si viene con escolta.
+  final String? escort;
 
   /// Lo que dice el rival al presentarse y lo que le contesta el héroe
   /// (solo en la versión entera).
@@ -643,7 +647,11 @@ class FoeIntro extends ConsumerWidget {
                     t: seal,
                     hanzi: def.hanzi ?? (boss ? '王' : '强'),
                     title: name,
-                    subtitle: boss ? t.introBoss : t.introElite,
+                    subtitle: boss
+                        ? t.introBoss
+                        : escort == null
+                        ? t.introElite
+                        : t.introEscort(escort!),
                     color: color,
                     size: 64,
                   ),

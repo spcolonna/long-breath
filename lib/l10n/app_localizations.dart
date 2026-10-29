@@ -3754,6 +3754,12 @@ abstract class AppLocalizations {
   /// **'Élite del camino'**
   String get introElite;
 
+  /// No description provided for @introEscort.
+  ///
+  /// In es, this message translates to:
+  /// **'Élite con escolta: {name}'**
+  String introEscort(String name);
+
   /// No description provided for @menuPlay.
   ///
   /// In es, this message translates to:

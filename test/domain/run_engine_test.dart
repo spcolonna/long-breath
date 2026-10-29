@@ -7,6 +7,7 @@ import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/domain/rng.dart';
 import 'package:long_breath/domain/run/feats.dart';
+import 'package:long_breath/domain/run/map_gen.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
@@ -702,6 +703,35 @@ void main() {
       expect(run.isWanderingMerchant(r), isFalse);
       r = run.leaveShop(r);
       expect(run.available(r), ['b']);
+    });
+
+    test('el élite a veces trae escolta: un común de la etapa, a la vez', () {
+      final st = run.data.balance.stages[2];
+      final floor = st.floors.firstWhere((f) => f.escort > 0);
+      var escorted = 0;
+      for (var seed = 0; seed < 200; seed++) {
+        final (map, _) = generateMap(
+          st.floors,
+          Rng.seeded(seed),
+          packable: run.packable,
+        );
+        final elite = map.firstWhere(
+          (n) => floor.enemies.contains(n.enemy) && n.type == NodeType.combat,
+        );
+        if (elite.waves.isEmpty) {
+          expect(elite.together, isFalse);
+          continue;
+        }
+        escorted++;
+        expect(elite.together, isTrue);
+        expect(floor.escorts, contains(elite.waves.single));
+        expect(run.data.enemy(elite.enemy!).rank, EnemyRank.elite);
+      }
+      // Cerca del porcentaje del piso, ni siempre ni nunca.
+      expect(
+        escorted,
+        inInclusiveRange(floor.escort * 2 - 40, floor.escort * 2 + 40),
+      );
     });
 
     test('un grupo paga jade extra por cada enemigo de más', () {

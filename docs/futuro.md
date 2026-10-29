@@ -33,7 +33,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 
 ### Combates
 - **Dos enemigos a la vez (1 contra 2).** **Hecho (29/10/2026):** los grupos de dos pueden pelear juntos (`floors[].together`, % por piso). Se apunta tocando, se ven las dos intenciones y actúan uno tras otro. Siguientes pasos posibles:
-  - élite con escolta (un élite y un común a la vez);
+  - élite con escolta (un élite y un común a la vez). **Hecho (29/10/2026):** `escort` y `escorts` en el piso del élite (etapa 2: 40%, etapa 3: 60%); el élite pelea con 80% de Vida, la escolta con 45% y los dos pegan 85%;
   - formas o cartas de área que peguen a los dos;
   - enemigos que se potencian entre sí (uno cubre al otro, uno cura al otro).
 

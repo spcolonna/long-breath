@@ -2335,6 +2335,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get introElite => 'Élite del camino';
 
   @override
+  String introEscort(String name) {
+    return 'Élite con escolta: $name';
+  }
+
+  @override
   String get menuPlay => 'Jugar';
 
   @override

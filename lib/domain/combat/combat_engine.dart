@@ -163,6 +163,8 @@ class CombatEngine {
         effects.fold(0, (a, e) => a + of(e));
     // En un grupo cada enemigo trae menos Vida: si no, el nodo dura el doble.
     final pair = together && waves.isNotEmpty;
+    // Élite con escolta: el élite casi entero y el que lo acompaña, liviano.
+    final escorted = pair && data.enemy(enemyId).rank == EnemyRank.elite;
     final packHp = pair ? b.packTogetherHp : b.packHpPct(1 + waves.length);
     _EnemyDraft spawn(String id) {
       final enemy = data.enemy(id);
@@ -172,7 +174,14 @@ class CombatEngine {
             EnemyRank.elite => pm.eliteHp,
             EnemyRank.boss => pm.bossHp,
           };
-      final hp = pct(pct(enemy.hp, dif.enemyHp, rankHp), packHp);
+      final hp = pct(
+        pct(enemy.hp, dif.enemyHp, rankHp),
+        !escorted
+            ? packHp
+            : enemy.rank == EnemyRank.elite
+            ? b.escortEliteHp
+            : b.escortHp,
+      );
       final structure =
           pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
       return _EnemyDraft(
@@ -226,7 +235,11 @@ class CombatEngine {
       // Dos a la vez pegan menos cada uno: si no, el turno enemigo es doble.
       enemyDamagePct: pct(
         pct(dif.enemyDamage, 100, pm.enemyDamage),
-        pair ? b.packTogetherDamage : 100,
+        escorted
+            ? b.escortDamage
+            : pair
+            ? b.packTogetherDamage
+            : 100,
       ),
       talismans: talismans,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath) + meta.firstTurnBreath,

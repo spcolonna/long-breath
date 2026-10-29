@@ -181,6 +181,8 @@ class FloorDef {
     this.enemies = const [],
     this.packs = const {1: 1},
     this.together = 0,
+    this.escort = 0,
+    this.escorts = const [],
     this.scene,
   });
 
@@ -195,6 +197,11 @@ class FloorDef {
   /// Chance (en %) de que un grupo de dos pelee a la vez en vez de en
   /// oleadas.
   final int together;
+
+  /// Chance (en %) de que el élite del piso venga con uno de [escorts] a su
+  /// lado, peleando a la vez.
+  final int escort;
+  final List<String> escorts;
 
   /// Escenario fijo de los combates del piso (la cumbre del jefe); si no,
   /// sale al azar de [GameBalance.scenes].
@@ -222,6 +229,8 @@ class FloorDef {
         _ => const {1: 1},
       },
       together: j['together'] as int? ?? 0,
+      escort: j['escort'] as int? ?? 0,
+      escorts: ((j['escorts'] as List?) ?? const []).cast<String>(),
       scene: j['scene'] as String?,
     );
   }
@@ -449,6 +458,9 @@ class GameBalance {
     this.packJade = 0,
     this.packTogetherHp = 100,
     this.packTogetherDamage = 100,
+    this.escortEliteHp = 100,
+    this.escortHp = 100,
+    this.escortDamage = 100,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     required this.difficulties,
@@ -527,6 +539,12 @@ class GameBalance {
   /// Daño (en %) de los golpes de cada uno cuando dos pelean a la vez.
   final int packTogetherDamage;
 
+  /// Élite con escolta: Vida (%) del élite, Vida (%) del que lo acompaña y
+  /// daño (%) de los dos. El élite casi entero; la escolta, liviana.
+  final int escortEliteHp;
+  final int escortHp;
+  final int escortDamage;
+
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
 
@@ -578,6 +596,11 @@ class GameBalance {
 
   /// Premios variados de los combates.
   final CombatRewardsDef combatRewards;
+
+  static int _escort(Map<String, dynamic> run, String key) =>
+      ((run['packs'] as Map<String, dynamic>?)?['escort']
+              as Map<String, dynamic>?)?[key] as int? ??
+      100;
 
   factory GameBalance.fromJson(Map<String, dynamic> j) {
     final player = j['player'] as Map<String, dynamic>;
@@ -652,6 +675,9 @@ class GameBalance {
           (run['packs'] as Map<String, dynamic>?)?['togetherDamagePct']
               as int? ??
           100,
+      escortEliteHp: _escort(run, 'eliteHpPct'),
+      escortHp: _escort(run, 'hpPct'),
+      escortDamage: _escort(run, 'damagePct'),
       merchantEvery:
           (run['wanderingMerchant'] as Map<String, dynamic>?)?['every'] as int? ??
               0,

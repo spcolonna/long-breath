@@ -985,6 +985,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             name: ref.watch(textProvider).enemy(def.id),
             intro: ref.watch(textProvider).enemyLine(def.id, 'intro'),
             reply: ref.watch(textProvider).enemyLine(def.id, 'reply'),
+            escort: s.enemies.length > 1 && def.rank == EnemyRank.elite
+                ? ref.watch(textProvider).enemy(s.enemies[1].id)
+                : null,
             stageId: stageId,
             scene: node?.scene,
             light: node?.light,
