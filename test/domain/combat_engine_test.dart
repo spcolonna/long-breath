@@ -777,6 +777,40 @@ void main() {
       expect(s.hand.length, hand - 1 + 3);
     });
 
+    test('Quiebre: si la carta desequilibra, el Tigre roba y gana Aliento',
+        () {
+      var s = setup(['hu_ben', 'hu_ya', ...filler], style: Style.tiger);
+      // Sin desequilibrar no hay premio.
+      final hand = s.hand.length;
+      s = play(s, 'hu_ben').state;
+      expect(s.enemy.staggered, isFalse);
+      expect(s.hand.length, hand - 1);
+      // El Colmillo lo desequilibra: +1 Aliento.
+      s = s.copyWith(enemy: s.enemy.copyWith(structure: 2));
+      final breath = s.player.breath;
+      final cost = engine.preview(s, uidOf(s, 'hu_ya')).cost;
+      final r = play(s, 'hu_ya');
+      expect(r.state.enemy.staggered, isTrue);
+      expect(r.state.player.breath, breath - cost + 1);
+      expect(r.events.whereType<BreathGained>().single.amount, 1);
+    });
+
+    test('Quiebre: la Embestida que desequilibra roba 2; ya caído, nada', () {
+      var s = setup(['hu_ben', 'hu_ben', ...filler, ...filler],
+          style: Style.tiger);
+      s = s.copyWith(
+        enemy: s.enemy.copyWith(structure: 3),
+        player: s.player.copyWith(breath: 9),
+      );
+      final hand = s.hand.length;
+      s = play(s, 'hu_ben').state;
+      expect(s.enemy.staggered, isTrue);
+      expect(s.hand.length, hand - 1 + 2);
+      final again = s.hand.length;
+      s = play(s, 'hu_ben').state;
+      expect(s.hand.length, again - 1, reason: 'ya estaba desequilibrado');
+    });
+
     test('Respirar borra las retenidas', () {
       var s = setup(['he_zui', ...filler, ...filler], style: Style.crane);
       s = endTurn(s, [uidOf(s, 'he_zui')]).state;

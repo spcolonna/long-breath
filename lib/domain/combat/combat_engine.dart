@@ -658,6 +658,8 @@ class CombatEngine {
         _draw(d, d.awakened.thirdAttackDraw, events);
       }
     }
+    final target = d.enemy;
+    final wasStaggered = target.staggered;
     if (dmg > 0 && d.enemy.parryReady && !d.enemy.staggered) {
       _parry(d, str, events);
     } else if (dmg > 0 || str > 0) {
@@ -683,12 +685,18 @@ class CombatEngine {
         (combo ? def.comboBreath : 0) +
         (wasRetained ? def.retainedBreath : 0);
     d.turnStructureBonus += def.turnStructureBonus;
+    // Quiebre (Tigre): la carta que lo desequilibra premia.
+    if (!wasStaggered && target.staggered && def.breakBreath > 0) {
+      d.breath += def.breakBreath;
+      events.add(BreathGained(def.breakBreath));
+    }
 
     (def.exhaust ? d.exhausted : d.discard).add(card);
     final draw =
         def.draw +
         (combo ? def.comboDraw : 0) +
-        (wasRetained ? def.retainedDraw : 0);
+        (wasRetained ? def.retainedDraw : 0) +
+        (!wasStaggered && target.staggered ? def.breakDraw : 0);
     if (draw > 0) _draw(d, draw, events);
 
     if (!d.isOver) _advanceForms(d, def, events);

@@ -31,6 +31,8 @@ class CardDef {
     this.comboBreath = 0,
     this.retainedDraw = 0,
     this.retainedBreath = 0,
+    this.breakDraw = 0,
+    this.breakBreath = 0,
     this.pool = 'starter',
     this.copies = 1,
   });
@@ -77,6 +79,11 @@ class CardDef {
   /// Si la carta viene retenida (Grulla): robás y ganás Aliento.
   final int retainedDraw;
   final int retainedBreath;
+
+  /// Quiebre (Tigre): si esta carta desequilibra al enemigo, robás
+  /// [breakDraw] y ganás [breakBreath] de Aliento.
+  final int breakDraw;
+  final int breakBreath;
   final String pool;
   final int copies;
 
@@ -113,6 +120,8 @@ class CardDef {
       comboBreath: j['comboBreath'] as int? ?? 0,
       retainedDraw: j['retainedDraw'] as int? ?? 0,
       retainedBreath: j['retainedBreath'] as int? ?? 0,
+      breakDraw: j['breakDraw'] as int? ?? 0,
+      breakBreath: j['breakBreath'] as int? ?? 0,
       pool: j['pool'] as String? ?? 'starter',
       copies: j['copies'] as int? ?? 1,
     );

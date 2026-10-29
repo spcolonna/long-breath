@@ -1797,6 +1797,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String effBreakDraw(int n) {
+    return 'Si lo desequilibra, robás $n';
+  }
+
+  @override
+  String effBreakBreath(int n) {
+    return 'Si lo desequilibra, +$n Aliento';
+  }
+
+  @override
   String styleChipFirstStrike(String hanzi, int n) {
     return '$hanzi Primer golpe +$n';
   }

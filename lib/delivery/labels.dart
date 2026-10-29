@@ -145,6 +145,8 @@ extension Labels on AppLocalizations {
     if (d.comboBreath > 0) effComboBreath(CardDef.comboAt, d.comboBreath),
     if (d.retainedDraw > 0) effRetainedDraw(d.retainedDraw),
     if (d.retainedBreath > 0) effRetainedBreath(d.retainedBreath),
+    if (d.breakDraw > 0) effBreakDraw(d.breakDraw),
+    if (d.breakBreath > 0) effBreakBreath(d.breakBreath),
     if (d.firstTurnOnly) effFirstTurn,
     if (d.exhaust) effExhaust,
   ].join('. ');

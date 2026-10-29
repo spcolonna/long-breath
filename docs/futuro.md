@@ -9,7 +9,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 - **Pulido general (29/10/2026):** botones que se hunden al tocar, Vida que cuenta, entradas escalonadas, carta que se quema o se mejora en fuente/mercader/maestro, avisos de papel con sello, mazos de robo y descarte con rebarajado, pausa de impacto en golpes fuertes y respeto de «reducir movimiento» del sistema. Transiciones propias: el combate entra con dos pinceladas de laca y oro en X; la etapa superada se abre como un rollo colgante.
 - **Pulido y técnico (29/10/2026):** Opciones (sonido, música, vibración y movimiento: como el sistema, completo o reducido), kit de nodo (fondo de etapa en mercader y maestro, opciones de papel, elegir carta con encabezado propio), cofre, cartas y talismanes que se hunden, nubes en dos capas en el combate (por código), niebla sin blur y sprites sin filtros cuando no hacen falta. La base para todo lo nuevo está en `docs/feel.md`.
   - **Falta:** los archivos de sonido y música (`assets/audio/` está vacío, así que el juego es mudo); medir el rendimiento en un teléfono real.
-- **Cartas de Serpiente y Grulla (29/10/2026):** 4 cartas más por camino (10 cada uno). Mecánicas nuevas: **combo** de la Serpiente (si ya jugaste 2 ataques en el turno, roba o da Aliento) y **retenida** de la Grulla que roba o da Aliento. Pendiente: llevar al Tigre a 10 con su propia mecánica (p. ej. premio al desequilibrar).
+- **Cartas de Serpiente y Grulla (29/10/2026):** 4 cartas más por camino (10 cada uno). Mecánicas nuevas: **combo** de la Serpiente (si ya jugaste 2 ataques en el turno, roba o da Aliento) y **retenida** de la Grulla que roba o da Aliento. Hecho después: el Tigre también tiene 10, con el **Quiebre** (la carta que desequilibra al enemigo roba o da Aliento).
 
 - **Balance:** hecho el 01/10/2026 (ver `balance.md`).
   - Combates de 2,4 a 4,8 turnos.
@@ -38,7 +38,6 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - enemigos que se potencian entre sí (uno cubre al otro, uno cura al otro).
 
 ### Caminos y cartas
-- **Cartas propias de la Serpiente y la Grulla.** Hoy solo el Tigre tiene cartas.
 - **Árbol por camino:** cada animal es una rama con cartas, formas y una mecánica propia:
   - Tigre: romper Estructura.
   - Serpiente: veneno, golpes encadenados y retener.

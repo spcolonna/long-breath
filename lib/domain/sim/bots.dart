@@ -431,6 +431,8 @@ double cardValue(CardDef d) {
   v += d.retainedDamage * 0.5 + d.retainedStructure * 0.4;
   v += (d.comboDraw * 2.5 + d.comboBreath * 3) * 0.5;
   v += (d.retainedDraw * 2.5 + d.retainedBreath * 3) * 0.5;
+  // Quiebre: desequilibra más o menos una de cada tres veces.
+  v += (d.breakDraw * 2.5 + d.breakBreath * 3) * 0.35;
   return v / (d.cost == 0 ? 0.8 : d.cost);
 }
 

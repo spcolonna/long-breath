@@ -2944,6 +2944,18 @@ abstract class AppLocalizations {
   /// **'Si la retuviste, +{n} Aliento'**
   String effRetainedBreath(int n);
 
+  /// No description provided for @effBreakDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Si lo desequilibra, robás {n}'**
+  String effBreakDraw(int n);
+
+  /// No description provided for @effBreakBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Si lo desequilibra, +{n} Aliento'**
+  String effBreakBreath(int n);
+
   /// No description provided for @styleChipFirstStrike.
   ///
   /// In es, this message translates to:

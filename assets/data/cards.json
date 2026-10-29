@@ -24,6 +24,10 @@
     { "id": "hu_xiao", "pinyin": "Hǔ Xiào", "hanzi": "虎啸", "type": "technique", "cost": 0, "turnStructureBonus": 2, "exhaust": true, "pool": "tiger" },
     { "id": "hu_wei", "pinyin": "Hǔ Wěi", "hanzi": "虎尾", "type": "kick", "cost": 2, "damage": 9, "structure": 5, "bonusDamageIfStaggered": 7, "pool": "tiger" },
     { "id": "xia_shan_hu", "pinyin": "Xià Shān Hǔ", "hanzi": "下山虎", "type": "palm", "cost": 1, "stance": "mabu", "damage": 5, "structure": 6, "pool": "tiger" },
+    { "id": "hu_ya", "pinyin": "Hǔ Yá", "hanzi": "虎牙", "type": "fist", "cost": 1, "damage": 4, "structure": 5, "breakBreath": 1, "pool": "tiger" },
+    { "id": "hu_ben", "pinyin": "Hǔ Bēn", "hanzi": "虎奔", "type": "kick", "cost": 2, "damage": 5, "structure": 9, "breakDraw": 2, "pool": "tiger" },
+    { "id": "e_hu_pu_shi", "pinyin": "È Hǔ Pū Shí", "hanzi": "饿虎扑食", "type": "palm", "cost": 0, "damage": 2, "structure": 2, "bonusDamageIfStaggered": 6, "pool": "tiger" },
+    { "id": "hu_dun", "pinyin": "Hǔ Dūn", "hanzi": "虎蹲", "type": "defense", "cost": 1, "stance": "mabu", "guard": 6, "height": "low", "onDeflectStructure": 4, "pool": "tiger" },
 
     { "id": "she_xing_shou", "pinyin": "Shé Xíng Shǒu", "hanzi": "蛇形手", "type": "palm", "cost": 0, "damage": 2, "structure": 2, "chainDamage": 2, "pool": "snake" },
     { "id": "she_tu_xin", "pinyin": "Shé Tǔ Xìn", "hanzi": "蛇吐信", "type": "palm", "cost": 1, "damage": 4, "structure": 2, "draw": 1, "pool": "snake" },
