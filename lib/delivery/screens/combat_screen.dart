@@ -87,50 +87,42 @@ class _Pop {
 /// Efectos de la arena en un instante: qué se animó y qué números hay en vuelo.
 class _ArenaFx {
   const _ArenaFx({
-    this.hitKey = 0,
-    this.heavy = false,
-    this.attackKey = 0,
-    this.pulseKey = 0,
-    this.sparkKey = 0,
-    this.burstKey = 0,
     this.strikeKey = 0,
     this.hurtKey = 0,
     this.guardKey = 0,
     this.deflectKey = 0,
     this.turnKey = 0,
-    this.enemyGuardKey = 0,
-    this.breakKey = 0,
     this.qiKey = 0,
-    this.dying = false,
     this.victory = false,
     this.defeated = false,
-    this.enemyPops = const [],
     this.heroPops = const [],
     this.talismanHits = const {},
   });
 
-  final int hitKey;
-  final bool heavy;
-  final int attackKey;
-  final int pulseKey;
-  final int sparkKey;
-  final int burstKey;
   final int strikeKey;
   final int hurtKey;
   final int guardKey;
   final int deflectKey;
   final int turnKey;
-  final int enemyGuardKey;
-  final int breakKey;
   final int qiKey;
-  final bool dying;
   final bool victory;
   final bool defeated;
-  final List<_Pop> enemyPops;
   final List<_Pop> heroPops;
 
   /// Cuántas veces actuó cada talismán (rebota su ficha).
   final Map<String, int> talismanHits;
+}
+
+/// Lo que se anima en cada enemigo en escena (con dos a la vez, cada uno lo
+/// suyo): golpe, embestida, pulso, chispas, estallido, guardia, quiebre.
+class _FoeFx {
+  int hit = 0, attack = 0, pulse = 0, spark = 0, burst = 0, guard = 0;
+  int brk = 0;
+  bool heavy = false, dying = false;
+  final pops = <_Pop>[];
+
+  /// Marca dónde está la figura, para que las cartas vuelen hacia ella.
+  final key = GlobalKey();
 }
 
 class _CombatScreenState extends ConsumerState<_CombatBody> {
@@ -139,7 +131,6 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   int _fxKey = 0;
   final _timers = <Timer>[];
   final _rnd = math.Random();
-  final _enemyKey = GlobalKey();
   final _heroKey = GlobalKey();
 
   /// Lo que se ve en la arena. Va un paso detrás del estado real para que los
@@ -155,17 +146,24 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   int? _playedUid;
   bool _endShown = false;
 
-  int _hitKey = 0, _attackKey = 0, _pulseKey = 0, _sparkKey = 0, _burstKey = 0;
   int _strikeKey = 0,
       _hurtKey = 0,
       _guardKey = 0,
       _deflectKey = 0,
       _turnKey = 0;
   int _shakeKey = 0, _flashKey = 0, _formBurstKey = 0, _popId = 0;
-  int _enemyGuardKey = 0, _breakKey = 0, _qiKey = 0;
+  int _qiKey = 0;
   double _shakeStrength = 8;
-  bool _heavy = false, _dying = false, _victory = false, _defeated = false;
-  final _enemyPops = <_Pop>[];
+  bool _victory = false, _defeated = false;
+
+  /// Animaciones de cada enemigo en escena, por su lugar.
+  final _foes = <_FoeFx>[];
+  _FoeFx _foe(int i) {
+    while (_foes.length <= i) {
+      _foes.add(_FoeFx());
+    }
+    return _foes[i];
+  }
   final _heroPops = <_Pop>[];
   final _talismanHits = <String, int>{};
 
@@ -296,6 +294,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     if (!ev.any((e) => e is CardPlayed)) {
       for (final e in ev) {
         switch (e) {
+          case TargetChanged():
+            HapticFeedback.selectionClick();
+            _audio.play(Sfx.cardSelect);
           case StanceChanged():
             _audio.play(Sfx.stanceChange);
           case CardsDrawn(:final count):
@@ -305,7 +306,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         }
       }
       setState(() => _shown = next);
-      _banners(ev);
+      _banners(ev, next.state.target);
       return;
     }
     // La carta vuela hacia su blanco; el golpe se ve cuando llega.
@@ -317,16 +318,19 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     });
     _audio.play(Sfx.cardPlay);
     final wave = ev.whereType<WaveStarted>().firstOrNull;
+    // La carta le pega al que estaba apuntado (si cae, ya se apunta al otro).
+    final slot = prev.state.target;
     _after(hits.isEmpty ? 150 : 240, () {
-      _impactOnEnemy(wave == null ? next : _fallen(prev, next), ev);
-      _banners(ev);
+      _impactOnEnemy(wave == null ? next : _fallen(prev, next), ev, slot);
+      _banners(ev, slot);
       if (ev.any((e) => e is Victory)) {
-        _win();
+        _win(slot);
       } else if (ev.any((e) => e is Defeat)) {
         _lose();
       } else if (wave != null) {
         _nextWave(next, wave);
       } else {
+        if (ev.any((e) => e is EnemyDefeated)) _foeDown(slot);
         setState(() => _busy = false);
       }
     });
@@ -346,13 +350,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     setState(() {
       _queue.clear();
       _current = null;
-      _dying = true;
-      _burstKey++;
+      _foe(0)
+        ..dying = true
+        ..burst += 1;
       _shake(12);
     });
     _after(_waveGap, () {
       setState(() {
-        _dying = false;
+        _foe(0).dying = false;
         _shown = next;
       });
       HapticFeedback.mediumImpact();
@@ -373,7 +378,20 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   /// Lo que tarda en despejarse la arena entre un enemigo del grupo y otro.
   static const _waveGap = 950;
 
-  void _impactOnEnemy(CombatView next, List<CombatEvent> ev) {
+  /// Cae uno de los dos en escena: estalla y su lugar queda vacío.
+  void _foeDown(int slot) {
+    HapticFeedback.heavyImpact();
+    _audio.play(Sfx.enemyDeath);
+    setState(() {
+      _foe(slot)
+        ..dying = true
+        ..burst += 1;
+      _shake(12);
+    });
+  }
+
+  void _impactOnEnemy(CombatView next, List<CombatEvent> ev, int slot) {
+    final f = _foe(slot);
     final hits = ev.whereType<EnemyDamaged>();
     final dmg = hits.fold(0, (a, e) => a + e.damage);
     final str = hits.fold(0, (a, e) => a + e.structure);
@@ -384,15 +402,15 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     setState(() {
       _shown = next;
       if (hits.isNotEmpty) {
-        _hitKey++;
-        _sparkKey++;
-        _heavy = dmg >= 10 || broken;
+        f.hit++;
+        f.spark++;
+        f.heavy = dmg >= 10 || broken;
         if (dmg > 0) {
-          _pop(_enemyPops, '−$dmg', Palette.lacquer, size: dmg >= 10 ? 42 : 34);
+          _pop(f.pops, '−$dmg', Palette.lacquer, size: dmg >= 10 ? 42 : 34);
         }
         if (str > 0) {
           _pop(
-            _enemyPops,
+            f.pops,
             '−$str',
             Palette.structure,
             size: 20,
@@ -403,7 +421,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         }
         if (absorbed > 0) {
           _pop(
-            _enemyPops,
+            f.pops,
             dmg == 0 ? t.blocked : '−$absorbed',
             Palette.sky,
             size: 18,
@@ -412,8 +430,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             dy: 26,
           );
         }
-        if (broken) _breakKey++;
-        if (_heavy) _shake(broken ? 14 : 9);
+        if (broken) f.brk++;
+        if (f.heavy) _shake(broken ? 14 : 9);
       }
       if (guard > 0) {
         _guardKey++;
@@ -448,9 +466,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       }
     });
     if (hits.isNotEmpty) {
-      _heavy ? HapticFeedback.heavyImpact() : HapticFeedback.mediumImpact();
+      f.heavy ? HapticFeedback.heavyImpact() : HapticFeedback.mediumImpact();
       _audio.play(
-        _heavy
+        f.heavy
             ? Sfx.hitHeavy
             : dmg == 0
             ? Sfx.block
@@ -465,10 +483,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   void _enemyTurn(CombatView prev, CombatView next) {
     final ev = next.events;
-    final t = AppLocalizations.of(context);
     // Si un desvío voltea al enemigo de un grupo, se lo ve caer al final.
     final wave = ev.whereType<WaveStarted>().firstOrNull;
-    final view = wave == null ? next : _fallen(prev, next);
     final nowUids = {for (final c in next.state.hand) c.uid};
     setState(() {
       _busy = true;
@@ -480,14 +496,119 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       };
     });
 
-    // 1. La mano se descarta. 2. El enemigo actúa. 3. Se reparte la mano nueva.
+    // 1. La mano se descarta. 2. Actúa cada enemigo, de a uno. 3. Se
+    // reparte la mano nueva.
+    final segs = _actors(ev);
     var at = 300;
+    var slot = 0;
+    for (final (k, (who, sev)) in segs.indexed) {
+      slot = who;
+      final last = k == segs.length - 1;
+      final view = !last
+          ? _partial(prev, next, [for (final x in segs.take(k + 1)) x.$1],
+              [for (final x in segs.take(k + 1)) ...x.$2])
+          : wave == null
+          ? next
+          : _fallen(prev, next);
+      at = _enemyActs(who, sev, view, next, at);
+      if (!last && sev.any((e) => e is EnemyDefeated)) {
+        _after(at, () => _foeDown(who));
+        at += 450;
+      }
+    }
+
+    if (ev.any((e) => e is Victory)) {
+      _after(at - 300, () => _win(slot));
+      return;
+    }
+    if (ev.any((e) => e is Defeat)) {
+      _after(at - 300, _lose);
+      return;
+    }
+    if (ev.any((e) => e is EnemyFled)) {
+      _after(at - 300, _fled);
+      return;
+    }
+    if (wave != null) {
+      _after(at, () => _nextWave(next, wave, unlock: false));
+      at += _waveGap + 200;
+    } else if (segs.length > 1 && segs.last.$2.any((e) => e is EnemyDefeated)) {
+      _after(at, () => _foeDown(segs.last.$1));
+      at += 450;
+    }
+    _after(at, () {
+      setState(() {
+        _hideHand = false;
+        _turnKey++;
+      });
+      HapticFeedback.selectionClick();
+      _audio.play(Sfx.turnStart);
+    });
+    _dealSounds(at + 320, next.state.hand.length);
+    _after(
+      at + 70 * next.state.hand.length + 320,
+      () => setState(() => _busy = false),
+    );
+  }
+
+  /// Los eventos del turno enemigo partidos por quién actúa: con uno solo,
+  /// todo es suyo; con dos, cada [EnemyActing] abre el tramo de ese.
+  List<(int, List<CombatEvent>)> _actors(List<CombatEvent> ev) {
+    final out = <(int, List<CombatEvent>)>[];
+    for (final e in ev) {
+      if (e is EnemyActing) {
+        out.add((e.index, []));
+      } else if (out.isEmpty) {
+        out.add((0, [e]));
+      } else {
+        out.last.$2.add(e);
+      }
+    }
+    if (out.length > 1 && out.first.$2.isEmpty) out.removeAt(0);
+    return out.isEmpty ? [(0, const [])] : out;
+  }
+
+  /// Cómo se ve la arena a mitad del turno enemigo: los que ya actuaron, en
+  /// su estado nuevo; los que faltan, como estaban; la Vida, con lo que
+  /// pegaron hasta ahora.
+  CombatView _partial(
+    CombatView prev,
+    CombatView next,
+    List<int> acted,
+    List<CombatEvent> sofar,
+  ) {
+    final lost = sofar.whereType<PlayerHit>().fold(0, (a, e) => a + e.damage);
+    final s = next.state;
+    return next.copyWith(
+      state: s.copyWith(
+        player: s.player.copyWith(
+          hp: math.max(s.player.hp, prev.state.player.hp - lost),
+        ),
+        enemies: [
+          for (final (i, e) in s.enemies.indexed)
+            acted.contains(i) ? e : prev.state.enemies[i],
+        ],
+      ),
+    );
+  }
+
+  /// Un enemigo actúa desde [at] (ms): embiste y pega, o se cubre, carga o
+  /// pierde el turno. Devuelve cuándo terminó.
+  int _enemyActs(
+    int slot,
+    List<CombatEvent> ev,
+    CombatView view,
+    CombatView next,
+    int at,
+  ) {
+    final t = AppLocalizations.of(context);
+    final f = _foe(slot);
     final outcomes = ev.where((e) => e is PlayerHit || e is Deflected).toList();
     if (outcomes.isNotEmpty) {
       _after(at, () {
-        setState(() => _attackKey++);
+        setState(() => f.attack++);
         _audio.play(Sfx.enemyWindup);
-        _audio.voice(next.state.enemy.id);
+        _audio.voice(next.state.enemies[slot].id);
       });
       at += EnemySprite.impactDelay.inMilliseconds;
       for (final (i, o) in outcomes.indexed) {
@@ -538,86 +659,60 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               default:
             }
           });
-          if (last) _banners(ev);
-        });
-      }
-      at += (outcomes.length - 1) * 240 + 450;
-    } else {
-      // Guardia, carga o turno perdido: el enemigo se infla o tambalea.
-      _after(at, () {
-        setState(() {
-          _shown = view;
-          for (final e in ev) {
-            switch (e) {
-              case EnemyGuarded(:final amount):
-                _audio.play(Sfx.enemyGuard);
-                _pulseKey++;
-                _enemyGuardKey++;
-                _pop(
-                  _enemyPops,
-                  '+$amount',
-                  Palette.sky,
-                  size: 26,
-                  icon: Icons.shield,
-                );
-              case EnemyCharged(:final amount):
-                _audio.play(Sfx.enemyCharge);
-                _pulseKey++;
-                _pop(
-                  _enemyPops,
-                  '+$amount',
-                  Palette.gold,
-                  size: 26,
-                  icon: Icons.bolt,
-                );
-              case EnemyActionSkipped():
-                _audio.play(Sfx.enemySkip);
-                _pop(_enemyPops, t.losesAction, Palette.gold, size: 18);
-              default:
+          if (last) {
+            // El contragolpe del desvío se ve en el que atacó.
+            final back = ev.whereType<EnemyDamaged>().toList();
+            if (back.isNotEmpty) {
+              setState(() {
+                f.hit++;
+                f.spark++;
+              });
             }
+            _banners(ev, slot);
           }
         });
-        HapticFeedback.lightImpact();
-        _banners(ev);
-      });
-      at += 650;
+      }
+      return at + (outcomes.length - 1) * 240 + 450;
     }
-
-    if (ev.any((e) => e is Defeat)) {
-      _after(at - 300, _lose);
-      return;
-    }
-    if (ev.any((e) => e is EnemyFled)) {
-      _after(at - 300, _fled);
-      return;
-    }
-    if (wave != null) {
-      _after(at, () => _nextWave(next, wave, unlock: false));
-      at += _waveGap + 200;
-    }
+    // Guardia, carga o turno perdido: el enemigo se infla o tambalea.
     _after(at, () {
       setState(() {
-        _hideHand = false;
-        _turnKey++;
+        _shown = view;
+        for (final e in ev) {
+          switch (e) {
+            case EnemyGuarded(:final amount):
+              _audio.play(Sfx.enemyGuard);
+              f.pulse++;
+              f.guard++;
+              _pop(f.pops, '+$amount', Palette.sky, size: 26, icon: Icons.shield);
+            case EnemyCharged(:final amount):
+              _audio.play(Sfx.enemyCharge);
+              f.pulse++;
+              _pop(f.pops, '+$amount', Palette.gold, size: 26, icon: Icons.bolt);
+            case EnemyActionSkipped():
+              _audio.play(Sfx.enemySkip);
+              _pop(f.pops, t.losesAction, Palette.gold, size: 18);
+            default:
+          }
+        }
       });
-      HapticFeedback.selectionClick();
-      _audio.play(Sfx.turnStart);
+      HapticFeedback.lightImpact();
+      _banners(ev, slot);
     });
-    _dealSounds(at + 320, next.state.hand.length);
-    _after(
-      at + 70 * next.state.hand.length + 320,
-      () => setState(() => _busy = false),
-    );
+    return at + 650;
   }
 
-  void _win() {
+  /// Victoria: estalla el último en caer ([slot]).
+  void _win([int slot = 0]) {
     HapticFeedback.heavyImpact();
     _audio.play(Sfx.enemyDeath);
     setState(() {
       _queue.clear();
       _current = null;
-      _dying = true;
-      _burstKey++;
+      for (final f in _foes) {
+        f.dying = true;
+      }
+      _foe(slot).burst++;
       _shake(16);
     });
     _after(450, () {
@@ -638,7 +733,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     setState(() {
       _queue.clear();
       _current = null;
-      _dying = true;
+      for (final f in _foes) {
+        f.dying = true;
+      }
     });
     _after(900, () => setState(() => _endShown = true));
   }
@@ -659,7 +756,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     });
   }
 
-  void _banners(List<CombatEvent> events) {
+  /// Carteles y números de los eventos; los del enemigo salen sobre el de
+  /// la posición [slot].
+  void _banners(List<CombatEvent> events, [int slot = 0]) {
+    final enemyPops = _foe(slot).pops;
     final data = ref.read(dataProvider);
     final text = ref.read(textProvider);
     final t = AppLocalizations.of(context);
@@ -685,7 +785,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           _queue.add(_Fx(t.wrathCalmed, null, Palette.gold));
         case EnemyEnraged(:final total):
           _pop(
-            _enemyPops,
+            enemyPops,
             '+$total',
             Palette.lacquer,
             size: 22,
@@ -706,7 +806,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           );
         case EnemyRegenerated(:final amount):
           _pop(
-            _enemyPops,
+            enemyPops,
             '+$amount',
             Palette.jade,
             size: 24,
@@ -822,24 +922,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           ]
         : live.state.hand;
     final fx = _ArenaFx(
-      hitKey: _hitKey,
-      heavy: _heavy,
-      attackKey: _attackKey,
-      pulseKey: _pulseKey,
-      sparkKey: _sparkKey,
-      burstKey: _burstKey,
       strikeKey: _strikeKey,
       hurtKey: _hurtKey,
       guardKey: _guardKey,
       deflectKey: _deflectKey,
       turnKey: _turnKey,
-      enemyGuardKey: _enemyGuardKey,
-      breakKey: _breakKey,
       qiKey: _qiKey,
-      dying: _dying,
       victory: _victory,
       defeated: _defeated,
-      enemyPops: _enemyPops,
       heroPops: _heroPops,
       talismanHits: {..._talismanHits},
     );
@@ -889,17 +979,27 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             talismans: s.talismans,
             fx: fx,
             heroKey: _heroKey,
-            introTitle: ref.watch(textProvider).enemy(s.enemy.id),
-            // Hoy hay un solo enemigo; la arena ya acepta varios.
+            introTitle: [
+              for (final e in s.enemies) ref.watch(textProvider).enemy(e.id),
+            ].join(' · '),
+            // Con dos a la vez, cada uno en su lugar; tocarlo lo apunta.
             slots: [
-              _EnemySlot(
-                def: data.enemy(s.enemy.id),
-                enemy: s.enemy,
-                intent: engine.intentView(s),
-                key: _enemyKey,
-                wave: s.wave,
-                waveCount: s.waveCount,
-              ),
+              for (final (i, e) in s.enemies.indexed)
+                _EnemySlot(
+                  def: data.enemy(e.id),
+                  enemy: e,
+                  intent: engine.intentView(s, i),
+                  foe: _foe(i),
+                  wave: s.wave,
+                  waveCount: s.waveCount,
+                  index: i,
+                  pair: s.enemies.length > 1,
+                  targeted: i == s.target,
+                  onTap: () {
+                    if (_busy) return;
+                    ref.read(combatControllerProvider.notifier).target(i);
+                  },
+                ),
             ],
           ),
         ),
@@ -927,7 +1027,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                   data: data,
                   engine: engine,
                   playedUid: _playedUid,
-                  enemyKey: _enemyKey,
+                  enemyKey: _foe(live.state.target).key,
                   heroKey: _heroKey,
                 ),
               ),
@@ -1036,9 +1136,13 @@ class _EnemySlot {
     required this.def,
     required this.enemy,
     required this.intent,
-    required this.key,
+    required this.foe,
+    required this.onTap,
     this.wave = 0,
     this.waveCount = 1,
+    this.index = 0,
+    this.pair = false,
+    this.targeted = true,
   });
 
   final EnemyDef def;
@@ -1049,8 +1153,15 @@ class _EnemySlot {
   final int wave;
   final int waveCount;
 
-  /// Marca dónde está la figura, para que las cartas vuelen hacia ella.
-  final GlobalKey key;
+  /// Sus animaciones (y la marca de dónde está la figura).
+  final _FoeFx foe;
+
+  /// Su lugar en escena; con [pair] hay dos a la vez y [targeted] dice si
+  /// las cartas van a él.
+  final int index;
+  final bool pair;
+  final bool targeted;
+  final VoidCallback onTap;
 }
 
 /// Escenario del combate: fondo de la etapa, suelo, los enemigos al frente y
@@ -1429,47 +1540,66 @@ class _EnemyStage extends ConsumerWidget {
     final text = ref.watch(textProvider);
     final e = slot.enemy;
     final def = slot.def;
+    final foe = slot.foe;
     final accent = rankColor(def.rank);
-    return Column(
+    // La guía del tutorial señala al primero (nunca hay dos en las lecciones).
+    Widget anchor(String id, Widget child) =>
+        slot.index == 0 ? TutorialAnchor(id: id, child: child) : child;
+    final aimed = slot.pair && slot.targeted && !foe.dying;
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: slot.pair ? slot.onTap : null,
+      child: Column(
       children: [
-        const SizedBox(height: 26),
-        TutorialAnchor(
-          id: 'intent',
-          child: AnimatedSwitcher(
+        // Con dos, los globos bajan un poco: arriba a la derecha está la pausa.
+        SizedBox(height: slot.pair ? 46 : 26),
+        anchor(
+          'intent',
+          AnimatedSwitcher(
             duration: const Duration(milliseconds: 280),
             switchInCurve: Curves.easeOutBack,
             transitionBuilder: (child, a) => ScaleTransition(
               scale: a,
               child: FadeTransition(opacity: a, child: child),
             ),
-            child: fx.dying
+            child: foe.dying
                 ? const SizedBox(key: ValueKey('none'), height: 50)
                 : _IntentBubble(
                     key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
                     iv: slot.intent,
+                    compact: slot.pair,
                   ),
           ),
         ),
         Expanded(
           child: LayoutBuilder(
             builder: (context, box) {
-              final size = math.min(box.maxHeight, 220.0);
+              final size = math.min(
+                math.min(box.maxHeight, 220.0),
+                box.maxWidth * 1.15,
+              );
               return Stack(
                 alignment: Alignment.center,
                 clipBehavior: Clip.none,
                 children: [
+                  // A quién apuntás: un halo de oro a sus pies.
+                  if (slot.pair)
+                    Positioned(
+                      bottom: (box.maxHeight - size) / 2 - 4,
+                      child: _TargetHalo(on: aimed, width: size * 0.8),
+                    ),
                   _Entrance(
                     // El que entra en un grupo también cae desde arriba.
                     key: ValueKey(slot.wave),
                     child: EnemySprite(
-                      key: slot.key,
+                      key: foe.key,
                       def: def,
                       staggered: e.staggered,
-                      hitKey: fx.hitKey,
-                      attackKey: fx.attackKey,
-                      pulseKey: fx.pulseKey,
-                      heavyHit: fx.heavy,
-                      dying: fx.dying,
+                      hitKey: foe.hit,
+                      attackKey: foe.attack,
+                      pulseKey: foe.pulse,
+                      heavyHit: foe.heavy,
+                      dying: foe.dying,
                       size: size,
                     ),
                   ),
@@ -1477,9 +1607,9 @@ class _EnemyStage extends ConsumerWidget {
                   // desequilibrarlo y pétalos al vencerlo.
                   Positioned.fill(
                     child: ArtBurst(
-                      trigger: fx.sparkKey,
+                      trigger: foe.spark,
                       asset: 'assets/art/vfx/hit_ink.webp',
-                      size: size * (fx.heavy ? 0.95 : 0.7),
+                      size: size * (foe.heavy ? 0.95 : 0.7),
                       duration: const Duration(milliseconds: 420),
                       from: 0.5,
                       to: 1.15,
@@ -1489,7 +1619,7 @@ class _EnemyStage extends ConsumerWidget {
                   ),
                   Positioned.fill(
                     child: ArtBurst(
-                      trigger: fx.enemyGuardKey,
+                      trigger: foe.guard,
                       asset: 'assets/art/vfx/guard_shield.webp',
                       size: size * 0.85,
                       duration: const Duration(milliseconds: 800),
@@ -1501,7 +1631,7 @@ class _EnemyStage extends ConsumerWidget {
                   ),
                   Positioned.fill(
                     child: ArtBurst(
-                      trigger: fx.breakKey,
+                      trigger: foe.brk,
                       asset: 'assets/art/vfx/break_shatter.webp',
                       size: size * 1.1,
                       duration: const Duration(milliseconds: 700),
@@ -1513,7 +1643,7 @@ class _EnemyStage extends ConsumerWidget {
                   ),
                   Positioned.fill(
                     child: ArtBurst(
-                      trigger: fx.burstKey,
+                      trigger: foe.burst,
                       asset: 'assets/art/vfx/lotus_petals.webp',
                       size: size * 1.2,
                       duration: const Duration(milliseconds: 1400),
@@ -1526,7 +1656,7 @@ class _EnemyStage extends ConsumerWidget {
                   // Chispas de cada golpe y estallido final.
                   Positioned.fill(
                     child: InkBurst(
-                      trigger: fx.sparkKey,
+                      trigger: foe.spark,
                       colors: [Colors.white, Palette.gold, accent],
                       count: 12,
                       radius: size * 0.45,
@@ -1535,7 +1665,7 @@ class _EnemyStage extends ConsumerWidget {
                   ),
                   Positioned.fill(
                     child: InkBurst(
-                      trigger: fx.burstKey,
+                      trigger: foe.burst,
                       colors: [
                         accent,
                         Palette.gold,
@@ -1549,36 +1679,50 @@ class _EnemyStage extends ConsumerWidget {
                   ),
                   Positioned(
                     top: size * 0.3,
-                    child: IgnorePointer(child: _PopStack(pops: fx.enemyPops)),
+                    child: IgnorePointer(child: _PopStack(pops: foe.pops)),
                   ),
                 ],
               );
             },
           ),
         ),
-        TutorialAnchor(
-          id: 'enemyInfo',
-          child: Column(
+        // Con dos en escena, el caído se apaga y deja su lugar vacío.
+        AnimatedOpacity(
+          opacity: slot.pair && foe.dying ? 0 : 1,
+          duration: const Duration(milliseconds: 600),
+          curve: Curves.easeOut,
+          child: anchor(
+          'enemyInfo',
+          Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Placa de nombre.
+              // Placa de nombre: muestra su regla (con dos en escena, el
+              // primer toque lo apunta).
               GestureDetector(
-                onTap: () => showDialog<void>(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                    title: Text(text.enemy(def.id)),
-                    content: Text(text.enemyRule(def.id)),
-                  ),
-                ),
+                onTap: slot.pair && !slot.targeted
+                    ? slot.onTap
+                    : () => showDialog<void>(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text(text.enemy(def.id)),
+                          content: Text(text.enemyRule(def.id)),
+                        ),
+                      ),
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(12, 4, 8, 4),
                   decoration: BoxDecoration(
                     color: accent,
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: aimed ? Palette.gold : accent,
+                      width: 2,
+                    ),
                     boxShadow: [
                       BoxShadow(
-                        color: accent.withValues(alpha: 0.4),
-                        blurRadius: 8,
+                        color: (aimed ? Palette.gold : accent).withValues(
+                          alpha: aimed ? 0.7 : 0.4,
+                        ),
+                        blurRadius: aimed ? 12 : 8,
                       ),
                     ],
                   ),
@@ -1586,14 +1730,23 @@ class _EnemyStage extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Flexible(
-                        child: Text(
-                          text.enemy(def.id),
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: Palette.onColor,
-                          ),
+                        // Con dos en escena el nombre se achica para entrar
+                        // entero.
+                        child: Builder(
+                          builder: (_) {
+                            final name = Text(
+                              text.enemy(def.id),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: Palette.onColor,
+                              ),
+                            );
+                            return slot.pair
+                                ? FittedBox(fit: BoxFit.scaleDown, child: name)
+                                : name;
+                          },
                         ),
                       ),
                       if (def.rank != EnemyRank.common)
@@ -1610,9 +1763,9 @@ class _EnemyStage extends ConsumerWidget {
                           ),
                         ),
                       const SizedBox(width: 4),
-                      const TutorialAnchor(
-                        id: 'enemyRule',
-                        child: Icon(
+                      anchor(
+                        'enemyRule',
+                        const Icon(
                           Icons.info_outline,
                           size: 16,
                           color: Palette.onColor,
@@ -1640,6 +1793,7 @@ class _EnemyStage extends ConsumerWidget {
                 height: 8,
               ),
             ],
+          ),
           ),
         ),
         AnimatedSize(
@@ -1737,9 +1891,108 @@ class _EnemyStage extends ConsumerWidget {
                     ],
                   ),
                 )
-              : const SizedBox(width: double.infinity),
+              // Con dos, el lugar de los estados se guarda igual: así las
+              // dos placas quedan a la misma altura.
+              : SizedBox(width: double.infinity, height: slot.pair ? 27 : 0),
         ),
       ],
+      ),
+    );
+  }
+}
+
+/// Halo de oro a los pies del enemigo al que apuntás (solo con dos en
+/// escena): aparece con un rebote y late despacio.
+class _TargetHalo extends StatefulWidget {
+  const _TargetHalo({required this.on, required this.width});
+
+  final bool on;
+  final double width;
+
+  @override
+  State<_TargetHalo> createState() => _TargetHaloState();
+}
+
+class _TargetHaloState extends State<_TargetHalo>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _beat;
+
+  @override
+  void initState() {
+    super.initState();
+    _beat = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1400),
+    );
+    if (widget.on) _beat.repeat(reverse: true);
+  }
+
+  // Late solo mientras está encendido: apagado no anima nada.
+  @override
+  void didUpdateWidget(_TargetHalo old) {
+    super.didUpdateWidget(old);
+    if (widget.on && !_beat.isAnimating) _beat.repeat(reverse: true);
+    if (!widget.on && _beat.isAnimating) _beat.stop();
+  }
+
+  @override
+  void dispose() {
+    _beat.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: TweenAnimationBuilder<double>(
+        tween: Tween(end: widget.on ? 1 : 0),
+        duration: const Duration(milliseconds: 320),
+        curve: widget.on ? Curves.easeOutBack : Curves.easeIn,
+        builder: (_, v, _) => v <= 0.01
+            ? SizedBox(width: widget.width)
+            : AnimatedBuilder(
+                animation: _beat,
+                builder: (_, _) {
+                  final b = Curves.easeInOut.transform(_beat.value);
+                  return Opacity(
+                    opacity: v.clamp(0, 1),
+                    child: Transform.scale(
+                      scale: v * (0.94 + 0.06 * b),
+                      child: Container(
+                        width: widget.width,
+                        height: widget.width * 0.2,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.elliptical(
+                              widget.width / 2,
+                              widget.width * 0.1,
+                            ),
+                          ),
+                          border: Border.all(
+                            color: Palette.gold.withValues(
+                              alpha: 0.75 + 0.25 * b,
+                            ),
+                            width: 2.4,
+                          ),
+                          gradient: RadialGradient(
+                            colors: [
+                              Palette.gold.withValues(alpha: 0.35 + 0.15 * b),
+                              Palette.gold.withValues(alpha: 0),
+                            ],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Palette.gold.withValues(alpha: 0.5 * b),
+                              blurRadius: 14,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+      ),
     );
   }
 }
@@ -1879,9 +2132,13 @@ class _MiniBar extends StatelessWidget {
 
 /// Globo de intención sobre la cabeza del enemigo.
 class _IntentBubble extends ConsumerWidget {
-  const _IntentBubble({super.key, required this.iv});
+  const _IntentBubble({super.key, required this.iv, this.compact = false});
 
   final IntentView iv;
+
+  /// Con dos en escena el globo es más angosto: letra más chica y el nombre
+  /// en hasta dos renglones.
+  final bool compact;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -1945,12 +2202,16 @@ class _IntentBubble extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 34,
-                height: 34,
+                width: compact ? 28 : 34,
+                height: compact ? 28 : 34,
                 decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-                child: GameIcon(icon, size: 22, color: Palette.onColor),
+                child: GameIcon(
+                  icon,
+                  size: compact ? 18 : 22,
+                  color: Palette.onColor,
+                ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: compact ? 6 : 8),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1959,8 +2220,10 @@ class _IntentBubble extends ConsumerWidget {
                     Text(
                       title,
                       overflow: TextOverflow.ellipsis,
+                      maxLines: compact ? 2 : 1,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: compact ? 12.5 : 14,
+                        height: compact ? 1.15 : null,
                         fontWeight: FontWeight.w700,
                         decoration: iv.skipped
                             ? TextDecoration.lineThrough

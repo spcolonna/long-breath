@@ -75,6 +75,7 @@ class CombatController extends Notifier<CombatView?> {
       deck: run.deck,
       enemyId: pack.first,
       waves: pack.sublist(1),
+      together: run.node(run.currentNode!).together,
       style: run.style,
       playerHp: run.hp,
       maxHp: run.maxHp,
@@ -156,6 +157,22 @@ class CombatController extends Notifier<CombatView?> {
   void clearSelection() => state = state!.copyWith(selected: () => null);
 
   void dingbu(Stance stance) => _dispatch(Dingbu(stance));
+
+  /// Apuntar a otro enemigo (con dos en escena); la carta elegida sigue
+  /// elegida.
+  void target(int index) {
+    final v = state!;
+    if (v.retaining || engine.validate(v.state, Target(index)) != null) return;
+    final r = engine.reduce(v.state, Target(index));
+    state = CombatView(
+      state: r.state,
+      events: r.events,
+      seq: v.seq + 1,
+      selected: v.selected,
+      lessonId: v.lessonId,
+      instance: v.instance,
+    );
+  }
 
   void breathe() => _dispatch(const Breathe());
 

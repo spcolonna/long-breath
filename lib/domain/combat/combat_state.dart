@@ -158,7 +158,8 @@ class CombatState {
     required this.breathPerTurn,
     required this.retainMax,
     required this.player,
-    required this.enemy,
+    required this.enemies,
+    this.target = 0,
     required this.drawPile,
     required this.hand,
     required this.discard,
@@ -197,7 +198,22 @@ class CombatState {
   final int breathPerTurn;
   final int retainMax;
   final PlayerCombat player;
-  final EnemyCombat enemy;
+
+  /// Los enemigos que están en escena a la vez (casi siempre uno; dos en
+  /// los nodos «a la vez»). Los caídos quedan con Vida 0.
+  final List<EnemyCombat> enemies;
+
+  /// A cuál de [enemies] le pegan las cartas.
+  final int target;
+
+  /// El enemigo al que apuntás.
+  EnemyCombat get enemy => enemies[target];
+
+  /// Índices de los enemigos en escena que siguen en pie.
+  List<int> get alive => [
+        for (var i = 0; i < enemies.length; i++)
+          if (enemies[i].hp > 0) i,
+      ];
   final List<CombatCard> drawPile;
   final List<CombatCard> hand;
   final List<CombatCard> discard;
@@ -260,8 +276,13 @@ class CombatState {
   /// Enemigos del grupo: los caídos, el actual y los que esperan.
   int get waveCount => wave + 1 + reserve.length;
 
-  /// Copia con jugador o enemigo reemplazados (tests y herramientas).
-  CombatState copyWith({PlayerCombat? player, EnemyCombat? enemy}) =>
+  /// Copia con jugador, enemigos o el enemigo apuntado reemplazados (tests,
+  /// herramientas y la arena).
+  CombatState copyWith({
+    PlayerCombat? player,
+    EnemyCombat? enemy,
+    List<EnemyCombat>? enemies,
+  }) =>
       CombatState(
         turn: turn,
         phase: phase,
@@ -269,7 +290,11 @@ class CombatState {
         breathPerTurn: breathPerTurn,
         retainMax: retainMax,
         player: player ?? this.player,
-        enemy: enemy ?? this.enemy,
+        enemies: [
+          for (final (i, e) in (enemies ?? this.enemies).indexed)
+            i == target && enemy != null ? enemy : e,
+        ],
+        target: target,
         drawPile: drawPile,
         hand: hand,
         discard: discard,

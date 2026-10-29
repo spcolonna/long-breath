@@ -321,6 +321,9 @@ class RunEngine {
     return [n.enemy!, ...n.waves];
   }
 
+  /// Si el grupo del combate actual pelea todo junto (no en oleadas).
+  bool togetherOf(RunState r) => r.node(r.currentNode!).together;
+
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
   /// lo venciste). Escapado no deja jade ni loto. [tally]: lo que pasó en
   /// el combate para los hitos (formas y desvíos).

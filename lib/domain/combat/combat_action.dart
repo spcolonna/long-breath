@@ -9,6 +9,12 @@ class PlayCard extends CombatAction {
   final int uid;
 }
 
+/// Apuntar a otro enemigo cuando hay dos en escena (no cuesta nada).
+class Target extends CombatAction {
+  const Target(this.index);
+  final int index;
+}
+
 class Dingbu extends CombatAction {
   const Dingbu(this.stance);
   final Stance stance;

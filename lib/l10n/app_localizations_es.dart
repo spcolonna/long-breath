@@ -583,6 +583,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invalidNoDiscard => 'No hay que descartar';
 
   @override
+  String get invalidBadTarget => 'A ese no se le puede apuntar';
+
+  @override
   String get partOfForm => 'Parte de una forma';
 
   @override

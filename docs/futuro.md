@@ -27,7 +27,10 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 - **Nuevas posturas:** Pūbù 仆步 (barrido bajo), Xiēbù 歇步 (cruzada, giro) y Dúlìbù 独立步 (grulla, sobre una pierna). Cada una con su ventaja y su costo, y con cartas que lleven a ella.
 
 ### Combates
-- **Dos enemigos a la vez (1 contra 2).** Hoy un grupo entra de a uno (oleadas). El siguiente paso es que algunos nodos (élite con escolta, por ejemplo) traigan dos enemigos en escena: se elige a quién pegarle, se ven dos intenciones y las formas de área tienen sentido. La arena ya recibe una lista de `slots` (`combat_screen.dart`); falta apuntar, el turno enemigo doble y el balance.
+- **Dos enemigos a la vez (1 contra 2).** **Hecho (29/10/2026):** los grupos de dos pueden pelear juntos (`floors[].together`, % por piso). Se apunta tocando, se ven las dos intenciones y actúan uno tras otro. Siguientes pasos posibles:
+  - élite con escolta (un élite y un común a la vez);
+  - formas o cartas de área que peguen a los dos;
+  - enemigos que se potencian entre sí (uno cubre al otro, uno cura al otro).
 
 ### Caminos y cartas
 - **Cartas propias de la Serpiente y la Grulla.** Hoy solo el Tigre tiene cartas.

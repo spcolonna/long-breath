@@ -146,9 +146,13 @@ class PlannerBot extends Bot {
     }
     if (breathes && shouldBreathe(engine, s)) return const Breathe();
     final search = _Search(engine, this);
-    final best = search.run(s);
+    final best = search.run(s, targeted: _targeted);
+    // Después de apuntar, juega o termina: así no va y viene entre los dos.
+    _targeted = best is Target;
     return best ?? EndTurn(retain: _retain(engine, s));
   }
+
+  bool _targeted = false;
 
   /// Cartas ordenadas de más a menos valiosas para guardar.
   List<int> _retainOrder(CombatEngine engine, CombatState s) {
@@ -174,15 +178,18 @@ class PlannerBot extends Bot {
   double score(CombatEngine engine, CombatState s) {
     if (s.phase == CombatPhase.won) return 1e6 + s.player.hp;
     if (s.phase == CombatPhase.lost) return -1e6;
-    final e = s.enemy;
     // En un grupo cuenta la Vida de los que esperan: si no, voltear al
     // primero (y que entre otro entero) parecería empeorar.
     final waiting = s.reserve.fold(0, (a, x) => a + x.hp);
-    var v = -(e.hp + waiting) * 3.0 + s.player.hp * 2.0;
-    if (e.staggered) {
-      v += 14;
-    } else {
-      v -= e.structure / e.maxStructure * 10;
+    var v = -waiting * 3.0 + s.player.hp * 2.0;
+    for (final e in s.enemies) {
+      if (e.hp == 0) continue;
+      v -= e.hp * 3.0;
+      if (e.staggered) {
+        v += 14;
+      } else {
+        v -= e.structure / e.maxStructure * 10;
+      }
     }
     v += s.player.breath * 2.0;
     v += s.player.structure * 0.4;
@@ -293,19 +300,21 @@ class _Search {
   double _bestScore = double.negativeInfinity;
   CombatAction? _bestFirst;
 
-  CombatAction? run(CombatState root) {
-    _visit(root, null);
+  /// [targeted]: la jugada anterior fue apuntar (no se vuelve a apuntar).
+  CombatAction? run(CombatState root, {bool targeted = false}) {
+    _visit(root, null, targeted);
     return _bestFirst;
   }
 
   String _key(CombatState s) {
     final hand = [for (final c in s.hand) c.uid]..sort();
     return '${hand.join(',')}|${s.player.stance.index}|${s.player.breath}|'
-        '${s.dingbuUsed}|${s.formProgress.values.join(',')}|${s.wave}|${s.enemy.hp}|'
-        '${s.enemy.structure}|${s.player.guard}|${s.player.guardHeight?.index}';
+        '${s.dingbuUsed}|${s.formProgress.values.join(',')}|${s.wave}|${s.target}|'
+        '${[for (final e in s.enemies) '${e.hp}/${e.structure}'].join(',')}|'
+        '${s.player.guard}|${s.player.guardHeight?.index}';
   }
 
-  void _visit(CombatState s, CombatAction? first) {
+  void _visit(CombatState s, CombatAction? first, [bool targeted = false]) {
     if (_nodes++ > bot.nodeLimit) return;
     if (!_seen.add(_key(s))) return;
     // Opción: terminar el turno acá.
@@ -320,7 +329,9 @@ class _Search {
     if (s.isOver) return;
     for (final a in engine.legalActions(s)) {
       if (a is EndTurn || a is Breathe) continue;
-      _visit(engine.reduce(s, a).state, first ?? a);
+      // Apuntar dos veces seguidas no sirve de nada.
+      if (a is Target && targeted) continue;
+      _visit(engine.reduce(s, a).state, first ?? a, a is Target);
     }
   }
 }
@@ -436,10 +447,13 @@ class NoviceBot extends Bot {
     if (s.phase == CombatPhase.discarding) return discard(s);
     final plays = engine.legalActions(s).whereType<PlayCard>().toList();
     CardDef def(PlayCard p) => engine.data.card(s.handCard(p.uid)!.cardId);
-    final view = engine.intentView(s);
-    final incoming = view.intent.kind == IntentKind.attack && !view.skipped
-        ? view.damage * view.intent.hits
+    // Con dos en escena se cuida del golpe más fuerte.
+    int hit(IntentView v) => v.intent.kind == IntentKind.attack && !v.skipped
+        ? v.damage * v.intent.hits
         : 0;
+    final view = [for (final i in s.alive) engine.intentView(s, i)]
+        .reduce((a, b) => hit(b) > hit(a) ? b : a);
+    final incoming = hit(view);
     if (incoming >= 6 && _defendedTurn != s.turn) {
       final defenses = plays.where((p) => def(p).type == CardType.defense).toList();
       if (defenses.isNotEmpty) {

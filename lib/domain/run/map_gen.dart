@@ -20,7 +20,8 @@ const _required = [NodeType.master];
 /// enemigos no se repiten dentro de un piso; los caminos no se cruzan.
 /// Cada combate lleva un escenario (sin repetir en el piso) y una luz.
 /// Los combates pueden traer un grupo (`packs` del piso) de los enemigos
-/// [packable]: los que esperan entran de a uno cuando cae el anterior.
+/// [packable]: los que esperan entran de a uno cuando cae el anterior, salvo
+/// que un grupo de dos salga «a la vez» (`together` del piso).
 (List<MapNodeDef>, Rng) generateMap(
   List<FloorDef> floors,
   Rng rng, {
@@ -74,14 +75,14 @@ const _required = [NodeType.master];
 
   // Mezcla las posiciones y reparte enemigos y escenarios sin repetir
   // dentro del piso.
-  final rows = <List<(NodeType, String?, String?, String?, List<String>)>>[];
+  final rows = <List<(NodeType, String?, String?, String?, List<String>, bool)>>[];
   for (var f = 0; f < floors.length; f++) {
     final (shuffled, r1) = rng.shuffle(types[f]);
     final (enemies, r2) = r1.shuffle(floors[f].enemies);
     final (places, r3) = r2.shuffle(scenes);
     rng = r3;
     var e = 0;
-    final row = <(NodeType, String?, String?, String?, List<String>)>[];
+    final row = <(NodeType, String?, String?, String?, List<String>, bool)>[];
     final packs = {
       for (final p in floors[f].packs.entries)
         if (p.value > 0) p.key: p.value,
@@ -92,7 +93,7 @@ const _required = [NodeType.master];
     ];
     for (final t in shuffled) {
       if (t != NodeType.combat) {
-        row.add((t, null, null, null, const []));
+        row.add((t, null, null, null, const [], false));
         continue;
       }
       String? light;
@@ -106,6 +107,7 @@ const _required = [NodeType.master];
           (places.isEmpty ? null : places[e % places.length]);
       final lead = enemies.isEmpty ? null : enemies[e % enemies.length];
       final waves = <String>[];
+      var together = false;
       if (lead != null &&
           packs.length > 1 &&
           followers.isNotEmpty &&
@@ -120,8 +122,13 @@ const _required = [NodeType.master];
           rng = r6;
           waves.add(from[pick]);
         }
+        if (waves.length == 1 && floors[f].together > 0) {
+          final (roll, r7) = rng.nextInt(100);
+          rng = r7;
+          together = roll < floors[f].together;
+        }
       }
-      row.add((t, lead, scene, light, waves));
+      row.add((t, lead, scene, light, waves, together));
       e++;
     }
     rows.add(row);
@@ -140,6 +147,7 @@ const _required = [NodeType.master];
           type: rows[f][i].$1,
           enemy: rows[f][i].$2,
           waves: rows[f][i].$5,
+          together: rows[f][i].$6,
           scene: rows[f][i].$3,
           light: rows[f][i].$4,
           next: [for (final j in next.$1[i]) _id(f + 1, j)],

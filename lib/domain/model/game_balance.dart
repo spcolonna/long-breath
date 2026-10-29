@@ -127,6 +127,7 @@ class MapNodeDef {
     required this.next,
     this.enemy,
     this.waves = const [],
+    this.together = false,
     this.scene,
     this.light,
   });
@@ -137,6 +138,9 @@ class MapNodeDef {
 
   /// Enemigos que entran después de [enemy], uno por vez (grupo).
   final List<String> waves;
+
+  /// Los de [waves] no esperan: pelean junto a [enemy], todos en escena.
+  final bool together;
   final List<String> next;
 
   /// Escenario del combate y la luz del momento (alba, niebla, ocaso): de
@@ -149,6 +153,7 @@ class MapNodeDef {
         type: NodeType.parse(j['type'] as String),
         enemy: j['enemy'] as String?,
         waves: ((j['waves'] as List?) ?? const []).cast<String>(),
+        together: j['together'] as bool? ?? false,
         next: (j['next'] as List).cast<String>(),
         scene: j['scene'] as String?,
         light: j['light'] as String?,
@@ -159,6 +164,7 @@ class MapNodeDef {
         'type': type.name,
         if (enemy != null) 'enemy': enemy,
         if (waves.isNotEmpty) 'waves': waves,
+        if (together) 'together': true,
         'next': next,
         if (scene != null) 'scene': scene,
         if (light != null) 'light': light,
@@ -174,6 +180,7 @@ class FloorDef {
     required this.types,
     this.enemies = const [],
     this.packs = const {1: 1},
+    this.together = 0,
     this.scene,
   });
 
@@ -184,6 +191,10 @@ class FloorDef {
 
   /// Peso de cada tamaño de grupo en los combates comunes ({1: 3, 2: 2}).
   final Map<int, int> packs;
+
+  /// Chance (en %) de que un grupo de dos pelee a la vez en vez de en
+  /// oleadas.
+  final int together;
 
   /// Escenario fijo de los combates del piso (la cumbre del jefe); si no,
   /// sale al azar de [GameBalance.scenes].
@@ -210,6 +221,7 @@ class FloorDef {
           },
         _ => const {1: 1},
       },
+      together: j['together'] as int? ?? 0,
       scene: j['scene'] as String?,
     );
   }
@@ -435,6 +447,8 @@ class GameBalance {
     this.masterForms = 2,
     this.packHp = const [100],
     this.packJade = 0,
+    this.packTogetherHp = 100,
+    this.packTogetherDamage = 100,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     required this.difficulties,
@@ -506,6 +520,12 @@ class GameBalance {
 
   /// Jade extra por cada enemigo de más en el grupo.
   final int packJade;
+
+  /// Vida (en %) de cada uno cuando dos pelean a la vez.
+  final int packTogetherHp;
+
+  /// Daño (en %) de los golpes de cada uno cuando dos pelean a la vez.
+  final int packTogetherDamage;
 
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
@@ -625,6 +645,13 @@ class GameBalance {
           const [100],
       packJade:
           (run['packs'] as Map<String, dynamic>?)?['jadePerExtra'] as int? ?? 0,
+      packTogetherHp:
+          (run['packs'] as Map<String, dynamic>?)?['togetherHpPct'] as int? ??
+          100,
+      packTogetherDamage:
+          (run['packs'] as Map<String, dynamic>?)?['togetherDamagePct']
+              as int? ??
+          100,
       merchantEvery:
           (run['wanderingMerchant'] as Map<String, dynamic>?)?['every'] as int? ??
               0,

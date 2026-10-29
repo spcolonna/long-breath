@@ -32,6 +32,7 @@ enum Invalid {
   breatheUsed,
   retainTooMany,
   noDiscard,
+  badTarget,
 }
 
 /// Valores finales de una carta en el estado actual (lo que muestra la UI).
@@ -141,6 +142,8 @@ class CombatEngine {
     List<String> talismans = const [],
     List<String> awakenings = const [],
     List<String> waves = const [],
+    // Con [together], los de [waves] entran junto al primero (no en oleadas).
+    bool together = false,
     // Dones de la escuela (reinos y meridianos).
     MetaBonus meta = MetaBonus.none,
   }) {
@@ -159,7 +162,8 @@ class CombatEngine {
     int sum(int Function(TalismanEffect e) of) =>
         effects.fold(0, (a, e) => a + of(e));
     // En un grupo cada enemigo trae menos Vida: si no, el nodo dura el doble.
-    final packHp = b.packHpPct(1 + waves.length);
+    final pair = together && waves.isNotEmpty;
+    final packHp = pair ? b.packTogetherHp : b.packHpPct(1 + waves.length);
     _EnemyDraft spawn(String id) {
       final enemy = data.enemy(id);
       final rankHp = pm.enemyHp +
@@ -203,8 +207,11 @@ class CombatEngine {
       guardHeight: null,
       stance: startStance,
       breath: 0,
-      enemy: spawn(enemyId),
-      reserve: [for (final id in waves) spawn(id).freeze()],
+      enemies: [
+        spawn(enemyId),
+        if (together) for (final id in waves) spawn(id),
+      ],
+      reserve: together ? [] : [for (final id in waves) spawn(id).freeze()],
       drawPile: [...shuffled],
       hand: [],
       discard: [],
@@ -216,7 +223,11 @@ class CombatEngine {
           if (forms == null || forms.contains(f.id)) f.id: 0,
       },
       rng: rng,
-      enemyDamagePct: pct(dif.enemyDamage, 100, pm.enemyDamage),
+      // Dos a la vez pegan menos cada uno: si no, el turno enemigo es doble.
+      enemyDamagePct: pct(
+        pct(dif.enemyDamage, 100, pm.enemyDamage),
+        pair ? b.packTogetherDamage : 100,
+      ),
       talismans: talismans,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath) + meta.firstTurnBreath,
       firstStrike: styleStats.firstStrike + aw.firstStrike,
@@ -242,6 +253,9 @@ class CombatEngine {
     switch (action) {
       case PlayCard(:final uid):
         _playCard(d, uid, events);
+      case Target(:final index):
+        d.target = d.cur = index;
+        events.add(TargetChanged(index));
       case Dingbu(:final stance):
         d.breath -= data.transition.cost;
         d.dingbuUsed = true;
@@ -265,8 +279,23 @@ class CombatEngine {
         d.pendingDiscard--;
         if (d.pendingDiscard == 0) d.phase = CombatPhase.playerTurn;
     }
-    if (d.enemyDown && !d.isOver) _nextWave(d, events);
+    _settle(d, events);
     return CombatResult(d.freeze(), events);
+  }
+
+  /// Después de cada acción: si cayó el apuntado y queda otro en escena, se
+  /// apunta a ese; si no queda ninguno, entra la siguiente oleada.
+  void _settle(_Draft d, List<CombatEvent> events) {
+    if (d.isOver) return;
+    if (d.enemies.length > 1) {
+      d.enemyDown = false;
+      if (d.enemies[d.target].hp == 0) {
+        d.target = d.cur = d.enemies.indexWhere((e) => e.hp > 0);
+        events.add(TargetChanged(d.target));
+      }
+    } else if (d.enemyDown) {
+      _nextWave(d, events);
+    }
   }
 
   /// Cayó un enemigo del grupo: entra el siguiente. El jugador conserva todo
@@ -290,6 +319,13 @@ class CombatEngine {
       return Invalid.mustDiscard;
     }
     switch (action) {
+      case Target(:final index):
+        if (index < 0 ||
+            index >= s.enemies.length ||
+            index == s.target ||
+            s.enemies[index].hp == 0) {
+          return Invalid.badTarget;
+        }
       case PlayCard(:final uid):
         final c = s.handCard(uid);
         if (c == null) return Invalid.notInHand;
@@ -325,6 +361,9 @@ class CombatEngine {
       if (!seen.add('${c.cardId}/${c.upgrades}')) continue;
       final a = PlayCard(c.uid);
       if (validate(s, a) == null) out.add(a);
+    }
+    for (final i in s.alive) {
+      if (i != s.target) out.add(Target(i));
     }
     for (final st in Stance.values) {
       final a = Dingbu(st);
@@ -526,11 +565,12 @@ class CombatEngine {
   IntentDef currentIntent(EnemyCombat e) =>
       data.enemy(e.id).phases[e.phaseIndex].pattern[e.patternIndex];
 
-  IntentView intentView(CombatState s) {
-    final e = s.enemy;
+  /// Lo que va a hacer el enemigo apuntado (o el de la posición [index]).
+  IntentView intentView(CombatState s, [int? index]) {
+    final e = index == null ? s.enemy : s.enemies[index];
     final def = data.enemy(e.id);
     final intent = currentIntent(e);
-    final punish = s.punishPending ? 1 : 0;
+    final punish = s.punishPending && def.sameStancePunishDamage > 0 ? 1 : 0;
     final pattern = def.phases[e.phaseIndex].pattern;
     final cdIndex = pattern.indexWhere((i) => i.countdown);
     int? countdown;
@@ -737,7 +777,8 @@ class CombatEngine {
     e.structure -= strTaken;
     events.add(EnemyDamaged(taken, strTaken, absorbed: absorbed));
     if (e.hp == 0) {
-      if (d.reserve.isNotEmpty) {
+      final others = d.enemies.any((x) => !identical(x, e) && x.hp > 0);
+      if (others || d.reserve.isNotEmpty) {
         d.enemyDown = true;
         events.add(EnemyDefeated(e.id));
         return;
@@ -831,8 +872,10 @@ class CombatEngine {
       ..clear()
       ..addAll(kept.map((c) => c.uid));
 
-    final enemyDef = data.enemy(d.enemy.id);
-    if (enemyDef.sameStancePunishDamage > 0 &&
+    final punishes = d.enemies.any(
+      (e) => e.hp > 0 && data.enemy(e.id).sameStancePunishDamage > 0,
+    );
+    if (punishes &&
         d.lastTurnEndStance != null &&
         d.lastTurnEndStance == d.stance) {
       d.punishPending = true;
@@ -840,15 +883,27 @@ class CombatEngine {
     d.lastTurnEndStance = d.stance;
     d.turnStructureBonus = 0;
 
-    final e = d.enemy;
-    if (e.staggered && e.staggerEndsTurn <= d.turn) {
-      e.staggered = false;
-      e.structure = e.maxStructure;
-      events.add(const EnemyRecovered());
+    final duo = d.enemies.length > 1;
+    for (var i = 0; i < d.enemies.length; i++) {
+      final e = d.enemies[i];
+      if (e.hp == 0) continue;
+      d.cur = i;
+      if (duo) events.add(EnemyActing(i));
+      if (e.staggered && e.staggerEndsTurn <= d.turn) {
+        e.staggered = false;
+        e.structure = e.maxStructure;
+        events.add(const EnemyRecovered());
+      }
+      _enemyAct(d, events);
+      if (d.isOver) return;
+      // Con dos en escena, que caiga uno (por un desvío) no frena al otro.
+      if (duo) d.enemyDown = false;
     }
-
-    _enemyAct(d, events);
-    if (d.isOver) return;
+    d.cur = d.target;
+    if (duo && d.enemies[d.target].hp == 0) {
+      d.target = d.cur = d.enemies.indexWhere((e) => e.hp > 0);
+      events.add(TargetChanged(d.target));
+    }
     _startPlayerTurn(d, events);
   }
 
@@ -908,7 +963,7 @@ class CombatEngine {
     var damage = intent.damage + e.chargeBonus + e.wrath;
     var structure = intent.structure;
     e.chargeBonus = 0;
-    if (d.punishPending) {
+    if (d.punishPending && def.sameStancePunishDamage > 0) {
       damage += def.sameStancePunishDamage;
       structure += def.sameStancePunishStructure;
       d.punishPending = false;
@@ -986,7 +1041,9 @@ class CombatEngine {
     d.deflectBonusStructure = 0;
     d.dingbuUsed = false;
     d.attacksThisTurn = 0;
-    d.enemy.parryReady = data.enemy(d.enemy.id).parry > 0;
+    for (final e in d.enemies) {
+      e.parryReady = e.hp > 0 && data.enemy(e.id).parry > 0;
+    }
     d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
     d.nextTurnBreathMod = 0;
     events.add(TurnStarted(d.turn, d.breath));
@@ -1122,7 +1179,8 @@ class _Draft {
     required this.guardHeight,
     required this.stance,
     required this.breath,
-    required this.enemy,
+    required this.enemies,
+    this.target = 0,
     required this.drawPile,
     required this.hand,
     required this.discard,
@@ -1171,7 +1229,8 @@ class _Draft {
     guardHeight: s.player.guardHeight,
     stance: s.player.stance,
     breath: s.player.breath,
-    enemy: _EnemyDraft.of(s.enemy),
+    enemies: [for (final e in s.enemies) _EnemyDraft.of(e)],
+    target: s.target,
     drawPile: [...s.drawPile],
     hand: [...s.hand],
     discard: [...s.discard],
@@ -1217,7 +1276,14 @@ class _Draft {
   Height? guardHeight;
   Stance stance;
   int breath;
-  _EnemyDraft enemy;
+  final List<_EnemyDraft> enemies;
+  int target;
+
+  /// El enemigo en juego ahora: el apuntado mientras jugás; el que actúa en
+  /// el turno enemigo.
+  late int cur = target;
+  _EnemyDraft get enemy => enemies[cur];
+  set enemy(_EnemyDraft e) => enemies[cur] = e;
   final List<EnemyCombat> reserve;
   int wave;
 
@@ -1273,7 +1339,8 @@ class _Draft {
       stance: stance,
       breath: breath,
     ),
-    enemy: enemy.freeze(),
+    enemies: List.unmodifiable([for (final e in enemies) e.freeze()]),
+    target: target,
     drawPile: List.unmodifiable(drawPile),
     hand: List.unmodifiable(hand),
     discard: List.unmodifiable(discard),

@@ -291,6 +291,7 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     Iterable<String>? forms,
     List<String> awakenings = const [],
     List<String> waves = const [],
+    bool together = false,
     MetaBonus meta = MetaBonus.none}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length;
@@ -309,6 +310,7 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           talismans: talismans,
           awakenings: awakenings,
           waves: waves,
+          together: together,
           meta: meta)
       .state;
   var steps = 0;
@@ -380,7 +382,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
             awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1),
-            meta: r.meta);
+            together: runEngine.togetherOf(r), meta: r.meta);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán

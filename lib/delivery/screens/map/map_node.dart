@@ -155,7 +155,8 @@ class _MapNodeState extends ConsumerState<MapNode>
                     ),
                   ),
                 ),
-                // Grupo: un punto por enemigo, colgado del sello.
+                // Grupo: un punto por enemigo, colgado del sello (unidos por
+                // un trazo si pelean a la vez).
                 if (widget.node.waves.isNotEmpty)
                   Positioned(
                     top:
@@ -166,6 +167,7 @@ class _MapNodeState extends ConsumerState<MapNode>
                     left: sealCenter.dx + look.size / 2 - 12,
                     child: _PackPips(
                       count: 1 + widget.node.waves.length,
+                      together: widget.node.together,
                       color: look.color,
                       dim: !available,
                     ),
@@ -184,15 +186,18 @@ class _MapNodeState extends ConsumerState<MapNode>
   }
 }
 
-/// Cuántos enemigos trae el combate: puntos de tinta en una plaquita.
+/// Cuántos enemigos trae el combate: puntos de tinta en una plaquita. Si
+/// pelean a la vez, los puntos van unidos por un trazo.
 class _PackPips extends StatelessWidget {
   const _PackPips({
     required this.count,
     required this.color,
     required this.dim,
+    this.together = false,
   });
 
   final int count;
+  final bool together;
   final Color color;
   final bool dim;
 
@@ -209,13 +214,17 @@ class _PackPips extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for (var i = 0; i < count; i++)
+          for (var i = 0; i < count; i++) ...[
+            if (i > 0)
+              together
+                  ? Container(width: 5, height: 2, color: c)
+                  : const SizedBox(width: 3),
             Container(
-              margin: EdgeInsets.only(left: i == 0 ? 0 : 3),
               width: 6,
               height: 6,
               decoration: BoxDecoration(shape: BoxShape.circle, color: c),
             ),
+          ],
         ],
       ),
     );

@@ -1018,4 +1018,83 @@ void main() {
       expect(r.state.player.hp, 50);
     });
   });
+
+  group('dos a la vez', () {
+    CombatState duo({String lead = 'salamander', String other = 'bat'}) =>
+        engine
+            .start(
+              deck: [
+                for (final (i, id)
+                    in ['gongbu_chongquan', 'gongbu_chongquan', ...filler]
+                        .indexed)
+                  CombatCard(uid: i, cardId: id),
+              ],
+              enemyId: lead,
+              waves: [other],
+              together: true,
+              style: Style.crane,
+              playerHp: 50,
+              seed: 1,
+              shuffle: false,
+            )
+            .state;
+
+    test('los dos están en escena desde el principio, con menos Vida y daño', () {
+      final s = duo();
+      expect([for (final e in s.enemies) e.id], ['salamander', 'bat']);
+      expect(s.reserve, isEmpty);
+      expect(s.target, 0);
+      final pct = data.balance.packTogetherHp;
+      expect(s.enemies[0].maxHp, (63 * pct / 100).round());
+      expect(s.enemies[1].maxHp, (53 * pct / 100).round());
+      expect(s.enemyDamagePct, data.balance.packTogetherDamage);
+    });
+
+    test('las cartas le pegan al que apuntás', () {
+      var s = duo();
+      expect(engine.legalActions(s).whereType<Target>().single.index, 1);
+      final r = engine.reduce(s, const Target(1));
+      expect(r.events.whereType<TargetChanged>().single.index, 1);
+      s = play(r.state, 'gongbu_chongquan').state;
+      expect(s.enemies[0].hp, s.enemies[0].maxHp);
+      expect(s.enemies[1].hp, lessThan(s.enemies[1].maxHp));
+      expect(engine.validate(s, const Target(1)), Invalid.badTarget);
+      expect(engine.validate(s, const Target(2)), Invalid.badTarget);
+    });
+
+    test('en el turno enemigo actúan los dos, en orden', () {
+      final s = duo();
+      final r = endTurn(s);
+      final acting = [
+        for (final e in r.events)
+          if (e is EnemyActing) e.index,
+      ];
+      expect(acting, [0, 1]);
+      final i0 = r.events.indexWhere((e) => e is EnemyActing && e.index == 0);
+      final i1 = r.events.indexWhere((e) => e is EnemyActing && e.index == 1);
+      expect(i0, lessThan(i1));
+      expect(r.state.enemies.every((e) => e.patternIndex == 1), isTrue);
+    });
+
+    test('al caer el apuntado se apunta al otro; la victoria es con los dos',
+        () {
+      var s = duo();
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: 1));
+      final r = play(s, 'gongbu_chongquan');
+      s = r.state;
+      expect(r.events.whereType<Victory>(), isEmpty);
+      expect(r.events.whereType<EnemyDefeated>().single.enemyId, 'salamander');
+      expect(r.events.whereType<TargetChanged>().single.index, 1);
+      expect(s.enemies[0].hp, 0);
+      expect(s.target, 1);
+      expect(s.alive, [1]);
+      // El caído ya no actúa.
+      final t = endTurn(s);
+      expect([for (final e in t.events) if (e is EnemyActing) e.index], [1]);
+      s = t.state.copyWith(enemy: t.state.enemy.copyWith(hp: 1));
+      final last = play(s, 'gongbu_chongquan');
+      expect(last.events.whereType<Victory>(), hasLength(1));
+      expect(last.state.phase, CombatPhase.won);
+    });
+  });
 }

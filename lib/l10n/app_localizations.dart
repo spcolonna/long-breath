@@ -1012,6 +1012,12 @@ abstract class AppLocalizations {
   /// **'No hay que descartar'**
   String get invalidNoDiscard;
 
+  /// No description provided for @invalidBadTarget.
+  ///
+  /// In es, this message translates to:
+  /// **'A ese no se le puede apuntar'**
+  String get invalidBadTarget;
+
   /// No description provided for @partOfForm.
   ///
   /// In es, this message translates to:

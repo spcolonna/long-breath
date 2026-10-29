@@ -564,3 +564,16 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
   | árbol completo | 58% | 80% |
 
 - **Progresión** (`--section meta`, 40 escuelas × 40 subidas en Normal): el promedio gana 29% en las subidas 1–5, 40% en las 6–10 y ~60% desde la 16; completa el árbol hacia la subida 22 (~75 de loto por subida al final). El experto pasa de 58% a ~85% y completa el árbol hacia la 16. El novato sigue en 0% (el bot no lee intenciones): para alguien que recién empieza, Fácil.
+
+### 3o. Dos a la vez (29/10/2026)
+- **Qué:** un grupo de dos puede pelear junto, los dos en escena (`floors[].together`, % de los grupos de dos): E1 35% desde el piso 2, E2 50%, E3 60%. Se apunta con la acción `Target` (gratis), actúan uno tras otro y la Guardia del jugador (una sola altura) vale contra los dos.
+- **Números:** `run.packs.togetherHpPct` 55 y `togetherDamagePct` 80 (cada uno trae el 55% de su Vida y pega el 80%).
+- **Calibración (300 runs, Normal):**
+
+| perfil | sin parejas | 60% Vida / 100% daño | 50% / 70% | **55% / 80%** |
+|---|---|---|---|---|
+| experto | 65% | 14%* | 68% | **66%** |
+| promedio | 33% | — | — | **31%** |
+
+  \* Ese 14% venía del bot, que se trababa yendo y viniendo entre los dos objetivos. Ahora no apunta dos veces seguidas.
+

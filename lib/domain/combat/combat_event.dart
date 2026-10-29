@@ -184,6 +184,19 @@ class EnemyDefeated extends CombatEvent {
   final String enemyId;
 }
 
+/// Con dos enemigos a la vez: actúa el de la posición [index] (lo que sigue
+/// hasta el próximo [EnemyActing] es suyo).
+class EnemyActing extends CombatEvent {
+  const EnemyActing(this.index);
+  final int index;
+}
+
+/// Cambió el enemigo apuntado (a mano, o porque cayó el anterior).
+class TargetChanged extends CombatEvent {
+  const TargetChanged(this.index);
+  final int index;
+}
+
 /// Entra el siguiente enemigo del grupo ([index] de [total], desde 1).
 class WaveStarted extends CombatEvent {
   const WaveStarted(this.enemyId, this.index, this.total);

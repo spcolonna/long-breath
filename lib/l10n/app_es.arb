@@ -467,6 +467,7 @@
   "invalidBreatheUsed": "Ya respiraste en este combate",
   "invalidRetainTooMany": "Retenés demasiadas cartas",
   "invalidNoDiscard": "No hay que descartar",
+  "invalidBadTarget": "A ese no se le puede apuntar",
   "partOfForm": "Parte de una forma",
   "tutStart": "Empezar entrenamiento",
   "tutSkipToRun": "Ya sé jugar: nueva run",
