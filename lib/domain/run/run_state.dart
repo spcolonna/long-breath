@@ -146,6 +146,7 @@ class RunState {
     this.stageWins = 0,
     this.stageJade = 0,
     this.stageLotus = 0,
+    this.feats = const {},
   });
 
   /// Etapa de la subida (0 = la primera). El [map] es el de esta etapa.
@@ -261,6 +262,10 @@ class RunState {
   final int stageJade;
   final int stageLotus;
 
+  /// Contadores de la subida para los hitos (formas, desvíos, combates
+  /// sin recibir daño). Ver `feats.dart`.
+  final Map<String, int> feats;
+
   RunState copyWith({
     Style? style,
     int? hp,
@@ -311,6 +316,7 @@ class RunState {
     int? stageWins,
     int? stageJade,
     int? stageLotus,
+    Map<String, int>? feats,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -362,6 +368,7 @@ class RunState {
         stageWins: stageWins ?? this.stageWins,
         stageJade: stageJade ?? this.stageJade,
         stageLotus: stageLotus ?? this.stageLotus,
+        feats: feats ?? this.feats,
       );
 
   /// Nodo del mapa por id.
@@ -422,6 +429,7 @@ class RunState {
         'stageWins': stageWins,
         'stageJade': stageJade,
         'stageLotus': stageLotus,
+        'feats': feats,
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -497,5 +505,9 @@ class RunState {
         stageWins: j['stageWins'] as int? ?? 0,
         stageJade: j['stageJade'] as int? ?? 0,
         stageLotus: j['stageLotus'] as int? ?? 0,
+        feats: {
+          for (final e in ((j['feats'] as Map?) ?? const {}).entries)
+            e.key as String: e.value as int,
+        },
       );
 }

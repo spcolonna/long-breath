@@ -6,6 +6,7 @@ import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/domain/rng.dart';
+import 'package:long_breath/domain/run/feats.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
@@ -36,6 +37,26 @@ void main() {
   RunState fresh(int seed, {Difficulty difficulty = Difficulty.normal}) => run
       .newRun(seed: seed, difficulty: difficulty)
       .copyWith(map: _legacy);
+
+  test('la subida junta formas, desvíos y combates sin daño para los hitos', () {
+    var r = fresh(3);
+    r = run.enter(r, 'n1');
+    r = run.finishCombat(
+      r,
+      won: true,
+      hp: r.hp,
+      tally: {Feat.forms: 2, Feat.deflects: 3},
+    );
+    expect(r.feats, {Feat.forms: 2, Feat.deflects: 3, Feat.flawless: 1});
+    r = run.chooseReward(r, null);
+    r = run.enter(r, 'n2');
+    r = run.finishCombat(r, won: true, hp: r.hp - 5, tally: {Feat.forms: 1});
+    expect(r.feats, {Feat.forms: 3, Feat.deflects: 3, Feat.flawless: 1});
+    final back = RunState.fromJson(
+      jsonDecode(jsonEncode(r.toJson())) as Map<String, dynamic>,
+    );
+    expect(back.feats, r.feats);
+  });
 
   test('camino completo con bifurcación, recompensa y fuente', () {
     var r = fresh(3);

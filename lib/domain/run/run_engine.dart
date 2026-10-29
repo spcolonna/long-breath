@@ -9,6 +9,7 @@ import '../model/game_data.dart';
 import '../model/meta_bonus.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
+import 'feats.dart';
 import 'map_gen.dart';
 import 'run_state.dart';
 
@@ -321,13 +322,21 @@ class RunEngine {
   }
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
-  /// lo venciste). Escapado no deja jade ni loto.
+  /// lo venciste). Escapado no deja jade ni loto. [tally]: lo que pasó en
+  /// el combate para los hitos (formas y desvíos).
   RunState finishCombat(
     RunState r, {
     required bool won,
     required int hp,
     int? fledWith,
+    Map<String, int> tally = const {},
   }) {
+    r = r.copyWith(
+      feats: addFeats(r.feats, {
+        ...tally,
+        if (won && fledWith == null && hp >= r.hp) Feat.flawless: 1,
+      }),
+    );
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
     final b = data.balance;
     final lotus = b.meridians.lotus;

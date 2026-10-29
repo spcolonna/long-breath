@@ -2014,6 +2014,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get registryTabCultivation => 'Cultivo';
 
   @override
+  String get registryHitos => 'Hitos';
+
+  @override
+  String get hitosSummary =>
+      'Cada hito se cumple una vez por partida y deja aliento a la escuela.';
+
+  @override
+  String get hitoNew => 'NUEVO';
+
+  @override
+  String hitoBreath(int n) {
+    return '+$n 气';
+  }
+
+  @override
   String get lootTitle => 'Botín';
 
   @override

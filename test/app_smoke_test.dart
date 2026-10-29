@@ -350,6 +350,10 @@ void main() {
     expect(find.text('Subir como Discípulo nº 2'), findsOneWidget);
     // El caído deja su aliento a la escuela.
     expect(find.textContaining('de aliento para la escuela'), findsOneWidget);
+    // Primera subida y llegó al Monasterio: dos hitos con su aliento.
+    expect(find.text('El primer paso'), findsOneWidget);
+    expect(find.text('Sobre las nubes'), findsOneWidget);
+    expect(find.text('+15 气'), findsOneWidget);
     await tester.tap(find.text('Volver a la escuela'));
     await settle();
     expect(find.text('Discípulo nº 2'), findsOneWidget);
@@ -357,5 +361,9 @@ void main() {
     await settle();
     expect(find.text('Discípulo nº 1'), findsOneWidget);
     expect(find.textContaining('Cayó ante'), findsOneWidget);
+    await tester.tap(find.text('Hitos 2/18'));
+    await settle();
+    expect(find.text('El primer paso'), findsOneWidget);
+    expect(find.text('Donde duerme el dragón'), findsOneWidget);
   });
 }

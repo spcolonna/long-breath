@@ -3280,6 +3280,30 @@ abstract class AppLocalizations {
   /// **'Cultivo'**
   String get registryTabCultivation;
 
+  /// No description provided for @registryHitos.
+  ///
+  /// In es, this message translates to:
+  /// **'Hitos'**
+  String get registryHitos;
+
+  /// No description provided for @hitosSummary.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada hito se cumple una vez por partida y deja aliento a la escuela.'**
+  String get hitosSummary;
+
+  /// No description provided for @hitoNew.
+  ///
+  /// In es, this message translates to:
+  /// **'NUEVO'**
+  String get hitoNew;
+
+  /// No description provided for @hitoBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} 气'**
+  String hitoBreath(int n);
+
   /// No description provided for @lootTitle.
   ///
   /// In es, this message translates to:

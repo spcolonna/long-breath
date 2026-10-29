@@ -87,6 +87,9 @@ class ContentText {
   /// Un pergamino de la escuela: [field] es `title`, `text` o `hint`.
   String lore(String id, String field) => _get('lore', id, field);
 
+  /// Un hito 功: [field] es `name` (su nombre) o `text` (cómo se cumple).
+  String hito(String id, String field) => _get('hitos', id, field);
+
   /// Lo que pasó al elegir [option] (con [failed], la versión que salió mal).
   String eventResult(String id, String option, {bool failed = false}) =>
       _get('events', id, failed ? '${option}Fail' : '${option}Result');

@@ -5,6 +5,7 @@ import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
+import '../../domain/run/feats.dart';
 import '../tutorial/lessons.dart';
 import '../providers.dart';
 import 'run_controller.dart';
@@ -185,6 +186,10 @@ class CombatController extends Notifier<CombatView?> {
           won: s.phase == CombatPhase.won,
           hp: s.player.hp,
           fledWith: s.enemy.fled ? s.enemy.stolen : null,
+          tally: {
+            Feat.forms: s.formsCompleted.values.fold(0, (a, n) => a + n),
+            Feat.deflects: s.deflects,
+          },
         );
     state = null;
   }

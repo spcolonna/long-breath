@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/model/enums.dart';
 import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
+import '../domain/run/feats.dart';
 
 /// Progreso de una partida: en qué dificultades ganó, la escuela, el
 /// registro, el loto y lo que ya vio. Cada partida guarda sus claves con su
@@ -26,6 +27,7 @@ class ProgressStorage {
     'meridians',
     'cinematics',
     'run',
+    'hitos',
   ];
 
   String get _key => '${prefix}winsByDifficulty';
@@ -37,6 +39,7 @@ class ProgressStorage {
   String get _lotusKey => '${prefix}lotus';
   String get _meridiansKey => '${prefix}meridians';
   String get _cinematicsKey => '${prefix}cinematics';
+  String get _hitosKey => '${prefix}hitos';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -126,16 +129,35 @@ extension SchoolRecord on ProgressStorage {
     return total;
   }
 
+  /// Hitos cumplidos en la partida. La primera vez (partidas de antes de
+  /// los hitos) se revisan las subidas del registro y su aliento se suma.
+  Future<Set<String>> hitos({int Function(Ascent)? migrate}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getStringList(_hitosKey);
+    if (saved != null) return {...saved};
+    final had = await breath(migrate: migrate);
+    final past = await ascents();
+    final got = <String>{};
+    for (final (i, a) in past.indexed) {
+      got.addAll(earnedHitos(a, past.take(i).toList(), got));
+    }
+    await prefs.setStringList(_hitosKey, got.toList());
+    await prefs.setInt(_breathKey, had + hitoBreath(got));
+    return got;
+  }
+
   /// Anota la subida con el número del discípulo actual, abre los
-  /// pergaminos que corresponden y pasa al siguiente discípulo. Devuelve la
-  /// subida tal como quedó (con su número y sus pergaminos nuevos).
-  /// También suma su aliento ([Ascent.breath]) al de la escuela.
+  /// pergaminos y los hitos que corresponden y pasa al siguiente discípulo.
+  /// Devuelve la subida tal como quedó (con su número, sus pergaminos y sus
+  /// hitos nuevos). También suma su aliento ([Ascent.breath], con el extra
+  /// de los hitos) al de la escuela.
   Future<Ascent> recordAscent(
     Ascent a, {
     int Function(Ascent)? migrate,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final n = await discipleNumber();
+    final got = await hitos(migrate: migrate);
     final had = await breath(migrate: migrate);
     final seeds = await lotus();
     final before = await ascents();
@@ -146,7 +168,12 @@ extension SchoolRecord on ProgressStorage {
       'breathBefore': had,
       'lotusBefore': seeds,
     });
-    final done = numbered.withLore(earnedLore(numbered, before, have));
+    final fresh = earnedHitos(numbered, before, got);
+    final done = Ascent.fromJson({
+      ...numbered.toJson(),
+      'breath': numbered.breath + hitoBreath(fresh),
+      'hitos': fresh,
+    }).withLore(earnedLore(numbered, before, have));
     final all = [...before, done];
     await prefs.setStringList(_ascentsKey, [
       for (final x in all.skip(
@@ -160,6 +187,7 @@ extension SchoolRecord on ProgressStorage {
       ...have,
       ...done.lore,
     ]);
+    await prefs.setStringList(_hitosKey, [...got, ...fresh]);
     await prefs.setInt(_discipleKey, n + 1);
     await prefs.setInt(_breathKey, had + done.breath);
     await prefs.setInt(_lotusKey, seeds + done.lotus);

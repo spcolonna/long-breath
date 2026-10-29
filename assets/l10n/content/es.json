@@ -818,5 +818,25 @@
     "tech_3": { "name": "Fēngchí", "hanzi": "风池", "text": "El estanque del viento, en la nuca." },
     "tech_4": { "name": "Tàichōng", "hanzi": "太冲", "text": "El gran paso del pie." },
     "tech_5": { "name": "Yìntáng", "hanzi": "印堂", "text": "El sello entre las cejas." }
+  },
+  "hitos": {
+    "first_climb": { "name": "El primer paso", "text": "Terminá una subida, llegues hasta donde llegues." },
+    "reach_monastery": { "name": "Sobre las nubes", "text": "Llegá al Monasterio Colgado." },
+    "reach_peak": { "name": "Donde duerme el dragón", "text": "Llegá a la Cumbre del Dragón Dormido." },
+    "summit": { "name": "La cumbre", "text": "Vencé al Dragón Dormido." },
+    "win_tiger": { "name": "Garra del Tigre", "text": "Ganá una subida por el camino del Tigre." },
+    "win_snake": { "name": "Paciencia de la Serpiente", "text": "Ganá una subida por el camino de la Serpiente." },
+    "win_crane": { "name": "Vuelo de la Grulla", "text": "Ganá una subida por el camino de la Grulla." },
+    "three_paths": { "name": "Los tres animales", "text": "Ganá con el Tigre, la Serpiente y la Grulla." },
+    "win_hard": { "name": "Montaña áspera", "text": "Ganá una subida en Difícil o más." },
+    "win_shifu": { "name": "Digno del maestro", "text": "Ganá una subida en Shifu." },
+    "pico_1": { "name": "El primer Pico", "text": "Ganá una subida con el Pico 1 o más." },
+    "pico_5": { "name": "Cinco Picos", "text": "Ganá una subida con el Pico 5 o más." },
+    "pico_10": { "name": "La cima de las cimas", "text": "Ganá una subida con el Pico 10." },
+    "forms_10": { "name": "Cuerpo que recuerda", "text": "Completá 10 formas en una misma subida." },
+    "deflects_20": { "name": "Agua que no se rompe", "text": "Desviá 20 golpes en una misma subida." },
+    "flawless_5": { "name": "Sin un rasguño", "text": "Ganá 5 combates sin perder Vida en una misma subida." },
+    "light_deck": { "name": "Lo justo", "text": "Ganá una subida con 16 cartas o menos en el mazo." },
+    "ten_disciples": { "name": "Diez discípulos", "text": "Mandá a la montaña al décimo discípulo de la escuela." }
   }
 }

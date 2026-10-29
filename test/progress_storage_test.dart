@@ -146,12 +146,55 @@ void main() {
       Ascent.fromJson({...fell('bat').toJson(), 'breath': 12}),
     );
     expect(a.breathBefore, 0);
+    // La primera subida cumple «El primer paso» (+10).
+    expect(a.hitos, ['first_climb']);
+    expect(a.breath, 22);
     final b = await storage.recordAscent(
       Ascent.fromJson({...fell('monk').toJson(), 'fell': false, 'breath': 40}),
     );
-    expect(b.breathBefore, 12);
-    expect(await storage.breath(), 52);
-    expect((await storage.ascents()).map((x) => x.breath), [12, 40]);
+    expect(b.breathBefore, 22);
+    // Ganar con un mazo chico: «La cumbre» (+30) y «Lo justo» (+30).
+    expect(b.hitos, ['summit', 'light_deck']);
+    expect(await storage.breath(), 122);
+    expect((await storage.ascents()).map((x) => x.breath), [22, 100]);
+  });
+
+  test('un hito se cumple una sola vez por partida', () async {
+    SharedPreferences.setMockInitialValues({});
+    final storage = ProgressStorage();
+    await storage.recordAscent(fell('bat'));
+    final again = await storage.recordAscent(fell('bat'));
+    expect(again.hitos, isEmpty);
+    expect(await storage.hitos(), {'first_climb'});
+  });
+
+  test('las partidas de antes de los hitos los cobran de su registro', () async {
+    SharedPreferences.setMockInitialValues({
+      'long_breath.breath': 100,
+      'long_breath.ascents': [
+        jsonEncode(fell('bat').toJson()),
+        jsonEncode(
+          Ascent.fromJson({
+            ...fell('monk', style: Style.tiger).toJson(),
+            'fell': false,
+            'deck': 25,
+            'stage': 2,
+          }).toJson(),
+        ),
+      ],
+    });
+    final storage = ProgressStorage();
+    expect(await storage.hitos(), {
+      'first_climb',
+      'reach_monastery',
+      'reach_peak',
+      'summit',
+      'win_tiger',
+    });
+    expect(await storage.breath(), 100 + 10 + 15 + 20 + 30 + 25);
+    // Ya cobrados: no se vuelven a sumar.
+    await storage.hitos();
+    expect(await storage.breath(), 200);
   });
 
   test('el aliento de antes del cultivo sale del registro', () async {

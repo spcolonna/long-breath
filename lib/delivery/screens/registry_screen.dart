@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/run/ascent.dart';
+import '../../domain/run/feats.dart';
 import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 import '../providers.dart';
@@ -11,6 +12,7 @@ import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
+import '../widgets/hito_tile.dart';
 
 /// 名册: el registro de la escuela. Una tablilla por cada discípulo que
 /// subió (los que cayeron y los que llegaron) y los pergaminos que se
@@ -23,9 +25,10 @@ class RegistryScreen extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     final ascents = ref.watch(ascentsProvider).value ?? const <Ascent>[];
     final lore = ref.watch(loreProvider).value ?? const <String>{};
+    final got = ref.watch(hitosProvider).value ?? const <String>{};
     final fallen = ascents.where((a) => a.fell).length;
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -43,6 +46,7 @@ class RegistryScreen extends ConsumerWidget {
                 t.registryAscents,
                 '${t.registryScrolls} ${lore.length}/${loreOrder.length}',
                 t.registryTabCultivation,
+                '${t.registryHitos} ${got.length}/${hitos.length}',
               ])
                 Tab(
                   child: FittedBox(fit: BoxFit.scaleDown, child: Text(label)),
@@ -101,6 +105,36 @@ class RegistryScreen extends ConsumerWidget {
               ],
             ),
             const RealmList(),
+            ListView(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+              children: [
+                // En papel: sobre el muro de la escuela no se leería.
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Palette.surface.withValues(alpha: 0.9),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    t.hitosSummary,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Palette.textDim),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                // Los cumplidos primero; los sellados, en su orden.
+                for (final h in [
+                  ...hitos.where((h) => got.contains(h.id)),
+                  ...hitos.where((h) => !got.contains(h.id)),
+                ]) ...[
+                  HitoTile(id: h.id, sealed: !got.contains(h.id)),
+                  const SizedBox(height: 10),
+                ],
+              ],
+            ),
           ],
         ),
       ),

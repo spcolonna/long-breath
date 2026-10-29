@@ -158,9 +158,19 @@ final loreProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(progressStorageProvider).lore(),
 );
 
+/// Hitos 功 cumplidos en la partida.
+final hitosProvider = FutureProvider<Set<String>>((ref) {
+  final def = ref.watch(dataProvider).balance.cultivation;
+  return ref
+      .watch(progressStorageProvider)
+      .hitos(migrate: (a) => ascentBreath(def, a));
+});
+
 /// Aliento de la escuela y reino del cultivo.
 final cultivationProvider = FutureProvider<Cultivation>((ref) async {
   final def = ref.watch(dataProvider).balance.cultivation;
+  // Los hitos de partidas viejas suman su aliento la primera vez.
+  await ref.watch(hitosProvider.future);
   final breath = await ref
       .watch(progressStorageProvider)
       .breath(migrate: (a) => ascentBreath(def, a));

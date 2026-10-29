@@ -232,6 +232,32 @@ Cada subida, se gane o se pierda, deja **aliento** a la escuela. Con aliento acu
   - al terminar una subida, "+N de aliento para la escuela", la barra que se llena y, si alcanza, el sello del reino nuevo con lo que se abrió;
   - en el Registro de la escuela, la pestaña **Cultivo**, con los seis reinos (los de arriba lacrados).
 
+### Hitos 功
+
+Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja aliento extra a la escuela, que se suma al de la subida. Empujan a probar caminos, dificultades y mecánicas.
+
+| Hito | Cómo se cumple | Aliento |
+|---|---|---|
+| 初 El primer paso | Terminar una subida | +10 |
+| 寺 Sobre las nubes | Llegar al Monasterio Colgado | +15 |
+| 顶 Donde duerme el dragón | Llegar a la Cumbre del Dragón Dormido | +20 |
+| 胜 La cumbre | Vencer al Dragón Dormido | +30 |
+| 虎 / 蛇 / 鹤 Garra del Tigre, Paciencia de la Serpiente, Vuelo de la Grulla | Ganar con ese camino | +25 cada uno |
+| 三 Los tres animales | Haber ganado con los tres caminos | +40 |
+| 难 Montaña áspera | Ganar en Difícil o Shifu | +30 |
+| 师 Digno del maestro | Ganar en Shifu | +50 |
+| 峰 / 岳 / 巅 Picos | Ganar con el Pico 1, 5 y 10 o más | +25 / +40 / +60 |
+| 形 Cuerpo que recuerda | 10 formas completas en una subida | +15 |
+| 卸 Agua que no se rompe | 20 desvíos en una subida | +15 |
+| 净 Sin un rasguño | 5 combates ganados sin perder Vida en una subida | +20 |
+| 简 Lo justo | Ganar con 16 cartas o menos | +30 |
+| 十 Diez discípulos | Mandar al décimo discípulo | +20 |
+
+- Todos juntos dan 495 de aliento, unas cuatro subidas ganadas en Normal.
+- Al terminar la subida, los hitos nuevos aparecen bajo el aliento, cada uno con su sello y un golpe.
+- En el Registro, la pestaña **Hitos** muestra los cumplidos y los que faltan.
+- Las partidas de antes cobran los hitos de su registro la primera vez que se abren (solo los que se pueden saber por las subidas guardadas).
+
 ## Semillas de loto 莲 y árbol de meridianos 经络
 
 La segunda moneda de la escuela, la que **no se pierde al caer**. Hace que cada subida, aunque termine mal, deje al próximo discípulo un poco más fuerte.

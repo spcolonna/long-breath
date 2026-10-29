@@ -68,8 +68,21 @@ class RunController extends Notifier<RunState?> {
     return (seed, _engine.packOf(next));
   }
 
-  void finishCombat({required bool won, required int hp, int? fledWith}) {
-    _set(_engine.finishCombat(state!, won: won, hp: hp, fledWith: fledWith));
+  void finishCombat({
+    required bool won,
+    required int hp,
+    int? fledWith,
+    Map<String, int> tally = const {},
+  }) {
+    _set(
+      _engine.finishCombat(
+        state!,
+        won: won,
+        hp: hp,
+        fledWith: fledWith,
+        tally: tally,
+      ),
+    );
     final phase = state!.phase;
     if (phase == RunPhase.victory || phase == RunPhase.defeat) {
       _record(state!);
@@ -114,6 +127,7 @@ class RunController extends Notifier<RunState?> {
       ...ascent.toJson(),
       'breath': ascentBreath(cultivation, ascent),
       'lotus': run.lotus,
+      'feats': run.feats,
     });
     ref.read(lastAscentProvider.notifier).set(null);
     ref
@@ -125,6 +139,7 @@ class RunController extends Notifier<RunState?> {
         ..invalidate(discipleProvider)
         ..invalidate(ascentsProvider)
         ..invalidate(loreProvider)
+        ..invalidate(hitosProvider)
         ..invalidate(cultivationProvider)
         ..invalidate(meridianProvider)
         ..invalidate(metaBonusProvider);

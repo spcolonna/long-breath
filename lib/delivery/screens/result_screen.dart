@@ -17,6 +17,7 @@ import '../controllers/climb.dart';
 import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/difficulty_sheet.dart';
+import '../widgets/hito_tile.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
@@ -65,6 +66,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         _stamped = true;
         HapticFeedback.heavyImpact();
         ref.read(audioProvider).play(Sfx.victoryStamp);
+      }
+    }
+    // Cada hito cumplido cae con un golpe y su campanita.
+    for (final (i, _) in (a?.hitos ?? const <String>[]).indexed) {
+      final at = 0.7 + i * 0.03;
+      if (_c.value >= at && !_lines.contains(at)) {
+        _lines.add(at);
+        HapticFeedback.mediumImpact();
+        ref.read(audioProvider).play(Sfx.formComplete);
       }
     }
     // Cada línea de la narración llega con un toque suave.
@@ -308,6 +318,16 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                               lotus: ascent.lotus,
                               total: ascent.lotusBefore + ascent.lotus,
                             ),
+                          ),
+                        ],
+                        // Hitos 功 que se cumplieron (su aliento ya está arriba).
+                        for (final (i, id)
+                            in (ascent?.hitos ?? const <String>[]).indexed) ...[
+                          const SizedBox(height: 10),
+                          _enter(
+                            0.68 + i * 0.03,
+                            0.76 + i * 0.03,
+                            HitoTile(id: id, fresh: true),
                           ),
                         ],
                         for (final (i, id)

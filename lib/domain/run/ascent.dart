@@ -22,6 +22,8 @@ class Ascent {
     this.breathBefore = 0,
     this.lotus = 0,
     this.lotusBefore = 0,
+    this.feats = const {},
+    this.hitos = const [],
   });
 
   /// Número del discípulo que subió.
@@ -56,6 +58,13 @@ class Ascent {
   final int lotus;
   final int lotusBefore;
 
+  /// Contadores de la subida (formas, desvíos, combates limpios).
+  final Map<String, int> feats;
+
+  /// Hitos que se cumplieron con esta subida (su aliento ya está en
+  /// [breath]).
+  final List<String> hitos;
+
   Ascent withLore(List<String> ids) => Ascent(
     n: n,
     fell: fell,
@@ -75,6 +84,8 @@ class Ascent {
     breathBefore: breathBefore,
     lotus: lotus,
     lotusBefore: lotusBefore,
+    feats: feats,
+    hitos: hitos,
   );
 
   Map<String, dynamic> toJson() => {
@@ -96,6 +107,8 @@ class Ascent {
     'breathBefore': breathBefore,
     'lotus': lotus,
     'lotusBefore': lotusBefore,
+    'feats': feats,
+    'hitos': hitos,
   };
 
   factory Ascent.fromJson(Map<String, dynamic> j) => Ascent(
@@ -120,6 +133,11 @@ class Ascent {
     breathBefore: j['breathBefore'] as int? ?? 0,
     lotus: j['lotus'] as int? ?? 0,
     lotusBefore: j['lotusBefore'] as int? ?? 0,
+    feats: {
+      for (final e in ((j['feats'] as Map?) ?? const {}).entries)
+        e.key as String: e.value as int,
+    },
+    hitos: [for (final s in (j['hitos'] as List?) ?? const []) s as String],
   );
 }
 
