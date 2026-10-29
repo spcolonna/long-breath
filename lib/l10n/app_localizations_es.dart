@@ -205,6 +205,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String drawPile(int count) {
+    return 'Por robar: $count';
+  }
+
+  @override
+  String discardPile(int count) {
+    return 'Descarte: $count';
+  }
+
+  @override
   String retainHint(int count) {
     return 'Tocá hasta $count carta(s) para retener';
   }

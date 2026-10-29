@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../domain/model/enums.dart';
+import 'widgets/press.dart';
 
 /// Paleta de día: papel de arroz, jade claro y acentos saturados.
 /// Nada de fondos oscuros: el color da la personalidad.
@@ -65,7 +66,16 @@ ThemeData buildTheme() {
         backgroundColor: Palette.lacquer,
         foregroundColor: Palette.onColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
+      ).copyWith(foregroundBuilder: pressedContent),
+    ),
+    outlinedButtonTheme: const OutlinedButtonThemeData(
+      style: ButtonStyle(foregroundBuilder: pressedContent),
+    ),
+    textButtonTheme: const TextButtonThemeData(
+      style: ButtonStyle(foregroundBuilder: pressedContent),
+    ),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(foregroundBuilder: pressedContent),
     ),
   );
 }

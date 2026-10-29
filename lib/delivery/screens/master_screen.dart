@@ -15,8 +15,10 @@ import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/press.dart';
 import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/hp_count.dart';
 
 /// Maestro errante: una sola lección, una forma o mejorar una carta.
 class MasterScreen extends ConsumerStatefulWidget {
@@ -80,6 +82,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
         body: DeckGrid(
           cards: run.deck,
           enabled: engine.canUpgrade,
+          pickFx: DeckPick.upgrade,
           onPick: (c) => _finish(
             t.masterUpgraded(text.card(c.cardId), upgrade),
             () => ctl.masterUpgrade(c.uid),
@@ -99,12 +102,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.favorite, color: Palette.jade, size: 18),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${run.hp}/${run.maxHp}',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
+                  HpCount(hp: run.hp, maxHp: run.maxHp),
                   const SizedBox(width: 12),
                   JadeCount(jade: run.jade),
                   Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
@@ -211,33 +209,44 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                       style: const TextStyle(color: Palette.textDim),
                     ),
                     const SizedBox(height: 8),
-                    for (final id in _forms!) ...[
-                      GestureDetector(
-                        onTap: busy
-                            ? null
-                            : () {
-                                HapticFeedback.selectionClick();
-                                ref.read(audioProvider).play(Sfx.cardSelect);
-                                setState(
-                                  () => _picked = _picked == id ? null : id,
-                                );
-                              },
-                        child: AnimatedOpacity(
-                          duration: const Duration(milliseconds: 200),
-                          opacity: _picked != null && _picked != id ? 0.55 : 1,
-                          child: AnimatedScale(
-                            duration: const Duration(milliseconds: 220),
-                            curve: Curves.easeOutBack,
-                            scale: _picked == id ? 1.03 : 1,
-                            child: FormScroll(
-                              form: form(id),
-                              name: text.form(id),
-                              steps: [
-                                for (final s in form(id).steps)
-                                  (text.card(s), deckIds.contains(s)),
-                              ],
-                              effect: t.formEffect(form(id).effect),
-                              selected: _picked == id,
+                    for (final (i, id) in _forms!.indexed) ...[
+                      StaggerIn(
+                        index: i,
+                        delay: const Duration(milliseconds: 200),
+                        child: Press(
+                          enabled: !busy,
+                          child: GestureDetector(
+                            onTap: busy
+                                ? null
+                                : () {
+                                    HapticFeedback.selectionClick();
+                                    ref
+                                        .read(audioProvider)
+                                        .play(Sfx.cardSelect);
+                                    setState(
+                                      () => _picked = _picked == id ? null : id,
+                                    );
+                                  },
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 200),
+                              opacity: _picked != null && _picked != id
+                                  ? 0.55
+                                  : 1,
+                              child: AnimatedScale(
+                                duration: const Duration(milliseconds: 220),
+                                curve: Curves.easeOutBack,
+                                scale: _picked == id ? 1.03 : 1,
+                                child: FormScroll(
+                                  form: form(id),
+                                  name: text.form(id),
+                                  steps: [
+                                    for (final s in form(id).steps)
+                                      (text.card(s), deckIds.contains(s)),
+                                  ],
+                                  effect: t.formEffect(form(id).effect),
+                                  selected: _picked == id,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -259,7 +268,11 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                       child: OutlinedButton.icon(
                         onPressed: busy
                             ? null
-                            : () => setState(() => _picking = true),
+                            : () {
+                                HapticFeedback.selectionClick();
+                                ref.read(audioProvider).play(Sfx.uiButton);
+                                setState(() => _picking = true);
+                              },
                         icon: const Icon(Icons.upgrade),
                         label: Text(
                           t.masterUpgrade(upgrade),

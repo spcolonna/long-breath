@@ -6,6 +6,8 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 
 ## 1. Pendientes inmediatos
 
+- **Pulido general (29/10/2026):** botones que se hunden al tocar, Vida que cuenta, entradas escalonadas, carta que se quema o se mejora en fuente/mercader/maestro, avisos de papel con sello, mazos de robo y descarte con rebarajado, pausa de impacto en golpes fuertes y respeto de «reducir movimiento» del sistema. Falta: transiciones especiales al entrar al combate y a la etapa superada.
+
 - **Balance:** hecho el 01/10/2026 (ver `balance.md`).
   - Combates de 2,4 a 4,8 turnos.
   - El jugador promedio gana el 60% de las runs y el experto el 79%.

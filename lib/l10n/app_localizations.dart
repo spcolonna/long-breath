@@ -400,6 +400,18 @@ abstract class AppLocalizations {
   /// **'Cancelar'**
   String get cancel;
 
+  /// No description provided for @drawPile.
+  ///
+  /// In es, this message translates to:
+  /// **'Por robar: {count}'**
+  String drawPile(int count);
+
+  /// No description provided for @discardPile.
+  ///
+  /// In es, this message translates to:
+  /// **'Descarte: {count}'**
+  String discardPile(int count);
+
   /// No description provided for @retainHint.
   ///
   /// In es, this message translates to:

@@ -13,6 +13,7 @@ import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/confirm_dialog.dart';
 import '../widgets/cinematic.dart';
 import '../widgets/deck_sheet.dart';
 import '../labels.dart';
@@ -23,6 +24,7 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/ink_reveal.dart';
 import '../widgets/juice.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/hp_count.dart';
 import 'map/map_layout.dart';
 import 'map/map_node.dart';
 import 'map/mountain_backdrop.dart';
@@ -516,25 +518,14 @@ void _enter(BuildContext context, WidgetRef ref, MapNodeDef n, InkFrom? ink) {
 
 Future<void> _confirmAbandon(BuildContext context, WidgetRef ref) async {
   final t = AppLocalizations.of(context);
-  final ok = await showDialog<bool>(
-    context: context,
-    builder: (ctx) => AlertDialog(
-      title: Text(t.abandonConfirmTitle),
-      content: Text(t.abandonConfirmBody),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(ctx, false),
-          child: Text(t.cancelAction),
-        ),
-        FilledButton(
-          style: FilledButton.styleFrom(backgroundColor: Palette.lacquer),
-          onPressed: () => Navigator.pop(ctx, true),
-          child: Text(t.abandon),
-        ),
-      ],
-    ),
+  final ok = await confirmDialog(
+    context,
+    title: t.abandonConfirmTitle,
+    body: t.abandonConfirmBody,
+    ok: t.abandon,
+    seal: '退',
   );
-  if (ok != true || !context.mounted) return;
+  if (!ok || !context.mounted) return;
   ref.read(runControllerProvider.notifier).abandon();
   ref.invalidate(savedRunProvider);
   context.go('/school');
@@ -574,12 +565,7 @@ class _RunHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.favorite, color: Palette.jade, size: 18),
-          const SizedBox(width: 4),
-          Text(
-            '${run.hp}/${run.maxHp}',
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
+          HpCount(hp: run.hp, maxHp: run.maxHp),
           const SizedBox(width: 8),
           JadeCount(jade: run.jade),
           if (run.lotus > 0) ...[

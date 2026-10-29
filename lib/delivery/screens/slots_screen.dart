@@ -11,6 +11,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/confirm_dialog.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/lotus.dart';
 import '../widgets/slot_badge.dart';
@@ -64,28 +65,13 @@ class SlotsScreen extends ConsumerWidget {
     bool progress,
   ) async {
     final t = AppLocalizations.of(context);
-    Future<bool> ask(String title, String body, String ok) async =>
-        await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text(title),
-            content: Text(body),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                child: Text(t.cancelAction),
-              ),
-              FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: Palette.lacquer,
-                ),
-                onPressed: () => Navigator.pop(ctx, true),
-                child: Text(ok),
-              ),
-            ],
-          ),
-        ) ==
-        true;
+    Future<bool> ask(String title, String body, String ok) => confirmDialog(
+      context,
+      title: title,
+      body: body,
+      ok: ok,
+      seal: '删',
+    );
     if (!await ask(
       t.slotDeleteTitle(slot),
       t.slotDeleteBody,

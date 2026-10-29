@@ -47,8 +47,11 @@ class _ShakeState extends State<Shake> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _c,
-      builder: (_, child) {
-        if (!_c.isAnimating) return child!;
+      builder: (context, child) {
+        // Con "reducir movimiento" del sistema, la pantalla no se sacude.
+        if (!_c.isAnimating || MediaQuery.disableAnimationsOf(context)) {
+          return child!;
+        }
         final t = _c.value;
         final decay = (1 - t) * (1 - t);
         final s = widget.strength * decay;
@@ -444,8 +447,10 @@ class _ScreenFlashState extends State<ScreenFlash>
     return IgnorePointer(
       child: AnimatedBuilder(
         animation: _c,
-        builder: (_, _) {
-          if (!_c.isAnimating) return const SizedBox.expand();
+        builder: (context, _) {
+          if (!_c.isAnimating || MediaQuery.disableAnimationsOf(context)) {
+            return const SizedBox.expand();
+          }
           final a = (1 - _c.value) * 0.4;
           return DecoratedBox(
             decoration: BoxDecoration(

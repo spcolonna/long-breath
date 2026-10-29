@@ -314,9 +314,13 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           _enter(
                             0.66,
                             0.74,
-                            _LotusLine(
-                              lotus: ascent.lotus,
-                              total: ascent.lotusBefore + ascent.lotus,
+                            AnimatedBuilder(
+                              animation: _c,
+                              builder: (_, _) => _LotusLine(
+                                lotus: ascent.lotus,
+                                total: ascent.lotusBefore + ascent.lotus,
+                                count: _span(0.68, 0.8),
+                              ),
                             ),
                           ),
                         ],
@@ -606,14 +610,22 @@ class _BrushPainter extends CustomPainter {
 
 /// "+N semillas de loto · la escuela tiene M", con la semilla que rebota.
 class _LotusLine extends StatelessWidget {
-  const _LotusLine({required this.lotus, required this.total});
+  const _LotusLine({
+    required this.lotus,
+    required this.total,
+    required this.count,
+  });
 
   final int lotus;
   final int total;
 
+  /// Cuánto va del conteo (0–1): las semillas se suman contando.
+  final double count;
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final n = (lotus * count).round();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
@@ -623,14 +635,15 @@ class _LotusLine extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Bounce(trigger: lotus, scale: 1.3, child: const LotusSeed(size: 22)),
+          Bounce(trigger: n, scale: 1.3, child: const LotusSeed(size: 22)),
           const SizedBox(width: 8),
           Flexible(
             child: Text(
-              t.resultLotus(lotus, total),
+              t.resultLotus(n, total - lotus + n),
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Palette.blossom,
+                fontFeatures: [FontFeature.tabularFigures()],
               ),
             ),
           ),

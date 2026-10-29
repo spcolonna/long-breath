@@ -195,6 +195,10 @@
   "endTurn": "Terminar turno",
   "confirm": "Confirmar",
   "cancel": "Cancelar",
+  "drawPile": "Por robar: {count}",
+  "@drawPile": {"placeholders": {"count": {"type": "int"}}},
+  "discardPile": "Descarte: {count}",
+  "@discardPile": {"placeholders": {"count": {"type": "int"}}},
   "retainHint": "Tocá hasta {count} carta(s) para retener",
   "@retainHint": {
     "placeholders": {

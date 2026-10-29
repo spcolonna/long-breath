@@ -15,6 +15,7 @@ import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/press.dart';
 
 /// Santuario de los animales: la montaña ofrece dos caminos al azar y el
 /// novicio toma uno. Al tocar un camino, la túnica se tiñe de su color.
@@ -100,26 +101,34 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                 ),
                 Row(
                   children: [
-                    for (final s in run.pathOptions)
+                    for (final (i, s) in run.pathOptions.indexed)
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 6),
-                          child: _PathTile(
-                            name: text.style(s),
-                            hanzi: data.balance.styles[s]!.hanzi,
-                            motto: text.styleMotto(s),
-                            stats: t.styleTileStats(
-                              data.balance.styles[s]!.draw,
-                              data.balance.styles[s]!.retain,
+                          child: StaggerIn(
+                            index: i,
+                            step: const Duration(milliseconds: 110),
+                            delay: const Duration(milliseconds: 200),
+                            rise: 28,
+                            child: Press(
+                              child: _PathTile(
+                                name: text.style(s),
+                                hanzi: data.balance.styles[s]!.hanzi,
+                                motto: text.styleMotto(s),
+                                stats: t.styleTileStats(
+                                  data.balance.styles[s]!.draw,
+                                  data.balance.styles[s]!.retain,
+                                ),
+                                color: styleColor(s),
+                                selected: s == picked,
+                                onTap: () {
+                                  if (_sworn) return;
+                                  HapticFeedback.selectionClick();
+                                  ref.read(audioProvider).play(Sfx.cardSelect);
+                                  setState(() => _picked = s);
+                                },
+                              ),
                             ),
-                            color: styleColor(s),
-                            selected: s == picked,
-                            onTap: () {
-                              if (_sworn) return;
-                              HapticFeedback.selectionClick();
-                              ref.read(audioProvider).play(Sfx.cardSelect);
-                              setState(() => _picked = s);
-                            },
                           ),
                         ),
                       ),

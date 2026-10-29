@@ -384,6 +384,8 @@ En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista 
 
 ## Cómo leer la pantalla de combate
 
+Arriba de la mano, a la izquierda, está el mazo por robar y a la derecha el descarte, cada uno con su número; tocándolos ves sus cartas. Cuando el mazo se vacía, el descarte se rebaraja y vuelve a él.
+
 De arriba hacia abajo:
 
 1. **Arena.** El escenario ocupa toda la pantalla y se mueve despacio; debajo de la mano se funde en papel. El enemigo va al frente y tu héroe de espaldas, abajo a la izquierda; al empezar, el héroe entra desde el costado.

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -28,10 +29,12 @@ import '../tutorial/tutorial_anchor.dart';
 import '../tutorial/tutorial_overlay.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/cinematic.dart';
+import '../widgets/deck_sheet.dart';
 import '../widgets/enemy_sprite.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/press.dart';
 import '../widgets/stage_scene.dart';
 import '../widgets/stat_bar.dart';
 import '../widgets/talisman_widgets.dart';
@@ -133,6 +136,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   final _rnd = math.Random();
   final _heroKey = GlobalKey();
 
+  /// Mazo por robar y descarte: de ahí salen y ahí caen las cartas.
+  final _drawKey = GlobalKey();
+  final _discardKey = GlobalKey();
+
+  /// Crece al rebarajar el descarte: las cartas vuelan de un mazo al otro.
+  int _shuffleKey = 0;
+
   /// Lo que se ve en la arena. Va un paso detrás del estado real para que los
   /// números y las barras cambien cuando el golpe llega, no antes.
   CombatView? _shown;
@@ -226,6 +236,17 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     );
   }
 
+  /// El descarte vuelve al mazo: vuelan las cartas y suena el barajado.
+  void _reshuffle(int at) {
+    _after(at, () {
+      setState(() => _shuffleKey++);
+      HapticFeedback.lightImpact();
+      for (var i = 0; i < 4; i++) {
+        _after(60 * i, () => _audio.play(Sfx.cardDeal));
+      }
+    });
+  }
+
   /// Un "flic" por carta, al ritmo del reparto de la mano.
   void _dealSounds(int at, int cards) {
     for (var i = 0; i < cards; i++) {
@@ -238,6 +259,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     for (final t in _timers) {
       t.cancel();
     }
+    timeDilation = 1;
     super.dispose();
   }
 
@@ -274,6 +296,15 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   void _shake(double strength) {
     _shakeStrength = strength;
     _shakeKey++;
+    if (strength >= 9) _hitStop(strength >= 14 ? 110 : 70);
+  }
+
+  /// Pausa de impacto: en los golpes fuertes todo se congela un instante
+  /// (las animaciones van casi quietas) y después sigue. Da peso al golpe.
+  void _hitStop(int ms) {
+    if (MediaQuery.disableAnimationsOf(context)) return;
+    timeDilation = 8;
+    _after(ms, () => timeDilation = 1);
   }
 
   void _present(CombatView prev, CombatView next) {
@@ -302,6 +333,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           case CardsDrawn(:final count):
             _audio.play(Sfx.breathGain);
             _dealSounds(250, count);
+          case DeckShuffled():
+            _reshuffle(0);
           default:
         }
       }
@@ -544,6 +577,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       HapticFeedback.selectionClick();
       _audio.play(Sfx.turnStart);
     });
+    if (ev.any((e) => e is DeckShuffled)) _reshuffle(at - 200);
     _dealSounds(at + 320, next.state.hand.length);
     _after(
       at + 70 * next.state.hand.length + 320,
@@ -1015,9 +1049,48 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           ignoring: _busy,
           child: Column(
             children: [
-              TutorialAnchor(
-                id: 'preview',
-                child: _PreviewPanel(view: live, data: data, engine: engine),
+              SizedBox(
+                width: double.infinity,
+                child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  // El panel deja lugar a los dos mazos en las esquinas.
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 34),
+                    child: TutorialAnchor(
+                      id: 'preview',
+                      child: _PreviewPanel(
+                        view: live,
+                        data: data,
+                        engine: engine,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 8,
+                    top: 0,
+                    child: _Pile(
+                      key: _drawKey,
+                      cards: live.state.drawPile,
+                      discard: false,
+                    ),
+                  ),
+                  Positioned(
+                    right: 8,
+                    top: 0,
+                    child: _Pile(
+                      key: _discardKey,
+                      cards: live.state.discard,
+                      discard: true,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: _Reshuffle(trigger: _shuffleKey),
+                    ),
+                  ),
+                ],
+              ),
               ),
               TutorialAnchor(
                 id: 'hand',
@@ -1029,6 +1102,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                   playedUid: _playedUid,
                   enemyKey: _foe(live.state.target).key,
                   heroKey: _heroKey,
+                  drawKey: _drawKey,
+                  discardKey: _discardKey,
                 ),
               ),
               TutorialAnchor(
@@ -2795,6 +2870,8 @@ class _HandArea extends ConsumerStatefulWidget {
     required this.playedUid,
     required this.enemyKey,
     required this.heroKey,
+    required this.drawKey,
+    required this.discardKey,
   });
 
   final CombatView view;
@@ -2806,6 +2883,8 @@ class _HandArea extends ConsumerStatefulWidget {
   final int? playedUid;
   final GlobalKey enemyKey;
   final GlobalKey heroKey;
+  final GlobalKey drawKey;
+  final GlobalKey discardKey;
 
   @override
   ConsumerState<_HandArea> createState() => _HandAreaState();
@@ -2821,6 +2900,8 @@ class _Leaving {
     this.width,
     this.target, {
     this.scale = 1,
+    this.burn = false,
+    this.pile,
   });
   final int id;
   final CombatCard card;
@@ -2831,6 +2912,12 @@ class _Leaving {
 
   /// Escala con la que arranca (la jugada sale agrandada).
   final double scale;
+
+  /// Se agota: se quema en el lugar en vez de ir al descarte.
+  final bool burn;
+
+  /// Dónde está el descarte (si se pudo medir): la carta cae ahí.
+  final Offset? pile;
 }
 
 /// Posición de cada carta en el abanico.
@@ -2878,6 +2965,8 @@ class _HandAreaState extends ConsumerState<_HandArea> {
     for (final (i, c) in old.hand.indexed) {
       if (now.contains(c.uid)) continue;
       final played = c.uid == widget.playedUid;
+      final burn =
+          !played && widget.view.state.exhausted.any((e) => e.uid == c.uid);
       _leaving.add(
         _Leaving(
           _leaveId++,
@@ -2893,6 +2982,8 @@ class _HandAreaState extends ConsumerState<_HandArea> {
           fan.w,
           played ? _targetFor(c, fan.w) : null,
           scale: played ? _Fan.zoom : 1,
+          burn: burn,
+          pile: played || burn ? null : _centerOf(widget.discardKey, fan.w),
         ),
       );
     }
@@ -2902,7 +2993,11 @@ class _HandAreaState extends ConsumerState<_HandArea> {
   Offset? _targetFor(CombatCard c, double w) {
     final def = widget.data.card(c.cardId);
     final toHero = !def.type.isAttack && def.damage == 0;
-    final key = toHero ? widget.heroKey : widget.enemyKey;
+    return _centerOf(toHero ? widget.heroKey : widget.enemyKey, w);
+  }
+
+  /// Dónde poner una carta de ancho [w] para que quede centrada sobre [key].
+  Offset? _centerOf(GlobalKey key, double w) {
     final target = key.currentContext?.findRenderObject();
     final me = context.findRenderObject();
     if (target is! RenderBox || me is! RenderBox || !target.attached) {
@@ -2984,6 +3079,7 @@ class _HandAreaState extends ConsumerState<_HandArea> {
       child: _DealIn(
         delayMs: dealDelay,
         from: Offset(-left - fan.w, 90),
+        pile: widget.drawKey,
         child: Shake(
           trigger: _denyUid == c.uid ? _denyKey : 0,
           strength: 7,
@@ -3035,6 +3131,215 @@ class _HandAreaState extends ConsumerState<_HandArea> {
   }
 }
 
+/// Un mazo chico en la esquina: el que queda por robar (laca) o el descarte
+/// (papel). Muestra cuántas hay y, al tocarlo, cuáles son.
+class _Pile extends StatelessWidget {
+  const _Pile({super.key, required this.cards, required this.discard});
+
+  final List<CombatCard> cards;
+  final bool discard;
+
+  static const w = 26.0;
+  static const h = 36.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final n = cards.length;
+    final color = discard ? Palette.textDim : Palette.lacquer;
+    return Tooltip(
+      message: discard ? t.discardPile(n) : t.drawPile(n),
+      child: Press(
+        enabled: n > 0,
+        child: GestureDetector(
+          onTap: n == 0 ? null : () => showDeckSheet(context, cards),
+          child: SizedBox(
+            width: w + 8,
+            height: 44,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                if (n == 0)
+                  Positioned(
+                    left: 0,
+                    top: 4,
+                    child: Container(
+                      width: w,
+                      height: h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: color.withValues(alpha: 0.35),
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                // Hasta tres dorsos corridos, para que se lea como pila.
+                for (var k = math.min(n, 3) - 1; k >= 0; k--)
+                  Positioned(
+                    left: 2.0 * k,
+                    top: 4 - 2.0 * k,
+                    child: _CardBack(discard: discard, tilt: discard ? 0.08 * k : 0),
+                  ),
+                Positioned(
+                  right: -2,
+                  bottom: -2,
+                  child: Bounce(
+                    trigger: n,
+                    scale: 1.3,
+                    child: Container(
+                      constraints: const BoxConstraints(minWidth: 18),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 1,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Palette.surface,
+                        borderRadius: BorderRadius.circular(9),
+                        border: Border.all(color: color, width: 1.2),
+                      ),
+                      child: Text(
+                        '$n',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w800,
+                          color: color,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Dorso de una carta en miniatura.
+class _CardBack extends StatelessWidget {
+  const _CardBack({this.discard = false, this.tilt = 0});
+
+  final bool discard;
+  final double tilt;
+
+  @override
+  Widget build(BuildContext context) => Transform.rotate(
+    angle: tilt,
+    child: Container(
+      width: _Pile.w,
+      height: _Pile.h,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: discard ? Palette.surface : Palette.lacquer,
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: discard ? Palette.line : Palette.gold,
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Palette.text.withValues(alpha: 0.15),
+            blurRadius: 3,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Text(
+        '息',
+        style: TextStyle(
+          fontSize: 13,
+          height: 1,
+          color: discard ? Palette.textDim : Palette.onColor,
+        ),
+      ),
+    ),
+  );
+}
+
+/// Al rebarajar, unos dorsos vuelan en arco del descarte (derecha) al mazo
+/// (izquierda).
+class _Reshuffle extends StatefulWidget {
+  const _Reshuffle({required this.trigger});
+
+  final int trigger;
+
+  @override
+  State<_Reshuffle> createState() => _ReshuffleState();
+}
+
+class _ReshuffleState extends State<_Reshuffle>
+    with SingleTickerProviderStateMixin {
+  static const _cards = 5;
+  late final AnimationController _c;
+
+  @override
+  void initState() {
+    super.initState();
+    _c = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 760),
+    );
+  }
+
+  @override
+  void didUpdateWidget(_Reshuffle old) {
+    super.didUpdateWidget(old);
+    if (widget.trigger != old.trigger) _c.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, box) => AnimatedBuilder(
+      animation: _c,
+      builder: (_, _) {
+        if (!_c.isAnimating) return const SizedBox.shrink();
+        // Los mismos lugares que los mazos (8 del borde, arriba).
+        final from = Offset(box.maxWidth - 8 - _Pile.w - 8, 4);
+        const to = Offset(8, 4);
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            for (var i = 0; i < _cards; i++)
+              Builder(
+                builder: (_) {
+                  final t = ((_c.value - i * 0.08) / 0.6).clamp(0.0, 1.0);
+                  if (t == 0 || t == 1) return const SizedBox.shrink();
+                  final k = Curves.easeInOutCubic.transform(t);
+                  final p =
+                      Offset.lerp(from, to, k)! +
+                      Offset(0, -46 * math.sin(math.pi * k));
+                  return Positioned(
+                    left: p.dx,
+                    top: p.dy,
+                    child: Transform.rotate(
+                      angle: -math.pi * 2 * k * 0.5,
+                      child: Opacity(
+                        opacity: math.min(1, math.min(t, 1 - t) * 6),
+                        child: _CardBack(discard: k < 0.5),
+                      ),
+                    ),
+                  );
+                },
+              ),
+          ],
+        );
+      },
+    ),
+  );
+}
+
 /// Entrada de una carta repartida: sale del mazo (abajo a la izquierda) y se
 /// acomoda con un pequeño rebote. Sin [delayMs] aparece sin animar.
 class _DealIn extends StatefulWidget {
@@ -3042,11 +3347,16 @@ class _DealIn extends StatefulWidget {
     required this.delayMs,
     required this.from,
     required this.child,
+    this.pile,
   });
 
   final int? delayMs;
   final Offset from;
   final Widget child;
+
+  /// El mazo por robar: si se puede medir, la carta sale de ahí (chica) en
+  /// vez de entrar desde el borde.
+  final GlobalKey? pile;
 
   @override
   State<_DealIn> createState() => _DealInState();
@@ -3066,6 +3376,17 @@ class _DealInState extends State<_DealIn> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  /// Desde el mazo hasta este lugar; se mide al arrancar el vuelo.
+  Offset? _fromPile;
+
+  Offset? _measure() {
+    final pile = widget.pile?.currentContext?.findRenderObject();
+    final me = context.findRenderObject();
+    if (pile is! RenderBox || me is! RenderBox || !pile.attached) return null;
+    final c = pile.localToGlobal(pile.size.center(Offset.zero));
+    return me.globalToLocal(c) - me.size.center(Offset.zero);
+  }
+
   @override
   Widget build(BuildContext context) {
     final start = (widget.delayMs ?? 0) / (_fly + (widget.delayMs ?? 0));
@@ -3074,12 +3395,21 @@ class _DealInState extends State<_DealIn> with SingleTickerProviderStateMixin {
       builder: (_, child) {
         if (_c.value >= 1) return child!;
         final raw = _c.value <= start ? 0.0 : (_c.value - start) / (1 - start);
+        // Se mide recién cuando sale: el mazo ya está en pantalla.
+        if (raw > 0) _fromPile ??= _measure();
         final v = Curves.easeOutBack.transform(raw);
+        final from = _fromPile;
         return Opacity(
-          opacity: math.min(1, raw * 3),
+          opacity: math.min(1, raw * (from == null ? 3 : 6)),
           child: Transform.translate(
-            offset: widget.from * (1 - v),
-            child: Transform.rotate(angle: -0.5 * (1 - v), child: child),
+            offset: (from ?? widget.from) * (1 - v),
+            child: Transform.rotate(
+              angle: -0.5 * (1 - v),
+              child: Transform.scale(
+                scale: from == null ? 1 : 0.35 + 0.65 * v,
+                child: child,
+              ),
+            ),
           ),
         );
       },
@@ -3110,7 +3440,11 @@ class _LeaveCardState extends State<_LeaveCard>
       AnimationController(
           vsync: this,
           duration: Duration(
-            milliseconds: widget.leaving.target == null ? 320 : 260,
+            milliseconds: widget.leaving.target != null
+                ? 260
+                : widget.leaving.burn
+                ? 520
+                : 380,
           ),
         )
         ..addStatusListener((s) {
@@ -3140,6 +3474,22 @@ class _LeaveCardState extends State<_LeaveCard>
           angle = l.angle + 0.6 * k;
           scale = l.scale - (l.scale - 0.45) * k;
           opacity = t < 0.8 ? 1 : (1 - t) / 0.2;
+        } else if (l.burn) {
+          // Agotada: sube un poco y se deshace.
+          final k = Curves.easeOut.transform(t);
+          pos = l.pos + Offset(0, -40 * k);
+          angle = l.angle;
+          scale = l.scale + 0.1 * k;
+          opacity = 1 - Curves.easeIn.transform(t);
+        } else if (l.pile != null) {
+          // Al descarte: un arco corto hasta la esquina, achicándose.
+          final k = Curves.easeInOutCubic.transform(t);
+          pos =
+              Offset.lerp(l.pos, l.pile!, k)! +
+              Offset(0, -40 * math.sin(math.pi * k));
+          angle = l.angle + 0.9 * k;
+          scale = l.scale - (l.scale - 0.32) * k;
+          opacity = t < 0.85 ? 1 : (1 - t) / 0.15;
         } else {
           final k = Curves.easeIn.transform(t);
           pos = l.pos + Offset(50 * k, 150 * k);
@@ -3174,11 +3524,27 @@ class _LeaveCardState extends State<_LeaveCard>
                   ),
                 ],
         ),
-        child: CardWidget(
-          def: widget.def,
-          upgrades: l.card.upgrades,
-          width: l.width,
-        ),
+        child: l.burn
+            ? AnimatedBuilder(
+                animation: _c,
+                builder: (_, child) => ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    Palette.lacquer.withValues(alpha: 0.6 * _c.value),
+                    BlendMode.srcATop,
+                  ),
+                  child: child,
+                ),
+                child: CardWidget(
+                  def: widget.def,
+                  upgrades: l.card.upgrades,
+                  width: l.width,
+                ),
+              )
+            : CardWidget(
+                def: widget.def,
+                upgrades: l.card.upgrades,
+                width: l.width,
+              ),
       ),
     );
   }

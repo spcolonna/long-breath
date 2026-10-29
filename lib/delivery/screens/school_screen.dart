@@ -12,10 +12,12 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/confirm_dialog.dart';
 import '../widgets/debug_menu.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/menu_button.dart';
+import '../widgets/press.dart';
 import '../widgets/slot_badge.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/npc_portrait.dart';
@@ -64,24 +66,13 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
     Future<void> climb() async {
       tap();
       if (resumable) {
-        final ok = await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text(t.menuReplaceRunTitle),
-            content: Text(t.menuReplaceRunBody),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                child: Text(t.cancelAction),
-              ),
-              FilledButton(
-                onPressed: () => Navigator.pop(ctx, true),
-                child: Text(t.menuReplaceRunOk),
-              ),
-            ],
-          ),
+        final ok = await confirmDialog(
+          context,
+          title: t.menuReplaceRunTitle,
+          body: t.menuReplaceRunBody,
+          ok: t.menuReplaceRunOk,
         );
-        if (ok != true || !context.mounted) return;
+        if (!ok || !context.mounted) return;
       }
       // La primera vez, antes de subir, la escuela cuenta por qué se sube.
       final lore = await ref.read(loreProvider.future);
@@ -133,7 +124,9 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
               // El héroe empieza de lino crudo: el camino se elige en la montaña.
               Expanded(
                 child: LayoutBuilder(
-                  builder: (context, box) => HeroSprite(
+                  builder: (context, box) => StaggerIn(
+                    index: 0,
+                    child: HeroSprite(
                     style: null,
                     height: math.min(box.maxHeight, box.maxWidth * 1.3),
                     glyph: stats.hanzi,
@@ -142,25 +135,31 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                         : cultivation.realm /
                               (cultivation.def.realms.length - 1),
                   ),
+                  ),
                 ),
               ),
-              const _SchoolLine(),
+              const StaggerIn(index: 1, child: _SchoolLine()),
               const SizedBox(height: 6),
-              const RealmLine(),
-              const _MeridianLine(),
+              const StaggerIn(index: 2, child: RealmLine()),
+              const StaggerIn(index: 3, child: _MeridianLine()),
               if (info != null && info.difficulty == Difficulty.normal)
-                _PicoLine(info: info),
+                StaggerIn(index: 3, child: _PicoLine(info: info)),
               const SizedBox(height: 10),
-              MenuButton(
+              StaggerIn(
+                index: 4,
+                child: MenuButton(
                 icon: Icons.landscape_rounded,
                 title: t.menuClimb,
                 subtitle: t.menuClimbSubtitle,
                 primary: !resumable,
                 onTap: climb,
               ),
+              ),
               if (resumable) ...[
                 const SizedBox(height: 10),
-                SizedBox(
+                StaggerIn(
+                  index: 5,
+                  child: SizedBox(
                   width: double.infinity,
                   height: 48,
                   child: FilledButton.icon(
@@ -171,6 +170,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                       style: const TextStyle(fontSize: 16),
                     ),
                   ),
+                ),
                 ),
               ],
             ],

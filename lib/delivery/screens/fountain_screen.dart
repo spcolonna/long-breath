@@ -11,6 +11,7 @@ import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/juice.dart';
+import '../widgets/press.dart';
 
 enum _Mode { choose, remove, upgrade }
 
@@ -55,6 +56,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
         body: DeckGrid(
           cards: run.deck,
           enabled: _mode == _Mode.upgrade ? engine.canUpgrade : null,
+          pickFx: _mode == _Mode.remove ? DeckPick.remove : DeckPick.upgrade,
           onPick: (c) {
             _mode == _Mode.remove
                 ? ctl.removeCard(c.uid)
@@ -65,7 +67,17 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
       );
     }
 
-    Widget option(IconData icon, String label, VoidCallback onTap) => Padding(
+    void pickMode(_Mode m) {
+      HapticFeedback.selectionClick();
+      ref.read(audioProvider).play(Sfx.uiButton);
+      setState(() => _mode = m);
+    }
+
+    Widget option(int i, IconData icon, String label, VoidCallback onTap) =>
+        StaggerIn(
+      index: i,
+      delay: const Duration(milliseconds: 300),
+      child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: SizedBox(
         width: double.infinity,
@@ -79,6 +91,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
           icon: Icon(icon),
           label: Text(label, style: const TextStyle(fontSize: 16)),
         ),
+      ),
       ),
     );
 
@@ -156,6 +169,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
               ),
               const Spacer(),
               option(
+                0,
                 Icons.favorite,
                 t.fountainHeal(engine.healOf(run)),
                 () {
@@ -173,14 +187,16 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                 },
               ),
               option(
+                1,
                 Icons.delete_outline,
                 t.fountainRemove,
-                () => setState(() => _mode = _Mode.remove),
+                () => pickMode(_Mode.remove),
               ),
               option(
+                2,
                 Icons.upgrade,
                 t.fountainUpgrade(data.balance.fountainUpgrade),
-                () => setState(() => _mode = _Mode.upgrade),
+                () => pickMode(_Mode.upgrade),
               ),
               const Spacer(),
             ],

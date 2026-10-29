@@ -15,6 +15,8 @@ import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/hp_count.dart';
+import '../widgets/press.dart';
 
 /// Evento del mapa: una escena, dos opciones y lo que pasó.
 class EventScreen extends ConsumerStatefulWidget {
@@ -90,16 +92,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.favorite, color: Palette.jade, size: 18),
-                  const SizedBox(width: 4),
-                  Bounce(
-                    trigger: '${run.hp}/${run.maxHp}',
-                    scale: 1.3,
-                    child: Text(
-                      '${run.hp}/${run.maxHp}',
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ),
+                  HpCount(hp: run.hp, maxHp: run.maxHp),
                   const SizedBox(width: 12),
                   JadeCount(jade: run.jade, size: 20),
                   Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
@@ -172,8 +165,12 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                     ? Column(
                         key: const ValueKey('options'),
                         children: [
-                          for (final o in event.options) ...[
-                            _OptionButton(
+                          for (final (i, o) in event.options.indexed) ...[
+                            StaggerIn(
+                              index: i,
+                              delay: const Duration(milliseconds: 250),
+                              child: Press(
+                                child: _OptionButton(
                               label: text.eventOption(id, o.id),
                               summary: t.eventOptionSummary(o),
                               risky: o.chance != null,
@@ -182,6 +179,8 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                                   ? t.merchantNoJade
                                   : t.eventCantPay,
                               onTap: () => _choose(o),
+                                ),
+                              ),
                             ),
                             const SizedBox(height: 10),
                           ],

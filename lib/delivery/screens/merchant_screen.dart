@@ -16,6 +16,8 @@ import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/hp_count.dart';
+import '../widgets/press.dart';
 
 /// Lo que se tiene elegido en la tienda.
 sealed class _Item {
@@ -151,6 +153,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
         body: DeckGrid(
           cards: run.deck,
           enabled: upgrade ? engine.canUpgrade : null,
+          pickFx: upgrade ? DeckPick.upgrade : DeckPick.remove,
           onPick: (c) {
             final item = _picking!;
             upgrade ? ctl.buyUpgrade(c.uid) : ctl.buyRemove(c.uid);
@@ -190,16 +193,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.favorite, color: Palette.jade, size: 18),
-                  const SizedBox(width: 4),
-                  Bounce(
-                    trigger: run.hp,
-                    scale: 1.3,
-                    child: Text(
-                      '${run.hp}/${run.maxHp}',
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ),
+                  HpCount(hp: run.hp, maxHp: run.maxHp),
                   const SizedBox(width: 12),
                   Stack(
                     clipBehavior: Clip.none,
@@ -259,39 +253,47 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        for (final id in _cards!)
-                          _Ware(
-                            price: _price(_CardItem(id)),
-                            oldPrice: id == _sale ? m.card : null,
-                            tag: id == _sale ? t.merchantSale(m.sale) : null,
-                            affordable: affordable(_CardItem(id)),
-                            selected: _selected == _CardItem(id),
-                            sold: _bought.contains(_CardItem(id)),
-                            onTap: () => _select(_CardItem(id)),
-                            child: CardWidget(
-                              def: data.card(id),
-                              width: 92,
+                        for (final (i, id) in _cards!.indexed)
+                          StaggerIn(
+                            index: i,
+                            delay: const Duration(milliseconds: 200),
+                            child: _Ware(
+                              price: _price(_CardItem(id)),
+                              oldPrice: id == _sale ? m.card : null,
+                              tag: id == _sale ? t.merchantSale(m.sale) : null,
+                              affordable: affordable(_CardItem(id)),
                               selected: _selected == _CardItem(id),
+                              sold: _bought.contains(_CardItem(id)),
+                              onTap: () => _select(_CardItem(id)),
+                              child: CardWidget(
+                                def: data.card(id),
+                                width: 92,
+                                selected: _selected == _CardItem(id),
+                              ),
                             ),
                           ),
                       ],
                     ),
                     if (_talisman != null) ...[
                       _Section(t.merchantTalisman),
-                      _Ware(
-                        price: m.talisman,
-                        affordable: affordable(const _TalismanItem()),
-                        selected: _selected is _TalismanItem,
-                        sold: _bought.contains(const _TalismanItem()),
-                        onTap: () => _select(const _TalismanItem()),
-                        child: _Panel(
+                      StaggerIn(
+                        index: 3,
+                        delay: const Duration(milliseconds: 200),
+                        child: _Ware(
+                          price: m.talisman,
+                          affordable: affordable(const _TalismanItem()),
                           selected: _selected is _TalismanItem,
-                          child: TalismanTile(id: _talisman!, badgeSize: 40),
+                          sold: _bought.contains(const _TalismanItem()),
+                          onTap: () => _select(const _TalismanItem()),
+                          child: _Panel(
+                            selected: _selected is _TalismanItem,
+                            child: TalismanTile(id: _talisman!, badgeSize: 40),
+                          ),
                         ),
                       ),
                     ],
                     _Section(t.merchantServices),
-                    for (final (item, icon, label) in [
+                    for (final (j, (item, icon, label)) in [
                       (
                         const _RemoveItem() as _Item,
                         Icons.delete_outline,
@@ -307,32 +309,36 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                         Icons.emoji_food_beverage_outlined,
                         t.merchantTea(m.teaHeal),
                       ),
-                    ])
+                    ].indexed)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: _Ware(
-                          price: _price(item),
-                          affordable: affordable(item),
-                          selected: _selected == item,
-                          sold: used(item),
-                          soldLabel: t.merchantUsed,
-                          onTap: () => _select(item),
-                          child: _Panel(
+                        child: StaggerIn(
+                          index: 4 + j,
+                          delay: const Duration(milliseconds: 200),
+                          child: _Ware(
+                            price: _price(item),
+                            affordable: affordable(item),
                             selected: _selected == item,
-                            child: Row(
-                              children: [
-                                Icon(icon, color: Palette.jade),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    label,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
+                            sold: used(item),
+                            soldLabel: t.merchantUsed,
+                            onTap: () => _select(item),
+                            child: _Panel(
+                              selected: _selected == item,
+                              child: Row(
+                                children: [
+                                  Icon(icon, color: Palette.jade),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      label,
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -528,82 +534,85 @@ class _Ware extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return GestureDetector(
-      onTap: sold ? null : onTap,
-      child: AnimatedScale(
-        scale: selected ? 1.05 : 1,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeOutBack,
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            AnimatedOpacity(
-              opacity: sold ? 0.35 : (affordable ? 1 : 0.6),
-              duration: const Duration(milliseconds: 300),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  child,
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const JadeCoin(size: 16),
-                      const SizedBox(width: 4),
-                      if (oldPrice != null) ...[
+    return Press(
+      enabled: !sold,
+      child: GestureDetector(
+        onTap: sold ? null : onTap,
+        child: AnimatedScale(
+          scale: selected ? 1.05 : 1,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutBack,
+          child: Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              AnimatedOpacity(
+                opacity: sold ? 0.35 : (affordable ? 1 : 0.6),
+                duration: const Duration(milliseconds: 300),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    child,
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const JadeCoin(size: 16),
+                        const SizedBox(width: 4),
+                        if (oldPrice != null) ...[
+                          Text(
+                            '$oldPrice',
+                            style: const TextStyle(
+                              color: Palette.textDim,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                        ],
                         Text(
-                          '$oldPrice',
-                          style: const TextStyle(
-                            color: Palette.textDim,
-                            decoration: TextDecoration.lineThrough,
+                          '$price',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: affordable ? Palette.jade : Palette.lacquer,
                           ),
                         ),
-                        const SizedBox(width: 4),
                       ],
-                      Text(
-                        '$price',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          color: affordable ? Palette.jade : Palette.lacquer,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            if (tag != null && !sold)
-              Positioned(top: -4, right: -6, child: _SaleTag(tag!)),
-            if (sold)
-              TweenAnimationBuilder<double>(
-                tween: Tween(begin: 1.8, end: 1),
-                duration: const Duration(milliseconds: 380),
-                curve: Curves.easeOutBack,
-                builder: (_, v, child) => Transform.scale(
-                  scale: v,
-                  child: Transform.rotate(angle: -0.2, child: child),
+                    ),
+                  ],
                 ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
+              ),
+              if (tag != null && !sold)
+                Positioned(top: -4, right: -6, child: _SaleTag(tag!)),
+              if (sold)
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 1.8, end: 1),
+                  duration: const Duration(milliseconds: 380),
+                  curve: Curves.easeOutBack,
+                  builder: (_, v, child) => Transform.scale(
+                    scale: v,
+                    child: Transform.rotate(angle: -0.2, child: child),
                   ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Palette.lacquer, width: 2),
-                    borderRadius: BorderRadius.circular(6),
-                    color: Palette.surface.withValues(alpha: 0.85),
-                  ),
-                  child: Text(
-                    soldLabel ?? t.merchantBought,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      color: Palette.lacquer,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Palette.lacquer, width: 2),
+                      borderRadius: BorderRadius.circular(6),
+                      color: Palette.surface.withValues(alpha: 0.85),
+                    ),
+                    child: Text(
+                      soldLabel ?? t.merchantBought,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        color: Palette.lacquer,
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
