@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../feel.dart';
 import '../theme.dart';
 import 'game_icon.dart';
 
@@ -94,7 +95,7 @@ class _BounceState extends State<Bounce> with SingleTickerProviderStateMixin {
   @override
   void didUpdateWidget(Bounce old) {
     super.didUpdateWidget(old);
-    if (widget.trigger != old.trigger) _c.forward(from: 0);
+    if (widget.trigger != old.trigger && !calm(context)) _c.forward(from: 0);
   }
 
   @override
@@ -165,17 +166,20 @@ class _PopTextState extends State<PopText> with SingleTickerProviderStateMixin {
         Shadow(color: Colors.white, blurRadius: 8),
       ],
     );
+    final still = calm(context);
     return AnimatedBuilder(
       animation: _c,
       builder: (_, child) {
         final t = _c.value;
+        final opacity = t < 0.65 ? 1.0 : 1 - (t - 0.65) / 0.35;
+        // Sin movimiento: aparece en su lugar y se desvanece.
+        if (still) return Opacity(opacity: opacity.clamp(0, 1), child: child);
         final pop = t < 0.18
             ? Curves.easeOutBack.transform(t / 0.18) * 1.35
             : 1.35 -
                   0.35 *
                       Curves.easeOut.transform(math.min(1, (t - 0.18) / 0.2));
         final rise = -widget.rise * Curves.easeOutCubic.transform(t);
-        final opacity = t < 0.65 ? 1.0 : 1 - (t - 0.65) / 0.35;
         return Opacity(
           opacity: opacity.clamp(0, 1),
           child: Transform.translate(
@@ -232,7 +236,7 @@ class _InkBurstState extends State<InkBurst>
   @override
   void didUpdateWidget(InkBurst old) {
     super.didUpdateWidget(old);
-    if (widget.trigger != old.trigger) _c.forward(from: 0);
+    if (widget.trigger != old.trigger && !calm(context)) _c.forward(from: 0);
   }
 
   @override
@@ -388,10 +392,11 @@ class _ArtBurstState extends State<ArtBurst>
             child: image,
           ),
         ),
-        builder: (_, child) {
+        builder: (context, child) {
           final t = _c.value;
           final on = _c.isAnimating;
-          final e = Curves.easeOutCubic.transform(t);
+          // Sin movimiento: el efecto se ve quieto y se desvanece.
+          final e = calm(context) ? 1.0 : Curves.easeOutCubic.transform(t);
           final fadeIn = (t / 0.12).clamp(0.0, 1.0);
           final fadeOut = t < widget.hold
               ? 1.0

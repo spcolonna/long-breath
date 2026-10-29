@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +14,7 @@ import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/lotus.dart';
 import '../widgets/scene_backdrop.dart';
+import '../feel.dart';
 
 /// Se venció al jefe de una etapa: la etapa queda sellada, el discípulo
 /// respira hondo (recupera Vida) y la siguiente aparece más arriba.
@@ -46,17 +46,17 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
     _c.forward();
     final audio = ref.read(audioProvider);
     _at(0.2, () {
-      HapticFeedback.heavyImpact();
+      Haptics.heavyImpact();
       audio.play(Sfx.victoryStamp);
       setState(() => _stampBurst++);
     });
     _at(0.5, () {
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       audio.play(Sfx.shrineOath);
       setState(() => _revealBurst++);
     });
     _at(0.72, () {
-      HapticFeedback.lightImpact();
+      Haptics.lightImpact();
       audio.play(Sfx.fountainHeal);
     });
   }
@@ -79,14 +79,14 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
     final run = ref.read(runControllerProvider);
     if (run == null) return;
     if (run.awakeningOptions.isNotEmpty && !_choosing) {
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       ref.read(audioProvider).play(Sfx.shrineOath);
       setState(() => _choosing = true);
       return;
     }
     if (run.awakeningOptions.isNotEmpty && _picked == null) return;
     _leaving = true;
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.uiButton);
     ref.read(runControllerProvider.notifier).advanceStage(_picked);
     context.go('/map');
@@ -94,7 +94,7 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
 
   void _pick(String id) {
     if (_picked == id) return;
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
     setState(() {
       _picked = id;

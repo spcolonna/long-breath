@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,6 +13,7 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/jade.dart';
 import '../widgets/talisman_widgets.dart';
+import '../feel.dart';
 
 /// Última lección: cómo es la subida, en diapositivas ilustradas con las
 /// mismas piezas del juego (íconos del mapa, cartas, el héroe).
@@ -37,7 +37,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
 
   void _onPage(int i) {
     setState(() => _page = i);
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.rewardFlip);
     if (i == _count - 1) {
       ref.read(tutorialStorageProvider).markDone('climb').then((_) {
@@ -55,7 +55,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
 
   /// Al terminar la lección se elige (o se crea) una partida.
   void _climb() {
-    HapticFeedback.mediumImpact();
+    Haptics.mediumImpact();
     ref.read(audioProvider).play(Sfx.uiButton);
     context.go('/slots');
   }

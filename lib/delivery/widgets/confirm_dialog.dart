@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../feel.dart';
 
 /// Pregunta de sí o no sobre papel, con un sello de laca arriba. Entra
 /// cayendo como un sello y el fondo se vela sin oscurecerse del todo.
@@ -17,7 +17,7 @@ Future<bool> confirmDialog(
   required String ok,
   String seal = '问',
 }) async {
-  HapticFeedback.selectionClick();
+  Haptics.selectionClick();
   ProviderScope.containerOf(context).read(audioProvider).play(Sfx.uiButton);
   final r = await showGeneralDialog<bool>(
     context: context,
@@ -117,7 +117,7 @@ class _ConfirmCard extends StatelessWidget {
                           Expanded(
                             child: FilledButton(
                               onPressed: () {
-                                HapticFeedback.mediumImpact();
+                                Haptics.mediumImpact();
                                 Navigator.pop(context, true);
                               },
                               child: FittedBox(

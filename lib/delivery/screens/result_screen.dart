@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,6 +21,7 @@ import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/lotus.dart';
+import '../feel.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({super.key});
@@ -51,7 +51,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
 
   void _onTick() {
     if (_burst == 0 && _c.value >= _landAt) {
-      HapticFeedback.heavyImpact();
+      Haptics.heavyImpact();
       final audio = ref.read(audioProvider)..play(Sfx.runResult);
       if (ref.read(runControllerProvider)?.phase == RunPhase.victory) {
         audio.jingle(Music.runWon);
@@ -64,7 +64,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       final def = ref.read(dataProvider).balance.cultivation;
       if (def.realmOf(a.breathBefore + a.breath) > def.realmOf(a.breathBefore)) {
         _stamped = true;
-        HapticFeedback.heavyImpact();
+        Haptics.heavyImpact();
         ref.read(audioProvider).play(Sfx.victoryStamp);
       }
     }
@@ -73,7 +73,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       final at = 0.7 + i * 0.03;
       if (_c.value >= at && !_lines.contains(at)) {
         _lines.add(at);
-        HapticFeedback.mediumImpact();
+        Haptics.mediumImpact();
         ref.read(audioProvider).play(Sfx.formComplete);
       }
     }
@@ -81,7 +81,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     for (final at in const [0.26, 0.36, 0.46]) {
       if (_c.value >= at && !_lines.contains(at)) {
         _lines.add(at);
-        HapticFeedback.selectionClick();
+        Haptics.selectionClick();
       }
     }
   }

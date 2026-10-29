@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,6 +18,8 @@ import '../widgets/press.dart';
 import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/hp_count.dart';
+import '../feel.dart';
+import '../widgets/node_kit.dart';
 
 /// Maestro errante: una sola lección, una forma o mejorar una carta.
 class MasterScreen extends ConsumerStatefulWidget {
@@ -39,7 +40,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
   int _burst = 0;
 
   void _finish(String label, VoidCallback apply) {
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.formComplete);
     setState(() {
       _done = label;
@@ -72,21 +73,15 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
     final upgrade = data.balance.fountainUpgrade;
 
     if (_picking) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(t.masterUpgradeHint),
-          leading: BackButton(
-            onPressed: () => setState(() => _picking = false),
-          ),
-        ),
-        body: DeckGrid(
-          cards: run.deck,
-          enabled: engine.canUpgrade,
-          pickFx: DeckPick.upgrade,
-          onPick: (c) => _finish(
-            t.masterUpgraded(text.card(c.cardId), upgrade),
-            () => ctl.masterUpgrade(c.uid),
-          ),
+      return DeckPickScreen(
+        title: t.masterUpgradeHint,
+        cards: run.deck,
+        enabled: engine.canUpgrade,
+        fx: DeckPick.upgrade,
+        onBack: () => setState(() => _picking = false),
+        onPick: (c) => _finish(
+          t.masterUpgraded(text.card(c.cardId), upgrade),
+          () => ctl.masterUpgrade(c.uid),
         ),
       );
     }
@@ -95,7 +90,8 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
     FormDef form(String id) => data.forms.firstWhere((f) => f.id == id);
     final busy = _done != null;
     return Scaffold(
-      body: SafeArea(
+      body: NodeBackdrop(
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
           child: Column(
@@ -219,7 +215,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                             onTap: busy
                                 ? null
                                 : () {
-                                    HapticFeedback.selectionClick();
+                                    Haptics.selectionClick();
                                     ref
                                         .read(audioProvider)
                                         .play(Sfx.cardSelect);
@@ -269,7 +265,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                         onPressed: busy
                             ? null
                             : () {
-                                HapticFeedback.selectionClick();
+                                Haptics.selectionClick();
                                 ref.read(audioProvider).play(Sfx.uiButton);
                                 setState(() => _picking = true);
                               },
@@ -326,6 +322,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

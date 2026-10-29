@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,6 +27,8 @@ import '../../infrastructure/slot_storage.dart';
 import '../controllers/climb.dart';
 import 'home_screen.dart' show routeFor;
 import '../../domain/model/enums.dart';
+import '../feel.dart';
+import '../widgets/options_sheet.dart';
 
 /// La escuela de una partida: quién sube, el reino, los meridianos, el
 /// registro y la subida.
@@ -59,7 +60,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
         saved.phase != RunPhase.defeat;
 
     void tap() {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.uiButton);
     }
 
@@ -118,7 +119,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                         : SlotBadge(slot: slot, info: info),
                   ),
                   if (kDebugMode) DebugButton(onDone: () => setState(() {})),
-                  const AudioToggles(),
+                  const OptionsButton(),
                 ],
               ),
               // El héroe empieza de lino crudo: el camino se elige en la montaña.
@@ -197,7 +198,7 @@ class _PicoLine extends ConsumerWidget {
     );
     if (open < 1) return const SizedBox.shrink();
     Future<void> set(int p) async {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.cardSelect);
       await ref.read(slotStorageProvider).setPico(info.slot, p);
       ref.invalidate(slotsProvider);
@@ -267,7 +268,7 @@ class _MeridianLine extends ConsumerWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: () {
-          HapticFeedback.selectionClick();
+          Haptics.selectionClick();
           ref.read(audioProvider).play(Sfx.uiButton);
           context.go('/meridians');
         },
@@ -320,7 +321,13 @@ class _DotState extends State<_Dot> with SingleTickerProviderStateMixin {
   late final _c = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 900),
-  )..repeat(reverse: true);
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _c, reverse: true);
+  }
 
   @override
   void dispose() {
@@ -380,7 +387,7 @@ class _SchoolLine extends ConsumerWidget {
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  HapticFeedback.selectionClick();
+                  Haptics.selectionClick();
                   context.go('/registry');
                 },
                 child: Padding(

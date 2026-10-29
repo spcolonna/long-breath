@@ -713,6 +713,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get music => 'Música';
 
   @override
+  String get options => 'Opciones';
+
+  @override
+  String get vibration => 'Vibración';
+
+  @override
+  String get motionTitle => 'Movimiento';
+
+  @override
+  String get motionSystem => 'Como el sistema';
+
+  @override
+  String get motionFull => 'Completo';
+
+  @override
+  String get motionReduced => 'Reducido';
+
+  @override
+  String get motionHint =>
+      'Reducido quita sacudidas, partículas, transiciones especiales y animaciones en bucle.';
+
+  @override
   String get menuLearn => 'Aprender a jugar';
 
   @override

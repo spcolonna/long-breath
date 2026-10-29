@@ -1216,6 +1216,48 @@ abstract class AppLocalizations {
   /// **'Música'**
   String get music;
 
+  /// No description provided for @options.
+  ///
+  /// In es, this message translates to:
+  /// **'Opciones'**
+  String get options;
+
+  /// No description provided for @vibration.
+  ///
+  /// In es, this message translates to:
+  /// **'Vibración'**
+  String get vibration;
+
+  /// No description provided for @motionTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Movimiento'**
+  String get motionTitle;
+
+  /// No description provided for @motionSystem.
+  ///
+  /// In es, this message translates to:
+  /// **'Como el sistema'**
+  String get motionSystem;
+
+  /// No description provided for @motionFull.
+  ///
+  /// In es, this message translates to:
+  /// **'Completo'**
+  String get motionFull;
+
+  /// No description provided for @motionReduced.
+  ///
+  /// In es, this message translates to:
+  /// **'Reducido'**
+  String get motionReduced;
+
+  /// No description provided for @motionHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Reducido quita sacudidas, partículas, transiciones especiales y animaciones en bucle.'**
+  String get motionHint;
+
   /// No description provided for @menuLearn.
   ///
   /// In es, this message translates to:

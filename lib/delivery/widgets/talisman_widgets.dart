@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -7,6 +6,7 @@ import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
 import 'juice.dart';
+import '../feel.dart';
 
 /// Color del borde de un talismán: oro los raros, jade los comunes.
 Color talismanColor(bool rare) => rare ? Palette.gold : Palette.jade;
@@ -101,7 +101,7 @@ class TalismanRow extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        HapticFeedback.selectionClick();
+        Haptics.selectionClick();
         showTalismansSheet(context, ids);
       },
       child: wrap

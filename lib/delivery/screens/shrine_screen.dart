@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +15,7 @@ import '../widgets/scene_backdrop.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/press.dart';
+import '../feel.dart';
 
 /// Santuario de los animales: la montaña ofrece dos caminos al azar y el
 /// novicio toma uno. Al tocar un camino, la túnica se tiñe de su color.
@@ -123,7 +123,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                                 selected: s == picked,
                                 onTap: () {
                                   if (_sworn) return;
-                                  HapticFeedback.selectionClick();
+                                  Haptics.selectionClick();
                                   ref.read(audioProvider).play(Sfx.cardSelect);
                                   setState(() => _picked = s);
                                 },
@@ -178,7 +178,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                         ? null
                         : () {
                             if (_sworn) return;
-                            HapticFeedback.heavyImpact();
+                            Haptics.heavyImpact();
                             ref.read(audioProvider).play(Sfx.shrineOath);
                             setState(() {
                               _sworn = true;

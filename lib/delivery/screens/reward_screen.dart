@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,6 +21,8 @@ import '../widgets/juice.dart';
 import '../widgets/lotus.dart';
 import 'home_screen.dart';
 import 'talisman_screen.dart';
+import '../feel.dart';
+import '../widgets/press.dart';
 
 /// El botín de un combate ganado: un cofre sellado que se abre y revela qué
 /// trae (cartas, jade, loto, temple, té o talismán). El tipo es sorpresa.
@@ -65,7 +66,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
 
   void _reveal() {
     if (!mounted || _open) return;
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     final audio = ref.read(audioProvider);
     audio.play(Sfx.rewardFlip);
     _after(180, () => audio.play(Sfx.victoryStamp));
@@ -296,7 +297,7 @@ class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return GestureDetector(
+    return Press(child: GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: widget.onOpen,
       child: Column(
@@ -320,7 +321,7 @@ class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
           Text(t.lootOpenHint, style: const TextStyle(color: Palette.textDim)),
         ],
       ),
-    );
+    ));
   }
 }
 
@@ -487,7 +488,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
         widget.onDone();
         return;
       }
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       ref.read(audioProvider).play(Sfx.rewardTake);
       setState(() {
         _taking = true;
@@ -502,7 +503,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
 
     void learn(String formId) {
       if (_taking) return;
-      HapticFeedback.heavyImpact();
+      Haptics.heavyImpact();
       ref.read(audioProvider).play(Sfx.formComplete);
       setState(() {
         _taking = true;
@@ -517,7 +518,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
 
     void select({String? card, bool form = false}) {
       if (_taking) return;
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.cardSelect);
       setState(() {
         _picked = card;
@@ -527,7 +528,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
 
     void reroll() {
       if (_taking) return;
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       ctl.rerollReward();
       setState(() {
         _picked = null;
@@ -557,7 +558,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
                 key: ValueKey('$_roll-$id'),
                 delayMs: 250 + 140 * i,
                 onFlip: () => ref.read(audioProvider).play(Sfx.rewardFlip),
-                child: GestureDetector(
+                child: Press(child: GestureDetector(
                   onTap: () => select(card: id),
                   child: Stack(
                     clipBehavior: Clip.none,
@@ -587,7 +588,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
                       ),
                     ],
                   ),
-                ),
+                )),
               ),
           ],
         ),
@@ -597,7 +598,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
             key: ValueKey('$_roll-${offered.id}'),
             delayMs: 250 + 140 * n,
             onFlip: () => ref.read(audioProvider).play(Sfx.rewardFlip),
-            child: GestureDetector(
+            child: Press(child: GestureDetector(
               onTap: () => select(form: true),
               child: Stack(
                 clipBehavior: Clip.none,
@@ -631,7 +632,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
                   ),
                 ],
               ),
-            ),
+            )),
           ),
         ],
         const SizedBox(height: 12),
@@ -748,7 +749,7 @@ class _CoinsLootState extends ConsumerState<_CoinsLoot> {
 
   void _take() {
     if (_taken) return;
-    HapticFeedback.mediumImpact();
+    Haptics.mediumImpact();
     ref.read(audioProvider).play(Sfx.rewardTake);
     final from = _center(_from);
     final to = _center(widget.target);
@@ -951,7 +952,7 @@ class _TeaLootState extends ConsumerState<_TeaLoot> {
 
   void _drink() {
     if (_drunk) return;
-    HapticFeedback.mediumImpact();
+    Haptics.mediumImpact();
     ref.read(audioProvider).play(Sfx.fountainHeal);
     setState(() => _drunk = true);
     Future.delayed(const Duration(milliseconds: 900), () {
@@ -1048,7 +1049,7 @@ class _UpgradeLootState extends ConsumerState<_UpgradeLoot> {
   void _temper() {
     final uid = _uid;
     if (uid == null || _done) return;
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.formComplete);
     setState(() {
       _done = true;
@@ -1085,7 +1086,7 @@ class _UpgradeLootState extends ConsumerState<_UpgradeLoot> {
                   cards: run.deck,
                   enabled: engine.canUpgrade,
                   onPick: (c) {
-                    HapticFeedback.selectionClick();
+                    Haptics.selectionClick();
                     ref.read(audioProvider).play(Sfx.cardSelect);
                     setState(() => _uid = c.uid);
                   },

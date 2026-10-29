@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,6 +11,8 @@ import '../widgets/scene_backdrop.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/juice.dart';
 import '../widgets/press.dart';
+import '../feel.dart';
+import '../widgets/node_kit.dart';
 
 enum _Mode { choose, remove, upgrade }
 
@@ -41,34 +42,23 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
     void done() => context.go('/map');
 
     if (_mode != _Mode.choose) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            _mode == _Mode.remove
-                ? t.fountainRemove
-                : t.fountainUpgrade(data.balance.fountainUpgrade),
-          ),
-          leading: BackButton(
-            onPressed: () => setState(() => _mode = _Mode.choose),
-          ),
-        ),
-        body: DeckGrid(
-          cards: run.deck,
-          enabled: _mode == _Mode.upgrade ? engine.canUpgrade : null,
-          pickFx: _mode == _Mode.remove ? DeckPick.remove : DeckPick.upgrade,
-          onPick: (c) {
-            _mode == _Mode.remove
-                ? ctl.removeCard(c.uid)
-                : ctl.upgradeCard(c.uid);
-            done();
-          },
-        ),
+      return DeckPickScreen(
+        title: _mode == _Mode.remove
+            ? t.fountainRemove
+            : t.fountainUpgrade(data.balance.fountainUpgrade),
+        cards: run.deck,
+        enabled: _mode == _Mode.upgrade ? engine.canUpgrade : null,
+        fx: _mode == _Mode.remove ? DeckPick.remove : DeckPick.upgrade,
+        onBack: () => setState(() => _mode = _Mode.choose),
+        onPick: (c) {
+          _mode == _Mode.remove ? ctl.removeCard(c.uid) : ctl.upgradeCard(c.uid);
+          done();
+        },
       );
     }
 
     void pickMode(_Mode m) {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.uiButton);
       setState(() => _mode = m);
     }
@@ -79,19 +69,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
       delay: const Duration(milliseconds: 300),
       child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
-      child: SizedBox(
-        width: double.infinity,
-        height: 56,
-        child: OutlinedButton.icon(
-          onPressed: onTap,
-          // Papel translúcido: se lee sobre el fondo pintado.
-          style: OutlinedButton.styleFrom(
-            backgroundColor: Palette.surface.withValues(alpha: 0.82),
-          ),
-          icon: Icon(icon),
-          label: Text(label, style: const TextStyle(fontSize: 16)),
-        ),
-      ),
+      child: ChoiceTile(leading: icon, title: label, onTap: onTap),
       ),
     );
 
@@ -174,7 +152,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                 t.fountainHeal(engine.healOf(run)),
                 () {
                   if (_healedFrom != null) return;
-                  HapticFeedback.mediumImpact();
+                  Haptics.mediumImpact();
                   ref.read(audioProvider).play(Sfx.fountainHeal);
                   setState(() {
                     _healedFrom = run.hp;

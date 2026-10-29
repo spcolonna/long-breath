@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import '../feel.dart';
 
 /// Retrato de un personaje de la montaña (mercader, maestro): entra subiendo
 /// sobre una mancha de color, respira despacio y lleva su sello al costado.
@@ -34,7 +35,13 @@ class _NpcPortraitState extends State<NpcPortrait>
   late final _breath = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 3200),
-  )..repeat();
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _breath);
+  }
 
   @override
   void dispose() {

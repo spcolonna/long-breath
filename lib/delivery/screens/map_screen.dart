@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,6 +28,7 @@ import 'map/map_layout.dart';
 import 'map/map_node.dart';
 import 'map/mountain_backdrop.dart';
 import 'map/trail_painter.dart';
+import '../feel.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -184,11 +184,11 @@ class _MapViewState extends ConsumerState<_MapView>
   late final _breath = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 2600),
-  )..repeat();
+  );
   late final _drift = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 50),
-  )..repeat();
+  );
   late final _reveal = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 750),
@@ -210,6 +210,13 @@ class _MapViewState extends ConsumerState<_MapView>
     Future.delayed(const Duration(milliseconds: 350), () {
       if (mounted) _reveal.forward();
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _breath);
+    loopUnlessCalm(context, _drift);
   }
 
   @override
@@ -244,7 +251,7 @@ class _MapViewState extends ConsumerState<_MapView>
     final from = _here;
     final to = layout.pos[n.id]!;
     ref.read(audioProvider).play(Sfx.mapNode);
-    HapticFeedback.mediumImpact();
+    Haptics.mediumImpact();
     setState(() {
       _going = n;
       final cur = widget.run.currentNode;
@@ -262,7 +269,7 @@ class _MapViewState extends ConsumerState<_MapView>
     );
     await _walk.forward(from: 0);
     if (!mounted) return;
-    HapticFeedback.lightImpact();
+    Haptics.lightImpact();
     setState(() => _burst++);
     await Future.delayed(const Duration(milliseconds: 160));
     if (!mounted) return;

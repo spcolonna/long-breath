@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +15,7 @@ import '../widgets/difficulty_sheet.dart';
 import '../widgets/lotus.dart';
 import '../widgets/slot_badge.dart';
 import 'map/map_layout.dart';
+import '../feel.dart';
 
 const _numerals = ['一', '二', '三'];
 
@@ -25,7 +25,7 @@ class SlotsScreen extends ConsumerWidget {
   const SlotsScreen({super.key});
 
   void _tap(WidgetRef ref) {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
   }
 
@@ -97,7 +97,7 @@ class SlotsScreen extends ConsumerWidget {
     _tap(ref);
     if (!await _confirmDelete(context, slot, progress)) return;
     await ref.read(slotStorageProvider).delete(slot);
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     _refresh(ref, slot);
     if (ref.read(activeSlotProvider) == slot) {
       ref

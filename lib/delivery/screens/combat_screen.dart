@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,6 +37,7 @@ import '../widgets/press.dart';
 import '../widgets/stage_scene.dart';
 import '../widgets/stat_bar.dart';
 import '../widgets/talisman_widgets.dart';
+import '../feel.dart';
 
 class CombatScreen extends ConsumerWidget {
   const CombatScreen({super.key});
@@ -224,7 +224,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   void _talismanActs(String id) {
     final def = ref.read(dataProvider).talisman(id);
     _talismanHits[id] = (_talismanHits[id] ?? 0) + 1;
-    HapticFeedback.lightImpact();
+    Haptics.lightImpact();
     _audio.play(Sfx.breathGain);
     _pop(
       _heroPops,
@@ -240,7 +240,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   void _reshuffle(int at) {
     _after(at, () {
       setState(() => _shuffleKey++);
-      HapticFeedback.lightImpact();
+      Haptics.lightImpact();
       for (var i = 0; i < 4; i++) {
         _after(60 * i, () => _audio.play(Sfx.cardDeal));
       }
@@ -326,7 +326,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       for (final e in ev) {
         switch (e) {
           case TargetChanged():
-            HapticFeedback.selectionClick();
+            Haptics.selectionClick();
             _audio.play(Sfx.cardSelect);
           case StanceChanged():
             _audio.play(Sfx.stanceChange);
@@ -378,7 +378,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   /// Cae el enemigo del grupo (estallido, sin el cartel de victoria) y, ya
   /// despejada la arena, entra el siguiente con su nombre y "2/3".
   void _nextWave(CombatView next, WaveStarted w, {bool unlock = true}) {
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     _audio.play(Sfx.enemyDeath);
     setState(() {
       _queue.clear();
@@ -393,7 +393,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         _foe(0).dying = false;
         _shown = next;
       });
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       _audio.play(Sfx.enemyDrop);
       final t = AppLocalizations.of(context);
       _queue.add(
@@ -413,7 +413,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Cae uno de los dos en escena: estalla y su lugar queda vacío.
   void _foeDown(int slot) {
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     _audio.play(Sfx.enemyDeath);
     setState(() {
       _foe(slot)
@@ -499,7 +499,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       }
     });
     if (hits.isNotEmpty) {
-      f.heavy ? HapticFeedback.heavyImpact() : HapticFeedback.mediumImpact();
+      f.heavy ? Haptics.heavyImpact() : Haptics.mediumImpact();
       _audio.play(
         f.heavy
             ? Sfx.hitHeavy
@@ -508,7 +508,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             : Sfx.hitLight,
       );
     } else if (guard > 0) {
-      HapticFeedback.lightImpact();
+      Haptics.lightImpact();
     }
     if (guard > 0) _audio.play(Sfx.guardUp);
     if (ev.any((e) => e is StanceChanged)) _audio.play(Sfx.stanceChange);
@@ -574,7 +574,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         _hideHand = false;
         _turnKey++;
       });
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       _audio.play(Sfx.turnStart);
     });
     if (ev.any((e) => e is DeckShuffled)) _reshuffle(at - 200);
@@ -683,8 +683,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                 }
                 _shake(damage == 0 ? 4 : math.min(16, 6 + damage * 0.6));
                 damage >= 8
-                    ? HapticFeedback.heavyImpact()
-                    : HapticFeedback.mediumImpact();
+                    ? Haptics.heavyImpact()
+                    : Haptics.mediumImpact();
                 _audio.play(damage > 0 ? Sfx.playerHurt : Sfx.block);
               case Deflected():
                 _audio.play(Sfx.deflect);
@@ -730,7 +730,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           }
         }
       });
-      HapticFeedback.lightImpact();
+      Haptics.lightImpact();
       _banners(ev, slot);
     });
     return at + 650;
@@ -738,7 +738,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Victoria: estalla el último en caer ([slot]).
   void _win([int slot = 0]) {
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     _audio.play(Sfx.enemyDeath);
     setState(() {
       _queue.clear();
@@ -754,7 +754,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _audio.play(Sfx.heroVictory);
     });
     _after(1150, () {
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       _audio.jingle(Music.victory);
       setState(() => _endShown = true);
     });
@@ -762,7 +762,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Se escapó: sale de escena sin la explosión de la victoria.
   void _fled() {
-    HapticFeedback.mediumImpact();
+    Haptics.mediumImpact();
     _audio.play(Sfx.enemySkip);
     setState(() {
       _queue.clear();
@@ -775,7 +775,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   }
 
   void _lose() {
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     _audio.play(Sfx.heroFall);
     setState(() {
       _queue.clear();
@@ -800,16 +800,16 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     for (final e in events) {
       switch (e) {
         case Deflected():
-          HapticFeedback.mediumImpact();
+          Haptics.mediumImpact();
           _queue.add(_Fx(t.deflect, '化', Palette.sky));
         case EnemyBroken():
-          HapticFeedback.heavyImpact();
+          Haptics.heavyImpact();
           _audio.play(Sfx.broken);
           _queue.add(_Fx(t.broken, t.staggeredDouble, Palette.gold));
         case ScaleShed(:final remaining):
           _queue.add(_Fx(t.scaleShed, t.scalesLeft(remaining), Palette.jade));
         case Parried(:final damage):
-          HapticFeedback.heavyImpact();
+          Haptics.heavyImpact();
           _audio.play(Sfx.block);
           _flashKey++;
           _shake(8);
@@ -826,7 +826,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             icon: Icons.local_fire_department,
           );
         case ThornsHurt(:final damage):
-          HapticFeedback.mediumImpact();
+          Haptics.mediumImpact();
           _audio.play(Sfx.playerHurt);
           _flashKey++;
           _pop(
@@ -849,7 +849,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             dy: -16,
           );
         case GuardBypassed():
-          HapticFeedback.lightImpact();
+          Haptics.lightImpact();
           _queue.add(_Fx(t.guardBypassed, t.guardBypassedDetail, Palette.sky));
         case BreathDrained(:final amount):
           _audio.play(Sfx.breathSpend);
@@ -870,14 +870,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             dy: 30,
           );
         case PlayerBroken():
-          HapticFeedback.heavyImpact();
+          Haptics.heavyImpact();
           _queue.add(_Fx(t.playerBroken, '−2 ${t.breath}', Palette.lacquer));
         case FormAdvanced(:final progress):
           _audio.play(Sfx.formStep, variant: progress - 1);
         case FormInterrupted():
           _audio.play(Sfx.formBroken);
         case FormCompleted(:final formId):
-          HapticFeedback.heavyImpact();
+          Haptics.heavyImpact();
           _audio.play(Sfx.formComplete);
           _formBurstKey++;
           final f = data.forms.firstWhere((f) => f.id == formId);
@@ -897,7 +897,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           _audio.play(Sfx.formBroken);
           _queue.add(_Fx(t.formsInterrupted, null, Palette.textDim));
         case EnemyPhaseChanged(:final phase):
-          HapticFeedback.heavyImpact();
+          Haptics.heavyImpact();
           _audio.play(Sfx.phaseTwo);
           _shake(phase >= 2 ? 18 : 14);
           _queue.add(
@@ -909,7 +909,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             ),
           );
         case ScalesRegrown(:final scales):
-          HapticFeedback.mediumImpact();
+          Haptics.mediumImpact();
           _audio.play(Sfx.enemyGuard);
           _queue.add(_Fx(t.scalesRegrown, t.scalesNow(scales), Palette.jade));
         case TalismanTriggered(:final talismanId):
@@ -3098,14 +3098,14 @@ class _HandAreaState extends ConsumerState<_HandArea> {
                   onTap: () {
                     if (selected && !free && !p.playable) {
                       // Segundo toque sobre una carta que no se puede jugar: "no".
-                      HapticFeedback.heavyImpact();
+                      Haptics.heavyImpact();
                       ref.read(audioProvider).play(Sfx.cardDeny);
                       setState(() {
                         _denyUid = c.uid;
                         _denyKey++;
                       });
                     } else {
-                      HapticFeedback.selectionClick();
+                      Haptics.selectionClick();
                       ref.read(audioProvider).play(Sfx.cardSelect);
                     }
                     ref.read(combatControllerProvider.notifier).tapCard(c.uid);
@@ -3827,7 +3827,7 @@ class _StyleChipState extends ConsumerState<_StyleChip> {
   }
 
   void _toggle() {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     _close?.cancel();
     setState(() => _open = !_open);
     if (_open) {
@@ -4143,7 +4143,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
   void _onTick() {
     if (!_sealed && _c.value >= _sealAt) {
       _sealed = true;
-      HapticFeedback.heavyImpact();
+      Haptics.heavyImpact();
       ref
           .read(audioProvider)
           .play(widget.won ? Sfx.victoryStamp : Sfx.defeatStamp);
@@ -4413,7 +4413,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
   /// Abre una lección: las de combate reinician esta pantalla, la de la
   /// subida es otra pantalla.
   void _openLesson(String id) {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
     final ctl = ref.read(combatControllerProvider.notifier)..finish();
     if (lessonById(id).isCombat) {
@@ -4424,14 +4424,14 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
   }
 
   void _toLessons() {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
     ref.read(combatControllerProvider.notifier).finish();
     context.go('/lessons');
   }
 
   void _continue() {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
     ref.read(combatControllerProvider.notifier).finish();
     final run = ref.read(runControllerProvider)!;
@@ -4525,7 +4525,7 @@ class _PauseButton extends ConsumerWidget {
         visualDensity: VisualDensity.compact,
         icon: const Icon(Icons.pause_rounded, color: Palette.text),
         onPressed: () {
-          HapticFeedback.selectionClick();
+          Haptics.selectionClick();
           ref.read(audioProvider).play(Sfx.uiButton);
           _open(context, ref);
         },

@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/combat/combat_state.dart';
@@ -11,6 +10,7 @@ import '../theme.dart';
 import 'card_widget.dart';
 import 'juice.dart';
 import 'press.dart';
+import '../feel.dart';
 
 /// Qué le pasa a la carta elegida antes de avisar: se quema (quitar) o se
 /// ilumina y sube de nivel (mejorar).
@@ -63,11 +63,11 @@ class _DeckGridState extends ConsumerState<DeckGrid>
     setState(() => _picked = c.uid);
     final audio = ref.read(audioProvider);
     if (fx == DeckPick.remove) {
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       audio.play(Sfx.breathSpend);
     } else {
       // La fanfarria queda para la pantalla que llama.
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       audio.play(Sfx.rewardFlip);
     }
     await _fx.forward(from: 0);

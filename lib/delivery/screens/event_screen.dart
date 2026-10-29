@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +16,8 @@ import '../widgets/scene_backdrop.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/hp_count.dart';
 import '../widgets/press.dart';
+import '../feel.dart';
+import '../widgets/node_kit.dart';
 
 /// Evento del mapa: una escena, dos opciones y lo que pasó.
 class EventScreen extends ConsumerStatefulWidget {
@@ -46,16 +47,16 @@ class _EventScreenState extends ConsumerState<EventScreen> {
         r.maxHp > 0 ||
         r.jade > 0;
     if (good) {
-      HapticFeedback.heavyImpact();
+      Haptics.heavyImpact();
       audio.play(Sfx.rewardTake);
     } else if (r.hp < 0) {
-      HapticFeedback.mediumImpact();
+      Haptics.mediumImpact();
       audio.play(Sfx.playerHurt);
     } else if (r.hp > 0) {
-      HapticFeedback.lightImpact();
+      Haptics.lightImpact();
       audio.play(Sfx.fountainHeal);
     } else {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       audio.play(Sfx.uiButton);
     }
     setState(() {
@@ -169,17 +170,18 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                             StaggerIn(
                               index: i,
                               delay: const Duration(milliseconds: 250),
-                              child: Press(
-                                child: _OptionButton(
-                              label: text.eventOption(id, o.id),
-                              summary: t.eventOptionSummary(o),
-                              risky: o.chance != null,
-                              enabled: engine.canChoose(run, o),
-                              blocked: run.hp > o.cost
-                                  ? t.merchantNoJade
-                                  : t.eventCantPay,
-                              onTap: () => _choose(o),
-                                ),
+                              child: ChoiceTile(
+                                title: text.eventOption(id, o.id),
+                                detail: t.eventOptionSummary(o),
+                                accent: o.chance != null ? Palette.gold : null,
+                                trailing: o.chance != null
+                                    ? Icons.casino_outlined
+                                    : Icons.chevron_right_rounded,
+                                enabled: engine.canChoose(run, o),
+                                blocked: run.hp > o.cost
+                                    ? t.merchantNoJade
+                                    : t.eventCantPay,
+                                onTap: () => _choose(o),
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -216,7 +218,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                     onPressed: _result == null
                         ? null
                         : () {
-                            HapticFeedback.selectionClick();
+                            Haptics.selectionClick();
                             ref.read(audioProvider).play(Sfx.uiButton);
                             context.go('/map');
                           },
@@ -228,82 +230,6 @@ class _EventScreenState extends ConsumerState<EventScreen> {
           ),
         ),
       ),
-      ),
-    );
-  }
-}
-
-class _OptionButton extends StatelessWidget {
-  const _OptionButton({
-    required this.label,
-    required this.summary,
-    required this.risky,
-    required this.enabled,
-    required this.blocked,
-    required this.onTap,
-  });
-
-  final String label;
-
-  /// Por qué no se puede elegir (Vida o jade).
-  final String blocked;
-  final String summary;
-  final bool risky;
-  final bool enabled;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Opacity(
-      opacity: enabled ? 1 : 0.5,
-      child: Material(
-        color: Palette.surface,
-        borderRadius: BorderRadius.circular(14),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(14),
-          onTap: enabled ? onTap : null,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: risky ? Palette.gold : Palette.line,
-                width: 1.5,
-              ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        label,
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        enabled ? summary : blocked,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: enabled ? Palette.textDim : Palette.lacquer,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  risky ? Icons.casino_outlined : Icons.chevron_right_rounded,
-                  color: risky ? Palette.gold : Palette.textDim,
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }

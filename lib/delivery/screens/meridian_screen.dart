@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +15,7 @@ import '../theme.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/juice.dart';
 import '../widgets/lotus.dart';
+import '../feel.dart';
 
 /// 经络: el árbol de meridianos. Tres canales (Cuerpo, Espíritu, Técnica)
 /// de cinco puntos cada uno; se abren con semillas de loto cuando la
@@ -38,7 +38,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
         .read(progressStorageProvider)
         .openMeridian(def, n, realm);
     if (!ok || !mounted) return;
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.formComplete);
     ref
       ..invalidate(meridianProvider)
@@ -50,7 +50,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
   }
 
   void _details(MeridianNode n, Cultivation c, int lotus, List<String> owned) {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.cardSelect);
     showModalBottomSheet<void>(
       context: context,
@@ -436,7 +436,13 @@ class _PointState extends ConsumerState<_Point>
   late final _pulse = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1400),
-  )..repeat(reverse: true);
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _pulse, reverse: true);
+  }
 
   @override
   void dispose() {

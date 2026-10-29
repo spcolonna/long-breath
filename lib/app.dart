@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'delivery/feel.dart';
 import 'delivery/providers.dart';
 import 'delivery/screens/meridian_screen.dart';
 import 'delivery/screens/climb_lesson_screen.dart';
@@ -35,7 +36,7 @@ import 'l10n/app_localizations.dart';
 /// la pantalla entra con una mancha de tinta desde ese punto.
 ///
 /// Con [fx], la pantalla tiene su propia entrada (ver `route_fx.dart`), salvo
-/// que el sistema pida reducir el movimiento.
+/// que se pida reducir el movimiento (sistema u Opciones).
 GoRoute _route(
   String path,
   Widget screen, {
@@ -59,13 +60,14 @@ GoRoute _route(
         parent: secondary,
         curve: const Interval(0, 0.4, curve: Curves.easeIn),
       );
-      if (fx != null && !MediaQuery.disableAnimationsOf(context)) {
+      final still = calm(context);
+      if (fx != null && !still) {
         return FadeTransition(
           opacity: ReverseAnimation(exit),
           child: fx(animation, child),
         );
       }
-      if (state.extra case final InkFrom from) {
+      if (state.extra case final InkFrom from when !still) {
         return FadeTransition(
           opacity: ReverseAnimation(exit),
           child: inkReveal(animation, child, from),
@@ -134,7 +136,8 @@ class LongBreathApp extends ConsumerWidget {
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
         routerConfig: _router,
-        builder: backdrop,
+        builder: (context, child) =>
+            MotionScope(child: backdrop(context, child)),
         supportedLocales: locales,
         localizationsDelegates: delegates,
         // Idioma del dispositivo si está soportado; si no, español.

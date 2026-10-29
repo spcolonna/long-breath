@@ -7,6 +7,8 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 ## 1. Pendientes inmediatos
 
 - **Pulido general (29/10/2026):** botones que se hunden al tocar, Vida que cuenta, entradas escalonadas, carta que se quema o se mejora en fuente/mercader/maestro, avisos de papel con sello, mazos de robo y descarte con rebarajado, pausa de impacto en golpes fuertes y respeto de «reducir movimiento» del sistema. Transiciones propias: el combate entra con dos pinceladas de laca y oro en X; la etapa superada se abre como un rollo colgante.
+- **Pulido y técnico (29/10/2026):** Opciones (sonido, música, vibración y movimiento: como el sistema, completo o reducido), kit de nodo (fondo de etapa en mercader y maestro, opciones de papel, elegir carta con encabezado propio), cofre, cartas y talismanes que se hunden, nubes en dos capas en el combate (por código), niebla sin blur y sprites sin filtros cuando no hacen falta. La base para todo lo nuevo está en `docs/feel.md`.
+  - **Falta:** los archivos de sonido y música (`assets/audio/` está vacío, así que el juego es mudo); medir el rendimiento en un teléfono real.
 - **Cartas de Serpiente y Grulla (29/10/2026):** 4 cartas más por camino (10 cada uno). Mecánicas nuevas: **combo** de la Serpiente (si ya jugaste 2 ataques en el turno, roba o da Aliento) y **retenida** de la Grulla que roba o da Aliento. Pendiente: llevar al Tigre a 10 con su propia mecánica (p. ej. premio al desequilibrar).
 
 - **Balance:** hecho el 01/10/2026 (ver `balance.md`).
@@ -249,9 +251,9 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - Presentación de etapa (paneo por la montaña) y de jefe/élite (silueta → color, sello y héroe). Completa la primera vez, corta después, se saltan con un toque.
 - Los jefes de las etapas 2 y 3 tienen fondo propio (Gran Campanario y Lecho del Dragón, 10/10/2026).
 - **Siguiente:**
-  - un ajuste "Reducir movimiento" en Opciones (hoy se respeta el del sistema);
+  - ~~un ajuste "Reducir movimiento" en Opciones~~ (hecho, 29/10/2026);
   - ~~un epílogo corto al vencer al Dragón Dormido~~ (hecho como pergamino; falta escena ilustrada);
-  - capas de nubes en PNG para parallax en el combate.
+  - ~~capas de nubes para parallax en el combate~~ (hecho por código, 29/10/2026).
 
 ### 3.8c Partidas (hecho, 12/10/2026)
 - Tres partidas con dificultad fija; borrar o empezar de cero con confirmación. La partida 1 usa las claves de antes.
@@ -275,7 +277,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
    - el giro del maestro;
    - finales por camino.
 5. Armas 兵器.
-6. Pasada de feel en mercader, evento, recompensa y maestro.
+6. ~~Pasada de feel en mercader, evento, recompensa y maestro~~ (hecho, 29/10/2026; ver `feel.md`).
 7. Optimización: peso de los PNG y rendimiento medido.
 
 

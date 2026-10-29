@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,6 +17,8 @@ import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/hp_count.dart';
 import '../widgets/press.dart';
+import '../feel.dart';
+import '../widgets/node_kit.dart';
 
 /// Lo que se tiene elegido en la tienda.
 sealed class _Item {
@@ -90,7 +91,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
 
   void _select(_Item i) {
     if (_bought.contains(i)) return;
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.cardSelect);
     setState(() => _selected = _selected == i ? null : i);
   }
@@ -118,7 +119,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
   }
 
   void _celebrate(_Item i) {
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.rewardTake);
     setState(() {
       _bought.add(i);
@@ -145,21 +146,17 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
 
     if (_picking != null) {
       final upgrade = _picking is _UpgradeItem;
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(upgrade ? t.merchantPickUpgrade : t.merchantPickRemove),
-          leading: BackButton(onPressed: () => setState(() => _picking = null)),
-        ),
-        body: DeckGrid(
-          cards: run.deck,
-          enabled: upgrade ? engine.canUpgrade : null,
-          pickFx: upgrade ? DeckPick.upgrade : DeckPick.remove,
-          onPick: (c) {
-            final item = _picking!;
-            upgrade ? ctl.buyUpgrade(c.uid) : ctl.buyRemove(c.uid);
-            _celebrate(item);
-          },
-        ),
+      return DeckPickScreen(
+        title: upgrade ? t.merchantPickUpgrade : t.merchantPickRemove,
+        cards: run.deck,
+        enabled: upgrade ? engine.canUpgrade : null,
+        fx: upgrade ? DeckPick.upgrade : DeckPick.remove,
+        onBack: () => setState(() => _picking = null),
+        onPick: (c) {
+          final item = _picking!;
+          upgrade ? ctl.buyUpgrade(c.uid) : ctl.buyRemove(c.uid);
+          _celebrate(item);
+        },
       );
     }
 
@@ -186,7 +183,8 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     };
 
     return Scaffold(
-      body: SafeArea(
+      body: NodeBackdrop(
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
           child: Column(
@@ -392,6 +390,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
@@ -634,7 +633,13 @@ class _SaleTagState extends State<_SaleTag>
   late final _c = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1800),
-  )..repeat(reverse: true);
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _c, reverse: true);
+  }
 
   @override
   void dispose() {

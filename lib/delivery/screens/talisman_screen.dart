@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +10,8 @@ import '../theme.dart';
 import '../widgets/juice.dart';
 import '../widgets/talisman_widgets.dart';
 import 'home_screen.dart' show routeFor;
+import '../feel.dart';
+import '../widgets/press.dart';
 
 /// Después de vencer al élite: elegir 1 de 3 talismanes. Después viene la
 /// recompensa de siempre. Al empezar la subida (árbol de meridianos) es el
@@ -74,7 +75,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
 
   void _select(String id) {
     if (_taking) return;
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.cardSelect);
     setState(() => _picked = id);
   }
@@ -82,7 +83,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
   void _take() {
     final id = _picked;
     if (id == null || _taking) return;
-    HapticFeedback.heavyImpact();
+    Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.rewardTake);
     setState(() {
       _taking = true;
@@ -117,7 +118,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
             onArrive: () => ref.read(audioProvider).play(Sfx.rewardFlip),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
-              child: GestureDetector(
+              child: Press(child: GestureDetector(
                 onTap: () => _select(id),
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -142,7 +143,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
                     ),
                   ],
                 ),
-              ),
+              )),
             ),
           ),
         const SizedBox(height: 12),

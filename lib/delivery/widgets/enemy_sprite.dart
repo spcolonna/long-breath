@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/model/enemy_def.dart';
 import '../theme.dart';
+import '../feel.dart';
 
 /// Figura del enemigo en la arena.
 ///
@@ -48,7 +49,9 @@ class _EnemySpriteState extends State<EnemySprite>
   late final _idle = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 2400),
-  )..repeat(reverse: true);
+  );
+  // Mantiene el cuerpo (y su imagen) al poner o quitar el tinte.
+  final _body = GlobalKey();
   late final _hit = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 480),
@@ -65,6 +68,12 @@ class _EnemySpriteState extends State<EnemySprite>
     vsync: this,
     duration: const Duration(milliseconds: 1100),
   );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _idle, reverse: true);
+  }
 
   @override
   void didUpdateWidget(EnemySprite old) {
@@ -178,15 +187,19 @@ class _EnemySpriteState extends State<EnemySprite>
                       scaleY:
                           breathe + atkScale + 0.08 * pulse - squash + 0.25 * d,
                       alignment: Alignment.bottomCenter,
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                          Colors.white.withValues(
-                            alpha: dying ? math.max(flash, d) : flash,
-                          ),
-                          BlendMode.srcATop,
-                        ),
-                        child: child,
-                      ),
+                      // El tinte cuesta una capa por cuadro: solo al
+                      // recibir un golpe o al caer.
+                      child: (dying ? math.max(flash, d) : flash) <= 0
+                          ? KeyedSubtree(key: _body, child: child!)
+                          : ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                Colors.white.withValues(
+                                  alpha: dying ? math.max(flash, d) : flash,
+                                ),
+                                BlendMode.srcATop,
+                              ),
+                              child: KeyedSubtree(key: _body, child: child!),
+                            ),
                     ),
                   ),
                 ),

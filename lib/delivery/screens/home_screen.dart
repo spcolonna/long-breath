@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +14,8 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/menu_button.dart';
 import '../widgets/press.dart';
 import '../widgets/scene_backdrop.dart';
+import '../feel.dart';
+import '../widgets/options_sheet.dart';
 
 String routeFor(RunState r) => switch (r.phase) {
   RunPhase.map => '/map',
@@ -60,7 +61,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final fresh = done.isEmpty;
 
     void tap() {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.uiButton);
     }
 
@@ -86,7 +87,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 const Align(
                   alignment: Alignment.centerRight,
-                  child: AudioToggles(),
+                  child: OptionsButton(),
                 ),
                 // El sello pintado del dragón; si faltara, el carácter.
                 enter(

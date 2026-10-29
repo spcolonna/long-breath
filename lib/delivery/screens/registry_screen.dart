@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,6 +12,7 @@ import '../widgets/scene_backdrop.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/hito_tile.dart';
+import '../feel.dart';
 
 /// 名册: el registro de la escuela. Una tablilla por cada discípulo que
 /// subió (los que cayeron y los que llegaron) y los pergaminos que se
@@ -40,7 +40,7 @@ class RegistryScreen extends ConsumerWidget {
             indicatorColor: Palette.lacquer,
             labelColor: Palette.text,
             unselectedLabelColor: Palette.textDim,
-            onTap: (_) => HapticFeedback.selectionClick(),
+            onTap: (_) => Haptics.selectionClick(),
             tabs: [
               for (final label in [
                 t.registryAscents,

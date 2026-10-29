@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/model/enums.dart';
@@ -10,6 +9,7 @@ import '../../infrastructure/progress_storage.dart';
 import '../providers.dart';
 import '../theme.dart';
 import 'juice.dart';
+import '../feel.dart';
 
 /// Color de cada dificultad: de jade (tranquila) a laca (maestro).
 Color difficultyColor(Difficulty d) => switch (d) {
@@ -64,13 +64,13 @@ class _DifficultySheetState extends ConsumerState<_DifficultySheet> {
   int? _pico;
 
   void _deny(VoidCallback count) {
-    HapticFeedback.lightImpact();
+    Haptics.lightImpact();
     ref.read(audioProvider).play(Sfx.cardDeny);
     setState(count);
   }
 
   void _choose(Difficulty d, [int pico = 0]) {
-    HapticFeedback.selectionClick();
+    Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.uiButton);
     Navigator.pop(context, (difficulty: d, pico: pico));
   }
@@ -155,7 +155,7 @@ class _DifficultySheetState extends ConsumerState<_DifficultySheet> {
                 max: picos,
                 selected: widget.initialPico > 0,
                 onStep: (n) {
-                  HapticFeedback.selectionClick();
+                  Haptics.selectionClick();
                   ref.read(audioProvider).play(Sfx.cardSelect);
                   setState(() => _pico = n);
                 },

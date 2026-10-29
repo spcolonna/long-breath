@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../feel.dart';
 
 /// Respuesta al toque compartida: todo lo que se puede tocar se hunde un poco
 /// al apoyar el dedo (con un clic háptico suave) y vuelve con un rebote.
@@ -29,7 +29,7 @@ class _PressState extends State<Press> {
 
   void _set(bool down) {
     if (!widget.enabled || down == _down) return;
-    if (down && widget.haptic) HapticFeedback.selectionClick();
+    if (down && widget.haptic) Haptics.selectionClick();
     setState(() => _down = down);
   }
 
@@ -76,7 +76,7 @@ class _PressedContentState extends State<_PressedContent> {
   void didUpdateWidget(_PressedContent old) {
     super.didUpdateWidget(old);
     if (widget.pressed && !old.pressed && !widget.disabled) {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
     }
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,6 +9,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../tutorial/lessons.dart';
 import '../widgets/juice.dart';
+import '../feel.dart';
 
 /// Lista de lecciones: en orden, cada una se habilita al completar la
 /// anterior y todas se pueden repetir.
@@ -23,7 +23,7 @@ class LessonsScreen extends ConsumerWidget {
     final allDone = lessons.every((l) => done.contains(l.id));
 
     void open(Lesson l) {
-      HapticFeedback.selectionClick();
+      Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.uiButton);
       if (l.isCombat) {
         ref.read(combatControllerProvider.notifier).startLesson(l.id);

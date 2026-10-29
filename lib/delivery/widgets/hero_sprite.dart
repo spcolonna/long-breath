@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../domain/model/enums.dart';
 import '../theme.dart';
 import 'juice.dart';
+import '../feel.dart';
 
 String heroAsset(Style? s) => 'assets/art/player/hero_${s?.name ?? 'novice'}.webp';
 
@@ -49,8 +50,9 @@ class HeroSprite extends StatefulWidget {
 
 class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
   late final _idle = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 2800))
-    ..repeat(reverse: true);
+      vsync: this, duration: const Duration(milliseconds: 2800));
+  // Mantiene el cuerpo (y su imagen) al poner o quitar los filtros.
+  final _body = GlobalKey();
   late final _strike = AnimationController(
       vsync: this, duration: const Duration(milliseconds: 380));
   late final _hurt = AnimationController(
@@ -59,6 +61,12 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
       vsync: this, duration: const Duration(milliseconds: 600));
   late final _end = AnimationController(
       vsync: this, duration: const Duration(milliseconds: 1000));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _idle, reverse: true);
+  }
 
   @override
   void didUpdateWidget(HeroSprite old) {
@@ -183,13 +191,14 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
                   child: Transform.scale(
                     scale: 1 + 0.015 * idle + 0.07 * s.clamp(0, 1),
                     alignment: Alignment.bottomCenter,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.matrix(saturationMatrix(1 - 0.8 * fall)),
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            Palette.lacquer.withValues(alpha: flash), BlendMode.srcATop),
-                        child: child,
-                      ),
+                    // Los filtros cuestan una capa por cuadro: solo cuando
+                    // hacen algo (al caer o al recibir un golpe).
+                    child: _filtered(
+                      fall > 0 ? saturationMatrix(1 - 0.8 * fall) : null,
+                      flash > 0
+                          ? Palette.lacquer.withValues(alpha: flash)
+                          : null,
+                      KeyedSubtree(key: _body, child: child!),
                     ),
                   ),
                 ),
@@ -201,4 +210,19 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
       child: image,
     );
   }
+}
+
+/// [child] con desaturación y tinte solo si hacen falta.
+Widget _filtered(List<double>? matrix, Color? tint, Widget child) {
+  var w = child;
+  if (tint != null) {
+    w = ColorFiltered(
+      colorFilter: ColorFilter.mode(tint, BlendMode.srcATop),
+      child: w,
+    );
+  }
+  if (matrix != null) {
+    w = ColorFiltered(colorFilter: ColorFilter.matrix(matrix), child: w);
+  }
+  return w;
 }

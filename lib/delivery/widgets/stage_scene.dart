@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'cloud_drift.dart';
 import 'ken_burns.dart';
+import '../feel.dart';
 
 /// Archivo de cada escenario (`combat_bg_<archivo>.webp`). Lo que no figura
 /// (la terraza, el patio colgado, el paso nevado) usa el fondo común de la
@@ -89,6 +91,9 @@ class StageScene extends StatelessWidget {
           KenBurns(zoom: 1.06, child: image)
         else
           RepaintBoundary(child: image),
+        // Nubes al aire libre; bajo techo no.
+        if (motion && _sceneFiles[scene] != 'templo')
+          CloudDrift(seed: (scene ?? stageId).hashCode),
         LightWash(light: light),
       ],
     );
@@ -171,7 +176,13 @@ class _MistDriftState extends State<_MistDrift>
   late final _c = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 24),
-  )..repeat();
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _c);
+  }
 
   @override
   void dispose() {
@@ -192,18 +203,30 @@ class _MistPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.35)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28);
     // Tres bancos a distintas alturas y velocidades; dan la vuelta al salir.
+    // El borde suave sale de un degradado (un blur por cuadro es caro).
     const banks = [(0.30, 1.0, 0.9), (0.55, 0.6, 1.2), (0.78, 1.4, 1.0)];
     for (final (i, (y, speed, scale)) in banks.indexed) {
       final w = size.width * 0.8 * scale;
+      final h = size.height * 0.12 * scale;
       final x = ((t.value * speed + i / 3) % 1) * (size.width + w) - w;
-      canvas.drawOval(
-        Rect.fromLTWH(x, size.height * y, w, size.height * 0.12 * scale),
-        paint,
+      canvas.save();
+      canvas.translate(x + w / 2, size.height * y + h / 2);
+      canvas.scale(w / h, 1);
+      canvas.drawCircle(
+        Offset.zero,
+        h / 2,
+        Paint()
+          ..shader = RadialGradient(
+            colors: [
+              Colors.white.withValues(alpha: 0.4),
+              Colors.white.withValues(alpha: 0.25),
+              Colors.white.withValues(alpha: 0),
+            ],
+            stops: const [0, 0.5, 1],
+          ).createShader(Rect.fromCircle(center: Offset.zero, radius: h / 2)),
       );
+      canvas.restore();
     }
   }
 
