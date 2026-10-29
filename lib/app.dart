@@ -24,6 +24,7 @@ import 'delivery/screens/stage_clear_screen.dart';
 import 'delivery/screens/talisman_screen.dart';
 import 'delivery/theme.dart';
 import 'delivery/widgets/ink_reveal.dart';
+import 'delivery/widgets/route_fx.dart';
 import 'l10n/app_localizations.dart';
 
 /// Las pantallas son transparentes sobre el mismo fondo de papel, así que
@@ -32,20 +33,38 @@ import 'l10n/app_localizations.dart';
 ///
 /// Si se navega con un [InkFrom] como `extra` (al tocar un lugar del mapa),
 /// la pantalla entra con una mancha de tinta desde ese punto.
-GoRoute _route(String path, Widget screen) => GoRoute(
+///
+/// Con [fx], la pantalla tiene su propia entrada (ver `route_fx.dart`), salvo
+/// que el sistema pida reducir el movimiento.
+GoRoute _route(
+  String path,
+  Widget screen, {
+  Widget Function(Animation<double>, Widget)? fx,
+  int fxMs = 900,
+}) => GoRoute(
   path: path,
   pageBuilder: (_, state) => CustomTransitionPage(
     key: state.pageKey,
     child: screen,
     transitionDuration: Duration(
-      milliseconds: state.extra is InkFrom ? 620 : 420,
+      milliseconds: fx != null
+          ? fxMs
+          : state.extra is InkFrom
+          ? 620
+          : 420,
     ),
     reverseTransitionDuration: const Duration(milliseconds: 300),
-    transitionsBuilder: (_, animation, secondary, child) {
+    transitionsBuilder: (context, animation, secondary, child) {
       final exit = CurvedAnimation(
         parent: secondary,
         curve: const Interval(0, 0.4, curve: Curves.easeIn),
       );
+      if (fx != null && !MediaQuery.disableAnimationsOf(context)) {
+        return FadeTransition(
+          opacity: ReverseAnimation(exit),
+          child: fx(animation, child),
+        );
+      }
       if (state.extra case final InkFrom from) {
         return FadeTransition(
           opacity: ReverseAnimation(exit),
@@ -78,7 +97,7 @@ final _router = GoRouter(
     _route('/lessons', const LessonsScreen()),
     _route('/lessons/climb', const ClimbLessonScreen()),
     _route('/map', const MapScreen()),
-    _route('/combat', const CombatScreen()),
+    _route('/combat', const CombatScreen(), fx: brushSlash, fxMs: 760),
     _route('/reward', const RewardScreen()),
     _route('/fountain', const FountainScreen()),
     _route('/shrine', const ShrineScreen()),
@@ -86,7 +105,7 @@ final _router = GoRouter(
     _route('/merchant', const MerchantScreen()),
     _route('/master', const MasterScreen()),
     _route('/talisman', const TalismanScreen()),
-    _route('/stage', const StageClearScreen()),
+    _route('/stage', const StageClearScreen(), fx: scrollUnroll, fxMs: 1100),
     _route('/result', const ResultScreen()),
     _route('/registry', const RegistryScreen()),
     _route('/meridians', const MeridianScreen()),

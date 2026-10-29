@@ -609,6 +609,7 @@ class CombatEngine {
     final card = d.hand.firstWhere((c) => c.uid == uid);
     final def = data.card(card.cardId);
     final wasRetained = d.retained.remove(uid);
+    final combo = d.attacksThisTurn >= CardDef.comboAt;
     d.breath -= _cost(
       def,
       d.stance,
@@ -677,11 +678,18 @@ class CombatEngine {
       d.stance = def.stance!;
       events.add(StanceChanged(d.stance));
     }
-    d.breath += def.gainBreath;
+    d.breath +=
+        def.gainBreath +
+        (combo ? def.comboBreath : 0) +
+        (wasRetained ? def.retainedBreath : 0);
     d.turnStructureBonus += def.turnStructureBonus;
 
     (def.exhaust ? d.exhausted : d.discard).add(card);
-    if (def.draw > 0) _draw(d, def.draw, events);
+    final draw =
+        def.draw +
+        (combo ? def.comboDraw : 0) +
+        (wasRetained ? def.retainedDraw : 0);
+    if (draw > 0) _draw(d, draw, events);
 
     if (!d.isOver) _advanceForms(d, def, events);
   }

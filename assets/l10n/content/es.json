@@ -140,8 +140,16 @@
     "xia_shan_hu": "Tigre que baja de la montaña",
     "she_wei": "Cola de serpiente",
     "she_shan": "Serpiente que se escurre",
+    "she_hui_tou": "La serpiente vuelve la cabeza",
+    "ling_she": "Serpiente ágil",
+    "she_jiao": "Abrazo de la serpiente",
+    "she_pan": "Serpiente al acecho",
     "he_xi": "Rodilla de grulla",
-    "he_ming": "Canto de la grulla"
+    "he_ming": "Canto de la grulla",
+    "he_ding": "Corona de la grulla",
+    "bai_he_liang_chi": "La grulla blanca abre las alas",
+    "he_zhuo": "Picotazo de la grulla",
+    "he_mian": "La grulla duerme"
   },
   "enemies": {
     "dummy": {

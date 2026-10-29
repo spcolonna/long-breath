@@ -2878,6 +2878,30 @@ abstract class AppLocalizations {
   /// **'Si la retuviste, +{n} de Estructura'**
   String effRetainedStructure(int n);
 
+  /// No description provided for @effComboDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Si ya jugaste {at} ataques en el turno, robás {n}'**
+  String effComboDraw(int at, int n);
+
+  /// No description provided for @effComboBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Si ya jugaste {at} ataques en el turno, +{n} Aliento'**
+  String effComboBreath(int at, int n);
+
+  /// No description provided for @effRetainedDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la retuviste, robás {n}'**
+  String effRetainedDraw(int n);
+
+  /// No description provided for @effRetainedBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Si la retuviste, +{n} Aliento'**
+  String effRetainedBreath(int n);
+
   /// No description provided for @styleChipFirstStrike.
   ///
   /// In es, this message translates to:

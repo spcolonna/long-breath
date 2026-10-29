@@ -737,6 +737,46 @@ void main() {
       expect(engine.preview(s, xi).structure, fresh + 5);
     });
 
+    test('Combo: después de 2 ataques, la Serpiente roba y gana Aliento', () {
+      var s = setup(['she_hui_tou', 'ling_she', 'tan_tui', 'tan_tui', ...filler],
+          style: Style.snake);
+      // Sin combo: la mano solo pierde la carta jugada.
+      final hand = s.hand.length;
+      s = play(s, 'she_hui_tou').state;
+      expect(s.hand.length, hand - 1);
+      s = play(s, 'tan_tui').state;
+      final breath = s.player.breath;
+      final cost = engine.preview(s, uidOf(s, 'ling_she')).cost;
+      s = play(s, 'ling_she').state;
+      expect(s.player.breath, breath - cost + 1, reason: 'Serpiente ágil');
+      expect(s.attacksThisTurn, 3);
+    });
+
+    test('Combo: Serpiente que vuelve la cabeza roba 1', () {
+      var s = setup(['tan_tui', 'tan_tui', 'she_hui_tou', ...filler],
+          style: Style.snake);
+      s = play(s, 'tan_tui').state;
+      s = play(s, 'tan_tui').state;
+      final hand = s.hand.length;
+      s = play(s, 'she_hui_tou').state;
+      expect(s.hand.length, hand, reason: 'jugó una y robó otra');
+    });
+
+    test('Grulla: retenida, la Corona da Aliento y el sueño roba más', () {
+      var s = setup(['he_ding', 'he_mian', ...filler, ...filler],
+          style: Style.crane);
+      final ding = uidOf(s, 'he_ding');
+      final mian = uidOf(s, 'he_mian');
+      s = endTurn(s, [ding, mian]).state;
+      final breath = s.player.breath;
+      expect(engine.preview(s, ding).cost, 0, reason: 'retenida, 1 menos');
+      s = play(s, 'he_ding').state;
+      expect(s.player.breath, breath + 1);
+      final hand = s.hand.length;
+      s = play(s, 'he_mian').state;
+      expect(s.hand.length, hand - 1 + 3);
+    });
+
     test('Respirar borra las retenidas', () {
       var s = setup(['he_zui', ...filler, ...filler], style: Style.crane);
       s = endTurn(s, [uidOf(s, 'he_zui')]).state;

@@ -31,12 +31,20 @@
     { "id": "jin_she", "pinyin": "Jīn Shé", "hanzi": "金蛇", "type": "fist", "cost": 2, "damage": 6, "structure": 3, "chainDamage": 3, "pool": "snake" },
     { "id": "she_wei", "pinyin": "Shé Wěi", "hanzi": "蛇尾", "type": "kick", "cost": 1, "damage": 3, "structure": 2, "chainStructure": 2, "pool": "snake" },
     { "id": "she_shan", "pinyin": "Shé Shǎn", "hanzi": "蛇闪", "type": "technique", "cost": 0, "draw": 2, "exhaust": true, "pool": "snake" },
+    { "id": "she_hui_tou", "pinyin": "Shé Huí Tóu", "hanzi": "蛇回头", "type": "palm", "cost": 0, "damage": 2, "structure": 1, "chainDamage": 1, "comboDraw": 1, "pool": "snake" },
+    { "id": "ling_she", "pinyin": "Líng Shé", "hanzi": "灵蛇", "type": "kick", "cost": 1, "damage": 4, "structure": 3, "chainDamage": 1, "comboBreath": 1, "pool": "snake" },
+    { "id": "she_jiao", "pinyin": "Shé Jiǎo", "hanzi": "蛇绞", "type": "palm", "cost": 2, "damage": 5, "structure": 4, "chainStructure": 3, "pool": "snake" },
+    { "id": "she_pan", "pinyin": "Shé Pán", "hanzi": "蛇盘", "type": "defense", "cost": 1, "guard": 6, "height": "low", "comboDraw": 1, "pool": "snake" },
 
     { "id": "he_chi", "pinyin": "Hè Chì", "hanzi": "鹤翅", "type": "defense", "cost": 1, "guard": 8, "height": "high", "onDeflectDamage": 6, "pool": "crane" },
     { "id": "du_li", "pinyin": "Dú Lì", "hanzi": "独立", "type": "defense", "cost": 0, "stance": "xubu", "guard": 4, "height": "low", "draw": 1, "pool": "crane" },
     { "id": "he_zui", "pinyin": "Hè Zuǐ", "hanzi": "鹤嘴", "type": "fist", "cost": 1, "damage": 5, "structure": 2, "retainedDamage": 6, "pool": "crane" },
     { "id": "he_wu", "pinyin": "Hè Wǔ", "hanzi": "鹤舞", "type": "kick", "cost": 2, "damage": 8, "structure": 6, "retainedDamage": 7, "pool": "crane" },
     { "id": "he_xi", "pinyin": "Hè Xī", "hanzi": "鹤膝", "type": "kick", "cost": 1, "damage": 3, "structure": 3, "retainedStructure": 5, "pool": "crane" },
-    { "id": "he_ming", "pinyin": "Hè Míng", "hanzi": "鹤鸣", "type": "defense", "cost": 2, "guard": 11, "height": "mid", "onDeflectDamage": 4, "onDeflectStructure": 3, "pool": "crane" }
+    { "id": "he_ming", "pinyin": "Hè Míng", "hanzi": "鹤鸣", "type": "defense", "cost": 2, "guard": 11, "height": "mid", "onDeflectDamage": 4, "onDeflectStructure": 3, "pool": "crane" },
+    { "id": "he_ding", "pinyin": "Hè Dǐng", "hanzi": "鹤顶", "type": "palm", "cost": 1, "damage": 5, "structure": 2, "retainedBreath": 1, "pool": "crane" },
+    { "id": "bai_he_liang_chi", "pinyin": "Bái Hè Liàng Chì", "hanzi": "白鹤亮翅", "type": "defense", "cost": 1, "guard": 7, "height": "high", "onDeflectDamage": 3, "retainedDraw": 1, "pool": "crane" },
+    { "id": "he_zhuo", "pinyin": "Hè Zhuó", "hanzi": "鹤啄", "type": "kick", "cost": 2, "damage": 7, "structure": 4, "retainedDamage": 4, "retainedStructure": 4, "pool": "crane" },
+    { "id": "he_mian", "pinyin": "Hè Mián", "hanzi": "鹤眠", "type": "technique", "cost": 0, "draw": 1, "retainedDraw": 2, "pool": "crane" }
   ]
 }

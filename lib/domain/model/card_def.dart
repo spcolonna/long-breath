@@ -27,6 +27,10 @@ class CardDef {
     this.retainedDamage = 0,
     this.chainStructure = 0,
     this.retainedStructure = 0,
+    this.comboDraw = 0,
+    this.comboBreath = 0,
+    this.retainedDraw = 0,
+    this.retainedBreath = 0,
     this.pool = 'starter',
     this.copies = 1,
   });
@@ -63,6 +67,16 @@ class CardDef {
 
   /// Estructura extra si la carta viene retenida del turno anterior (Grulla).
   final int retainedStructure;
+
+  /// Combo (Serpiente): si ya jugaste [comboAt] ataques en el turno, robás
+  /// [comboDraw] y ganás [comboBreath] de Aliento.
+  static const comboAt = 2;
+  final int comboDraw;
+  final int comboBreath;
+
+  /// Si la carta viene retenida (Grulla): robás y ganás Aliento.
+  final int retainedDraw;
+  final int retainedBreath;
   final String pool;
   final int copies;
 
@@ -95,6 +109,10 @@ class CardDef {
       retainedDamage: j['retainedDamage'] as int? ?? 0,
       chainStructure: j['chainStructure'] as int? ?? 0,
       retainedStructure: j['retainedStructure'] as int? ?? 0,
+      comboDraw: j['comboDraw'] as int? ?? 0,
+      comboBreath: j['comboBreath'] as int? ?? 0,
+      retainedDraw: j['retainedDraw'] as int? ?? 0,
+      retainedBreath: j['retainedBreath'] as int? ?? 0,
       pool: j['pool'] as String? ?? 'starter',
       copies: j['copies'] as int? ?? 1,
     );

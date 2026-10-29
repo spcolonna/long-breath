@@ -1755,6 +1755,26 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String effComboDraw(int at, int n) {
+    return 'Si ya jugaste $at ataques en el turno, robás $n';
+  }
+
+  @override
+  String effComboBreath(int at, int n) {
+    return 'Si ya jugaste $at ataques en el turno, +$n Aliento';
+  }
+
+  @override
+  String effRetainedDraw(int n) {
+    return 'Si la retuviste, robás $n';
+  }
+
+  @override
+  String effRetainedBreath(int n) {
+    return 'Si la retuviste, +$n Aliento';
+  }
+
+  @override
   String styleChipFirstStrike(String hanzi, int n) {
     return '$hanzi Primer golpe +$n';
   }

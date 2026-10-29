@@ -160,6 +160,7 @@ class PlannerBot extends Bot {
     int value(CombatCard c) {
       final d = data.card(c.cardId);
       var v = d.damage + d.structure + d.retainedDamage + d.retainedStructure;
+      v += (d.retainedDraw + d.retainedBreath) * 3;
       if (d.cost > 0) v += 2;
       for (final f in engine.knownForms(s)) {
         final p = s.formProgress[f.id]!;
@@ -428,6 +429,8 @@ double cardValue(CardDef d) {
   // Cadena: se cuentan ~1,5 ataques previos; retenida: la mitad de las veces.
   v += d.chainDamage * 1.5 + d.chainStructure * 1.2;
   v += d.retainedDamage * 0.5 + d.retainedStructure * 0.4;
+  v += (d.comboDraw * 2.5 + d.comboBreath * 3) * 0.5;
+  v += (d.retainedDraw * 2.5 + d.retainedBreath * 3) * 0.5;
   return v / (d.cost == 0 ? 0.8 : d.cost);
 }
 

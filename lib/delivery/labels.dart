@@ -141,6 +141,10 @@ extension Labels on AppLocalizations {
     if (d.retainedDamage > 0) effRetained(d.retainedDamage),
     if (d.chainStructure > 0) effChainStructure(d.chainStructure),
     if (d.retainedStructure > 0) effRetainedStructure(d.retainedStructure),
+    if (d.comboDraw > 0) effComboDraw(CardDef.comboAt, d.comboDraw),
+    if (d.comboBreath > 0) effComboBreath(CardDef.comboAt, d.comboBreath),
+    if (d.retainedDraw > 0) effRetainedDraw(d.retainedDraw),
+    if (d.retainedBreath > 0) effRetainedBreath(d.retainedBreath),
     if (d.firstTurnOnly) effFirstTurn,
     if (d.exhaust) effExhaust,
   ].join('. ');
