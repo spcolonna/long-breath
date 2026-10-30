@@ -1880,31 +1880,33 @@ class AppLocalizationsEs extends AppLocalizations {
   String get picoRule1 => 'Élites +15% de Vida';
 
   @override
-  String get picoRule2 => 'La fuente cura 5 menos';
+  String get picoRule2 => 'El mercader cobra 20% más';
 
   @override
-  String get picoRule3 => 'El jefe +10% de Vida';
+  String get picoRule3 => 'Los rivales arrancan con 3 de Guardia';
 
   @override
   String get picoRule4 => 'Rivales +5% de daño';
 
   @override
-  String get picoRule5 => 'Empezás con 5 de Vida menos';
+  String get picoRule5 =>
+      'Empezás con 5 de Vida menos y la fuente cura 5 menos';
 
   @override
-  String get picoRule6 => 'Rivales +10% de Estructura';
+  String get picoRule6 => 'Los élites traen 1 de Espinas';
 
   @override
-  String get picoRule7 => 'Rivales +5% de daño otra vez';
+  String get picoRule7 => 'Rivales +5% de daño y +5% de Estructura';
 
   @override
-  String get picoRule8 => 'Élites y jefe +10% de Vida otra vez';
+  String get picoRule8 => 'Élites y jefe +10% de Vida';
 
   @override
-  String get picoRule9 => 'Rivales +5% de daño otra vez';
+  String get picoRule9 => 'Un Respiro menos por combate';
 
   @override
-  String get picoRule10 => 'Todos los rivales +8% de Vida y +5% de Estructura';
+  String get picoRule10 =>
+      'Rivales +5% de daño, +8% de Vida y +5% de Estructura';
 
   @override
   String wrathChip(int n) {

@@ -270,9 +270,10 @@ class MerchantDef {
   /// Precio de una carta en oferta.
   int get salePrice => (card * (100 - sale) / 100).round();
 
-  /// Los mismos precios con [pct] % de descuento (meridianos).
+  /// Los mismos precios con [pct] % de descuento (meridianos); negativo es
+  /// recargo (Picos).
   MerchantDef discounted(int pct) {
-    if (pct <= 0) return this;
+    if (pct == 0) return this;
     int off(int v) => (v * (100 - pct) / 100).round();
     return MerchantDef(
       cards: cards,
@@ -341,6 +342,10 @@ class PicoDef {
     this.enemyStructure = 0,
     this.fountainHeal = 0,
     this.playerHp = 0,
+    this.enemyGuard = 0,
+    this.eliteThorns = 0,
+    this.breathes = 0,
+    this.merchantPct = 0,
   });
 
   final int enemyHp;
@@ -352,6 +357,18 @@ class PicoDef {
   final int fountainHeal;
   final int playerHp;
 
+  /// Guardia con la que arranca cada rival (se le cae al actuar).
+  final int enemyGuard;
+
+  /// Espinas que suman los élites.
+  final int eliteThorns;
+
+  /// Respiros de más (o de menos) por combate.
+  final int breathes;
+
+  /// Recargo (%) en los precios del mercader.
+  final int merchantPct;
+
   PicoDef operator +(PicoDef o) => PicoDef(
         enemyHp: enemyHp + o.enemyHp,
         commonHp: commonHp + o.commonHp,
@@ -361,6 +378,10 @@ class PicoDef {
         enemyStructure: enemyStructure + o.enemyStructure,
         fountainHeal: fountainHeal + o.fountainHeal,
         playerHp: playerHp + o.playerHp,
+        enemyGuard: enemyGuard + o.enemyGuard,
+        eliteThorns: eliteThorns + o.eliteThorns,
+        breathes: breathes + o.breathes,
+        merchantPct: merchantPct + o.merchantPct,
       );
 
   factory PicoDef.fromJson(Map<String, dynamic> j) => PicoDef(
@@ -372,6 +393,10 @@ class PicoDef {
         enemyStructure: j['enemyStructure'] as int? ?? 0,
         fountainHeal: j['fountainHeal'] as int? ?? 0,
         playerHp: j['playerHp'] as int? ?? 0,
+        enemyGuard: j['enemyGuard'] as int? ?? 0,
+        eliteThorns: j['eliteThorns'] as int? ?? 0,
+        breathes: j['breathes'] as int? ?? 0,
+        merchantPct: j['merchantPct'] as int? ?? 0,
       );
 }
 

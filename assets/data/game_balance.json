@@ -94,15 +94,15 @@
   },
   "picos": [
     { "eliteHp": 15 },
-    { "fountainHeal": -5 },
-    { "bossHp": 10 },
+    { "merchantPct": 20 },
+    { "enemyGuard": 3 },
     { "enemyDamage": 5 },
-    { "playerHp": -5 },
-    { "enemyStructure": 10 },
-    { "enemyDamage": 5 },
+    { "playerHp": -5, "fountainHeal": -5 },
+    { "eliteThorns": 1 },
+    { "enemyDamage": 5, "enemyStructure": 5 },
     { "eliteHp": 10, "bossHp": 10 },
-    { "enemyDamage": 5 },
-    { "enemyHp": 8, "enemyStructure": 5 }
+    { "breathes": -1 },
+    { "enemyDamage": 5, "enemyHp": 8, "enemyStructure": 5 }
   ],
   "run": {
     "stageClear": { "heal": 100, "jade": 25 },

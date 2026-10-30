@@ -584,19 +584,34 @@ void main() {
         start(null, pico: 1, enemy: 'monk').enemy.maxHp,
         (128 * 1.15).round(),
       );
-      // Pico 6: daño del 4 y Estructura del 6, sin tocar la Vida común.
+      // Pico 6: daño del 4 y Guardia del 3, sin tocar Vida ni Estructura.
       final s = start(null, pico: 6);
       expect(s.enemy.maxHp, 63);
-      expect(s.enemy.maxStructure, (14 * 1.1).round());
+      expect(s.enemy.maxStructure, 14);
+      expect(s.enemy.guard, 3);
       expect(
         engine.intentView(s).damage,
         (engine.intentView(start(null)).damage * 1.05).round(),
       );
-      // Pico 10 sobre las reglas anteriores: jefe +10 +10 +8.
+      // Espinas solo para las élites.
+      expect(s.enemy.thorns, 0);
+      expect(start(null, pico: 6, enemy: 'monk').enemy.thorns, 1);
+      expect(start(null, pico: 5, enemy: 'monk').enemy.thorns, 0);
+      // Pico 7: +5% de Estructura.
+      expect(start(null, pico: 7).enemy.maxStructure, (14 * 1.05).round());
+      // Pico 9: un Respiro menos.
+      expect(start(null, pico: 9).breathesLeft, start(null).breathesLeft - 1);
+      // Pico 10 sobre las reglas anteriores: jefe +10 +8.
       expect(
         start(null, pico: 10, enemy: 'dragon').enemy.maxHp,
-        (150 * 1.28).round(),
+        (150 * 1.18).round(),
       );
+    });
+
+    test('la Guardia del Pico se le cae cuando actúa', () {
+      CombatState act(int pico) =>
+          engine.reduce(start(null, pico: pico), const EndTurn()).state;
+      expect(act(3).enemy.guard, act(0).enemy.guard);
     });
 
     test('Shifu sube Vida, Estructura y daño enemigos', () {

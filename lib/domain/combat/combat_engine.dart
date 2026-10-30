@@ -191,6 +191,9 @@ class CombatEngine {
         structure: math.max(1, structure - sum((e) => e.enemyStructure)),
         maxStructure: structure,
         scales: enemy.scales,
+        // Picos: arranca cubierto y, si es élite, con espinas.
+        guard: pm.enemyGuard,
+        thorns: enemy.rank == EnemyRank.elite ? pm.eliteThorns : 0,
       );
     }
     final extraStructure = sum((e) => e.structure) + meta.structure;
@@ -225,7 +228,7 @@ class CombatEngine {
       hand: [],
       discard: [],
       exhausted: [],
-      breathesLeft: b.breathesPerCombat + meta.breathes,
+      breathesLeft: math.max(0, b.breathesPerCombat + meta.breathes + pm.breathes),
       // Solo las formas que conoce (null = todas: tests y herramientas).
       formProgress: {
         for (final f in data.forms)
@@ -822,7 +825,7 @@ class CombatEngine {
 
   /// Espinas: golpearlo con una carta te lastima.
   void _thorns(_Draft d, List<CombatEvent> events) {
-    final n = data.enemy(d.enemy.id).thorns;
+    final n = data.enemy(d.enemy.id).thorns + d.enemy.thorns;
     if (n <= 0) return;
     d.hp = math.max(0, d.hp - n);
     events.add(ThornsHurt(n));
@@ -1129,6 +1132,7 @@ class _EnemyDraft {
     this.stolen = 0,
     this.fled = false,
     this.guardBlocks,
+    this.thorns = 0,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -1150,6 +1154,7 @@ class _EnemyDraft {
     stolen: e.stolen,
     fled: e.fled,
     guardBlocks: e.guardBlocks,
+    thorns: e.thorns,
   );
 
   final String id;
@@ -1170,6 +1175,7 @@ class _EnemyDraft {
   int stolen;
   bool fled;
   CardType? guardBlocks;
+  final int thorns;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -1190,6 +1196,7 @@ class _EnemyDraft {
     stolen: stolen,
     fled: fled,
     guardBlocks: guardBlocks,
+    thorns: thorns,
   );
 }
 

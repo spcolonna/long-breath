@@ -441,20 +441,23 @@ Todos los talismanes juntos valen unos +20 puntos: de 27% sin ninguno a 45% con 
 
 Están en `game_balance.json` → `picos` y se acumulan: el Pico N incluye las reglas del 1 al N. Van encima de Normal; ganar en Normal o más difícil abre el siguiente. `dart run tool/simulate.dart --section picos` usa las mismas reglas que la app.
 
+Con reglas de juego (3 etapas, 200 runs por perfil, octubre 2026):
+
 | Pico | Regla nueva | Promedio | Experto |
 |---|---|---|---|
-| 0 | Normal | 62% | 82% |
-| 1 | Élites +15% de Vida | 61% | 80% |
-| 2 | La fuente cura 5 menos | 56% | 78% |
-| 3 | El jefe +10% de Vida | 51% | 74% |
-| 4 | Rivales +5% de daño | 39% | 65% |
-| 5 | Empezás con 5 de Vida menos | 30% | 56% |
-| 6 | Rivales +10% de Estructura | 20% | 44% |
-| 7 | Rivales +5% de daño otra vez | 16% | 38% |
-| 8 | Élites y jefe +10% de Vida otra vez | 11% | 32% |
-| 9 | Rivales +5% de daño otra vez | 7% | 24% |
-| 10 | Todos los rivales +8% de Vida y +5% de Estructura | 3% | 17% |
+| 0 | Normal | 30% | 67% |
+| 1 | Élites +15% de Vida | 17% | 61% |
+| 2 | El mercader cobra 20% más | 20% | 56% |
+| 3 | Los rivales arrancan con 3 de Guardia | 14% | 55% |
+| 4 | Rivales +5% de daño | 11% | 48% |
+| 5 | 5 de Vida menos y la fuente cura 5 menos | 6% | 31% |
+| 6 | Los élites traen 1 de Espinas | 3% | 20% |
+| 7 | Rivales +5% de daño y +5% de Estructura | 1% | 12% |
+| 8 | Élites y jefe +10% de Vida | 0% | 7% |
+| 9 | Un Respiro menos por combate | 0% | 7% |
+| 10 | Rivales +5% de daño, +8% de Vida y +5% de Estructura | 0% | 3% |
 
+- **Reglas:** la curva quedó casi igual a la de solo números (61→3% el experto). Con 2 de Espinas el Pico 6 bajaba al 10%, por eso es 1. El bot casi no usa el Respiro, así que el Pico 9 le pesa más a un humano de lo que muestra la tabla.
 - **Curva:** cada Pico le quita al experto entre 2 y 12 puntos, sin saltos grandes. Con un humano experto, que juega mejor que el bot, el Pico 10 debería quedar en 20–30%.
 - **Qué pesa:** el daño enemigo y la Vida inicial son las palancas más fuertes; la Vida de los comunes casi no cambia nada (se descartó). La Vida de élites y jefe muerde poco al principio, por eso abre la escala.
 - **Prototipo anterior (3 etapas):** las reglas "la fuente cura menos" y "empezás con menos Vida" no tenían efecto en el simulador (tocaban valores que la run no usa), así que sus números estaban inflados. Las "recompensas de 2 cartas" no endurecían y se sacaron.

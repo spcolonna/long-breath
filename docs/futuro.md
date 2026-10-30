@@ -219,7 +219,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - La fuente cura menos.
   - Las élites tienen una regla extra.
 - Es lo que da cientos de horas de rejugabilidad.
-- **Hecho (etapa 1):** 10 Picos encima de Normal, en `game_balance.json`. El bot experto baja de 80% a 17% (`balance.md`, sección 6). Medidos con 3 etapas (`balance.md` §3i): del 80% al 3% para el experto. Falta: élites con una regla extra como Pico.
+- **Hecho (etapa 1):** 10 Picos encima de Normal, en `game_balance.json`. El bot experto baja de 80% a 17% (`balance.md`, sección 6). Medidos con 3 etapas (`balance.md` §3i): del 80% al 3% para el experto. **Hecho (reglas):** además de los números, cuatro Picos cambian cómo se juega: mercader más caro (2), rivales que arrancan con Guardia (3), élites con Espinas (6) y un Respiro menos (9).
 - **Arte:** ninguno.
 
 ### 3.7 Progresión entre partidas: el cultivo del aliento

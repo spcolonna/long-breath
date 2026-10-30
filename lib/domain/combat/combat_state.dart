@@ -81,6 +81,7 @@ class EnemyCombat {
     this.stolen = 0,
     this.fled = false,
     this.guardBlocks,
+    this.thorns = 0,
   });
 
   final String id;
@@ -120,6 +121,9 @@ class EnemyCombat {
   /// Tipo de golpe que frena su Guardia (null = todos). Los otros la esquivan.
   final CardType? guardBlocks;
 
+  /// Espinas que suma a las suyas (élites en los Picos).
+  final int thorns;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -146,6 +150,7 @@ class EnemyCombat {
         stolen: stolen,
         fled: fled,
         guardBlocks: guardBlocks,
+        thorns: thorns,
       );
 }
 

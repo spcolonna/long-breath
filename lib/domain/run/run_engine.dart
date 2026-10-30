@@ -848,10 +848,12 @@ class RunEngine {
 
   // ------------------------------------------------------------- mercader
 
-  /// Mercader de la etapa en la que está la run.
+  /// Mercader de la etapa en la que está la run (los Picos lo encarecen).
   MerchantDef merchantOf(RunState r) => data.balance
       .merchantAt(r.stage)
-      .discounted(r.meta.merchantDiscountPct);
+      .discounted(
+        r.meta.merchantDiscountPct - data.balance.picoMods(r.pico).merchantPct,
+      );
 
   RunState _rollShop(RunState r) {
     final m = merchantOf(r);

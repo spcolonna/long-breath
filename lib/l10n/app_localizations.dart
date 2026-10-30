@@ -3067,13 +3067,13 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule2.
   ///
   /// In es, this message translates to:
-  /// **'La fuente cura 5 menos'**
+  /// **'El mercader cobra 20% más'**
   String get picoRule2;
 
   /// No description provided for @picoRule3.
   ///
   /// In es, this message translates to:
-  /// **'El jefe +10% de Vida'**
+  /// **'Los rivales arrancan con 3 de Guardia'**
   String get picoRule3;
 
   /// No description provided for @picoRule4.
@@ -3085,37 +3085,37 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule5.
   ///
   /// In es, this message translates to:
-  /// **'Empezás con 5 de Vida menos'**
+  /// **'Empezás con 5 de Vida menos y la fuente cura 5 menos'**
   String get picoRule5;
 
   /// No description provided for @picoRule6.
   ///
   /// In es, this message translates to:
-  /// **'Rivales +10% de Estructura'**
+  /// **'Los élites traen 1 de Espinas'**
   String get picoRule6;
 
   /// No description provided for @picoRule7.
   ///
   /// In es, this message translates to:
-  /// **'Rivales +5% de daño otra vez'**
+  /// **'Rivales +5% de daño y +5% de Estructura'**
   String get picoRule7;
 
   /// No description provided for @picoRule8.
   ///
   /// In es, this message translates to:
-  /// **'Élites y jefe +10% de Vida otra vez'**
+  /// **'Élites y jefe +10% de Vida'**
   String get picoRule8;
 
   /// No description provided for @picoRule9.
   ///
   /// In es, this message translates to:
-  /// **'Rivales +5% de daño otra vez'**
+  /// **'Un Respiro menos por combate'**
   String get picoRule9;
 
   /// No description provided for @picoRule10.
   ///
   /// In es, this message translates to:
-  /// **'Todos los rivales +8% de Vida y +5% de Estructura'**
+  /// **'Rivales +5% de daño, +8% de Vida y +5% de Estructura'**
   String get picoRule10;
 
   /// No description provided for @wrathChip.

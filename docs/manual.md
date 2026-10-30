@@ -309,15 +309,15 @@ Los Picos son Normal con reglas extra, para quien ya gana. Aparecen debajo de la
 | Pico | Regla nueva |
 |---|---|
 | 1 | Élites +15% de Vida |
-| 2 | La fuente cura 5 menos |
-| 3 | El jefe +10% de Vida |
+| 2 | El mercader cobra 20% más |
+| 3 | Los rivales arrancan con 3 de Guardia (se les cae cuando actúan) |
 | 4 | Rivales +5% de daño |
-| 5 | Empezás con 5 de Vida menos |
-| 6 | Rivales +10% de Estructura |
-| 7 | Rivales +5% de daño otra vez |
-| 8 | Élites y jefe +10% de Vida otra vez |
-| 9 | Rivales +5% de daño otra vez |
-| 10 | Todos los rivales +8% de Vida y +5% de Estructura |
+| 5 | Empezás con 5 de Vida menos y la fuente cura 5 menos |
+| 6 | Los élites traen 1 de Espinas (cada carta que los golpea te quita 1 de Vida) |
+| 7 | Rivales +5% de daño y +5% de Estructura |
+| 8 | Élites y jefe +10% de Vida |
+| 9 | Un Respiro menos por combate |
+| 10 | Rivales +5% de daño, +8% de Vida y +5% de Estructura |
 
 - **Selector:** la tarjeta de Picos muestra el número, la regla nueva y cuántas arrastra. Con − y + se elige entre el 1 y el más alto abierto; tocar la tarjeta empieza la subida.
 - **En la subida:** el mapa muestra "Normal · Pico N" en morado.

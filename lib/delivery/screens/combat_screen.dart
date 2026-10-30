@@ -1884,7 +1884,7 @@ class _EnemyStage extends ConsumerWidget {
                   e.wrath > 0 ||
                   e.parryReady ||
                   e.stolen > 0 ||
-                  def.thorns > 0 ||
+                  def.thorns + e.thorns > 0 ||
                   def.regen > 0
               ? Padding(
                   padding: const EdgeInsets.only(top: 4),
@@ -1905,10 +1905,10 @@ class _EnemyStage extends ConsumerWidget {
                             color: Palette.sky,
                           ),
                         ),
-                      if (def.thorns > 0 && !e.staggered)
+                      if (def.thorns + e.thorns > 0 && !e.staggered)
                         _Chip(
                           icon: Icons.grass,
-                          text: t.thornsChip(def.thorns),
+                          text: t.thornsChip(def.thorns + e.thorns),
                           color: Palette.lacquer,
                         ),
                       if (def.regen > 0 && e.hp < e.maxHp)
@@ -2750,8 +2750,11 @@ class _PreviewPanel extends ConsumerWidget {
       else if (p.damage > 0)
         t.previewDamage(p.damage),
       ?guardNote,
-      if (p.damage > 0 && !parried && enemyDef.thorns > 0 && !s.enemy.staggered)
-        t.previewThorns(enemyDef.thorns),
+      if (p.damage > 0 &&
+          !parried &&
+          enemyDef.thorns + s.enemy.thorns > 0 &&
+          !s.enemy.staggered)
+        t.previewThorns(enemyDef.thorns + s.enemy.thorns),
       if (p.structure > 0) t.previewStructure(p.structure),
       if (p.guard > 0) '${t.guard} ${p.guard} ${t.heightLabel(p.height)}',
       if (p.stanceAfter != s.player.stance)

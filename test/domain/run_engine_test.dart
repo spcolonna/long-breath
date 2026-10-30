@@ -293,10 +293,17 @@ void main() {
     expect(run.healOf(r), 15);
     r = RunState.fromJson(r.toJson());
     expect(r.pico, 5);
-    // Antes del Pico 2 la fuente cura lo de siempre.
+    // Antes del Pico 5 la fuente cura lo de siempre.
     expect(run.healOf(run.newRun(seed: 1, pico: 1)), 20);
     final old = fresh(1).toJson()..remove('pico');
     expect(RunState.fromJson(old).pico, 0);
+  });
+
+  test('desde el Pico 2 el mercader cobra más', () {
+    final base = run.merchantOf(run.newRun(seed: 1, pico: 1));
+    final dear = run.merchantOf(run.newRun(seed: 1, pico: 2));
+    expect(dear.card, (base.card * 1.2).round());
+    expect(dear.remove, (base.remove * 1.2).round());
   });
 
   group('eventos', () {
