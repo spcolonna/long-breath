@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 96 · ✅ 92 · 🎨 4 · ❌ 0
+Total: 115 · ✅ 102 · 🎨 4 · ❌ 9
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -91,7 +91,26 @@ Total: 96 · ✅ 92 · 🎨 4 · ❌ 0
 
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
-| ✅ propio | `assets/art/cards/gongbu_chongquan.webp` | ilustración de Puñetazo a fondo | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/gongbu_chongquan.webp` | ilustración de gongbu_chongquan | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/mabu_chongquan.webp` | ilustración de mabu_chongquan | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/tan_tui.webp` | ilustración de tan_tui | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/tui_zhang.webp` | ilustración de tui_zhang | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/mabu_jiada.webp` | ilustración de mabu_jiada | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/xubu_liangzhang.webp` | ilustración de xubu_liangzhang | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/ge_dang.webp` | ilustración de ge_dang | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/an_zhang.webp` | ilustración de an_zhang | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/deng_tui.webp` | ilustración de deng_tui | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/ce_chuai.webp` | ilustración de ce_chuai | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/gongbu_tuizhang.webp` | ilustración de gongbu_tuizhang | hanzi de marca de agua | — |
+| ❌ falta | `assets/art/cards/pi_quan.webp` | ilustración de pi_quan | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/shang_jia.webp` | ilustración de shang_jia | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/ti_xi.webp` | ilustración de ti_xi | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/tiao_xi.webp` | ilustración de tiao_xi | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/baoquan_li.webp` | ilustración de baoquan_li | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/hu_zhao.webp` | ilustración de hu_zhao | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/hu_pu.webp` | ilustración de hu_pu | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/hu_bao_tou.webp` | ilustración de hu_bao_tou | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/hu_xiao.webp` | ilustración de hu_xiao | hanzi de marca de agua | no |
 
 ## npc
 

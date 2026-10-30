@@ -114,8 +114,13 @@ def main():
     for f in ("fist", "palm", "kick", "defense", "technique"):
         add("ui", f"cards/frame_{f}.webp", f"marco de carta {f}",
             "papel teñido sin marco")
-    add("cartas", "cards/gongbu_chongquan.webp", "ilustración de Puñetazo a fondo",
-        "hanzi de marca de agua")
+    for f in ("gongbu_chongquan", "mabu_chongquan", "tan_tui", "tui_zhang",
+              "mabu_jiada", "xubu_liangzhang", "ge_dang", "an_zhang",
+              "deng_tui", "ce_chuai", "gongbu_tuizhang", "pi_quan",
+              "shang_jia", "ti_xi", "tiao_xi", "baoquan_li", "hu_zhao",
+              "hu_pu", "hu_bao_tou", "hu_xiao"):
+        add("cartas", f"cards/{f}.webp", f"ilustración de {f}",
+            "hanzi de marca de agua")
     add("npc", "npc/master.webp", "maestro", "vacío")
     add("npc", "npc/merchant.webp", "mercader", "vacío")
     for p in ("novice", "tiger", "snake", "crane"):

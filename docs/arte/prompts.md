@@ -8,25 +8,24 @@ identidad visual de Long Breath. Antes de pasar un prompt, mirá [`relevamiento.
 claro, color saturado y mucho aire.
 
 **Cómo usarlos:**
-- Cada bloque gris es **un solo mensaje**: copialo entero y pegalo en una conversación nueva. Arranca a generar sin
-  preguntar.
-- Los bloques tienen **10 imágenes como máximo**.
-- Cada imagen repite toda su descripción (formato, estilo, qué no incluir). Así sale consistente aunque la corras
-  sola, en otra conversación o en otra cuenta.
-- ChatGPT no les pone nombre: salen en el orden de la lista. Guardá cada PNG con el nombre que figura en
-  `Image N — <nombre>` (más `.png`), en la carpeta que se indica, y pedile a Claude que las integre.
-- Si una sale mal, regenerala sola con su prompt individual (más abajo, mismo nombre).
+- **Una imagen por mensaje.** Cada bloque gris es un prompt suelto: copialo entero y pegalo en ChatGPT (mejor en una
+  conversación nueva). Arranca a generar sin preguntar. Los pedidos de a 10 en un solo mensaje no funcionan: ChatGPT
+  repite la misma imagen o las junta en una sola.
+- Cada prompt repite toda su descripción (formato, estilo, qué no incluir). Así sale consistente aunque la corras en
+  otra conversación o en otra cuenta.
+- Guardá cada PNG con el nombre que figura en el título del prompt (más `.png`), en la carpeta que se indica, y pedile
+  a Claude que las integre.
 - Al integrar: se corre `python3 tool/optimize_art.py` (lo pasa a `.webp` del tamaño en que se muestra y borra el
-  PNG) y `python3 tool/art_status.py`; después se marca ✅ acá y se saca la imagen de su bloque. **El PNG nunca se
-  commitea:** en git solo queda el `.webp`, para que el repositorio no pese. Los prompts nuevos van en su sección y en
-  un bloque de hasta 10.
+  PNG) y `python3 tool/art_status.py`; después se marca ✅ acá y se saca el prompt de «Para generar ahora». **El PNG
+  nunca se commitea:** en git solo queda el `.webp`, para que el repositorio no pese. Los prompts nuevos van en su
+  sección y, sueltos, en «Para generar ahora».
 
 ## Resumen: qué está y qué falta
 
-- **Falta (19):** las ilustraciones de cartas de los bloques A y B, justo abajo en «Para generar ahora».
+- **Falta (9):** ilustraciones de cartas, justo abajo en «Para generar ahora», un prompt por imagen.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
-  `gongbu_chongquan`. El detalle está en «Estado», más abajo.
+  11 ilustraciones de cartas. El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
 
@@ -45,143 +44,15 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-| Bloque | Qué | Carpeta | Imágenes |
-|---|---|---|---|
-| A | Ilustraciones de cartas, 1 de 2 | `assets/art/cards/` | 10 |
-| B | Ilustraciones de cartas, 2 de 2 | `assets/art/cards/` | 9 |
+Faltan **9 ilustraciones de cartas**, carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola. `gongbu_chongquan` y las 10 del bloque A ya están y sirven de referencia de estilo.
 
-Es lo único que falta. La carta ya muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca
-de agua), así que cada una se integra sola al optimizarla. `gongbu_chongquan` ya está y sirve de referencia de estilo.
-Ninguna imagen es recoloreo.
+Cada bloque gris es **una imagen**: copialo, pegalo en ChatGPT y guardá el PNG con el nombre del título. El color de la estela es el del tipo de la carta.
 
-## Bloque A — Ilustraciones de cartas, 1 de 2 (10)
-
-Archivos, en orden: `mabu_chongquan.png`, `tan_tui.png`, `tui_zhang.png`, `mabu_jiada.png`, `xubu_liangzhang.png`, `ge_dang.png`, `an_zhang.png`, `deng_tui.png`, `ce_chuai.png`, `gongbu_tuizhang.png`. Carpeta: `assets/art/cards/`.
-- El color de la estela es el del tipo de la carta.
+### 1. `pi_quan.png` — Puño martillo 劈拳
 
 ```
-Generate exactly 10 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
+Create ONE single image. Start immediately, without asking questions.
 
-Image 1 — mabu_chongquan:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist in a wide low horse stance, thighs parallel to the ground, firing a straight punch to the side, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 2 — tan_tui:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist snapping a fast whip-like front kick at waist height, the kicking foot pointed, arms balanced, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 3 — tui_zhang:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist pushing forward with an open palm, fingers up, a soft shockwave in front of the hand, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 4 — mabu_jiada:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist in horse stance raising one forearm to block overhead while punching with the other hand, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 5 — xubu_liangzhang:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist in an empty stance, weight on the back leg, one open palm raised high above the head like a guard, the other hand hooked behind, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 6 — ge_dang:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist sweeping a forearm across the body at chest height to block an incoming strike, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 7 — an_zhang:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist pressing both palms downward in front of the hips to smother a low attack, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 8 — deng_tui:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist thrusting a straight heel kick forward at stomach height, toes pulled back, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 9 — ce_chuai:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist delivering a powerful side kick with the body leaning away and the heel leading, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-
-Image 10 — gongbu_tuizhang:
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background: a martial artist in a deep bow stance pushing forward with an open palm, the whole body behind the push, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
-```
-
-## Bloque B — Ilustraciones de cartas, 2 de 2 (9)
-
-Archivos, en orden: `pi_quan.png`, `shang_jia.png`, `ti_xi.png`, `tiao_xi.png`, `baoquan_li.png`, `hu_zhao.png`, `hu_pu.png`, `hu_bao_tou.png`, `hu_xiao.png`. Carpeta: `assets/art/cards/`.
-- El color de la estela es el del tipo de la carta.
-
-```
-Generate exactly 9 separate images. Start generating immediately, without asking questions or requesting confirmation. Each image has its own complete instructions below; follow them separately. Each image is its own file: do NOT combine them into a grid, collage or contact sheet.
-
-Image 1 — pi_quan:
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist bringing a fist down in a chopping arc from above like an axe, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
@@ -191,8 +62,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 2 — shang_jia:
+### 2. `shang_jia.png` — Bloqueo alto 上架
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist raising one forearm horizontally above the head to block a strike from above, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -202,8 +78,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 3 — ti_xi:
+### 3. `ti_xi.png` — Rodilla escudo 提膝
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist balanced on one leg with the other knee lifted high to guard the body, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -213,8 +94,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 4 — tiao_xi:
+### 4. `tiao_xi.png` — Recuperar el aliento 调息
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist standing calmly with palms facing down in front of the belly, eyes closed, a soft swirl of breath rising, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
@@ -224,8 +110,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 5 — baoquan_li:
+### 5. `baoquan_li.png` — Saludo marcial 抱拳礼
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist bowing slightly with the kung fu salute, right fist pressed into the open left palm in front of the chest, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
@@ -235,8 +126,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 6 — hu_zhao:
+### 6. `hu_zhao.png` — Garra de tigre 虎爪
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist striking with a tiger claw hand, fingers curled like talons, faint tiger stripes in the motion trail, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
@@ -246,8 +142,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 7 — hu_pu:
+### 7. `hu_pu.png` — Salto del tigre 虎扑
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist leaping forward with both tiger-claw hands extended, like a tiger pouncing, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
@@ -257,8 +158,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 8 — hu_bao_tou:
+### 8. `hu_bao_tou.png` — Guardia del tigre 虎抱头
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist crouching and wrapping both arms around the head like a tiger protecting itself, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
@@ -268,8 +174,13 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
 
-Image 9 — hu_xiao:
+### 9. `hu_xiao.png` — Rugido del tigre 虎啸
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
 Small square illustration of a kung fu move on a transparent background: a martial artist in a low stance releasing a powerful roar, a visible golden roar wave with a faint tiger head shape, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
@@ -331,7 +242,7 @@ backgrounds, no photorealism, no text, no watermark.
 |---|---|---|---|
 | Íconos | `assets/art/icons/` | 6 | ✅ |
 | Marcos por tipo | `assets/art/cards/` | 5 | ✅ |
-| Ilustraciones de cartas | `assets/art/cards/` | 20 | ✅ 1 (`gongbu_chongquan`) · ⬜ 19 en bloques A y B |
+| Ilustraciones de cartas | `assets/art/cards/` | 20 | ✅ 11 (`gongbu_chongquan` y bloque A) · ⬜ 9 en «Para generar ahora» |
 
 ---
 
@@ -868,7 +779,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Puñetazo firme 马步冲拳 ⬜
+#### Puñetazo firme 马步冲拳 ✅
 
 **Destino:** `assets/art/cards/mabu_chongquan.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -886,7 +797,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Patada látigo 弹腿 ⬜
+#### Patada látigo 弹腿 ✅
 
 **Destino:** `assets/art/cards/tan_tui.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -904,7 +815,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Empujón de palma 推掌 ⬜
+#### Empujón de palma 推掌 ✅
 
 **Destino:** `assets/art/cards/tui_zhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -922,7 +833,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Bloqueo y contragolpe 马步架打 ⬜
+#### Bloqueo y contragolpe 马步架打 ✅
 
 **Destino:** `assets/art/cards/mabu_jiada.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -940,7 +851,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Paso atrás 虚步亮掌 ⬜
+#### Paso atrás 虚步亮掌 ✅
 
 **Destino:** `assets/art/cards/xubu_liangzhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -958,7 +869,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Bloqueo medio 格挡 ⬜
+#### Bloqueo medio 格挡 ✅
 
 **Destino:** `assets/art/cards/ge_dang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -976,7 +887,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Bloqueo bajo 按掌 ⬜
+#### Bloqueo bajo 按掌 ✅
 
 **Destino:** `assets/art/cards/an_zhang.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -994,7 +905,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Patada de talón 蹬腿 ⬜
+#### Patada de talón 蹬腿 ✅
 
 **Destino:** `assets/art/cards/deng_tui.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1012,7 +923,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Patada lateral 侧踹 ⬜
+#### Patada lateral 侧踹 ✅
 
 **Destino:** `assets/art/cards/ce_chuai.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1030,7 +941,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Empujón a fondo 弓步推掌 ⬜
+#### Empujón a fondo 弓步推掌 ✅
 
 **Destino:** `assets/art/cards/gongbu_tuizhang.png`, cuadrada (1024×1024), fondo transparente.
 

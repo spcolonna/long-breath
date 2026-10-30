@@ -46,7 +46,7 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
 - **Mapa:** `map_node_stone` (textura de los sellos).
 - **UI:** `ui/logo` (menú), los 6 íconos de `icons/` (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
-- **Ilustraciones de cartas:** `gongbu_chongquan`. La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
+- **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai` y `gongbu_tuizhang`. La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
 
 ## Reserva de recoloreos
 
@@ -67,4 +67,4 @@ Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la 
 
 ### 3. Ilustraciones de cartas
 
-- Faltan 19 (bloques A y B de `prompts.md`). Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px.
+- Faltan 9 (`pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li` y las 4 del tigre), un prompt suelto por imagen en «Para generar ahora» de `prompts.md`. Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px.
