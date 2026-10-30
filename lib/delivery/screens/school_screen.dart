@@ -183,23 +183,40 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
 }
 
 /// Pico con el que sube esta partida: se cambia con − y + entre el 1 y el
-/// más alto abierto en ella. Solo aparece si ya se abrió alguno.
-class _PicoLine extends ConsumerWidget {
+/// más alto abierto en ella. Solo aparece si ya se abrió alguno. El número
+/// cambia al toque aunque el guardado tarde: tocar rápido no pierde pasos.
+class _PicoLine extends ConsumerStatefulWidget {
   const _PicoLine({required this.info});
 
   final SlotInfo info;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_PicoLine> createState() => _PicoLineState();
+}
+
+class _PicoLineState extends ConsumerState<_PicoLine> {
+  late int _pico = widget.info.pico;
+
+  @override
+  void didUpdateWidget(_PicoLine old) {
+    super.didUpdateWidget(old);
+    if (old.info.slot != widget.info.slot) _pico = widget.info.pico;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final info = widget.info;
     final open = math.max(
       ref.watch(picoUnlockedProvider).value ?? 0,
       info.pico,
     );
     if (open < 1) return const SizedBox.shrink();
+    final pico = _pico;
     Future<void> set(int p) async {
       Haptics.selectionClick();
       ref.read(audioProvider).play(Sfx.cardSelect);
+      setState(() => _pico = p);
       await ref.read(slotStorageProvider).setPico(info.slot, p);
       ref.invalidate(slotsProvider);
     }
@@ -213,7 +230,7 @@ class _PicoLine extends ConsumerWidget {
             tooltip: t.picoLower,
             visualDensity: VisualDensity.compact,
             color: picoColor,
-            onPressed: info.pico > 0 ? () => set(info.pico - 1) : null,
+            onPressed: pico > 0 ? () => set(pico - 1) : null,
             icon: const Icon(Icons.remove_circle_outline_rounded),
           ),
           Container(
@@ -224,7 +241,7 @@ class _PicoLine extends ConsumerWidget {
               border: Border.all(color: picoColor.withValues(alpha: 0.6)),
             ),
             child: Text(
-              info.pico == 0 ? t.picoNone : '${t.picoName(info.pico)} · 峰',
+              pico == 0 ? t.picoNone : '${t.picoName(pico)} · 峰',
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
@@ -236,7 +253,7 @@ class _PicoLine extends ConsumerWidget {
             tooltip: t.picoHigher,
             visualDensity: VisualDensity.compact,
             color: picoColor,
-            onPressed: info.pico < open ? () => set(info.pico + 1) : null,
+            onPressed: pico < open ? () => set(pico + 1) : null,
             icon: const Icon(Icons.add_circle_outline_rounded),
           ),
         ],

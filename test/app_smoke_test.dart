@@ -117,8 +117,8 @@ void main() {
     await settle();
     await tester.tap(find.text('Volver al menú'));
     await settle();
-    expect(find.text('Continuar run'), findsOneWidget);
-    await tester.tap(find.text('Continuar run'));
+    expect(find.text('Continuar la subida'), findsOneWidget);
+    await tester.tap(find.text('Continuar la subida'));
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
     await tester.tap(find.text(pathName).first);

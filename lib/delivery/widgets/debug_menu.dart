@@ -10,7 +10,7 @@ import '../screens/home_screen.dart' show routeFor;
 import '../theme.dart';
 
 /// Menú de pruebas: solo aparece en las builds de desarrollo (kDebugMode).
-/// Arranca una subida en cualquier etapa y piso, y suma loto.
+/// Arranca una subida en cualquier etapa y piso, suma loto y abre los Picos.
 class DebugButton extends ConsumerWidget {
   const DebugButton({super.key, this.onDone});
 
@@ -64,6 +64,15 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
     if (mounted) Navigator.pop(context);
   }
 
+  Future<void> _picos() async {
+    await ref.read(progressStorageProvider).markPicoWin(
+      Difficulty.normal,
+      ProgressStorage.maxPico,
+    );
+    ref.invalidate(picoUnlockedProvider);
+    if (mounted) Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final stages = ref.watch(dataProvider).balance.stages;
@@ -110,6 +119,11 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
             FilledButton(onPressed: _start, child: const Text('Subir acá')),
             const SizedBox(height: 8),
             OutlinedButton(onPressed: _lotus, child: const Text('+20 loto')),
+            const SizedBox(height: 8),
+            OutlinedButton(
+              onPressed: _picos,
+              child: const Text('Abrir todos los Picos'),
+            ),
           ],
         ),
       ),

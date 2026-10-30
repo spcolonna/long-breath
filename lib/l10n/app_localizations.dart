@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// No description provided for @continueRun.
   ///
   /// In es, this message translates to:
-  /// **'Continuar run'**
+  /// **'Continuar la subida'**
   String get continueRun;
 
   /// No description provided for @styleTitle.

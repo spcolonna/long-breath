@@ -15,7 +15,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get newRun => 'Nueva run';
 
   @override
-  String get continueRun => 'Continuar run';
+  String get continueRun => 'Continuar la subida';
 
   @override
   String get styleTitle => 'Elegí tu camino';
