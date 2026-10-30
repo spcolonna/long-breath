@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import '../model/enums.dart';
 import 'ascent.dart';
 
@@ -87,3 +89,34 @@ List<String> earnedHitos(Ascent a, List<Ascent> before, Set<String> have) => [
 /// Aliento extra que dejan [ids].
 int hitoBreath(Iterable<String> ids) =>
     ids.fold(0, (s, id) => s + hito(id).breath);
+
+/// Hitos que una partida de [difficulty] no puede cumplir (la dificultad
+/// es de la partida; el Pico solo existe en Normal).
+bool _outOfReach(HitoDef h, Difficulty difficulty) => switch (h.id) {
+  'win_hard' => difficulty.index < Difficulty.hard.index,
+  'win_shifu' => difficulty != Difficulty.shifu,
+  'pico_1' || 'pico_5' || 'pico_10' => difficulty != Difficulty.normal,
+  _ => false,
+};
+
+/// El próximo hito para mostrar en la escuela: el primero sin cumplir que
+/// la partida puede alcanzar (null si ya están todos).
+HitoDef? nextHito(Set<String> have, Difficulty difficulty) {
+  for (final h in hitos) {
+    if (!have.contains(h.id) && !_outOfReach(h, difficulty)) return h;
+  }
+  return null;
+}
+
+/// En los hitos de contador, lo mejor que se llegó y cuánto piden.
+(int, int)? hitoBest(String id, List<Ascent> ascents) {
+  int best(int Function(Ascent) f) =>
+      ascents.fold(0, (m, a) => math.max(m, f(a)));
+  return switch (id) {
+    'forms_10' => (best((a) => _feat(a, Feat.forms)), 10),
+    'deflects_20' => (best((a) => _feat(a, Feat.deflects)), 20),
+    'flawless_5' => (best((a) => _feat(a, Feat.flawless)), 5),
+    'ten_disciples' => (best((a) => a.n), 10),
+    _ => null,
+  };
+}

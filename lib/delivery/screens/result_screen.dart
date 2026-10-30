@@ -11,6 +11,7 @@ import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
+import '../foe_name.dart';
 import '../providers.dart';
 import '../controllers/climb.dart';
 import '../theme.dart';
@@ -132,7 +133,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     final place = node?.scene == null
         ? null
         : text.path(node!.scene!, node.light ?? 'alba');
-    final enemy = node?.enemy == null ? null : text.enemy(node!.enemy!);
+    final enemy = node?.enemy == null ? null : ref.foe(context, node!.enemy!);
     final ink = won ? Palette.gold : Palette.lacquer;
     final lines = [
       if (place != null) won ? t.resultSummitAt(place) : t.resultFellAt(place),

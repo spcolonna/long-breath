@@ -6,6 +6,7 @@ import '../../domain/run/run_engine.dart';
 import '../../domain/run/run_state.dart';
 import '../../domain/run/ascent.dart';
 import '../../domain/run/cultivation.dart';
+import '../../domain/run/ghost.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../providers.dart';
 import '../screens/map/map_layout.dart';
@@ -35,6 +36,7 @@ class RunController extends Notifier<RunState?> {
     int pico = 0,
     List<String>? locked,
     MetaBonus? meta,
+    Ghost? ghost,
   }) =>
       _set(_engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
@@ -43,6 +45,7 @@ class RunController extends Notifier<RunState?> {
         locked:
             locked ?? ref.read(cultivationProvider).value?.locked ?? const [],
         meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
+        ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
       ));
 
   void abandon() => _set(null);
@@ -56,6 +59,7 @@ class RunController extends Notifier<RunState?> {
         stage: stage,
         floor: floor,
         meta: ref.read(metaBonusProvider).value ?? MetaBonus.none,
+        ghost: ghostFrom(ref.read(ascentsProvider).value ?? const []),
       ));
 
   void enter(String nodeId) => _set(_engine.enter(state!, nodeId));
@@ -106,6 +110,7 @@ class RunController extends Notifier<RunState?> {
     final stages = ref.read(dataProvider).balance.stages;
     final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);
     final cultivation = ref.read(dataProvider).balance.cultivation;
+    final keepsake = keepsakeOf(ref.read(dataProvider), run.deck, run.style);
     var ascent = Ascent(
       n: 0,
       fell: run.phase == RunPhase.defeat,
@@ -122,6 +127,12 @@ class RunController extends Notifier<RunState?> {
       style: run.style,
       maxHp: run.maxHp,
       deck: run.deck.length,
+      keepsake: keepsake?.cardId,
+      keepsakeUp: keepsake?.upgrades ?? 0,
+      // Si lo venció el Discípulo Perdido, queda quién lo llevaba.
+      ghost: node?.enemy == ghostEnemy || (node?.waves.contains(ghostEnemy) ?? false)
+          ? run.ghost?.n
+          : null,
     );
     ascent = Ascent.fromJson({
       ...ascent.toJson(),

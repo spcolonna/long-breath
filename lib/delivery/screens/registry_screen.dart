@@ -27,8 +27,14 @@ class RegistryScreen extends ConsumerWidget {
     final lore = ref.watch(loreProvider).value ?? const <String>{};
     final got = ref.watch(hitosProvider).value ?? const <String>{};
     final fallen = ascents.where((a) => a.fell).length;
+    // `/registry?tab=3` abre directo en una pestaña (por ejemplo, Hitos).
+    final tab = int.tryParse(
+          GoRouterState.of(context).uri.queryParameters['tab'] ?? '',
+        ) ??
+        0;
     return DefaultTabController(
       length: 4,
+      initialIndex: tab.clamp(0, 3),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -158,7 +164,9 @@ class _AscentTile extends ConsumerWidget {
         ? t.registrySummit
         : a.enemy == null
         ? t.registryFellEarly
-        : t.registryFell(text.enemy(a.enemy!));
+        : t.registryFell(
+            a.ghost != null ? t.ghostName(a.ghost!) : text.enemy(a.enemy!),
+          );
     final place = a.scene == null
         ? null
         : text.path(a.scene!, a.light ?? 'alba');

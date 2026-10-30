@@ -3885,6 +3885,96 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Sin Pico'**
   String get picoNone;
+
+  /// No description provided for @ghostName.
+  ///
+  /// In es, this message translates to:
+  /// **'Discípulo Perdido nº {n}'**
+  String ghostName(int n);
+
+  /// No description provided for @ghostIntro.
+  ///
+  /// In es, this message translates to:
+  /// **'Fui el nº {n}. Caí en el piso {floor} y la niebla no me deja bajar.'**
+  String ghostIntro(int n, int floor);
+
+  /// No description provided for @ghostIntroPath.
+  ///
+  /// In es, this message translates to:
+  /// **'Fui el nº {n}, mi camino era {path}. Caí en el piso {floor} y la niebla no me deja bajar.'**
+  String ghostIntroPath(int n, String path, int floor);
+
+  /// No description provided for @ghostRank.
+  ///
+  /// In es, this message translates to:
+  /// **'Caído de la escuela'**
+  String get ghostRank;
+
+  /// No description provided for @ghostReply.
+  ///
+  /// In es, this message translates to:
+  /// **'Vine a llevarte de vuelta a la escuela.'**
+  String get ghostReply;
+
+  /// No description provided for @ghostDrop.
+  ///
+  /// In es, this message translates to:
+  /// **'El nº {n} te deja su carta'**
+  String ghostDrop(int n);
+
+  /// No description provided for @schoolLastFallen.
+  ///
+  /// In es, this message translates to:
+  /// **'Último caído: nº {n}'**
+  String schoolLastFallen(int n);
+
+  /// No description provided for @schoolFellTo.
+  ///
+  /// In es, this message translates to:
+  /// **'{enemy} · piso {floor}'**
+  String schoolFellTo(String enemy, int floor);
+
+  /// No description provided for @schoolFellAt.
+  ///
+  /// In es, this message translates to:
+  /// **'Cayó en el piso {floor}'**
+  String schoolFellAt(int floor);
+
+  /// No description provided for @schoolGhostWaits.
+  ///
+  /// In es, this message translates to:
+  /// **'Su cinta te espera'**
+  String get schoolGhostWaits;
+
+  /// No description provided for @schoolNoFallen.
+  ///
+  /// In es, this message translates to:
+  /// **'Nadie cayó todavía'**
+  String get schoolNoFallen;
+
+  /// No description provided for @schoolNoFallenSub.
+  ///
+  /// In es, this message translates to:
+  /// **'La escuela entera te mira subir'**
+  String get schoolNoFallenSub;
+
+  /// No description provided for @schoolNextHito.
+  ///
+  /// In es, this message translates to:
+  /// **'Hito · +{breath} aliento'**
+  String schoolNextHito(int breath);
+
+  /// No description provided for @schoolAllHitos.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos los hitos cumplidos'**
+  String get schoolAllHitos;
+
+  /// No description provided for @schoolHitoBest.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} · mejor {have}/{need}'**
+  String schoolHitoBest(String name, int have, int need);
 }
 
 class _AppLocalizationsDelegate

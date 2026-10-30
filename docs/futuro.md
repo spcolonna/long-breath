@@ -235,7 +235,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 ### 3.8 Historia y legado
 - **Hecho (base):** cada subida la hace un discípulo con número; al caer se narra qué pasó y "la escuela envía a otro novicio"; registro de la escuela 名册 con tablillas y 9 pergaminos de lore que se abren por hitos (prólogo, santuario, caer ante cada rival, cumbre, 5 y 10 caídos). Sin efecto mecánico.
 - **Pendiente:**
-  - Que el Discípulo Perdido lleve algo de un discípulo caído del registro (nombre/número, su camino).
+  - ~~Que el Discípulo Perdido lleve algo de un discípulo caído del registro~~ **hecho (30/10/2026):** lleva el número del último caído, se presenta diciendo quién fue, su camino y dónde cayó, y al vencerlo suelta la carta que ese discípulo dejó en el registro (la de su camino más mejorada). Si te vence, el registro dice «Cayó ante el Discípulo Perdido nº N». Siguiente: que pelee con cartas de su camino.
   - ~~Pergaminos de las etapas 2 y 3, y del giro del maestro~~ **hecho (12/10/2026):** 18 pergaminos (vigas, huellas, Guardián de la Campana, Dama del Viento, epílogo con el giro), diálogos de jefes y élites, maestro errante con líneas por etapa y 4 eventos con historia.
   - Ilustración del epílogo (hoy es un pergamino).
 - **Escenas:**
@@ -269,10 +269,10 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 **Hoja de ruta (07/10/2026), por prioridad:**
 1. Cultivo del aliento: **hecho**.
 2. Hitos 功 (logros): **hecho (29/10/2026)**, 18 hitos por partida con aliento extra (ver `manual.md`). Siguiente: hitos por enemigo (vencer a cada jefe y élite), por despertares y por talismanes; mostrar el próximo hito cercano en la escuela.
-3. Menú principal vivo: reino, aura, último caído e hitos.
+3. ~~Menú principal vivo~~ **hecho (30/10/2026):** en la escuela de cada partida, nubes que pasan, motas de aliento y aura que crecen con el cultivo, tablilla del último caído y el próximo hito con su avance.
 4. Narrativa:
    - pergaminos de las etapas 2 y 3;
-   - el Discípulo Perdido con el nombre de un caído;
+   - ~~el Discípulo Perdido con el nombre de un caído~~ (hecho);
    - el giro del maestro;
    - finales por camino.
 5. Armas 兵器.

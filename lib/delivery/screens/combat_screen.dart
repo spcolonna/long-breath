@@ -20,6 +20,8 @@ import '../audio/game_audio.dart';
 import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
+import '../../domain/run/ghost.dart';
+import '../foe_name.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../tutorial/illustrations.dart';
@@ -189,9 +191,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final live = ref.read(combatControllerProvider);
     if (live == null) return;
     final rank = ref.read(dataProvider).enemy(live.state.enemy.id).rank;
+    // El Discípulo Perdido que lleva la cinta de un caído también se
+    // presenta: dice quién fue.
+    final ghost = live.state.enemy.id == ghostEnemy &&
+        ref.read(runControllerProvider)?.ghost != null;
     _intro =
         !live.tutorial &&
-        rank != EnemyRank.common &&
+        (rank != EnemyRank.common || ghost) &&
         live.state.turn <= 1 &&
         live.state.wave == 0 &&
         ref.read(cinematicsProvider);
@@ -398,7 +404,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       final t = AppLocalizations.of(context);
       _queue.add(
         _Fx(
-          ref.read(textProvider).enemy(w.enemyId),
+          ref.foe(context, w.enemyId),
           t.waveOf(w.index, w.total),
           Palette.lacquer,
         ),
@@ -975,18 +981,35 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
     if (_intro) {
       final def = data.enemy(s.enemy.id);
+      final ghost = def.id == ghostEnemy ? run?.ghost : null;
+      final ghostPath = ghost?.style == null
+          ? null
+          : ref.watch(textProvider).style(ghost!.style!);
       return Scaffold(
         body: CinematicGate(
-          id: 'foe_${def.id}',
+          // Cada caído se presenta entero la primera vez que vuelve.
+          id: ghost != null ? 'ghost_${ghost.n}' : 'foe_${def.id}',
           // Los jefes se presentan enteros la primera vez; las élites, cortas.
-          fullFirstTime: def.rank == EnemyRank.boss,
+          fullFirstTime: def.rank == EnemyRank.boss || ghost != null,
           builder: (full) => FoeIntro(
             def: def,
-            name: ref.watch(textProvider).enemy(def.id),
-            intro: ref.watch(textProvider).enemyLine(def.id, 'intro'),
-            reply: ref.watch(textProvider).enemyLine(def.id, 'reply'),
+            name: ref.foe(context, def.id),
+            intro: ghost == null
+                ? ref.watch(textProvider).enemyLine(def.id, 'intro')
+                : ghostPath == null
+                ? AppLocalizations.of(context).ghostIntro(ghost.n, ghost.floor)
+                : AppLocalizations.of(context)
+                      .ghostIntroPath(ghost.n, ghostPath, ghost.floor),
+            reply: ghost != null
+                ? AppLocalizations.of(context).ghostReply
+                : ref.watch(textProvider).enemyLine(def.id, 'reply'),
+            rankLine: ghost == null
+                ? null
+                : AppLocalizations.of(context).ghostRank,
+            sealHanzi: ghost == null ? null : '忆',
+            tint: ghost == null ? null : Palette.blossom,
             escort: s.enemies.length > 1 && def.rank == EnemyRank.elite
-                ? ref.watch(textProvider).enemy(s.enemies[1].id)
+                ? ref.foe(context, s.enemies[1].id)
                 : null,
             stageId: stageId,
             scene: node?.scene,
@@ -1017,7 +1040,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             fx: fx,
             heroKey: _heroKey,
             introTitle: [
-              for (final e in s.enemies) ref.watch(textProvider).enemy(e.id),
+              for (final e in s.enemies) ref.foe(context, e.id),
             ].join(' · '),
             // Con dos a la vez, cada uno en su lugar; tocarlo lo apunta.
             slots: [
@@ -1173,7 +1196,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                 turns: live.state.turn,
                 hp: live.state.player.hp,
                 maxHp: live.state.player.maxHp,
-                enemyName: ref.watch(textProvider).enemy(live.state.enemy.id),
+                enemyName: ref.foe(context, live.state.enemy.id),
                 enemyHp: live.state.enemy.hp,
                 quote: live.lessonId != null
                     ? null
@@ -1782,7 +1805,7 @@ class _EnemyStage extends ConsumerWidget {
                     : () => showDialog<void>(
                         context: context,
                         builder: (_) => AlertDialog(
-                          title: Text(text.enemy(def.id)),
+                          title: Text(ref.foe(context, def.id)),
                           content: Text(text.enemyRule(def.id)),
                         ),
                       ),
@@ -1813,7 +1836,7 @@ class _EnemyStage extends ConsumerWidget {
                         child: Builder(
                           builder: (_) {
                             final name = Text(
-                              text.enemy(def.id),
+                              ref.foe(context, def.id),
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 15,
@@ -1929,7 +1952,7 @@ class _EnemyStage extends ConsumerWidget {
                           onTap: () => showDialog<void>(
                             context: context,
                             builder: (_) => AlertDialog(
-                              title: Text(text.enemy(def.id)),
+                              title: Text(ref.foe(context, def.id)),
                               content: Text(text.enemyRule(def.id)),
                             ),
                           ),

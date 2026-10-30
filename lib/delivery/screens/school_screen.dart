@@ -20,7 +20,9 @@ import '../widgets/press.dart';
 import '../widgets/slot_badge.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/npc_portrait.dart';
+import '../widgets/cloud_drift.dart';
 import '../widgets/cultivation_view.dart';
+import '../widgets/school_life.dart';
 import '../widgets/lotus.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../infrastructure/slot_storage.dart';
@@ -51,7 +53,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
     final t = AppLocalizations.of(context);
     final saved = ref.watch(savedRunProvider).value;
     final stats = ref.watch(dataProvider).balance.novice;
-    final cultivation = ref.watch(cultivationProvider).value;
+    final aura = auraLevel(ref);
     final info = ref.watch(slotInfoProvider).value;
     final slot = ref.watch(activeSlotProvider);
     final resumable =
@@ -98,7 +100,15 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
     }
 
     return Scaffold(
-      body: SafeArea(
+      body: Stack(
+        children: [
+          const Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(gradient: Palette.backdrop),
+            ),
+          ),
+          Positioned.fill(child: CloudDrift(seed: slot)),
+          SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 4, 24, 24),
           child: Column(
@@ -127,20 +137,31 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                 child: LayoutBuilder(
                   builder: (context, box) => StaggerIn(
                     index: 0,
-                    child: HeroSprite(
-                    style: null,
-                    height: math.min(box.maxHeight, box.maxWidth * 1.3),
-                    glyph: stats.hanzi,
-                    aura: cultivation == null || !cultivation.active
-                        ? 0
-                        : cultivation.realm /
-                              (cultivation.def.realms.length - 1),
-                  ),
+                    // El aura y las motas de aliento crecen con el cultivo.
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned.fill(child: QiMotes(level: aura)),
+                        HeroSprite(
+                          style: null,
+                          height: math.min(box.maxHeight, box.maxWidth * 1.3),
+                          glyph: stats.hanzi,
+                          aura: aura,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               const StaggerIn(index: 1, child: _SchoolLine()),
               const SizedBox(height: 6),
+              StaggerIn(
+                index: 1,
+                child: SchoolMemory(
+                  difficulty: info?.difficulty ?? Difficulty.normal,
+                ),
+              ),
+              const SizedBox(height: 4),
               const StaggerIn(index: 2, child: RealmLine()),
               const StaggerIn(index: 3, child: _MeridianLine()),
               if (info != null && info.difficulty == Difficulty.normal)
@@ -177,6 +198,8 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
             ],
           ),
         ),
+      ),
+        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ import '../model/enums.dart';
 import '../model/game_balance.dart';
 import '../model/meta_bonus.dart';
 import '../rng.dart';
+import 'ghost.dart';
 
 enum RunPhase {
   map,
@@ -147,6 +148,7 @@ class RunState {
     this.stageJade = 0,
     this.stageLotus = 0,
     this.feats = const {},
+    this.ghost,
   });
 
   /// Etapa de la subida (0 = la primera). El [map] es el de esta etapa.
@@ -266,6 +268,10 @@ class RunState {
   /// sin recibir daño). Ver `feats.dart`.
   final Map<String, int> feats;
 
+  /// El caído que lleva el Discípulo Perdido en esta subida (null si
+  /// nadie cayó todavía en la partida).
+  final Ghost? ghost;
+
   RunState copyWith({
     Style? style,
     int? hp,
@@ -317,6 +323,7 @@ class RunState {
     int? stageJade,
     int? stageLotus,
     Map<String, int>? feats,
+    Ghost? ghost,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -369,6 +376,7 @@ class RunState {
         stageJade: stageJade ?? this.stageJade,
         stageLotus: stageLotus ?? this.stageLotus,
         feats: feats ?? this.feats,
+        ghost: ghost ?? this.ghost,
       );
 
   /// Nodo del mapa por id.
@@ -430,6 +438,7 @@ class RunState {
         'stageJade': stageJade,
         'stageLotus': stageLotus,
         'feats': feats,
+        'ghost': ghost?.toJson(),
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -508,6 +517,10 @@ class RunState {
         feats: {
           for (final e in ((j['feats'] as Map?) ?? const {}).entries)
             e.key as String: e.value as int,
+        },
+        ghost: switch (j['ghost']) {
+          final Map<String, dynamic> g => Ghost.fromJson(g),
+          _ => null,
         },
       );
 }

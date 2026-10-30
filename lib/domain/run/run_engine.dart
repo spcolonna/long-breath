@@ -10,6 +10,7 @@ import '../model/meta_bonus.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'feats.dart';
+import 'ghost.dart';
 import 'map_gen.dart';
 import 'run_state.dart';
 
@@ -28,6 +29,7 @@ class RunEngine {
     int pico = 0,
     List<String> locked = const [],
     MetaBonus meta = MetaBonus.none,
+    Ghost? ghost,
   }) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp +
@@ -59,6 +61,7 @@ class RunEngine {
       meta: meta,
       jade: meta.startJade,
       rerollsLeft: meta.rerolls,
+      ghost: ghost,
     );
     if (meta.upgradedStarters > 0) {
       final (pool, rng2) =
@@ -213,12 +216,14 @@ class RunEngine {
     int pico = 0,
     Style style = Style.tiger,
     MetaBonus meta = MetaBonus.none,
+    Ghost? ghost,
   }) {
     var r = newRun(
       seed: seed,
       difficulty: difficulty,
       pico: pico,
       meta: meta,
+      ghost: ghost,
     ).copyWith(style: style, jade: 150);
     final last = data.balance.stages.length - 1;
     for (var s = 0; s < stage.clamp(0, last); s++) {
@@ -386,7 +391,7 @@ class RunEngine {
       r.maxHp,
       hp + talismanSum(r, (e) => e.winHeal) + r.meta.winHeal,
     );
-    r = r.copyWith(hp: healed);
+    r = _ghostDrop(r.copyWith(hp: healed));
     // El élite y el jefe dejan elegir un talismán antes del premio.
     final (talismans, rngT) = elite || boss
         ? _rollTalismans(
@@ -401,6 +406,43 @@ class RunEngine {
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       talismanOptions: kind == RewardKind.talisman ? null : talismans,
       cardlessStreak: kind == RewardKind.cards ? 0 : r.cardlessStreak + 1,
+    );
+  }
+
+  /// Vencido el Discípulo Perdido, suelta la carta del caído que lo
+  /// llevaba (una sola vez por subida). Si su registro no guardó carta, una
+  /// de su camino.
+  RunState _ghostDrop(RunState r) {
+    final g = r.ghost;
+    if (g == null || g.claimedAt != null) return r;
+    if (!packOf(r).contains(ghostEnemy)) return r;
+    var id = g.card;
+    var upgrades = g.upgrades;
+    var rng = r.rng;
+    if (id == null || !data.cards.containsKey(id)) {
+      final pool = [
+        for (final c in data.cards.values)
+          if (!r.locked.contains(c.id) &&
+              (c.pool == (g.style?.name ?? '') ||
+                  (g.style == null &&
+                      data.balance.rewardPools.contains(c.pool))))
+            c.id,
+      ];
+      if (pool.isEmpty) return r;
+      final (picked, next) = _pick(rng, pool);
+      id = picked;
+      rng = next;
+      upgrades = 0;
+    }
+    final card = id;
+    return r.copyWith(
+      deck: [
+        ...r.deck,
+        CombatCard(uid: r.nextUid, cardId: card, upgrades: upgrades),
+      ],
+      nextUid: r.nextUid + 1,
+      rng: rng,
+      ghost: g.claim(r.currentNode!, card),
     );
   }
 

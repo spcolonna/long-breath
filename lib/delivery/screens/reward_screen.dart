@@ -105,6 +105,9 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                   ),
                   const SizedBox(height: 8),
                   _Spoils(jade: _run.jadeGained, lotus: _run.lotusGained),
+                  if (_run.ghost case final g?
+                      when g.claimedAt == _run.currentNode && g.dropped != null)
+                    _Keepsake(n: g.n, card: g.dropped!, upgrades: g.upgrades),
                   Expanded(
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 380),
@@ -268,6 +271,84 @@ class _Spoils extends StatelessWidget {
         if (lotus > 0)
           chip(1, const LotusSeed(), t.lotusGained(lotus), Palette.blossom),
       ],
+    );
+  }
+}
+
+/// Lo que dejó el Discípulo Perdido: la carta del caído cuya cinta
+/// llevaba. Ya está en el mazo; acá solo se muestra.
+class _Keepsake extends ConsumerWidget {
+  const _Keepsake({
+    required this.n,
+    required this.card,
+    required this.upgrades,
+  });
+
+  final int n;
+  final String card;
+  final int upgrades;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final text = ref.watch(textProvider);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 900),
+      curve: const Interval(0.35, 1, curve: Curves.easeOutBack),
+      builder: (_, v, child) => Opacity(
+        opacity: v.clamp(0, 1),
+        child: Transform.translate(offset: Offset(0, 14 * (1 - v)), child: child),
+      ),
+      child: Container(
+        margin: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.fromLTRB(8, 6, 14, 6),
+        decoration: BoxDecoration(
+          color: Palette.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Palette.blossom.withValues(alpha: 0.55)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const InkSeal(hanzi: '遗', color: Palette.blossom, size: 34),
+            const SizedBox(width: 10),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    t.ghostDrop(n),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Palette.textDim,
+                    ),
+                  ),
+                  Text.rich(
+                    TextSpan(
+                      text: text.card(card),
+                      children: [
+                        if (upgrades > 0)
+                          TextSpan(
+                            text: ' +$upgrades',
+                            style: const TextStyle(color: Palette.gold),
+                          ),
+                      ],
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                      color: Palette.text,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

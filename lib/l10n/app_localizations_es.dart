@@ -2439,4 +2439,67 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get picoNone => 'Sin Pico';
+
+  @override
+  String ghostName(int n) {
+    return 'Discípulo Perdido nº $n';
+  }
+
+  @override
+  String ghostIntro(int n, int floor) {
+    return 'Fui el nº $n. Caí en el piso $floor y la niebla no me deja bajar.';
+  }
+
+  @override
+  String ghostIntroPath(int n, String path, int floor) {
+    return 'Fui el nº $n, mi camino era $path. Caí en el piso $floor y la niebla no me deja bajar.';
+  }
+
+  @override
+  String get ghostRank => 'Caído de la escuela';
+
+  @override
+  String get ghostReply => 'Vine a llevarte de vuelta a la escuela.';
+
+  @override
+  String ghostDrop(int n) {
+    return 'El nº $n te deja su carta';
+  }
+
+  @override
+  String schoolLastFallen(int n) {
+    return 'Último caído: nº $n';
+  }
+
+  @override
+  String schoolFellTo(String enemy, int floor) {
+    return '$enemy · piso $floor';
+  }
+
+  @override
+  String schoolFellAt(int floor) {
+    return 'Cayó en el piso $floor';
+  }
+
+  @override
+  String get schoolGhostWaits => 'Su cinta te espera';
+
+  @override
+  String get schoolNoFallen => 'Nadie cayó todavía';
+
+  @override
+  String get schoolNoFallenSub => 'La escuela entera te mira subir';
+
+  @override
+  String schoolNextHito(int breath) {
+    return 'Hito · +$breath aliento';
+  }
+
+  @override
+  String get schoolAllHitos => 'Todos los hitos cumplidos';
+
+  @override
+  String schoolHitoBest(String name, int have, int need) {
+    return '$name · mejor $have/$need';
+  }
 }

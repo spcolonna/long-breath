@@ -457,10 +457,19 @@ class FoeIntro extends ConsumerWidget {
     this.intro,
     this.reply,
     this.escort,
+    this.rankLine,
+    this.sealHanzi,
+    this.tint,
   });
 
   final EnemyDef def;
   final String name;
+
+  /// Para el Discípulo Perdido: su línea bajo el nombre, su sello y su color
+  /// en lugar de los del rango.
+  final String? rankLine;
+  final String? sealHanzi;
+  final Color? tint;
 
   /// Nombre del que acompaña al élite, si viene con escolta.
   final String? escort;
@@ -481,7 +490,7 @@ class FoeIntro extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     final audio = ref.read(audioProvider);
     final boss = def.rank == EnemyRank.boss;
-    final color = rankColor(def.rank);
+    final color = tint ?? rankColor(def.rank);
     // Si tiene diálogo, la presentación se estira para leerlo: el rival
     // habla y, en la versión entera, el héroe le contesta.
     final intro = this.intro;
@@ -645,13 +654,14 @@ class FoeIntro extends ConsumerWidget {
                   alignment: const Alignment(0, 0.7),
                   child: _TitleSeal(
                     t: seal,
-                    hanzi: def.hanzi ?? (boss ? '王' : '强'),
+                    hanzi: sealHanzi ?? def.hanzi ?? (boss ? '王' : '强'),
                     title: name,
-                    subtitle: boss
+                    subtitle: rankLine ??
+                        (boss
                         ? t.introBoss
                         : escort == null
                         ? t.introElite
-                        : t.introEscort(escort!),
+                        : t.introEscort(escort!)),
                     color: color,
                     size: 64,
                   ),
