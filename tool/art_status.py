@@ -114,11 +114,9 @@ def main():
     for f in ("fist", "palm", "kick", "defense", "technique"):
         add("ui", f"cards/frame_{f}.webp", f"marco de carta {f}",
             "papel teñido sin marco")
-    for f in ("gongbu_chongquan", "mabu_chongquan", "tan_tui", "tui_zhang",
-              "mabu_jiada", "xubu_liangzhang", "ge_dang", "an_zhang",
-              "deng_tui", "ce_chuai", "gongbu_tuizhang", "pi_quan",
-              "shang_jia", "ti_xi", "tiao_xi", "baoquan_li", "hu_zhao",
-              "hu_pu", "hu_bao_tou", "hu_xiao"):
+    with open(os.path.join(ROOT, "assets/data/cards.json")) as fh:
+        cards = json.load(fh)
+    for f in [c["id"] for c in (cards["cards"] if isinstance(cards, dict) else cards)]:
         add("cartas", f"cards/{f}.webp", f"ilustración de {f}",
             "hanzi de marca de agua")
     add("npc", "npc/master.webp", "maestro", "vacío")
