@@ -102,7 +102,8 @@ void main() {
     final engine = RunEngine(data);
     final a = engine.newRun(seed: 9);
     expect(a.locked, isEmpty);
-    expect(engine.missingTalismans(a).length, data.talismans.length);
+    expect(engine.missingTalismans(a).length,
+        data.talismans.values.where((t) => !t.boss).length);
   });
 
   test('el cultivo informa el progreso hacia el reino siguiente', () {

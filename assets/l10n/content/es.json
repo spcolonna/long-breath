@@ -474,7 +474,15 @@
     "formas": "Pergamino Gastado",
     "aliento": "Perla del Aliento",
     "grieta": "Sello de la Grieta",
-    "victoria": "Cinta de la Victoria"
+    "victoria": "Cinta de la Victoria",
+    "cambio": "Hoja que Cambia",
+    "paso": "Sandalia Ligera",
+    "bolsa": "Bolsa del Peregrino",
+    "vacio": "Cuenco Vacío",
+    "quiebre": "Martillo Quebrado",
+    "espejo": "Espejo de Bronce",
+    "luna": "Luna Llena",
+    "montana": "Raíz de la Montaña"
   },
   "realms": {
     "lianqi": { "name": "Aliento templado", "text": "La escuela recién aprende a respirar con vos." },

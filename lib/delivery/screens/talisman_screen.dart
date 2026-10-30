@@ -133,7 +133,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
                       child: InkBurst(
                         trigger: _picked == id ? _burst : 0,
                         colors: [
-                          talismanColor(data.talisman(id).rare),
+                          talismanColor(data.talisman(id)),
                           Palette.gold,
                           Colors.white,
                         ],

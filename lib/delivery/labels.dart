@@ -193,6 +193,16 @@ extension Labels on AppLocalizations {
     if (e.winHeal > 0) talEffWinHeal(e.winHeal),
     if (e.deflectBreath > 0) talEffDeflect(e.deflectBreath),
     if (e.formHeal > 0) talEffFormHeal(e.formHeal),
+    if (e.stanceGuard > 0) talEffStanceGuard(e.stanceGuard),
+    if (e.dingbuDiscount > 0) talEffDingbu(text.dingbu()),
+    if (e.winJade > 0) talEffWinJade(e.winJade),
+    if (e.firstCardDiscount > 0) talEffFirstCard(e.firstCardDiscount),
+    if (e.breakDraw > 0) talEffBreakDraw(e.breakDraw),
+    if (e.deflectDamage > 0) talEffDeflectDamage(e.deflectDamage),
+    if (e.turnBreath > 0) talEffTurnBreath(e.turnBreath),
+    if (e.handSize < 0) talEffHandLess(-e.handSize),
+    if (e.maxHp < 0) talEffMaxHpLess(-e.maxHp),
+    if (e.guardKeepPct > 0) talEffGuardKeep(e.guardKeepPct),
   ].join(' ');
 
   /// Consecuencias de un resultado de evento, en corto ("−8 Vida · …").

@@ -208,8 +208,8 @@ class CombatEngine {
     final d = _Draft(
       turn: 0,
       phase: CombatPhase.playerTurn,
-      handSize: styleStats.draw + aw.draw,
-      breathPerTurn: styleStats.breath,
+      handSize: math.max(1, styleStats.draw + aw.draw + sum((e) => e.handSize)),
+      breathPerTurn: styleStats.breath + sum((e) => e.turnBreath),
       retainMax: styleStats.retain + aw.retain,
       hp: playerHp,
       maxHp: maxHp ?? b.playerHp,
@@ -273,10 +273,10 @@ class CombatEngine {
         d.target = d.cur = index;
         events.add(TargetChanged(index));
       case Dingbu(:final stance):
-        d.breath -= data.transition.cost;
+        d.breath -= dingbuCost(state);
         d.dingbuUsed = true;
         d.stance = stance;
-        events.add(StanceChanged(stance));
+        _stanceChanged(d, events);
       case Breathe():
         final n = d.hand.length;
         d.discard.addAll(d.hand);
@@ -350,7 +350,7 @@ class CombatEngine {
         if (costOf(s, def, uid) > s.player.breath) return Invalid.noBreath;
       case Dingbu(:final stance):
         if (s.dingbuUsed) return Invalid.dingbuUsed;
-        if (s.player.breath < data.transition.cost) return Invalid.noBreath;
+        if (s.player.breath < dingbuCost(s)) return Invalid.noBreath;
         if (stance == s.player.stance) return Invalid.sameStance;
       case Breathe():
         if (s.breathesLeft <= 0) return Invalid.breatheUsed;
@@ -403,8 +403,35 @@ class CombatEngine {
     def,
     s.player.stance,
     (uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0) +
-        _firstStrikeDiscount(def, s.attacksThisTurn, s.awakened),
+        _firstStrikeDiscount(def, s.attacksThisTurn, s.awakened) +
+        _firstCardDiscount(s.talismans, s.cardsThisTurn),
   );
+
+  /// Suma un efecto de los talismanes del combate.
+  int _tal(List<String> ids, int Function(TalismanEffect e) of) =>
+      ids.fold(0, (a, id) => a + of(data.talisman(id).effect));
+
+  /// Talismán Vacío: la primera carta del turno cuesta menos.
+  int _firstCardDiscount(List<String> talismans, int cards) =>
+      cards == 0 ? _tal(talismans, (e) => e.firstCardDiscount) : 0;
+
+  /// Lo que cuesta el Paso en T (algunos talismanes lo abaratan).
+  int dingbuCost(CombatState s) => math.max(
+    0,
+    data.transition.cost - _tal(s.talismans, (e) => e.dingbuDiscount),
+  );
+
+  /// Talismán Cambio: cada cambio de postura da Guardia.
+  void _stanceChanged(_Draft d, List<CombatEvent> events) {
+    events.add(StanceChanged(d.stance));
+    for (final id in d.talismans) {
+      final g = data.talisman(id).effect.stanceGuard;
+      if (g <= 0) continue;
+      d.guard += g;
+      events.add(TalismanTriggered(id));
+      events.add(GuardGained(g, d.guardHeight));
+    }
+  }
 
   /// Despertar del Tigre: el primer ataque del turno cuesta menos.
   int _firstStrikeDiscount(CardDef def, int attacks, AwakeningEffect aw) =>
@@ -630,8 +657,17 @@ class CombatEngine {
       def,
       d.stance,
       (wasRetained ? d.retainedDiscount : 0) +
-          _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened),
+          _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened) +
+          _firstCardDiscount(d.talismans, d.cardsThisTurn),
     );
+    if (d.cardsThisTurn == 0) {
+      for (final id in d.talismans) {
+        if (data.talisman(id).effect.firstCardDiscount > 0) {
+          events.add(TalismanTriggered(id));
+        }
+      }
+    }
+    d.cardsThisTurn++;
     d.hand.remove(card);
     events.add(CardPlayed(def.id));
 
@@ -694,7 +730,7 @@ class CombatEngine {
     // de la carta. Así preparar la postura (con otra carta o Paso en T) paga.
     if (def.stance != null && def.stance != d.stance) {
       d.stance = def.stance!;
-      events.add(StanceChanged(d.stance));
+      _stanceChanged(d, events);
     }
     d.breath +=
         def.gainBreath +
@@ -843,6 +879,13 @@ class CombatEngine {
     events.add(const EnemyBroken());
     // Despertar del Tigre: desequilibrar roba.
     if (d.awakened.breakDraw > 0) _draw(d, d.awakened.breakDraw, events);
+    // Talismán Quiebre: también roba.
+    for (final id in d.talismans) {
+      final n = data.talisman(id).effect.breakDraw;
+      if (n <= 0) continue;
+      events.add(TalismanTriggered(id));
+      _draw(d, n, events);
+    }
     if (e.wrath > 0) {
       e.wrath = 0;
       events.add(const WrathCalmed());
@@ -1011,16 +1054,18 @@ class CombatEngine {
       d.nextTurnBreathMod += data.balance.deflectBreathBonus +
           stance.deflectBreathBonus +
           d.awakened.deflectBreath;
+      var back = 0;
       for (final id in d.talismans) {
-        final extra = data.talisman(id).effect.deflectBreath;
-        if (extra > 0) {
-          d.nextTurnBreathMod += extra;
+        final fx = data.talisman(id).effect;
+        if (fx.deflectBreath > 0) d.nextTurnBreathMod += fx.deflectBreath;
+        back += fx.deflectDamage;
+        if (fx.deflectBreath > 0 || fx.deflectDamage > 0) {
           events.add(TalismanTriggered(id));
         }
       }
       _hitEnemy(
         d,
-        d.deflectBonusDamage,
+        d.deflectBonusDamage + back,
         data.balance.deflectEnemyStructureLoss + d.deflectBonusStructure,
         events,
       );
@@ -1067,8 +1112,19 @@ class CombatEngine {
 
   void _startPlayerTurn(_Draft d, List<CombatEvent> events) {
     d.turn++;
-    d.guard = 0;
-    d.guardHeight = null;
+    // Talismán Montaña: parte de la Guardia se queda (con su altura).
+    final keep = math.min(100, _tal(d.talismans, (e) => e.guardKeepPct));
+    final kept = d.turn > 1 ? d.guard * keep ~/ 100 : 0;
+    if (kept > 0) {
+      for (final id in d.talismans) {
+        if (data.talisman(id).effect.guardKeepPct > 0) {
+          events.add(TalismanTriggered(id));
+        }
+      }
+    }
+    d.guard = kept;
+    if (kept == 0) d.guardHeight = null;
+    d.cardsThisTurn = 0;
     d.deflectBonusDamage = 0;
     d.deflectBonusStructure = 0;
     d.dingbuUsed = false;
@@ -1244,6 +1300,7 @@ class _Draft {
     this.chain = 0,
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
+    this.cardsThisTurn = 0,
     this.drawPenalty = 0,
     this.awakened = AwakeningEffect.none,
     List<int>? retained,
@@ -1294,6 +1351,7 @@ class _Draft {
     chain: s.chain,
     retainedDiscount: s.retainedDiscount,
     attacksThisTurn: s.attacksThisTurn,
+    cardsThisTurn: s.cardsThisTurn,
     drawPenalty: s.drawPenalty,
     awakened: s.awakened,
     retained: [...s.retained],
@@ -1350,6 +1408,7 @@ class _Draft {
   final int chain;
   final int retainedDiscount;
   int attacksThisTurn;
+  int cardsThisTurn;
   int drawPenalty;
   final AwakeningEffect awakened;
   final List<int> retained;
@@ -1402,6 +1461,7 @@ class _Draft {
     chain: chain,
     retainedDiscount: retainedDiscount,
     attacksThisTurn: attacksThisTurn,
+    cardsThisTurn: cardsThisTurn,
     retained: List.unmodifiable(retained),
     drawPenalty: drawPenalty,
     awakened: awakened,

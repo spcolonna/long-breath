@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/model/talisman_def.dart';
 import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 import '../providers.dart';
@@ -8,8 +9,13 @@ import '../theme.dart';
 import 'juice.dart';
 import '../feel.dart';
 
-/// Color del borde de un talismán: oro los raros, jade los comunes.
-Color talismanColor(bool rare) => rare ? Palette.gold : Palette.jade;
+/// Color del borde de un talismán: laca los de jefe, oro los raros y jade
+/// los comunes.
+Color talismanColor(TalismanDef def) => switch (def.tier) {
+  TalismanTier.boss => Palette.lacquer,
+  TalismanTier.rare => Palette.gold,
+  TalismanTier.common => Palette.jade,
+};
 
 /// Talismán dibujado con su carácter: no hace falta arte.
 class TalismanBadge extends ConsumerWidget {
@@ -29,7 +35,8 @@ class TalismanBadge extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final def = ref.watch(dataProvider).talisman(id);
-    final color = talismanColor(def.rare);
+    final color = talismanColor(def);
+    final special = def.tier != TalismanTier.common;
     return Bounce(
       trigger: trigger,
       scale: 1.4,
@@ -43,8 +50,8 @@ class TalismanBadge extends ConsumerWidget {
           border: Border.all(color: color, width: size > 40 ? 3 : 2),
           boxShadow: [
             BoxShadow(
-              color: color.withValues(alpha: def.rare ? 0.55 : 0.25),
-              blurRadius: def.rare ? 10 : 4,
+              color: color.withValues(alpha: special ? 0.55 : 0.25),
+              blurRadius: special ? 10 : 4,
             ),
           ],
         ),
@@ -54,7 +61,7 @@ class TalismanBadge extends ConsumerWidget {
             fontSize: size * 0.5,
             height: 1,
             fontWeight: FontWeight.w700,
-            color: def.rare ? Palette.gold : Palette.text,
+            color: special ? color : Palette.text,
           ),
         ),
       ),
@@ -202,7 +209,7 @@ class TalismanTile extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  if (def.rare) ...[
+                  if (def.tier != TalismanTier.common) ...[
                     const SizedBox(width: 6),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -210,15 +217,15 @@ class TalismanTile extends ConsumerWidget {
                         vertical: 1,
                       ),
                       decoration: BoxDecoration(
-                        color: Palette.gold.withValues(alpha: 0.18),
+                        color: talismanColor(def).withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        t.talismanRare,
-                        style: const TextStyle(
+                        def.boss ? t.talismanBoss : t.talismanRare,
+                        style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
-                          color: Palette.gold,
+                          color: talismanColor(def),
                         ),
                       ),
                     ),

@@ -681,6 +681,65 @@ void main() {
       expect(r.events.whereType<TalismanTriggered>(), hasLength(1));
       expect(r.state.player.hp, 38);
     });
+
+    test('Vacío: la primera carta del turno cuesta 1 menos', () {
+      final deck = ['tan_tui', 'tan_tui', ...filler];
+      final base = setup(deck);
+      final cost = engine.preview(base, uidOf(base, 'tan_tui')).cost;
+      var s = setup(deck, talismans: ['vacio']);
+      expect(engine.preview(s, uidOf(s, 'tan_tui')).cost, cost - 1);
+      final r = play(s, 'tan_tui');
+      expect(r.events.whereType<TalismanTriggered>(), hasLength(1));
+      s = r.state;
+      expect(s.player.breath, base.player.breath - (cost - 1));
+      expect(engine.preview(s, uidOf(s, 'tan_tui')).cost, cost);
+    });
+
+    test('Sandalia: el Paso en T no cuesta Aliento', () {
+      final s = setup(filler, talismans: ['paso']);
+      expect(engine.dingbuCost(s), 0);
+      final after = engine.reduce(s, const Dingbu(Stance.xubu)).state;
+      expect(after.player.breath, s.player.breath);
+      expect(after.player.stance, Stance.xubu);
+    });
+
+    test('Hoja que Cambia: cambiar de postura da Guardia', () {
+      final s = setup(['gongbu_chongquan', ...filler], talismans: ['cambio']);
+      final r = play(s, 'gongbu_chongquan');
+      expect(r.state.player.stance, Stance.gongbu);
+      expect(r.state.player.guard, 1);
+      expect(r.events.whereType<TalismanTriggered>(), hasLength(1));
+      // El Paso en T también cuenta.
+      final d = engine.reduce(r.state, const Dingbu(Stance.xubu)).state;
+      expect(d.player.guard, 2);
+    });
+
+    test('Espejo: cada desvío le devuelve daño', () {
+      int hpAfter(List<String> talismans) {
+        var s = setup(['an_zhang', 'ti_xi', ...filler], talismans: talismans);
+        s = play(s, 'an_zhang').state;
+        s = play(s, 'ti_xi').state;
+        return endTurn(s).state.enemy.hp;
+      }
+
+      expect(hpAfter(const []) - hpAfter(const ['espejo']), 6);
+    });
+
+    test('Raíz de la Montaña: parte de la Guardia se queda', () {
+      var s = setup(['ge_dang', ...filler], talismans: ['montana']);
+      s = play(s, 'ge_dang').state;
+      final g = s.player.guard;
+      final next = endTurn(s).state;
+      expect(next.player.guard, g * 30 ~/ 100);
+      expect(next.player.guardHeight, Height.mid);
+    });
+
+    test('Luna Llena: un Aliento más por turno', () {
+      final base = setup(filler);
+      final s = setup(filler, talismans: ['luna']);
+      expect(s.breathPerTurn, base.breathPerTurn + 1);
+      expect(s.player.breath, base.player.breath + 1);
+    });
   });
 
   group('pasivas de los caminos', () {

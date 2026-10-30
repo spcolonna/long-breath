@@ -374,8 +374,9 @@ class RunEngine {
     } else {
       final (rolled, rngJ) = _rollJade(r);
       // Cada enemigo de más en el grupo suma jade.
-      final jade =
-          rolled + b.packJade * r.node(r.currentNode!).waves.length;
+      final jade = rolled +
+          b.packJade * r.node(r.currentNode!).waves.length +
+          talismanSum(r, (e) => e.winJade);
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
     final gained = lotusOf(r, lotusBase);
@@ -395,7 +396,11 @@ class RunEngine {
     // El élite y el jefe dejan elegir un talismán antes del premio.
     final (talismans, rngT) = elite || boss
         ? _rollTalismans(
-            r.rng, r, b.talismanChoices + r.meta.talismanChoices)
+            r.rng,
+            r,
+            b.talismanChoices + r.meta.talismanChoices,
+            boss: boss,
+          )
         : (const <String>[], r.rng);
     r = r.copyWith(rng: rngT);
     // El jefe deja cartas; el que se escapó, también (no hay otro premio).
@@ -601,27 +606,39 @@ class RunEngine {
   int talismanSum(RunState r, int Function(TalismanEffect e) of) =>
       r.talismans.fold(0, (a, id) => a + of(data.talisman(id).effect));
 
-  /// Talismanes que todavía no se tienen ([rare]: null = cualquiera).
-  List<String> missingTalismans(RunState r, {bool? rare}) => [
+  /// Talismanes que todavía no se tienen ([rare]: null = común o raro).
+  /// Los de jefe solo salen con [boss].
+  List<String> missingTalismans(RunState r, {bool? rare, bool boss = false}) =>
+      [
         for (final t in data.talismans.values)
           if (!r.talismans.contains(t.id) &&
               !r.locked.contains(t.id) &&
-              (rare == null || t.rare == rare))
+              t.boss == boss &&
+              (boss || rare == null || t.rare == rare))
             t.id,
       ];
 
-  (List<String>, Rng) _rollTalismans(Rng rng, RunState r, int n) {
-    final (shuffled, next) = rng.shuffle(missingTalismans(r));
-    return (shuffled.take(n).toList(), next);
+  /// El jefe de etapa ofrece los suyos primero y completa con los demás.
+  (List<String>, Rng) _rollTalismans(
+    Rng rng,
+    RunState r,
+    int n, {
+    bool boss = false,
+  }) {
+    final (own, rng2) = rng.shuffle(boss ? missingTalismans(r, boss: true) : <String>[]);
+    final (rest, next) = rng2.shuffle(missingTalismans(r));
+    return ([...own, ...rest].take(n).toList(), next);
   }
 
-  /// Suma un talismán: los de Vida máxima también curan lo mismo.
+  /// Suma un talismán: los de Vida máxima también curan lo mismo (y los
+  /// que la quitan nunca dejan al discípulo en 0).
   RunState addTalisman(RunState r, String id) {
     final extra = data.talisman(id).effect.maxHp;
+    final maxHp = math.max(1, r.maxHp + extra);
     return r.copyWith(
       talismans: [...r.talismans, id],
-      maxHp: r.maxHp + extra,
-      hp: r.hp + extra,
+      maxHp: maxHp,
+      hp: (r.hp + extra).clamp(1, maxHp),
     );
   }
 

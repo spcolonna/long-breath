@@ -235,7 +235,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     _pop(
       _heroPops,
       '${def.hanzi} ${ref.read(textProvider).talisman(id)}',
-      def.rare ? Palette.gold : Palette.jade,
+      talismanColor(def),
       size: 16,
       dx: 70,
       dy: -70,
@@ -3628,7 +3628,7 @@ class _ActionBar extends ConsumerWidget {
     }
 
     final canDingbu =
-        !busy && !s.dingbuUsed && s.player.breath >= data.transition.cost;
+        !busy && !s.dingbuUsed && s.player.breath >= engine.dingbuCost(s);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
       child: Row(
@@ -3653,7 +3653,7 @@ class _ActionBar extends ConsumerWidget {
                 ),
                 child: _CostLabel(
                   label: text.dingbu(),
-                  cost: data.transition.cost,
+                  cost: engine.dingbuCost(s),
                 ),
               ),
             ),

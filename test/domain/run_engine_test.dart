@@ -421,6 +421,29 @@ void main() {
       expect(RunState.fromJson(r.toJson()).talismans, ['vida']);
     });
 
+    test('los de jefe solo los ofrece el jefe', () {
+      final r = fresh(3);
+      final normal = run.missingTalismans(r);
+      expect(normal, isNot(contains('luna')));
+      expect(normal, isNot(contains('montana')));
+      expect(run.missingTalismans(r, rare: true), isNot(contains('luna')));
+      expect(run.missingTalismans(r, boss: true), ['luna', 'montana']);
+    });
+
+    test('Luna Llena quita Vida máxima sin dejarte en 0', () {
+      var r = fresh(3).copyWith(hp: 3);
+      r = run.addTalisman(r, 'luna');
+      expect(r.maxHp, 45);
+      expect(r.hp, 1);
+    });
+
+    test('Bolsa del Peregrino: más jade al ganar', () {
+      var r = run.enter(fresh(3), 'n1');
+      final plain = run.finishCombat(r, won: true, hp: 30).jadeGained;
+      r = run.enter(run.addTalisman(fresh(3), 'bolsa'), 'n1');
+      expect(run.finishCombat(r, won: true, hp: 30).jadeGained, plain + 8);
+    });
+
     test('un combate común no da talismán', () {
       var r = run.enter(fresh(3), 'n1');
       r = run.finishCombat(r, won: true, hp: 30);
@@ -886,7 +909,9 @@ void main() {
       expect(r.rerollsLeft, 1);
       expect(r.deck.where((c) => c.upgrades > 0), hasLength(2));
       expect(r.phase, RunPhase.talisman, reason: 'el don de la escuela');
-      r = real.chooseTalisman(r, r.talismanOptions.first);
+      // La fuente cambiaría la curación que se mide abajo.
+      r = real.chooseTalisman(
+          r, r.talismanOptions.firstWhere((t) => t != 'fuente'));
       expect(r.phase, RunPhase.map);
       expect(r.talismans, hasLength(1));
       expect(real.merchantOf(r).card,

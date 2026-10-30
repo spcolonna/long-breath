@@ -1486,10 +1486,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get talismanPickHint =>
-      'Vale para toda la subida y actúa solo. Los raros brillan en oro.';
+      'Vale para toda la subida y actúa solo. Los raros brillan en oro y los del jefe, en laca.';
 
   @override
   String get talismanRare => 'Raro';
+
+  @override
+  String get talismanBoss => 'De jefe';
 
   @override
   String talismanGained(String name) {
@@ -1555,6 +1558,56 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String talEffFormHeal(int n) {
     return 'Cada forma completa cura $n.';
+  }
+
+  @override
+  String talEffStanceGuard(int n) {
+    return 'Cada vez que cambiás de postura, +$n de Guardia.';
+  }
+
+  @override
+  String talEffDingbu(String move) {
+    return 'El $move no cuesta Aliento.';
+  }
+
+  @override
+  String talEffWinJade(int n) {
+    return 'Ganar un combate da +$n de jade.';
+  }
+
+  @override
+  String talEffFirstCard(int n) {
+    return 'La primera carta de cada turno cuesta $n menos.';
+  }
+
+  @override
+  String talEffBreakDraw(int n) {
+    return 'Desequilibrar a un rival roba $n cartas.';
+  }
+
+  @override
+  String talEffDeflectDamage(int n) {
+    return 'Cada desvío le devuelve $n de daño.';
+  }
+
+  @override
+  String talEffTurnBreath(int n) {
+    return '+$n de Aliento en cada turno,';
+  }
+
+  @override
+  String talEffHandLess(int n) {
+    return 'pero robás $n carta menos.';
+  }
+
+  @override
+  String talEffMaxHpLess(int n) {
+    return 'pero perdés $n de Vida máxima.';
+  }
+
+  @override
+  String talEffGuardKeep(int n) {
+    return 'Al empezar tu turno conservás el $n% de tu Guardia.';
   }
 
   @override

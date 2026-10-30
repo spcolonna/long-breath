@@ -163,6 +163,16 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Perla del Aliento 气 | +1 de Aliento en el primer turno | raro |
    | Sello de la Grieta 裂 | El rival empieza con 3 de Estructura menos | raro |
    | Cinta de la Victoria 胜 | Ganar un combate cura 3 | raro |
+   | Sandalia Ligera 轻 | El Paso en T no cuesta Aliento | común |
+   | Bolsa del Peregrino 囊 | Ganar un combate da +8 de jade | común |
+   | Espejo de Bronce 镜 | Cada desvío le devuelve 6 de daño | común |
+   | Hoja que Cambia 变 | Cada cambio de postura (carta o Paso en T) da +1 de Guardia | raro |
+   | Cuenco Vacío 空 | La primera carta de cada turno cuesta 1 menos | raro |
+   | Martillo Quebrado 破 | Desequilibrar a un rival roba 1 carta | raro |
+   | Luna Llena 月 | +1 de Aliento en cada turno, pero −5 de Vida máxima | de jefe |
+   | Raíz de la Montaña 山 | Al empezar tu turno conservás el 30% de tu Guardia (con su altura) | de jefe |
+
+   Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader.
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.

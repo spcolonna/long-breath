@@ -376,7 +376,9 @@ double formValue(RunEngine run, RunState r, FormDef f) {
 double talismanValue(String id) => const {
       'grieta': 12.0, 'victoria': 11.0, 'aliento': 10.0, 'vida': 8.0,
       'primer': 7.0, 'fuente': 7.0, 'roca': 5.0, 'arco': 3.0,
-      'desvio': 3.0, 'formas': 2.0,
+      'desvio': 3.0, 'formas': 2.0, 'montana': 20.0, 'cambio': 15.0,
+      'vacio': 15.0, 'quiebre': 14.0, 'luna': 12.0, 'espejo': 10.0,
+      'paso': 5.0, 'bolsa': 4.0,
     }[id] ??
     4.0;
 

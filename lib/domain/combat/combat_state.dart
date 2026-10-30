@@ -190,6 +190,7 @@ class CombatState {
     this.chain = 0,
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
+    this.cardsThisTurn = 0,
     this.retained = const [],
     this.drawPenalty = 0,
     this.awakened = AwakeningEffect.none,
@@ -263,6 +264,9 @@ class CombatState {
   /// Ataques jugados en este turno (Tigre y Serpiente cuentan con esto).
   final int attacksThisTurn;
 
+  /// Cartas jugadas en este turno (talismán Vacío).
+  final int cardsThisTurn;
+
   /// Cartas que vienen retenidas del turno anterior (Grulla).
   final List<int> retained;
 
@@ -325,6 +329,7 @@ class CombatState {
         chain: chain,
         retainedDiscount: retainedDiscount,
         attacksThisTurn: attacksThisTurn,
+        cardsThisTurn: cardsThisTurn,
         retained: retained,
         drawPenalty: drawPenalty,
         awakened: awakened,

@@ -2497,7 +2497,7 @@ abstract class AppLocalizations {
   /// No description provided for @talismanPickHint.
   ///
   /// In es, this message translates to:
-  /// **'Vale para toda la subida y actúa solo. Los raros brillan en oro.'**
+  /// **'Vale para toda la subida y actúa solo. Los raros brillan en oro y los del jefe, en laca.'**
   String get talismanPickHint;
 
   /// No description provided for @talismanRare.
@@ -2505,6 +2505,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Raro'**
   String get talismanRare;
+
+  /// No description provided for @talismanBoss.
+  ///
+  /// In es, this message translates to:
+  /// **'De jefe'**
+  String get talismanBoss;
 
   /// No description provided for @talismanGained.
   ///
@@ -2589,6 +2595,66 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cada forma completa cura {n}.'**
   String talEffFormHeal(int n);
+
+  /// No description provided for @talEffStanceGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada vez que cambiás de postura, +{n} de Guardia.'**
+  String talEffStanceGuard(int n);
+
+  /// No description provided for @talEffDingbu.
+  ///
+  /// In es, this message translates to:
+  /// **'El {move} no cuesta Aliento.'**
+  String talEffDingbu(String move);
+
+  /// No description provided for @talEffWinJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Ganar un combate da +{n} de jade.'**
+  String talEffWinJade(int n);
+
+  /// No description provided for @talEffFirstCard.
+  ///
+  /// In es, this message translates to:
+  /// **'La primera carta de cada turno cuesta {n} menos.'**
+  String talEffFirstCard(int n);
+
+  /// No description provided for @talEffBreakDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Desequilibrar a un rival roba {n} cartas.'**
+  String talEffBreakDraw(int n);
+
+  /// No description provided for @talEffDeflectDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada desvío le devuelve {n} de daño.'**
+  String talEffDeflectDamage(int n);
+
+  /// No description provided for @talEffTurnBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Aliento en cada turno,'**
+  String talEffTurnBreath(int n);
+
+  /// No description provided for @talEffHandLess.
+  ///
+  /// In es, this message translates to:
+  /// **'pero robás {n} carta menos.'**
+  String talEffHandLess(int n);
+
+  /// No description provided for @talEffMaxHpLess.
+  ///
+  /// In es, this message translates to:
+  /// **'pero perdés {n} de Vida máxima.'**
+  String talEffMaxHpLess(int n);
+
+  /// No description provided for @talEffGuardKeep.
+  ///
+  /// In es, this message translates to:
+  /// **'Al empezar tu turno conservás el {n}% de tu Guardia.'**
+  String talEffGuardKeep(int n);
 
   /// No description provided for @awEffFirstStrike.
   ///

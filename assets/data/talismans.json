@@ -9,6 +9,14 @@
     { "id": "formas",   "hanzi": "套", "rarity": "common", "effect": { "formHeal": 8 } },
     { "id": "aliento",  "hanzi": "气", "rarity": "rare",   "effect": { "firstTurnBreath": 1 } },
     { "id": "grieta",   "hanzi": "裂", "rarity": "rare",   "effect": { "enemyStructure": 3 } },
-    { "id": "victoria", "hanzi": "胜", "rarity": "rare",   "effect": { "winHeal": 3 } }
+    { "id": "victoria", "hanzi": "胜", "rarity": "rare",   "effect": { "winHeal": 3 } },
+    { "id": "cambio",   "hanzi": "变", "rarity": "rare",   "effect": { "stanceGuard": 1 } },
+    { "id": "paso",     "hanzi": "轻", "rarity": "common", "effect": { "dingbuDiscount": 1 } },
+    { "id": "bolsa",    "hanzi": "囊", "rarity": "common", "effect": { "winJade": 8 } },
+    { "id": "vacio",    "hanzi": "空", "rarity": "rare",   "effect": { "firstCardDiscount": 1 } },
+    { "id": "quiebre",  "hanzi": "破", "rarity": "rare",   "effect": { "breakDraw": 1 } },
+    { "id": "espejo",   "hanzi": "镜", "rarity": "common", "effect": { "deflectDamage": 6 } },
+    { "id": "luna",     "hanzi": "月", "rarity": "boss",   "effect": { "turnBreath": 1, "maxHp": -5 } },
+    { "id": "montana",  "hanzi": "山", "rarity": "boss",   "effect": { "guardKeepPct": 30 } }
   ]
 }

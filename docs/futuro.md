@@ -195,6 +195,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Prototipo:** hay 10 talismanes medidos en `balance.md` (sección 5). Cada uno suma entre +1 y +14 puntos de victoria, y todos juntos unos +20.
 - Se obtienen en las élites, los jefes, los eventos y el mercader.
 - **En el juego** (02/10/2026): los 10 del prototipo, del élite (1 de 3) y de los eventos. Falta: talismanes de jefe, del mercader y talismanes que cambien reglas (no solo números).
+- **Hecho (30/10/2026):** 8 talismanes que cambian reglas (Paso en T gratis, Guardia al cambiar de postura, primera carta más barata, robar al desequilibrar, desvío que devuelve daño, jade al ganar) y una rareza nueva **de jefe** (laca) que solo da el jefe de etapa: Luna Llena (+1 Aliento por turno, −5 Vida máxima) y Raíz de la Montaña (conservás 30% de la Guardia). Medidos con `--section talismans`: comunes +5 a +12 pp, raros +16/+17, de jefe +12 a +25; el balance general quedó igual (experto 66% contra 65%, promedio 30% contra 31%). Falta: más de jefe con costo, y talismanes que dependan del camino.
 - **Arte:** ícono chico por talismán. Se pueden armar con un set de íconos simples o con caracteres caligrafiados.
 
 ### 3.5 Más enemigos
