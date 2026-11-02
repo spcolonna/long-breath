@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 141 · ✅ 111 · 🎨 4 · ❌ 26
+Total: 141 · ✅ 119 · 🎨 4 · ❌ 18
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -111,14 +111,14 @@ Total: 141 · ✅ 111 · 🎨 4 · ❌ 26
 | ✅ propio | `assets/art/cards/hu_pu.webp` | ilustración de hu_pu | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/hu_bao_tou.webp` | ilustración de hu_bao_tou | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/hu_xiao.webp` | ilustración de hu_xiao | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/hu_wei.webp` | ilustración de hu_wei | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/xia_shan_hu.webp` | ilustración de xia_shan_hu | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/hu_ya.webp` | ilustración de hu_ya | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/hu_ben.webp` | ilustración de hu_ben | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/e_hu_pu_shi.webp` | ilustración de e_hu_pu_shi | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/hu_dun.webp` | ilustración de hu_dun | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_xing_shou.webp` | ilustración de she_xing_shou | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_tu_xin.webp` | ilustración de she_tu_xin | hanzi de marca de agua | no |
+| ✅ propio | `assets/art/cards/hu_wei.webp` | ilustración de hu_wei | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/xia_shan_hu.webp` | ilustración de xia_shan_hu | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/hu_ya.webp` | ilustración de hu_ya | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/hu_ben.webp` | ilustración de hu_ben | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/e_hu_pu_shi.webp` | ilustración de e_hu_pu_shi | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/hu_dun.webp` | ilustración de hu_dun | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_xing_shou.webp` | ilustración de she_xing_shou | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_tu_xin.webp` | ilustración de she_tu_xin | hanzi de marca de agua | — |
 | ❌ falta | `assets/art/cards/she_chan_shen.webp` | ilustración de she_chan_shen | hanzi de marca de agua | no |
 | ❌ falta | `assets/art/cards/jin_she.webp` | ilustración de jin_she | hanzi de marca de agua | no |
 | ❌ falta | `assets/art/cards/she_wei.webp` | ilustración de she_wei | hanzi de marca de agua | no |
