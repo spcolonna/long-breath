@@ -79,6 +79,7 @@ class _Pop {
     this.icon,
     this.dx = 0,
     this.dy = 0,
+    this.heavy = false,
   });
   final int id;
   final String text;
@@ -87,6 +88,7 @@ class _Pop {
   final IconData? icon;
   final double dx;
   final double dy;
+  final bool heavy;
 }
 
 /// Efectos de la arena en un instante: qué se animó y qué números hay en vuelo.
@@ -164,6 +166,12 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _deflectKey = 0,
       _turnKey = 0;
   int _shakeKey = 0, _flashKey = 0, _formBurstKey = 0, _popId = 0;
+
+  /// Destello dorado (desequilibrio, forma, remate) y sello del remate.
+  int _goldFlashKey = 0, _finishKey = 0;
+
+  /// Cada cambio de velocidad invalida los anteriores (el último manda).
+  int _dilation = 0;
   int _qiKey = 0;
   double _shakeStrength = 8;
   bool _victory = false, _defeated = false;
@@ -285,6 +293,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     IconData? icon,
     double dx = 0,
     double dy = 0,
+    bool heavy = false,
   }) {
     final p = _Pop(
       _popId++,
@@ -294,9 +303,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       icon: icon,
       dx: dx + (_rnd.nextDouble() - 0.5) * 24,
       dy: dy,
+      heavy: heavy,
     );
     into.add(p);
-    _after(1100, () => setState(() => into.remove(p)));
+    _after(heavy ? 1400 : 1100, () => setState(() => into.remove(p)));
   }
 
   void _shake(double strength) {
@@ -307,10 +317,28 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Pausa de impacto: en los golpes fuertes todo se congela un instante
   /// (las animaciones van casi quietas) y después sigue. Da peso al golpe.
-  void _hitStop(int ms) {
+  void _hitStop(int ms) => _dilate([(8, ms)]);
+
+  /// Cambios de velocidad en tramos (factor, ms): primero casi quieto y
+  /// después cámara lenta, y vuelve a la normal. Un tramo nuevo reemplaza
+  /// a los que quedaban. Con movimiento reducido no hace nada.
+  void _dilate(List<(double, int)> steps) {
     if (MediaQuery.disableAnimationsOf(context)) return;
-    timeDilation = 8;
-    _after(ms, () => timeDilation = 1);
+    final token = ++_dilation;
+    var at = 0;
+    for (final (factor, ms) in steps) {
+      if (at == 0) {
+        timeDilation = factor;
+      } else {
+        _after(at, () {
+          if (_dilation == token) timeDilation = factor;
+        });
+      }
+      at += ms;
+    }
+    _after(at, () {
+      if (_dilation == token) timeDilation = 1;
+    });
   }
 
   void _present(CombatView prev, CombatView next) {
@@ -438,14 +466,32 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final guard = ev.whereType<GuardGained>().fold(0, (a, e) => a + e.amount);
     final broken = ev.any((e) => e is EnemyBroken);
     final t = AppLocalizations.of(context);
+    // Le pegó desequilibrado: el daño vino doble.
+    final before = _shown?.state.enemies;
+    final doubled =
+        before != null && slot < before.length && before[slot].staggered;
+    final kill = ev.any(
+      (e) => e is Victory || e is EnemyDefeated || e is WaveStarted,
+    );
     setState(() {
       _shown = next;
       if (hits.isNotEmpty) {
         f.hit++;
         f.spark++;
-        f.heavy = dmg >= 10 || broken;
+        f.heavy = dmg >= 10 || broken || kill;
         if (dmg > 0) {
-          _pop(f.pops, '−$dmg', Palette.lacquer, size: dmg >= 10 ? 42 : 34);
+          // Tres tamaños: común, fuerte y brutal (o el que tumba).
+          final brutal = dmg >= 18 || kill || doubled;
+          _pop(
+            f.pops,
+            '−$dmg',
+            Palette.lacquer,
+            size: brutal ? 54 : (f.heavy ? 44 : 34),
+            heavy: brutal || f.heavy,
+          );
+          if (doubled) {
+            _pop(f.pops, '×2', Palette.gold, size: 24, dx: 52, dy: -38);
+          }
         }
         if (str > 0) {
           _pop(
@@ -470,7 +516,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           );
         }
         if (broken) f.brk++;
-        if (f.heavy) _shake(broken ? 14 : 9);
+        if (f.heavy) _shake(broken || kill ? 14 : 9);
       }
       if (guard > 0) {
         _guardKey++;
@@ -742,10 +788,18 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     return at + 650;
   }
 
-  /// Victoria: estalla el último en caer ([slot]).
+  /// Victoria: estalla el último en caer ([slot]). A una élite o a un jefe
+  /// se lo remata: trazo de pincel, sello 破 y cámara lenta más larga.
   void _win([int slot = 0]) {
+    final enemies =
+        (_shown ?? ref.read(combatControllerProvider))?.state.enemies;
+    final id =
+        enemies != null && slot < enemies.length ? enemies[slot].id : null;
+    final grand = id != null &&
+        ref.read(dataProvider).enemy(id).rank != EnemyRank.common;
     Haptics.heavyImpact();
     _audio.play(Sfx.enemyDeath);
+    if (grand) _audio.play(Sfx.broken);
     setState(() {
       _queue.clear();
       _current = null;
@@ -753,13 +807,24 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         f.dying = true;
       }
       _foe(slot).burst++;
-      _shake(16);
+      _goldFlashKey++;
+      _shake(grand ? 20 : 16);
+      if (grand) _finishKey++;
     });
-    _after(450, () {
+    // El último golpe se ve en cámara lenta.
+    _dilate(grand ? [(10, 160), (4, 650)] : [(8, 110), (3, 300)]);
+    if (grand) {
+      _after(380, () {
+        Haptics.heavyImpact();
+        _audio.play(Sfx.victoryStamp);
+      });
+    }
+    final wait = grand ? 600 : 0;
+    _after(450 + wait, () {
       setState(() => _victory = true);
       _audio.play(Sfx.heroVictory);
     });
-    _after(1150, () {
+    _after(1150 + wait, () {
       Haptics.mediumImpact();
       _audio.jingle(Music.victory);
       setState(() => _endShown = true);
@@ -811,6 +876,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         case EnemyBroken():
           Haptics.heavyImpact();
           _audio.play(Sfx.broken);
+          // Se quiebra: congela, cámara lenta y vuelve.
+          _goldFlashKey++;
+          _dilate([(9, 110), (3, 320)]);
           _queue.add(_Fx(t.broken, t.staggeredDouble, Palette.gold));
         case ScaleShed(:final remaining):
           _queue.add(_Fx(t.scaleShed, t.scalesLeft(remaining), Palette.jade));
@@ -886,6 +954,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           Haptics.heavyImpact();
           _audio.play(Sfx.formComplete);
           _formBurstKey++;
+          _goldFlashKey++;
+          _dilate([(8, 90), (2.5, 400)]);
           final f = data.forms.firstWhere((f) => f.id == formId);
           _queue.add(
             _Fx(
@@ -1174,6 +1244,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             Positioned.fill(
               child: ScreenFlash(trigger: _flashKey, color: Palette.lacquer),
             ),
+            Positioned.fill(
+              child: ScreenFlash(trigger: _goldFlashKey, color: Palette.gold),
+            ),
+            Positioned.fill(child: FinisherSeal(trigger: _finishKey)),
             Positioned.fill(
               child: InkBurst(
                 trigger: _formBurstKey,
@@ -1529,6 +1603,7 @@ class _PopStack extends StatelessWidget {
                   color: p.color,
                   size: p.size,
                   icon: p.icon,
+                  heavy: p.heavy,
                 ),
               ),
           ],

@@ -130,6 +130,7 @@ class PopText extends StatefulWidget {
     this.size = 30,
     this.icon,
     this.rise = 56,
+    this.heavy = false,
   });
 
   final String text;
@@ -138,6 +139,10 @@ class PopText extends StatefulWidget {
   final IconData? icon;
   final double rise;
 
+  /// Golpe fuerte: salta más, se tuerce un instante, lleva borde dorado y
+  /// queda más tiempo a la vista.
+  final bool heavy;
+
   @override
   State<PopText> createState() => _PopTextState();
 }
@@ -145,7 +150,7 @@ class PopText extends StatefulWidget {
 class _PopTextState extends State<PopText> with SingleTickerProviderStateMixin {
   late final _c = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 1000),
+    duration: Duration(milliseconds: widget.heavy ? 1300 : 1000),
   )..forward();
 
   @override
@@ -174,17 +179,28 @@ class _PopTextState extends State<PopText> with SingleTickerProviderStateMixin {
         final opacity = t < 0.65 ? 1.0 : 1 - (t - 0.65) / 0.35;
         // Sin movimiento: aparece en su lugar y se desvanece.
         if (still) return Opacity(opacity: opacity.clamp(0, 1), child: child);
+        final peak = widget.heavy ? 1.7 : 1.35;
         final pop = t < 0.18
-            ? Curves.easeOutBack.transform(t / 0.18) * 1.35
-            : 1.35 -
-                  0.35 *
+            ? Curves.easeOutBack.transform(t / 0.18) * peak
+            : peak -
+                  (peak - 1) *
                       Curves.easeOut.transform(math.min(1, (t - 0.18) / 0.2));
-        final rise = -widget.rise * Curves.easeOutCubic.transform(t);
+        // El fuerte sube menos: pesa.
+        final rise =
+            -widget.rise *
+            (widget.heavy ? 0.6 : 1) *
+            Curves.easeOutCubic.transform(t);
+        final tilt = widget.heavy && t < 0.3
+            ? math.sin(t / 0.3 * math.pi * 2) * 0.09 * (1 - t / 0.3)
+            : 0.0;
         return Opacity(
           opacity: opacity.clamp(0, 1),
           child: Transform.translate(
             offset: Offset(0, rise),
-            child: Transform.scale(scale: pop, child: child),
+            child: Transform.rotate(
+              angle: tilt,
+              child: Transform.scale(scale: pop, child: child),
+            ),
           ),
         );
       },
@@ -200,7 +216,28 @@ class _PopTextState extends State<PopText> with SingleTickerProviderStateMixin {
                 color: widget.color,
               ),
             ),
-          Text(widget.text, style: style),
+          if (widget.heavy)
+            Stack(
+              children: [
+                Text(
+                  widget.text,
+                  style: style.copyWith(
+                    color: null,
+                    shadows: const [
+                      Shadow(color: Color(0x66FFFFFF), blurRadius: 14),
+                    ],
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = widget.size * 0.14
+                      ..strokeJoin = StrokeJoin.round
+                      ..color = Palette.gold,
+                  ),
+                ),
+                Text(widget.text, style: style.copyWith(shadows: const [])),
+              ],
+            )
+          else
+            Text(widget.text, style: style),
         ],
       ),
     );
@@ -604,4 +641,169 @@ List<double> saturationMatrix(double s) {
     r * i, g * i, b * i + s, 0, 0, //
     0, 0, 0, 1, 0,
   ];
+}
+
+/// Remate: un trazo de pincel cruza la pantalla en diagonal y un sello con
+/// [hanzi] cae en el centro, cada vez que cambia [trigger]. Para el golpe
+/// que tumba a una élite o a un jefe. Sin movimiento, solo aparece el sello.
+class FinisherSeal extends StatefulWidget {
+  const FinisherSeal({
+    super.key,
+    required this.trigger,
+    this.hanzi = '破',
+    this.color = Palette.lacquer,
+    this.size = 120,
+  });
+
+  final int trigger;
+  final String hanzi;
+  final Color color;
+  final double size;
+
+  static const duration = Duration(milliseconds: 1250);
+
+  @override
+  State<FinisherSeal> createState() => _FinisherSealState();
+}
+
+class _FinisherSealState extends State<FinisherSeal>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: FinisherSeal.duration,
+  );
+
+  @override
+  void didUpdateWidget(FinisherSeal old) {
+    super.didUpdateWidget(old);
+    if (widget.trigger != old.trigger) _c.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final still = calm(context);
+    return IgnorePointer(
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _c,
+          builder: (context, _) {
+            if (!_c.isAnimating) return const SizedBox.expand();
+            final t = _c.value;
+            final fade = t < 0.75 ? 1.0 : 1 - (t - 0.75) / 0.25;
+            // El sello cae después del trazo: grande, y asienta con rebote.
+            final st = ((t - 0.12) / 0.22).clamp(0.0, 1.0);
+            final scale = still
+                ? 1.0
+                : 2.4 - 1.4 * Curves.easeOutBack.transform(st);
+            return Opacity(
+              opacity: fade.clamp(0, 1),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (!still)
+                    Positioned.fill(
+                      child: CustomPaint(
+                        painter: _SlashPainter(
+                          progress: Curves.easeOutCubic.transform(
+                            (t / 0.16).clamp(0, 1),
+                          ),
+                          color: widget.color,
+                        ),
+                      ),
+                    ),
+                  if (still || st > 0)
+                    Opacity(
+                      opacity: still ? 1 : st.clamp(0, 1),
+                      child: Transform.scale(
+                        scale: scale,
+                        child: Transform.rotate(
+                          angle: -0.08,
+                          child: _sealBox(),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _sealBox() {
+    final s = widget.size;
+    return Container(
+      width: s,
+      height: s,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: widget.color,
+        borderRadius: BorderRadius.circular(s * 0.14),
+        border: Border.all(color: Palette.gold, width: s * 0.04),
+        boxShadow: [
+          BoxShadow(
+            color: widget.color.withValues(alpha: 0.45),
+            blurRadius: s * 0.35,
+          ),
+        ],
+      ),
+      child: Text(
+        widget.hanzi,
+        style: TextStyle(
+          fontSize: s * 0.62,
+          height: 1,
+          fontWeight: FontWeight.w900,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+/// Trazo de pincel de esquina a esquina: grueso en el medio, fino en las
+/// puntas, que avanza con [progress].
+class _SlashPainter extends CustomPainter {
+  _SlashPainter({required this.progress, required this.color});
+
+  final double progress;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (progress <= 0) return;
+    final a = Offset(size.width * -0.1, size.height * 0.62);
+    final b = Offset(size.width * 1.1, size.height * 0.30);
+    final dir = b - a;
+    final n = Offset(-dir.dy, dir.dx) / dir.distance;
+    const steps = 24;
+    final w = size.shortestSide * 0.07;
+    final top = <Offset>[];
+    final bottom = <Offset>[];
+    for (var i = 0; i <= steps; i++) {
+      final u = i / steps * progress;
+      final p = a + dir * u;
+      final k = math.sin(math.pi * (i / steps)) * w;
+      top.add(p + n * k);
+      bottom.add(p - n * k * 0.6);
+    }
+    final path = Path()..addPolygon([...top, ...bottom.reversed], true);
+    canvas.drawPath(path, Paint()..color = color.withValues(alpha: 0.85));
+    canvas.drawPath(
+      path,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = Palette.gold.withValues(alpha: 0.7),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_SlashPainter old) => old.progress != progress;
 }

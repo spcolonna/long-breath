@@ -33,4 +33,55 @@ void main() {
     await tester.pump(const Duration(milliseconds: 600));
     expect(_opacity(tester), 0);
   });
+
+  testWidgets('FinisherSeal: el sello cae con el remate y se va', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_seal(0));
+    expect(find.text('破'), findsNothing);
+    await tester.pumpWidget(_seal(1));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('破'), findsOneWidget);
+    await tester.pump(FinisherSeal.duration);
+    expect(find.text('破'), findsNothing);
+  });
+
+  testWidgets('FinisherSeal: con movimiento reducido solo aparece el sello', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_seal(0, calm: true));
+    await tester.pumpWidget(_seal(1, calm: true));
+    await tester.pump(const Duration(milliseconds: 50));
+    expect(find.text('破'), findsOneWidget);
+    expect(
+      find
+          .byType(CustomPaint)
+          .evaluate()
+          .where((e) => (e.widget as CustomPaint).painter != null),
+      isEmpty,
+    );
+  });
+
+  testWidgets('PopText fuerte: borde dorado y dura más', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Center(
+          child: PopText(text: '−24', color: Colors.red, heavy: true),
+        ),
+      ),
+    );
+    expect(find.text('−24'), findsNWidgets(2), reason: 'borde y relleno');
+    await tester.pump(const Duration(milliseconds: 1100));
+    final op = tester.widget<Opacity>(find.byType(Opacity).first).opacity;
+    expect(op, greaterThan(0));
+  });
 }
+
+Widget _seal(int trigger, {bool calm = false}) => MaterialApp(
+  home: MediaQuery(
+    data: MediaQueryData(disableAnimations: calm),
+    child: Stack(
+      children: [Positioned.fill(child: FinisherSeal(trigger: trigger))],
+    ),
+  ),
+);
