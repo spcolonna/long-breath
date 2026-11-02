@@ -273,6 +273,8 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ## 4. Orden sugerido
 
+**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos, élites opcionales); 2) economía y progresión (jade entre subidas, talismanes de jefe con costo, legado); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
+
 **Hoja de ruta (07/10/2026), por prioridad:**
 1. Cultivo del aliento: **hecho**.
 2. Hitos 功 (logros): **hecho (29/10/2026)**, 18 hitos por partida con aliento extra (ver `manual.md`). Hitos por enemigo (élites de cada reino, jefe sin perder Vida), por despertares y por talismanes: **hecho (02/11/2026)**, 27 en total, con barra de avance en el Registro.
