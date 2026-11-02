@@ -206,6 +206,8 @@ backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra
 
 ## Camino Grulla
 
+> **Mismo cuidado que con la Serpiente:** las alas y el equilibrio en una pata hacen que ChatGPT convierta los brazos en alas, agregue o funda piernas y deforme los dedos. Cada prompt pide brazos humanos con manga, las dos piernas completas aunque una esté levantada y una forma de mano simple a la vista. La grulla aparece solo como espíritu de tinta separado del cuerpo. Si sale una mano o una pierna mal, en la misma conversación pedí: *«Same image, fix only the hands and legs: five fingers each, two complete legs, fully visible»*.
+
 ### 9. `he_chi.png` — Ala de grulla 鹤翅
 
 ```
@@ -213,13 +215,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist sweeping one arm up and outward like an opening wing to deflect a blow, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: standing in a balanced stance, the front forearm sweeping up and outward above the head with the open palm turned out to deflect a high blow, the rear hand open in front of the chest.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that spreads one large wing behind the raised arm like a shield, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 10. `du_li.png` — Grulla en una pata 独立
@@ -229,13 +234,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist balanced calmly on one leg, the other knee raised, arms spread low like a crane, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: balanced calmly on one straight leg, the other knee raised to hip height with the foot hanging relaxed below it, both arms extended low and slightly out to the sides for balance.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, palms facing down); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that stands on one leg beside the figure, mirroring the pose, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 11. `he_zui.png` — Pico de grulla 鹤嘴
@@ -245,13 +253,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist pecking forward with the fingertips pinched together into a crane beak, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: in a forward bow stance, the front arm extended at chest height striking with a crane-beak hand, the rear hand open at the hip.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand: all five fingertips pinched together into one clear point, wrist straight, like a bird's beak; rear hand a flat open palm); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in vermilion (#E8453C) that stretches its long neck forward along the striking arm, its beak pointing the same way as the hand, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 12. `he_wu.png` — Danza de la grulla 鹤舞
@@ -261,13 +272,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist turning in a graceful spinning kick with both arms spread like wings, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a high side kick at the moment of a turn: the support leg straight, the kicking leg extended out to the side at chest height with the foot flexed, the torso upright and leaning slightly away, both arms open wide to the sides for balance.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that circles once around the figure with its wings open, tracing the turn, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 13. `he_xi.png` — Rodilla de grulla 鹤膝
@@ -277,13 +291,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist driving a rising knee strike while the arms lift like wings, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a rising knee strike: standing on one leg, the other knee driving up to chest height with the shin hanging below it, both arms raised to the sides at shoulder height, elbows soft.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that lifts off from under the raised knee with wings spread upward, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 14. `he_ming.png` — Canto de la grulla 鹤鸣
@@ -293,13 +310,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist in a tall poised guard, chin up as if calling out, a ring of sound waves around the arms, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a tall poised guard, feet apart, chin slightly raised, both forearms held up in front of the body with open palms facing forward, one at face height and one at chest height.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that throws its head back and calls out above the figure, with soft rings of sound spreading around the guard, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 15. `he_ding.png` — Corona de la grulla 鹤顶
@@ -309,13 +329,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist striking upward with the top of the wrist bent like a crane head, a small red crown accent, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: in a short forward stance, the front arm striking upward at chin height with the back of the bent wrist, the rear hand open in front of the chest.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand: wrist bent down, fingers relaxed and together pointing down, the top of the wrist leading the strike; rear hand a flat open palm); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in violet (#9B5DE5) that rises beside the striking wrist with its small red crown at the point of impact, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 16. `bai_he_liang_chi.png` — La grulla blanca abre las alas 白鹤亮翅
@@ -325,13 +348,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist in the classic White Crane Spreads Its Wings pose, one hand high, one hand low, weight on the back leg, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: the classic White Crane Spreads Its Wings pose: weight on the bent back leg, the front foot resting lightly on its toes, one hand raised beside the temple with the palm turned out, the other hand pressing down beside the hip.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that opens both wings wide behind the figure, one high and one low, echoing the hands, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 17. `he_zhuo.png` — Picotazo de la grulla 鹤啄
@@ -341,13 +367,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist snapping a quick, sharp toe kick like a crane pecking, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a quick snapping toe kick: the support leg slightly bent, the kicking leg straight forward at knee height, toes pointed, both open hands raised in front of the chest in guard.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that darts its beak down along the kicking leg toward the toes, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ### 18. `he_mian.png` — La grulla duerme 鹤眠
@@ -357,13 +386,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist resting serenely on one leg with eyes closed and arms folded like tucked wings, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: resting serenely on one straight leg with eyes closed, the other knee raised with the foot tucked beside the standing knee, both open hands resting one on top of the other in front of the belly, shoulders relaxed.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, one palm laid on the other, all ten fingers visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in jade green (#1FA38A) that sleeps standing on one leg beside the figure with its head tucked under a wing, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ---
@@ -1616,13 +1648,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist sweeping one arm up and outward like an opening wing to deflect a blow, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: standing in a balanced stance, the front forearm sweeping up and outward above the head with the open palm turned out to deflect a high blow, the rear hand open in front of the chest.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that spreads one large wing behind the raised arm like a shield, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Grulla en una pata 独立 ⬜
@@ -1634,13 +1669,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist balanced calmly on one leg, the other knee raised, arms spread low like a crane, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: balanced calmly on one straight leg, the other knee raised to hip height with the foot hanging relaxed below it, both arms extended low and slightly out to the sides for balance.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, palms facing down); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that stands on one leg beside the figure, mirroring the pose, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Pico de grulla 鹤嘴 ⬜
@@ -1652,13 +1690,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist pecking forward with the fingertips pinched together into a crane beak, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in vermilion (#E8453C), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: in a forward bow stance, the front arm extended at chest height striking with a crane-beak hand, the rear hand open at the hip.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand: all five fingertips pinched together into one clear point, wrist straight, like a bird's beak; rear hand a flat open palm); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in vermilion (#E8453C) that stretches its long neck forward along the striking arm, its beak pointing the same way as the hand, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Danza de la grulla 鹤舞 ⬜
@@ -1670,13 +1711,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist turning in a graceful spinning kick with both arms spread like wings, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a high side kick at the moment of a turn: the support leg straight, the kicking leg extended out to the side at chest height with the foot flexed, the torso upright and leaning slightly away, both arms open wide to the sides for balance.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that circles once around the figure with its wings open, tracing the turn, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Rodilla de grulla 鹤膝 ⬜
@@ -1688,13 +1732,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist driving a rising knee strike while the arms lift like wings, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a rising knee strike: standing on one leg, the other knee driving up to chest height with the shin hanging below it, both arms raised to the sides at shoulder height, elbows soft.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that lifts off from under the raised knee with wings spread upward, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Canto de la grulla 鹤鸣 ⬜
@@ -1706,13 +1753,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist in a tall poised guard, chin up as if calling out, a ring of sound waves around the arms, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a tall poised guard, feet apart, chin slightly raised, both forearms held up in front of the body with open palms facing forward, one at face height and one at chest height.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that throws its head back and calls out above the figure, with soft rings of sound spreading around the guard, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Corona de la grulla 鹤顶 ⬜
@@ -1724,13 +1774,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist striking upward with the top of the wrist bent like a crane head, a small red crown accent, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in violet (#9B5DE5), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: in a short forward stance, the front arm striking upward at chin height with the back of the bent wrist, the rear hand open in front of the chest.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand: wrist bent down, fingers relaxed and together pointing down, the top of the wrist leading the strike; rear hand a flat open palm); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in violet (#9B5DE5) that rises beside the striking wrist with its small red crown at the point of impact, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### La grulla blanca abre las alas 白鹤亮翅 ⬜
@@ -1742,13 +1795,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist in the classic White Crane Spreads Its Wings pose, one hand high, one hand low, weight on the back leg, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in cobalt blue (#3E7BE0), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: the classic White Crane Spreads Its Wings pose: weight on the bent back leg, the front foot resting lightly on its toes, one hand raised beside the temple with the palm turned out, the other hand pressing down beside the hip.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that opens both wings wide behind the figure, one high and one low, echoing the hands, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### Picotazo de la grulla 鹤啄 ⬜
@@ -1760,13 +1816,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist snapping a quick, sharp toe kick like a crane pecking, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in gold (#E59A12), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a quick snapping toe kick: the support leg slightly bent, the kicking leg straight forward at knee height, toes pointed, both open hands raised in front of the chest in guard.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that darts its beak down along the kicking leg toward the toes, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 #### La grulla duerme 鹤眠 ⬜
@@ -1778,13 +1837,16 @@ Create ONE single image. Start immediately, without asking questions.
 
 Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
 
-Small square illustration of a kung fu move on a transparent background: a martial artist resting serenely on one leg with eyes closed and arms folded like tucked wings, white crane feathers drifting in the motion trail, dynamic brush-stroke figure, motion trail in jade green (#1FA38A), clear silhouette readable at small size.
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: resting serenely on one straight leg with eyes closed, the other knee raised with the foot tucked beside the standing knee, both open hands resting one on top of the other in front of the belly, shoulders relaxed.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, one palm laid on the other, all ten fingers visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in jade green (#1FA38A) that sleeps standing on one leg beside the figure with its head tucked under a wing, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark.
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
 ## 5. Íconos y efectos
