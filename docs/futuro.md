@@ -39,7 +39,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 - **Golpes con peso.** **Hecho (02/11/2026):** cámara lenta breve al desequilibrar, al completar una forma y en el golpe final. Tres tamaños de número de daño (el fuerte con borde dorado) y «×2» si estaba desequilibrado. Las élites y los jefes se rematan con un trazo de pincel y un sello 破. Siguientes pasos posibles:
   - sonido propio de remate (hoy reusa `break` + `victory_stamp`);
   - zoom de cámara al rival en el remate de un jefe;
-  - combo visible: contador de golpes seguidos en el mismo turno.
+  - ~~combo visible~~ **Hecho (02/11/2026):** `ComboCounter` desde el segundo ataque del turno, con nota que sube; falta que las cartas de combo (Serpiente) brillen cuando ya cumplen.
 
 ### Caminos y cartas
 - **Árbol por camino:** cada animal es una rama con cartas, formas y una mecánica propia:

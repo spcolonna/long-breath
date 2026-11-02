@@ -7,7 +7,7 @@ Todo lo que se agrega al juego tiene que salir pulido desde el primer commit. Es
 1. **Todo lo que se toca se hunde.** Usá `Press` alrededor del `GestureDetector`, o un botón de Material, que ya se hunde por el tema. Nada de `InkWell` dentro de `Press`: el ripple se duplica.
 2. **Cada toque suena y vibra.** Vibrá con `Haptics.*` (respeta Opciones), nunca con `HapticFeedback` directo. El sonido va por `ref.read(audioProvider).play(Sfx.…)`. Si no existe el id, se agrega al `enum Sfx` aunque todavía no haya archivo.
 3. **Nada aparece de golpe.** Las listas y las opciones entran con `StaggerIn`. Los números que cambian, con `CountUp` (o `HpCount` y `JadeCount`). Los premios y gastos, con `PopText` y, si son importantes, con `Bounce` + `InkBurst`.
-4. **Los momentos grandes tienen pausa.** Un golpe fuerte lleva `Shake` + `ScreenFlash` y su número con `PopText(heavy: true)`. En combate, el tiempo se frena con `_dilate` de `combat_screen.dart` (congela y después cámara lenta): al desequilibrar, al completar una forma y en el golpe final. Una élite o un jefe se rematan con `FinisherSeal`. Una carta que se quema o mejora va con `DeckPickScreen` o `DeckGrid(pickFx:)`. Para una entrada especial, un `fx` en `_route` de `app.dart` (ver `route_fx.dart`).
+4. **Los momentos grandes tienen pausa.** Un golpe fuerte lleva `Shake` + `ScreenFlash` y su número con `PopText(heavy: true)`. En combate, el tiempo se frena con `_dilate` de `combat_screen.dart` (congela y después cámara lenta): al desequilibrar, al completar una forma y en el golpe final. Una élite o un jefe se rematan con `FinisherSeal`. Los ataques encadenados en un turno se cuentan con `ComboCounter`. Una carta que se quema o mejora va con `DeckPickScreen` o `DeckGrid(pickFx:)`. Para una entrada especial, un `fx` en `_route` de `app.dart` (ver `route_fx.dart`).
 5. **Los lugares del camino usan el kit de nodo** (`node_kit.dart`):
    - `NodeBackdrop` para el fondo pintado de la etapa;
    - `ChoiceTile` para las opciones;
@@ -33,7 +33,7 @@ Todo lo que se agrega al juego tiene que salir pulido desde el primer commit. Es
 | `Press`, `pressedContent` | `widgets/press.dart` | Hundir lo que se toca; el tema lo aplica a los botones |
 | `StaggerIn` | `widgets/press.dart` | Entrar de a uno |
 | `CountUp`, `HpCount`, `JadeCount` | `press.dart`, `hp_count.dart`, `jade.dart` | Cifras que cuentan |
-| `Shake`, `Bounce`, `PopText`, `InkBurst`, `ArtBurst`, `ScreenFlash`, `TrailBar`, `FinisherSeal` | `widgets/juice.dart` | Golpes, premios, estallidos, barras con estela, remate (trazo + sello 破) |
+| `Shake`, `Bounce`, `PopText`, `InkBurst`, `ArtBurst`, `ScreenFlash`, `TrailBar`, `FinisherSeal`, `ComboCounter` | `widgets/juice.dart` | Golpes, premios, estallidos, barras con estela, remate (trazo + sello 破), cadena de golpes |
 | `DeckGrid(pickFx:)` | `widgets/deck_sheet.dart` | La carta se quema o se ilumina |
 | `NodeBackdrop`, `ChoiceTile`, `DeckPickScreen` | `widgets/node_kit.dart` | Pantallas de lugares del camino |
 | `SceneBackdrop`, `KenBurns`, `StageScene` | `widgets/` | Fondos pintados que respiran |

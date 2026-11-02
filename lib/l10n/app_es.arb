@@ -281,6 +281,7 @@
   "rankElite": "Élite",
   "rankBoss": "Guardián",
   "waveOf": "{index} de {total}",
+  "comboHits": "golpes",
   "@waveOf": {
     "placeholders": {
       "index": {

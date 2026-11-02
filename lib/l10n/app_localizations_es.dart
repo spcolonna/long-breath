@@ -412,6 +412,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get comboHits => 'golpes';
+
+  @override
   String get merchantWandering => 'Un mercader ambulante se cruza en el camino';
 
   @override

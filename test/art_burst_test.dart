@@ -75,7 +75,39 @@ void main() {
     final op = tester.widget<Opacity>(find.byType(Opacity).first).opacity;
     expect(op, greaterThan(0));
   });
+
+  testWidgets('ComboCounter: desde el segundo golpe, crece y se apaga', (
+    tester,
+  ) async {
+    double opacity() =>
+        tester.widget<AnimatedOpacity>(find.byType(AnimatedOpacity)).opacity;
+    double fontOf(String n) =>
+        tester.widget<Text>(find.text(n).last).style!.fontSize!;
+
+    await tester.pumpWidget(_combo(1));
+    expect(opacity(), 0, reason: 'un golpe solo no es cadena');
+    await tester.pumpWidget(_combo(2));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(opacity(), 1);
+    final small = fontOf('2');
+    await tester.pumpWidget(_combo(5));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(fontOf('5'), greaterThan(small));
+    expect(find.text('5'), findsNWidgets(2), reason: 'de 5 en adelante, borde');
+    expect(ComboCounter.colorOf(5), isNot(ComboCounter.colorOf(2)));
+
+    // Cierra el turno: se desvanece mostrando todavía el último número.
+    await tester.pumpWidget(_combo(0));
+    expect(opacity(), 0);
+    expect(find.text('5'), findsWidgets);
+  });
 }
+
+Widget _combo(int n) => MaterialApp(
+  home: Center(
+    child: ComboCounter(count: n, label: 'golpes'),
+  ),
+);
 
 Widget _seal(int trigger, {bool calm = false}) => MaterialApp(
   home: MediaQuery(

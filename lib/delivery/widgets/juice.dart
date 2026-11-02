@@ -807,3 +807,128 @@ class _SlashPainter extends CustomPainter {
   @override
   bool shouldRepaint(_SlashPainter old) => old.progress != progress;
 }
+
+/// Contador de golpes seguidos en el turno: aparece desde el segundo, salta
+/// y crece con cada golpe (tinta, laca y oro) y se apaga al cerrar el turno.
+/// Sin movimiento, solo cambia el número.
+class ComboCounter extends StatefulWidget {
+  const ComboCounter({super.key, required this.count, required this.label});
+
+  /// Golpes del turno; por debajo de 2 no se muestra.
+  final int count;
+
+  /// Lo que va debajo del número («golpes»).
+  final String label;
+
+  static const shownFrom = 2;
+
+  /// Color del contador según la cadena: más larga, más caliente.
+  static Color colorOf(int n) =>
+      n >= 5 ? Palette.gold : (n >= 4 ? Palette.lacquer : Palette.text);
+
+  @override
+  State<ComboCounter> createState() => _ComboCounterState();
+}
+
+class _ComboCounterState extends State<ComboCounter>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 420),
+    value: 1,
+  );
+
+  /// El último número mostrado: queda mientras el contador se desvanece.
+  late int _last = widget.count;
+
+  @override
+  void didUpdateWidget(ComboCounter old) {
+    super.didUpdateWidget(old);
+    if (widget.count >= ComboCounter.shownFrom) {
+      _last = widget.count;
+      if (widget.count > old.count) _c.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final shown = widget.count >= ComboCounter.shownFrom;
+    final n = math.max(_last, ComboCounter.shownFrom);
+    final color = ComboCounter.colorOf(n);
+    final size = math.min(30.0 + (n - 2) * 7, 58.0);
+    final still = calm(context);
+    final stroke = n >= 5
+        ? (Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = size * 0.12
+            ..color = Colors.white)
+        : null;
+    final number = TextStyle(
+      fontSize: size,
+      fontWeight: FontWeight.w900,
+      height: 1,
+      color: color,
+      shadows: const [
+        Shadow(color: Colors.white, blurRadius: 2),
+        Shadow(color: Colors.white, blurRadius: 8),
+      ],
+    );
+    return IgnorePointer(
+      child: AnimatedOpacity(
+        opacity: shown ? 1 : 0,
+        duration: Duration(milliseconds: shown ? 120 : 500),
+        child: AnimatedBuilder(
+          animation: _c,
+          builder: (_, child) {
+            if (still) return child!;
+            // Salta grande y asienta; de 5 en adelante tiembla un poco.
+            final t = _c.value;
+            final scale = 1 + 0.6 * (1 - Curves.easeOutBack.transform(t));
+            final wobble = n >= 5
+                ? math.sin(t * math.pi * 4) * 0.08 * (1 - t)
+                : 0.0;
+            return Transform.rotate(
+              angle: wobble,
+              child: Transform.scale(scale: scale, child: child),
+            );
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Stack(
+                children: [
+                  if (stroke != null)
+                    Text(
+                      '$n',
+                      style: number.copyWith(
+                        foreground: stroke,
+                        color: null,
+                        shadows: const [],
+                      ),
+                    ),
+                  Text('$n', style: number),
+                ],
+              ),
+              Text(
+                widget.label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.5,
+                  color: color,
+                  shadows: const [Shadow(color: Colors.white, blurRadius: 6)],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

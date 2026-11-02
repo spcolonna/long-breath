@@ -742,6 +742,12 @@ abstract class AppLocalizations {
   /// **'{index} de {total}'**
   String waveOf(int index, int total);
 
+  /// No description provided for @comboHits.
+  ///
+  /// In es, this message translates to:
+  /// **'golpes'**
+  String get comboHits;
+
   /// No description provided for @merchantWandering.
   ///
   /// In es, this message translates to:

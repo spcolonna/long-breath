@@ -170,6 +170,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   /// Destello dorado (desequilibrio, forma, remate) y sello del remate.
   int _goldFlashKey = 0, _finishKey = 0;
 
+  /// Golpes seguidos en este turno (el contador de la arena).
+  int _combo = 0;
+
   /// Cada cambio de velocidad invalida los anteriores (el último manda).
   int _dilation = 0;
   int _qiKey = 0;
@@ -473,8 +476,15 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final kill = ev.any(
       (e) => e is Victory || e is EnemyDefeated || e is WaveStarted,
     );
+    final combo = next.state.attacksThisTurn;
+    if (combo > _combo && combo >= ComboCounter.shownFrom) {
+      // Si la carta avanzó una forma, ya suena su nota: no se pisan.
+      final form = ev.any((e) => e is FormAdvanced || e is FormCompleted);
+      _comboUp(combo, sound: !form);
+    }
     setState(() {
       _shown = next;
+      _combo = combo;
       if (hits.isNotEmpty) {
         f.hit++;
         f.spark++;
@@ -566,12 +576,25 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     if (ev.any((e) => e is StanceChanged)) _audio.play(Sfx.stanceChange);
   }
 
+  /// Un golpe más en la cadena: una nota que sube y un toque más fuerte.
+  void _comboUp(int n, {bool sound = true}) {
+    if (sound) {
+      _after(90, () => _audio.play(Sfx.formStep, variant: math.min(n - 2, 4)));
+    }
+    if (n >= 4) {
+      Haptics.mediumImpact();
+    } else {
+      Haptics.lightImpact();
+    }
+  }
+
   void _enemyTurn(CombatView prev, CombatView next) {
     final ev = next.events;
     // Si un desvío voltea al enemigo de un grupo, se lo ve caer al final.
     final wave = ev.whereType<WaveStarted>().firstOrNull;
     final nowUids = {for (final c in next.state.hand) c.uid};
     setState(() {
+      _combo = 0;
       _busy = true;
       _hideHand = true;
       _playedUid = null;
@@ -1248,6 +1271,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               child: ScreenFlash(trigger: _goldFlashKey, color: Palette.gold),
             ),
             Positioned.fill(child: FinisherSeal(trigger: _finishKey)),
+            Align(
+              alignment: const Alignment(0, -0.62),
+              child: ComboCounter(
+                count: _combo,
+                label: AppLocalizations.of(context).comboHits,
+              ),
+            ),
             Positioned.fill(
               child: InkBurst(
                 trigger: _formBurstKey,
