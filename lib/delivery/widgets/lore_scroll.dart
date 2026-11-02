@@ -4,11 +4,14 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/model/enums.dart';
 import '../../domain/run/ascent.dart';
 import '../../l10n/app_localizations.dart';
 import '../content_text.dart';
 import '../providers.dart';
 import '../theme.dart';
+import 'lotus.dart';
+import 'npc_portrait.dart';
 
 const _rod = Color(0xFFC9A46A);
 const _rodEdge = Color(0xFFA9844C);
@@ -106,6 +109,16 @@ class _PaperPainter extends CustomPainter {
   @override
   bool shouldRepaint(_PaperPainter old) =>
       old.image != image || old.scale != scale || old.sealed != sealed;
+}
+
+const _styleHanzi = {Style.tiger: '虎', Style.snake: '蛇', Style.crane: '鹤'};
+
+/// El camino de un pergamino de final (`ending_tiger`…), o null.
+Style? _endingStyle(String id) {
+  for (final s in Style.values) {
+    if (endingOf(s) == id) return s;
+  }
+  return null;
 }
 
 /// Un pergamino de la escuela: papel entre dos varillas. Lacrado (con el
@@ -272,8 +285,33 @@ class LoreScroll extends ConsumerWidget {
                               ),
                               const SizedBox(height: 12),
                             ],
+                            // El secreto del maestro trae su retrato.
+                            if (id == 'master_name') ...[
+                              Center(
+                                child: NpcPortrait(
+                                  asset: 'assets/art/npc/master.webp',
+                                  color: Palette.gold,
+                                  height: 150,
+                                  badge: const InkSeal(
+                                    hanzi: '师',
+                                    color: Palette.lacquer,
+                                    size: 48,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                            ],
                             Row(
                               children: [
+                                // Cada final lleva el sello de su camino.
+                                if (_endingStyle(id) case final style?) ...[
+                                  InkSeal(
+                                    hanzi: _styleHanzi[style]!,
+                                    color: styleColor(style),
+                                    size: 40,
+                                  ),
+                                  const SizedBox(width: 10),
+                                ],
                                 Expanded(
                                   child: Text(
                                     text.lore(id, 'title'),

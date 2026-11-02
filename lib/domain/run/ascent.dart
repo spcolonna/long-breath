@@ -178,14 +178,26 @@ const loreOrder = [
   'fell_sleeping_dragon',
   'summit',
   'epilogue',
+  'ending_tiger',
+  'ending_snake',
+  'ending_crane',
   'fallen_5',
   'fallen_10',
+  'master_name',
 ];
+
+/// El final de cada camino: se abre al llegar a la cumbre con ese camino.
+String endingOf(Style s) => 'ending_${s.name}';
 
 /// Qué pergaminos abre una subida, dado lo que ya se tenía y las subidas
 /// anteriores.
 List<String> earnedLore(Ascent a, List<Ascent> before, Set<String> have) {
   final fallen = before.where((x) => x.fell).length + (a.fell ? 1 : 0);
+  final ending = !a.fell && a.style != null ? endingOf(a.style!) : null;
+  // El maestro cuenta su secreto a quien llegó por los tres caminos.
+  final allEndings = Style.values
+      .map(endingOf)
+      .every((e) => e == ending || have.contains(e));
   return [
     if (a.style != null) 'reach_shrine',
     if (a.fell) 'first_fall',
@@ -202,7 +214,9 @@ List<String> earnedLore(Ascent a, List<Ascent> before, Set<String> have) {
     if (a.fell && a.enemy == 'sleeping_dragon') 'fell_sleeping_dragon',
     if (!a.fell) 'summit',
     if (!a.fell) 'epilogue',
+    ?ending,
     if (fallen >= 5) 'fallen_5',
     if (fallen >= 10) 'fallen_10',
+    if (allEndings) 'master_name',
   ].where((id) => !have.contains(id)).toList();
 }

@@ -740,6 +740,21 @@
       "title": "El cuaderno del maestro",
       "text": "Cuando bajaste, el maestro te esperaba en la puerta. Abrió el cuaderno que no mostraba a nadie: estaban todos los discípulos y el piso al que había llegado cada uno. Al lado de tu nombre escribió «cumbre». «El dragón fue el primer maestro de esta escuela», te dijo. «Sueña con nosotros y nosotros respiramos por él. Algún día me vas a reemplazar: alguien tiene que mandar al próximo». Y te dio el pincel."
     },
+    "ending_tiger": {
+      "title": "El tigre de la puerta",
+      "text": "El tigre te acompañó hasta la mitad de la bajada y después se sentó en una roca a mirar el valle. Desde entonces sos vos quien enseña a plantar los pies. Cuando un novicio duda frente a la puerta, le repetís lo que aprendiste arriba: «la fuerza no es golpear primero, es no dar un paso atrás». Una mañana apareció un tigre de piedra junto a la puerta de la escuela. Nadie recuerda haberlo tallado.",
+      "hint": "Llegá a la cumbre por el camino del Tigre."
+    },
+    "ending_snake": {
+      "title": "El agua que baja",
+      "text": "La serpiente te mostró un camino que nadie conocía: el que baja por dentro de la montaña, siguiendo el agua del deshielo. Llegaste a la escuela antes que el sol. Ahora enseñás que un golpe llama al siguiente, como una ola llama a otra, y los novicios practican junto al arroyo del patio. El maestro jura que antes ese arroyo no estaba.",
+      "hint": "Llegá a la cumbre por el camino de la Serpiente."
+    },
+    "ending_crane": {
+      "title": "Una pata sobre la nube",
+      "text": "La grulla no te dejó bajar a pie: te llevó sobre las nubes que respira el dragón, despacio, en una sola inhalación. Desde arriba viste la escuela entera y entendiste por qué el maestro espera tanto antes de mandar a alguien. Ahora sos vos quien enseña a quedarse quieto, a guardar una carta y a guardar el aliento. Los novicios dicen que, cuando meditás, una grulla se posa en el techo.",
+      "hint": "Llegá a la cumbre por el camino de la Grulla."
+    },
     "prologue": {
       "title": "La escuela del Dragón Dormido",
       "text": "Al pie de la Montaña de las Mil Nubes hay una escuela que respira despacio. Dicen que en la cumbre duerme un dragón y que su aliento hace las nubes. Cada novicio, cuando el maestro lo decide, sube solo. Hoy te toca a vos.",
@@ -804,6 +819,11 @@
       "title": "Lo que el maestro anota",
       "text": "Diez caídos. Una noche ves al maestro escribir en un cuaderno que no muestra a nadie: no anota nombres, anota hasta qué piso llegó cada uno. Como si estuviera midiendo algo.",
       "hint": "Que caigan 10 discípulos."
+    },
+    "master_name": {
+      "title": "El nombre que falta",
+      "text": "Cuando volviste de la cumbre por el tercer camino, el maestro cerró el cuaderno y te llevó al patio. «Nunca llegué arriba», te dijo. «Me quedé sin aliento en la nieve, frente a la Dama del Viento, y el dragón soñó que yo bajaba. Esas huellas que viste eran mías». Por eso anota pisos y no nombres: mide lo cerca que llega cada uno del lugar donde él se detuvo. «Ustedes suben por los tres caminos que yo no supe elegir. Cada vez que uno llega, respiro un poco más hondo». Esa noche, en la viga más alta del monasterio, talló junto a la tuya la última letra de su nombre.",
+      "hint": "Llegá a la cumbre por los tres caminos."
     }
   },
   "masterLines": {
@@ -815,7 +835,8 @@
     "xuankongsi_3": "En la cumbre hay una piedra con nombres. No me preguntes cuál es el mío.",
     "wolongding_1": "Desde acá la escuela parece un grano de arroz. Ahí empezó todo: un maestro que subió y no quiso bajar.",
     "wolongding_2": "El dragón no cuida la cumbre: cuida la respiración de todos los que viven abajo.",
-    "wolongding_3": "Si llegás, no tengas miedo de lo que veas tallado. Es una promesa, no una condena."
+    "wolongding_3": "Si llegás, no tengas miedo de lo que veas tallado. Es una promesa, no una condena.",
+    "wolongding_4": "Hay tres caminos hasta la cumbre. Yo no supe elegir ninguno."
   },
   "stageIntros": {
     "qianyunshan": "Senderos de piedra entre nubes bajas. Acá empieza toda subida.",

@@ -241,8 +241,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - Ilustración del epílogo (hoy es un pergamino).
 - **Escenas:**
   - Prólogo en el templo del Dragón Dormido 卧龙门 (hoy es un pergamino; falta la ilustración).
-  - Giro del maestro.
-  - Finales distintos según el camino.
+  - ~~Giro del maestro~~ y ~~finales distintos según el camino~~ **hecho (02/11/2026)** como pergaminos (con sello del camino y retrato del maestro). Falta: escenas ilustradas.
 - **Legado:** lo que un discípulo deja para el siguiente, por ejemplo una carta heredada.
 - **Arte:** pocas ilustraciones fijas, con texto encima.
 
@@ -274,8 +273,8 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 4. Narrativa:
    - pergaminos de las etapas 2 y 3;
    - ~~el Discípulo Perdido con el nombre de un caído~~ (hecho);
-   - el giro del maestro;
-   - finales por camino.
+   - ~~el giro del maestro~~ (hecho);
+   - ~~finales por camino~~ (hecho, 02/11/2026).
 5. Armas 兵器.
 6. ~~Pasada de feel en mercader, evento, recompensa y maestro~~ (hecho, 29/10/2026; ver `feel.md`).
 7. Optimización: peso de los PNG y rendimiento medido.

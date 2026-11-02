@@ -62,8 +62,10 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 
 - **Jefes y élites hablan:** al presentarse dicen algo y, la primera vez, tu héroe les contesta. Al caer dejan una última frase (y otra si te vencen).
 - **El maestro errante** dice algo distinto cada vez que te lo cruzás, distinto en cada etapa: va soltando pistas de por qué se sube.
-- **Pergaminos (18):** prólogo, santuario, caídas ante cada rival importante, el monasterio (las vigas con los nombres de los que siguieron), la nieve (las huellas que solo bajan una vez), la cumbre y el **epílogo**.
+- **Pergaminos (22):** prólogo, santuario, caídas ante cada rival importante, el monasterio (las vigas con los nombres de los que siguieron), la nieve (las huellas que solo bajan una vez), la cumbre y el **epílogo**, un **final por camino** (Tigre, Serpiente y Grulla, cada uno con su sello) y **el nombre que falta**.
 - **El giro:** el Dragón Dormido fue el primer maestro de la escuela. Sueña con los discípulos y ellos respiran por él; el maestro anota hasta qué piso llega cada uno. Quien llega a la cumbre encuentra su nombre ya tallado: es una promesa, no una condena. En el epílogo el maestro te da el pincel para mandar al próximo.
+- **Finales por camino:** al llegar a la cumbre se abre el final del camino con el que subiste: el tigre de piedra en la puerta, el arroyo que aparece en el patio, la grulla en el techo.
+- **El giro del maestro:** con los tres finales, el maestro confiesa que nunca llegó arriba: se quedó sin aliento frente a la Dama del Viento y el dragón soñó que bajaba (las huellas en la nieve son suyas). Por eso anota pisos y no nombres. Pergamino con su retrato; la línea nueva del maestro en la cumbre lo anticipa.
 - **Eventos con historia:** las vigas con nombres y los títeres de linterna (monasterio), el sabio en el hielo y donde nacen las nubes (cumbre).
 
 
@@ -71,7 +73,7 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 
 - **Cultivo del aliento:** con cada partida el discípulo avanza por reinos de cultivo (境界). No envejece ni cambia de cuerpo; su aura crece.
 - **Árbol del camino:** cada animal tendrá su rama y sus propias cartas.
-- **Legado e historia:** el prólogo en el templo, el giro del maestro y lo que heredan los que vienen detrás.
+- **Legado e historia:** el prólogo en el templo y lo que heredan los que vienen detrás.
 
 ---
 
