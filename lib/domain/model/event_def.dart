@@ -1,3 +1,5 @@
+import 'enums.dart';
+
 /// Lo que se gana en un evento, además de la Vida.
 enum EventGain {
   /// Una forma que todavía no se conoce (si no queda ninguna, una carta).
@@ -16,7 +18,16 @@ enum EventGain {
   upgrade,
 
   /// Se pierde una carta inicial al azar (achica el mazo).
-  loseStarter;
+  loseStarter,
+
+  /// Elegir una de tres cartas del camino (sin camino, de recompensa).
+  pathCards,
+
+  /// Elegir qué carta del mazo mejorar.
+  pickUpgrade,
+
+  /// El talismán del camino (si ya se tiene, uno raro).
+  pathTalisman;
 
   static EventGain? parse(String? s) =>
       s == null ? null : EventGain.values.byName(s);
@@ -62,9 +73,14 @@ class EventOptionDef {
     this.chance,
     this.failure,
     this.price = 0,
+    this.duel,
   });
 
   final String id;
+
+  /// Rival de un duelo: elegirla lleva a pelear contra él, y ganarle deja
+  /// elegir talismán (el del camino entre ellos).
+  final String? duel;
 
   /// Jade que se paga al elegirla, salga bien o mal.
   final int price;
@@ -85,6 +101,7 @@ class EventOptionDef {
       id: j['id'] as String,
       chance: chance,
       price: j['price'] as int? ?? 0,
+      duel: j['duel'] as String?,
       outcome: EventOutcome.fromJson(
         (chance == null ? j : j['success']) as Map<String, dynamic>,
       ),
@@ -102,6 +119,7 @@ class EventDef {
     required this.hanzi,
     required this.options,
     this.stages,
+    this.path,
   });
 
   final String id;
@@ -110,6 +128,9 @@ class EventDef {
 
   /// Etapas donde puede salir (ids); `null` = en cualquiera.
   final List<String>? stages;
+
+  /// Camino al que pertenece: solo le sale a quien lo sigue.
+  final Style? path;
 
   bool fitsStage(String stageId) => stages == null || stages!.contains(stageId);
 
@@ -123,5 +144,6 @@ class EventDef {
         EventOptionDef.fromJson(o as Map<String, dynamic>),
     ],
     stages: (j['stages'] as List?)?.cast<String>(),
+    path: j['path'] == null ? null : Style.parse(j['path'] as String),
   );
 }

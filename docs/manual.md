@@ -140,6 +140,18 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Monasterio Colgado | El monje de la campana 钟 (meditar: +14 Vida; o golpear la campana: −6 Vida, una forma) · La viga quebrada 梁 (saltar: 60%, +40 jade o −12 Vida; o buscar otra tabla: −3 Vida) · La biblioteca colgada 经 (estudiar: −4 Vida, mejorás una carta; donar 40 jade: talismán raro; o seguir) |
    | Cumbre del Dragón Dormido | El ermitaño en la nieve 雪 (desenterrarlo: −8 Vida, talismán raro; o compartir tu fuego: 15 jade, +16 Vida) · La escama en el hielo 鳞 (arrancarla: 50%, +8 Vida máxima o −10 Vida; o escuchar: +10 Vida) · Las banderas del viento 幡 (coserlas: −5 Vida, mejorás una carta; soltar una técnica vieja: +6 Vida y perdés una carta inicial; o seguir) |
 
+   Cada camino tiene además **una prueba por etapa** (cartel «Prueba del Tigre/de la Serpiente/de la Grulla», sello del color del camino). Es el primer evento que sale después del santuario en cada etapa, y nunca le sale a otro camino. Sus opciones son elecciones de verdad:
+   - **Cartas del camino:** elegís 1 de 3 cartas de tu camino en la pantalla del botín (volver a tirar también tira del camino).
+   - **Elegir qué mejorar:** elegís la carta en la pantalla del botín.
+   - **El talismán del camino** (si ya lo tenés, uno raro).
+   - **Duelo** (borde de laca, ícono de lucha): peleás contra un rival de la etapa. Si ganás, te deja elegir talismán (el de tu camino primero), más el jade y el loto de siempre, sin el premio de cartas. Si perdés, la subida termina como en cualquier combate. Si la app se cierra a mitad del duelo, volvés a la escena.
+
+   | Camino | Mil Nubes | Monasterio | Cumbre |
+   |---|---|---|---|
+   | Tigre | La roca de los puños 岩 (partirla: −10 Vida, cartas del camino · duelo con el Bandido del Paso · sentarte: +6 Vida) | Los tambores de guerra 鼓 (golpear: −8 Vida, elegís qué mejorar · duelo con el guardián del templo · escuchar: +10 Vida) | Las marcas del tigre blanco 痕 (apoyar la mano: −14 Vida, talismán del camino · duelo con el simio de las nieves · seguir el rastro: 60% cartas del camino, si no −8 Vida) |
+   | Serpiente | El estanque de los juncos 苇 (imitar: −6 Vida, elegís qué mejorar · duelo con el Discípulo Perdido · descansar: +8 Vida) | El rollo enroscado 卷 (sacarlo: 55% talismán del camino, si no −12 Vida · copia por 35 jade: cartas del camino · duelo con la sombra) | La piel mudada 蜕 (atarla: −12 Vida, talismán del camino · estudiarla: −8 Vida, cartas del camino · duelo con el músico del guqin) |
+   | Grulla | La grulla en una pata 鹤 (quedarte quieto: +6 Vida y elegís qué mejorar · seguirla: −8 Vida, cartas del camino · duelo con el gólem) | El balcón sin baranda 台 (caminar el borde: 60% talismán del camino, si no −10 Vida · duelo con el hombre de bronce · té: +12 Vida) | La danza sobre la nieve 舞 (bailar: −10 Vida, cartas del camino · duelo con el discípulo del viento · mirar: +5 Vida máxima) |
+
    | Evento | Opciones |
    |---|---|
    | El ermitaño del pino 隐 | Entrenar con él: −8 Vida, aprendés una forma · Dejarle jade: pagás 25, aprendés una forma · Agradecer y seguir: nada |

@@ -144,6 +144,78 @@
         { "id": "gather", "chance": 50, "success": { "jade": 40 }, "failure": { "hp": 8 } },
         { "id": "leave" }
       ]
+    },
+    {
+      "id": "tiger_boulder", "hanzi": "岩", "stages": ["qianyunshan"], "path": "tiger",
+      "options": [
+        { "id": "smash", "hp": 10, "gain": "pathCards" },
+        { "id": "challenge", "duel": "bandit" },
+        { "id": "rest", "heal": 6 }
+      ]
+    },
+    {
+      "id": "tiger_drums", "hanzi": "鼓", "stages": ["xuankongsi"], "path": "tiger",
+      "options": [
+        { "id": "strike", "hp": 8, "gain": "pickUpgrade" },
+        { "id": "spar", "duel": "temple_guard" },
+        { "id": "listen", "heal": 10 }
+      ]
+    },
+    {
+      "id": "tiger_marks", "hanzi": "痕", "stages": ["wolongding"], "path": "tiger",
+      "options": [
+        { "id": "touch", "hp": 14, "gain": "pathTalisman" },
+        { "id": "hunt", "duel": "snow_ape" },
+        { "id": "follow", "chance": 60, "success": { "gain": "pathCards" }, "failure": { "hp": 8 } }
+      ]
+    },
+    {
+      "id": "snake_reeds", "hanzi": "苇", "stages": ["qianyunshan"], "path": "snake",
+      "options": [
+        { "id": "imitate", "hp": 6, "gain": "pickUpgrade" },
+        { "id": "challenge", "duel": "disciple" },
+        { "id": "rest", "heal": 8 }
+      ]
+    },
+    {
+      "id": "snake_scroll", "hanzi": "卷", "stages": ["xuankongsi"], "path": "snake",
+      "options": [
+        { "id": "steal", "chance": 55, "success": { "gain": "pathTalisman" }, "failure": { "hp": 12 } },
+        { "id": "copy", "price": 35, "gain": "pathCards" },
+        { "id": "shadow", "duel": "shadow_puppet" }
+      ]
+    },
+    {
+      "id": "snake_skin", "hanzi": "蜕", "stages": ["wolongding"], "path": "snake",
+      "options": [
+        { "id": "wear", "hp": 12, "gain": "pathTalisman" },
+        { "id": "study", "hp": 8, "gain": "pathCards" },
+        { "id": "answer", "duel": "guqin_player" }
+      ]
+    },
+    {
+      "id": "crane_pond", "hanzi": "鹤", "stages": ["qianyunshan"], "path": "crane",
+      "options": [
+        { "id": "wait", "heal": 6, "gain": "pickUpgrade" },
+        { "id": "follow", "hp": 8, "gain": "pathCards" },
+        { "id": "guard", "duel": "golem" }
+      ]
+    },
+    {
+      "id": "crane_balcony", "hanzi": "台", "stages": ["xuankongsi"], "path": "crane",
+      "options": [
+        { "id": "balance", "chance": 60, "success": { "gain": "pathTalisman" }, "failure": { "hp": 10 } },
+        { "id": "spar", "duel": "bronze_man" },
+        { "id": "tea", "heal": 12 }
+      ]
+    },
+    {
+      "id": "crane_dance", "hanzi": "舞", "stages": ["wolongding"], "path": "crane",
+      "options": [
+        { "id": "dance", "hp": 10, "gain": "pathCards" },
+        { "id": "spar", "duel": "wind_disciple" },
+        { "id": "watch", "maxHp": 5 }
+      ]
     }
   ]
 }

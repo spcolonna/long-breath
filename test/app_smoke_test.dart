@@ -193,6 +193,40 @@ void main() {
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
 
+    // Evento del camino: su cartel, una elección que lleva al botín y un
+    // duelo que lleva a pelear contra el rival.
+    final style = container.read(runControllerProvider)!.style!;
+    final (pathEvent, pick, duel, rival, tag) = switch (style) {
+      Style.tiger => ('tiger_boulder', 'Partirla a golpes',
+          'Desafiar al bandido', 'Bandido del Paso', 'PRUEBA DEL TIGRE'),
+      Style.snake => ('snake_reeds', 'Imitar su paso', 'Retar al discípulo',
+          'Discípulo Perdido', 'PRUEBA DE LA SERPIENTE'),
+      Style.crane => ('crane_pond', 'Seguirla en vuelo', 'Cuidarla del gólem',
+          'Gólem de Cuarzo', 'PRUEBA DE LA GRULLA'),
+    };
+    final beforePath = container.read(runControllerProvider)!;
+    runs.resume(beforePath.copyWith(phase: RunPhase.event, eventId: pathEvent));
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/event');
+    await settle();
+    expect(find.text(tag), findsOneWidget);
+    expect(find.textContaining('Duelo con $rival'), findsOneWidget);
+    await tester.tap(find.text(pick));
+    await settle();
+    await tester.tap(find.text('Elegir'));
+    await settle();
+    expect(find.text('Botín'), findsOneWidget);
+    runs.resume(beforePath.copyWith(phase: RunPhase.event, eventId: pathEvent));
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/event');
+    await settle();
+    await tester.tap(find.text(duel));
+    await settle();
+    expect(find.text(rival), findsOneWidget);
+    await tester.tap(find.text('¡A pelear!'));
+    await settle();
+    expect(find.byType(CombatScreen), findsOneWidget);
+    expect(container.read(runControllerProvider)!.duel, isNotNull);
+    runs.resume(beforePath);
+
     // Talismán del élite: se elige uno y después viene la recompensa.
     runs.resume(
       container.read(runControllerProvider)!.copyWith(

@@ -225,10 +225,20 @@ extension Labels on AppLocalizations {
           EventGain.card => eventGainCard,
           EventGain.upgrade => eventGainUpgrade,
           EventGain.loseStarter => eventGainLoseStarter,
+          EventGain.pathCards => eventGainPathCards,
+          EventGain.pickUpgrade => eventGainPickUpgrade,
+          EventGain.pathTalisman => eventGainPathTalisman,
         },
     ];
     return parts.isEmpty ? eventNothing : parts.join(' · ');
   }
+
+  /// Cartel de un evento de camino.
+  String eventPath(Style s) => switch (s) {
+    Style.tiger => eventPathTiger,
+    Style.snake => eventPathSnake,
+    Style.crane => eventPathCrane,
+  };
 
   /// Lo que promete una opción (con riesgo: las dos salidas posibles).
   String eventOptionSummary(EventOptionDef o) {

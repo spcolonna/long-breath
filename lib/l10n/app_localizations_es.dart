@@ -1422,6 +1422,35 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventGainLoseStarter => 'perdés una carta inicial al azar';
 
   @override
+  String get eventGainPathCards => 'elegís 1 de 3 cartas de tu camino';
+
+  @override
+  String get eventGainPickUpgrade => 'elegís qué carta mejorar';
+
+  @override
+  String get eventGainPathTalisman => 'el talismán de tu camino';
+
+  @override
+  String eventDuel(String enemy) {
+    return 'Duelo con $enemy · si ganás: talismán a elegir y jade';
+  }
+
+  @override
+  String get eventDuelGo => '¡A pelear!';
+
+  @override
+  String get eventChoose => 'Elegir';
+
+  @override
+  String get eventPathTiger => 'Prueba del Tigre';
+
+  @override
+  String get eventPathSnake => 'Prueba de la Serpiente';
+
+  @override
+  String get eventPathCrane => 'Prueba de la Grulla';
+
+  @override
   String get eventNothing => 'sin cambios';
 
   @override

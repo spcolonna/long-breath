@@ -45,6 +45,7 @@ class EventResult {
     this.form,
     this.upgraded,
     this.lost,
+    this.duel,
   });
 
   final String eventId;
@@ -67,6 +68,9 @@ class EventResult {
   final String? upgraded;
   final String? lost;
 
+  /// Rival del duelo que se aceptó.
+  final String? duel;
+
   Map<String, dynamic> toJson() => {
         'eventId': eventId,
         'optionId': optionId,
@@ -79,6 +83,7 @@ class EventResult {
         'form': form,
         'upgraded': upgraded,
         'lost': lost,
+        'duel': duel,
       };
 
   factory EventResult.fromJson(Map<String, dynamic> j) => EventResult(
@@ -93,6 +98,7 @@ class EventResult {
         form: j['form'] as String?,
         upgraded: j['upgraded'] as String?,
         lost: j['lost'] as String?,
+        duel: j['duel'] as String?,
       );
 }
 
@@ -122,6 +128,7 @@ class RunState {
     this.eventId,
     this.seenEvents = const [],
     this.lastEvent,
+    this.duel,
     required this.map,
     this.jade = 0,
     this.jadeGained = 0,
@@ -205,6 +212,10 @@ class RunState {
 
   /// Resultado del último evento resuelto.
   final EventResult? lastEvent;
+
+  /// Rival del duelo de un evento (el combate de la fase combat es contra
+  /// él y no contra el enemigo del nodo).
+  final String? duel;
 
   /// Mapa de esta subida (generado con la semilla de la run).
   final List<MapNodeDef> map;
@@ -296,6 +307,8 @@ class RunState {
     bool clearEventId = false,
     List<String>? seenEvents,
     EventResult? lastEvent,
+    String? duel,
+    bool clearDuel = false,
     int? jade,
     int? jadeGained,
     int? combatsSinceMerchant,
@@ -349,6 +362,7 @@ class RunState {
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
         lastEvent: lastEvent ?? this.lastEvent,
+        duel: clearDuel ? null : duel ?? this.duel,
         map: map ?? this.map,
         jade: jade ?? this.jade,
         jadeGained: jadeGained ?? this.jadeGained,
@@ -412,6 +426,7 @@ class RunState {
         'eventId': eventId,
         'seenEvents': seenEvents,
         'lastEvent': lastEvent?.toJson(),
+        'duel': duel,
         'map': [for (final n in map) n.toJson()],
         'jade': jade,
         'jadeGained': jadeGained,
@@ -478,6 +493,7 @@ class RunState {
           final Map<String, dynamic> e => EventResult.fromJson(e),
           _ => null,
         },
+        duel: j['duel'] as String?,
         // Las subidas guardadas antes del mapa generado no tienen 'map' y se
         // descartan al cargar.
         map: [

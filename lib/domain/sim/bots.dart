@@ -402,10 +402,15 @@ double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
       EventGain.card => 3.0,
       EventGain.upgrade => 4.0,
       EventGain.loseStarter => 2.0,
+      EventGain.pathCards => 5.0,
+      EventGain.pickUpgrade => 5.0,
+      EventGain.pathTalisman => 10.0,
     };
     return v;
   }
 
+  // Un duelo es un combate más con talismán: vale si sobra Vida.
+  if (o.duel != null) return r.hp / r.maxHp > 0.6 ? 8.0 : -5.0;
   final chance = o.chance;
   final price = o.price * jadeWorth;
   if (chance == null) return value(o.outcome) - price;

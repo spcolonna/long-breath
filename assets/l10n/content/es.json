@@ -722,6 +722,99 @@
       "gatherFail": "El aliento cambia de golpe y te tira contra las piedras. La montaña no quiere que le saquen nada.",
       "leave": "Dejarla en paz",
       "leaveResult": "Te alejás en silencio. Detrás tuyo, una nube nueva sube hacia la cumbre."
+    },
+    "tiger_boulder": {
+      "name": "La roca de los puños",
+      "text": "Una roca enorme tapa el sendero. Tiene marcas de puños: alguien del Tigre practicó acá. Sentado arriba, un bandido se ríe: «Nadie la movió en diez años».",
+      "smash": "Partirla a golpes",
+      "smashResult": "Golpe tras golpe, la roca se raja y se parte en dos. Te sangran los nudillos, pero ahora entendés las marcas: adentro hay tres técnicas del Tigre.",
+      "challenge": "Desafiar al bandido",
+      "challengeResult": "El bandido salta de la roca y escupe al costado. «A ver ese Tigre.»",
+      "rest": "Sentarte frente a ella",
+      "restResult": "Respirás como respira la montaña. Cuando te levantás, el bandido se fue y el cuerpo pesa menos."
+    },
+    "tiger_drums": {
+      "name": "Los tambores de guerra",
+      "text": "En un patio colgado sobre el vacío, los monjes golpean tambores de guerra. El guardián del templo te mide de arriba abajo: «El Tigre no se queda mirando, ¿o sí?».",
+      "strike": "Golpear el tambor mayor",
+      "strikeResult": "Golpeás el parche con todo el cuerpo y el trueno te sube por los brazos. Elegí qué técnica se queda con esa fuerza.",
+      "spar": "Pedirle un combate al guardián",
+      "sparResult": "El guardián deja el palo del tambor y se calza los guantes. Los monjes cambian el ritmo: ahora tocan para ustedes.",
+      "listen": "Escuchar el ritmo",
+      "listenResult": "Te sentás en un rincón y dejás que el ritmo te acomode el pulso. Las heridas dejan de latir."
+    },
+    "tiger_marks": {
+      "name": "Las marcas del tigre blanco",
+      "text": "En la pared de hielo hay tres zarpazos del ancho de un hombre. Dicen que el tigre blanco, el primero del camino, afilaba acá sus garras. Un simio de las nieves los rasca, celoso, y te gruñe.",
+      "touch": "Apoyar la mano en las marcas",
+      "touchResult": "El hielo quema y corta, pero no sacás la mano. Algo del tigre blanco se te queda en el puño.",
+      "hunt": "Enfrentar al simio",
+      "huntResult": "El simio se golpea el pecho y baja de un salto. Las marcas, parece, ahora son suyas.",
+      "follow": "Seguir el rastro en la nieve",
+      "followResult": "El rastro termina en una piedra plana con técnicas grabadas a zarpazos. Elegí la que te llevás.",
+      "followFail": "La nieve se hunde y caés hasta la cintura. Salís helado y con las manos lastimadas."
+    },
+    "snake_reeds": {
+      "name": "El estanque de los juncos",
+      "text": "Una serpiente cruza el estanque entre los juncos sin mover ni uno. En la otra orilla, un discípulo de otra escuela intenta lo mismo y los voltea todos. Te mira de reojo.",
+      "imitate": "Imitar su paso",
+      "imitateResult": "Te metés al agua y vas despacio, torciéndote como ella. Al tercer intento no se mueve ni un junco. Elegí qué técnica afinás.",
+      "challenge": "Retar al discípulo",
+      "challengeResult": "El discípulo sale del agua, empapado y ofendido. «La Serpiente no se aprende mirando.»",
+      "rest": "Descansar en la orilla",
+      "restResult": "La mirás hasta que desaparece entre los juncos. El agua tibia te afloja los golpes."
+    },
+    "snake_scroll": {
+      "name": "El rollo enroscado",
+      "text": "En una repisa de la biblioteca colgante hay un rollo atado con escamas. Una serpiente duerme enroscada a su alrededor y, en la pared, una sombra de papel se mueve sin que nadie la maneje.",
+      "steal": "Sacarlo sin despertarla",
+      "stealResult": "Tus dedos se deslizan entre sus anillos sin rozarla. Dentro del rollo hay un amuleto.",
+      "stealFail": "Abre un ojo y muerde. El veneno es leve, pero te arde todo el brazo.",
+      "copy": "Pagar una copia al bibliotecario",
+      "copyResult": "El bibliotecario cuenta el jade y te deja copiar tres pasajes. Elegí cuál aprendés.",
+      "shadow": "Enfrentar a la sombra",
+      "shadowResult": "La sombra se despega de la pared y toma cuerpo. Se pone en guardia entre vos y el rollo."
+    },
+    "snake_skin": {
+      "name": "La piel mudada",
+      "text": "En la nieve hay una piel de serpiente larga como un puente. Del otro lado, un músico toca el guqin y cada nota suena a pregunta: ¿sabés moverte como ella?",
+      "wear": "Atarte un trozo al brazo",
+      "wearResult": "La piel está fría y te aprieta el brazo como un abrazo. Algo de la serpiente se te queda adentro.",
+      "study": "Estudiar su recorrido",
+      "studyResult": "Seguís las marcas de las escamas sobre la nieve hasta entender cómo se movía. Elegí la técnica.",
+      "answer": "Responderle al músico",
+      "answerResult": "El músico deja el guqin y se pone de pie. «Respondé con el cuerpo, entonces.»"
+    },
+    "crane_pond": {
+      "name": "La grulla en una pata",
+      "text": "En el estanque de la terraza una grulla duerme sobre una pata. No se movió en toda la mañana. Entre las piedras, un gólem de roca avanza hacia ella, un paso por hora.",
+      "wait": "Quedarte quieto con ella",
+      "waitResult": "Te parás en una pierna a su lado. Pasa el sol, pasa el viento, y algo se acomoda. Elegí qué técnica se vuelve más firme.",
+      "follow": "Seguirla en vuelo",
+      "followResult": "Corrés por las terrazas detrás de su vuelo y te caés dos veces. Arriba, donde se posa, hay tres técnicas grabadas en la piedra.",
+      "guard": "Cuidarla del gólem",
+      "guardResult": "Te parás entre la grulla y el gólem. La roca gira despacio y te mira."
+    },
+    "crane_balcony": {
+      "name": "El balcón sin baranda",
+      "text": "Un balcón de madera se asoma al vacío, sin baranda. Una maestra anciana de la Grulla toma té sobre el borde, en una sola pierna. Detrás de ella, un hombre de bronce espera órdenes.",
+      "balance": "Caminar por el borde",
+      "balanceResult": "Das la vuelta entera sobre el borde sin mirar abajo. La maestra asiente y saca algo de la manga para vos.",
+      "balanceFail": "El viento empuja y te agarrás del borde con las uñas. La maestra te sube sin derramar el té.",
+      "spar": "Medirte con el hombre de bronce",
+      "sparResult": "La maestra golpea la taza con la uña. El hombre de bronce da un paso al frente.",
+      "tea": "Tomar el té con la maestra",
+      "teaResult": "El té es amargo y caliente. Mientras lo tomás, el vacío deja de dar miedo y el cuerpo descansa."
+    },
+    "crane_dance": {
+      "name": "La danza sobre la nieve",
+      "text": "Una bandada de grullas baila sobre la nieve sin dejar huellas. Un discípulo del viento las imita a la perfección y, al verte, te hace una reverencia de desafío.",
+      "dance": "Sumarte a la danza",
+      "danceResult": "Al principio vas torpe y el frío muerde, pero al final tus pasos tampoco dejan huella. Elegí la técnica que te llevás.",
+      "spar": "Aceptar el desafío",
+      "sparResult": "El discípulo sonríe y el viento se levanta con él.",
+      "watch": "Mirar hasta el final",
+      "watchResult": "No te movés hasta que se posa la última grulla. Algo del aguante de la montaña se te queda en el pecho."
     }
   },
   "lore": {

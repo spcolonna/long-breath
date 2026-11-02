@@ -255,6 +255,14 @@ class RunEngine {
   /// desde el mapa, como si todavía no se hubiera entrado a ese nodo.
   RunState retreat(RunState r) {
     if (r.phase != RunPhase.combat) return r;
+    // Un duelo a medias vuelve a la escena del evento.
+    if (r.duel != null) {
+      return r.copyWith(
+        phase: RunPhase.event,
+        eventId: r.lastEvent!.eventId,
+        clearDuel: true,
+      );
+    }
     final visited = r.visited.sublist(0, r.visited.length - 1);
     return r.copyWith(
       phase: RunPhase.map,
@@ -318,16 +326,18 @@ class RunEngine {
     return (seed, r.copyWith(rng: rng));
   }
 
-  String enemyOf(RunState r) => r.node(r.currentNode!).enemy!;
+  String enemyOf(RunState r) => r.duel ?? r.node(r.currentNode!).enemy!;
 
   /// Enemigos del combate actual, en el orden en que entran.
   List<String> packOf(RunState r) {
+    if (r.duel != null) return [r.duel!];
     final n = r.node(r.currentNode!);
     return [n.enemy!, ...n.waves];
   }
 
   /// Si el grupo del combate actual pelea todo junto (no en oleadas).
-  bool togetherOf(RunState r) => r.node(r.currentNode!).together;
+  bool togetherOf(RunState r) =>
+      r.duel == null && r.node(r.currentNode!).together;
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
   /// lo venciste). Escapado no deja jade ni loto. [tally]: lo que pasó en
@@ -379,7 +389,7 @@ class RunEngine {
       final (rolled, rngJ) = _rollJade(r);
       // Cada enemigo de más en el grupo suma jade.
       final jade = rolled +
-          b.packJade * r.node(r.currentNode!).waves.length +
+          b.packJade * (packOf(r).length - 1) +
           talismanSum(r, (e) => e.winJade);
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
@@ -397,20 +407,23 @@ class RunEngine {
       hp + talismanSum(r, (e) => e.winHeal) + r.meta.winHeal,
     );
     r = _ghostDrop(r.copyWith(hp: healed));
-    // El élite y el jefe dejan elegir un talismán antes del premio.
-    final (talismans, rngT) = elite || boss
+    // El élite, el jefe y el rival de un duelo dejan elegir un talismán
+    // antes del premio (el duelo, con el del camino entre ellos).
+    final duel = r.duel != null;
+    final (talismans, rngT) = elite || boss || (duel && !fled)
         ? _rollTalismans(
             r.rng,
             r,
             b.talismanChoices + r.meta.talismanChoices,
             boss: boss,
+            path: duel,
           )
         : (const <String>[], r.rng);
-    r = r.copyWith(rng: rngT);
+    r = r.copyWith(rng: rngT, clearDuel: true);
     // El jefe deja cartas; el que se escapó, también (no hay otro premio).
     final (kind, rngK) = boss || fled
         ? (RewardKind.cards, r.rng)
-        : _rollRewardKind(r, allowTalisman: !elite);
+        : _rollRewardKind(r, allowTalisman: !elite && !duel);
     return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       talismanOptions: kind == RewardKind.talisman ? null : talismans,
@@ -605,7 +618,13 @@ class RunEngine {
   RunState rerollReward(RunState r) {
     _checkReward(r, RewardKind.cards);
     if (r.rerollsLeft <= 0) throw StateError('No quedan');
-    return _rollCardReward(r.copyWith(rerollsLeft: r.rerollsLeft - 1));
+    final spent = r.copyWith(rerollsLeft: r.rerollsLeft - 1);
+    // Las cartas de un evento de camino se vuelven a tirar del camino.
+    if (r.node(r.currentNode!).type == NodeType.event) {
+      final (options, rng) = _rollPathCards(spent.rng, spent);
+      return spent.copyWith(rewardOptions: options, rng: rng);
+    }
+    return _rollCardReward(spent);
   }
 
   void _checkReward(RunState r, [RewardKind? kind]) {
@@ -640,14 +659,25 @@ class RunEngine {
         t.id,
   ];
 
-  /// El jefe de etapa ofrece los suyos primero y completa con los demás.
+  /// El jefe de etapa ofrece los suyos primero y completa con los demás;
+  /// con [path], el talismán del camino va primero.
   (List<String>, Rng) _rollTalismans(
     Rng rng,
     RunState r,
     int n, {
     bool boss = false,
+    bool path = false,
   }) {
-    final (own, rng2) = rng.shuffle(boss ? missingTalismans(r, boss: true) : <String>[]);
+    final (own, rng2) = rng.shuffle(
+      boss
+          ? missingTalismans(r, boss: true)
+          : path
+              ? [
+                  for (final id in missingTalismans(r))
+                    if (data.talisman(id).pool != null) id,
+                ]
+              : <String>[],
+    );
     final (rest, next) = rng2.shuffle(missingTalismans(r));
     return ([...own, ...rest].take(n).toList(), next);
   }
@@ -670,23 +700,34 @@ class RunEngine {
     if (!r.talismanOptions.contains(id)) {
       throw StateError('Talismán no ofrecido: $id');
     }
-    // Al empezar la subida (meridianos) se vuelve al mapa.
+    // Al empezar la subida (meridianos) y después de un duelo se vuelve al
+    // mapa: el talismán es todo el premio.
+    final done = r.currentNode == null ||
+        r.node(r.currentNode!).type == NodeType.event;
     return addTalisman(r, id).copyWith(
       talismanOptions: const [],
-      phase: r.currentNode == null ? RunPhase.map : RunPhase.reward,
+      rewardOptions: done ? const [] : null,
+      phase: done ? RunPhase.map : RunPhase.reward,
     );
   }
 
   // --------------------------------------------------------------- eventos
 
-  /// Primero los eventos propios de la etapa que no viste, después los
-  /// generales que no viste y, si ya viste todo, cualquiera de la etapa.
+  /// Primero el del camino en esta etapa, después los propios de la etapa
+  /// que no viste, los generales que no viste y, si ya viste todo,
+  /// cualquiera de la etapa. Los de otro camino nunca salen.
   RunState _rollEvent(RunState r) {
     final stageId = stageOf(r).id;
-    final here = [for (final e in data.events) if (e.fitsStage(stageId)) e];
+    final here = [
+      for (final e in data.events)
+        if (e.fitsStage(stageId) && (e.path == null || e.path == r.style)) e,
+    ];
     final fresh = [for (final e in here) if (!r.seenEvents.contains(e.id)) e];
+    final path = [for (final e in fresh) if (e.path != null) e.id];
     final own = [for (final e in fresh) if (e.stages != null) e.id];
-    final pool = own.isNotEmpty
+    final pool = path.isNotEmpty
+        ? path
+        : own.isNotEmpty
         ? own
         : fresh.isNotEmpty
             ? [for (final e in fresh) e.id]
@@ -731,6 +772,8 @@ class RunEngine {
       next = next.copyWith(hp: math.min(next.maxHp, next.hp + outcome.heal));
     }
     String? talisman, card, form, upgraded, lost;
+    // Las ganancias que se eligen pasan por la pantalla del premio.
+    RunState? offer;
     switch (outcome.gain) {
       case null:
         break;
@@ -743,9 +786,17 @@ class RunEngine {
         } else {
           (next, card) = _gainCard(next);
         }
-      case EventGain.talisman || EventGain.rareTalisman:
-        final rare = outcome.gain == EventGain.rareTalisman;
-        var pool = missingTalismans(next, rare: rare);
+      case EventGain.talisman ||
+          EventGain.rareTalisman ||
+          EventGain.pathTalisman:
+        final rare = outcome.gain != EventGain.talisman;
+        final own = [
+          for (final id in missingTalismans(next, rare: true))
+            if (data.talisman(id).pool != null) id,
+        ];
+        var pool = outcome.gain == EventGain.pathTalisman && own.isNotEmpty
+            ? own
+            : missingTalismans(next, rare: rare);
         if (pool.isEmpty) pool = missingTalismans(next);
         if (pool.isNotEmpty) {
           final (pick, rng2) = _pick(next.rng, pool);
@@ -754,6 +805,28 @@ class RunEngine {
         }
       case EventGain.card:
         (next, card) = _gainCard(next);
+      case EventGain.pathCards:
+        final (options, rng2) = _rollPathCards(next.rng, next);
+        offer = next.copyWith(
+          rewardKind: RewardKind.cards,
+          rewardOptions: options,
+          clearRewardForm: true,
+          rewardAmount: 0,
+          jadeGained: 0,
+          lotusGained: 0,
+          rng: rng2,
+        );
+      case EventGain.pickUpgrade:
+        if (next.deck.any(canUpgrade)) {
+          offer = next.copyWith(
+            rewardKind: RewardKind.upgrade,
+            rewardOptions: const [],
+            clearRewardForm: true,
+            rewardAmount: data.balance.fountainUpgrade,
+            jadeGained: 0,
+            lotusGained: 0,
+          );
+        }
       case EventGain.upgrade:
         final pool = [for (final c in next.deck) if (canUpgrade(c)) c.uid];
         if (pool.isNotEmpty) {
@@ -775,8 +848,15 @@ class RunEngine {
           );
         }
     }
+    if (offer != null) next = offer;
+    final duel = success == false ? null : option.duel;
     return next.copyWith(
-      phase: RunPhase.map,
+      phase: duel != null
+          ? RunPhase.combat
+          : offer != null
+              ? RunPhase.reward
+              : RunPhase.map,
+      duel: duel,
       clearEventId: true,
       seenEvents: [...next.seenEvents, event.id],
       lastEvent: EventResult(
@@ -791,8 +871,21 @@ class RunEngine {
         form: form,
         upgraded: upgraded,
         lost: lost,
+        duel: duel,
       ),
     );
+  }
+
+  /// Tres cartas del camino de la run para elegir (sin camino, de las de
+  /// recompensa).
+  (List<String>, Rng) _rollPathCards(Rng rng, RunState r) {
+    final style = r.style;
+    final pool = [
+      for (final c in data.rewardPoolFor(style, locked: r.locked))
+        if (style == null || c.pool == style.name) c.id,
+    ];
+    final (shuffled, next) = rng.shuffle(pool);
+    return (shuffled.take(data.balance.rewardChoices).toList(), next);
   }
 
   (RunState, String) _gainCard(RunState r) {

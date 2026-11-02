@@ -2404,6 +2404,60 @@ abstract class AppLocalizations {
   /// **'perdés una carta inicial al azar'**
   String get eventGainLoseStarter;
 
+  /// No description provided for @eventGainPathCards.
+  ///
+  /// In es, this message translates to:
+  /// **'elegís 1 de 3 cartas de tu camino'**
+  String get eventGainPathCards;
+
+  /// No description provided for @eventGainPickUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'elegís qué carta mejorar'**
+  String get eventGainPickUpgrade;
+
+  /// No description provided for @eventGainPathTalisman.
+  ///
+  /// In es, this message translates to:
+  /// **'el talismán de tu camino'**
+  String get eventGainPathTalisman;
+
+  /// No description provided for @eventDuel.
+  ///
+  /// In es, this message translates to:
+  /// **'Duelo con {enemy} · si ganás: talismán a elegir y jade'**
+  String eventDuel(String enemy);
+
+  /// No description provided for @eventDuelGo.
+  ///
+  /// In es, this message translates to:
+  /// **'¡A pelear!'**
+  String get eventDuelGo;
+
+  /// No description provided for @eventChoose.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir'**
+  String get eventChoose;
+
+  /// No description provided for @eventPathTiger.
+  ///
+  /// In es, this message translates to:
+  /// **'Prueba del Tigre'**
+  String get eventPathTiger;
+
+  /// No description provided for @eventPathSnake.
+  ///
+  /// In es, this message translates to:
+  /// **'Prueba de la Serpiente'**
+  String get eventPathSnake;
+
+  /// No description provided for @eventPathCrane.
+  ///
+  /// In es, this message translates to:
+  /// **'Prueba de la Grulla'**
+  String get eventPathCrane;
+
   /// No description provided for @eventNothing.
   ///
   /// In es, this message translates to:

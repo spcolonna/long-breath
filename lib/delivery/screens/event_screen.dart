@@ -6,6 +6,7 @@ import '../../domain/model/event_def.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
+import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
@@ -31,15 +32,47 @@ class _EventScreenState extends ConsumerState<EventScreen> {
   /// El evento se guarda acá: al resolverlo la run vuelve al mapa.
   String? _eventId;
   EventResult? _result;
-  int _burst = 0;
+  int _burst = 0, _shake = 0, _flash = 0, _seal = 0;
+
+  /// Adónde lleva el botón después de elegir: a pelear (duelo), a elegir
+  /// (cartas o mejora) o de vuelta al mapa.
+  RunPhase _next = RunPhase.map;
+
+  @override
+  void initState() {
+    super.initState();
+    // Un evento del camino entra con ceremonia: sello, golpe y sonido.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final id = ref.read(runControllerProvider)?.eventId;
+      if (!mounted || id == null) return;
+      if (ref.read(dataProvider).event(id).path == null) return;
+      Haptics.mediumImpact();
+      ref.read(audioProvider).play(Sfx.shrineOath);
+      setState(() => _seal++);
+    });
+  }
 
   void _choose(EventOptionDef o) {
     if (_result != null) return;
     final ctl = ref.read(runControllerProvider.notifier);
     ctl.resolveEvent(o.id);
-    final r = ref.read(runControllerProvider)!.lastEvent!;
+    final run = ref.read(runControllerProvider)!;
+    final r = run.lastEvent!;
     final audio = ref.read(audioProvider);
+    _next = run.phase;
+    if (_next == RunPhase.combat) {
+      // El rival acepta: golpe seco, destello y la pantalla tiembla.
+      Haptics.heavyImpact();
+      audio.play(Sfx.fightStart);
+      setState(() {
+        _result = r;
+        _shake++;
+        _flash++;
+      });
+      return;
+    }
     final good =
+        _next == RunPhase.reward ||
         r.talisman != null ||
         r.form != null ||
         r.card != null ||
@@ -77,10 +110,18 @@ class _EventScreenState extends ConsumerState<EventScreen> {
     final engine = ref.watch(runEngineProvider);
     final text = ref.watch(textProvider);
     final event = data.event(id);
+    final path = event.path;
+    final accent = path == null ? Palette.blossom : styleColor(path);
     return Scaffold(
       // El alto en el camino (pabellón, té y faroles); si faltara, el paisaje
       // de la etapa.
-      body: SceneBackdrop(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Shake(
+              trigger: _shake,
+              strength: 10,
+              child: SceneBackdrop(
         assets: [
           'assets/art/ui/event_bg.webp',
           ...stageArt(data.balance.stages[run.stage].id, 'map_bg.webp'),
@@ -99,31 +140,44 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                   Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
                 ],
               ),
-              const Spacer(),
-              Container(
+              // La escena se centra en el lugar que queda; en pantallas
+              // chicas se desliza y las opciones siguen a mano.
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, box) => SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: box.maxHeight),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+              Bounce(
+                trigger: _seal,
+                scale: 1.25,
+                child: Container(
                 width: 92,
                 height: 92,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Palette.surface,
-                  border: Border.all(color: Palette.blossom, width: 3),
+                  border: Border.all(color: accent, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Palette.blossom.withValues(alpha: 0.35),
+                      color: accent.withValues(alpha: 0.35),
                       blurRadius: 18,
                     ),
                   ],
                 ),
                 child: Text(
                   event.hanzi,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 46,
                     height: 1,
-                    color: Palette.blossom,
+                    color: accent,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
+              ),
               ),
               const SizedBox(height: 14),
               // Una nube de papel: el paisaje se ve y el texto se lee.
@@ -135,6 +189,10 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                 ),
                 child: Column(
                   children: [
+                    if (path != null) ...[
+                      _PathTag(label: t.eventPath(path), color: accent),
+                      const SizedBox(height: 8),
+                    ],
                     Text(
                       text.event(id),
                       textAlign: TextAlign.center,
@@ -143,16 +201,33 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      text.eventText(id),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 16, height: 1.4),
+                    // Al elegir, la escena se pliega y deja lugar a lo que pasó.
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 360),
+                      curve: Curves.easeOutCubic,
+                      child: _result != null
+                          ? const SizedBox(width: double.infinity)
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                text.eventText(id),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  height: 1.4,
+                                ),
+                              ),
+                            ),
                     ),
                   ],
                 ),
               ),
-              const Spacer(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 320),
                 transitionBuilder: (child, a) => FadeTransition(
@@ -172,11 +247,19 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                               delay: const Duration(milliseconds: 250),
                               child: ChoiceTile(
                                 title: text.eventOption(id, o.id),
-                                detail: t.eventOptionSummary(o),
-                                accent: o.chance != null ? Palette.gold : null,
-                                trailing: o.chance != null
-                                    ? Icons.casino_outlined
-                                    : Icons.chevron_right_rounded,
+                                detail: o.duel != null
+                                    ? t.eventDuel(text.enemy(o.duel!))
+                                    : t.eventOptionSummary(o),
+                                accent: o.duel != null
+                                    ? Palette.lacquer
+                                    : o.chance != null
+                                        ? Palette.gold
+                                        : null,
+                                trailing: o.duel != null
+                                    ? Icons.sports_martial_arts
+                                    : o.chance != null
+                                        ? Icons.casino_outlined
+                                        : Icons.chevron_right_rounded,
                                 enabled: engine.canChoose(run, o),
                                 blocked: run.hp > o.cost
                                     ? t.merchantNoJade
@@ -192,7 +275,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                         key: const ValueKey('result'),
                         clipBehavior: Clip.none,
                         children: [
-                          _ResultCard(result: _result!),
+                          _ResultCard(result: _result!, accent: accent),
                           Positioned.fill(
                             child: InkBurst(
                               trigger: _burst,
@@ -215,14 +298,17 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                 child: SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    onPressed: _result == null
-                        ? null
-                        : () {
-                            Haptics.selectionClick();
-                            ref.read(audioProvider).play(Sfx.uiButton);
-                            context.go('/map');
-                          },
-                    child: Text(t.eventContinue),
+                    style: _next == RunPhase.combat
+                        ? FilledButton.styleFrom(
+                            backgroundColor: Palette.lacquer,
+                          )
+                        : null,
+                    onPressed: _result == null ? null : _leave,
+                    child: Text(switch (_next) {
+                      RunPhase.combat => t.eventDuelGo,
+                      RunPhase.reward => t.eventChoose,
+                      _ => t.eventContinue,
+                    }),
                   ),
                 ),
               ),
@@ -231,15 +317,37 @@ class _EventScreenState extends ConsumerState<EventScreen> {
         ),
       ),
       ),
+            ),
+          ),
+          Positioned.fill(
+            child: ScreenFlash(trigger: _flash, color: Palette.lacquer),
+          ),
+        ],
+      ),
     );
+  }
+
+  void _leave() {
+    Haptics.selectionClick();
+    ref.read(audioProvider).play(Sfx.uiButton);
+    switch (_next) {
+      case RunPhase.combat:
+        ref.read(combatControllerProvider.notifier).start();
+        context.go('/combat');
+      case RunPhase.reward:
+        context.go('/reward');
+      default:
+        context.go('/map');
+    }
   }
 }
 
 /// Qué pasó: la escena, si salió bien o mal y lo que se ganó o perdió.
 class _ResultCard extends ConsumerWidget {
-  const _ResultCard({required this.result});
+  const _ResultCard({required this.result, required this.accent});
 
   final EventResult result;
+  final Color accent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -248,6 +356,7 @@ class _ResultCard extends ConsumerWidget {
     final r = result;
     final failed = r.success == false;
     final chips = <Widget>[
+      if (r.duel != null) _Rival(id: r.duel!),
       if (r.hp < 0) _chip(t.eventCost(-r.hp), Palette.lacquer, Icons.favorite),
       if (r.hp > 0) _chip(t.eventHeal(r.hp), Palette.jade, Icons.favorite),
       if (r.maxHp > 0)
@@ -303,7 +412,7 @@ class _ResultCard extends ConsumerWidget {
         color: Palette.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: failed ? Palette.lacquer : Palette.blossom,
+          color: failed || r.duel != null ? Palette.lacquer : accent,
           width: 2,
         ),
       ),
@@ -394,4 +503,82 @@ class _PopIn extends StatelessWidget {
     builder: (_, v, child) => Transform.scale(scale: v, child: child),
     child: child,
   );
+}
+
+/// Cartel de un evento de camino («Prueba del Tigre»).
+class _PathTag extends StatelessWidget {
+  const _PathTag({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: 0.12),
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: color.withValues(alpha: 0.5)),
+    ),
+    child: Text(
+      label.toUpperCase(),
+      style: TextStyle(
+        fontSize: 12,
+        letterSpacing: 1.6,
+        fontWeight: FontWeight.w800,
+        color: color,
+      ),
+    ),
+  );
+}
+
+/// El rival que aceptó el duelo, con su nombre.
+class _Rival extends ConsumerWidget {
+  const _Rival({required this.id});
+
+  final String id;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final def = ref.watch(dataProvider).enemy(id);
+    final name = ref.watch(textProvider).enemy(id);
+    return _PopIn(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 76,
+            height: 76,
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Palette.bg,
+              border: Border.all(color: Palette.lacquer, width: 3),
+            ),
+            child: Image.asset(
+              'assets/art/enemies/${def.art}.webp',
+              cacheWidth: 228,
+              fit: BoxFit.contain,
+              errorBuilder: (_, _, _) => const Icon(
+                Icons.sports_martial_arts,
+                size: 40,
+                color: Palette.lacquer,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+            name,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              color: Palette.lacquer,
+            ),
+          ),
+          ),
+        ],
+      ),
+    );
+  }
 }

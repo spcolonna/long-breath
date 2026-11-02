@@ -139,9 +139,22 @@ void main() {
     expect(data.talismans.values.where((t) => t.boss), hasLength(2));
     expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(23),
         reason: 'cada uno se reconoce por su carácter');
-    expect(data.events, hasLength(20));
+    expect(data.events, hasLength(29));
     for (final e in data.events) {
       expect(e.options.length, inInclusiveRange(2, 3), reason: e.id);
+      for (final o in e.options) {
+        if (o.duel != null) data.enemy(o.duel!);
+      }
+    }
+    // Un evento por camino en cada etapa, con su duelo.
+    for (final s in Style.values) {
+      final own = [for (final e in data.events) if (e.path == s) e];
+      expect(
+        own.map((e) => e.stages!.single).toSet(),
+        {for (final st in data.balance.stages) st.id},
+        reason: s.name,
+      );
+      expect(own.every((e) => e.options.any((o) => o.duel != null)), isTrue);
     }
   });
 

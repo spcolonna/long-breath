@@ -126,7 +126,14 @@ void main() {
     r = run.enter(r, 'e2');
     expect(r.phase, RunPhase.event);
     final ev = run.data.event(r.eventId!);
-    r = run.resolveEvent(r, ev.options.last.id);
+    // Sin duelo: vuelve al mapa, o pasa antes por elegir carta o mejora.
+    final calm = ev.options.lastWhere((o) => o.duel == null);
+    r = run.resolveEvent(r, calm.id);
+    if (r.phase == RunPhase.reward) {
+      r = r.rewardKind == RewardKind.upgrade
+          ? run.chooseRewardUpgrade(r, r.deck.firstWhere(run.canUpgrade).uid)
+          : run.chooseReward(r, null);
+    }
     expect(r.phase, RunPhase.map);
     r = run.enter(r, 'n4');
     expect(r.phase, RunPhase.fountain);
@@ -428,6 +435,102 @@ void main() {
       final spring = run.resolveEvent(at('spring'), 'bathe');
       expect(spring.deck.where((c) => c.upgrades > 0), hasLength(1));
       expect(spring.lastEvent!.upgraded, isNotNull);
+    });
+  });
+
+  group('eventos de camino', () {
+    // Un evento con un combate después (el duelo no es el jefe de etapa).
+    const scene = [
+      MapNodeDef(id: 'x', type: NodeType.event, next: ['y']),
+      MapNodeDef(id: 'y', type: NodeType.combat, enemy: 'bat', next: []),
+    ];
+    RunState walk(Style? style, {int stage = 0, int seed = 1}) => run.enter(
+          fresh(seed).copyWith(
+            style: style,
+            stage: stage,
+            map: scene,
+            clearCurrentNode: true,
+            visited: const [],
+          ),
+          'x',
+        );
+    RunState at(String id, Style style, {int seed = 1}) =>
+        walk(style, seed: seed).copyWith(eventId: id, hp: 40);
+
+    test('sale el del camino propio en cada etapa y nunca el de otro', () {
+      for (final (i, own) in ['tiger_boulder', 'tiger_drums', 'tiger_marks']
+          .indexed) {
+        for (var seed = 0; seed < 8; seed++) {
+          expect(walk(Style.tiger, stage: i, seed: seed).eventId, own);
+        }
+      }
+      for (var seed = 0; seed < 30; seed++) {
+        final none = walk(null, seed: seed).eventId!;
+        final snake = walk(Style.snake, seed: seed).eventId!;
+        expect(run.data.event(none).path, isNull);
+        expect(run.data.event(snake).path, anyOf(isNull, Style.snake));
+      }
+    });
+
+    test('cartas del camino: se eligen entre tres y se vuelven a tirar del camino', () {
+      var r = run.resolveEvent(at('tiger_boulder', Style.tiger), 'smash');
+      expect(r.hp, 30);
+      expect(r.phase, RunPhase.reward);
+      expect(r.rewardKind, RewardKind.cards);
+      expect(r.rewardOptions, hasLength(3));
+      expect(r.jadeGained, 0);
+      bool tiger(String id) => run.data.card(id).pool == 'tiger';
+      expect(r.rewardOptions.every(tiger), isTrue);
+      r = run.rerollReward(r.copyWith(rerollsLeft: 1));
+      expect(r.rewardOptions.every(tiger), isTrue);
+      final pick = r.rewardOptions.first;
+      r = run.chooseReward(r, pick);
+      expect(r.phase, RunPhase.map);
+      expect(r.deck.last.cardId, pick);
+    });
+
+    test('elegir qué mejorar pasa por el premio de mejora', () {
+      var r = run.resolveEvent(at('tiger_drums', Style.tiger), 'strike');
+      expect(r.phase, RunPhase.reward);
+      expect(r.rewardKind, RewardKind.upgrade);
+      final uid = r.deck.firstWhere(run.canUpgrade).uid;
+      r = run.chooseRewardUpgrade(r, uid);
+      expect(r.phase, RunPhase.map);
+      expect(r.deck.firstWhere((c) => c.uid == uid).upgrades, greaterThan(0));
+    });
+
+    test('el talismán del camino; si ya se tiene, uno raro', () {
+      final r = run.resolveEvent(at('snake_skin', Style.snake), 'wear');
+      expect(r.talismans.last, 'escama');
+      expect(r.lastEvent!.talisman, 'escama');
+      final again = run.resolveEvent(
+        at('snake_skin', Style.snake).copyWith(talismans: ['escama']),
+        'wear',
+      );
+      final got = run.data.talisman(again.talismans.last);
+      expect(got.rare, isTrue);
+      expect(got.pool, isNull);
+    });
+
+    test('duelo: pelea contra el rival y deja el talismán del camino primero', () {
+      var r = run.resolveEvent(at('tiger_boulder', Style.tiger), 'challenge');
+      expect(r.phase, RunPhase.combat);
+      expect(r.duel, 'bandit');
+      expect(r.lastEvent!.duel, 'bandit');
+      expect(run.packOf(r), ['bandit']);
+      expect(run.togetherOf(r), isFalse);
+      expect(RunState.fromJson(r.toJson()).duel, 'bandit');
+      // Si se cierra la app a mitad del duelo, se vuelve a la escena.
+      final back = run.retreat(r);
+      expect(back.phase, RunPhase.event);
+      expect(back.eventId, 'tiger_boulder');
+      expect(back.duel, isNull);
+      r = run.finishCombat(r, won: true, hp: 30);
+      expect(r.duel, isNull);
+      expect(r.phase, RunPhase.talisman);
+      expect(r.talismanOptions.first, 'garra');
+      r = run.chooseTalisman(r, 'garra');
+      expect(r.phase, RunPhase.map, reason: 'el talismán es todo el premio');
     });
   });
 
