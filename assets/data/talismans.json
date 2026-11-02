@@ -17,6 +17,11 @@
     { "id": "quiebre",  "hanzi": "破", "rarity": "rare",   "effect": { "breakDraw": 1 } },
     { "id": "espejo",   "hanzi": "镜", "rarity": "common", "effect": { "deflectDamage": 6 } },
     { "id": "luna",     "hanzi": "月", "rarity": "boss",   "effect": { "turnBreath": 1, "maxHp": -5 } },
-    { "id": "montana",  "hanzi": "山", "rarity": "boss",   "effect": { "guardKeepPct": 30 } }
+    { "id": "montana",  "hanzi": "山", "rarity": "boss",   "effect": { "guardKeepPct": 30 } },
+    { "id": "garra",    "hanzi": "爪", "rarity": "rare",   "pool": "tiger", "effect": { "breakDamage": 5 } },
+    { "id": "escama",   "hanzi": "鳞", "rarity": "rare",   "pool": "snake", "effect": { "thirdAttackDraw": 1 } },
+    { "id": "pluma",    "hanzi": "羽", "rarity": "rare",   "pool": "crane", "effect": { "retainedGuard": 3 } },
+    { "id": "abaco",    "hanzi": "算", "rarity": "rare",   "shop": true,    "effect": { "shopDiscountPct": 20 } },
+    { "id": "manga",    "hanzi": "袖", "rarity": "rare",   "shop": true,    "effect": { "handSize": 1, "maxHp": -10 } }
   ]
 }

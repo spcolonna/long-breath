@@ -132,10 +132,12 @@ void main() {
   });
 
   test('talismanes y eventos', () {
-    expect(data.talismans, hasLength(18));
-    expect(data.talismans.values.where((t) => t.rare), hasLength(6));
+    expect(data.talismans, hasLength(23));
+    expect(data.talismans.values.where((t) => t.rare), hasLength(11));
+    expect(data.talismans.values.where((t) => t.pool != null), hasLength(3));
+    expect(data.talismans.values.where((t) => t.shop), hasLength(2));
     expect(data.talismans.values.where((t) => t.boss), hasLength(2));
-    expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(18),
+    expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(23),
         reason: 'cada uno se reconoce por su carácter');
     expect(data.events, hasLength(20));
     for (final e in data.events) {

@@ -1611,6 +1611,31 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String talEffHandMore(int n) {
+    return '+$n carta en cada mano.';
+  }
+
+  @override
+  String talEffBreakDamage(int n) {
+    return 'Desequilibrar a un rival le pega un golpe de $n, que entra doble.';
+  }
+
+  @override
+  String talEffThirdAttackDraw(int n) {
+    return 'El tercer ataque de cada turno roba $n carta.';
+  }
+
+  @override
+  String talEffRetainedGuard(int n) {
+    return 'Al empezar tu turno, +$n de Guardia por cada carta retenida.';
+  }
+
+  @override
+  String talEffShopDiscount(int n) {
+    return 'El mercader te cobra un $n% menos.';
+  }
+
+  @override
   String awEffFirstStrike(int n) {
     return 'El primer ataque del turno pega +$n.';
   }

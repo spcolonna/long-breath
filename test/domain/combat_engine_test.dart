@@ -188,6 +188,16 @@ void main() {
       expect(s.phase, CombatPhase.won);
     });
 
+    test('Garra del Tigre: desequilibrar le pega (doble)', () {
+      int hpAfter(List<String> talismans) {
+        var s = setup(filler, enemy: 'golem', talismans: talismans);
+        s = s.copyWith(enemy: s.enemy.copyWith(structure: 2));
+        return play(s, 'tui_zhang').state.enemy.hp;
+      }
+
+      expect(hpAfter(const []) - hpAfter(const ['garra']), 10);
+    });
+
     test('se recupera al final de tu próximo turno', () {
       var s = setup([...filler, ...filler], enemy: 'golem');
       s = s.copyWith(enemy: s.enemy.copyWith(structure: 2));
@@ -732,6 +742,25 @@ void main() {
       final next = endTurn(s).state;
       expect(next.player.guard, g * 30 ~/ 100);
       expect(next.player.guardHeight, Height.mid);
+    });
+
+    test('Escama de la Serpiente: el tercer ataque roba', () {
+      final deck = ['tan_tui', 'tan_tui', 'tan_tui', ...filler];
+      var s = setup(deck, style: Style.snake, talismans: ['escama']);
+      s = s.copyWith(player: s.player.copyWith(breath: 10));
+      final before = s.hand.length;
+      for (var i = 0; i < 3; i++) {
+        s = play(s, 'tan_tui').state;
+      }
+      expect(s.hand.length, before - 3 + 1);
+    });
+
+    test('Pluma de la Grulla: cada carta retenida da Guardia', () {
+      final s = setup(filler, talismans: ['pluma']);
+      final keep = [s.hand[0].uid, s.hand[1].uid];
+      final next = endTurn(s, keep).state;
+      final plain = endTurn(setup(filler), keep).state;
+      expect(next.player.guard - plain.player.guard, 6);
     });
 
     test('Luna Llena: un Aliento más por turno', () {

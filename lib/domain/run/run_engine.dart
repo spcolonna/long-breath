@@ -622,16 +622,23 @@ class RunEngine {
       r.talismans.fold(0, (a, id) => a + of(data.talisman(id).effect));
 
   /// Talismanes que todavía no se tienen ([rare]: null = común o raro).
-  /// Los de jefe solo salen con [boss].
-  List<String> missingTalismans(RunState r, {bool? rare, bool boss = false}) =>
-      [
-        for (final t in data.talismans.values)
-          if (!r.talismans.contains(t.id) &&
-              !r.locked.contains(t.id) &&
-              t.boss == boss &&
-              (boss || rare == null || t.rare == rare))
-            t.id,
-      ];
+  /// Los de jefe solo salen con [boss], los del mercader solo con [shop] y
+  /// los de camino solo a ese camino.
+  List<String> missingTalismans(
+    RunState r, {
+    bool? rare,
+    bool boss = false,
+    bool shop = false,
+  }) => [
+    for (final t in data.talismans.values)
+      if (!r.talismans.contains(t.id) &&
+          !r.locked.contains(t.id) &&
+          t.boss == boss &&
+          t.shop == shop &&
+          (t.pool == null || t.pool == r.style) &&
+          (boss || shop || rare == null || t.rare == rare))
+        t.id,
+  ];
 
   /// El jefe de etapa ofrece los suyos primero y completa con los demás.
   (List<String>, Rng) _rollTalismans(
@@ -926,16 +933,25 @@ class RunEngine {
   MerchantDef merchantOf(RunState r) => data.balance
       .merchantAt(r.stage)
       .discounted(
-        r.meta.merchantDiscountPct - data.balance.picoMods(r.pico).merchantPct,
+        r.meta.merchantDiscountPct +
+            talismanSum(r, (e) => e.shopDiscountPct) -
+            data.balance.picoMods(r.pico).merchantPct,
       );
 
   RunState _rollShop(RunState r) {
     final m = merchantOf(r);
     final (cards, rng) = _rollRewards(r.rng, r, m.cards);
-    // Más arriba se venden raros; si no queda ninguno, uno común.
+    // La mitad de las veces trae uno de los suyos, que solo él vende. Si
+    // no, más arriba se venden raros; si no queda ninguno, uno común.
+    final own = missingTalismans(r, shop: true);
+    final (pick, rng1) = rng.nextInt(2);
     final rares = m.rareTalisman ? missingTalismans(r, rare: true) : <String>[];
-    final (talismans, rng2) = rng.shuffle(
-      rares.isNotEmpty ? rares : missingTalismans(r, rare: false),
+    final (talismans, rng2) = rng1.shuffle(
+      own.isNotEmpty && pick == 0
+          ? own
+          : rares.isNotEmpty
+          ? rares
+          : missingTalismans(r, rare: false),
     );
     final (sale, rng3) = rng2.nextInt(math.max(1, cards.length));
     return r.copyWith(

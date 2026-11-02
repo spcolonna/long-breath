@@ -457,6 +457,24 @@ void main() {
       expect(run.missingTalismans(r, boss: true), ['luna', 'montana']);
     });
 
+    test('los de camino solo le salen a ese camino', () {
+      expect(run.missingTalismans(fresh(3)), isNot(contains('garra')));
+      for (final (s, own) in [
+        (Style.tiger, 'garra'),
+        (Style.snake, 'escama'),
+        (Style.crane, 'pluma'),
+      ]) {
+        final mine = run.missingTalismans(
+          fresh(3).copyWith(style: s),
+          rare: true,
+        );
+        expect(
+          mine.where((id) => run.data.talisman(id).pool != null),
+          [own],
+        );
+      }
+    });
+
     test('Luna Llena quita Vida máxima sin dejarte en 0', () {
       var r = fresh(3).copyWith(hp: 3);
       r = run.addTalisman(r, 'luna');
@@ -587,7 +605,8 @@ void main() {
       final r = shop();
       expect(r.phase, RunPhase.merchant);
       expect(r.shopCards, hasLength(3));
-      expect(run.data.talisman(r.shopTalisman!).rare, isFalse);
+      final t = run.data.talisman(r.shopTalisman!);
+      expect(t.shop || !t.rare, isTrue, reason: 'común o de los suyos');
       expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
     });
 
@@ -604,11 +623,37 @@ void main() {
       final r2 = up(1), r3 = up(2);
       expect(run.merchantOf(r2).card, greaterThan(base.card));
       expect(r2.shopCards, hasLength(4));
-      expect(run.data.talisman(r2.shopTalisman!).rare, isFalse);
+      final t2 = run.data.talisman(r2.shopTalisman!);
+      expect(t2.shop || !t2.rare, isTrue);
       expect(run.merchantOf(r3).talisman, greaterThan(run.merchantOf(r2).talisman));
       expect(run.data.talisman(r3.shopTalisman!).rare, isTrue);
       final bought = run.buyTalisman(r3);
       expect(bought.jade, 200 - run.merchantOf(r3).talisman);
+    });
+
+    test('el mercader trae a veces los suyos, que solo él vende', () {
+      final seen = <String>{};
+      for (var seed = 1; seed <= 20; seed++) {
+        final r = run.enter(
+          fresh(seed).copyWith(
+            jade: 200,
+            map: [const MapNodeDef(id: 'm', type: NodeType.merchant, next: [])],
+          ),
+          'm',
+        );
+        seen.add(r.shopTalisman!);
+      }
+      expect(seen.intersection({'abaco', 'manga'}), isNotEmpty);
+      expect(run.missingTalismans(fresh(5)), isNot(contains('abaco')));
+      expect(run.missingTalismans(fresh(5), shop: true), ['abaco', 'manga']);
+    });
+
+    test('Ábaco del Mercader: todo sale un 20% menos', () {
+      final r = fresh(5);
+      final base = run.merchantOf(r);
+      final cheap = run.merchantOf(run.addTalisman(r, 'abaco'));
+      expect(cheap.card, lessThan(base.card));
+      expect(cheap.talisman, lessThan(base.talisman));
     });
 
     test('cada etapa tiene sus eventos y prefiere los propios', () {

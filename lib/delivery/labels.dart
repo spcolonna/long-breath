@@ -203,6 +203,11 @@ extension Labels on AppLocalizations {
     if (e.handSize < 0) talEffHandLess(-e.handSize),
     if (e.maxHp < 0) talEffMaxHpLess(-e.maxHp),
     if (e.guardKeepPct > 0) talEffGuardKeep(e.guardKeepPct),
+    if (e.handSize > 0) talEffHandMore(e.handSize),
+    if (e.breakDamage > 0) talEffBreakDamage(e.breakDamage),
+    if (e.thirdAttackDraw > 0) talEffThirdAttackDraw(e.thirdAttackDraw),
+    if (e.retainedGuard > 0) talEffRetainedGuard(e.retainedGuard),
+    if (e.shopDiscountPct > 0) talEffShopDiscount(e.shopDiscountPct),
   ].join(' ');
 
   /// Consecuencias de un resultado de evento, en corto ("−8 Vida · …").

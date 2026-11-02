@@ -173,8 +173,13 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Martillo Quebrado 破 | Desequilibrar a un rival roba 1 carta | raro |
    | Luna Llena 月 | +1 de Aliento en cada turno, pero −5 de Vida máxima | de jefe |
    | Raíz de la Montaña 山 | Al empezar tu turno conservás el 30% de tu Guardia (con su altura) | de jefe |
+   | Garra del Tigre 爪 | Desequilibrar a un rival le pega un golpe de 5, que entra doble | raro, solo Tigre |
+   | Escama de la Serpiente 鳞 | El tercer ataque de cada turno roba 1 carta | raro, solo Serpiente |
+   | Pluma de la Grulla 羽 | Al empezar tu turno, +3 de Guardia por cada carta retenida | raro, solo Grulla |
+   | Ábaco del Mercader 算 | El mercader te cobra un 20% menos | del mercader |
+   | Manga Ancha 袖 | +1 carta en cada mano, pero −10 de Vida máxima | del mercader |
 
-   Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader.
+   Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader. Los **de camino** solo le salen al discípulo de ese camino (en el élite, los eventos de talismán raro y el mercader de la Cumbre). Los **del mercader** solo los vende él: la mitad de las veces trae uno de esos en lugar del talismán de siempre, al mismo precio.
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
@@ -276,7 +281,7 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 | 觉 Tres animales despiertos | Conocer los 12 despertares | +40 |
 | 符 Cinturón cargado | Terminar una subida con 6 talismanes | +15 |
 | 印 El sello del jefe | Terminar una subida con un talismán de jefe | +20 |
-| 宝 El cofre de la escuela | Haber terminado con cada uno de los 18 talismanes | +40 |
+| 宝 El cofre de la escuela | Haber terminado con cada uno de los 23 talismanes (los de camino, con su camino) | +40 |
 | 简 Lo justo | Ganar con 16 cartas o menos | +30 |
 | 十 Diez discípulos | Mandar al décimo discípulo | +20 |
 

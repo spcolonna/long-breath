@@ -709,6 +709,15 @@ class CombatEngine {
       if (d.attacksThisTurn == 3 && d.awakened.thirdAttackDraw > 0) {
         _draw(d, d.awakened.thirdAttackDraw, events);
       }
+      // Escama de la Serpiente: también.
+      if (d.attacksThisTurn == 3) {
+        for (final id in d.talismans) {
+          final n = data.talisman(id).effect.thirdAttackDraw;
+          if (n <= 0) continue;
+          events.add(TalismanTriggered(id));
+          _draw(d, n, events);
+        }
+      }
     }
     final target = d.enemy;
     final wasStaggered = target.staggered;
@@ -885,6 +894,13 @@ class CombatEngine {
       if (n <= 0) continue;
       events.add(TalismanTriggered(id));
       _draw(d, n, events);
+    }
+    // Garra del Tigre: el desequilibrio duele (y entra doble).
+    for (final id in d.talismans) {
+      final n = data.talisman(id).effect.breakDamage;
+      if (n <= 0 || d.enemyDown) continue;
+      events.add(TalismanTriggered(id));
+      _hitEnemy(d, n, 0, events);
     }
     if (e.wrath > 0) {
       e.wrath = 0;
@@ -1124,6 +1140,17 @@ class CombatEngine {
     }
     d.guard = kept;
     if (kept == 0) d.guardHeight = null;
+    // Pluma de la Grulla: cada carta retenida cubre.
+    if (d.retained.isNotEmpty) {
+      for (final id in d.talismans) {
+        final n = data.talisman(id).effect.retainedGuard;
+        if (n <= 0) continue;
+        final g = n * d.retained.length;
+        events.add(TalismanTriggered(id));
+        d.guard += g;
+        events.add(GuardGained(g, d.guardHeight));
+      }
+    }
     d.cardsThisTurn = 0;
     d.deflectBonusDamage = 0;
     d.deflectBonusStructure = 0;

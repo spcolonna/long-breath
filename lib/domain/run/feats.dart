@@ -49,7 +49,7 @@ const stageElites = [
 
 /// Despertares de cada camino y talismanes que hay en total.
 const awakeningsPerPath = 4;
-const talismanCount = 18;
+const talismanCount = 23;
 
 Map<String, int> addFeats(Map<String, int> a, Map<String, int> b) => {
   ...a,

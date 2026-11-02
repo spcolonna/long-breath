@@ -22,6 +22,10 @@ class TalismanEffect {
     this.turnBreath = 0,
     this.handSize = 0,
     this.guardKeepPct = 0,
+    this.breakDamage = 0,
+    this.thirdAttackDraw = 0,
+    this.retainedGuard = 0,
+    this.shopDiscountPct = 0,
   });
 
   /// Postura con la que se empieza cada combate.
@@ -83,6 +87,20 @@ class TalismanEffect {
   /// Porcentaje de la Guardia que queda al empezar el turno.
   final int guardKeepPct;
 
+  // Los de camino y los del mercader.
+
+  /// Daño que recibe el rival al quedar desequilibrado (Tigre).
+  final int breakDamage;
+
+  /// Cartas que roba el tercer ataque de cada turno (Serpiente).
+  final int thirdAttackDraw;
+
+  /// Guardia al empezar el turno por cada carta retenida (Grulla).
+  final int retainedGuard;
+
+  /// Porcentaje de descuento en el mercader.
+  final int shopDiscountPct;
+
   /// Se aplica al empezar el combate (para la animación de aviso).
   bool get atStart =>
       startStance != null ||
@@ -113,12 +131,18 @@ class TalismanEffect {
     turnBreath: j['turnBreath'] as int? ?? 0,
     handSize: j['handSize'] as int? ?? 0,
     guardKeepPct: j['guardKeepPct'] as int? ?? 0,
+    breakDamage: j['breakDamage'] as int? ?? 0,
+    thirdAttackDraw: j['thirdAttackDraw'] as int? ?? 0,
+    retainedGuard: j['retainedGuard'] as int? ?? 0,
+    shopDiscountPct: j['shopDiscountPct'] as int? ?? 0,
   );
 }
 
 /// De dónde sale un talismán: los comunes de cualquier lado, los raros del
 /// élite, el mercader de arriba y algunos eventos, y los de jefe solo del
-/// jefe de etapa (cambian una regla grande, a veces con un costo).
+/// jefe de etapa (cambian una regla grande, a veces con un costo). Aparte,
+/// los raros de camino solo le salen a ese camino y los del mercader solo se
+/// compran.
 enum TalismanTier {
   common,
   rare,
@@ -135,6 +159,8 @@ class TalismanDef {
     required this.hanzi,
     required this.tier,
     required this.effect,
+    this.pool,
+    this.shop = false,
   });
 
   final String id;
@@ -145,6 +171,12 @@ class TalismanDef {
   final TalismanTier tier;
   final TalismanEffect effect;
 
+  /// Camino al que pertenece (null = de todos).
+  final Style? pool;
+
+  /// Solo lo vende el mercader.
+  final bool shop;
+
   bool get rare => tier == TalismanTier.rare;
   bool get boss => tier == TalismanTier.boss;
 
@@ -153,5 +185,10 @@ class TalismanDef {
     hanzi: j['hanzi'] as String,
     tier: TalismanTier.parse(j['rarity'] as String?),
     effect: TalismanEffect.fromJson(j['effect'] as Map<String, dynamic>),
+    pool: switch (j['pool']) {
+      final String s => Style.parse(s),
+      _ => null,
+    },
+    shop: j['shop'] as bool? ?? false,
   );
 }

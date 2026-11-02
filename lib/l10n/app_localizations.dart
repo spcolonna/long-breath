@@ -2656,6 +2656,36 @@ abstract class AppLocalizations {
   /// **'Al empezar tu turno conservás el {n}% de tu Guardia.'**
   String talEffGuardKeep(int n);
 
+  /// No description provided for @talEffHandMore.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} carta en cada mano.'**
+  String talEffHandMore(int n);
+
+  /// No description provided for @talEffBreakDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'Desequilibrar a un rival le pega un golpe de {n}, que entra doble.'**
+  String talEffBreakDamage(int n);
+
+  /// No description provided for @talEffThirdAttackDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'El tercer ataque de cada turno roba {n} carta.'**
+  String talEffThirdAttackDraw(int n);
+
+  /// No description provided for @talEffRetainedGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'Al empezar tu turno, +{n} de Guardia por cada carta retenida.'**
+  String talEffRetainedGuard(int n);
+
+  /// No description provided for @talEffShopDiscount.
+  ///
+  /// In es, this message translates to:
+  /// **'El mercader te cobra un {n}% menos.'**
+  String talEffShopDiscount(int n);
+
   /// No description provided for @awEffFirstStrike.
   ///
   /// In es, this message translates to:

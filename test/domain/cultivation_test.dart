@@ -103,7 +103,9 @@ void main() {
     final a = engine.newRun(seed: 9);
     expect(a.locked, isEmpty);
     expect(engine.missingTalismans(a).length,
-        data.talismans.values.where((t) => !t.boss).length);
+        data.talismans.values
+            .where((t) => !t.boss && !t.shop && t.pool == null)
+            .length);
   });
 
   test('el cultivo informa el progreso hacia el reino siguiente', () {
