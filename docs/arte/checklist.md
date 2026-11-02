@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 141 · ✅ 119 · 🎨 4 · ❌ 18
+Total: 141 · ✅ 127 · 🎨 4 · ❌ 10
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -119,14 +119,14 @@ Total: 141 · ✅ 119 · 🎨 4 · ❌ 18
 | ✅ propio | `assets/art/cards/hu_dun.webp` | ilustración de hu_dun | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_xing_shou.webp` | ilustración de she_xing_shou | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_tu_xin.webp` | ilustración de she_tu_xin | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/she_chan_shen.webp` | ilustración de she_chan_shen | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/jin_she.webp` | ilustración de jin_she | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_wei.webp` | ilustración de she_wei | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_shan.webp` | ilustración de she_shan | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_hui_tou.webp` | ilustración de she_hui_tou | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/ling_she.webp` | ilustración de ling_she | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_jiao.webp` | ilustración de she_jiao | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/she_pan.webp` | ilustración de she_pan | hanzi de marca de agua | no |
+| ✅ propio | `assets/art/cards/she_chan_shen.webp` | ilustración de she_chan_shen | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/jin_she.webp` | ilustración de jin_she | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_wei.webp` | ilustración de she_wei | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_shan.webp` | ilustración de she_shan | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_hui_tou.webp` | ilustración de she_hui_tou | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/ling_she.webp` | ilustración de ling_she | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_jiao.webp` | ilustración de she_jiao | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/she_pan.webp` | ilustración de she_pan | hanzi de marca de agua | — |
 | ❌ falta | `assets/art/cards/he_chi.webp` | ilustración de he_chi | hanzi de marca de agua | no |
 | ❌ falta | `assets/art/cards/du_li.webp` | ilustración de du_li | hanzi de marca de agua | no |
 | ❌ falta | `assets/art/cards/he_zui.webp` | ilustración de he_zui | hanzi de marca de agua | no |

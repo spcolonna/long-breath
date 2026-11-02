@@ -22,10 +22,10 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (18):** ilustraciones de las cartas de los caminos Serpiente y Grulla, justo abajo en «Para generar ahora», un prompt por imagen.
+- **Falta (10):** ilustraciones de las cartas del camino Grulla, justo abajo en «Para generar ahora», un prompt por imagen.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
-  28 ilustraciones de cartas (el camino Tigre, completo). El detalle está en «Estado», más abajo.
+  37 ilustraciones de cartas (los caminos Tigre y Serpiente, completos). El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
 
@@ -44,171 +44,15 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Faltan **18 ilustraciones de cartas** (las de los caminos Serpiente y Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 28 que ya están sirven de referencia de estilo.
+Faltan **10 ilustraciones de cartas** (las del camino Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 37 que ya están sirven de referencia de estilo.
 
 Cada bloque gris es **una imagen**: copialo, pegalo en ChatGPT y guardá el PNG con el nombre del título. El color de la estela es el del tipo de la carta.
-
-## Camino Serpiente
-
-> **Por qué estos prompts son más largos:** con las técnicas «enroscadas», ChatGPT dobla brazos y torso como si fueran de goma y deforma los dedos. Por eso cada prompt pide una pose humana estable, una forma de mano simple (palma plana o puño) con las dos manos a la vista, y deja todo lo enroscado a un espíritu de serpiente de tinta separado del cuerpo. También describe al héroe para que salga el mismo de las cartas que ya están. Si igual sale una mano mal, en la misma conversación pedí: *«Same image, fix only the hands: five fingers each, simple flat palm, fully visible»*.
-
-### 1. `she_chan_shen.png` — Serpiente enroscada 蛇缠身
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: standing in a stable low horse stance, the front forearm raised upright in front of the chest with the open palm turned outward to deflect a blow, the rear hand held open beside the hip, calm and rooted.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in cobalt blue (#3E7BE0) that coils in a wide spiral around the whole figure like a protective shield; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 2. `jin_she.png` — Serpiente dorada 金蛇
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: stepping forward into a long bow stance and throwing a straight punch, the front arm fully extended at shoulder height, the rear fist pulled back at the hip.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (two tight closed fists, knuckles clearly drawn, thumb folded over the fingers); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in vermilion (#E8453C) that spirals forward along the punching arm like a corkscrew, with a golden glint on its scales, ending in a small serpent head just past the fist; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 3. `she_wei.png` — Cola de serpiente 蛇尾
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: dropping into a low crouch on the bent support leg while the other leg stretches out straight and sweeps close to the ground, heel leading; the front hand rests open on the bent knee and the other arm reaches back for balance.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in gold (#E59A12) that trails behind the sweeping heel along the ground in a long S curve, like a snake's tail; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 4. `she_shan.png` — Serpiente que se escurre 蛇闪
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: taking a light, balanced sidestep out of the way of a strike, upper body leaning slightly to one side, both open hands raised in front of the chest ready to guard.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in jade green (#1FA38A) that draws an S curve along the path of the sidestep, showing where the body slipped away; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 5. `she_hui_tou.png` — La serpiente vuelve la cabeza 蛇回头
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: a turning strike: the figure has just pivoted on the balls of the feet, body and head now facing the same direction, one arm thrusting a palm strike forward at shoulder height, the other hand open in front of the chest; hair and robe still swinging from the turn.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, the striking wrist slightly bent back); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in violet (#9B5DE5) that follows the turn in a half circle behind the figure and rises with its head beside the striking palm; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 6. `ling_she.png` — Serpiente ágil 灵蛇
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: a light hopping front kick: the support leg slightly bent, up on the toes, the kicking leg snapping forward to waist height with the foot flexed, both arms open to the sides for balance.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in gold (#E59A12) that springs upward in a quick zigzag from the ground to the kicking foot; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 7. `she_jiao.png` — Abrazo de la serpiente 蛇绞
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: in a bow stance, the front hand presses down and forward at waist height, palm down, as if pinning an opponent's arm, while the rear hand pulls back to the hip as a closed fist; no opponent is drawn.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand a flat palm facing down with the fingers together; rear hand a closed fist with the thumb folded over); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in violet (#9B5DE5) that loops twice in a tight spiral in the empty space just in front of the front palm, like a snare closing on an invisible arm; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
-
-### 8. `she_pan.png` — Serpiente al acecho 蛇盘
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: in a deep low stance with the weight sunk onto the back leg, knees bent, back straight, the front hand held open at chin height, the rear hand open below the front elbow guarding the body, eyes fixed forward, patient.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, palms facing forward); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso turns at most a quarter turn and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The snake is NOT in the body: the human pose stays natural, stable and anatomically correct. The coiling is shown only by a separate translucent ink serpent spirit in cobalt blue (#3E7BE0) that lies coiled in a flat spiral on the ground under the figure's feet, its head raised and watching, ready to strike; it never touches, wraps or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
-```
 
 ## Camino Grulla
 
 > **Mismo cuidado que con la Serpiente:** las alas y el equilibrio en una pata hacen que ChatGPT convierta los brazos en alas, agregue o funda piernas y deforme los dedos. Cada prompt pide brazos humanos con manga, las dos piernas completas aunque una esté levantada y una forma de mano simple a la vista. La grulla aparece solo como espíritu de tinta separado del cuerpo. Si sale una mano o una pierna mal, en la misma conversación pedí: *«Same image, fix only the hands and legs: five fingers each, two complete legs, fully visible»*.
 
-### 9. `he_chi.png` — Ala de grulla 鹤翅
+### 1. `he_chi.png` — Ala de grulla 鹤翅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -227,7 +71,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 10. `du_li.png` — Grulla en una pata 独立
+### 2. `du_li.png` — Grulla en una pata 独立
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -246,7 +90,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 11. `he_zui.png` — Pico de grulla 鹤嘴
+### 3. `he_zui.png` — Pico de grulla 鹤嘴
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -265,7 +109,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 12. `he_wu.png` — Danza de la grulla 鹤舞
+### 4. `he_wu.png` — Danza de la grulla 鹤舞
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -284,7 +128,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 13. `he_xi.png` — Rodilla de grulla 鹤膝
+### 5. `he_xi.png` — Rodilla de grulla 鹤膝
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -303,7 +147,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 14. `he_ming.png` — Canto de la grulla 鹤鸣
+### 6. `he_ming.png` — Canto de la grulla 鹤鸣
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -322,7 +166,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 15. `he_ding.png` — Corona de la grulla 鹤顶
+### 7. `he_ding.png` — Corona de la grulla 鹤顶
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -341,7 +185,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 16. `bai_he_liang_chi.png` — La grulla blanca abre las alas 白鹤亮翅
+### 8. `bai_he_liang_chi.png` — La grulla blanca abre las alas 白鹤亮翅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -360,7 +204,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 17. `he_zhuo.png` — Picotazo de la grulla 鹤啄
+### 9. `he_zhuo.png` — Picotazo de la grulla 鹤啄
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -379,7 +223,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 18. `he_mian.png` — La grulla duerme 鹤眠
+### 10. `he_mian.png` — La grulla duerme 鹤眠
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -448,7 +292,7 @@ backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra
 |---|---|---|---|
 | Íconos | `assets/art/icons/` | 6 | ✅ |
 | Marcos por tipo | `assets/art/cards/` | 5 | ✅ |
-| Ilustraciones de cartas | `assets/art/cards/` | 46 | ✅ 28 · ⬜ 18 (Serpiente y Grulla) en «Para generar ahora» |
+| Ilustraciones de cartas | `assets/art/cards/` | 46 | ✅ 37 · ⬜ 10 (Grulla) en «Para generar ahora» |
 
 ---
 
@@ -1471,7 +1315,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-#### Serpiente enroscada 蛇缠身 ⬜
+#### Serpiente enroscada 蛇缠身 ✅
 
 **Destino:** `assets/art/cards/she_chan_shen.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1492,7 +1336,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Serpiente dorada 金蛇 ⬜
+#### Serpiente dorada 金蛇 ✅
 
 **Destino:** `assets/art/cards/jin_she.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1513,7 +1357,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Cola de serpiente 蛇尾 ⬜
+#### Cola de serpiente 蛇尾 ✅
 
 **Destino:** `assets/art/cards/she_wei.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1534,7 +1378,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Serpiente que se escurre 蛇闪 ⬜
+#### Serpiente que se escurre 蛇闪 ✅
 
 **Destino:** `assets/art/cards/she_shan.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1555,7 +1399,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### La serpiente vuelve la cabeza 蛇回头 ⬜
+#### La serpiente vuelve la cabeza 蛇回头 ✅
 
 **Destino:** `assets/art/cards/she_hui_tou.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1576,7 +1420,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Serpiente ágil 灵蛇 ⬜
+#### Serpiente ágil 灵蛇 ✅
 
 **Destino:** `assets/art/cards/ling_she.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1597,7 +1441,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Abrazo de la serpiente 蛇绞 ⬜
+#### Abrazo de la serpiente 蛇绞 ✅
 
 **Destino:** `assets/art/cards/she_jiao.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1618,7 +1462,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Serpiente al acecho 蛇盘 ⬜
+#### Serpiente al acecho 蛇盘 ✅
 
 **Destino:** `assets/art/cards/she_pan.png`, cuadrada (1024×1024), fondo transparente.
 

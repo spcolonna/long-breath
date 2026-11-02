@@ -46,7 +46,7 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
 - **Mapa:** `map_node_stone` (textura de los sellos).
 - **UI:** `ui/logo` (menú), los 6 íconos de `icons/` (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
-- **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai`, `gongbu_tuizhang`, `pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li`, `hu_zhao`, `hu_pu`, `hu_bao_tou`, `hu_xiao`, `hu_wei`, `xia_shan_hu`, `hu_ya`, `hu_ben`, `e_hu_pu_shi`, `hu_dun`, `she_xing_shou` y `she_tu_xin` (las 16 comunes, las 10 del Tigre y 2 de la Serpiente). La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
+- **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai`, `gongbu_tuizhang`, `pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li`, `hu_zhao`, `hu_pu`, `hu_bao_tou`, `hu_xiao`, `hu_wei`, `xia_shan_hu`, `hu_ya`, `hu_ben`, `e_hu_pu_shi`, `hu_dun`, `she_xing_shou`, `she_tu_xin`, `she_chan_shen`, `jin_she`, `she_wei`, `she_shan`, `she_hui_tou`, `ling_she`, `she_jiao` y `she_pan` (las 16 comunes, las 10 del Tigre y las 10 de la Serpiente). La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
 
 ## Reserva de recoloreos
 
@@ -67,4 +67,4 @@ Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la 
 
 ### 3. Ilustraciones de cartas
 
-- Faltan 18: las de los caminos (8 de la Serpiente y 10 de la Grulla), un prompt suelto por imagen en «Para generar ahora» de `prompts.md`. Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px. Las de Serpiente y Grulla llevan reglas de anatomía (manos simples a la vista, pose estable, piernas completas; lo enroscado o las alas solo en un espíritu de tinta separado) porque ChatGPT deformaba dedos y cuerpos.
+- Faltan 10: las del camino Grulla, un prompt suelto por imagen en «Para generar ahora» de `prompts.md`. Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px. Llevan reglas de anatomía (manos simples a la vista, pose estable, piernas completas; las alas solo en un espíritu de tinta separado) porque ChatGPT deformaba dedos y cuerpos; con esas reglas las de la Serpiente salieron bien.
