@@ -59,6 +59,33 @@ void main() {
     expect(back.feats, r.feats);
   });
 
+  test('vencer a un élite o jefe queda en la subida; el jefe limpio, aparte', () {
+    var r = fresh(3).copyWith(currentNode: 'n5', phase: RunPhase.combat);
+    r = run.finishCombat(r, won: true, hp: r.hp - 1);
+    expect(r.feats[Feat.beat('monk')], 1);
+    r = r.copyWith(currentNode: 'n6', phase: RunPhase.combat);
+    r = run.finishCombat(r, won: true, hp: r.hp);
+    expect(r.feats[Feat.beat('dragon')], 1);
+    expect(r.feats[Feat.flawlessBoss], 1);
+    r = r.copyWith(currentNode: 'n1', phase: RunPhase.combat);
+    r = run.finishCombat(r, won: true, hp: r.hp);
+    expect(r.feats.containsKey(Feat.beat('bat')), isFalse);
+  });
+
+  test('al terminar se anotan despertares y talismanes que se llevaban', () {
+    final r = fresh(3).copyWith(
+      awakenings: ['hu_nu'],
+      talismans: ['arco', 'luna'],
+    );
+    expect(run.finalFeats(r), {
+      Feat.awakening('hu_nu'): 1,
+      Feat.talisman('arco'): 1,
+      Feat.talisman('luna'): 1,
+      Feat.talismans: 2,
+      Feat.bossTalisman: 1,
+    });
+  });
+
   test('camino completo con bifurcación, recompensa y fuente', () {
     var r = fresh(3);
     expect(r.deck.length, 12);

@@ -865,6 +865,10 @@
     "reach_monastery": { "name": "Sobre las nubes", "text": "Llegá al Monasterio Colgado." },
     "reach_peak": { "name": "Donde duerme el dragón", "text": "Llegá a la Cumbre del Dragón Dormido." },
     "summit": { "name": "La cumbre", "text": "Vencé al Dragón Dormido." },
+    "elites_0": { "name": "Los guardianes de las campanas", "text": "Vencé al Monje sin Rostro, al León de Piedra y a la Dama del Abanico, en las subidas que hagan falta." },
+    "elites_1": { "name": "El campanario en silencio", "text": "Vencé a los seis élites del Monasterio Colgado, en las subidas que hagan falta." },
+    "elites_2": { "name": "Hielo que se rinde", "text": "Vencé a la Dama del Viento, al León de las Nieves, al Sueño del Dragón y al Qilin." },
+    "flawless_boss": { "name": "Ni un pelo fuera de lugar", "text": "Vencé a un jefe sin perder Vida." },
     "win_tiger": { "name": "Garra del Tigre", "text": "Ganá una subida por el camino del Tigre." },
     "win_snake": { "name": "Paciencia de la Serpiente", "text": "Ganá una subida por el camino de la Serpiente." },
     "win_crane": { "name": "Vuelo de la Grulla", "text": "Ganá una subida por el camino de la Grulla." },
@@ -877,6 +881,11 @@
     "forms_10": { "name": "Cuerpo que recuerda", "text": "Completá 10 formas en una misma subida." },
     "deflects_20": { "name": "Agua que no se rompe", "text": "Desviá 20 golpes en una misma subida." },
     "flawless_5": { "name": "Sin un rasguño", "text": "Ganá 5 combates sin perder Vida en una misma subida." },
+    "awaken_path": { "name": "El animal despierto", "text": "Conocé los cuatro despertares de un mismo camino, entre todas tus subidas." },
+    "awaken_all": { "name": "Tres animales despiertos", "text": "Conocé los doce despertares de los tres caminos." },
+    "talismans_6": { "name": "Cinturón cargado", "text": "Terminá una subida llevando 6 talismanes." },
+    "talisman_boss": { "name": "El sello del jefe", "text": "Terminá una subida llevando un talismán de jefe." },
+    "talismans_all": { "name": "El cofre de la escuela", "text": "Llevá cada uno de los 18 talismanes alguna vez, al terminar una subida." },
     "light_deck": { "name": "Lo justo", "text": "Ganá una subida con 16 cartas o menos en el mazo." },
     "ten_disciples": { "name": "Diez discípulos", "text": "Mandá a la montaña al décimo discípulo de la escuela." }
   }

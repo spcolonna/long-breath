@@ -262,6 +262,8 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 | 寺 Sobre las nubes | Llegar al Monasterio Colgado | +15 |
 | 顶 Donde duerme el dragón | Llegar a la Cumbre del Dragón Dormido | +20 |
 | 胜 La cumbre | Vencer al Dragón Dormido | +30 |
+| 狮 / 钟 / 麟 Élites de cada reino | Vencer a todos los élites del reino, sumando subidas (3 / 6 / 4) | +15 / +20 / +25 |
+| 镇 Ni un pelo fuera de lugar | Vencer a un jefe sin perder Vida | +25 |
 | 虎 / 蛇 / 鹤 Garra del Tigre, Paciencia de la Serpiente, Vuelo de la Grulla | Ganar con ese camino | +25 cada uno |
 | 三 Los tres animales | Haber ganado con los tres caminos | +40 |
 | 难 Montaña áspera | Ganar en Difícil o Shifu | +30 |
@@ -270,10 +272,17 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 | 形 Cuerpo que recuerda | 10 formas completas en una subida | +15 |
 | 卸 Agua que no se rompe | 20 desvíos en una subida | +15 |
 | 净 Sin un rasguño | 5 combates ganados sin perder Vida en una subida | +20 |
+| 醒 El animal despierto | Conocer los 4 despertares de un camino, sumando subidas | +20 |
+| 觉 Tres animales despiertos | Conocer los 12 despertares | +40 |
+| 符 Cinturón cargado | Terminar una subida con 6 talismanes | +15 |
+| 印 El sello del jefe | Terminar una subida con un talismán de jefe | +20 |
+| 宝 El cofre de la escuela | Haber terminado con cada uno de los 18 talismanes | +40 |
 | 简 Lo justo | Ganar con 16 cartas o menos | +30 |
 | 十 Diez discípulos | Mandar al décimo discípulo | +20 |
 
-- Todos juntos dan 495 de aliento, unas cuatro subidas ganadas en Normal.
+- Todos juntos (27) dan 715 de aliento, unas seis subidas ganadas en Normal.
+- Los de élites, despertares y el cofre se juntan entre subidas: como cada reino tiene un solo piso de élite, hace falta volver a subir para conocerlos a todos. En el Registro, los sellados de contador muestran su barra (por ejemplo 2/6).
+- Los élites vencidos y lo que se llevaba se anotan desde esta versión; las subidas viejas no cuentan para estos hitos.
 - Al terminar la subida, los hitos nuevos aparecen bajo el aliento, cada uno con su sello y un golpe.
 - En el Registro, la pestaña **Hitos** muestra los cumplidos y los que faltan.
 - Las partidas de antes cobran los hitos de su registro la primera vez que se abren (solo los que se pueden saber por las subidas guardadas).

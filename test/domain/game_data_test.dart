@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/run/ascent.dart';
+import 'package:long_breath/domain/run/feats.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
@@ -211,5 +212,20 @@ void main() {
       final master = content['masterLines'] as Map<String, dynamic>;
       expect(master.containsKey('${stage.id}_1'), isTrue, reason: stage.id);
     }
+  });
+
+  test('los hitos conocen a los élites, despertares y talismanes del juego', () {
+    for (final (i, stage) in data.balance.stages.indexed) {
+      final elites = {
+        for (final f in stage.floors)
+          for (final e in f.enemies)
+            if (data.enemy(e).rank == EnemyRank.elite) e,
+      };
+      expect(elites, stageElites[i].toSet(), reason: stage.id);
+    }
+    for (final s in Style.values) {
+      expect(data.balance.statsOf(s).awakenings, hasLength(awakeningsPerPath));
+    }
+    expect(data.talismans, hasLength(talismanCount));
   });
 }

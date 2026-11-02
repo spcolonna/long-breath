@@ -138,7 +138,7 @@ class RunController extends Notifier<RunState?> {
       ...ascent.toJson(),
       'breath': ascentBreath(cultivation, ascent),
       'lotus': run.lotus,
-      'feats': run.feats,
+      'feats': _engine.finalFeats(run),
     });
     ref.read(lastAscentProvider.notifier).set(null);
     ref

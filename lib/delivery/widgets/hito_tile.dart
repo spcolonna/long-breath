@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +11,8 @@ import 'lotus.dart';
 
 /// Un hito 功 en papel: sello con su carácter, nombre, cómo se cumple y el
 /// aliento que deja. Sellado ([sealed]) se ve apagado; recién cumplido
-/// ([fresh]) lleva la marca "nuevo".
+/// ([fresh]) lleva la marca "nuevo". Los sellados de contador muestran
+/// cuánto falta.
 class HitoTile extends ConsumerWidget {
   const HitoTile({
     super.key,
@@ -27,6 +30,8 @@ class HitoTile extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
     final def = hito(id);
+    final ascents = sealed ? ref.watch(ascentsProvider).value : null;
+    final best = ascents == null ? null : hitoBest(id, ascents);
     final accent = sealed ? Palette.textDim : Palette.gold;
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 10, 14, 10),
@@ -103,6 +108,33 @@ class HitoTile extends ConsumerWidget {
                     color: Palette.textDim,
                   ),
                 ),
+                if (best != null && best.$1 > 0) ...[
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(3),
+                          child: LinearProgressIndicator(
+                            value: math.min(1, best.$1 / best.$2),
+                            minHeight: 5,
+                            backgroundColor: Palette.line,
+                            color: Palette.gold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${math.min(best.$1, best.$2)}/${best.$2}',
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          color: Palette.textDim,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),

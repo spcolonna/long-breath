@@ -361,7 +361,7 @@ void main() {
     await settle();
     expect(find.text('Discípulo nº 1'), findsOneWidget);
     expect(find.textContaining('Cayó ante'), findsOneWidget);
-    await tester.tap(find.text('Hitos 2/18'));
+    await tester.tap(find.text('Hitos 2/27'));
     await settle();
     expect(find.text('El primer paso'), findsOneWidget);
     expect(find.text('Donde duerme el dragón'), findsOneWidget);

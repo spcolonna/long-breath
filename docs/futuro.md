@@ -268,7 +268,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 **Hoja de ruta (07/10/2026), por prioridad:**
 1. Cultivo del aliento: **hecho**.
-2. Hitos 功 (logros): **hecho (29/10/2026)**, 18 hitos por partida con aliento extra (ver `manual.md`). Siguiente: hitos por enemigo (vencer a cada jefe y élite), por despertares y por talismanes; mostrar el próximo hito cercano en la escuela.
+2. Hitos 功 (logros): **hecho (29/10/2026)**, 18 hitos por partida con aliento extra (ver `manual.md`). Hitos por enemigo (élites de cada reino, jefe sin perder Vida), por despertares y por talismanes: **hecho (02/11/2026)**, 27 en total, con barra de avance en el Registro.
 3. ~~Menú principal vivo~~ **hecho (30/10/2026):** en la escuela de cada partida, nubes que pasan, motas de aliento y aura que crecen con el cultivo, tablilla del último caído y el próximo hito con su avance.
 4. Narrativa:
    - pergaminos de las etapas 2 y 3;

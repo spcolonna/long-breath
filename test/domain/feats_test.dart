@@ -89,4 +89,39 @@ void main() {
       {Feat.forms: 5, Feat.deflects: 1},
     );
   });
+
+  test('los élites de un reino se juntan entre subidas', () {
+    final before = [
+      ascent(feats: {Feat.beat('monk'): 1}),
+      ascent(feats: {Feat.beat('lion'): 1}),
+    ];
+    expect(hitoBest('elites_0', before), (2, 3));
+    final last = ascent(feats: {Feat.beat('fan'): 1});
+    expect(earnedHitos(last, before, {'first_climb'}), ['elites_0']);
+    expect(
+      earnedHitos(last, const [], {'first_climb'}),
+      isNot(contains('elites_0')),
+    );
+  });
+
+  test('los despertares cuentan por camino; los talismanes, entre subidas', () {
+    final tiger = [
+      for (final id in ['hu_nu', 'hu_po', 'hu_yue'])
+        ascent(style: Style.tiger, feats: {Feat.awakening(id): 1}),
+    ];
+    final snake = ascent(style: Style.snake, feats: {Feat.awakening('she_du'): 1});
+    expect(hitoBest('awaken_path', [...tiger, snake]), (3, 4));
+    expect(
+      earnedHitos(snake, tiger, {'first_climb'}),
+      isNot(contains('awaken_path')),
+    );
+    final fourth = ascent(style: Style.tiger, feats: {Feat.awakening('hu_shi'): 1});
+    expect(earnedHitos(fourth, tiger, {'first_climb'}), ['awaken_path']);
+    final got = earnedHitos(
+      ascent(feats: {Feat.talismans: 6, Feat.bossTalisman: 1}),
+      const [],
+      {'first_climb'},
+    );
+    expect(got, ['talismans_6', 'talisman_boss']);
+  });
 }

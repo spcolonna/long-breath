@@ -339,18 +339,22 @@ class RunEngine {
     int? fledWith,
     Map<String, int> tally = const {},
   }) {
+    final boss = _atStageBoss(r);
+    final elite = !boss && data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    final fled = fledWith != null;
+    final beaten = won && !fled;
+    final flawless = beaten && hp >= r.hp;
     r = r.copyWith(
       feats: addFeats(r.feats, {
         ...tally,
-        if (won && fledWith == null && hp >= r.hp) Feat.flawless: 1,
+        if (flawless) Feat.flawless: 1,
+        if (flawless && boss) Feat.flawlessBoss: 1,
+        if (beaten && (boss || elite)) Feat.beat(enemyOf(r)): 1,
       }),
     );
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
     final b = data.balance;
     final lotus = b.meridians.lotus;
-    final boss = _atStageBoss(r);
-    final elite = !boss && data.enemy(enemyOf(r)).rank == EnemyRank.elite;
-    final fled = fledWith != null;
     final lotusBase = fled
         ? 0
         : lotus.perCombat +
@@ -413,6 +417,17 @@ class RunEngine {
       cardlessStreak: kind == RewardKind.cards ? 0 : r.cardlessStreak + 1,
     );
   }
+
+  /// Los contadores de la subida al terminar, con lo que se llevaba:
+  /// despertares y talismanes (para los hitos).
+  Map<String, int> finalFeats(RunState r) => {
+    ...r.feats,
+    for (final a in r.awakenings) Feat.awakening(a): 1,
+    for (final t in r.talismans) Feat.talisman(t): 1,
+    Feat.talismans: r.talismans.length,
+    if (r.talismans.any((t) => data.talisman(t).tier == TalismanTier.boss))
+      Feat.bossTalisman: 1,
+  };
 
   /// Vencido el Discípulo Perdido, suelta la carta del caído que lo
   /// llevaba (una sola vez por subida). Si su registro no guardó carta, una
