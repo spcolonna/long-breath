@@ -139,6 +139,11 @@ class TalismanTriggered extends CombatEvent {
   final String talismanId;
 }
 
+/// El arma actuó (al empezar o con su efecto: atravesar Guardia, etc.).
+class WeaponTriggered extends CombatEvent {
+  const WeaponTriggered();
+}
+
 class FormsResetByEnemy extends CombatEvent {
   const FormsResetByEnemy();
 }

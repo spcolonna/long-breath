@@ -19,6 +19,7 @@ GameData loadGameDataFromDir([
     enemies: read('enemies.json'),
     balance: {...read('game_balance.json'), ...balancePatch},
     talismans: read('talismans.json'),
+    weapons: read('weapons.json'),
     events: read('events.json'),
   );
 }

@@ -44,6 +44,7 @@ extension Labels on AppLocalizations {
     RewardKind.upgrade => lootKindUpgrade,
     RewardKind.tea => lootKindTea,
     RewardKind.talisman => lootKindTalisman,
+    RewardKind.weapon => lootKindWeapon,
   };
 
   String typeLabel(CardType type) => switch (type) {
@@ -208,6 +209,9 @@ extension Labels on AppLocalizations {
     if (e.thirdAttackDraw > 0) talEffThirdAttackDraw(e.thirdAttackDraw),
     if (e.retainedGuard > 0) talEffRetainedGuard(e.retainedGuard),
     if (e.shopDiscountPct > 0) talEffShopDiscount(e.shopDiscountPct),
+    if (e.attackStructure > 0) talEffAttackStructure(e.attackStructure),
+    if (e.guardPierce > 0) talEffGuardPierce(e.guardPierce),
+    if (e.heavyDamage > 0) talEffHeavyDamage(e.heavyDamage),
   ].join(' ');
 
   /// Consecuencias de un resultado de evento, en corto ("−8 Vida · …").

@@ -142,6 +142,11 @@ class RunState {
     this.shopSale,
     this.shopTea = false,
     this.masterForms = const [],
+    this.weapon,
+    this.weaponLevel = 0,
+    this.weaponOptions = const [],
+    this.shopWeapon,
+    this.shopForged = false,
     this.stage = 0,
     this.meta = MetaBonus.none,
     this.lotus = 0,
@@ -247,6 +252,17 @@ class RunState {
   /// Formas que ofrece el maestro errante (solo en la fase master).
   final List<String> masterForms;
 
+  /// Arma equipada y su nivel (0 = sin arma).
+  final String? weapon;
+  final int weaponLevel;
+
+  /// Armas que ofrece el botín (con arma, solo la propia para templarla).
+  final List<String> weaponOptions;
+
+  /// Arma en venta (sin arma) o la propia para templar, y si ya se templó.
+  final String? shopWeapon;
+  final bool shopForged;
+
   /// Dones de la escuela con los que empezó la subida (reinos y meridianos).
   final MetaBonus meta;
 
@@ -323,6 +339,12 @@ class RunState {
     bool clearShopSale = false,
     bool? shopTea,
     List<String>? masterForms,
+    String? weapon,
+    int? weaponLevel,
+    List<String>? weaponOptions,
+    String? shopWeapon,
+    bool clearShopWeapon = false,
+    bool? shopForged,
     List<MapNodeDef>? map,
     int? stage,
     int? lotus,
@@ -377,6 +399,11 @@ class RunState {
         shopSale: clearShopSale ? null : shopSale ?? this.shopSale,
         shopTea: shopTea ?? this.shopTea,
         masterForms: masterForms ?? this.masterForms,
+        weapon: weapon ?? this.weapon,
+        weaponLevel: weaponLevel ?? this.weaponLevel,
+        weaponOptions: weaponOptions ?? this.weaponOptions,
+        shopWeapon: clearShopWeapon ? null : shopWeapon ?? this.shopWeapon,
+        shopForged: shopForged ?? this.shopForged,
         stage: stage ?? this.stage,
         meta: meta,
         lotus: lotus ?? this.lotus,
@@ -440,6 +467,11 @@ class RunState {
         'shopSale': shopSale,
         'shopTea': shopTea,
         'masterForms': masterForms,
+        'weapon': weapon,
+        'weaponLevel': weaponLevel,
+        'weaponOptions': weaponOptions,
+        'shopWeapon': shopWeapon,
+        'shopForged': shopForged,
         'stage': stage,
         'meta': meta.toJson(),
         'lotus': lotus,
@@ -512,6 +544,12 @@ class RunState {
         shopSale: j['shopSale'] as String?,
         shopTea: j['shopTea'] as bool? ?? false,
         masterForms: ((j['masterForms'] as List?) ?? const []).cast<String>(),
+        weapon: j['weapon'] as String?,
+        weaponLevel: j['weaponLevel'] as int? ?? 0,
+        weaponOptions:
+            ((j['weaponOptions'] as List?) ?? const []).cast<String>(),
+        shopWeapon: j['shopWeapon'] as String?,
+        shopForged: j['shopForged'] as bool? ?? false,
         stage: j['stage'] as int? ?? 0,
         meta: switch (j['meta']) {
           final Map<String, dynamic> m => MetaBonus.fromJson(m),

@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (10):** ilustraciones de las cartas del camino Grulla, justo abajo en «Para generar ahora», un prompt por imagen.
+- **Falta (13):** las 3 armas (`assets/art/weapons/`) y las ilustraciones de las cartas del camino Grulla, justo abajo en «Para generar ahora», un prompt por imagen.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
   37 ilustraciones de cartas (los caminos Tigre y Serpiente, completos). El detalle está en «Estado», más abajo.
@@ -43,6 +43,54 @@ claro, color saturado y mucho aire.
 ---
 
 # Para generar ahora
+
+## Armas — `assets/art/weapons/`
+
+Faltan **3 armas**. Ninguna es recoloreo. Hasta que llegan, el juego las dibuja por código. Cada imagen va en la mano del héroe y en la elección del arma; vertical, con la punta arriba y **sin borla** (la borla, del color del nivel, la pone el juego). Al integrar se recortan los márgenes transparentes a una caja 1:3 y se ajusta el punto de agarre en `lib/delivery/widgets/weapon_art.dart` (`weaponShapes`).
+
+### 1. `weapons/gun.png` — Bastón 棍
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
+
+The weapon: a Chinese long staff (gùn), a straight round pole of polished ash wood lacquered warm vermilion-brown, slightly thicker at the bottom, with a gold metal cap ring at each end and two thin gold rings around the middle, simple and elegant. Layout: the grip area is the middle of the staff.
+
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### 2. `weapons/jian.png` — Espada 剑
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
+
+The weapon: a Chinese straight double-edged sword (jiàn), a slim bright steel blade with a fine central ridge and a pointed tip taking the top 60% of the height, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel at the bottom. Layout: the guard sits at about 62% of the height from the top and the pommel near the bottom.
+
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### 3. `weapons/pudao.png` — Pudao 朴刀
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
+
+The weapon: a Chinese pudao, a long two-handed saber: a broad, single-edged curved steel blade on top (straight back on the left, curved cutting edge bulging to the right, rising to a point) taking the top 40% of the height, a gold collar where blade meets handle, then a long straight lacquered vermilion-brown wooden handle with a small gold end cap at the bottom. Layout: the blade takes the top 40% of the height and the long handle the rest.
+
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+---
 
 Faltan **10 ilustraciones de cartas** (las del camino Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 37 que ya están sirven de referencia de estilo.
 
@@ -292,7 +340,8 @@ backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra
 |---|---|---|---|
 | Íconos | `assets/art/icons/` | 6 | ✅ |
 | Marcos por tipo | `assets/art/cards/` | 5 | ✅ |
-| Ilustraciones de cartas | `assets/art/cards/` | 46 | ✅ 37 · ⬜ 10 (Grulla) en «Para generar ahora» |
+| Ilustraciones de cartas | `assets/art/cards/` | 58 | ✅ 37 · ⬜ 10 (Grulla) en «Para generar ahora» · 12 de armas con hanzi (opcionales) |
+| Armas | `assets/art/weapons/` | 3 | ⬜ 3 en «Para generar ahora» (dibujadas por código mientras tanto) |
 
 ---
 

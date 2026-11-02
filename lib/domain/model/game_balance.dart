@@ -248,6 +248,8 @@ class MerchantDef {
     this.tea = 15,
     this.teaHeal = 15,
     this.rareTalisman = false,
+    this.weapon = 50,
+    this.weaponForge = 35,
   });
 
   /// Cartas en venta.
@@ -267,6 +269,10 @@ class MerchantDef {
   /// Si el talismán en venta es raro (los mercaderes de más arriba).
   final bool rareTalisman;
 
+  /// Arma (si no tenés) y templarla un nivel (si ya tenés).
+  final int weapon;
+  final int weaponForge;
+
   /// Precio de una carta en oferta.
   int get salePrice => (card * (100 - sale) / 100).round();
 
@@ -285,6 +291,8 @@ class MerchantDef {
       tea: off(tea),
       teaHeal: teaHeal,
       rareTalisman: rareTalisman,
+      weapon: off(weapon),
+      weaponForge: off(weaponForge),
     );
   }
 
@@ -298,6 +306,8 @@ class MerchantDef {
         tea: j['tea'] as int? ?? 15,
         teaHeal: j['teaHeal'] as int? ?? 15,
         rareTalisman: j['rareTalisman'] as bool? ?? false,
+        weapon: j['weapon'] as int? ?? 50,
+        weaponForge: j['weaponForge'] as int? ?? 35,
       );
 }
 
@@ -401,7 +411,7 @@ class PicoDef {
 }
 
 /// Tipos de premio de un combate ganado (se revela al ganar).
-enum RewardKind { cards, jade, lotus, upgrade, tea, talisman }
+enum RewardKind { cards, jade, lotus, upgrade, tea, talisman, weapon }
 
 /// Qué premio deja un combate común: pesos por etapa y cuánto da cada uno.
 class CombatRewardsDef {

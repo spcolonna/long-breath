@@ -37,6 +37,9 @@ abstract class Bot {
   String pickTalisman(RunEngine run, RunState r) =>
       r.talismanOptions[random.nextInt(r.talismanOptions.length)];
 
+  /// Arma elegida en el botín: la primera (la afín al camino va primero).
+  String pickWeapon(RunEngine run, RunState r) => r.weaponOptions.first;
+
   /// Opción elegida en un evento (entre las que puede pagar).
   String pickEventOption(RunEngine run, RunState r) {
     final options = [
@@ -212,6 +215,14 @@ class PlannerBot extends Bot {
     if (!r.shopTea && r.hp <= r.maxHp * 0.6 && run.canAfford(r, m.tea)) {
       r = run.buyTea(r);
     }
+    if (r.shopWeapon != null && r.weapon == null && run.canAfford(r, m.weapon)) {
+      r = run.buyWeapon(r);
+    } else if (r.shopWeapon != null &&
+        !r.shopForged &&
+        run.canForge(r) &&
+        run.canAfford(r, m.weaponForge)) {
+      r = run.buyForge(r);
+    }
     if (r.shopTalisman != null && run.canAfford(r, m.talisman)) {
       r = run.buyTalisman(r);
     }
@@ -250,9 +261,9 @@ class PlannerBot extends Bot {
         best = id;
       }
     }
-    return best != null
-        ? run.masterTeach(r, best)
-        : run.masterUpgrade(r, bestUpgrade(run, r));
+    if (best != null) return run.masterTeach(r, best);
+    if (run.canMasterForge(r)) return run.masterForge(r);
+    return run.masterUpgrade(r, bestUpgrade(run, r));
   }
 
   @override

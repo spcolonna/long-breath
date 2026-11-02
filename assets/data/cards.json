@@ -49,6 +49,20 @@
     { "id": "he_ding", "pinyin": "Hè Dǐng", "hanzi": "鹤顶", "type": "palm", "cost": 1, "damage": 5, "structure": 2, "retainedBreath": 1, "pool": "crane" },
     { "id": "bai_he_liang_chi", "pinyin": "Bái Hè Liàng Chì", "hanzi": "白鹤亮翅", "type": "defense", "cost": 1, "guard": 7, "height": "high", "onDeflectDamage": 3, "retainedDraw": 1, "pool": "crane" },
     { "id": "he_zhuo", "pinyin": "Hè Zhuó", "hanzi": "鹤啄", "type": "kick", "cost": 2, "damage": 7, "structure": 4, "retainedDamage": 4, "retainedStructure": 4, "pool": "crane" },
-    { "id": "he_mian", "pinyin": "Hè Mián", "hanzi": "鹤眠", "type": "technique", "cost": 0, "draw": 1, "retainedDraw": 2, "pool": "crane" }
+    { "id": "he_mian", "pinyin": "Hè Mián", "hanzi": "鹤眠", "type": "technique", "cost": 0, "draw": 1, "retainedDraw": 2, "pool": "crane" },
+    { "id": "gun_sao", "pinyin": "Sǎo Gùn", "hanzi": "扫棍", "type": "palm", "cost": 1, "damage": 2, "structure": 4, "pool": "gun" },
+    { "id": "gun_ge", "pinyin": "Gé Gùn", "hanzi": "格棍", "type": "defense", "cost": 1, "guard": 8, "height": "low", "onDeflectStructure": 4, "pool": "gun" },
+    { "id": "gun_tiao", "pinyin": "Tiǎo Gùn", "hanzi": "挑棍", "type": "palm", "cost": 2, "damage": 4, "structure": 8, "breakDraw": 1, "pool": "gun" },
+    { "id": "gun_wuhua", "pinyin": "Wǔhuā Gùn", "hanzi": "舞花棍", "type": "palm", "cost": 2, "damage": 4, "structure": 5, "turnStructureBonus": 2, "pool": "gun" },
+
+    { "id": "jian_ci", "pinyin": "Cì Jiàn", "hanzi": "刺剑", "type": "fist", "cost": 1, "damage": 6, "structure": 1, "pool": "jian" },
+    { "id": "jian_dian", "pinyin": "Diǎn Jiàn", "hanzi": "点剑", "type": "fist", "cost": 0, "damage": 2, "draw": 1, "exhaust": true, "pool": "jian" },
+    { "id": "jian_jie", "pinyin": "Jié Jiàn", "hanzi": "截剑", "type": "defense", "cost": 1, "guard": 7, "height": "mid", "onDeflectDamage": 6, "pool": "jian" },
+    { "id": "jian_chuanxin", "pinyin": "Chuān Xīn Jiàn", "hanzi": "穿心剑", "type": "fist", "cost": 2, "damage": 10, "structure": 2, "comboDraw": 1, "pool": "jian" },
+
+    { "id": "pudao_pi", "pinyin": "Pī Dāo", "hanzi": "劈刀", "type": "palm", "cost": 2, "damage": 13, "structure": 5, "pool": "pudao" },
+    { "id": "pudao_lan", "pinyin": "Lán Dāo", "hanzi": "拦刀", "type": "defense", "cost": 2, "guard": 11, "height": "high", "damage": 3, "pool": "pudao" },
+    { "id": "pudao_kan", "pinyin": "Kǎn Dāo", "hanzi": "砍刀", "type": "kick", "cost": 3, "damage": 16, "structure": 8, "clearGuard": true, "pool": "pudao" },
+    { "id": "pudao_chantou", "pinyin": "Chántóu Dāo", "hanzi": "缠头刀", "type": "palm", "cost": 3, "damage": 10, "structure": 6, "bonusDamageIfStaggered": 10, "pool": "pudao" }
   ]
 }

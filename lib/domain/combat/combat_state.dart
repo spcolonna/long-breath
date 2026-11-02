@@ -1,5 +1,6 @@
 import '../model/awakening_def.dart';
 import '../model/enums.dart';
+import '../model/talisman_def.dart';
 import '../rng.dart';
 
 /// Una carta concreta dentro de un mazo (uid único por run).
@@ -186,6 +187,9 @@ class CombatState {
     this.enemyDamagePct = 100,
     this.fistBonus = 0,
     this.talismans = const [],
+    this.weapon,
+    this.weaponLevel = 0,
+    this.weaponEffect,
     this.firstStrike = 0,
     this.chain = 0,
     this.retainedDiscount = 0,
@@ -256,6 +260,11 @@ class CombatState {
   /// Talismanes de la run que acompañan este combate.
   final List<String> talismans;
 
+  /// Arma equipada, su nivel y lo que da (con el bonus de su camino).
+  final String? weapon;
+  final int weaponLevel;
+  final TalismanEffect? weaponEffect;
+
   /// Pasivas del camino (ver [StyleStats]).
   final int firstStrike;
   final int chain;
@@ -325,6 +334,9 @@ class CombatState {
         enemyDamagePct: enemyDamagePct,
         fistBonus: fistBonus,
         talismans: talismans,
+        weapon: weapon,
+        weaponLevel: weaponLevel,
+        weaponEffect: weaponEffect,
         firstStrike: firstStrike,
         chain: chain,
         retainedDiscount: retainedDiscount,

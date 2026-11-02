@@ -85,6 +85,8 @@ class CombatController extends Notifier<CombatView?> {
       seed: seed,
       forms: run.knownForms,
       talismans: run.talismans,
+      weapon: run.weapon,
+      weaponLevel: run.weaponLevel,
       awakenings: run.awakenings,
       meta: run.meta,
     );

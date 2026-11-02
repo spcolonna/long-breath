@@ -278,7 +278,6 @@ void main() {
     GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/merchant');
     await settle();
     expect(find.text('Mercader de pergaminos'), findsOneWidget);
-    expect(find.text('Quitar 1 carta del mazo'), findsOneWidget);
     final shop = container.read(runControllerProvider)!;
     final ware = container.read(textProvider).talisman(shop.shopTalisman!);
     await tester.tap(find.text(ware));
@@ -298,6 +297,9 @@ void main() {
       200,
       scrollable: find.byType(Scrollable).first,
     );
+    // Sin arma, la armería vende una; los servicios van debajo.
+    expect(container.read(runControllerProvider)!.shopWeapon, isNotNull);
+    expect(find.text('Quitar 1 carta del mazo'), findsOneWidget);
     await settle();
     final hpBefore = container.read(runControllerProvider)!.hp;
     await tester.tap(teaLabel);

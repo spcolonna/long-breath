@@ -50,6 +50,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 - **Leopardo** como cuarto camino (velocidad: cartas de costo 0 y robar). El Dragón queda sellado por la historia.
 
 ### Armas (bīngqì 兵器)
+- **Hecho (02/11/2026):** bastón 棍, espada 剑 y pudao 朴刀, con 3 niveles, 4 técnicas cada una, efecto propio (Estructura, atravesar Guardia, golpes pesados) y extra de camino. El primer élite la garantiza; se templa en el botín, el mercader (armería) y el maestro (hasta el II). Capa del arma en la mano del héroe, dibujada por código hasta que llegue el arte (`assets/art/weapons/<id>.png`). Balance (`balance.md` §3p): promedio 32% (antes 31%), experto 66% (igual). **Falta:** el arte de las tres; cambiar de arma; más armas (lanza 枪, sable 刀, san jie gun 三节棍); formas de arma; sonidos `weaponSwing`/`weaponForge`.
 - **Mejoras que son armas:** palo/bastón (gùn 棍), espada (jiàn 剑), pudao (朴刀) y otras, cada una con **nivel 1, 2 y 3**. Se consiguen y suben en la subida (recompensa, mercader o maestro errante).
 - **Qué cambian:** cada arma le da identidad al mazo. Por ejemplo:
   - Bastón: alcance y Estructura (barridos bajos, golpes que desequilibran).
@@ -284,7 +285,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
    - ~~el Discípulo Perdido con el nombre de un caído~~ (hecho);
    - ~~el giro del maestro~~ (hecho);
    - ~~finales por camino~~ (hecho, 02/11/2026).
-5. Armas 兵器.
+5. ~~Armas 兵器~~ (hecho, 02/11/2026; falta el arte).
 6. ~~Pasada de feel en mercader, evento, recompensa y maestro~~ (hecho, 29/10/2026; ver `feel.md`).
 7. Optimización: peso de los PNG y rendimiento medido.
 

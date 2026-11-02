@@ -43,6 +43,8 @@ class _DebugSheet extends ConsumerStatefulWidget {
 class _DebugSheetState extends ConsumerState<_DebugSheet> {
   int _stage = 0;
   int _floor = 1;
+  String? _weapon;
+  int _weaponLevel = 1;
 
   Future<void> _start() async {
     final info = await ref.read(slotInfoProvider.future);
@@ -51,7 +53,14 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
     final difficulty = info?.difficulty ?? Difficulty.normal;
     ref
         .read(runControllerProvider.notifier)
-        .debugStart(difficulty, info?.pico ?? 0, _stage, _floor);
+        .debugStart(
+          difficulty,
+          info?.pico ?? 0,
+          _stage,
+          _floor,
+          weapon: _weapon,
+          weaponLevel: _weaponLevel,
+        );
     ref.invalidate(savedRunProvider);
     final router = GoRouter.of(context);
     Navigator.pop(context);
@@ -116,6 +125,26 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
               label: '$_floor',
               onChanged: (v) => setState(() => _floor = v.round()),
             ),
+            Wrap(
+              spacing: 8,
+              alignment: WrapAlignment.center,
+              children: [
+                for (final w in [null, ...ref.watch(dataProvider).weapons.keys])
+                  ChoiceChip(
+                    label: Text(w == null ? 'Sin arma' : names.weapon(w)),
+                    selected: _weapon == w,
+                    onSelected: (_) => setState(() => _weapon = w),
+                  ),
+                if (_weapon != null)
+                  for (final lv in [1, 2, 3])
+                    ChoiceChip(
+                      label: Text('Nv $lv'),
+                      selected: _weaponLevel == lv,
+                      onSelected: (_) => setState(() => _weaponLevel = lv),
+                    ),
+              ],
+            ),
+            const SizedBox(height: 8),
             FilledButton(onPressed: _start, child: const Text('Subir acá')),
             const SizedBox(height: 8),
             OutlinedButton(onPressed: _lotus, child: const Text('+20 loto')),

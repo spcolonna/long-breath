@@ -15,6 +15,7 @@ import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/weapon_widgets.dart';
 import '../widgets/hp_count.dart';
 import '../widgets/press.dart';
 import '../feel.dart';
@@ -38,6 +39,11 @@ class _CardItem extends _Item {
 
 class _TalismanItem extends _Item {
   const _TalismanItem();
+}
+
+/// El arma en venta (sin arma) o templar la propia.
+class _WeaponItem extends _Item {
+  const _WeaponItem();
 }
 
 class _RemoveItem extends _Item {
@@ -64,6 +70,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
   /// Lo que había en venta al entrar: lo comprado queda con su sello.
   List<String>? _cards;
   String? _talisman;
+  String? _weapon;
   _Item? _selected;
 
   /// Elegir carta del mazo para un servicio.
@@ -84,9 +91,17 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
       _CardItem(:final id) => id == _sale ? m.salePrice : m.card,
       _TeaItem() => m.tea,
       _TalismanItem() => m.talisman,
+      _WeaponItem() => _forging ? m.weaponForge : m.weapon,
       _RemoveItem() => m.remove,
       _UpgradeItem() => m.upgrade,
     };
+  }
+
+  /// Si la armería templa la propia (y no vende una).
+  bool get _forging {
+    final run = ref.read(runControllerProvider);
+    return run != null && _weapon != null && run.weapon == _weapon &&
+        !_bought.contains(const _WeaponItem());
   }
 
   void _select(_Item i) {
@@ -109,6 +124,8 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
         ctl.buyCard(id);
       case _TalismanItem():
         ctl.buyTalisman();
+      case _WeaponItem():
+        _forging ? ctl.buyForge() : ctl.buyWeapon();
       case _TeaItem():
         ctl.buyTea();
         ref.read(audioProvider).play(Sfx.fountainHeal);
@@ -141,6 +158,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     final m = engine.merchantOf(run);
     _cards ??= run.shopCards;
     _talisman ??= run.shopTalisman;
+    _weapon ??= run.shopWeapon;
     _sale ??= run.shopSale;
     final ctl = ref.read(runControllerProvider.notifier);
 
@@ -165,6 +183,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
       _RemoveItem() => run.shopRemoved,
       _UpgradeItem() => run.shopUpgraded,
       _TeaItem() => run.shopTea,
+      _WeaponItem() => _bought.contains(i) || (_forging && run.shopForged),
       _ => _bought.contains(i),
     };
 
@@ -177,6 +196,9 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
       _TalismanItem() =>
         '${text.talisman(_talisman!)}\n'
             '${t.talismanEffect(data.talisman(_talisman!).effect, text)}',
+      _WeaponItem() =>
+        '${text.weapon(_weapon!)}\n'
+            '${t.talismanEffect(data.weapon(_weapon!).levels[(_forging ? run.weaponLevel + 1 : 1) - 1].effect, text)}',
       _RemoveItem() => t.merchantRemove,
       _UpgradeItem() => t.merchantUpgrade(data.balance.fountainUpgrade),
       _TeaItem() => t.merchantTeaDetail(m.teaHeal),
@@ -286,6 +308,34 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                           child: _Panel(
                             selected: _selected is _TalismanItem,
                             child: TalismanTile(id: _talisman!, badgeSize: 40),
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (_weapon != null) ...[
+                      _Section(t.merchantWeapon),
+                      StaggerIn(
+                        index: 3,
+                        delay: const Duration(milliseconds: 200),
+                        child: _Ware(
+                          price: _price(const _WeaponItem()),
+                          affordable: affordable(const _WeaponItem()),
+                          selected: _selected is _WeaponItem,
+                          sold: used(const _WeaponItem()),
+                          onTap: () => _select(const _WeaponItem()),
+                          child: _Panel(
+                            selected: _selected is _WeaponItem,
+                            child: WeaponTile(
+                              id: _weapon!,
+                              level: run.weapon == _weapon && _forging
+                                  ? run.weaponLevel + 1
+                                  : run.weapon == _weapon
+                                  ? run.weaponLevel
+                                  : 1,
+                              from: _forging ? run.weaponLevel : null,
+                              style: run.style,
+                              artHeight: 90,
+                            ),
                           ),
                         ),
                       ),

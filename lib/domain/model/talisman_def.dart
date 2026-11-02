@@ -26,7 +26,12 @@ class TalismanEffect {
     this.thirdAttackDraw = 0,
     this.retainedGuard = 0,
     this.shopDiscountPct = 0,
+    this.attackStructure = 0,
+    this.guardPierce = 0,
+    this.heavyDamage = 0,
   });
+
+  static const none = TalismanEffect();
 
   /// Postura con la que se empieza cada combate.
   final Stance? startStance;
@@ -101,6 +106,46 @@ class TalismanEffect {
   /// Porcentaje de descuento en el mercader.
   final int shopDiscountPct;
 
+  // Los de las armas.
+
+  /// Estructura extra que quita cada ataque con daño (Bastón).
+  final int attackStructure;
+
+  /// Guardia del rival que atraviesan los ataques de carta (Espada).
+  final int guardPierce;
+
+  /// Daño extra de los ataques que cuestan 2 o más de Aliento (Pudao).
+  final int heavyDamage;
+
+  TalismanEffect operator +(TalismanEffect o) => TalismanEffect(
+    startStance: startStance ?? o.startStance,
+    firstTurnBreath: firstTurnBreath + o.firstTurnBreath,
+    structure: structure + o.structure,
+    enemyHp: enemyHp + o.enemyHp,
+    enemyStructure: enemyStructure + o.enemyStructure,
+    maxHp: maxHp + o.maxHp,
+    fountainHeal: fountainHeal + o.fountainHeal,
+    winHeal: winHeal + o.winHeal,
+    deflectBreath: deflectBreath + o.deflectBreath,
+    formHeal: formHeal + o.formHeal,
+    stanceGuard: stanceGuard + o.stanceGuard,
+    dingbuDiscount: dingbuDiscount + o.dingbuDiscount,
+    winJade: winJade + o.winJade,
+    firstCardDiscount: firstCardDiscount + o.firstCardDiscount,
+    breakDraw: breakDraw + o.breakDraw,
+    deflectDamage: deflectDamage + o.deflectDamage,
+    turnBreath: turnBreath + o.turnBreath,
+    handSize: handSize + o.handSize,
+    guardKeepPct: guardKeepPct + o.guardKeepPct,
+    breakDamage: breakDamage + o.breakDamage,
+    thirdAttackDraw: thirdAttackDraw + o.thirdAttackDraw,
+    retainedGuard: retainedGuard + o.retainedGuard,
+    shopDiscountPct: shopDiscountPct + o.shopDiscountPct,
+    attackStructure: attackStructure + o.attackStructure,
+    guardPierce: guardPierce + o.guardPierce,
+    heavyDamage: heavyDamage + o.heavyDamage,
+  );
+
   /// Se aplica al empezar el combate (para la animación de aviso).
   bool get atStart =>
       startStance != null ||
@@ -135,6 +180,9 @@ class TalismanEffect {
     thirdAttackDraw: j['thirdAttackDraw'] as int? ?? 0,
     retainedGuard: j['retainedGuard'] as int? ?? 0,
     shopDiscountPct: j['shopDiscountPct'] as int? ?? 0,
+    attackStructure: j['attackStructure'] as int? ?? 0,
+    guardPierce: j['guardPierce'] as int? ?? 0,
+    heavyDamage: j['heavyDamage'] as int? ?? 0,
   );
 }
 

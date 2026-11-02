@@ -1,0 +1,25 @@
+{
+  "weapons": [
+    { "id": "gun", "hanzi": "棍", "pinyin": "Gùn", "path": "crane",
+      "pathBonus": { "structure": 3 },
+      "levels": [
+        { "effect": { "attackStructure": 0 }, "cards": ["gun_sao", "gun_ge"] },
+        { "effect": { "enemyStructure": 1 }, "cards": ["gun_tiao"] },
+        { "effect": { "enemyStructure": 2, "attackStructure": 1 }, "cards": ["gun_wuhua"] }
+      ] },
+    { "id": "jian", "hanzi": "剑", "pinyin": "Jiàn", "path": "snake",
+      "pathBonus": { "guardPierce": 2 },
+      "levels": [
+        { "effect": { "guardPierce": 2 }, "cards": ["jian_ci", "jian_dian"] },
+        { "effect": { "guardPierce": 2, "deflectDamage": 2 }, "cards": ["jian_jie"] },
+        { "effect": { "guardPierce": 3, "deflectDamage": 3 }, "cards": ["jian_chuanxin"] }
+      ] },
+    { "id": "pudao", "hanzi": "朴刀", "pinyin": "Pǔdāo", "path": "tiger",
+      "pathBonus": { "breakDamage": 4 },
+      "levels": [
+        { "effect": { "heavyDamage": 3 }, "cards": ["pudao_pi", "pudao_lan"] },
+        { "effect": { "heavyDamage": 4 }, "cards": ["pudao_kan"] },
+        { "effect": { "heavyDamage": 5 }, "cards": ["pudao_chantou"] }
+      ] }
+  ]
+}

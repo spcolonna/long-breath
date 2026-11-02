@@ -13,7 +13,7 @@ void main() {
   final data = loadGameDataFromDir();
 
   test('cartas: 12 iniciales, 8 generales y las propias de cada camino', () {
-    expect(data.cards.length, 46); // definiciones únicas
+    expect(data.cards.length, 58); // definiciones únicas (12 de armas)
     expect(data.starterDeck.length, 12);
     expect(data.cards.values.where((c) => c.pool == 'reward').length, 8);
     const own = {Style.tiger: 10, Style.snake: 10, Style.crane: 10};
@@ -22,6 +22,30 @@ void main() {
           reason: s.name);
     }
     expect(data.rewardPool.length, 38);
+  });
+
+  test('armas: 3, con 3 niveles y sus cartas propias', () {
+    expect(data.weapons.keys, ['gun', 'jian', 'pudao']);
+    expect({for (final w in data.weapons.values) w.path}, hasLength(3),
+        reason: 'cada una afín a un camino distinto');
+    for (final w in data.weapons.values) {
+      expect(w.maxLevel, 3, reason: w.id);
+      final cards = w.cardsUpTo(3);
+      expect(cards.toSet(), hasLength(cards.length), reason: w.id);
+      expect(cards, hasLength(4), reason: w.id);
+      for (final id in cards) {
+        expect(data.card(id).pool, w.id, reason: id);
+      }
+      expect(
+        data.cards.values.where((c) => c.pool == w.id).map((c) => c.id),
+        unorderedEquals(cards),
+        reason: 'toda carta del arma figura en un nivel',
+      );
+    }
+    expect(data.rewardPoolFor(Style.crane, weapon: 'gun', weaponLevel: 1),
+        hasLength(20));
+    expect(data.rewardPoolFor(Style.crane, weapon: 'gun', weaponLevel: 3),
+        hasLength(22));
   });
 
   test('las cartas de cada camino solo le salen a ese camino', () {

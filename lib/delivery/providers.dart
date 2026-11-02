@@ -51,6 +51,17 @@ final cardArtProvider = FutureProvider<Set<String>>((ref) async {
   };
 });
 
+/// Ids de las armas que tienen imagen (`assets/art/weapons/<id>.webp`).
+/// Las que no, se dibujan por código.
+final weaponArtProvider = FutureProvider<Set<String>>((ref) async {
+  final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+  return {
+    for (final a in manifest.listAssets())
+      if (a.startsWith('assets/art/weapons/'))
+        a.split('/').last.replaceAll('.webp', ''),
+  };
+});
+
 final combatEngineProvider = Provider<CombatEngine>(
   (ref) => CombatEngine(ref.watch(dataProvider)),
 );

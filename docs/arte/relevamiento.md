@@ -21,6 +21,7 @@ Actualizado: 2026-10-11.
 | Victoria | `wolongding/map_bg.png` | el de la etapa 1 |
 | Enemigo | `enemies/<art>.png` | `placeholder.png` |
 | Héroe | `player/hero_<camino>.png` | vacío |
+| Arma | `weapons/<arma>.png` (capa en la mano del héroe) | dibujada por código |
 
 Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 

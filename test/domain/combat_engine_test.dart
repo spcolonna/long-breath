@@ -22,6 +22,9 @@ CombatState setup(
   List<String>? forms,
   List<String> talismans = const [],
   List<String> awakenings = const [],
+  String? weapon,
+  int weaponLevel = 1,
+  int pico = 0,
 }) => engine
     .start(
       deck: [
@@ -35,6 +38,9 @@ CombatState setup(
       forms: forms,
       talismans: talismans,
       awakenings: awakenings,
+      weapon: weapon,
+      weaponLevel: weaponLevel,
+      pico: pico,
     )
     .state;
 
@@ -1282,6 +1288,52 @@ void main() {
       final last = play(s, 'gongbu_chongquan');
       expect(last.events.whereType<Victory>(), hasLength(1));
       expect(last.state.phase, CombatPhase.won);
+    });
+  });
+
+  group('armas', () {
+    test('pudao: los ataques de 2 o más de Aliento pegan más', () {
+      final deck = ['deng_tui', 'tan_tui', ...filler];
+      final plain = setup(deck);
+      final armed = setup(deck, weapon: 'pudao');
+      int dmg(CombatState s, String id) =>
+          engine.preview(s, uidOf(s, id)).damage;
+      expect(dmg(armed, 'deng_tui'), dmg(plain, 'deng_tui') + 3);
+      expect(dmg(armed, 'tan_tui'), dmg(plain, 'tan_tui'),
+          reason: 'cuesta 1: no es un golpe pesado');
+    });
+
+    test('bastón: el rival empieza con menos Estructura y cada ataque quita más',
+        () {
+      final deck = ['tan_tui', 'ge_dang', ...filler];
+      final plain = setup(deck);
+      final armed = setup(deck, weapon: 'gun', weaponLevel: 3);
+      expect(armed.enemy.structure, plain.enemy.structure - 2);
+      int str(CombatState s) => engine.preview(s, uidOf(s, 'tan_tui')).structure;
+      expect(str(armed), str(plain) + 1);
+      expect(armed.weapon, 'gun');
+      expect(armed.weaponLevel, 3);
+    });
+
+    test('espada: los ataques atraviesan la Guardia del rival sin gastarla', () {
+      final deck = ['tan_tui', ...filler];
+      final plain = setup(deck, pico: 3);
+      expect(plain.enemy.guard, 3, reason: 'el Pico 3 lo cubre');
+      final hitPlain = play(plain, 'tan_tui');
+      final armed = setup(deck, pico: 3, weapon: 'jian');
+      final hitArmed = play(armed, 'tan_tui');
+      int absorbed(CombatResult r) =>
+          r.events.whereType<EnemyDamaged>().first.absorbed;
+      expect(absorbed(hitPlain), 3);
+      expect(absorbed(hitArmed), 1, reason: 'atraviesa 2 de 3');
+      expect(hitArmed.events.whereType<WeaponTriggered>(), isNotEmpty);
+    });
+
+    test('el bonus de camino solo lo recibe el camino afín', () {
+      final deck = ['tan_tui', ...filler];
+      final crane = setup(deck, weapon: 'gun');
+      final tiger = setup(deck, weapon: 'gun', style: Style.tiger);
+      expect(crane.player.maxStructure, tiger.player.maxStructure + 3);
     });
   });
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../domain/model/enums.dart';
 import '../theme.dart';
 import 'juice.dart';
+import 'weapon_art.dart';
 import '../feel.dart';
 
 String heroAsset(Style? s) => 'assets/art/player/hero_${s?.name ?? 'novice'}.webp';
@@ -15,6 +16,7 @@ String heroAsset(Style? s) => 'assets/art/player/hero_${s?.name ?? 'novice'}.web
 /// Respira en reposo, avanza al golpear ([strikeKey]), se sacude con un
 /// destello rojo al recibir daño ([hurtKey]), brilla al ganar Guardia
 /// ([guardKey]), festeja al ganar ([victory]) y cae al perder ([defeated]).
+/// Con [weapon], la lleva en la mano adelantada y la blande al golpear.
 class HeroSprite extends StatefulWidget {
   const HeroSprite({
     super.key,
@@ -27,6 +29,8 @@ class HeroSprite extends StatefulWidget {
     this.defeated = false,
     this.glyph,
     this.aura = 0,
+    this.weapon,
+    this.weaponLevel = 0,
   });
 
   final Style? style;
@@ -43,6 +47,10 @@ class HeroSprite extends StatefulWidget {
   /// Cuánto creció el aura con el cultivo (0 = recién llegado, 1 = el
   /// reino más alto). Solo en la pantalla de inicio.
   final double aura;
+
+  /// Arma en la mano y su nivel (la borla y el brillo).
+  final String? weapon;
+  final int weaponLevel;
 
   @override
   State<HeroSprite> createState() => _HeroSpriteState();
@@ -122,6 +130,34 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
         // Victoria: un salto corto. Derrota: se hunde y pierde el color.
         final hop = widget.victory ? -math.sin(math.pi * math.min(1, _end.value * 1.6)) * 26 : 0.0;
         final fall = widget.defeated ? e : 0.0;
+        // El arma va dentro del cuerpo: hereda el paso, el retroceso y los
+        // filtros, y además se blande al golpear.
+        Widget body = KeyedSubtree(key: _body, child: child!);
+        final weapon = widget.weapon;
+        if (weapon != null) {
+          final shape = weaponShapeOf(weapon);
+          final len = h * shape.length;
+          body = Stack(
+            clipBehavior: Clip.none,
+            children: [
+              body,
+              Positioned(
+                left: w * heroHand.dx - len / 6,
+                top: h * heroHand.dy - len * shape.grip,
+                child: Transform.rotate(
+                  angle: shape.angle + 0.7 * s + 0.04 * (idle - 0.5),
+                  alignment: Alignment(0, shape.grip * 2 - 1),
+                  child: WeaponArt(
+                    id: weapon,
+                    level: widget.weaponLevel,
+                    height: len,
+                    sway: ((idle - 0.5) * 2 - s).clamp(-1.0, 1.0),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
         return SizedBox(
           width: w,
           height: h,
@@ -198,7 +234,7 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
                       flash > 0
                           ? Palette.lacquer.withValues(alpha: flash)
                           : null,
-                      KeyedSubtree(key: _body, child: child!),
+                      body,
                     ),
                   ),
                 ),

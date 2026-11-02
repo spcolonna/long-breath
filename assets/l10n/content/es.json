@@ -153,7 +153,19 @@
     "he_ding": "Corona de la grulla",
     "bai_he_liang_chi": "La grulla blanca abre las alas",
     "he_zhuo": "Picotazo de la grulla",
-    "he_mian": "La grulla duerme"
+    "he_mian": "La grulla duerme",
+    "gun_sao": "Barrido bajo",
+    "gun_ge": "Bastón que cruza",
+    "gun_tiao": "Bastón que levanta",
+    "gun_wuhua": "Molinete del bastón",
+    "jian_ci": "Estocada",
+    "jian_dian": "Punta que pica",
+    "jian_jie": "Corte que intercepta",
+    "jian_chuanxin": "Espada que atraviesa",
+    "pudao_pi": "Tajo que parte",
+    "pudao_lan": "Hoja que ataja",
+    "pudao_kan": "Hachazo de pudao",
+    "pudao_chantou": "Hoja que envuelve la cabeza"
   },
   "enemies": {
     "dummy": {
@@ -488,6 +500,11 @@
     "pluma": "Pluma de la Grulla",
     "abaco": "Ábaco del Mercader",
     "manga": "Manga Ancha"
+  },
+  "weapons": {
+    "gun": { "name": "Bastón", "text": "Madera de fresno, largo como un hombre. Barre bajo y no deja pie firme." },
+    "jian": { "name": "Espada", "text": "Hoja recta de doble filo. Busca el hueco en la guardia y entra." },
+    "pudao": { "name": "Pudao", "text": "Mango largo y hoja ancha, arma de campesinos. Lenta, pero lo que toca se parte." }
   },
   "realms": {
     "lianqi": { "name": "Aliento templado", "text": "La escuela recién aprende a respirar con vos." },

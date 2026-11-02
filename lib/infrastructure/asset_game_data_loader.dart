@@ -15,6 +15,7 @@ Future<GameData> loadGameDataFromAssets() async {
     enemies: await read('enemies.json'),
     balance: await read('game_balance.json'),
     talismans: await read('talismans.json'),
+    weapons: await read('weapons.json'),
     events: await read('events.json'),
   );
 }

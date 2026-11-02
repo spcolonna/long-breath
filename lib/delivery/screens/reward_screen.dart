@@ -21,6 +21,7 @@ import '../widgets/juice.dart';
 import '../widgets/lotus.dart';
 import 'home_screen.dart';
 import 'talisman_screen.dart';
+import '../widgets/weapon_widgets.dart';
 import '../feel.dart';
 import '../widgets/press.dart';
 
@@ -173,6 +174,14 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
         options: _run.talismanOptions,
         onChosen: (id) {
           ref.read(runControllerProvider.notifier).chooseRewardTalisman(id);
+          _leave();
+        },
+      ),
+      RewardKind.weapon => WeaponChoice(
+        top: stamp,
+        options: _run.weaponOptions,
+        onChosen: (id) {
+          ref.read(runControllerProvider.notifier).chooseRewardWeapon(id);
           _leave();
         },
       ),

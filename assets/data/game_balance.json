@@ -37,7 +37,7 @@
   "rewards": { "choices": 3, "pools": ["reward", "tiger", "snake", "crane"], "talismanChoices": 3 },
   "fountain": { "heal": 20, "upgrade": 3 },
   "jade": { "common": 14, "elite": 0, "spread": 6 },
-  "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25 },
+  "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25, "weapon": 50, "weaponForge": 60 },
   "master": { "forms": 2 },
   "cultivation": {
     "perFloor": 2, "perStage": 10, "win": 25, "perPico": 10,
@@ -53,9 +53,9 @@
   },
   "combatRewards": {
     "weights": [
-      { "cards": 55, "jade": 15, "lotus": 12, "upgrade": 8, "tea": 8, "talisman": 2 },
-      { "cards": 50, "jade": 14, "lotus": 14, "upgrade": 10, "tea": 9, "talisman": 3 },
-      { "cards": 45, "jade": 14, "lotus": 15, "upgrade": 12, "tea": 10, "talisman": 4 }
+      { "cards": 55, "jade": 15, "lotus": 12, "upgrade": 8, "tea": 8, "talisman": 2, "weapon": 1 },
+      { "cards": 50, "jade": 14, "lotus": 14, "upgrade": 10, "tea": 9, "talisman": 3, "weapon": 1 },
+      { "cards": 45, "jade": 14, "lotus": 15, "upgrade": 12, "tea": 10, "talisman": 4, "weapon": 1 }
     ],
     "jade": [20, 30, 40], "teaPct": [15, 20, 25], "talismanChoices": 2, "maxWithoutCards": 2
   },
@@ -146,7 +146,7 @@
         "scenes": ["pasarela", "escalera", "patio_colgado"],
         "lights": ["alba", "niebla", "ocaso"],
         "enemyMods": { "enemyHp": 14, "enemyDamage": 9 },
-        "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20 }
+        "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20, "weapon": 60, "weaponForge": 75 }
       },
       {
         "id": "wolongding", "hanzi": "卧龙顶", "pinyin": "Wò Lóng Dǐng",
@@ -166,7 +166,7 @@
         "scenes": ["ventisquero", "glaciar", "paso_nevado"],
         "lights": ["alba", "niebla", "ocaso"],
         "enemyMods": { "enemyHp": 22, "enemyDamage": 16 },
-        "merchant": { "cards": 4, "card": 30, "talisman": 85, "rareTalisman": true, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25 }
+        "merchant": { "cards": 4, "card": 30, "talisman": 85, "rareTalisman": true, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25, "weapon": 75, "weaponForge": 90 }
       }
     ]
   }

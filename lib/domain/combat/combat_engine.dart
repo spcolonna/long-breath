@@ -140,6 +140,8 @@ class CombatEngine {
     int? maxHp,
     Iterable<String>? forms,
     List<String> talismans = const [],
+    String? weapon,
+    int weaponLevel = 1,
     List<String> awakenings = const [],
     List<String> waves = const [],
     // Con [together], los de [waves] entran junto al primero (no en oleadas).
@@ -158,7 +160,13 @@ class CombatEngine {
         (stage < b.stages.length ? b.stages[stage].enemyMods : const PicoDef());
     int pct(int v, int p, [int extra = 0]) =>
         (v * p * (100 + extra) / 10000).round();
-    final effects = [for (final id in talismans) data.talisman(id).effect];
+    final wfx = weapon == null
+        ? null
+        : data.weapon(weapon).effectAt(weaponLevel, style);
+    final effects = [
+      for (final id in talismans) data.talisman(id).effect,
+      ?wfx,
+    ];
     int sum(int Function(TalismanEffect e) of) =>
         effects.fold(0, (a, e) => a + of(e));
     // En un grupo cada enemigo trae menos Vida: si no, el nodo dura el doble.
@@ -245,6 +253,9 @@ class CombatEngine {
             : 100,
       ),
       talismans: talismans,
+      weapon: weapon,
+      weaponLevel: weaponLevel,
+      weaponEffect: wfx,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath) + meta.firstTurnBreath,
       firstStrike: styleStats.firstStrike + aw.firstStrike,
       chain: styleStats.chain + aw.chain,
@@ -254,6 +265,7 @@ class CombatEngine {
     final events = <CombatEvent>[
       for (final id in talismans)
         if (data.talisman(id).effect.atStart) TalismanTriggered(id),
+      if (wfx != null && wfx.atStart) const WeaponTriggered(),
     ];
     _startPlayerTurn(d, events);
     return CombatResult(d.freeze(), events);
@@ -404,31 +416,54 @@ class CombatEngine {
     s.player.stance,
     (uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0) +
         _firstStrikeDiscount(def, s.attacksThisTurn, s.awakened) +
-        _firstCardDiscount(s.talismans, s.cardsThisTurn),
+        _firstCardDiscount(s.talismans, s.cardsThisTurn, s.weaponEffect),
   );
 
-  /// Suma un efecto de los talismanes del combate.
-  int _tal(List<String> ids, int Function(TalismanEffect e) of) =>
-      ids.fold(0, (a, id) => a + of(data.talisman(id).effect));
+  /// Lugar del arma entre los talismanes del combate.
+  static const _weaponSlot = '#weapon';
+
+  /// Los talismanes del combate y, si hay, el arma (que cuenta como uno).
+  List<String> _slots(List<String> ids, TalismanEffect? weapon) =>
+      weapon == null ? ids : [...ids, _weaponSlot];
+
+  TalismanEffect _fx(String id, TalismanEffect? weapon) =>
+      id == _weaponSlot ? weapon! : data.talisman(id).effect;
+
+  CombatEvent _trig(String id) =>
+      id == _weaponSlot ? const WeaponTriggered() : TalismanTriggered(id);
+
+  /// Suma un efecto de los talismanes del combate (y del arma).
+  int _tal(
+    List<String> ids,
+    int Function(TalismanEffect e) of, [
+    TalismanEffect? weapon,
+  ]) =>
+      ids.fold(0, (a, id) => a + of(data.talisman(id).effect)) +
+      (weapon == null ? 0 : of(weapon));
 
   /// Talismán Vacío: la primera carta del turno cuesta menos.
-  int _firstCardDiscount(List<String> talismans, int cards) =>
-      cards == 0 ? _tal(talismans, (e) => e.firstCardDiscount) : 0;
+  int _firstCardDiscount(
+    List<String> talismans,
+    int cards, [
+    TalismanEffect? weapon,
+  ]) =>
+      cards == 0 ? _tal(talismans, (e) => e.firstCardDiscount, weapon) : 0;
 
   /// Lo que cuesta el Paso en T (algunos talismanes lo abaratan).
   int dingbuCost(CombatState s) => math.max(
     0,
-    data.transition.cost - _tal(s.talismans, (e) => e.dingbuDiscount),
+    data.transition.cost -
+        _tal(s.talismans, (e) => e.dingbuDiscount, s.weaponEffect),
   );
 
   /// Talismán Cambio: cada cambio de postura da Guardia.
   void _stanceChanged(_Draft d, List<CombatEvent> events) {
     events.add(StanceChanged(d.stance));
-    for (final id in d.talismans) {
-      final g = data.talisman(id).effect.stanceGuard;
+    for (final id in _slots(d.talismans, d.weaponEffect)) {
+      final g = _fx(id, d.weaponEffect).stanceGuard;
       if (g <= 0) continue;
       d.guard += g;
-      events.add(TalismanTriggered(id));
+      events.add(_trig(id));
       events.add(GuardGained(g, d.guardHeight));
     }
   }
@@ -451,9 +486,11 @@ class CombatEngine {
     required int firstStrike,
     required int chain,
     AwakeningEffect awakened = AwakeningEffect.none,
+    int heavy = 0,
   }) {
     if (!def.type.isAttack || def.damage == 0) return 0;
-    return (attacks == 0 ? firstStrike : 0) +
+    return (def.cost >= 2 ? heavy : 0) +
+        (attacks == 0 ? firstStrike : 0) +
         (chain + def.chainDamage) * attacks +
         (retained ? def.retainedDamage + awakened.retainedDamage : 0);
   }
@@ -465,9 +502,11 @@ class CombatEngine {
     required int attacks,
     required bool retained,
     AwakeningEffect awakened = AwakeningEffect.none,
+    int perAttack = 0,
   }) {
     if (!def.type.isAttack) return 0;
-    return (def.chainStructure + awakened.chainStructure) * attacks +
+    return (def.damage > 0 ? perAttack : 0) +
+        (def.chainStructure + awakened.chainStructure) * attacks +
         (retained ? def.retainedStructure : 0) +
         (attacks == 0 ? awakened.firstStrikeStructure : 0);
   }
@@ -549,6 +588,7 @@ class CombatEngine {
       firstStrike: s.firstStrike,
       chain: s.chain,
       awakened: s.awakened,
+      heavy: _tal(s.talismans, (e) => e.heavyDamage, s.weaponEffect),
     );
     final (dmg, str) = _cardHit(
       def,
@@ -563,6 +603,7 @@ class CombatEngine {
         attacks: s.attacksThisTurn,
         retained: s.retained.contains(uid),
         awakened: s.awakened,
+        perAttack: _tal(s.talismans, (e) => e.attackStructure, s.weaponEffect),
       ),
     );
     final dealt = _enemyDamageTaken(
@@ -658,12 +699,12 @@ class CombatEngine {
       d.stance,
       (wasRetained ? d.retainedDiscount : 0) +
           _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened) +
-          _firstCardDiscount(d.talismans, d.cardsThisTurn),
+          _firstCardDiscount(d.talismans, d.cardsThisTurn, d.weaponEffect),
     );
     if (d.cardsThisTurn == 0) {
-      for (final id in d.talismans) {
-        if (data.talisman(id).effect.firstCardDiscount > 0) {
-          events.add(TalismanTriggered(id));
+      for (final id in _slots(d.talismans, d.weaponEffect)) {
+        if (_fx(id, d.weaponEffect).firstCardDiscount > 0) {
+          events.add(_trig(id));
         }
       }
     }
@@ -694,12 +735,14 @@ class CombatEngine {
         firstStrike: d.firstStrike,
         chain: d.chain,
         awakened: d.awakened,
+        heavy: _tal(d.talismans, (e) => e.heavyDamage, d.weaponEffect),
       ),
       _styleStructure(
         def,
         attacks: d.attacksThisTurn,
         retained: wasRetained,
         awakened: d.awakened,
+        perAttack: _tal(d.talismans, (e) => e.attackStructure, d.weaponEffect),
       ),
     );
     if (def.type.isAttack) {
@@ -711,10 +754,10 @@ class CombatEngine {
       }
       // Escama de la Serpiente: también.
       if (d.attacksThisTurn == 3) {
-        for (final id in d.talismans) {
-          final n = data.talisman(id).effect.thirdAttackDraw;
+        for (final id in _slots(d.talismans, d.weaponEffect)) {
+          final n = _fx(id, d.weaponEffect).thirdAttackDraw;
           if (n <= 0) continue;
-          events.add(TalismanTriggered(id));
+          events.add(_trig(id));
           _draw(d, n, events);
         }
       }
@@ -814,11 +857,11 @@ class CombatEngine {
   }
 
   void _talismansOnForm(_Draft d, List<CombatEvent> events) {
-    for (final id in d.talismans) {
-      final heal = data.talisman(id).effect.formHeal;
+    for (final id in _slots(d.talismans, d.weaponEffect)) {
+      final heal = _fx(id, d.weaponEffect).formHeal;
       if (heal <= 0) continue;
       final healed = math.min(heal, d.maxHp - d.hp);
-      events.add(TalismanTriggered(id));
+      events.add(_trig(id));
       if (healed > 0) {
         d.hp += healed;
         events.add(PlayerHealed(healed));
@@ -846,7 +889,15 @@ class CombatEngine {
     final covers =
         e.guardBlocks == null || type == null || type == e.guardBlocks;
     if (!covers && e.guard > 0 && taken > 0) events.add(const GuardBypassed());
-    final absorbed = covers ? math.min(e.guard, taken) : 0;
+    // Espada: los ataques de carta atraviesan parte de la Guardia, que no se
+    // gasta.
+    final pierce = type != null && type.isAttack
+        ? _tal(d.talismans, (x) => x.guardPierce, d.weaponEffect)
+        : 0;
+    if (covers && pierce > 0 && e.guard > 0 && taken > 0) {
+      events.add(const WeaponTriggered());
+    }
+    final absorbed = covers ? math.min(math.max(0, e.guard - pierce), taken) : 0;
     e.guard -= absorbed;
     taken -= absorbed;
     e.hp = math.max(0, e.hp - taken);
@@ -889,17 +940,17 @@ class CombatEngine {
     // Despertar del Tigre: desequilibrar roba.
     if (d.awakened.breakDraw > 0) _draw(d, d.awakened.breakDraw, events);
     // Talismán Quiebre: también roba.
-    for (final id in d.talismans) {
-      final n = data.talisman(id).effect.breakDraw;
+    for (final id in _slots(d.talismans, d.weaponEffect)) {
+      final n = _fx(id, d.weaponEffect).breakDraw;
       if (n <= 0) continue;
-      events.add(TalismanTriggered(id));
+      events.add(_trig(id));
       _draw(d, n, events);
     }
     // Garra del Tigre: el desequilibrio duele (y entra doble).
-    for (final id in d.talismans) {
-      final n = data.talisman(id).effect.breakDamage;
+    for (final id in _slots(d.talismans, d.weaponEffect)) {
+      final n = _fx(id, d.weaponEffect).breakDamage;
       if (n <= 0 || d.enemyDown) continue;
-      events.add(TalismanTriggered(id));
+      events.add(_trig(id));
       _hitEnemy(d, n, 0, events);
     }
     if (e.wrath > 0) {
@@ -1071,12 +1122,12 @@ class CombatEngine {
           stance.deflectBreathBonus +
           d.awakened.deflectBreath;
       var back = 0;
-      for (final id in d.talismans) {
-        final fx = data.talisman(id).effect;
+      for (final id in _slots(d.talismans, d.weaponEffect)) {
+        final fx = _fx(id, d.weaponEffect);
         if (fx.deflectBreath > 0) d.nextTurnBreathMod += fx.deflectBreath;
         back += fx.deflectDamage;
         if (fx.deflectBreath > 0 || fx.deflectDamage > 0) {
-          events.add(TalismanTriggered(id));
+          events.add(_trig(id));
         }
       }
       _hitEnemy(
@@ -1129,12 +1180,15 @@ class CombatEngine {
   void _startPlayerTurn(_Draft d, List<CombatEvent> events) {
     d.turn++;
     // Talismán Montaña: parte de la Guardia se queda (con su altura).
-    final keep = math.min(100, _tal(d.talismans, (e) => e.guardKeepPct));
+    final keep = math.min(
+      100,
+      _tal(d.talismans, (e) => e.guardKeepPct, d.weaponEffect),
+    );
     final kept = d.turn > 1 ? d.guard * keep ~/ 100 : 0;
     if (kept > 0) {
-      for (final id in d.talismans) {
-        if (data.talisman(id).effect.guardKeepPct > 0) {
-          events.add(TalismanTriggered(id));
+      for (final id in _slots(d.talismans, d.weaponEffect)) {
+        if (_fx(id, d.weaponEffect).guardKeepPct > 0) {
+          events.add(_trig(id));
         }
       }
     }
@@ -1142,11 +1196,11 @@ class CombatEngine {
     if (kept == 0) d.guardHeight = null;
     // Pluma de la Grulla: cada carta retenida cubre.
     if (d.retained.isNotEmpty) {
-      for (final id in d.talismans) {
-        final n = data.talisman(id).effect.retainedGuard;
+      for (final id in _slots(d.talismans, d.weaponEffect)) {
+        final n = _fx(id, d.weaponEffect).retainedGuard;
         if (n <= 0) continue;
         final g = n * d.retained.length;
-        events.add(TalismanTriggered(id));
+        events.add(_trig(id));
         d.guard += g;
         events.add(GuardGained(g, d.guardHeight));
       }
@@ -1323,6 +1377,9 @@ class _Draft {
     this.enemyDamagePct = 100,
     this.fistBonus = 0,
     this.talismans = const [],
+    this.weapon,
+    this.weaponLevel = 0,
+    this.weaponEffect,
     this.firstStrike = 0,
     this.chain = 0,
     this.retainedDiscount = 0,
@@ -1374,6 +1431,9 @@ class _Draft {
     enemyDamagePct: s.enemyDamagePct,
     fistBonus: s.fistBonus,
     talismans: s.talismans,
+    weapon: s.weapon,
+    weaponLevel: s.weaponLevel,
+    weaponEffect: s.weaponEffect,
     firstStrike: s.firstStrike,
     chain: s.chain,
     retainedDiscount: s.retainedDiscount,
@@ -1431,6 +1491,9 @@ class _Draft {
   final int enemyDamagePct;
   int fistBonus;
   final List<String> talismans;
+  final String? weapon;
+  final int weaponLevel;
+  final TalismanEffect? weaponEffect;
   final int firstStrike;
   final int chain;
   final int retainedDiscount;
@@ -1484,6 +1547,9 @@ class _Draft {
     enemyDamagePct: enemyDamagePct,
     fistBonus: fistBonus,
     talismans: talismans,
+    weapon: weapon,
+    weaponLevel: weaponLevel,
+    weaponEffect: weaponEffect,
     firstStrike: firstStrike,
     chain: chain,
     retainedDiscount: retainedDiscount,

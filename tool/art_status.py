@@ -49,7 +49,8 @@ def prompted(rel):
     if rel.startswith("enemies/"):
         name = os.path.splitext(os.path.basename(rel))[0]
         return re.search(rf"^###.*\(`{name}`,(?!.*hecho)", docs, re.M) is not None
-    return rel in docs or rel.replace("stages/", "") in docs
+    png = rel.replace(".webp", ".png")
+    return any(r in docs for r in (rel, png, rel.replace("stages/", "")))
 
 
 def main():
@@ -119,6 +120,10 @@ def main():
     for f in [c["id"] for c in (cards["cards"] if isinstance(cards, dict) else cards)]:
         add("cartas", f"cards/{f}.webp", f"ilustración de {f}",
             "hanzi de marca de agua")
+    for w in json.loads(read("assets/data/weapons.json"))["weapons"]:
+        add("armas", f"weapons/{w['id']}.webp",
+            f"arma {w['id']} (capa en la mano del héroe)",
+            "arma dibujada por código")
     add("npc", "npc/master.webp", "maestro", "vacío")
     add("npc", "npc/merchant.webp", "mercader", "vacío")
     for p in ("novice", "tiger", "snake", "crane"):

@@ -540,7 +540,9 @@ void main() {
       r = run.finishCombat(r, won: true, hp: 30);
       expect(r.phase, RunPhase.talisman);
       expect(r.talismanOptions, hasLength(3));
-      expect(r.rewardOptions, hasLength(3), reason: 'la recompensa ya espera');
+      expect(r.rewardKind, RewardKind.weapon,
+          reason: 'sin arma, el élite la garantiza después del talismán');
+      expect(r.weaponOptions, hasLength(3));
       expect(() => run.chooseTalisman(r, 'nope'), throwsStateError);
       final vida = r.copyWith(talismanOptions: ['vida', 'roca', 'arco']);
       r = run.chooseTalisman(vida, 'vida');
@@ -1127,5 +1129,110 @@ void main() {
     final next = run.available(r).map(r.node).toList();
     expect(next.single.enemy, isNotNull);
     expect(next.single.type, NodeType.combat);
+  });
+
+  group('armas', () {
+    RunState rewarded(RunState r) => run.finishCombat(
+      run.enter(r.copyWith(currentNode: 'n4'), 'n5'),
+      won: true,
+      hp: 30,
+    );
+
+    test('el primer élite da a elegir arma, la del camino primero', () {
+      var r = rewarded(fresh(3).copyWith(style: Style.snake));
+      r = run.chooseTalisman(r, r.talismanOptions.first);
+      expect(r.rewardKind, RewardKind.weapon);
+      expect(r.weaponOptions, hasLength(3));
+      expect(r.weaponOptions.first, 'jian');
+      expect(() => run.chooseRewardWeapon(r, 'nope'), throwsStateError);
+      r = run.chooseRewardWeapon(r, 'pudao');
+      expect(r.weapon, 'pudao');
+      expect(r.weaponLevel, 1);
+      expect(r.phase, isNot(RunPhase.reward));
+    });
+
+    test('con arma, el élite da otro premio y el botín de arma la templa', () {
+      final armed = run.equipWeapon(fresh(3), 'gun');
+      final r = rewarded(armed);
+      expect(r.rewardKind, isNot(RewardKind.weapon));
+      final forge = r.copyWith(
+        phase: RunPhase.reward,
+        rewardKind: RewardKind.weapon,
+        weaponOptions: ['gun'],
+      );
+      final up = run.chooseRewardWeapon(forge, 'gun');
+      expect(up.weaponLevel, 2);
+      expect(run.canGainWeapon(run.equipWeapon(up, 'gun', level: 3)), isFalse);
+    });
+
+    test('las cartas del arma salen en el botín según el nivel', () {
+      final r = run.equipWeapon(fresh(3), 'jian', level: 2);
+      final ids = {
+        for (var seed = 0; seed < 60; seed++)
+          ...run.collectReward(r.copyWith(phase: RunPhase.reward)).deck.map(
+                (c) => c.cardId,
+              ),
+      };
+      expect(ids, isNotEmpty);
+      final pool = run.data.rewardPoolFor(
+        r.style,
+        weapon: 'jian',
+        weaponLevel: 2,
+      ).map((c) => c.id);
+      expect(pool, containsAll(['jian_ci', 'jian_dian', 'jian_jie']));
+      expect(pool, isNot(contains('jian_chuanxin')));
+    });
+
+    test('el mercader vende un arma sin arma y la templa con arma', () {
+      const shop = MapNodeDef(id: 'm', type: NodeType.merchant, next: []);
+      RunState visit(RunState r) =>
+          run.enter(r.copyWith(jade: 200, map: [shop]), 'm');
+      var r = visit(fresh(5));
+      expect(r.shopWeapon, isNotNull);
+      final price = run.merchantOf(r).weapon;
+      r = run.buyWeapon(r);
+      expect(r.weapon, isNotNull);
+      expect(r.jade, 200 - price);
+      expect(() => run.buyWeapon(r), throwsStateError);
+
+      var f = visit(run.equipWeapon(fresh(5), 'gun'));
+      expect(f.shopWeapon, 'gun');
+      f = run.buyForge(f);
+      expect(f.weaponLevel, 2);
+      expect(() => run.buyForge(f), throwsStateError, reason: 'una vez');
+    });
+
+    test('el maestro templa hasta el nivel 2', () {
+      var r = run.equipWeapon(fresh(3), 'pudao').copyWith(
+        phase: RunPhase.master,
+      );
+      r = run.masterForge(r);
+      expect(r.weaponLevel, 2);
+      expect(r.phase, RunPhase.map);
+      expect(
+        () => run.masterForge(r.copyWith(phase: RunPhase.master)),
+        throwsStateError,
+      );
+    });
+
+    test('el arma se guarda con la subida', () {
+      final r = run.equipWeapon(fresh(3), 'jian', level: 2).copyWith(
+        weaponOptions: ['jian'],
+        shopWeapon: 'jian',
+        shopForged: true,
+      );
+      final back = RunState.fromJson(
+        jsonDecode(jsonEncode(r.toJson())) as Map<String, dynamic>,
+      );
+      expect(back.weapon, 'jian');
+      expect(back.weaponLevel, 2);
+      expect(back.weaponOptions, ['jian']);
+      expect(back.shopWeapon, 'jian');
+      expect(back.shopForged, isTrue);
+      final old = RunState.fromJson(
+        jsonDecode(jsonEncode(fresh(3).toJson())) as Map<String, dynamic>,
+      );
+      expect(old.weapon, isNull);
+    });
   });
 }

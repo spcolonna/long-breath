@@ -17,6 +17,7 @@ import '../widgets/juice.dart';
 import '../widgets/press.dart';
 import '../widgets/npc_portrait.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/weapon_widgets.dart';
 import '../widgets/hp_count.dart';
 import '../feel.dart';
 import '../widgets/node_kit.dart';
@@ -276,6 +277,48 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                         ),
                       ),
                     ),
+                    if (run.weapon != null && engine.canForge(run)) ...[
+                      const SizedBox(height: 8),
+                      SizedBox(
+                        height: 52,
+                        child: OutlinedButton.icon(
+                          onPressed: busy || !engine.canMasterForge(run)
+                              ? null
+                              : () => _finish(
+                                  t.weaponForged(
+                                    text.weapon(run.weapon!),
+                                    run.weaponLevel + 1,
+                                  ),
+                                  ctl.masterForge,
+                                ),
+                          icon: WeaponBadge(
+                            id: run.weapon!,
+                            level: run.weaponLevel,
+                            size: 24,
+                          ),
+                          label: Text(
+                            t.masterForge(
+                              text.weapon(run.weapon!),
+                              run.weaponLevel,
+                              run.weaponLevel + 1,
+                            ),
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      if (!engine.canMasterForge(run))
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            t.masterForgeMax,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Palette.textDim,
+                            ),
+                          ),
+                        ),
+                    ],
                   ],
                 ),
               ),

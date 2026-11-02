@@ -23,6 +23,7 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/ink_reveal.dart';
 import '../widgets/juice.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/weapon_widgets.dart';
 import '../widgets/hp_count.dart';
 import 'map/map_layout.dart';
 import 'map/map_node.dart';
@@ -592,7 +593,8 @@ class _RunHeader extends StatelessWidget {
               label: Text('${run.deck.length}'),
             ),
           ),
-          // Los talismanes de la subida; tocarlos explica qué hace cada uno.
+          // El arma y los talismanes de la subida; tocarlos explica qué hacen.
+          WeaponChip(id: run.weapon, level: run.weaponLevel, style: run.style),
           Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
           _Altitude(floor: floor, floors: floors),
         ],

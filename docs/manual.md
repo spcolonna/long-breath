@@ -193,6 +193,14 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader. Los **de camino** solo le salen al discípulo de ese camino (en el élite, los eventos de talismán raro y el mercader de la Cumbre). Los **del mercader** solo los vende él: la mitad de las veces trae uno de esos en lugar del talismán de siempre, al mismo precio.
 
+   **Armas 兵器.** Una sola por subida, con tres niveles. **El primer élite que vencés sin arma te deja elegir una de las tres** (la afín a tu camino va primero), después de su talismán. Cada arma suma sus técnicas al botín de cartas (2 en el nivel I y una más en el II y en el III), da un efecto propio y un extra a su camino afín. Se templa (sube un nivel) en el botín sorpresa, con el mercader o con el maestro (este, solo hasta el II). En combate el héroe la lleva en la mano y la blande al golpear; la borla muestra el nivel (jade, cobalto, oro, y el III brilla). Tocar su sello en el mapa o en el combate explica qué hace.
+
+   | Arma | Nivel I | Nivel II | Nivel III | Camino afín |
+   |---|---|---|---|---|
+   | 棍 Bastón | Barrido bajo, Bastón que cruza | Bastón que levanta; el rival empieza con 1 de Estructura menos | Molinete del bastón; 2 de Estructura menos y cada ataque quita +1 de Estructura | Grulla: +3 de Estructura máxima |
+   | 剑 Espada | Estocada, Punta que pica; los ataques atraviesan 2 de la Guardia del rival (sin gastarla) | Corte que intercepta; atraviesan 2 y cada desvío devuelve 2 | Espada que atraviesa; atraviesan 3 y el desvío devuelve 3 | Serpiente: atraviesa 2 más |
+   | 朴刀 Pudao | Tajo que parte, Hoja que ataja; los ataques de 2 o más de Aliento pegan +3 | Hachazo de pudao; +4 | Hoja que envuelve la cabeza; +5 | Tigre: desequilibrar pega un golpe de 4, que entra doble |
+
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
 8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
    - **Botín sorpresa 赏:** al ganar un combate aparece un cofre de laca que se abre solo (o al tocarlo) y estampa qué trae. No se sabe antes de pelear:
@@ -205,8 +213,9 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
      | 炼 Temple | Una carta del mazo a elección gana +3 | 8% / 10% / 12% |
      | 茶 Té de montaña | Cura 15% / 20% / 25% de la Vida máxima | 8% / 9% / 10% |
      | 符 Talismán | Elegís 1 de 2 | 2% / 3% / 4% |
+     | 兵 Arma | Sin arma, elegís 1 de 3; con arma, la templás | 1% / 1% / 1% |
 
-     Reglas: el jefe y el enemigo que se escapa siempre dejan pergaminos; el élite da su talismán y después un botín que no es talismán; con la Vida llena el té se cambia por jade, y sin cartas para templar el temple se cambia por pergaminos; nunca hay más de 2 botines seguidos sin pergaminos. El jade de siempre del combate y su loto se muestran arriba, aparte del cofre.
+     Reglas: el jefe y el enemigo que se escapa siempre dejan pergaminos; el élite da su talismán y después un botín que no es talismán (si todavía no tenés arma, el arma); con el arma en el nivel III el botín de arma se cambia por jade; con la Vida llena el té se cambia por jade, y sin cartas para templar el temple se cambia por pergaminos; nunca hay más de 2 botines seguidos sin pergaminos. El jade de siempre del combate y su loto se muestran arriba, aparte del cofre.
 9. **Mercader ambulante** 商: no tiene lugar en el mapa. Se cruza en el camino después de la recompensa, más o menos cada 3 combates ganados (2 a 4), y si en la etapa todavía no apareció, después del élite. Nunca después del jefe. Vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. **Más arriba cobra más y trae otras cosas:**
 
    | Etapa | Cartas | Carta | Talismán | Quitar | Mejorar | Té |
@@ -215,8 +224,10 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Monasterio Colgado | 4 | 25 | común, 60 | 35 | 30 | 20 (+20 Vida) |
    | Cumbre del Dragón Dormido | 4 | 30 | **raro**, 85 | 40 | 35 | 25 (+25 Vida) |
 
+   **Armería:** si no tenés arma, vende una (50 / 60 / 75 de jade según la etapa; la mitad de las veces, la de tu camino); si tenés, la templa un nivel (60 / 75 / 90), una vez por visita.
+
    Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
-10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3.
+10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3 **o** templar tu arma (solo hasta el nivel II).
 11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera toda la Vida)** y aparece la siguiente. Antes de los despertares se ve el **Botín de la etapa**: combates ganados, jade y semillas de loto, contados de a uno.
 12. **Fin:** ganás al vencer al **Dragón Dormido**, jefe de la tercera etapa. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial. El registro cuenta el piso de toda la subida (por ejemplo "Piso 14 de 27").
 

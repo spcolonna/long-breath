@@ -208,7 +208,7 @@ Future<void> main(List<String> args) async {
       for (final p in selected) {
         logs[p] = await simulate(cfg, p, runs, seed, style: style);
       }
-      _report(logs);
+      _report(logs, raw.build());
   }
   print('_${(sw.elapsedMilliseconds / 1000).toStringAsFixed(0)} s de cómputo_');
 }
@@ -435,7 +435,7 @@ Future<void> _cultivation(
   ]);
 }
 
-void _report(Map<String, List<RunLog>> logs) {
+void _report(Map<String, List<RunLog>> logs, GameData data) {
   print('## Runs');
   table([
     'perfil', 'victoria', 'llega al jefe final', 'piso medio de derrota',
@@ -482,6 +482,24 @@ void _report(Map<String, List<RunLog>> logs) {
           '${pct(l.where((r) => r.style == s && r.won).length, l.where((r) => r.style == s).length)} '
               '(${l.where((r) => r.style == s).length})',
         '${l.where((r) => r.style == null).length}',
+      ],
+  ]);
+
+  print('## Victoria por arma (con la que terminó y nivel medio)');
+  final weaponIds = [null, ...data.weapons.keys];
+  table(['perfil', for (final w in weaponIds) w ?? 'sin arma'], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      [
+        p,
+        for (final w in weaponIds)
+          () {
+            final with_ = l.where((r) => r.weapon == w).toList();
+            final lv = with_.isEmpty
+                ? 0
+                : with_.fold(0, (a, r) => a + r.weaponLevel) / with_.length;
+            return '${pct(with_.where((r) => r.won).length, with_.length)} '
+                '(${with_.length}, nv ${lv.toStringAsFixed(1)})';
+          }(),
       ],
   ]);
 

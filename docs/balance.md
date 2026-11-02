@@ -580,3 +580,16 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
 
   \* Ese 14% venía del bot, que se trababa yendo y viniendo entre los dos objetivos. Ahora no apunta dos veces seguidas.
 
+
+### 3p. Armas (02/11/2026)
+`dart run tool/simulate.dart --runs 500 --profile promedio,experto --difficulty normal` (nueva tabla «Victoria por arma»). La base sin armas se mide con una copia de `assets/data` con `weapons.json` vacío (`--data <dir>`).
+
+| | sin armas | con armas |
+|---|---|---|
+| promedio | 31% | 32% |
+| experto | 66% | 66% |
+
+- La primera versión subía el promedio a 51%. Casi todo venía del **extra de camino** (con la Escama o el Quiebre de la Grulla como extra valía como un talismán raro gratis: +8 pp) y del bastón, que con Estructura en cada ataque desequilibraba de más. Las técnicas solas no suben la victoria.
+- Ajustes: los extras pasaron a ser chicos (Grulla +3 Estructura, Serpiente atraviesa 2 más, Tigre golpe de 4 al desequilibrar), el bastón quita Estructura de entrada y recién en el III por ataque, la espada atraviesa 2/2/3, y el pudao pega +3/+4/+5 en los golpes de 2 o más.
+- Templado: el botín de arma bajó a 1% y la armería templa por 60/75/90; el maestro templa solo hasta el II. Nivel medio al terminar: 2,1 (promedio) y 2,6 (experto).
+- Por arma (promedio): bastón 41%, espada 31%, pudao 32%; el bastón queda arriba sobre todo porque lo eligen las Grullas, que con él suben de 29% a 31%.

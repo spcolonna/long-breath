@@ -22,6 +22,7 @@ ART = os.path.join(ROOT, "assets", "art")
 # Lado mayor máximo, por carpeta o por archivo (None: sin achicar).
 LIMITS = {
     "enemies": 1024,
+    "weapons": 768,
     "npc": 1280,
     "player": 1280,
     "stages": None,

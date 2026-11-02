@@ -1648,6 +1648,91 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String talEffAttackStructure(int n) {
+    return 'Tus ataques quitan $n más de Estructura.';
+  }
+
+  @override
+  String talEffGuardPierce(int n) {
+    return 'Tus ataques atraviesan $n de la Guardia del rival, sin gastarla.';
+  }
+
+  @override
+  String talEffHeavyDamage(int n) {
+    return 'Los ataques que cuestan 2 o más de Aliento pegan +$n.';
+  }
+
+  @override
+  String get weaponPickTitle => 'Elegí un arma';
+
+  @override
+  String get weaponPickHint =>
+      'Una sola por subida: suma sus técnicas al botín y se templa hasta el nivel III.';
+
+  @override
+  String get weaponForgeTitle => 'Templar el arma';
+
+  @override
+  String get weaponForgeHint =>
+      'Tu arma sube un nivel: más fuerte y con una técnica nueva en el botín.';
+
+  @override
+  String weaponLevel(int n) {
+    return 'Nivel $n';
+  }
+
+  @override
+  String weaponLevelUp(int from, int to) {
+    return 'Nivel $from → $to';
+  }
+
+  @override
+  String weaponAffinity(String bonus) {
+    return 'Afín a tu camino: $bonus';
+  }
+
+  @override
+  String weaponCards(String names) {
+    return 'Técnicas: $names';
+  }
+
+  @override
+  String weaponGained(String name) {
+    return '¡$name!';
+  }
+
+  @override
+  String weaponForged(String name, int n) {
+    return '¡$name, nivel $n!';
+  }
+
+  @override
+  String get weaponNone => 'Sin arma. El primer élite te deja elegir una.';
+
+  @override
+  String get weaponTitle => 'Arma';
+
+  @override
+  String get lootKindWeapon => 'Arma';
+
+  @override
+  String get merchantWeapon => 'Armería';
+
+  @override
+  String merchantForge(String name, int n) {
+    return 'Templar $name (nivel $n)';
+  }
+
+  @override
+  String masterForge(String name, int from, int to) {
+    return 'Templar $name (nivel $from → $to)';
+  }
+
+  @override
+  String get masterForgeMax =>
+      'El maestro templa hasta el nivel II; el III lo da el botín o el mercader.';
+
+  @override
   String talEffBreakDamage(int n) {
     return 'Desequilibrar a un rival le pega un golpe de $n, que entra doble.';
   }

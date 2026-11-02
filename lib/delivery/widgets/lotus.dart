@@ -109,6 +109,7 @@ class LotusCount extends StatelessWidget {
   RewardKind.upgrade => ('炼', Palette.gold),
   RewardKind.tea => ('茶', Palette.sky),
   RewardKind.talisman => ('符', Palette.structure),
+  RewardKind.weapon => ('兵', Palette.gold),
 };
 
 /// Carácter y color de cada rama del árbol de meridianos.

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import '../combat/combat_state.dart';
+import '../model/card_def.dart';
 import '../model/enemy_def.dart';
 import '../model/enums.dart';
 import '../model/event_def.dart';
@@ -217,6 +218,8 @@ class RunEngine {
     Style style = Style.tiger,
     MetaBonus meta = MetaBonus.none,
     Ghost? ghost,
+    String? weapon,
+    int weaponLevel = 1,
   }) {
     var r = newRun(
       seed: seed,
@@ -225,6 +228,7 @@ class RunEngine {
       meta: meta,
       ghost: ghost,
     ).copyWith(style: style, jade: 150);
+    if (weapon != null) r = equipWeapon(r, weapon, level: weaponLevel);
     final last = data.balance.stages.length - 1;
     for (var s = 0; s < stage.clamp(0, last); s++) {
       r = advanceStage(r.copyWith(phase: RunPhase.stageClear));
@@ -421,8 +425,11 @@ class RunEngine {
         : (const <String>[], r.rng);
     r = r.copyWith(rng: rngT, clearDuel: true);
     // El jefe deja cartas; el que se escapó, también (no hay otro premio).
+    // El primer élite sin arma la garantiza.
     final (kind, rngK) = boss || fled
         ? (RewardKind.cards, r.rng)
+        : elite && r.weapon == null && data.weapons.isNotEmpty
+        ? (RewardKind.weapon, r.rng)
         : _rollRewardKind(r, allowTalisman: !elite && !duel);
     return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
@@ -508,6 +515,7 @@ class RunEngine {
       RewardKind.tea when r.hp >= r.maxHp => RewardKind.jade,
       RewardKind.upgrade when !r.deck.any(canUpgrade) => RewardKind.cards,
       RewardKind.talisman when missingTalismans(r).isEmpty => RewardKind.jade,
+      RewardKind.weapon when !canGainWeapon(r) => RewardKind.jade,
       _ => kind,
     };
     return (kind, rng);
@@ -545,6 +553,9 @@ class RunEngine {
         );
       case RewardKind.upgrade:
         return cleared.copyWith(rewardAmount: data.balance.fountainUpgrade);
+      case RewardKind.weapon:
+        final (options, rng) = _rollWeapons(r);
+        return cleared.copyWith(weaponOptions: options, rng: rng);
     }
   }
 
@@ -590,6 +601,7 @@ class RunEngine {
         rewardOptions: const [],
         clearRewardForm: true,
         talismanOptions: const [],
+        weaponOptions: const [],
         rewardAmount: 0,
       ),
     );
@@ -634,11 +646,63 @@ class RunEngine {
     }
   }
 
+  // ----------------------------------------------------------------- armas
+
+  /// Recompensas posibles: las del camino más las del arma.
+  List<CardDef> _pool(RunState r) => data.rewardPoolFor(
+    r.style,
+    locked: r.locked,
+    weapon: r.weapon,
+    weaponLevel: r.weaponLevel,
+  );
+
+  /// Lo que da el arma equipada (con el bonus de su camino).
+  TalismanEffect weaponEffectOf(RunState r) => r.weapon == null
+      ? TalismanEffect.none
+      : data.weapon(r.weapon!).effectAt(r.weaponLevel, r.style);
+
+  /// Si el arma equipada todavía se puede templar.
+  bool canForge(RunState r) =>
+      r.weapon != null && r.weaponLevel < data.weapon(r.weapon!).maxLevel;
+
+  /// Si un premio de arma sirve: conseguir la primera o templar la propia.
+  bool canGainWeapon(RunState r) =>
+      data.weapons.isNotEmpty && (r.weapon == null || canForge(r));
+
+  RunState equipWeapon(RunState r, String id, {int level = 1}) {
+    data.weapon(id);
+    return r.copyWith(weapon: id, weaponLevel: level);
+  }
+
+  RunState forgeWeapon(RunState r) {
+    if (!canForge(r)) throw StateError('No se puede templar');
+    return r.copyWith(weaponLevel: r.weaponLevel + 1);
+  }
+
+  /// Las armas del botín: la propia (para templarla) o las tres, con la del
+  /// camino primero.
+  (List<String>, Rng) _rollWeapons(RunState r) {
+    if (r.weapon != null) return ([r.weapon!], r.rng);
+    final (all, rng) = r.rng.shuffle([...data.weapons.keys]);
+    bool own(String w) => data.weapon(w).path == r.style;
+    return ([...all.where(own), ...all.where((w) => !own(w))], rng);
+  }
+
+  /// Premio de arma: equipar una de las ofrecidas o templar la propia.
+  RunState chooseRewardWeapon(RunState r, String id) {
+    _checkReward(r, RewardKind.weapon);
+    if (!r.weaponOptions.contains(id)) throw StateError('Arma no ofrecida: $id');
+    final armed = id == r.weapon ? forgeWeapon(r) : equipWeapon(r, id);
+    return _leaveReward(armed.copyWith(weaponOptions: const []));
+  }
+
   // ------------------------------------------------------------ talismanes
 
   /// Suma un efecto de todos los talismanes de la run.
+  /// El arma cuenta como uno más.
   int talismanSum(RunState r, int Function(TalismanEffect e) of) =>
-      r.talismans.fold(0, (a, id) => a + of(data.talisman(id).effect));
+      r.talismans.fold(0, (a, id) => a + of(data.talisman(id).effect)) +
+      of(weaponEffectOf(r));
 
   /// Talismanes que todavía no se tienen ([rare]: null = común o raro).
   /// Los de jefe solo salen con [boss], los del mercader solo con [shop] y
@@ -890,7 +954,7 @@ class RunEngine {
 
   (RunState, String) _gainCard(RunState r) {
     final pool = [
-      for (final c in data.rewardPoolFor(r.style, locked: r.locked)) c.id,
+      for (final c in _pool(r)) c.id,
     ];
     final (id, rng) = _pick(r.rng, pool);
     return (
@@ -926,7 +990,7 @@ class RunEngine {
 
   (List<String>, Rng) _rollRewards(Rng rng, RunState r, int n) {
     final pool = [
-      for (final c in data.rewardPoolFor(r.style, locked: r.locked)) c.id,
+      for (final c in _pool(r)) c.id,
     ];
     final (shuffled, next) = rng.shuffle(pool);
     return (shuffled.take(n).toList(), next);
@@ -1047,7 +1111,22 @@ class RunEngine {
           : missingTalismans(r, rare: false),
     );
     final (sale, rng3) = rng2.nextInt(math.max(1, cards.length));
+    // Sin arma vende una (la del camino la mitad de las veces); con arma,
+    // la templa.
+    var rng4 = rng3;
+    String? weapon;
+    if (canForge(r)) {
+      weapon = r.weapon;
+    } else if (r.weapon == null && data.weapons.isNotEmpty) {
+      final (ws, next) = _rollWeapons(r);
+      final (coin, next2) = next.nextInt(2);
+      weapon = coin == 0 ? ws.first : ws.last;
+      rng4 = next2;
+    }
     return r.copyWith(
+      shopWeapon: weapon,
+      clearShopWeapon: weapon == null,
+      shopForged: false,
       shopCards: cards,
       shopSale: cards.isEmpty ? null : cards[sale],
       clearShopSale: cards.isEmpty,
@@ -1056,7 +1135,7 @@ class RunEngine {
       clearShopTalisman: talismans.isEmpty,
       shopRemoved: false,
       shopUpgraded: false,
-      rng: rng3,
+      rng: rng4,
     );
   }
 
@@ -1084,6 +1163,26 @@ class RunEngine {
     if (r.shopTalisman == null) throw StateError('No hay talismán');
     return addTalisman(r, r.shopTalisman!)
         .copyWith(jade: r.jade - price, clearShopTalisman: true);
+  }
+
+  /// Comprar el arma en venta (sin arma).
+  RunState buyWeapon(RunState r) {
+    final price = merchantOf(r).weapon;
+    _checkShop(r, price);
+    final w = r.shopWeapon;
+    if (w == null || r.weapon != null) throw StateError('No hay arma');
+    return equipWeapon(r, w).copyWith(
+      jade: r.jade - price,
+      clearShopWeapon: true,
+    );
+  }
+
+  /// Templar el arma con el mercader (una vez por tienda).
+  RunState buyForge(RunState r) {
+    final price = merchantOf(r).weaponForge;
+    _checkShop(r, price);
+    if (r.shopForged || r.shopWeapon != r.weapon) throw StateError('Ya se usó');
+    return forgeWeapon(r).copyWith(jade: r.jade - price, shopForged: true);
   }
 
   RunState buyRemove(RunState r, int uid) {
@@ -1123,6 +1222,7 @@ class RunEngine {
       shopCards: const [],
       clearShopTalisman: true,
       clearShopSale: true,
+      clearShopWeapon: true,
     );
   }
 
@@ -1157,6 +1257,20 @@ class RunEngine {
     _checkMaster(r);
     return _upgrade(r, uid)
         .copyWith(masterForms: const [], phase: RunPhase.map);
+  }
+
+  /// El maestro templa hasta el nivel 2; el último, solo el botín o el
+  /// mercader.
+  static const masterForgeMax = 2;
+
+  bool canMasterForge(RunState r) =>
+      canForge(r) && r.weaponLevel < masterForgeMax;
+
+  /// Templar el arma con el maestro (en vez de forma o mejora).
+  RunState masterForge(RunState r) {
+    _checkMaster(r);
+    if (!canMasterForge(r)) throw StateError('El maestro no la templa');
+    return forgeWeapon(r).copyWith(masterForms: const [], phase: RunPhase.map);
   }
 
   void _checkMaster(RunState r) {

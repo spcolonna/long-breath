@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 141 · ✅ 127 · 🎨 4 · ❌ 10
+Total: 156 · ✅ 127 · 🎨 4 · ❌ 25
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -127,16 +127,36 @@ Total: 141 · ✅ 127 · 🎨 4 · ❌ 10
 | ✅ propio | `assets/art/cards/ling_she.webp` | ilustración de ling_she | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_jiao.webp` | ilustración de she_jiao | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_pan.webp` | ilustración de she_pan | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/he_chi.webp` | ilustración de he_chi | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/du_li.webp` | ilustración de du_li | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_zui.webp` | ilustración de he_zui | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_wu.webp` | ilustración de he_wu | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_xi.webp` | ilustración de he_xi | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_ming.webp` | ilustración de he_ming | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_ding.webp` | ilustración de he_ding | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/bai_he_liang_chi.webp` | ilustración de bai_he_liang_chi | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_zhuo.webp` | ilustración de he_zhuo | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/he_mian.webp` | ilustración de he_mian | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/he_chi.webp` | ilustración de he_chi | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/du_li.webp` | ilustración de du_li | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_zui.webp` | ilustración de he_zui | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_wu.webp` | ilustración de he_wu | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_xi.webp` | ilustración de he_xi | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_ming.webp` | ilustración de he_ming | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_ding.webp` | ilustración de he_ding | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/bai_he_liang_chi.webp` | ilustración de bai_he_liang_chi | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_zhuo.webp` | ilustración de he_zhuo | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/he_mian.webp` | ilustración de he_mian | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/gun_sao.webp` | ilustración de gun_sao | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/gun_ge.webp` | ilustración de gun_ge | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/gun_tiao.webp` | ilustración de gun_tiao | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/gun_wuhua.webp` | ilustración de gun_wuhua | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/jian_ci.webp` | ilustración de jian_ci | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/jian_dian.webp` | ilustración de jian_dian | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/jian_jie.webp` | ilustración de jian_jie | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/jian_chuanxin.webp` | ilustración de jian_chuanxin | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/pudao_pi.webp` | ilustración de pudao_pi | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/pudao_lan.webp` | ilustración de pudao_lan | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/pudao_kan.webp` | ilustración de pudao_kan | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/pudao_chantou.webp` | ilustración de pudao_chantou | hanzi de marca de agua | no |
+
+## armas
+
+| Estado | Archivo | Para qué | Si falta se ve | Prompt |
+|---|---|---|---|---|
+| ❌ falta | `assets/art/weapons/gun.webp` | arma gun (capa en la mano del héroe) | arma dibujada por código | listo |
+| ❌ falta | `assets/art/weapons/jian.webp` | arma jian (capa en la mano del héroe) | arma dibujada por código | listo |
+| ❌ falta | `assets/art/weapons/pudao.webp` | arma pudao (capa en la mano del héroe) | arma dibujada por código | listo |
 
 ## npc
 

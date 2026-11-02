@@ -51,7 +51,14 @@ class RunController extends Notifier<RunState?> {
   void abandon() => _set(null);
 
   /// Menú de pruebas (solo debug): subida en la etapa y el piso elegidos.
-  void debugStart(Difficulty difficulty, int pico, int stage, int floor) =>
+  void debugStart(
+    Difficulty difficulty,
+    int pico,
+    int stage,
+    int floor, {
+    String? weapon,
+    int weaponLevel = 1,
+  }) =>
       _set(_engine.debugStart(
         seed: DateTime.now().microsecondsSinceEpoch,
         difficulty: difficulty,
@@ -60,6 +67,8 @@ class RunController extends Notifier<RunState?> {
         floor: floor,
         meta: ref.read(metaBonusProvider).value ?? MetaBonus.none,
         ghost: ghostFrom(ref.read(ascentsProvider).value ?? const []),
+        weapon: weapon,
+        weaponLevel: weaponLevel,
       ));
 
   void enter(String nodeId) => _set(_engine.enter(state!, nodeId));
@@ -175,6 +184,9 @@ class RunController extends Notifier<RunState?> {
   void chooseRewardTalisman(String id) =>
       _set(_engine.chooseRewardTalisman(state!, id));
 
+  void chooseRewardWeapon(String id) =>
+      _set(_engine.chooseRewardWeapon(state!, id));
+
   void rerollReward() => _set(_engine.rerollReward(state!));
 
   /// La presentación de la etapa ya se vio: no se repite al volver al mapa.
@@ -190,6 +202,10 @@ class RunController extends Notifier<RunState?> {
 
   void buyTalisman() => _set(_engine.buyTalisman(state!));
 
+  void buyWeapon() => _set(_engine.buyWeapon(state!));
+
+  void buyForge() => _set(_engine.buyForge(state!));
+
   void buyRemove(int uid) => _set(_engine.buyRemove(state!, uid));
 
   void buyUpgrade(int uid) => _set(_engine.buyUpgrade(state!, uid));
@@ -201,6 +217,8 @@ class RunController extends Notifier<RunState?> {
   void masterTeach(String formId) => _set(_engine.masterTeach(state!, formId));
 
   void masterUpgrade(int uid) => _set(_engine.masterUpgrade(state!, uid));
+
+  void masterForge() => _set(_engine.masterForge(state!));
 
   void choosePath(Style style) => _set(_engine.choosePath(state!, style));
 

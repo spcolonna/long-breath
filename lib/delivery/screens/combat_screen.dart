@@ -39,6 +39,8 @@ import '../widgets/press.dart';
 import '../widgets/stage_scene.dart';
 import '../widgets/stat_bar.dart';
 import '../widgets/talisman_widgets.dart';
+import '../widgets/weapon_art.dart';
+import '../widgets/weapon_widgets.dart';
 import '../feel.dart';
 
 class CombatScreen extends ConsumerWidget {
@@ -104,6 +106,7 @@ class _ArenaFx {
     this.defeated = false,
     this.heroPops = const [],
     this.talismanHits = const {},
+    this.weaponHits = 0,
   });
 
   final int strikeKey;
@@ -118,6 +121,9 @@ class _ArenaFx {
 
   /// Cuántas veces actuó cada talismán (rebota su ficha).
   final Map<String, int> talismanHits;
+
+  /// Cuántas veces actuó el arma (rebota su ficha).
+  final int weaponHits;
 }
 
 /// Lo que se anima en cada enemigo en escena (con dos a la vez, cada uno lo
@@ -189,6 +195,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   }
   final _heroPops = <_Pop>[];
   final _talismanHits = <String, int>{};
+  int _weaponHits = 0;
 
   GameAudio get _audio => ref.read(audioProvider);
 
@@ -235,6 +242,28 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     for (final (i, e) in live.events.whereType<TalismanTriggered>().indexed) {
       _after(1500 + 420 * i, () => setState(() => _talismanActs(e.talismanId)));
     }
+    if (live.events.any((e) => e is WeaponTriggered)) {
+      final n = live.events.whereType<TalismanTriggered>().length;
+      _after(1500 + 420 * n, () => setState(_weaponActs));
+    }
+  }
+
+  /// La ficha del arma rebota y su nombre sale del héroe.
+  void _weaponActs() {
+    final s = ref.read(combatControllerProvider)?.state;
+    final id = s?.weapon;
+    if (id == null) return;
+    _weaponHits++;
+    Haptics.lightImpact();
+    _pop(
+      _heroPops,
+      '${ref.read(dataProvider).weapon(id).hanzi} '
+          '${ref.read(textProvider).weapon(id)}',
+      weaponColor(s!.weaponLevel),
+      size: 15,
+      dx: 60,
+      dy: -95,
+    );
   }
 
   /// La ficha del talismán rebota y su nombre sale del héroe.
@@ -1013,6 +1042,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           _queue.add(_Fx(t.scalesRegrown, t.scalesNow(scales), Palette.jade));
         case TalismanTriggered(:final talismanId):
           setState(() => _talismanActs(talismanId));
+        case WeaponTriggered():
+          setState(_weaponActs);
         default:
       }
     }
@@ -1065,6 +1096,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       defeated: _defeated,
       heroPops: _heroPops,
       talismanHits: {..._talismanHits},
+      weaponHits: _weaponHits,
     );
     final run = live.tutorial ? null : ref.watch(runControllerProvider);
     final node = run?.currentNode == null ? null : run!.node(run.currentNode!);
@@ -1130,6 +1162,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                 ? null
                 : ref.watch(runControllerProvider)?.style,
             talismans: s.talismans,
+            weapon: s.weapon,
+            weaponLevel: s.weaponLevel,
             fx: fx,
             heroKey: _heroKey,
             introTitle: [
@@ -1379,6 +1413,8 @@ class _Arena extends StatelessWidget {
     required this.turn,
     required this.style,
     required this.talismans,
+    this.weapon,
+    this.weaponLevel = 0,
     required this.fx,
     required this.heroKey,
     required this.introTitle,
@@ -1393,6 +1429,8 @@ class _Arena extends StatelessWidget {
   final int turn;
   final Style? style;
   final List<String> talismans;
+  final String? weapon;
+  final int weaponLevel;
   final _ArenaFx fx;
   final GlobalKey heroKey;
   final String introTitle;
@@ -1507,6 +1545,8 @@ class _Arena extends StatelessWidget {
                   guardKey: fx.guardKey,
                   victory: fx.victory,
                   defeated: fx.defeated,
+                  weapon: weapon,
+                  weaponLevel: weaponLevel,
                 ),
               ),
             ),
@@ -1569,6 +1609,16 @@ class _Arena extends StatelessWidget {
                 if (style != null) ...[
                   const SizedBox(height: 6),
                   _StyleChip(style: style!),
+                ],
+                if (weapon != null) ...[
+                  const SizedBox(height: 6),
+                  WeaponChip(
+                    id: weapon,
+                    level: weaponLevel,
+                    style: style,
+                    size: 26,
+                    trigger: fx.weaponHits,
+                  ),
                 ],
                 if (talismans.isNotEmpty) ...[
                   const SizedBox(height: 6),

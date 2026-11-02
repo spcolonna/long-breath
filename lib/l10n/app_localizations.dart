@@ -2722,6 +2722,126 @@ abstract class AppLocalizations {
   /// **'+{n} carta en cada mano.'**
   String talEffHandMore(int n);
 
+  /// No description provided for @talEffAttackStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus ataques quitan {n} más de Estructura.'**
+  String talEffAttackStructure(int n);
+
+  /// No description provided for @talEffGuardPierce.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus ataques atraviesan {n} de la Guardia del rival, sin gastarla.'**
+  String talEffGuardPierce(int n);
+
+  /// No description provided for @talEffHeavyDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'Los ataques que cuestan 2 o más de Aliento pegan +{n}.'**
+  String talEffHeavyDamage(int n);
+
+  /// No description provided for @weaponPickTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí un arma'**
+  String get weaponPickTitle;
+
+  /// No description provided for @weaponPickHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Una sola por subida: suma sus técnicas al botín y se templa hasta el nivel III.'**
+  String get weaponPickHint;
+
+  /// No description provided for @weaponForgeTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Templar el arma'**
+  String get weaponForgeTitle;
+
+  /// No description provided for @weaponForgeHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu arma sube un nivel: más fuerte y con una técnica nueva en el botín.'**
+  String get weaponForgeHint;
+
+  /// No description provided for @weaponLevel.
+  ///
+  /// In es, this message translates to:
+  /// **'Nivel {n}'**
+  String weaponLevel(int n);
+
+  /// No description provided for @weaponLevelUp.
+  ///
+  /// In es, this message translates to:
+  /// **'Nivel {from} → {to}'**
+  String weaponLevelUp(int from, int to);
+
+  /// No description provided for @weaponAffinity.
+  ///
+  /// In es, this message translates to:
+  /// **'Afín a tu camino: {bonus}'**
+  String weaponAffinity(String bonus);
+
+  /// No description provided for @weaponCards.
+  ///
+  /// In es, this message translates to:
+  /// **'Técnicas: {names}'**
+  String weaponCards(String names);
+
+  /// No description provided for @weaponGained.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{name}!'**
+  String weaponGained(String name);
+
+  /// No description provided for @weaponForged.
+  ///
+  /// In es, this message translates to:
+  /// **'¡{name}, nivel {n}!'**
+  String weaponForged(String name, int n);
+
+  /// No description provided for @weaponNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin arma. El primer élite te deja elegir una.'**
+  String get weaponNone;
+
+  /// No description provided for @weaponTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Arma'**
+  String get weaponTitle;
+
+  /// No description provided for @lootKindWeapon.
+  ///
+  /// In es, this message translates to:
+  /// **'Arma'**
+  String get lootKindWeapon;
+
+  /// No description provided for @merchantWeapon.
+  ///
+  /// In es, this message translates to:
+  /// **'Armería'**
+  String get merchantWeapon;
+
+  /// No description provided for @merchantForge.
+  ///
+  /// In es, this message translates to:
+  /// **'Templar {name} (nivel {n})'**
+  String merchantForge(String name, int n);
+
+  /// No description provided for @masterForge.
+  ///
+  /// In es, this message translates to:
+  /// **'Templar {name} (nivel {from} → {to})'**
+  String masterForge(String name, int from, int to);
+
+  /// No description provided for @masterForgeMax.
+  ///
+  /// In es, this message translates to:
+  /// **'El maestro templa hasta el nivel II; el III lo da el botín o el mercader.'**
+  String get masterForgeMax;
+
   /// No description provided for @talEffBreakDamage.
   ///
   /// In es, this message translates to:

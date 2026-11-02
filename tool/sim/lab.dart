@@ -70,6 +70,7 @@ class RawData {
         enemies: files['enemies.json']!,
         balance: files['game_balance.json']!,
         talismans: files['talismans.json'],
+        weapons: files['weapons.json'],
         events: files['events.json'],
       );
 }
@@ -247,6 +248,10 @@ class RunLog {
   final learned = <String>[];
   final talismans = <String>[];
 
+  /// Arma con la que terminó y su nivel.
+  String? weapon;
+  int weaponLevel = 0;
+
   /// Despertares del camino aprendidos en la run.
   final awakenings = <String>[];
 
@@ -292,7 +297,9 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     List<String> awakenings = const [],
     List<String> waves = const [],
     bool together = false,
-    MetaBonus meta = MetaBonus.none}) {
+    MetaBonus meta = MetaBonus.none,
+    String? weapon,
+    int weaponLevel = 1}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length;
   var s = engine
@@ -308,6 +315,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           maxHp: maxHp,
           forms: forms,
           talismans: talismans,
+          weapon: weapon,
+          weaponLevel: weaponLevel,
           awakenings: awakenings,
           waves: waves,
           together: together,
@@ -382,7 +391,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final f = playFight(engine, bot, r.deck, enemy, r.style, r.hp, cs, r.talismans,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
             awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1),
-            together: runEngine.togetherOf(r), meta: r.meta);
+            together: runEngine.togetherOf(r), meta: r.meta,
+            weapon: r.weapon, weaponLevel: r.weaponLevel);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
@@ -423,6 +433,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
         final t = bot.pickTalisman(runEngine, r);
         log.talismans.add(t);
         r = runEngine.chooseRewardTalisman(r, t);
+      case RunPhase.reward when r.rewardKind == RewardKind.weapon:
+        log.kinds.add(r.rewardKind);
+        r = runEngine.chooseRewardWeapon(r, bot.pickWeapon(runEngine, r));
       case RunPhase.reward when r.rewardKind != RewardKind.cards:
         log.kinds.add(r.rewardKind);
         r = runEngine.collectReward(r);
@@ -471,6 +484,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
   log.stage = r.stage;
   log.lotus = r.lotus;
   log.floor = r.visited.length;
+  log.weapon = r.weapon;
+  log.weaponLevel = r.weaponLevel;
   return log;
 }
 
