@@ -22,6 +22,8 @@ class Ascent {
     this.breathBefore = 0,
     this.lotus = 0,
     this.lotusBefore = 0,
+    this.jade = 0,
+    this.offering = 0,
     this.feats = const {},
     this.hitos = const [],
     this.keepsake,
@@ -61,6 +63,11 @@ class Ascent {
   final int lotus;
   final int lotusBefore;
 
+  /// Jade que sobró y las semillas que dio como ofrenda (ya están en
+  /// [lotus]).
+  final int jade;
+  final int offering;
+
   /// Contadores de la subida (formas, desvíos, combates limpios).
   final Map<String, int> feats;
 
@@ -94,6 +101,8 @@ class Ascent {
     breathBefore: breathBefore,
     lotus: lotus,
     lotusBefore: lotusBefore,
+    jade: jade,
+    offering: offering,
     feats: feats,
     hitos: hitos,
     keepsake: keepsake,
@@ -120,6 +129,8 @@ class Ascent {
     'breathBefore': breathBefore,
     'lotus': lotus,
     'lotusBefore': lotusBefore,
+    'jade': jade,
+    'offering': offering,
     'feats': feats,
     'hitos': hitos,
     'keepsake': keepsake,
@@ -149,6 +160,8 @@ class Ascent {
     breathBefore: j['breathBefore'] as int? ?? 0,
     lotus: j['lotus'] as int? ?? 0,
     lotusBefore: j['lotusBefore'] as int? ?? 0,
+    jade: j['jade'] as int? ?? 0,
+    offering: j['offering'] as int? ?? 0,
     feats: {
       for (final e in ((j['feats'] as Map?) ?? const {}).entries)
         e.key as String: e.value as int,

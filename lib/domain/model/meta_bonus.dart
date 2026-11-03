@@ -176,6 +176,7 @@ class LotusDef {
     this.boss = 0,
     this.victory = 0,
     this.reward = const [],
+    this.jadePer = 0,
   });
 
   final int perCombat;
@@ -186,6 +187,10 @@ class LotusDef {
   /// Lo que da el premio de loto en cada etapa.
   final List<int> reward;
 
+  /// Ofrenda al terminar: una semilla por cada [jadePer] de jade que
+  /// sobró (0 = el jade se pierde).
+  final int jadePer;
+
   int rewardAt(int stage) =>
       reward.isEmpty ? 0 : reward[stage.clamp(0, reward.length - 1)];
 
@@ -195,6 +200,7 @@ class LotusDef {
         boss: j['boss'] as int? ?? 0,
         victory: j['victory'] as int? ?? 0,
         reward: ((j['reward'] as List?) ?? const []).cast<int>(),
+        jadePer: j['jadePer'] as int? ?? 0,
       );
 }
 

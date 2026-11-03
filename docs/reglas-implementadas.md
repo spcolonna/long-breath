@@ -95,6 +95,7 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - Cada combate ganado da `jade.common` + 0..`jade.spread` (élite: `jade.elite` + 0..`spread`). El jefe no da (termina la subida).
 - El mercader (`merchant` en el balance) ofrece `cards` cartas del pool de recompensas, 1 talismán común que no tengas y dos servicios por visita: quitar una carta y mejorar una carta (+`fountain.upgrade`).
 - No se puede comprar sin jade suficiente.
+- **Ofrenda:** al terminar la subida (gane o caiga), el jade que sobra da `meridians.lotus.jadePer` (5) de jade por semilla, con el % de loto del árbol (`RunEngine.offeringOf`). Se suma al loto del `Ascent` (`jade` y `offering` quedan aparte para mostrarlo).
 
 ## Maestro errante
 - Ofrece hasta `master.forms` formas que todavía no sabés y que tu camino permite.

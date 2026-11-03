@@ -630,3 +630,7 @@ Pisos 5 y 7 de cada etapa, 40%: un combate pasa a ser un élite de la etapa. El 
 | experto | 63% | 64% | 5,9 → 6,8 |
 
 Riesgo y premio se compensan: la victoria no se mueve y la subida tiene más talismanes.
+
+### 3t. Ofrenda de jade (03/11/2026)
+
+Al terminar la subida, el jade sin gastar da 1 semilla de loto cada 5 (`meridians.lotus.jadePer`), con el % del árbol. Promedio en Normal (300 subidas): sobran 33,9 de jade, unas 6–7 semillas por subida. No cambia la victoria (34%): solo acelera un poco el árbol de meridianos.

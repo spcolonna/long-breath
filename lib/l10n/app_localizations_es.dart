@@ -2526,6 +2526,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String resultOffering(int jade, int n) {
+    return '$jade de jade sobrante, ofrendado a la escuela: +$n';
+  }
+
+  @override
   String get resultToMeridians => 'Abrir meridianos';
 
   @override

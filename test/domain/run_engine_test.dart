@@ -1132,6 +1132,17 @@ void main() {
       expect(more.lotus, lotus.perCombat * 2);
     });
 
+    test('el jade que sobra se ofrenda como loto', () {
+      final per = real.data.balance.meridians.lotus.jadePer;
+      expect(per, greaterThan(0));
+      final r = at(1);
+      expect(real.offeringOf(r.copyWith(jade: 0)), 0);
+      expect(real.offeringOf(r.copyWith(jade: per - 1)), 0);
+      expect(real.offeringOf(r.copyWith(jade: per * 7 + 2)), 7);
+      final more = at(1, meta: const MetaBonus(lotusPct: 100));
+      expect(real.offeringOf(more.copyWith(jade: per * 7)), 14);
+    });
+
     test('los dones se aplican al empezar y quedan guardados', () {
       const meta = MetaBonus(
         maxHp: 4,

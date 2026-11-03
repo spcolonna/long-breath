@@ -4018,6 +4018,12 @@ abstract class AppLocalizations {
   /// **'+{n} semillas de loto · la escuela tiene {total}'**
   String resultLotus(int n, int total);
 
+  /// No description provided for @resultOffering.
+  ///
+  /// In es, this message translates to:
+  /// **'{jade} de jade sobrante, ofrendado a la escuela: +{n}'**
+  String resultOffering(int jade, int n);
+
   /// No description provided for @resultToMeridians.
   ///
   /// In es, this message translates to:

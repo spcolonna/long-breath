@@ -187,7 +187,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ### 3.3 Nuevos tipos de nodo
 - **Evento:** **en el juego** (02/10/2026): 6 eventos y 2 nodos en la etapa 1. Para crecer: más eventos por etapa, eventos que dependan del camino o de un talismán, y eventos con más de dos opciones.
-- **Mercader de pergaminos:** **en el juego** (02/10/2026), con jade de los combates. **Economía (05/10/2026):** carta en oferta (−40%), té de jengibre (+15 Vida por 15), mercader posible desde el piso 2, la élite ya no da jade (llegaba cuando no quedaban tiendas) y eventos que pagan o cobran jade (ermitaño, dados, peregrino). Simulación: el jade sin gastar al final bajó de ~61 a ~27; promedio 58%. Falta: que el jade sobrante sirva entre subidas (cultivo §3.7), talismanes raros caros en la tienda y precios que suban por etapa. Idea original: compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
+- **Mercader de pergaminos:** **en el juego** (02/10/2026), con jade de los combates. **Economía (05/10/2026):** carta en oferta (−40%), té de jengibre (+15 Vida por 15), mercader posible desde el piso 2, la élite ya no da jade (llegaba cuando no quedaban tiendas) y eventos que pagan o cobran jade (ermitaño, dados, peregrino). Simulación: el jade sin gastar al final bajó de ~61 a ~27; promedio 58%. ~~Que el jade sobrante sirva entre subidas~~ **hecho (03/11/2026):** se ofrenda a la escuela, 1 semilla de loto cada 5 de jade. Falta: talismanes raros caros en la tienda y precios que suban por etapa. Idea original: compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
 - **Maestro errante:** **en el juego** (02/10/2026): enseña una forma o mejora una carta.
 - **Arte:** 1 ícono por tipo de nodo. Los eventos se resuelven con texto y alguna ilustración reutilizada.
 
@@ -274,7 +274,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ## 4. Orden sugerido
 
-**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos (hecho), élites opcionales (hecho)); 2) economía y progresión (jade entre subidas, talismanes de jefe con costo, legado); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
+**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos (hecho), élites opcionales (hecho)); 2) economía y progresión (jade entre subidas (hecho), talismanes de jefe con costo, legado); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
 
 **Hoja de ruta (07/10/2026), por prioridad:**
 1. Cultivo del aliento: **hecho**.

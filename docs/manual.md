@@ -321,7 +321,7 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 
 La segunda moneda de la escuela, la que **no se pierde al caer**. Hace que cada subida, aunque termine mal, deje al próximo discípulo un poco más fuerte.
 
-- **Cómo se gana:** 1 por combate ganado, +4 el élite, +8 cada jefe y +15 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10. Se ve arriba en el mapa (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
+- **Cómo se gana:** 1 por combate ganado, +4 el élite, +8 cada jefe y +15 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10, y el **jade que sobra** al terminar se ofrenda: 1 semilla cada 5 de jade (con el % del árbol). Se ve arriba en el mapa (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
 - **Dónde se gasta:** en el inicio, el botón **Meridianos** (con un punto que late cuando alcanza para algo) abre el árbol. También se llega desde la pantalla final.
 - **El árbol:** tres canales de tinta, **Cuerpo 身**, **Espíritu 神** y **Técnica 技**, de cinco puntos de acupuntura cada uno. Cada punto pide el anterior de su canal y un reino del cultivo. Al abrirlo, la tinta corre por el canal. Vale desde la próxima subida (la que está guardada no cambia).
 

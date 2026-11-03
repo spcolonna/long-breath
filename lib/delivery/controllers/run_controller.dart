@@ -143,10 +143,13 @@ class RunController extends Notifier<RunState?> {
           ? run.ghost?.n
           : null,
     );
+    final offering = _engine.offeringOf(run);
     ascent = Ascent.fromJson({
       ...ascent.toJson(),
       'breath': ascentBreath(cultivation, ascent),
-      'lotus': run.lotus,
+      'lotus': run.lotus + offering,
+      'jade': run.jade,
+      'offering': offering,
       'feats': _engine.finalFeats(run),
     });
     ref.read(lastAscentProvider.notifier).set(null);

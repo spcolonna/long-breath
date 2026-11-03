@@ -490,6 +490,13 @@ class RunEngine {
   int lotusOf(RunState r, int base) =>
       (base * (100 + r.meta.lotusPct) / 100).round();
 
+  /// Semillas que deja el jade que sobró al terminar la subida: se ofrenda
+  /// a la escuela en vez de perderse.
+  int offeringOf(RunState r) {
+    final per = data.balance.meridians.lotus.jadePer;
+    return per <= 0 || r.jade <= 0 ? 0 : lotusOf(r, r.jade ~/ per);
+  }
+
   /// Sorteo del premio de un combate común o de élite.
   (RewardKind, Rng) _rollRewardKind(RunState r, {required bool allowTalisman}) {
     final def = data.balance.combatRewards;

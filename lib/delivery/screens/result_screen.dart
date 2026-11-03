@@ -324,6 +324,27 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                               ),
                             ),
                           ),
+                          // El jade que sobró no se pierde: va como ofrenda.
+                          if (ascent.offering > 0) ...[
+                            const SizedBox(height: 6),
+                            _enter(
+                              0.7,
+                              0.78,
+                              Text(
+                                t.resultOffering(
+                                  ascent.jade,
+                                  ascent.offering,
+                                ),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Palette.blossom.withValues(
+                                    alpha: 0.85,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                         // Hitos 功 que se cumplieron (su aliento ya está arriba).
                         for (final (i, id)
