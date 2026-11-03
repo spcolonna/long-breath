@@ -88,6 +88,7 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - Se genera en `RunEngine.newRun` con la semilla de la run (`lib/domain/run/map_gen.dart`) y se guarda en la run (`RunState.map`). Las subidas guardadas sin mapa se descartan.
 - Reglas: al menos un combate en cada piso que los permite; santuario, fuente, mercader y maestro como mucho uno por piso; mercader y maestro aparecen al menos una vez en el mapa; enemigos sin repetir dentro de un piso.
 - Conexiones: cada nodo se une con los que le quedan enfrente; entre pisos del mismo ancho se suman diagonales al azar sin cruces.
+- **Élite opcional** (`elite` % y `elites` del piso; hoy pisos 5 y 7 al 40%): si el piso tiene más de un lugar, uno de sus combates pasa a ser uno de `elites`, sin escolta ni grupo. Los élites no se repiten en el mapa mientras queden otros (el del piso 9 también evita al opcional). Es élite por su rango, así que da talismán, arma, loto y mercader como cualquier élite.
 - Se empieza eligiendo entre los nodos del primer piso (los que no tienen ninguno antes).
 
 ## Jade y mercader

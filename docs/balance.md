@@ -619,3 +619,14 @@ Si el caído tenía camino, el nodo del Discípulo Perdido pelea con `disciple_<
 | grulla | 11.5 | 8.9 |
 
 Victoria 96–100% en todas: pesa lo mismo que el de siempre, solo cambia cómo se pelea.
+
+### 3s. Élites opcionales (03/11/2026)
+
+Pisos 5 y 7 de cada etapa, 40%: un combate pasa a ser un élite de la etapa. El bot lo toma si tiene más del 70% de Vida. 400 subidas, Normal:
+
+| perfil | victoria (sin) | victoria (con) | talismanes por subida |
+|---|---|---|---|
+| promedio | 34% | 33% | 4,0 → 4,5 |
+| experto | 63% | 64% | 5,9 → 6,8 |
+
+Riesgo y premio se compensan: la victoria no se mueve y la subida tiene más talismanes.

@@ -115,6 +115,8 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Las etapas 2 y 3 tienen la misma forma (11 pisos: élite, fuente y jefe arriba), sin santuario: el camino se elige una sola vez. El mapa se tiñe según la etapa (jade, piedra tibia, nieve) y el título dice "Etapa 2 de 3".
 
+   **Élites opcionales:** en los pisos 5 y 7 de cada etapa, 4 de cada 10 veces uno de los combates es un élite (el sello dorado 精), con los mismos élites de arriba y sin escolta. Es un desvío: el piso siempre tiene otro lugar por donde pasar. Quien lo vence se lleva su talismán (y el arma, si todavía no tiene). El élite de arriba no repite a uno ya cruzado mientras queden otros.
+
    Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un maestro. El mercader no está en el mapa: aparece en el camino (ver 9).
 
    **Grupos:** muchos combates comunes traen 2 enemigos (en la etapa 2 y 3, hasta 3). Se pelean de a uno: cuando cae uno, entra el siguiente y vos seguís con tu Vida, tu mano, tu postura y tus formas a medio hacer; no hay recompensa ni descanso en el medio. Para que el nodo no dure el doble, cada uno trae menos Vida (70% si son 2, 58% si son 3), y cada enemigo de más suma 5 de jade. En el mapa, el sello del combate lleva una plaquita con un punto por enemigo; en el combate, unos puntos bajo el nombre marcan cuál va.

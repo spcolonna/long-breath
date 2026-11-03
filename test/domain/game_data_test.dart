@@ -134,6 +134,10 @@ void main() {
         for (final e in f.enemies) {
           expect(data.enemies.containsKey(e), isTrue, reason: e);
         }
+        // Los élites opcionales son los mismos élites de la etapa.
+        for (final e in f.elites) {
+          expect(st.floors[8].enemies, contains(e), reason: e);
+        }
       }
     }
     // Solo la primera etapa tiene santuario: el camino se elige una vez.

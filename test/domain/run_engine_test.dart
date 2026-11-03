@@ -933,6 +933,48 @@ void main() {
       expect(run.available(r), ['b']);
     });
 
+    test('élite opcional: a veces un combate intermedio, siempre con salida', () {
+      for (final st in run.data.balance.stages) {
+        var seen = 0;
+        for (var seed = 0; seed < 200; seed++) {
+          final (map, _) = generateMap(
+            st.floors,
+            Rng.seeded(seed),
+            packable: run.packable,
+          );
+          for (var f = 0; f < st.floors.length; f++) {
+            final row = map.where((n) => n.id.startsWith('f${f + 1}')).toList();
+            final elites = row.where(
+              (n) =>
+                  n.type == NodeType.combat &&
+                  run.data.enemy(n.enemy!).rank == EnemyRank.elite,
+            );
+            if (st.floors[f].elite == 0) {
+              if (f != 8) expect(elites, isEmpty, reason: '${st.id} $f');
+              continue;
+            }
+            expect(elites.length, lessThanOrEqualTo(1));
+            if (elites.isEmpty) continue;
+            seen++;
+            expect(row.length, greaterThan(1), reason: 'tiene que haber otro lugar');
+            expect(elites.single.waves, isEmpty);
+          }
+          // Mientras queden otros, el élite del piso 9 no repite uno opcional.
+          final ids = [
+            for (final n in map)
+              if (n.type == NodeType.combat &&
+                  run.data.enemy(n.enemy!).rank == EnemyRank.elite)
+                n.enemy,
+          ];
+          if (ids.length <= st.floors[8].enemies.length) {
+            expect(ids.toSet(), hasLength(ids.length), reason: '${st.id} $seed');
+          }
+        }
+        // 2 pisos al 40%: unos 160 en 200 mapas, ni siempre ni nunca.
+        expect(seen, inInclusiveRange(100, 220), reason: st.id);
+      }
+    });
+
     test('el élite a veces trae escolta: un común de la etapa, a la vez', () {
       final st = run.data.balance.stages[2];
       final floor = st.floors.firstWhere((f) => f.escort > 0);
@@ -944,7 +986,7 @@ void main() {
           packable: run.packable,
         );
         final elite = map.firstWhere(
-          (n) => floor.enemies.contains(n.enemy) && n.type == NodeType.combat,
+          (n) => n.id.startsWith('f9') && n.type == NodeType.combat,
         );
         if (elite.waves.isEmpty) {
           expect(elite.together, isFalse);

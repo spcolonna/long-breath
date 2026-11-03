@@ -23,6 +23,8 @@ const _required = [NodeType.master];
 /// [packable]: los que esperan entran de a uno cuando cae el anterior, salvo
 /// que un grupo de dos salga «a la vez» (`together` del piso). El élite
 /// puede traer escolta (`escort` del piso): uno de `escorts`, a la vez.
+/// Un piso con `elite` puede cambiar uno de sus combates por un élite
+/// opcional; los élites no se repiten en el mapa mientras queden otros.
 (List<MapNodeDef>, Rng) generateMap(
   List<FloorDef> floors,
   Rng rng, {
@@ -77,11 +79,34 @@ const _required = [NodeType.master];
   // Mezcla las posiciones y reparte enemigos y escenarios sin repetir
   // dentro del piso.
   final rows = <List<(NodeType, String?, String?, String?, List<String>, bool)>>[];
+  final eliteIds = {for (final f in floors) ...f.elites};
+  final usedElites = <String>{};
+  List<String> fresh(List<String> ids) => [
+    ...ids.where((x) => !usedElites.contains(x)),
+    ...ids.where(usedElites.contains),
+  ];
   for (var f = 0; f < floors.length; f++) {
     final (shuffled, r1) = rng.shuffle(types[f]);
-    final (enemies, r2) = r1.shuffle(floors[f].enemies);
+    final (mixed, r2) = r1.shuffle(floors[f].enemies);
     final (places, r3) = r2.shuffle(scenes);
     rng = r3;
+    final enemies = fresh(mixed);
+    // Élite opcional: solo si el piso deja otro lugar por donde pasar.
+    var optional = -1;
+    String? optionalFoe;
+    if (floors[f].elite > 0 &&
+        floors[f].elites.isNotEmpty &&
+        shuffled.length > 1 &&
+        shuffled.contains(NodeType.combat)) {
+      final (roll, r4) = rng.nextInt(100);
+      rng = r4;
+      if (roll < floors[f].elite) {
+        final (pool, r5) = rng.shuffle(floors[f].elites);
+        rng = r5;
+        optional = shuffled.indexOf(NodeType.combat);
+        optionalFoe = fresh(pool).first;
+      }
+    }
     var e = 0;
     final row = <(NodeType, String?, String?, String?, List<String>, bool)>[];
     final packs = {
@@ -92,7 +117,8 @@ const _required = [NodeType.master];
       for (final id in floors[f].enemies)
         if (packable?.call(id) ?? false) id,
     ];
-    for (final t in shuffled) {
+    for (var i = 0; i < shuffled.length; i++) {
+      final t = shuffled[i];
       if (t != NodeType.combat) {
         row.add((t, null, null, null, const [], false));
         continue;
@@ -106,7 +132,12 @@ const _required = [NodeType.master];
       final scene =
           floors[f].scene ??
           (places.isEmpty ? null : places[e % places.length]);
-      final lead = enemies.isEmpty ? null : enemies[e % enemies.length];
+      final lead = i == optional
+          ? optionalFoe
+          : enemies.isEmpty
+          ? null
+          : enemies[e % enemies.length];
+      if (lead != null && eliteIds.contains(lead)) usedElites.add(lead);
       final waves = <String>[];
       var together = false;
       if (lead != null &&
@@ -129,6 +160,7 @@ const _required = [NodeType.master];
           together = roll < floors[f].together;
         }
       } else if (lead != null &&
+          i != optional &&
           floors[f].escort > 0 &&
           floors[f].escorts.isNotEmpty &&
           !(packable?.call(lead) ?? false)) {

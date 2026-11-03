@@ -210,7 +210,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Por etapa:** entre 6 y 8 comunes, 2 o 3 élites y 1 jefe, cada uno con una regla que enseñe algo.
 - **Variantes con poco arte:** el mismo sprite recoloreado por código, como el héroe, con otro patrón y otra regla. Por ejemplo, "Gólem de Jade" frente a "Gólem de Piedra".
 - **Arte:** entre 4 y 6 sprites nuevos por etapa. El resto son variantes.
-- **Hecho (05/10/2026):** élites con regla propia en la etapa 1: el piso 8 sale al azar entre Monje sin Rostro, León de Piedra (despierta, se calma al desequilibrarlo) y Dama del Abanico (desvía el primer golpe de cada turno). Común nuevo: Mono Ladrón (roba jade y se escapa en su tercera acción). Promedio en Normal: 59%. El mercader y el maestro tienen retrato. Después: el Bandido del Paso y el Hongo Lingzhi, con arte propio. Falta: élites opcionales en pisos intermedios.
+- **Hecho (05/10/2026):** élites con regla propia en la etapa 1: el piso 8 sale al azar entre Monje sin Rostro, León de Piedra (despierta, se calma al desequilibrarlo) y Dama del Abanico (desvía el primer golpe de cada turno). Común nuevo: Mono Ladrón (roba jade y se escapa en su tercera acción). Promedio en Normal: 59%. El mercader y el maestro tienen retrato. Después: el Bandido del Paso y el Hongo Lingzhi, con arte propio. Hecho (03/11/2026): élites opcionales en los pisos 5 y 7 (40%), como desvío con talismán.
 
 - **Familias nuevas (propuesta, 11/10/2026):** ya hay varias variantes de bat, golem, salamander, disciple, monk, lion y dragon. El arte nuevo va a conceptos distintos, no a reemplazar recoloreos que ya funcionan:
   - teatro y arte: Ópera de las Mil Caras 变脸 (cambia de guardia cada turno), títeres de linterna 皮影, músico de guqin que marca el ritmo;
@@ -274,7 +274,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ## 4. Orden sugerido
 
-**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos (hecho), élites opcionales); 2) economía y progresión (jade entre subidas, talismanes de jefe con costo, legado); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
+**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos (hecho), élites opcionales (hecho)); 2) economía y progresión (jade entre subidas, talismanes de jefe con costo, legado); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
 
 **Hoja de ruta (07/10/2026), por prioridad:**
 1. Cultivo del aliento: **hecho**.

@@ -183,6 +183,8 @@ class FloorDef {
     this.together = 0,
     this.escort = 0,
     this.escorts = const [],
+    this.elite = 0,
+    this.elites = const [],
     this.scene,
   });
 
@@ -202,6 +204,12 @@ class FloorDef {
   /// lado, peleando a la vez.
   final int escort;
   final List<String> escorts;
+
+  /// Chance (en %) de que uno de los combates del piso sea un élite
+  /// opcional (uno de [elites]): un desvío con más riesgo y talismán, si el
+  /// piso tiene otro lugar por donde pasar.
+  final int elite;
+  final List<String> elites;
 
   /// Escenario fijo de los combates del piso (la cumbre del jefe); si no,
   /// sale al azar de [GameBalance.scenes].
@@ -231,6 +239,8 @@ class FloorDef {
       together: j['together'] as int? ?? 0,
       escort: j['escort'] as int? ?? 0,
       escorts: ((j['escorts'] as List?) ?? const []).cast<String>(),
+      elite: j['elite'] as int? ?? 0,
+      elites: ((j['elites'] as List?) ?? const []).cast<String>(),
       scene: j['scene'] as String?,
     );
   }
