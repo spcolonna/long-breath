@@ -22,6 +22,7 @@ import 'delivery/screens/school_screen.dart';
 import 'delivery/screens/shrine_screen.dart';
 import 'delivery/screens/slots_screen.dart';
 import 'delivery/screens/stage_clear_screen.dart';
+import 'delivery/screens/legacy_screen.dart';
 import 'delivery/screens/talisman_screen.dart';
 import 'delivery/theme.dart';
 import 'delivery/widgets/ink_reveal.dart';
@@ -106,6 +107,7 @@ final _router = GoRouter(
     _route('/event', const EventScreen()),
     _route('/merchant', const MerchantScreen()),
     _route('/master', const MasterScreen()),
+    _route('/legacy', const LegacyScreen()),
     _route('/talisman', const TalismanScreen()),
     _route('/stage', const StageClearScreen(), fx: scrollUnroll, fxMs: 1100),
     _route('/result', const ResultScreen()),

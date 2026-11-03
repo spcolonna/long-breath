@@ -73,7 +73,7 @@ El Discípulo Perdido y el Monje sin Rostro son espíritus de estudiantes que ca
 
 - **Cultivo del aliento:** con cada partida el discípulo avanza por reinos de cultivo (境界). No envejece ni cambia de cuerpo; su aura crece.
 - **Árbol del camino:** cada animal tendrá su rama y sus propias cartas.
-- **Legado e historia:** el prólogo en el templo y lo que heredan los que vienen detrás.
+- **Historia:** el prólogo en el templo ilustrado.
 
 ---
 
@@ -94,6 +94,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 ## Una partida (run)
 
 1. **Inicio:** el menú principal (común a todas) tiene **Aprender** y **Jugar**. Jugar muestra las **tres partidas**: cada una tiene su escuela, su registro, su loto y una **dificultad fija** que se elige al crearla. Una partida se puede **empezar de cero** o **borrar** (pide confirmación; si tiene progreso, dos veces). Las lecciones y el sonido son comunes. Dentro de la partida, **La subida** empieza como novicio sin preguntar la dificultad (el Pico se ajusta con − y +), y **Continuar run** retoma la subida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
+   - **Legado 承:** desde la segunda subida, el discípulo anterior (haya ganado o caído) te deja algo y elegís una de dos herencias: **su carta** (la que guardó en el registro, con la mitad de sus mejoras) o **lo que alcanzó** (+3 de Vida máxima si pasó de la primera etapa; si no, +15 de jade). Si solo tenía cartas iniciales, queda la segunda. Se elige antes del talismán de los meridianos.
    - **Pruebas (solo en builds de desarrollo):** el ícono del bicho en la escuela arranca una subida en cualquier etapa y piso, y suma loto.
 2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 11 pisos por etapa, de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso). Arriba a la derecha, la regla de altura marca tu piso sobre el total; el número junto al ícono del mazo es la cantidad de cartas (tocalo para verlas).
 

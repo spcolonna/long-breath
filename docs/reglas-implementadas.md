@@ -92,6 +92,11 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Élite opcional** (`elite` % y `elites` del piso; hoy pisos 5 y 7 al 40%): si el piso tiene más de un lugar, uno de sus combates pasa a ser uno de `elites`, sin escolta ni grupo. Los élites no se repiten en el mapa mientras queden otros (el del piso 9 también evita al opcional). Es élite por su rango, así que da talismán, arma, loto y mercader como cualquier élite.
 - Se empieza eligiendo entre los nodos del primer piso (los que no tienen ninguno antes).
 
+## Legado
+- Al empezar una subida, si hubo otra antes, `RunEngine.legacyOf(ascents.last)` arma el legado del discípulo anterior (ganó o cayó): su `keepsake` con `upgradePct`% (50) de las mejoras, y `maxHp` (3) si llegó a la etapa `hpStage` (1 = la segunda) o `jade` (15) si no. Datos en `legacy` de `game_balance.json`.
+- `newRun(legacy:)` abre la fase `legacy` (pantalla `/legacy`); `chooseLegacy` suma la carta al mazo o los números y sigue con el talismán de los meridianos si había, o al mapa. Si solo tenía iniciales, se ofrece únicamente la opción de números.
+- No reemplaza al Discípulo Perdido: ese sigue llevando la carta completa del último caído.
+
 ## Jade y mercader
 - Cada combate ganado da `jade.common` + 0..`jade.spread` (élite: `jade.elite` + 0..`spread`). El jefe no da (termina la subida).
 - El mercader (`merchant` en el balance) ofrece `cards` cartas del pool de recompensas, 1 talismán común que no tengas y dos servicios por visita: quitar una carta y mejorar una carta (+`fountain.upgrade`).

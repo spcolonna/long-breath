@@ -7,6 +7,7 @@ import '../../domain/run/run_state.dart';
 import '../../domain/run/ascent.dart';
 import '../../domain/run/cultivation.dart';
 import '../../domain/run/ghost.dart';
+import '../../domain/run/legacy.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../providers.dart';
 import '../screens/map/map_layout.dart';
@@ -37,6 +38,7 @@ class RunController extends Notifier<RunState?> {
     List<String>? locked,
     MetaBonus? meta,
     Ghost? ghost,
+    Legacy? legacy,
   }) =>
       _set(_engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
@@ -46,6 +48,7 @@ class RunController extends Notifier<RunState?> {
             locked ?? ref.read(cultivationProvider).value?.locked ?? const [],
         meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
+        legacy: legacy,
       ));
 
   void abandon() => _set(null);
@@ -194,6 +197,9 @@ class RunController extends Notifier<RunState?> {
 
   /// La presentación de la etapa ya se vio: no se repite al volver al mapa.
   void introSeen() => _set(state!.copyWith(introShown: state!.stage));
+
+  void chooseLegacy(LegacyPick pick) =>
+      _set(_engine.chooseLegacy(state!, pick));
 
   void chooseTalisman(String id) =>
       _set(_engine.chooseTalisman(state!, id));

@@ -11,6 +11,7 @@ import 'package:long_breath/delivery/providers.dart';
 import 'package:long_breath/delivery/screens/combat_screen.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
+import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -226,6 +227,24 @@ void main() {
     expect(find.byType(CombatScreen), findsOneWidget);
     expect(container.read(runControllerProvider)!.duel, isNotNull);
     runs.resume(beforePath);
+
+    // Legado al empezar: la carta del anterior entra al mazo.
+    final noLegacy = container.read(runControllerProvider)!;
+    runs.resume(noLegacy.copyWith(
+      phase: RunPhase.legacy,
+      legacy: const Legacy(n: 3, card: 'hu_zhao', upgrades: 2, jade: 15),
+    ));
+    GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/legacy');
+    await settle();
+    expect(find.text('Legado'), findsOneWidget);
+    expect(find.text('+15 de jade'), findsOneWidget);
+    await tester.tap(find.text('Su carta'));
+    await settle();
+    await tester.tap(find.text('Confirmar'));
+    await settle();
+    expect(container.read(runControllerProvider)!.deck.last.cardId, 'hu_zhao');
+    expect(container.read(runControllerProvider)!.phase, RunPhase.map);
+    runs.resume(noLegacy);
 
     // Talismán del élite: se elige uno y después viene la recompensa.
     runs.resume(

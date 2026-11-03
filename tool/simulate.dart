@@ -48,6 +48,7 @@ class Config {
     this.difficulty = Difficulty.normal,
     this.locked = const [],
     this.meta = MetaBonus.none,
+    this.legacy,
   });
 
   final RawData raw;
@@ -63,6 +64,9 @@ class Config {
 
   /// Dones de la escuela (reinos y meridianos).
   final MetaBonus meta;
+
+  /// Herencia al empezar: card, hp o jade (null = sin legado).
+  final String? legacy;
 }
 
 /// Corre [runs] runs de un perfil repartidas en varios isolates.
@@ -107,6 +111,7 @@ Future<List<RunLog>> simulate(Config c, String profile, int runs, int seed,
               pico: c.pico,
               locked: c.locked,
               meta: c.meta,
+              legacy: c.legacy,
             ),
         ];
       }),
@@ -199,6 +204,7 @@ Future<void> main(List<String> args) async {
           raw: raw,
           stages: stages,
           talismans: flag('talismans'),
+          legacy: _args.contains('--legacy') ? opt('legacy', '') : null,
           difficulty: Difficulty.parse(opt('difficulty', 'normal')),
           locked: [
             for (final id in opt('locked', '').split(','))

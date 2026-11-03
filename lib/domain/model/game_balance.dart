@@ -423,6 +423,36 @@ class PicoDef {
 /// Tipos de premio de un combate ganado (se revela al ganar).
 enum RewardKind { cards, jade, lotus, upgrade, tea, talisman, weapon }
 
+/// Legado: la carta del anterior conserva [upgradePct]% de sus mejoras;
+/// la otra opción es [maxHp] de Vida máxima si llegó a la etapa [hpStage]
+/// (0 = la primera) o [jade] si no.
+class LegacyDef {
+  const LegacyDef({
+    this.enabled = false,
+    this.upgradePct = 50,
+    this.maxHp = 0,
+    this.jade = 0,
+    this.hpStage = 1,
+  });
+
+  /// Sin datos: no hay legado.
+  static const none = LegacyDef();
+
+  final bool enabled;
+  final int upgradePct;
+  final int maxHp;
+  final int jade;
+  final int hpStage;
+
+  factory LegacyDef.fromJson(Map<String, dynamic> j) => LegacyDef(
+        enabled: true,
+        upgradePct: j['upgradePct'] as int? ?? 50,
+        maxHp: j['maxHp'] as int? ?? 0,
+        jade: j['jade'] as int? ?? 0,
+        hpStage: j['hpStage'] as int? ?? 1,
+      );
+}
+
 /// Qué premio deja un combate común: pesos por etapa y cuánto da cada uno.
 class CombatRewardsDef {
   const CombatRewardsDef({
@@ -514,6 +544,7 @@ class GameBalance {
     this.cultivation = CultivationDef.none,
     this.meridians = MeridianDef.none,
     this.combatRewards = CombatRewardsDef.none,
+    this.legacy = LegacyDef.none,
   });
 
   final int playerHp;
@@ -642,6 +673,9 @@ class GameBalance {
   /// Premios variados de los combates.
   final CombatRewardsDef combatRewards;
 
+  /// Lo que el discípulo anterior le deja al siguiente.
+  final LegacyDef legacy;
+
   static int _escort(Map<String, dynamic> run, String key) =>
       ((run['packs'] as Map<String, dynamic>?)?['escort']
               as Map<String, dynamic>?)?[key] as int? ??
@@ -753,6 +787,10 @@ class GameBalance {
       combatRewards: switch (j['combatRewards']) {
         final Map<String, dynamic> m => CombatRewardsDef.fromJson(m),
         _ => CombatRewardsDef.none,
+      },
+      legacy: switch (j['legacy']) {
+        final Map<String, dynamic> m => LegacyDef.fromJson(m),
+        _ => LegacyDef.none,
       },
     );
   }

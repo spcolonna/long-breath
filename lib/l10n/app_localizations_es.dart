@@ -2382,6 +2382,35 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get legacyTitle => 'Legado';
+
+  @override
+  String legacyHint(int n) {
+    return 'El discípulo nº $n te dejó algo para el camino. Elegí una herencia.';
+  }
+
+  @override
+  String get legacyCard => 'Su carta';
+
+  @override
+  String legacyCardUp(String card, int n) {
+    return '$card +$n';
+  }
+
+  @override
+  String get legacyStat => 'Lo que alcanzó';
+
+  @override
+  String legacyHp(int n) {
+    return '+$n de Vida máxima';
+  }
+
+  @override
+  String legacyJade(int n) {
+    return '+$n de jade';
+  }
+
+  @override
   String get talismanStartTitle => 'Don de la escuela';
 
   @override

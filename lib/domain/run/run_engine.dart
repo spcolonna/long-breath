@@ -10,8 +10,10 @@ import '../model/game_data.dart';
 import '../model/meta_bonus.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
+import 'ascent.dart';
 import 'feats.dart';
 import 'ghost.dart';
+import 'legacy.dart';
 import 'map_gen.dart';
 import 'run_state.dart';
 
@@ -31,6 +33,7 @@ class RunEngine {
     List<String> locked = const [],
     MetaBonus meta = MetaBonus.none,
     Ghost? ghost,
+    Legacy? legacy,
   }) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp +
@@ -84,7 +87,53 @@ class RunEngine {
         );
       }
     }
+    // La herencia va primero; el don de la escuela queda esperando.
+    if (legacy != null) {
+      r = r.copyWith(phase: RunPhase.legacy, legacy: legacy);
+    }
     return r;
+  }
+
+  /// El legado del discípulo de [last] (la subida anterior, ganada o
+  /// perdida), o null si no hubo ninguna.
+  Legacy? legacyOf(Ascent? last) {
+    final def = data.balance.legacy;
+    if (last == null || !def.enabled) return null;
+    final far = last.stage >= def.hpStage;
+    return Legacy(
+      n: last.n,
+      card: data.cards.containsKey(last.keepsake) ? last.keepsake : null,
+      upgrades: last.keepsakeUp * def.upgradePct ~/ 100,
+      maxHp: far ? def.maxHp : 0,
+      jade: far ? 0 : def.jade,
+    );
+  }
+
+  /// Tomar la herencia: la carta entra al mazo o se suman los números.
+  /// Después, el talismán de los meridianos si había, o el mapa.
+  RunState chooseLegacy(RunState r, LegacyPick pick) {
+    final l = r.legacy;
+    if (r.phase != RunPhase.legacy || l == null) {
+      throw StateError('No hay legado');
+    }
+    final next = r.talismanOptions.isEmpty ? RunPhase.map : RunPhase.talisman;
+    return switch (pick) {
+      LegacyPick.card when l.card != null => r.copyWith(
+          deck: [
+            ...r.deck,
+            CombatCard(uid: r.nextUid, cardId: l.card!, upgrades: l.upgrades),
+          ],
+          nextUid: r.nextUid + 1,
+          phase: next,
+        ),
+      LegacyPick.card => throw StateError('El legado no trae carta'),
+      LegacyPick.stat => r.copyWith(
+          maxHp: r.maxHp + l.maxHp,
+          hp: r.hp + l.maxHp,
+          jade: r.jade + l.jade,
+          phase: next,
+        ),
+    };
   }
 
   (List<MapNodeDef>, Rng) _stageMap(int stage, Rng rng) {

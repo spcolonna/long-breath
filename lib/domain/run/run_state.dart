@@ -4,10 +4,14 @@ import '../model/game_balance.dart';
 import '../model/meta_bonus.dart';
 import '../rng.dart';
 import 'ghost.dart';
+import 'legacy.dart';
 
 enum RunPhase {
   map,
   combat,
+
+  /// Elegir la herencia del discípulo anterior (antes del primer nodo).
+  legacy,
 
   /// Elegir un talismán (después de vencer al élite, antes de la recompensa).
   talisman,
@@ -161,6 +165,7 @@ class RunState {
     this.stageLotus = 0,
     this.feats = const {},
     this.ghost,
+    this.legacy,
   });
 
   /// Etapa de la subida (0 = la primera). El [map] es el de esta etapa.
@@ -299,6 +304,9 @@ class RunState {
   /// nadie cayó todavía en la partida).
   final Ghost? ghost;
 
+  /// Lo que dejó el discípulo anterior (se elige en [RunPhase.legacy]).
+  final Legacy? legacy;
+
   RunState copyWith({
     Style? style,
     int? hp,
@@ -359,6 +367,7 @@ class RunState {
     int? stageLotus,
     Map<String, int>? feats,
     Ghost? ghost,
+    Legacy? legacy,
   }) =>
       RunState(
         style: style ?? this.style,
@@ -418,6 +427,7 @@ class RunState {
         stageLotus: stageLotus ?? this.stageLotus,
         feats: feats ?? this.feats,
         ghost: ghost ?? this.ghost,
+        legacy: legacy ?? this.legacy,
       );
 
   /// Nodo del mapa por id.
@@ -486,6 +496,7 @@ class RunState {
         'stageLotus': stageLotus,
         'feats': feats,
         'ghost': ghost?.toJson(),
+        'legacy': legacy?.toJson(),
       };
 
   factory RunState.fromJson(Map<String, dynamic> j) => RunState(
@@ -574,6 +585,10 @@ class RunState {
         },
         ghost: switch (j['ghost']) {
           final Map<String, dynamic> g => Ghost.fromJson(g),
+          _ => null,
+        },
+        legacy: switch (j['legacy']) {
+          final Map<String, dynamic> l => Legacy.fromJson(l),
           _ => null,
         },
       );

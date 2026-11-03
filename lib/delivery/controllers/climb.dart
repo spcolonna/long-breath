@@ -25,7 +25,10 @@ Future<void> startClimb(BuildContext context, WidgetRef ref) async {
         locked: locked,
         meta: meta,
         ghost: ghostFrom(ascents),
+        legacy: ref
+            .read(runEngineProvider)
+            .legacyOf(ascents.isEmpty ? null : ascents.last),
       );
-  // Con el talismán de los meridianos se elige antes del mapa.
+  // La herencia y el talismán de los meridianos se eligen antes del mapa.
   context.go(routeFor(ref.read(runControllerProvider)!));
 }

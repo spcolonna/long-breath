@@ -647,3 +647,16 @@ Cuatro nuevos de jefe; el jefe ofrece 3 de 6. `--section talismans`, 300 subidas
 | Horno de Cinabrio 炉 | forma cura 8, ganar cura 5 | −8 Vida máxima | +15 |
 
 Ajustes: la Hoja con +4 a los pesados y +1 E daba +37 (con −4 de Estructura); el Horno con −1 carta por mano daba −15. Balance general en Normal (400 subidas): promedio 31% (antes 33%), experto 63% (antes 64%), dentro del ruido.
+
+### 3v. Legado (03/11/2026)
+
+Al empezar, el discípulo elige la carta del anterior (mitad de mejoras) o sus números (`legacy` en el balance). `--legacy card|hp|jade` (la carta del sim: una del camino con +3), 800 subidas en Normal:
+
+| herencia | promedio | experto |
+|---|---|---|
+| ninguna (control) | 32% | 67% |
+| carta | 38% | 68% |
+| +3 Vida máxima | 39% | 71% |
+| +15 jade | 36% | 64% |
+
+Con +5 de Vida máxima daba +8 a +10 pp; se bajó a +3 (del orden de un punto del árbol de meridianos, que da +2). El ruido entre corridas es de ±3 pp.

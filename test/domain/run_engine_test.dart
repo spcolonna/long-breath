@@ -6,7 +6,9 @@ import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/domain/rng.dart';
+import 'package:long_breath/domain/run/ascent.dart';
 import 'package:long_breath/domain/run/feats.dart';
+import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/map_gen.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
@@ -1163,6 +1165,49 @@ void main() {
       expect(real.offeringOf(r.copyWith(jade: per * 7 + 2)), 7);
       final more = at(1, meta: const MetaBonus(lotusPct: 100));
       expect(real.offeringOf(more.copyWith(jade: per * 7)), 14);
+    });
+
+    test('legado: la carta con la mitad de mejoras o los números', () {
+      final def = real.data.balance.legacy;
+      expect(def.enabled, isTrue);
+      Ascent prev({int stage = 0, String? card = 'hu_zhao'}) => Ascent(
+          n: 3, fell: true, floor: 6, floors: 33, stage: stage,
+          difficulty: Difficulty.normal, pico: 0,
+          keepsake: card, keepsakeUp: 7);
+      expect(real.legacyOf(null), isNull, reason: 'la primera subida');
+      final near = real.legacyOf(prev())!;
+      expect(near.n, 3);
+      expect(near.upgrades, 7 * def.upgradePct ~/ 100);
+      expect((near.maxHp, near.jade), (0, def.jade));
+      final far = real.legacyOf(prev(stage: def.hpStage))!;
+      expect((far.maxHp, far.jade), (def.maxHp, 0));
+      expect(real.legacyOf(prev(card: null))!.card, isNull);
+
+      // Primero la herencia, después el don de la escuela.
+      final start = real.newRun(
+          seed: 4, meta: const MetaBonus(startTalisman: 1), legacy: near);
+      expect(start.phase, RunPhase.legacy);
+      expect(start.talismanOptions, isNotEmpty);
+      final back = RunState.fromJson(
+          jsonDecode(jsonEncode(start.toJson())) as Map<String, dynamic>);
+      expect(back.legacy!.card, 'hu_zhao');
+      final withCard = real.chooseLegacy(back, LegacyPick.card);
+      expect(withCard.phase, RunPhase.talisman);
+      expect(withCard.deck, hasLength(start.deck.length + 1));
+      expect(withCard.deck.last.cardId, 'hu_zhao');
+      expect(withCard.deck.last.upgrades, near.upgrades);
+      expect(withCard.nextUid, start.nextUid + 1);
+      final withJade = real.chooseLegacy(start, LegacyPick.stat);
+      expect(withJade.jade, start.jade + def.jade);
+      final hp = real.chooseLegacy(
+          real.newRun(seed: 4, legacy: far), LegacyPick.stat);
+      expect(hp.phase, RunPhase.map);
+      expect((hp.maxHp, hp.hp), (start.maxHp + def.maxHp, start.hp + def.maxHp));
+      expect(
+          () => real.chooseLegacy(
+              real.newRun(seed: 4, legacy: real.legacyOf(prev(card: null))),
+              LegacyPick.card),
+          throwsStateError);
     });
 
     test('los dones se aplican al empezar y quedan guardados', () {

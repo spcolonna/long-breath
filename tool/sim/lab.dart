@@ -12,6 +12,7 @@ import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/game_data.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
+import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/domain/sim/bots.dart';
@@ -355,7 +356,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
     Difficulty difficulty = Difficulty.normal,
     int pico = 0,
     List<String> locked = const [],
-    MetaBonus meta = MetaBonus.none}) {
+    MetaBonus meta = MetaBonus.none,
+    String? legacy}) {
   final engine = CombatEngine(data);
   final runEngine = RunEngine(data);
   final log = RunLog();
@@ -373,6 +375,25 @@ RunLog playRun(GameData data, Bot bot, int seed,
   }
   for (final id in startTalismans) {
     r = runEngine.addTalisman(r, id);
+  }
+  // Legado: card = una carta del camino buscado con +3 (la mitad de lo que
+  // suele guardar un discípulo); hp / jade = los números.
+  if (legacy != null) {
+    final def = data.balance.legacy;
+    final pool = [
+      for (final c in data.cards.values)
+        if (c.pool == (wanted ?? Style.tiger).name) c.id,
+    ];
+    r = r.copyWith(
+      phase: RunPhase.legacy,
+      legacy: Legacy(
+        n: 1,
+        card: pool[tRng.nextInt(pool.length)],
+        upgrades: 3,
+        maxHp: legacy == 'hp' ? def.maxHp : 0,
+        jade: legacy == 'jade' ? def.jade : 0,
+      ),
+    );
   }
   while (r.phase != RunPhase.victory && r.phase != RunPhase.defeat) {
     switch (r.phase) {
@@ -416,6 +437,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
             r = runEngine.addTalisman(r, t);
           }
         }
+      case RunPhase.legacy:
+        r = runEngine.chooseLegacy(
+            r, legacy == 'card' ? LegacyPick.card : LegacyPick.stat);
       case RunPhase.talisman:
         final t = bot.pickTalisman(runEngine, r);
         log.talismans.add(t);

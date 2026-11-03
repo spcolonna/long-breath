@@ -59,6 +59,7 @@
     ],
     "jade": [20, 30, 40], "teaPct": [15, 20, 25], "talismanChoices": 2, "maxWithoutCards": 2
   },
+  "legacy": { "upgradePct": 50, "maxHp": 3, "jade": 15, "hpStage": 1 },
   "meridians": {
     "lotus": { "perCombat": 1, "elite": 4, "boss": 8, "victory": 15, "reward": [6, 8, 10], "jadePer": 5 },
     "realmPerks": {

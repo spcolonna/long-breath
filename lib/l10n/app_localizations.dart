@@ -3820,6 +3820,48 @@ abstract class AppLocalizations {
   /// **'+{n} de loto'**
   String lotusGained(int n);
 
+  /// No description provided for @legacyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Legado'**
+  String get legacyTitle;
+
+  /// No description provided for @legacyHint.
+  ///
+  /// In es, this message translates to:
+  /// **'El discípulo nº {n} te dejó algo para el camino. Elegí una herencia.'**
+  String legacyHint(int n);
+
+  /// No description provided for @legacyCard.
+  ///
+  /// In es, this message translates to:
+  /// **'Su carta'**
+  String get legacyCard;
+
+  /// No description provided for @legacyCardUp.
+  ///
+  /// In es, this message translates to:
+  /// **'{card} +{n}'**
+  String legacyCardUp(String card, int n);
+
+  /// No description provided for @legacyStat.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo que alcanzó'**
+  String get legacyStat;
+
+  /// No description provided for @legacyHp.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Vida máxima'**
+  String legacyHp(int n);
+
+  /// No description provided for @legacyJade.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de jade'**
+  String legacyJade(int n);
+
   /// No description provided for @talismanStartTitle.
   ///
   /// In es, this message translates to:

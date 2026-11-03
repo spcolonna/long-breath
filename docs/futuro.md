@@ -250,7 +250,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 - **Escenas:**
   - Prólogo en el templo del Dragón Dormido 卧龙门 (hoy es un pergamino; falta la ilustración).
   - ~~Giro del maestro~~ y ~~finales distintos según el camino~~ **hecho (02/11/2026)** como pergaminos (con sello del camino y retrato del maestro). Falta: escenas ilustradas.
-- **Legado:** lo que un discípulo deja para el siguiente, por ejemplo una carta heredada.
+- ~~**Legado:** lo que un discípulo deja para el siguiente~~ **hecho (03/11/2026):** al empezar cada subida (desde la segunda) el nuevo elige una herencia del discípulo anterior, gane o pierda: su carta guardada con la mitad de las mejoras, o +3 de Vida máxima si pasó de la primera etapa (si no, +15 de jade). Va antes del talismán de los meridianos.
 - **Arte:** pocas ilustraciones fijas, con texto encima.
 
 ### 3.8b Presentaciones y escenarios (hecho)
@@ -274,7 +274,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ## 4. Orden sugerido
 
-**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos (hecho), élites opcionales (hecho)); 2) economía y progresión (jade entre subidas (hecho), talismanes de jefe con costo (hecho), legado); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
+**Prioridad acordada (02/11/2026):** 1) contenido de juego (armas, formas por camino, Discípulo Perdido con cartas, enemigos pedidos (hecho), élites opcionales (hecho)); 2) economía y progresión (jade entre subidas (hecho), talismanes de jefe con costo (hecho), legado (hecho)); 3) pulido chico; 4) escenas ilustradas, desafío diario y combate libre. La duración total y el precio se deciden después de que lo prueben amigos.
 
 **Hoja de ruta (07/10/2026), por prioridad:**
 1. Cultivo del aliento: **hecho**.

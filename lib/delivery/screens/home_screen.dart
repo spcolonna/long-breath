@@ -20,6 +20,7 @@ import '../widgets/options_sheet.dart';
 String routeFor(RunState r) => switch (r.phase) {
   RunPhase.map => '/map',
   RunPhase.combat => '/map',
+  RunPhase.legacy => '/legacy',
   RunPhase.talisman => '/talisman',
   RunPhase.reward => '/reward',
   RunPhase.event => '/event',
