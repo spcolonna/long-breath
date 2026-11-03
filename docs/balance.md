@@ -634,3 +634,16 @@ Riesgo y premio se compensan: la victoria no se mueve y la subida tiene más tal
 ### 3t. Ofrenda de jade (03/11/2026)
 
 Al terminar la subida, el jade sin gastar da 1 semilla de loto cada 5 (`meridians.lotus.jadePer`), con el % del árbol. Promedio en Normal (300 subidas): sobran 33,9 de jade, unas 6–7 semillas por subida. No cambia la victoria (34%): solo acelera un poco el árbol de meridianos.
+
+### 3u. Talismanes de jefe con costo (03/11/2026)
+
+Cuatro nuevos de jefe; el jefe ofrece 3 de 6. `--section talismans`, 300 subidas (pp sobre la base):
+
+| talismán | efecto | costo | pp |
+|---|---|---|---|
+| Tambor de Bronce 鼓 | rival −10 Vida, −3 Estructura | fuente −15 | +10 |
+| Perla del Dragón 珠 | 1ª carta −1, desequilibrar roba 1 | mercader +50% | +23 |
+| Hoja Partida 刃 | +1 E por ataque, +2 a los de 2+ | −6 Estructura | +25 |
+| Horno de Cinabrio 炉 | forma cura 8, ganar cura 5 | −8 Vida máxima | +15 |
+
+Ajustes: la Hoja con +4 a los pesados y +1 E daba +37 (con −4 de Estructura); el Horno con −1 carta por mano daba −15. Balance general en Normal (400 subidas): promedio 31% (antes 33%), experto 63% (antes 64%), dentro del ruido.

@@ -20,6 +20,7 @@ Murciélago → [Discípulo | Evento] → Santuario → bifurcación [Gólem | S
 - Al empezar el combate: postura inicial, Estructura máxima extra, Aliento del turno 1 (vía `nextTurnBreathMod`) y Vida/Estructura del rival (nunca menos de 1; el máximo del rival no cambia, así se ve la diferencia). Cada uno emite `TalismanTriggered`.
 - En combate: Aliento extra por desvío (al turno siguiente) y curación al completar una forma.
 - En la run: Vida máxima (al conseguirlo), curación de la fuente (`healOf`) y curación al ganar un combate (no en el jefe final, que termina la run).
+- **De jefe con costo:** los efectos pueden ser negativos (`fountainHeal`, `shopDiscountPct`, `structure`, `maxHp`, `handSize`). La fuente nunca cura menos de 0; el texto pone los costos al final («…, pero …»). El jefe ofrece 3 de los 6 de jefe.
 
 ## Santuario y caminos
 - La run empieza sin camino (`style: null`) con las estadísticas de `novice`.

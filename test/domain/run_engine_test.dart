@@ -580,7 +580,29 @@ void main() {
       expect(normal, isNot(contains('luna')));
       expect(normal, isNot(contains('montana')));
       expect(run.missingTalismans(r, rare: true), isNot(contains('luna')));
-      expect(run.missingTalismans(r, boss: true), ['luna', 'montana']);
+      expect(run.missingTalismans(r, boss: true), [
+        'luna',
+        'montana',
+        'tambor',
+        'perla',
+        'hoja',
+        'horno',
+      ]);
+      for (final id in run.missingTalismans(r, boss: true)) {
+        expect(normal, isNot(contains(id)));
+      }
+    });
+
+    test('los de jefe con costo: la fuente nunca quita Vida', () {
+      final r = fresh(3);
+      final base = run.healOf(r);
+      final drum = r.copyWith(talismans: ['tambor']);
+      expect(run.healOf(drum), math.max(0, base - 15));
+      final none = r.copyWith(talismans: ['tambor', 'tambor']);
+      expect(run.healOf(none), 0);
+      final card = run.merchantOf(r).card;
+      final shop = run.merchantOf(r.copyWith(talismans: ['perla']));
+      expect(shop.card, (card * 1.5).round());
     });
 
     test('los de camino solo le salen a ese camino', () {

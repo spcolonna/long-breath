@@ -201,8 +201,6 @@ extension Labels on AppLocalizations {
     if (e.breakDraw > 0) talEffBreakDraw(e.breakDraw),
     if (e.deflectDamage > 0) talEffDeflectDamage(e.deflectDamage),
     if (e.turnBreath > 0) talEffTurnBreath(e.turnBreath),
-    if (e.handSize < 0) talEffHandLess(-e.handSize),
-    if (e.maxHp < 0) talEffMaxHpLess(-e.maxHp),
     if (e.guardKeepPct > 0) talEffGuardKeep(e.guardKeepPct),
     if (e.handSize > 0) talEffHandMore(e.handSize),
     if (e.breakDamage > 0) talEffBreakDamage(e.breakDamage),
@@ -212,6 +210,12 @@ extension Labels on AppLocalizations {
     if (e.attackStructure > 0) talEffAttackStructure(e.attackStructure),
     if (e.guardPierce > 0) talEffGuardPierce(e.guardPierce),
     if (e.heavyDamage > 0) talEffHeavyDamage(e.heavyDamage),
+    // Los costos van al final («…, pero …»).
+    if (e.handSize < 0) talEffHandLess(-e.handSize),
+    if (e.maxHp < 0) talEffMaxHpLess(-e.maxHp),
+    if (e.fountainHeal < 0) talEffFountainLess(-e.fountainHeal),
+    if (e.shopDiscountPct < 0) talEffShopMarkup(-e.shopDiscountPct),
+    if (e.structure < 0) talEffStructureLess(-e.structure),
   ].join(' ');
 
   /// Consecuencias de un resultado de evento, en corto ("−8 Vida · …").

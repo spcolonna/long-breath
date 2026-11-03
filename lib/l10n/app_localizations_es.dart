@@ -1644,6 +1644,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String talEffFountainLess(int n) {
+    return 'pero la fuente cura $n menos.';
+  }
+
+  @override
+  String talEffShopMarkup(int n) {
+    return 'pero el mercader te cobra un $n% más.';
+  }
+
+  @override
+  String talEffStructureLess(int n) {
+    return 'pero tenés $n de Estructura menos.';
+  }
+
+  @override
   String talEffGuardKeep(int n) {
     return 'Al empezar tu turno conservás el $n% de tu Guardia.';
   }

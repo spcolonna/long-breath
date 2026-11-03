@@ -187,6 +187,10 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Martillo Quebrado 破 | Desequilibrar a un rival roba 1 carta | raro |
    | Luna Llena 月 | +1 de Aliento en cada turno, pero −5 de Vida máxima | de jefe |
    | Raíz de la Montaña 山 | Al empezar tu turno conservás el 30% de tu Guardia (con su altura) | de jefe |
+   | Tambor de Bronce 鼓 | Los rivales empiezan con 10 de Vida y 3 de Estructura menos, pero la fuente cura 15 menos | de jefe |
+   | Perla del Dragón 珠 | La primera carta de cada turno cuesta 1 menos y desequilibrar roba 1 carta, pero el mercader cobra un 50% más | de jefe |
+   | Hoja Partida 刃 | Cada ataque con daño quita 1 más de Estructura y los de 2+ de Aliento pegan 2 más, pero tenés 6 de Estructura menos | de jefe |
+   | Horno de Cinabrio 炉 | Cada forma cura 8 y ganar un combate cura 5, pero −8 de Vida máxima | de jefe |
    | Garra del Tigre 爪 | Desequilibrar a un rival le pega un golpe de 5, que entra doble | raro, solo Tigre |
    | Escama de la Serpiente 鳞 | El tercer ataque de cada turno roba 1 carta | raro, solo Serpiente |
    | Pluma de la Grulla 羽 | Al empezar tu turno, +3 de Guardia por cada carta retenida | raro, solo Grulla |
@@ -306,7 +310,7 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 | 觉 Tres animales despiertos | Conocer los 12 despertares | +40 |
 | 符 Cinturón cargado | Terminar una subida con 6 talismanes | +15 |
 | 印 El sello del jefe | Terminar una subida con un talismán de jefe | +20 |
-| 宝 El cofre de la escuela | Haber terminado con cada uno de los 23 talismanes (los de camino, con su camino) | +40 |
+| 宝 El cofre de la escuela | Haber terminado con cada uno de los 27 talismanes (los de camino, con su camino) | +40 |
 | 简 Lo justo | Ganar con 16 cartas o menos | +30 |
 | 十 Diez discípulos | Mandar al décimo discípulo | +20 |
 

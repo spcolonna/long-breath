@@ -2722,6 +2722,24 @@ abstract class AppLocalizations {
   /// **'pero perdés {n} de Vida máxima.'**
   String talEffMaxHpLess(int n);
 
+  /// No description provided for @talEffFountainLess.
+  ///
+  /// In es, this message translates to:
+  /// **'pero la fuente cura {n} menos.'**
+  String talEffFountainLess(int n);
+
+  /// No description provided for @talEffShopMarkup.
+  ///
+  /// In es, this message translates to:
+  /// **'pero el mercader te cobra un {n}% más.'**
+  String talEffShopMarkup(int n);
+
+  /// No description provided for @talEffStructureLess.
+  ///
+  /// In es, this message translates to:
+  /// **'pero tenés {n} de Estructura menos.'**
+  String talEffStructureLess(int n);
+
   /// No description provided for @talEffGuardKeep.
   ///
   /// In es, this message translates to:

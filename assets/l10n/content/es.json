@@ -525,6 +525,10 @@
     "espejo": "Espejo de Bronce",
     "luna": "Luna Llena",
     "montana": "Raíz de la Montaña",
+    "tambor": "Tambor de Bronce",
+    "perla": "Perla del Dragón",
+    "hoja": "Hoja Partida",
+    "horno": "Horno de Cinabrio",
     "garra": "Garra del Tigre",
     "escama": "Escama de la Serpiente",
     "pluma": "Pluma de la Grulla",
@@ -1030,7 +1034,7 @@
     "awaken_all": { "name": "Tres animales despiertos", "text": "Conocé los doce despertares de los tres caminos." },
     "talismans_6": { "name": "Cinturón cargado", "text": "Terminá una subida llevando 6 talismanes." },
     "talisman_boss": { "name": "El sello del jefe", "text": "Terminá una subida llevando un talismán de jefe." },
-    "talismans_all": { "name": "El cofre de la escuela", "text": "Llevá cada uno de los 23 talismanes alguna vez, al terminar una subida (los de camino, con su camino)." },
+    "talismans_all": { "name": "El cofre de la escuela", "text": "Llevá cada uno de los 27 talismanes alguna vez, al terminar una subida (los de camino, con su camino)." },
     "light_deck": { "name": "Lo justo", "text": "Ganá una subida con 16 cartas o menos en el mazo." },
     "ten_disciples": { "name": "Diez discípulos", "text": "Mandá a la montaña al décimo discípulo de la escuela." }
   }

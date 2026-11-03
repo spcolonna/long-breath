@@ -1044,12 +1044,15 @@ class RunEngine {
     ));
   }
 
-  /// Vida que cura la fuente en la dificultad de la run.
-  int healOf(RunState r) =>
-      data.balance.difficulty(r.difficulty).fountainHeal +
-      data.balance.picoMods(r.pico).fountainHeal +
-      talismanSum(r, (e) => e.fountainHeal) +
-      r.meta.fountainHeal;
+  /// Vida que cura la fuente en la dificultad de la run (un talismán con
+  /// costo la achica, pero nunca le quita Vida).
+  int healOf(RunState r) => math.max(
+    0,
+    data.balance.difficulty(r.difficulty).fountainHeal +
+        data.balance.picoMods(r.pico).fountainHeal +
+        talismanSum(r, (e) => e.fountainHeal) +
+        r.meta.fountainHeal,
+  );
 
   RunState fountainHeal(RunState r) {
     _checkFountain(r);
