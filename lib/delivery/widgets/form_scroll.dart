@@ -63,7 +63,7 @@ class FormScroll extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      t.formScroll,
+                      form.isLong ? t.formScrollLong : t.formScroll,
                       style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,

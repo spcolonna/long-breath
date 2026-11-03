@@ -67,7 +67,15 @@ void main() {
     expect(data.forms.map((f) => f.id), [
       'xiao_hong_quan', 'wu_bu_quan', 'she_quan', 'he_quan',
       'lian_huan_quan', 'men_hu_tui', 'hu_quan', 'da_hong_quan',
+      'meng_hu_chu_shan', 'ling_she_chu_dong', 'he_zhan_chi',
+      'fu_hu_quan', 'jin_she_chan_si', 'bai_he_quan',
     ]);
+    // Cada camino: una forma corta abierta desde el inicio y una larga.
+    for (final s in Style.values) {
+      final own = data.forms.where((f) => f.pool == s);
+      expect(own.where((f) => f.steps.length == 3).length, greaterThanOrEqualTo(2));
+      expect(own.where((f) => f.steps.length == 5).length, 1, reason: s.name);
+    }
     expect(data.forms.firstWhere((f) => f.id == 'he_quan').pool, Style.crane);
     expect(data.forms.firstWhere((f) => f.id == 'hu_quan').pool, Style.tiger);
     expect(data.forms.firstWhere((f) => f.id == 'she_quan').pool, Style.snake);

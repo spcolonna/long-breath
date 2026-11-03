@@ -256,6 +256,18 @@ abstract class AppLocalizations {
   /// **'Forma · 套路'**
   String get formScroll;
 
+  /// No description provided for @formScrollLong.
+  ///
+  /// In es, this message translates to:
+  /// **'Forma larga · 大套路'**
+  String get formScrollLong;
+
+  /// No description provided for @formLong.
+  ///
+  /// In es, this message translates to:
+  /// **'Forma larga'**
+  String get formLong;
+
   /// No description provided for @formScrollHint.
   ///
   /// In es, this message translates to:

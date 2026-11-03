@@ -136,6 +136,8 @@
     }
   },
   "formScroll": "Forma · 套路",
+  "formScrollLong": "Forma larga · 大套路",
+  "formLong": "Forma larga",
   "formScrollHint": "Aprenderla reemplaza a la carta. Al jugar sus pasos en orden se dispara:",
   "formLearned": "¡Aprendiste {name}!",
   "@formLearned": {

@@ -45,7 +45,7 @@
     "realms": [
       { "id": "lianqi", "hanzi": "炼气", "breath": 0 },
       { "id": "zhuji", "hanzi": "筑基", "breath": 90, "unlocks": ["crane"] },
-      { "id": "kaimai", "hanzi": "开脉", "breath": 250, "unlocks": ["hu_wei", "she_wei", "he_xi"] },
+      { "id": "kaimai", "hanzi": "开脉", "breath": 250, "unlocks": ["hu_wei", "she_wei", "he_xi", "fu_hu_quan", "jin_she_chan_si", "bai_he_quan"] },
       { "id": "ningshen", "hanzi": "凝神", "breath": 460, "unlocks": ["hu_quan", "she_quan", "he_quan"] },
       { "id": "tongxuan", "hanzi": "通玄", "breath": 720, "unlocks": ["xia_shan_hu", "she_shan", "he_ming"] },
       { "id": "guizhen", "hanzi": "归真", "breath": 1050, "unlocks": ["da_hong_quan"] }

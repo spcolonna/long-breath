@@ -105,7 +105,13 @@
     "men_hu_tui": "Patadas de la puerta",
     "hu_quan": "Puño del Tigre",
     "he_quan": "Puño de la Grulla",
-    "da_hong_quan": "Gran Puño Rojo"
+    "da_hong_quan": "Gran Puño Rojo",
+    "meng_hu_chu_shan": "El tigre feroz baja de la montaña",
+    "ling_she_chu_dong": "La serpiente sale de la cueva",
+    "he_zhan_chi": "La grulla abre las alas",
+    "fu_hu_quan": "Puño que doma al tigre",
+    "jin_she_chan_si": "La serpiente dorada enrosca la seda",
+    "bai_he_quan": "Puño de la Grulla Blanca"
   },
   "cards": {
     "gongbu_chongquan": "Puñetazo a fondo",

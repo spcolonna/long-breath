@@ -185,6 +185,27 @@ void main() {
     expect(r.knownForms, [form]);
   });
 
+  test('formas de camino: salen más seguido y las largas se abren con el cultivo', () {
+    final own = {
+      for (final f in run.data.forms)
+        if (f.pool == Style.crane) f.id,
+    };
+    var hits = 0;
+    for (var seed = 1; seed <= 60; seed++) {
+      var r = fresh(seed).copyWith(style: Style.crane);
+      r = run.enter(r, 'n1');
+      r = run.finishCombat(r, won: true, hp: 40);
+      if (own.contains(r.rewardForm)) hits++;
+    }
+    expect(hits, greaterThan(30), reason: 'dos de cada tres, más el azar');
+    final r = fresh(1).copyWith(style: Style.crane);
+    expect(run.learnableForms(r), containsAll(['he_zhan_chi', 'bai_he_quan']));
+    final realm0 = run.data.balance.cultivation.lockedAt(0);
+    expect(realm0, contains('bai_he_quan'), reason: 'la larga espera al reino 开脉');
+    expect(realm0, isNot(contains('he_zhan_chi')));
+    expect(run.data.forms.firstWhere((f) => f.id == 'bai_he_quan').isLong, isTrue);
+  });
+
   test('fuente: mejorar y eliminar', () {
     var r = fresh(1)
         .copyWith(phase: RunPhase.fountain);

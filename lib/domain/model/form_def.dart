@@ -59,6 +59,9 @@ class FormDef {
   /// Camino que la enseña; null = cualquier camino (o novicio).
   final Style? pool;
 
+  /// Forma larga (5 pasos o más): cuesta juntarla y pega mucho más.
+  bool get isLong => steps.length >= 5;
+
   factory FormDef.fromJson(Map<String, dynamic> j) => FormDef(
         id: j['id'] as String,
         pinyin: j['pinyin'] as String,

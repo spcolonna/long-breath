@@ -517,6 +517,14 @@ Una forma es una secuencia fija de cartas. Si la completás en orden, se desata 
 | **Patadas de la puerta** 门户腿 | Patada látigo → Patada lateral → Patada de talón | 6 de daño, 14 a Estructura | rompe guardias |
 | **Puño del Tigre** 虎拳 (solo Tigre) | Garra de tigre → Salto del tigre → Rugido del tigre | 22 de daño, 8 a Estructura | remate |
 | **Gran Puño Rojo** 大洪拳 | Puñetazo firme → Empujón a fondo → Patada de talón → Paso atrás → Puñetazo a fondo | 18 de daño, 8 a Estructura, Guardia 8 media | la gran forma |
+| **El tigre feroz baja de la montaña** 猛虎出山 (solo Tigre) | Puñetazo a fondo → Garra de tigre → Colmillo de tigre | 10 de daño, 6 a Estructura, +1 Aliento | corta: abre el combate |
+| **La serpiente sale de la cueva** 灵蛇出洞 (solo Serpiente) | Puñetazo a fondo → La serpiente vuelve la cabeza → Serpiente ágil | 6 de daño, Guardia 6 baja, curás 4, robás 1 | corta: sigue la cadena |
+| **La grulla abre las alas** 鹤展翅 (solo Grulla) | Paso atrás → La grulla blanca abre las alas → Corona de la grulla | 8 de daño, 8 a Estructura, robás 1 | corta: dos defensas y remate |
+| **Puño que doma al tigre** 工字伏虎拳 (solo Tigre, forma larga) | Garra → Colmillo → Salto → Embestida → Tigre hambriento | 34 de daño, 18 a Estructura, robás 2 | larga |
+| **La serpiente dorada enrosca la seda** 金蛇缠丝 (solo Serpiente, forma larga) | Mano de serpiente → Serpiente enroscada → Serpiente dorada → Abrazo de la serpiente → Lengua de serpiente | 20 de daño, curás 12, Guardia 10 media, +2 Aliento | larga |
+| **Puño de la Grulla Blanca** 白鹤拳 (solo Grulla, forma larga) | Ala de grulla → Grulla en una pata → Corona → Danza de la grulla → Picotazo | 24 de daño, 20 a Estructura, +2 Aliento, robás 1 | larga |
+
+**Formas de camino.** Cada camino tiene dos formas cortas (una abierta desde el inicio) y una **forma larga** de 5 pasos que se abre en el reino 开脉. Con camino elegido, el pergamino del botín, el maestro y los eventos ofrecen una forma de tu camino dos de cada tres veces. Las formas largas se marcan como «Forma larga · 大套路» y, al completarlas, el combate se frena más y la pantalla tiembla.
 
 Varias necesitan cartas de recompensa (Puño martillo, Patada lateral, Patada de talón, Empujón a fondo, las del Tigre): conviene elegir cartas y formas pensando una en la otra.
 

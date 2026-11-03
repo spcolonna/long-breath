@@ -19,7 +19,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   Segunda vuelta (mismo día): dificultades Fácil/Normal/Difícil/Shifu en la interfaz, retener como cartas extra (Tigre roba 5) y escamas del Dragón. Shifu se desbloquea ganando en Difícil. El Dragón tiene una tercera fase (escamas que vuelven y Aliento cada dos acciones).
 
   Lo que queda:
-  - **Formas más alcanzables:** formas propias de cada camino.
+  - ~~**Formas más alcanzables:** formas propias de cada camino.~~ Hecho (03/11/2026): 2 cortas y 1 larga por camino, y prioridad del camino al ofrecerlas.
   - **Calibrar el modelo de tiempo** con partidas reales, y confirmar las dificultades con personas.
 - **Duración acorde al precio (requisito de la versión final).** Hoy una subida se resuelve en unos 12 minutos y el juego completo (3 etapas, prototipo) en alrededor de una hora. Para la versión que se venda, eso no alcanza: la duración total tiene que estar a la altura de lo que cuesta. Antes de lanzar hay que fijar el precio y, con él, la meta de horas (ver sección 3), y verificarla con el simulador y con personas: horas hasta la primera victoria, horas hasta ganar con los tres caminos y horas de rejugabilidad (dificultades, Picos, cultivo).
 - **Arte de la etapa 1:** completo el 02/10/2026 (6 enemigos y 4 fondos de tramo).
@@ -65,7 +65,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - El nivel se muestra por código (brillo, borla o cinta de color, aura), sin arte extra. Si alguna pose no encaja con la capa, recién ahí se dibuja el sprite completo.
 
 ### Formas
-- **Más formas** en lugar de 2: formas de cada camino y formas largas de 5 o 6 pasos con gran recompensa.
+- ~~**Más formas** en lugar de 2: formas de cada camino y formas largas de 5 o 6 pasos con gran recompensa.~~ Hecho (03/11/2026): 14 formas, una larga de 5 pasos por camino.
 - **Formas con cadena de postura:** cada paso tiene que jugarse en una postura determinada.
 - **Aprender formas en la subida:** las da un maestro errante, en un nodo del mapa.
 

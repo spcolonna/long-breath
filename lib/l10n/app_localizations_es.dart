@@ -121,6 +121,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get formScroll => 'Forma · 套路';
 
   @override
+  String get formScrollLong => 'Forma larga · 大套路';
+
+  @override
+  String get formLong => 'Forma larga';
+
+  @override
   String get formScrollHint =>
       'Aprenderla reemplaza a la carta. Al jugar sus pasos en orden se dispara:';
 

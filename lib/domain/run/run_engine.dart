@@ -842,9 +842,9 @@ class RunEngine {
       case null:
         break;
       case EventGain.form:
-        final forms = learnableForms(next);
+        final (forms, rng2) = _shuffleForms(next.rng, next);
         if (forms.isNotEmpty) {
-          final (pick, rng2) = _pick(next.rng, forms);
+          final pick = forms.first;
           form = pick;
           next = next.copyWith(knownForms: [...next.knownForms, pick], rng: rng2);
         } else {
@@ -982,10 +982,22 @@ class RunEngine {
       ];
 
   (String?, Rng) _rollForm(Rng rng, RunState r) {
-    final pool = learnableForms(r);
-    if (pool.isEmpty) return (null, rng);
-    final (shuffled, next) = rng.shuffle(pool);
-    return (shuffled.first, next);
+    final (shuffled, next) = _shuffleForms(rng, r);
+    return (shuffled.firstOrNull, next);
+  }
+
+  /// Formas aprendibles barajadas; con camino, dos de cada tres veces va
+  /// primero una del camino (son las que su mazo puede completar).
+  (List<String>, Rng) _shuffleForms(Rng rng, RunState r) {
+    final (shuffled, next) = rng.shuffle(learnableForms(r));
+    final own = [
+      for (final id in shuffled)
+        if (data.forms.firstWhere((f) => f.id == id).pool != null) id,
+    ];
+    if (own.isEmpty) return (shuffled, next);
+    final (roll, next2) = next.nextInt(3);
+    if (roll == 0) return (shuffled, next2);
+    return ([own.first, ...shuffled.where((id) => id != own.first)], next2);
   }
 
   (List<String>, Rng) _rollRewards(Rng rng, RunState r, int n) {
@@ -1234,7 +1246,7 @@ class RunEngine {
   // -------------------------------------------------------- maestro errante
 
   RunState _rollMaster(RunState r) {
-    final (forms, rng) = r.rng.shuffle(learnableForms(r));
+    final (forms, rng) = _shuffleForms(r.rng, r);
     return r.copyWith(
       masterForms: forms.take(data.balance.masterForms).toList(),
       rng: rng,

@@ -23,6 +23,25 @@
       "effect": { "damage": 22, "structure": 8 } },
     { "id": "da_hong_quan", "pinyin": "Dà Hóng Quán", "hanzi": "大洪拳",
       "steps": ["mabu_chongquan", "gongbu_tuizhang", "deng_tui", "xubu_liangzhang", "gongbu_chongquan"],
-      "effect": { "damage": 18, "structure": 8, "guard": 8, "height": "mid" } }
+      "effect": { "damage": 18, "structure": 8, "guard": 8, "height": "mid" } },
+    { "id": "meng_hu_chu_shan", "pinyin": "Měng Hǔ Chū Shān", "hanzi": "猛虎出山", "pool": "tiger",
+      "steps": ["gongbu_chongquan", "hu_zhao", "hu_ya"],
+      "effect": { "damage": 10, "structure": 6, "breath": 1 } },
+    { "id": "ling_she_chu_dong", "pinyin": "Líng Shé Chū Dòng", "hanzi": "灵蛇出洞", "pool": "snake",
+      "steps": ["gongbu_chongquan", "she_hui_tou", "ling_she"],
+      "effect": { "damage": 6, "guard": 6, "height": "low", "heal": 4, "draw": 1 } },
+    { "id": "he_zhan_chi", "pinyin": "Hè Zhǎn Chì", "hanzi": "鹤展翅", "pool": "crane",
+      "steps": ["xubu_liangzhang", "bai_he_liang_chi", "he_ding"],
+      "effect": { "damage": 8, "structure": 8, "draw": 1 } },
+    { "id": "fu_hu_quan", "pinyin": "Gōng Zì Fú Hǔ Quán", "hanzi": "工字伏虎拳", "pool": "tiger",
+      "steps": ["hu_zhao", "hu_ya", "hu_pu", "hu_ben", "e_hu_pu_shi"],
+      "effect": { "damage": 34, "structure": 18, "draw": 2 } },
+    { "id": "jin_she_chan_si", "pinyin": "Jīn Shé Chán Sī", "hanzi": "金蛇缠丝", "pool": "snake",
+      "steps": ["she_xing_shou", "she_chan_shen", "jin_she", "she_jiao", "she_tu_xin"],
+      "effect": { "damage": 20, "heal": 12, "guard": 10, "height": "mid", "breath": 2 } },
+    { "id": "bai_he_quan", "pinyin": "Bái Hè Quán", "hanzi": "白鹤拳", "pool": "crane",
+      "steps": ["he_chi", "du_li", "he_ding", "he_wu", "he_zhuo"],
+      "effect": { "damage": 24, "structure": 20, "breath": 2, "draw": 1 } }
+
   ]
 }

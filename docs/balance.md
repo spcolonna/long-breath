@@ -593,3 +593,17 @@ Los pisos extra dan más recompensas y jade, y eso compensa el desgaste. Con dif
 - Ajustes: los extras pasaron a ser chicos (Grulla +3 Estructura, Serpiente atraviesa 2 más, Tigre golpe de 4 al desequilibrar), el bastón quita Estructura de entrada y recién en el III por ataque, la espada atraviesa 2/2/3, y el pudao pega +3/+4/+5 en los golpes de 2 o más.
 - Templado: el botín de arma bajó a 1% y la armería templa por 60/75/90; el maestro templa solo hasta el II. Nivel medio al terminar: 2,1 (promedio) y 2,6 (experto).
 - Por arma (promedio): bastón 41%, espada 31%, pudao 32%; el bastón queda arriba sobre todo porque lo eligen las Grullas, que con él suben de 29% a 31%.
+
+### 3q. Formas de camino (03/11/2026)
+
+Antes, un jugador recién llegado no tenía ninguna forma de camino (las tres se abrían en 凝神) y se completaban 0,4–0,7 formas por subida. Ahora cada camino suma una corta abierta desde el inicio (猛虎出山, 灵蛇出洞, 鹤展翅: un inicial y dos cartas comunes del camino) y una larga de 5 pasos que se abre en 开脉 (工字伏虎拳, 金蛇缠丝, 白鹤拳). Con camino, el botín, el maestro y los eventos ponen primero una forma del camino 2 de cada 3 veces.
+
+300 subidas, Normal:
+
+| perfil | victoria (antes) | victoria | formas completadas por subida |
+|---|---|---|---|
+| promedio | 32% | 35% | 1,1 |
+| experto | 66% | 64% | 2,5 |
+
+El cambio en victoria está dentro del ruido; las formas dejan de ser raras.
+

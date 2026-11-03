@@ -1007,12 +1007,20 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           _audio.play(Sfx.formComplete);
           _formBurstKey++;
           _goldFlashKey++;
-          _dilate([(8, 90), (2.5, 400)]);
           final f = data.forms.firstWhere((f) => f.id == formId);
+          // La forma larga se siente más: más lenta y con temblor.
+          if (f.isLong) {
+            _dilate([(10, 140), (3, 600)]);
+            _shake(12);
+          } else {
+            _dilate([(8, 90), (2.5, 400)]);
+          }
           _queue.add(
             _Fx(
               text.form(f.id),
-              '${f.hanzi} · ${f.pinyin}',
+              f.isLong
+                  ? '${t.formLong} · ${f.hanzi} · ${f.pinyin}'
+                  : '${f.hanzi} · ${f.pinyin}',
               Palette.lacquer,
               big: true,
             ),
