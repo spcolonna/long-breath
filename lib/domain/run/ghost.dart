@@ -6,6 +6,15 @@ import 'ascent.dart';
 /// Id del rival que lleva la cinta de un caído.
 const ghostEnemy = 'disciple';
 
+/// Con quién se pelea en el nodo del Discípulo Perdido: si el caído tenía
+/// camino, la versión que lucha con los golpes de ese camino.
+String ghostFoe(Ghost? g) =>
+    g?.style == null ? ghostEnemy : '${ghostEnemy}_${g!.style!.name}';
+
+/// True para el Discípulo Perdido en cualquiera de sus versiones.
+bool isGhostFoe(String id) =>
+    id == ghostEnemy || id.startsWith('${ghostEnemy}_');
+
 /// Un discípulo caído del registro que vuelve en la subida como el
 /// Discípulo Perdido: su número, su camino, dónde cayó y la carta que
 /// lleva (la que suelta al vencerlo).

@@ -211,7 +211,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final rank = ref.read(dataProvider).enemy(live.state.enemy.id).rank;
     // El Discípulo Perdido que lleva la cinta de un caído también se
     // presenta: dice quién fue.
-    final ghost = live.state.enemy.id == ghostEnemy &&
+    final ghost = isGhostFoe(live.state.enemy.id) &&
         ref.read(runControllerProvider)?.ghost != null;
     _intro =
         !live.tutorial &&
@@ -1114,7 +1114,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
     if (_intro) {
       final def = data.enemy(s.enemy.id);
-      final ghost = def.id == ghostEnemy ? run?.ghost : null;
+      final ghost = isGhostFoe(def.id) ? run?.ghost : null;
       final ghostPath = ghost?.style == null
           ? null
           : ref.watch(textProvider).style(ghost!.style!);

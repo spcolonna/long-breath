@@ -56,6 +56,30 @@
         { "kind": "attack", "height": "mid", "damage": 9, "structure": 2 },
         { "kind": "attack", "labelKey": "sweep", "height": "low", "damage": 7, "structure": 4 }
       ] } ] },
+    { "id": "disciple_tiger", "art": "disciple", "rank": "common", "hp": 80, "structure": 18, "wrath": 1,
+      "sameStancePunish": { "damage": 5, "structure": 2 },
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "g_hu_zhao", "height": "high", "damage": 8, "structure": 3 },
+        { "kind": "attack", "labelKey": "g_hu_ya", "height": "mid", "damage": 4, "structure": 1, "hits": 2 },
+        { "kind": "charge", "labelKey": "g_hu_xiao", "value": 5 },
+        { "kind": "attack", "labelKey": "g_fu_hu_quan", "height": "low", "damage": 12, "structure": 6, "countdown": true }
+      ] } ] },
+    { "id": "disciple_snake", "art": "disciple", "rank": "common", "hp": 74, "structure": 18, "regen": 2,
+      "sameStancePunish": { "damage": 5, "structure": 2 },
+      "phases": [ { "pattern": [
+        { "kind": "attack", "labelKey": "g_she_hui_tou", "height": "low", "damage": 7, "structure": 2, "drain": 1 },
+        { "kind": "guard", "labelKey": "g_she_chan_shen", "value": 8 },
+        { "kind": "attack", "labelKey": "g_ling_she", "height": "mid", "damage": 10, "structure": 2, "interrupt": true },
+        { "kind": "attack", "labelKey": "g_jin_she_chan_si", "height": "high", "damage": 14, "structure": 4, "countdown": true }
+      ] } ] },
+    { "id": "disciple_crane", "art": "disciple", "rank": "common", "hp": 74, "structure": 20, "parry": 2,
+      "sameStancePunish": { "damage": 5, "structure": 2 },
+      "phases": [ { "pattern": [
+        { "kind": "guard", "labelKey": "g_bai_he_liang_chi", "value": 7 },
+        { "kind": "attack", "labelKey": "g_he_zhuo", "height": "high", "damage": 4, "structure": 1, "hits": 2 },
+        { "kind": "guard", "labelKey": "g_du_li", "value": 9, "blocks": "kick" },
+        { "kind": "attack", "labelKey": "g_bai_he_quan", "height": "mid", "damage": 11, "structure": 5, "countdown": true }
+      ] } ] },
     { "id": "bandit", "rank": "common", "hp": 66, "structure": 15,
       "phases": [ { "pattern": [
         { "kind": "attack", "labelKey": "staff_jab", "height": "high", "damage": 6, "structure": 2 },

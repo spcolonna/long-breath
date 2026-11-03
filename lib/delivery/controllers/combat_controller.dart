@@ -1,11 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
 import '../../domain/combat/combat_action.dart';
 import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/run/feats.dart';
+import '../../domain/run/ghost.dart';
 import '../tutorial/lessons.dart';
 import '../providers.dart';
 import 'run_controller.dart';
@@ -71,10 +73,14 @@ class CombatController extends Notifier<CombatView?> {
     final runCtl = ref.read(runControllerProvider.notifier);
     final (seed, pack) = runCtl.beginCombat();
     final run = ref.read(runControllerProvider)!;
+    // El Discípulo Perdido pelea con el camino del caído que lleva.
+    final foes = [
+      for (final id in pack) id == ghostEnemy ? ghostFoe(run.ghost) : id,
+    ];
     final r = engine.start(
       deck: run.deck,
-      enemyId: pack.first,
-      waves: pack.sublist(1),
+      enemyId: foes.first,
+      waves: foes.sublist(1),
       together: run.node(run.currentNode!).together,
       style: run.style,
       playerHp: run.hp,

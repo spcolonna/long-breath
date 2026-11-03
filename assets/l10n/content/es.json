@@ -192,7 +192,19 @@
     },
     "disciple": {
       "name": "Discípulo Perdido",
-      "rule": "Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +4 de daño y +2 a Estructura."
+      "rule": "Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +5 de daño y +2 a Estructura."
+    },
+    "disciple_tiger": {
+      "name": "Discípulo Perdido",
+      "rule": "Camino del Tigre. Despierta: cada acción suma +1 a sus golpes. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura."
+    },
+    "disciple_snake": {
+      "name": "Discípulo Perdido",
+      "rule": "Camino de la Serpiente. Recupera 2 de Vida antes de cada acción. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura."
+    },
+    "disciple_crane": {
+      "name": "Discípulo Perdido",
+      "rule": "Camino de la Grulla. Abanico: el primer golpe de cada turno no le hace daño y te devuelve 3. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura."
     },
     "monk": {
       "name": "Monje sin Rostro",
@@ -424,6 +436,18 @@
     }
   },
   "intents": {
+    "g_hu_zhao": "Garra de tigre",
+    "g_hu_ya": "Colmillo de tigre",
+    "g_hu_xiao": "Rugido del tigre",
+    "g_fu_hu_quan": "Puño que doma al tigre",
+    "g_she_hui_tou": "La serpiente vuelve la cabeza",
+    "g_she_chan_shen": "Serpiente enroscada",
+    "g_ling_she": "Serpiente ágil",
+    "g_jin_she_chan_si": "La serpiente dorada enrosca la seda",
+    "g_bai_he_liang_chi": "La grulla blanca abre las alas",
+    "g_he_zhuo": "Picotazo de la grulla",
+    "g_du_li": "Grulla en una pata",
+    "g_bai_he_quan": "Puño de la Grulla Blanca",
     "dragon_breath": "Aliento del Dragón",
     "sweep": "Barrido",
     "charge": "Carga",

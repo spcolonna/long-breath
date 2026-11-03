@@ -52,6 +52,7 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 ## Formas
 - La subida arranca sin formas (`RunState.knownForms` vacío). Al ganar un combate que no es el último, se sortea una forma no aprendida y permitida por el camino (`pool`) como `rewardForm`. Elegir carta (o saltear) la descarta; `chooseForm` la aprende sin sumar carta.
 - Con camino elegido, `_shuffleForms` pone primero una forma del camino 2 de cada 3 veces (botín, maestro y `EventGain.form`). `FormDef.isLong` (5+ pasos) marca las formas largas; las tres de camino se abren en 开脉.
+- El nodo `disciple` pelea con `ghostFoe(run.ghost)` (`disciple_tiger|snake|crane` si el caído tenía camino; lo arma `CombatController.start`). `isGhostFoe` reconoce cualquier versión para el nombre «nº N», la intro y la carta que suelta.
 - El combate solo sigue las formas conocidas (`CombatEngine.start(forms:)`). Las lecciones pasan las suyas en `LessonSetup.forms`.
 - Efectos posibles: daño, Estructura, Guardia (+altura), robar, Aliento (`breath`), curar (`heal`, hasta la Vida máxima) y `fistBonus` (+daño a los Puños con daño, acumulable, todo el combate).
 - Solo los Puños, Palmas y Patadas pueden interrumpir. Las defensas y técnicas nunca interrumpen, aunque estén en otro paso de la secuencia.

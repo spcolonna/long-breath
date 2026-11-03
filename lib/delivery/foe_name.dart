@@ -11,7 +11,7 @@ import 'providers.dart';
 extension FoeName on WidgetRef {
   String foe(BuildContext context, String id) {
     final g = read(runControllerProvider)?.ghost;
-    return id == ghostEnemy && g != null
+    return isGhostFoe(id) && g != null
         ? AppLocalizations.of(context).ghostName(g.n)
         : read(textProvider).enemy(id);
   }

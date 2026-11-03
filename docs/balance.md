@@ -607,3 +607,15 @@ Antes, un jugador recién llegado no tenía ninguna forma de camino (las tres se
 
 El cambio en victoria está dentro del ruido; las formas dejan de ser raras.
 
+### 3r. Discípulo Perdido por camino (03/11/2026)
+
+Si el caído tenía camino, el nodo del Discípulo Perdido pelea con `disciple_<camino>` (misma imagen, mismo castigo de postura). Simulado reemplazando al `disciple` de la etapa 1 (300 subidas, Normal; Vida perdida por pelea):
+
+| Versión | promedio | experto |
+|---|---|---|
+| base | 9.5 | 8.5 |
+| tigre | 8.6 | 7.4 |
+| serpiente | 8.1 | 7.0 |
+| grulla | 11.5 | 8.9 |
+
+Victoria 96–100% en todas: pesa lo mismo que el de siempre, solo cambia cómo se pelea.

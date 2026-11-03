@@ -37,7 +37,7 @@ La subida se hace por tramos: la ladera de bambú, el santuario de los animales,
 Antes de subir, los novicios practican en el patio con el **muñeco de madera** (木人桩), el mismo que se usa en las escuelas de Wing Chun y de Hung Gar. En el camino aparecen:
 
 - **Murciélago de Jade:** un espíritu de la montaña con alas de jade hechas de ecos. Su chillido aturde y te hace soltar lo que tenés en la mano.
-- **Discípulo Perdido:** un alumno que no llegó arriba y quedó atrapado en la montaña. Castiga a quien se queda quieto en la misma postura.
+- **Discípulo Perdido:** un alumno que no llegó arriba y quedó atrapado en la montaña. Castiga a quien se queda quieto en la misma postura. Si lleva a un caído que ya tenía camino, pelea con los golpes de ese camino y cierra con su forma larga.
 - **Gólem de Cuarzo:** cuarzo pálido con vetas turquesa y musgo en los hombros, casi inamovible hasta que se le rompe el equilibrio.
 - **Salamandra de Brasa:** ágil y escurridiza, con la cola encendida como una brasa; se entierra para protegerse.
 - **Mono Ladrón:** un mono dorado que se lleva tu jade en cada manotazo y, si no lo frenás a tiempo, se escapa con el botín.
@@ -536,6 +536,9 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 |---|---|---|---|---|---|
 | Murciélago de Jade | Común | 48 | 11 | Alto 3×2 → Alto 7 → Chillido | Chillido: al empezar tu turno descartás 1 carta a elección |
 | Discípulo Perdido | Común | 70 | 18 | Alto 7 → Medio 9 → Barrido bajo 7 | Si terminás el turno en la misma postura que el anterior, su ataque hace +5 de daño y +2 a Estructura |
+| Discípulo Perdido (Tigre) | Común | 80 | 18 | Garra de tigre alta 8 → Colmillo medio 4×2 → Rugido (Carga +5) → Puño que doma al tigre bajo 12 (cuenta regresiva) | Lleva a un caído del camino del Tigre. **Despierta +1** y el castigo de postura |
+| Discípulo Perdido (Serpiente) | Común | 74 | 18 | La serpiente vuelve la cabeza baja 7 (−1 Aliento) → Serpiente enroscada (Guardia 8) → Serpiente ágil media 10 (Interrumpir) → La serpiente dorada enrosca la seda alta 14 (cuenta regresiva) | Lleva a un caído del camino de la Serpiente. **Regeneración 2** y el castigo de postura |
+| Discípulo Perdido (Grulla) | Común | 74 | 20 | La grulla blanca abre las alas (Guardia 7) → Picotazo alto 4×2 → Grulla en una pata (Guardia 9 contra patadas) → Puño de la Grulla Blanca medio 11 (cuenta regresiva) | Lleva a un caído del camino de la Grulla. **Abanico 2** y el castigo de postura |
 | Gólem de Cuarzo | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
 | Salamandra de Brasa | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
 | Mono Ladrón | Común | 58 | 13 | Manotazo alto 4×2 → Manotazo bajo 5×2 → Se escapa | **Ladrón:** cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa (con cuenta regresiva): se lleva lo robado y ese combate no da jade, aunque la carta de recompensa se gana igual. Si lo vencés antes, no perdés nada. Desequilibrarlo le hace perder la acción y te da un turno más |

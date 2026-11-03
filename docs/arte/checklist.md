@@ -198,7 +198,7 @@ Total: 156 · ✅ 127 · 🎨 4 · ❌ 25
 | ✅ propio | `assets/art/enemies/bat.webp` | bat (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat_bronze.webp` | bell_bat (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bat_frost.webp` | frost_bat (common) | enemies/placeholder.webp | — |
-| ✅ propio | `assets/art/enemies/disciple.webp` | disciple (common) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/disciple.webp` | disciple (common), disciple_tiger (common), disciple_snake (common), disciple_crane (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/disciple_saffron.webp` | temple_guard (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/disciple_wind.webp` | wind_disciple (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/dummy.webp` | dummy (common), dummy_basic (common), dummy_heights (common), dummy_light (common), dummy_guard (common), dummy_forms (common) | enemies/placeholder.webp | — |

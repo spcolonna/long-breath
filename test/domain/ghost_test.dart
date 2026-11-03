@@ -59,6 +59,24 @@ void main() {
     expect(g.upgrades, 2);
   });
 
+  test('el Discípulo Perdido pelea con el camino del caído', () {
+    expect(ghostFoe(null), ghostEnemy);
+    expect(ghostFoe(const Ghost(n: 1, floor: 2)), ghostEnemy);
+    for (final s in Style.values) {
+      final id = ghostFoe(Ghost(n: 1, floor: 2, style: s));
+      expect(isGhostFoe(id), isTrue);
+      final def = data.enemy(id);
+      expect(def.art, data.enemy(ghostEnemy).art, reason: id);
+      expect(def.sameStancePunishDamage, greaterThan(0), reason: id);
+      // Cada versión cierra su ciclo con la forma larga de su camino.
+      final last = def.phases.single.pattern.last;
+      expect(last.countdown, isTrue, reason: id);
+      final form = data.forms.firstWhere((f) => f.pool == s && f.isLong);
+      expect(last.labelKey, 'g_${form.id}', reason: id);
+    }
+    expect(isGhostFoe('wind_disciple'), isFalse);
+  });
+
   test('la carta que se deja: la del camino más mejorada; iniciales no', () {
     const deck = [
       CombatCard(uid: 0, cardId: 'ge_dang', upgrades: 3),
