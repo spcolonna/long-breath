@@ -173,6 +173,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fountain => 'Fuente de meditación';
 
   @override
+  String get fountainDry => 'La fuente está seca: no cura nada.';
+
+  @override
   String fountainHeal(int amount) {
     return 'Curar $amount de Vida';
   }
@@ -2408,6 +2411,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String legacyJade(int n) {
     return '+$n de jade';
+  }
+
+  @override
+  String legacyGained(String what) {
+    return 'Heredado: $what';
   }
 
   @override

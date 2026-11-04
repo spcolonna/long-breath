@@ -172,6 +172,7 @@
     }
   },
   "fountain": "Fuente de meditación",
+  "fountainDry": "La fuente está seca: no cura nada.",
   "fountainHeal": "Curar {amount} de Vida",
   "@fountainHeal": {
     "placeholders": {
@@ -1104,6 +1105,8 @@
   "@legacyHp": { "placeholders": { "n": { "type": "int" } } },
   "legacyJade": "+{n} de jade",
   "@legacyJade": { "placeholders": { "n": { "type": "int" } } },
+  "legacyGained": "Heredado: {what}",
+  "@legacyGained": { "placeholders": { "what": { "type": "String" } } },
   "talismanStartTitle": "Don de la escuela",
   "talismanStartHint": "Los meridianos te acompañan: elegí un talismán para esta subida.",
   "stageLootTitle": "Botín de la etapa",

@@ -100,6 +100,7 @@ class StaggerIn extends StatefulWidget {
     this.delay = Duration.zero,
     this.rise = 18,
     this.scaleFrom = 1,
+    this.onShow,
   });
 
   final int index;
@@ -110,6 +111,10 @@ class StaggerIn extends StatefulWidget {
 
   /// Escala inicial: más de 1 para que baje hacia su lugar (como un sello).
   final double scaleFrom;
+
+  /// Al empezar a aparecer (el sonido de una opción que llega). También con
+  /// movimiento reducido.
+  final VoidCallback? onShow;
 
   @override
   State<StaggerIn> createState() => _StaggerInState();
@@ -137,6 +142,15 @@ class _StaggerInState extends State<StaggerIn>
         curve: Curves.easeOutCubic,
       ),
     );
+    if (widget.onShow != null) _c.addListener(_maybeShow);
+  }
+
+  var _shown = false;
+
+  void _maybeShow() {
+    if (_shown || _c.duration! * _c.value < _wait) return;
+    _shown = true;
+    widget.onShow!();
   }
 
   @override

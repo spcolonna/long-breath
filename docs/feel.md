@@ -31,11 +31,11 @@ Todo lo que se agrega al juego tiene que salir pulido desde el primer commit. Es
 | Pieza | Archivo | Para qué |
 |---|---|---|
 | `Press`, `pressedContent` | `widgets/press.dart` | Hundir lo que se toca; el tema lo aplica a los botones |
-| `StaggerIn` | `widgets/press.dart` | Entrar de a uno |
+| `StaggerIn(onShow:)` | `widgets/press.dart` | Entrar de a uno (con su sonido al llegar) |
 | `CountUp`, `HpCount`, `JadeCount` | `press.dart`, `hp_count.dart`, `jade.dart` | Cifras que cuentan |
 | `Shake`, `Bounce`, `PopText`, `InkBurst`, `ArtBurst`, `ScreenFlash`, `TrailBar`, `FinisherSeal`, `ComboCounter` | `widgets/juice.dart` | Golpes, premios, estallidos, barras con estela, remate (trazo + sello 破), cadena de golpes |
 | `DeckGrid(pickFx:)` | `widgets/deck_sheet.dart` | La carta se quema o se ilumina |
-| `NodeBackdrop`, `ChoiceTile`, `DeckPickScreen` | `widgets/node_kit.dart` | Pantallas de lugares del camino |
+| `NodeBackdrop`, `ChoiceTile`, `DeckPickScreen`, `PickCard` | `widgets/node_kit.dart` | Pantallas de lugares del camino; `PickCard` para elegir un premio (talismán, legado) |
 | `SceneBackdrop`, `KenBurns`, `StageScene` | `widgets/` | Fondos pintados que respiran |
 | `CloudDrift` | `widgets/cloud_drift.dart` | Nubes en dos capas (parallax), sin arte |
 | `brushSlash`, `scrollUnroll`, `inkReveal` | `route_fx.dart`, `ink_reveal.dart` | Entradas de pantalla especiales |

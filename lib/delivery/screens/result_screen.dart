@@ -18,6 +18,7 @@ import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/hito_tile.dart';
+import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
@@ -46,7 +47,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         ..forward();
   static const _landAt = 0.12;
   static const _stampAt = 0.72;
+  static const _offerFrom = 0.72;
+  static const _offerAt = 0.8;
   bool _stamped = false;
+  bool _offered = false;
   int _burst = 0;
   final _lines = <double>[];
 
@@ -67,6 +71,18 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
         _stamped = true;
         Haptics.heavyImpact();
         ref.read(audioProvider).play(Sfx.victoryStamp);
+      }
+    }
+    // La ofrenda: el jade se va contando y, al volverse loto, suena el cuenco.
+    if ((a?.offering ?? 0) > 0) {
+      if (!_lines.contains(_offerFrom) && _c.value >= _offerFrom) {
+        _lines.add(_offerFrom);
+        Haptics.lightImpact();
+      }
+      if (!_offered && _c.value >= _offerAt) {
+        _offered = true;
+        Haptics.mediumImpact();
+        ref.read(audioProvider).play(Sfx.offering);
       }
     }
     // Cada hito cumplido cae con un golpe y su campanita.
@@ -329,18 +345,13 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                             const SizedBox(height: 6),
                             _enter(
                               0.7,
-                              0.78,
-                              Text(
-                                t.resultOffering(
-                                  ascent.jade,
-                                  ascent.offering,
-                                ),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Palette.blossom.withValues(
-                                    alpha: 0.85,
-                                  ),
+                              0.76,
+                              AnimatedBuilder(
+                                animation: _c,
+                                builder: (_, _) => _OfferingLine(
+                                  jade: ascent.jade,
+                                  offering: ascent.offering,
+                                  drain: _span(_offerFrom, _offerAt),
                                 ),
                               ),
                             ),
@@ -671,6 +682,76 @@ class _LotusLine extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// La ofrenda: el jade sobrante baja contando y, al vaciarse, rebota el loto
+/// que dejó en la escuela.
+class _OfferingLine extends StatelessWidget {
+  const _OfferingLine({
+    required this.jade,
+    required this.offering,
+    required this.drain,
+  });
+
+  final int jade;
+  final int offering;
+
+  /// Cuánto se ofrendó (0–1).
+  final double drain;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final done = drain >= 1;
+    const style = TextStyle(
+      fontWeight: FontWeight.w700,
+      fontFeatures: [FontFeature.tabularFigures()],
+    );
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Opacity(
+              opacity: 1 - 0.5 * drain,
+              child: const JadeCoin(size: 18),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '${(jade * (1 - drain)).round()}',
+              style: style.copyWith(color: Palette.jade),
+            ),
+            const SizedBox(width: 8),
+            const Icon(
+              Icons.arrow_forward_rounded,
+              size: 16,
+              color: Palette.textDim,
+            ),
+            const SizedBox(width: 8),
+            Bounce(
+              trigger: done ? 1 : 0,
+              scale: 1.4,
+              child: const LotusSeed(size: 20),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '+${(offering * drain).round()}',
+              style: style.copyWith(color: Palette.blossom),
+            ),
+          ],
+        ),
+        const SizedBox(height: 2),
+        Text(
+          t.resultOffering(jade, offering),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 12,
+            color: Palette.blossom.withValues(alpha: 0.85),
+          ),
+        ),
+      ],
     );
   }
 }

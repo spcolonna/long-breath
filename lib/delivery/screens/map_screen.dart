@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/model/enums.dart';
 import '../../domain/model/game_balance.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
@@ -270,7 +271,13 @@ class _MapViewState extends ConsumerState<_MapView>
     );
     await _walk.forward(from: 0);
     if (!mounted) return;
-    Haptics.lightImpact();
+    // Llegar ante un élite o el jefe pesa más que ante un combate común.
+    final rank = n.type == NodeType.combat
+        ? ref.read(dataProvider).enemy(n.enemy!).rank
+        : null;
+    rank == EnemyRank.elite || rank == EnemyRank.boss
+        ? Haptics.heavyImpact()
+        : Haptics.lightImpact();
     setState(() => _burst++);
     await Future.delayed(const Duration(milliseconds: 160));
     if (!mounted) return;

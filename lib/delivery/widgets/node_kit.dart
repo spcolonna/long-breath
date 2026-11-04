@@ -239,3 +239,57 @@ class DeckPickScreen extends ConsumerWidget {
     );
   }
 }
+
+/// Tarjeta de una elección de premio (talismán, legado): la elegida sube y
+/// brilla con [accent], las otras se apagan y se van al confirmar.
+class PickCard extends StatelessWidget {
+  const PickCard({
+    super.key,
+    required this.picked,
+    required this.dimmed,
+    required this.taking,
+    required this.accent,
+    required this.child,
+  });
+
+  final bool picked;
+  final bool dimmed;
+  final bool taking;
+  final Color accent;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final still = calm(context);
+    return AnimatedScale(
+      scale: taking ? 1.06 : (picked ? 1.03 : (dimmed ? 0.96 : 1)),
+      duration: Duration(milliseconds: still ? 0 : 240),
+      curve: Curves.easeOutBack,
+      child: AnimatedOpacity(
+        opacity: dimmed ? (taking ? 0 : 0.55) : 1,
+        duration: const Duration(milliseconds: 220),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Palette.surface,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: picked ? accent : Palette.line,
+              width: picked ? 3 : 1.5,
+            ),
+            boxShadow: picked
+                ? [
+                    BoxShadow(
+                      color: Palette.gold.withValues(alpha: 0.45),
+                      blurRadius: 14,
+                    ),
+                  ]
+                : null,
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}

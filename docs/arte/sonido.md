@@ -546,6 +546,28 @@ clean start with no silence, mobile-friendly mix.
 ```
 
 
+#### `legacy_seal` — El sello 承 del legado cae al empezar la subida
+
+**Destino:** `assets/audio/sfx/legacy_seal.wav`
+
+```
+Soft ink seal pressed on paper with a warm low wooden knock and a faint guqin pluck, 0.8 seconds.
+Style: crisp, punchy game sound effect for a bright martial-arts card game, traditional Chinese
+percussion and instruments, close and dry, no long reverb tail, no music, no voice unless stated,
+clean start with no silence, mobile-friendly mix.
+```
+
+#### `offering` — El jade que sobra se ofrenda y se vuelve loto
+
+**Destino:** `assets/audio/sfx/offering.wav`
+
+```
+Jade coins clinking into a bowl, turning into a soft rising chime like a lotus opening, 1.2 seconds.
+Style: crisp, punchy game sound effect for a bright martial-arts card game, traditional Chinese
+percussion and instruments, close and dry, no long reverb tail, no music, no voice unless stated,
+clean start with no silence, mobile-friendly mix.
+```
+
 
 ---
 

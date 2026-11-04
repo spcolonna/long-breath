@@ -40,6 +40,8 @@ enum Sfx {
   rewardTake('reward_take', volume: 0.8),
   fountainHeal('fountain_heal'),
   shrineOath('shrine_oath'),
+  legacySeal('legacy_seal', volume: 0.8),
+  offering('offering', volume: 0.8),
   runResult('run_result');
 
   const Sfx(this.id, {this.variants = 1, this.volume = 1});

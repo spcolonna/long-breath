@@ -233,9 +233,38 @@ class TalismanTile extends ConsumerWidget {
                 ],
               ),
               Text(
-                t.talismanEffect(def.effect, text),
+                t.talismanEffect(def.effect, text, costs: false),
                 style: const TextStyle(fontSize: 13, color: Palette.textDim),
               ),
+              // Lo que cobra, aparte y en laca: se lee de un vistazo.
+              if (t.talismanCost(def.effect) case final cost
+                  when cost.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(top: 1, right: 4),
+                        child: Icon(
+                          Icons.change_history_rounded,
+                          size: 13,
+                          color: Palette.lacquer,
+                        ),
+                      ),
+                      Flexible(
+                        child: Text(
+                          cost,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: Palette.lacquer,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),

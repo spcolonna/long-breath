@@ -182,8 +182,13 @@ extension Labels on AppLocalizations {
     if (e.retain > 0) awEffRetain(e.retain),
   ].join(' ');
 
-  /// Lo que hace un talismán, una frase por efecto.
-  String talismanEffect(TalismanEffect e, ContentText text) => [
+  /// Lo que hace un talismán, una frase por efecto. Sin [costs], deja afuera
+  /// lo que cobra (para mostrarlo aparte con [talismanCost]).
+  String talismanEffect(
+    TalismanEffect e,
+    ContentText text, {
+    bool costs = true,
+  }) => [
     if (e.startStance != null) talEffStance(text.stance(e.startStance!)),
     if (e.firstTurnBreath > 0) talEffFirstBreath(e.firstTurnBreath),
     if (e.structure > 0) talEffStructure(e.structure),
@@ -211,6 +216,11 @@ extension Labels on AppLocalizations {
     if (e.guardPierce > 0) talEffGuardPierce(e.guardPierce),
     if (e.heavyDamage > 0) talEffHeavyDamage(e.heavyDamage),
     // Los costos van al final («…, pero …»).
+    if (costs) talismanCost(e),
+  ].where((s) => s.isNotEmpty).join(' ');
+
+  /// Lo que cobra un talismán («pero …»), o vacío si no cobra nada.
+  String talismanCost(TalismanEffect e) => [
     if (e.handSize < 0) talEffHandLess(-e.handSize),
     if (e.maxHp < 0) talEffMaxHpLess(-e.maxHp),
     if (e.fountainHeal < 0) talEffFountainLess(-e.fountainHeal),

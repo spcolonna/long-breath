@@ -346,6 +346,12 @@ abstract class AppLocalizations {
   /// **'Fuente de meditación'**
   String get fountain;
 
+  /// No description provided for @fountainDry.
+  ///
+  /// In es, this message translates to:
+  /// **'La fuente está seca: no cura nada.'**
+  String get fountainDry;
+
   /// No description provided for @fountainHeal.
   ///
   /// In es, this message translates to:
@@ -3861,6 +3867,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'+{n} de jade'**
   String legacyJade(int n);
+
+  /// No description provided for @legacyGained.
+  ///
+  /// In es, this message translates to:
+  /// **'Heredado: {what}'**
+  String legacyGained(String what);
 
   /// No description provided for @talismanStartTitle.
   ///

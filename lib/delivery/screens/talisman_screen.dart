@@ -8,9 +8,11 @@ import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/juice.dart';
+import '../widgets/node_kit.dart';
 import '../widgets/talisman_widgets.dart';
 import 'home_screen.dart' show routeFor;
 import '../feel.dart';
+import '../labels.dart';
 import '../widgets/press.dart';
 
 /// Después de vencer al élite: elegir 1 de 3 talismanes. Después viene la
@@ -75,7 +77,11 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
 
   void _select(String id) {
     if (_taking) return;
-    Haptics.selectionClick();
+    // Uno que cobra se siente más pesado en la mano.
+    final cost = AppLocalizations.of(
+      context,
+    ).talismanCost(ref.read(dataProvider).talisman(id).effect);
+    cost.isEmpty ? Haptics.selectionClick() : Haptics.mediumImpact();
     ref.read(audioProvider).play(Sfx.cardSelect);
     setState(() => _picked = id);
   }
@@ -113,37 +119,43 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
         ),
         const Spacer(),
         for (final (i, id) in widget.options.indexed)
-          _Arrive(
-            delayMs: 150 + 160 * i,
-            onArrive: () => ref.read(audioProvider).play(Sfx.rewardFlip),
+          StaggerIn(
+            index: i,
+            delay: const Duration(milliseconds: 150),
+            step: const Duration(milliseconds: 160),
+            rise: 40,
+            onShow: () => ref.read(audioProvider).play(Sfx.rewardFlip),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
-              child: Press(child: GestureDetector(
-                onTap: () => _select(id),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    _Option(
-                      id: id,
-                      picked: _picked == id,
-                      dimmed: _picked != null && _picked != id,
-                      taking: _taking && _picked == id,
-                    ),
-                    Positioned.fill(
-                      child: InkBurst(
-                        trigger: _picked == id ? _burst : 0,
-                        colors: [
-                          talismanColor(data.talisman(id)),
-                          Palette.gold,
-                          Colors.white,
-                        ],
-                        count: 36,
-                        radius: 160,
+              child: Press(
+                child: GestureDetector(
+                  onTap: () => _select(id),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      PickCard(
+                        picked: _picked == id,
+                        dimmed: _picked != null && _picked != id,
+                        taking: _taking && _picked == id,
+                        accent: Palette.lacquer,
+                        child: TalismanTile(id: id, badgeSize: 52),
                       ),
-                    ),
-                  ],
+                      Positioned.fill(
+                        child: InkBurst(
+                          trigger: _picked == id ? _burst : 0,
+                          colors: [
+                            talismanColor(data.talisman(id)),
+                            Palette.gold,
+                            Colors.white,
+                          ],
+                          count: 36,
+                          radius: 160,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )),
+              ),
             ),
           ),
         const SizedBox(height: 12),
@@ -175,95 +187,4 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
       ],
     );
   }
-}
-
-/// Tarjeta de un talismán: la elegida sube y brilla, las otras se apagan.
-class _Option extends StatelessWidget {
-  const _Option({
-    required this.id,
-    required this.picked,
-    required this.dimmed,
-    required this.taking,
-  });
-
-  final String id;
-  final bool picked;
-  final bool dimmed;
-  final bool taking;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedScale(
-      scale: taking ? 1.06 : (picked ? 1.03 : (dimmed ? 0.96 : 1)),
-      duration: const Duration(milliseconds: 240),
-      curve: Curves.easeOutBack,
-      child: AnimatedOpacity(
-        opacity: dimmed ? (taking ? 0 : 0.55) : 1,
-        duration: const Duration(milliseconds: 220),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Palette.surface,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: picked ? Palette.lacquer : Palette.line,
-              width: picked ? 3 : 1.5,
-            ),
-            boxShadow: picked
-                ? [
-                    BoxShadow(
-                      color: Palette.gold.withValues(alpha: 0.45),
-                      blurRadius: 14,
-                    ),
-                  ]
-                : null,
-          ),
-          child: TalismanTile(id: id, badgeSize: 52),
-        ),
-      ),
-    );
-  }
-}
-
-/// Entra desde abajo con un pequeño rebote, una opción después de la otra.
-class _Arrive extends StatefulWidget {
-  const _Arrive({
-    required this.delayMs,
-    required this.onArrive,
-    required this.child,
-  });
-
-  final int delayMs;
-  final VoidCallback onArrive;
-  final Widget child;
-
-  @override
-  State<_Arrive> createState() => _ArriveState();
-}
-
-class _ArriveState extends State<_Arrive> {
-  bool _in = false;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(milliseconds: widget.delayMs), () {
-      if (!mounted) return;
-      widget.onArrive();
-      setState(() => _in = true);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) => AnimatedSlide(
-    offset: _in ? Offset.zero : const Offset(0, 0.6),
-    duration: const Duration(milliseconds: 420),
-    curve: Curves.easeOutBack,
-    child: AnimatedOpacity(
-      opacity: _in ? 1 : 0,
-      duration: const Duration(milliseconds: 260),
-      child: widget.child,
-    ),
-  );
 }
