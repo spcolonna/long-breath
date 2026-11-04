@@ -88,10 +88,10 @@
     ]
   },
   "difficulties": {
-    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 105, "enemyDamage": 105 },
-    "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20, "enemyHp": 111, "enemyDamage": 110 },
-    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 116, "enemyDamage": 115 },
-    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 115, "enemyDamage": 114, "enemyStructure": 106 }
+    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 109, "enemyDamage": 108 },
+    "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20, "enemyHp": 115, "enemyDamage": 114 },
+    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 118, "enemyDamage": 117 },
+    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 120, "enemyDamage": 118, "enemyStructure": 108 }
   },
   "picos": [
     { "eliteHp": 15 },

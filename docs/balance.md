@@ -660,3 +660,18 @@ Al empezar, el discípulo elige la carta del anterior (mitad de mejoras) o sus n
 | +15 jade | 36% | 64% |
 
 Con +5 de Vida máxima daba +8 a +10 pp; se bajó a +3 (del orden de un punto del árbol de meridianos, que da +2). El ruido entre corridas es de ±3 pp.
+
+### 3w. Recalibración de dificultades (04/11/2026)
+
+Con élites, talismanes de jefe, formas de camino y armas, todo se había corrido para arriba (400 subidas, sin legado): Normal promedio 31% / experto 63% (objetivo de escuela nueva 25% / 55%), Fácil promedio 72% (~64%), Difícil experto 47% (~43%), Shifu experto 37% (~24%). Además el legado suma unos 5 pp a cada discípulo después del primero.
+
+| dificultad | antes (Vida/daño enemigo) | ahora | promedio | experto |
+|---|---|---|---|---|
+| Fácil | 105/105 | 109/108 | 63% | 87% |
+| Normal | 111/110 | 115/114 | 26% (legado: 29–30%) | 55% (legado: 61–63%) |
+| Difícil | 116/115 | 118/117 | 15% | 41% |
+| Shifu | 115/114, Estructura 106 | 120/118, Estructura 108 | 5% | 23% |
+
+Meta en Normal (40 escuelas × 40 subidas): el promedio completa el árbol en la subida 20 y queda en ~60% con todo abierto; el experto, en la 15 y ~86%. Dentro del objetivo (58% / 80%, árbol hacia la subida 22).
+
+Nota: en zsh, `--legacy hp` dentro de una variable sin `${=var}` llega como un solo argumento y el simulador lo ignora (da igual que sin legado).

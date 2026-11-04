@@ -349,10 +349,10 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 
 | Dificultad | Vida | Fuente | Enemigos |
 |---|---|---|---|
-| Fácil 易 | 60 | +25 | 105% de Vida y daño |
-| Normal 常 | 50 | +20 | 111% de Vida, 110% de daño |
-| Difícil 难 | 50 | +15 | 116% de Vida, 115% de daño |
-| Shifu 师 | 45 | +15 | 115% de Vida, 114% de daño, 106% de Estructura |
+| Fácil 易 | 60 | +25 | 109% de Vida, 108% de daño |
+| Normal 常 | 50 | +20 | 115% de Vida, 114% de daño |
+| Difícil 难 | 50 | +15 | 118% de Vida, 117% de daño |
+| Shifu 师 | 45 | +15 | 120% de Vida, 118% de daño, 108% de Estructura |
 
 Los porcentajes se aplican sobre la tabla de enemigos.
 
