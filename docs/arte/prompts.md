@@ -22,10 +22,10 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (13):** las 3 armas (`assets/art/weapons/`) y las ilustraciones de las cartas del camino Grulla, justo abajo en «Para generar ahora», un prompt por imagen.
+- **Falta (5):** las ilustraciones de 5 cartas del camino Grulla (Rodilla, Canto, La grulla blanca abre las alas, Picotazo y La grulla duerme), justo abajo en «Para generar ahora», un prompt por imagen.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
-  37 ilustraciones de cartas (los caminos Tigre y Serpiente, completos). El detalle está en «Estado», más abajo.
+  las 3 armas y 42 ilustraciones de cartas (Tigre y Serpiente completos, 5 de la Grulla). El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
 
@@ -44,55 +44,7 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-## Armas — `assets/art/weapons/`
-
-Faltan **3 armas**. Ninguna es recoloreo. Hasta que llegan, el juego las dibuja por código. Cada imagen va en la mano del héroe y en la elección del arma; vertical, con la punta arriba y **sin borla** (la borla, del color del nivel, la pone el juego). Al integrar se recortan los márgenes transparentes a una caja 1:3 y se ajusta el punto de agarre en `lib/delivery/widgets/weapon_art.dart` (`weaponShapes`).
-
-### 1. `weapons/gun.png` — Bastón 棍
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
-
-The weapon: a Chinese long staff (gùn), a straight round pole of polished ash wood lacquered warm vermilion-brown, slightly thicker at the bottom, with a gold metal cap ring at each end and two thin gold rings around the middle, simple and elegant. Layout: the grip area is the middle of the staff.
-
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
-```
-
-### 2. `weapons/jian.png` — Espada 剑
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
-
-The weapon: a Chinese straight double-edged sword (jiàn), a slim bright steel blade with a fine central ridge and a pointed tip taking the top 60% of the height, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel at the bottom. Layout: the guard sits at about 62% of the height from the top and the pommel near the bottom.
-
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
-```
-
-### 3. `weapons/pudao.png` — Pudao 朴刀
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
-
-The weapon: a Chinese pudao, a long two-handed saber: a broad, single-edged curved steel blade on top (straight back on the left, curved cutting edge bulging to the right, rising to a point) taking the top 40% of the height, a gold collar where blade meets handle, then a long straight lacquered vermilion-brown wooden handle with a small gold end cap at the bottom. Layout: the blade takes the top 40% of the height and the long handle the rest.
-
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
-```
-
----
-
-Faltan **10 ilustraciones de cartas** (las del camino Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 37 que ya están sirven de referencia de estilo.
+Faltan **5 ilustraciones de cartas** (las del camino Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 42 que ya están sirven de referencia de estilo.
 
 Cada bloque gris es **una imagen**: copialo, pegalo en ChatGPT y guardá el PNG con el nombre del título. El color de la estela es el del tipo de la carta.
 
@@ -100,83 +52,7 @@ Cada bloque gris es **una imagen**: copialo, pegalo en ChatGPT y guardá el PNG 
 
 > **Mismo cuidado que con la Serpiente:** las alas y el equilibrio en una pata hacen que ChatGPT convierta los brazos en alas, agregue o funda piernas y deforme los dedos. Cada prompt pide brazos humanos con manga, las dos piernas completas aunque una esté levantada y una forma de mano simple a la vista. La grulla aparece solo como espíritu de tinta separado del cuerpo. Si sale una mano o una pierna mal, en la misma conversación pedí: *«Same image, fix only the hands and legs: five fingers each, two complete legs, fully visible»*.
 
-### 1. `he_chi.png` — Ala de grulla 鹤翅
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: standing in a balanced stance, the front forearm sweeping up and outward above the head with the open palm turned out to deflect a high blow, the rear hand open in front of the chest.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that spreads one large wing behind the raised arm like a shield, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
-```
-
-### 2. `du_li.png` — Grulla en una pata 独立
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: balanced calmly on one straight leg, the other knee raised to hip height with the foot hanging relaxed below it, both arms extended low and slightly out to the sides for balance.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, palms facing down); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in cobalt blue (#3E7BE0) that stands on one leg beside the figure, mirroring the pose, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
-```
-
-### 3. `he_zui.png` — Pico de grulla 鹤嘴
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: in a forward bow stance, the front arm extended at chest height striking with a crane-beak hand, the rear hand open at the hip.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand: all five fingertips pinched together into one clear point, wrist straight, like a bird's beak; rear hand a flat open palm); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in vermilion (#E8453C) that stretches its long neck forward along the striking arm, its beak pointing the same way as the hand, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
-```
-
-### 4. `he_wu.png` — Danza de la grulla 鹤舞
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: a high side kick at the moment of a turn: the support leg straight, the kicking leg extended out to the side at chest height with the foot flexed, the torso upright and leaning slightly away, both arms open wide to the sides for balance.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in gold (#E59A12) that circles once around the figure with its wings open, tracing the turn, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
-```
-
-### 5. `he_xi.png` — Rodilla de grulla 鹤膝
+### 1. `he_xi.png` — Rodilla de grulla 鹤膝
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -195,7 +71,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 6. `he_ming.png` — Canto de la grulla 鹤鸣
+### 2. `he_ming.png` — Canto de la grulla 鹤鸣
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -214,26 +90,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 7. `he_ding.png` — Corona de la grulla 鹤顶
-
-```
-Create ONE single image. Start immediately, without asking questions.
-
-Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
-
-Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
-The move: in a short forward stance, the front arm striking upward at chin height with the back of the bent wrist, the rear hand open in front of the chest.
-ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (front hand: wrist bent down, fingers relaxed and together pointing down, the top of the wrist leading the strike; rear hand a flat open palm); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
-The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in violet (#9B5DE5) that rises beside the striking wrist with its small red crown at the point of impact, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
-Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
-cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
-(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
-confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
-high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
-backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
-```
-
-### 8. `bai_he_liang_chi.png` — La grulla blanca abre las alas 白鹤亮翅
+### 3. `bai_he_liang_chi.png` — La grulla blanca abre las alas 白鹤亮翅
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -252,7 +109,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 9. `he_zhuo.png` — Picotazo de la grulla 鹤啄
+### 4. `he_zhuo.png` — Picotazo de la grulla 鹤啄
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -271,7 +128,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-### 10. `he_mian.png` — La grulla duerme 鹤眠
+### 5. `he_mian.png` — La grulla duerme 鹤眠
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -340,8 +197,8 @@ backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra
 |---|---|---|---|
 | Íconos | `assets/art/icons/` | 6 | ✅ |
 | Marcos por tipo | `assets/art/cards/` | 5 | ✅ |
-| Ilustraciones de cartas | `assets/art/cards/` | 58 | ✅ 37 · ⬜ 10 (Grulla) en «Para generar ahora» · 12 de armas con hanzi (opcionales) |
-| Armas | `assets/art/weapons/` | 3 | ⬜ 3 en «Para generar ahora» (dibujadas por código mientras tanto) |
+| Ilustraciones de cartas | `assets/art/cards/` | 58 | ✅ 42 · ⬜ 5 (Grulla) en «Para generar ahora» · 12 de armas con hanzi (opcionales) |
+| Armas | `assets/art/weapons/` | 3 | ✅ |
 
 ---
 
@@ -1532,7 +1389,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers.
 ```
 
-#### Ala de grulla 鹤翅 ⬜
+#### Ala de grulla 鹤翅 ✅
 
 **Destino:** `assets/art/cards/he_chi.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1553,7 +1410,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-#### Grulla en una pata 独立 ⬜
+#### Grulla en una pata 独立 ✅
 
 **Destino:** `assets/art/cards/du_li.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1574,7 +1431,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-#### Pico de grulla 鹤嘴 ⬜
+#### Pico de grulla 鹤嘴 ✅
 
 **Destino:** `assets/art/cards/he_zui.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1595,7 +1452,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-#### Danza de la grulla 鹤舞 ⬜
+#### Danza de la grulla 鹤舞 ✅
 
 **Destino:** `assets/art/cards/he_wu.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -1658,7 +1515,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
 ```
 
-#### Corona de la grulla 鹤顶 ⬜
+#### Corona de la grulla 鹤顶 ✅
 
 **Destino:** `assets/art/cards/he_ding.png`, cuadrada (1024×1024), fondo transparente.
 
@@ -2880,6 +2737,54 @@ Create a PORTRAIT image with a 9:16 aspect ratio (1080×1920), fully opaque (no 
 Story illustration of a wise old master with a long white beard and flowing cream-and-jade robes handing a large calligraphy brush to a young disciple seen from behind, both standing on a mountain summit at sunrise, the soft translucent shape of a friendly cobalt-and-gold dragon formed by clouds watching over them, warm hopeful mood, gold light.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft gradients, clean confident brush strokes, flat shading with watercolor bleeds, joyful and premium mood, very readable on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
 ```
+
+## 10. Armas — `assets/art/weapons/` ✅
+
+Las 3 están integradas. Ninguna es recoloreo; si falta una, el juego la dibuja por código. Cada imagen va en la mano del héroe y en la elección del arma; vertical, con la punta arriba y **sin borla** (la borla, del color del nivel, la pone el juego). Al integrar se recortan los márgenes transparentes a una caja 1:3 y se ajusta el punto de agarre en `lib/delivery/widgets/weapon_art.dart` (`weaponShapes`).
+
+### 1. `weapons/gun.png` — Bastón 棍 ✅
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
+
+The weapon: a Chinese long staff (gùn), a straight round pole of polished ash wood lacquered warm vermilion-brown, slightly thicker at the bottom, with a gold metal cap ring at each end and two thin gold rings around the middle, simple and elegant. Layout: the grip area is the middle of the staff.
+
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### 2. `weapons/jian.png` — Espada 剑 ✅
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
+
+The weapon: a Chinese straight double-edged sword (jiàn), a slim bright steel blade with a fine central ridge and a pointed tip taking the top 60% of the height, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel at the bottom. Layout: the guard sits at about 62% of the height from the top and the pommel near the bottom.
+
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### 3. `weapons/pudao.png` — Pudao 朴刀 ✅
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Game item sprite: a single weapon standing perfectly VERTICAL and centered, tip pointing straight UP, seen flat from the side, filling the full height of the image from top to bottom with only a thin empty margin. No hand, no person, no stand, no tassel, no ribbon, no shadow on the ground (the tassel is added by the game).
+
+The weapon: a Chinese pudao, a long two-handed saber: a broad, single-edged curved steel blade on top (straight back on the left, curved cutting edge bulging to the right, rising to a point) taking the top 40% of the height, a gold collar where blade meets handle, then a long straight lacquered vermilion-brown wooden handle with a small gold end cap at the bottom. Layout: the blade takes the top 40% of the height and the long handle the rest.
+
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, high readability on a small phone screen. NOT dark, NOT gloomy, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+---
 
 ## Pendiente
 

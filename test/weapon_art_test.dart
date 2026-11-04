@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:long_breath/delivery/providers.dart';
 import 'package:long_breath/delivery/widgets/hero_sprite.dart';
 import 'package:long_breath/delivery/widgets/weapon_art.dart';
 import 'package:long_breath/domain/model/enums.dart';
 
-Widget _hero(String weapon, int level, {bool calm = false}) => ProviderScope(
+Widget _hero(
+  String weapon,
+  int level, {
+  bool calm = false,
+  Set<String> art = const {},
+}) => ProviderScope(
+  key: ValueKey('$weapon $art'),
+  overrides: [weaponArtProvider.overrideWith((ref) async => art)],
   child: MaterialApp(
     home: MediaQuery(
       data: MediaQueryData(disableAnimations: calm),
@@ -38,6 +46,24 @@ void main() {
           reason: 'sin imagen, se dibuja',
         );
       }
+    }
+  });
+
+  testWidgets('con imagen, el arma usa su webp', (tester) async {
+    for (final id in weaponShapes.keys) {
+      await tester.pumpWidget(_hero(id, 2, art: {id}));
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(
+        find.byWidgetPredicate(
+          (w) =>
+              w is Image &&
+              w.image is AssetImage &&
+              (w.image as AssetImage).assetName ==
+                  'assets/art/weapons/$id.webp',
+        ),
+        findsOneWidget,
+        reason: id,
+      );
     }
   });
 

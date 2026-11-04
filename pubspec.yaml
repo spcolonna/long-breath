@@ -39,6 +39,7 @@ flutter:
     - assets/art/ui/
     - assets/art/vfx/
     - assets/art/icons/
+    - assets/art/weapons/
     - assets/art/cards/
     # hero.webp es la fuente de tool/recolor_hero.py; el juego usa las variantes.
     - assets/art/player/hero_novice.webp

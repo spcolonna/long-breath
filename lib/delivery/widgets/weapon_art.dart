@@ -32,8 +32,8 @@ class WeaponShape {
 
 const weaponShapes = <String, WeaponShape>{
   'gun': WeaponShape(grip: 0.58, tassel: 0.14, length: 0.95, angle: 0.75),
-  'jian': WeaponShape(grip: 0.74, tassel: 0.88, length: 0.62, angle: 0.4),
-  'pudao': WeaponShape(grip: 0.72, tassel: 0.40, length: 0.95, angle: 0.35),
+  'jian': WeaponShape(grip: 0.78, tassel: 0.96, length: 0.62, angle: 0.4),
+  'pudao': WeaponShape(grip: 0.72, tassel: 0.43, length: 0.95, angle: 0.35),
 };
 
 WeaponShape weaponShapeOf(String id) =>

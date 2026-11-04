@@ -68,4 +68,4 @@ Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la 
 
 ### 3. Ilustraciones de cartas
 
-- Faltan 10: las del camino Grulla, un prompt suelto por imagen en «Para generar ahora» de `prompts.md`. Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px. Llevan reglas de anatomía (manos simples a la vista, pose estable, piernas completas; las alas solo en un espíritu de tinta separado) porque ChatGPT deformaba dedos y cuerpos; con esas reglas las de la Serpiente salieron bien.
+- Faltan 5 del camino Grulla (he_xi, he_ming, bai_he_liang_chi, he_zhuo, he_mian); ya están he_chi, du_li, he_zui, he_wu y he_ding. Cada una tiene un prompt suelto por imagen en «Para generar ahora» de `prompts.md`. Se usan solas apenas llegan: `optimize_art.py` las deja en 384 px. Llevan reglas de anatomía (manos simples a la vista, pose estable, piernas completas; las alas solo en un espíritu de tinta separado) porque ChatGPT deformaba dedos y cuerpos; con esas reglas las de la Serpiente salieron bien.

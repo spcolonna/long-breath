@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 156 · ✅ 127 · 🎨 4 · ❌ 25
+Total: 156 · ✅ 135 · 🎨 4 · ❌ 17
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -127,13 +127,13 @@ Total: 156 · ✅ 127 · 🎨 4 · ❌ 25
 | ✅ propio | `assets/art/cards/ling_she.webp` | ilustración de ling_she | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_jiao.webp` | ilustración de she_jiao | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_pan.webp` | ilustración de she_pan | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/he_chi.webp` | ilustración de he_chi | hanzi de marca de agua | listo |
-| ❌ falta | `assets/art/cards/du_li.webp` | ilustración de du_li | hanzi de marca de agua | listo |
-| ❌ falta | `assets/art/cards/he_zui.webp` | ilustración de he_zui | hanzi de marca de agua | listo |
-| ❌ falta | `assets/art/cards/he_wu.webp` | ilustración de he_wu | hanzi de marca de agua | listo |
+| ✅ propio | `assets/art/cards/he_chi.webp` | ilustración de he_chi | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/du_li.webp` | ilustración de du_li | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/he_zui.webp` | ilustración de he_zui | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/he_wu.webp` | ilustración de he_wu | hanzi de marca de agua | — |
 | ❌ falta | `assets/art/cards/he_xi.webp` | ilustración de he_xi | hanzi de marca de agua | listo |
 | ❌ falta | `assets/art/cards/he_ming.webp` | ilustración de he_ming | hanzi de marca de agua | listo |
-| ❌ falta | `assets/art/cards/he_ding.webp` | ilustración de he_ding | hanzi de marca de agua | listo |
+| ✅ propio | `assets/art/cards/he_ding.webp` | ilustración de he_ding | hanzi de marca de agua | — |
 | ❌ falta | `assets/art/cards/bai_he_liang_chi.webp` | ilustración de bai_he_liang_chi | hanzi de marca de agua | listo |
 | ❌ falta | `assets/art/cards/he_zhuo.webp` | ilustración de he_zhuo | hanzi de marca de agua | listo |
 | ❌ falta | `assets/art/cards/he_mian.webp` | ilustración de he_mian | hanzi de marca de agua | listo |
@@ -154,9 +154,9 @@ Total: 156 · ✅ 127 · 🎨 4 · ❌ 25
 
 | Estado | Archivo | Para qué | Si falta se ve | Prompt |
 |---|---|---|---|---|
-| ❌ falta | `assets/art/weapons/gun.webp` | arma gun (capa en la mano del héroe) | arma dibujada por código | listo |
-| ❌ falta | `assets/art/weapons/jian.webp` | arma jian (capa en la mano del héroe) | arma dibujada por código | listo |
-| ❌ falta | `assets/art/weapons/pudao.webp` | arma pudao (capa en la mano del héroe) | arma dibujada por código | listo |
+| ✅ propio | `assets/art/weapons/gun.webp` | arma gun (capa en la mano del héroe) | arma dibujada por código | — |
+| ✅ propio | `assets/art/weapons/jian.webp` | arma jian (capa en la mano del héroe) | arma dibujada por código | — |
+| ✅ propio | `assets/art/weapons/pudao.webp` | arma pudao (capa en la mano del héroe) | arma dibujada por código | — |
 
 ## npc
 
