@@ -731,6 +731,7 @@
   "lesClimbSlide6": "Si perdés toda la Vida, ese discípulo no vuelve: la escuela manda a otro novicio, que empieza de cero. Mirá siempre el globo del rival antes de jugar. ¡Suerte!",
   "eventNode": "Evento",
   "combatNode": "Camino",
+  "optionalEliteTag": "Desvío",
   "formMissingShort": "Faltan cartas",
   "eventCost": "−{n} Vida",
   "@eventCost": {"placeholders": {"n": {"type": "int"}}},

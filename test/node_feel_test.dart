@@ -6,6 +6,7 @@ import 'package:long_breath/app.dart';
 import 'package:long_breath/delivery/controllers/run_controller.dart';
 import 'package:long_breath/delivery/providers.dart';
 import 'package:long_breath/domain/model/enums.dart';
+import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,5 +135,32 @@ void main() {
     await settle(tester);
     expect(find.text('Esto sigue más arriba'), findsOneWidget);
     expect(container.read(runControllerProvider)!.marks, {'wounded': 0});
+
+    // Un élite que comparte piso se marca como desvío en el mapa.
+    runs.newRun(Difficulty.normal);
+    r = container.read(runControllerProvider)!;
+    final data = container.read(dataProvider);
+    final elite = data.balance.stages[0].floors[8].enemies.first;
+    final first = r.map.firstWhere((n) => n.id == r.starts.first);
+    runs.resume(
+      r.copyWith(
+        phase: RunPhase.map,
+        map: [
+          for (final n in r.map)
+            n.id == first.id
+                ? MapNodeDef(
+                    id: n.id,
+                    type: NodeType.combat,
+                    enemy: elite,
+                    next: n.next,
+                  )
+                : n,
+        ],
+      ),
+    );
+    go(tester, '/map');
+    await settle(tester);
+    expect(r.starts.length, greaterThan(1));
+    expect(find.text('Desvío'), findsOneWidget);
   });
 }

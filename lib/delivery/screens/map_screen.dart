@@ -254,6 +254,13 @@ class _MapViewState extends ConsumerState<_MapView>
     final to = layout.pos[n.id]!;
     ref.read(audioProvider).play(Sfx.mapNode);
     Haptics.mediumImpact();
+    // Tomar el desvío: un segundo golpe, como quien acepta el reto.
+    if (isOptionalElite(n, widget.run.map, ref.read(dataProvider))) {
+      Future.delayed(
+        const Duration(milliseconds: 110),
+        Haptics.heavyImpact,
+      );
+    }
     setState(() {
       _going = n;
       final cur = widget.run.currentNode;
@@ -410,6 +417,7 @@ class _MapViewState extends ConsumerState<_MapView>
                             available:
                                 _going == null &&
                                 widget.available.contains(n.id),
+                            optional: isOptionalElite(n, run.map, data),
                             onTap: () => _go(n),
                           ),
                         ),

@@ -2368,6 +2368,12 @@ abstract class AppLocalizations {
   /// **'Camino'**
   String get combatNode;
 
+  /// No description provided for @optionalEliteTag.
+  ///
+  /// In es, this message translates to:
+  /// **'Desvío'**
+  String get optionalEliteTag;
+
   /// No description provided for @formMissingShort.
   ///
   /// In es, this message translates to:

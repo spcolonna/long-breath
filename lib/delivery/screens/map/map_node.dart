@@ -33,6 +33,18 @@ const sealCenter = Offset(52, 30);
   NodeType.master => (hanzi: '师', color: Palette.structure, size: 48.0),
 };
 
+/// Élite que se puede esquivar: comparte piso con otro lugar (el élite de
+/// arriba de la etapa no deja elegir).
+bool isOptionalElite(MapNodeDef n, List<MapNodeDef> map, GameData data) {
+  bool elite(MapNodeDef m) =>
+      m.type == NodeType.combat && data.enemy(m.enemy!).rank == EnemyRank.elite;
+  if (!elite(n)) return false;
+  final floor = n.id.substring(0, n.id.length - 1);
+  return map.any(
+    (m) => m.id.length == n.id.length && m.id.startsWith(floor) && !elite(m),
+  );
+}
+
 String nodeLabel(
   MapNodeDef n,
   AppLocalizations t,
@@ -58,9 +70,13 @@ class MapNode extends ConsumerStatefulWidget {
     required this.visited,
     required this.available,
     required this.onTap,
+    this.optional = false,
   });
 
   final MapNodeDef node;
+
+  /// Élite opcional: anillo punteado que gira y la placa «Desvío».
+  final bool optional;
   final bool visited;
   final bool available;
   final VoidCallback? onTap;
@@ -152,9 +168,23 @@ class _MapNodeState extends ConsumerState<MapNode>
                       available: available,
                       visited: widget.visited,
                       pulse: available ? _float.value : null,
+                      orbit: widget.optional ? _float.value : null,
                     ),
                   ),
                 ),
+                if (widget.optional)
+                  Positioned(
+                    top:
+                        sealCenter.dy -
+                        look.size / 2 -
+                        10 +
+                        (available ? -3 - 3 * math.sin(phase) : 0),
+                    right: sealCenter.dx + look.size / 2 - 22,
+                    child: _DetourTag(
+                      label: t.optionalEliteTag,
+                      dim: !available,
+                    ),
+                  ),
                 // Grupo: un punto por enemigo, colgado del sello (unidos por
                 // un trazo si pelean a la vez).
                 if (widget.node.waves.isNotEmpty)
@@ -184,6 +214,78 @@ class _MapNodeState extends ConsumerState<MapNode>
       ),
     );
   }
+}
+
+/// Placa del élite opcional: un desvío con talismán.
+class _DetourTag extends StatelessWidget {
+  const _DetourTag({required this.label, required this.dim});
+
+  final String label;
+  final bool dim;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = dim ? Palette.gold.withValues(alpha: 0.55) : Palette.gold;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(4, 2, 6, 2),
+      decoration: BoxDecoration(
+        color: Palette.surface,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: c, width: 1.2),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.call_split_rounded, size: 11, color: c),
+          const SizedBox(width: 2),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 9.5,
+              height: 1.1,
+              fontWeight: FontWeight.w800,
+              color: dim ? Palette.textDim : Palette.text,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Anillo de trazos cortos alrededor del sello que gira despacio.
+class _OrbitPainter extends CustomPainter {
+  _OrbitPainter(this.turn, this.color);
+
+  final double turn;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final r = size.shortestSide / 2 - 1;
+    final c = size.center(Offset.zero);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+    const dashes = 14;
+    const gap = 2 * math.pi / dashes;
+    for (var i = 0; i < dashes; i++) {
+      final a = turn * 2 * math.pi / 4 + i * gap;
+      canvas.drawArc(
+        Rect.fromCircle(center: c, radius: r),
+        a,
+        gap * 0.55,
+        false,
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_OrbitPainter old) =>
+      old.turn != turn || old.color != color;
 }
 
 /// Cuántos enemigos trae el combate: puntos de tinta en una plaquita. Si
@@ -237,9 +339,13 @@ class _Seal extends StatelessWidget {
     required this.available,
     required this.visited,
     required this.pulse,
+    this.orbit,
   });
 
   final ({String hanzi, Color color, double size}) look;
+
+  /// Giro del anillo punteado (0..1) del élite opcional.
+  final double? orbit;
   final bool available;
   final bool visited;
 
@@ -301,6 +407,22 @@ class _Seal extends StatelessWidget {
               ),
             ),
           ],
+          if (orbit != null)
+            IgnorePointer(
+              child: OverflowBox(
+                maxWidth: s + 16,
+                maxHeight: s + 16,
+                child: CustomPaint(
+                  size: Size.square(s + 14),
+                  painter: _OrbitPainter(
+                    available ? orbit! : 0,
+                    look.color.withValues(
+                      alpha: available ? 0.9 : (visited ? 0.25 : 0.5),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           // La piedra: luz arriba a la izquierda, sombra abajo.
           Container(
             width: s,

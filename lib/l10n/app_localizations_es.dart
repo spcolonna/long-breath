@@ -1398,6 +1398,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get combatNode => 'Camino';
 
   @override
+  String get optionalEliteTag => 'Desvío';
+
+  @override
   String get formMissingShort => 'Faltan cartas';
 
   @override
