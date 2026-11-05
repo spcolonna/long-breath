@@ -211,6 +211,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Hoja que Cambia 变 | Cada cambio de postura (carta o Paso en T) da +1 de Guardia | raro |
    | Cuenco Vacío 空 | La primera carta de cada turno cuesta 1 menos | raro |
    | Martillo Quebrado 破 | Desequilibrar a un rival roba 1 carta | raro |
+   | Rueda de las Posturas 轮 | Cada carta que encadena desde su postura da +1 Aliento | raro |
    | Luna Llena 月 | +1 de Aliento en cada turno, pero −5 de Vida máxima | de jefe |
    | Raíz de la Montaña 山 | Al empezar tu turno conservás el 30% de tu Guardia (con su altura) | de jefe |
    | Tambor de Bronce 鼓 | Los rivales empiezan con 10 de Vida y 3 de Estructura menos, pero la fuente cura 15 menos | de jefe |

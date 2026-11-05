@@ -791,7 +791,17 @@ class CombatEngine {
       d.guardHeight = null;
     }
     final chained = def.chainsFrom(d.stance);
-    if (chained) events.add(StanceChained(def.id, def.chainFrom!));
+    if (chained) {
+      events.add(StanceChained(def.id, def.chainFrom!));
+      // Rueda de las Posturas: cada cadena da Aliento.
+      for (final id in _slots(d.talismans, d.weaponEffect)) {
+        final n = _fx(id, d.weaponEffect).chainBreath;
+        if (n <= 0) continue;
+        events.add(_trig(id));
+        d.breath += n;
+        events.add(BreathGained(n));
+      }
+    }
 
     // Pega con la postura en la que estabas; recién después te deja en la
     // de la carta. Así preparar la postura (con otra carta o Paso en T) paga.

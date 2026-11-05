@@ -29,6 +29,7 @@ class TalismanEffect {
     this.attackStructure = 0,
     this.guardPierce = 0,
     this.heavyDamage = 0,
+    this.chainBreath = 0,
   });
 
   static const none = TalismanEffect();
@@ -106,6 +107,9 @@ class TalismanEffect {
   /// Porcentaje de descuento en el mercader.
   final int shopDiscountPct;
 
+  /// Aliento por cada cadena de postura.
+  final int chainBreath;
+
   // Los de las armas.
 
   /// Estructura extra que quita cada ataque con daño (Bastón).
@@ -144,6 +148,7 @@ class TalismanEffect {
     attackStructure: attackStructure + o.attackStructure,
     guardPierce: guardPierce + o.guardPierce,
     heavyDamage: heavyDamage + o.heavyDamage,
+    chainBreath: chainBreath + o.chainBreath,
   );
 
   /// Se aplica al empezar el combate (para la animación de aviso).
@@ -183,6 +188,7 @@ class TalismanEffect {
     attackStructure: j['attackStructure'] as int? ?? 0,
     guardPierce: j['guardPierce'] as int? ?? 0,
     heavyDamage: j['heavyDamage'] as int? ?? 0,
+    chainBreath: j['chainBreath'] as int? ?? 0,
   );
 }
 

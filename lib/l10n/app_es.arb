@@ -1234,5 +1234,7 @@
   "effFrom": "Desde {name}: {bonus}",
   "@effFrom": {"placeholders": {"name": {"type": "String"}, "bonus": {"type": "String"}}},
   "chainedTag": "Encadena",
-  "chainedFloat": "¡Cadena!"
+  "chainedFloat": "¡Cadena!",
+  "talEffChainBreath": "Cada carta que encadena desde su postura da +{n} de Aliento.",
+  "@talEffChainBreath": {"placeholders": {"n": {"type": "int"}}}
 }

@@ -685,6 +685,23 @@ void main() {
   });
 
   group('talismanes', () {
+    test('Rueda de las Posturas: cada cadena da Aliento', () {
+      var s = setup(
+        ['ma_zhuan_gong', 'gong_zhuan_xu', ...filler],
+        talismans: ['rueda'],
+      );
+      final r = play(s, 'ma_zhuan_gong');
+      expect(r.events.whereType<TalismanTriggered>(), isNotEmpty);
+      s = r.state;
+      expect(s.player.breath, 4 - 1 + 1);
+      // Sin cadena (la patada desde Arco sí encadena; jugada dos veces no).
+      s = play(s, 'gong_zhuan_xu').state;
+      expect(s.player.breath, 4 - 1 + 1 - 1 + 1 + 1);
+      final plain = play(setup(['an_zhang', ...filler], talismans: ['rueda']),
+          'an_zhang');
+      expect(plain.events.whereType<TalismanTriggered>(), isEmpty);
+    });
+
     test('al empezar: postura, Estructura, Aliento y rival debilitado', () {
       final r = engine.start(
         deck: [

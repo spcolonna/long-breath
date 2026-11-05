@@ -4413,6 +4413,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'¡Cadena!'**
   String get chainedFloat;
+
+  /// No description provided for @talEffChainBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada carta que encadena desde su postura da +{n} de Aliento.'**
+  String talEffChainBreath(int n);
 }
 
 class _AppLocalizationsDelegate

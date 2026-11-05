@@ -2802,4 +2802,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chainedFloat => '¡Cadena!';
+
+  @override
+  String talEffChainBreath(int n) {
+    return 'Cada carta que encadena desde su postura da +$n de Aliento.';
+  }
 }

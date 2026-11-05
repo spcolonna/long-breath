@@ -218,6 +218,7 @@ extension Labels on AppLocalizations {
     if (e.breakDamage > 0) talEffBreakDamage(e.breakDamage),
     if (e.thirdAttackDraw > 0) talEffThirdAttackDraw(e.thirdAttackDraw),
     if (e.retainedGuard > 0) talEffRetainedGuard(e.retainedGuard),
+    if (e.chainBreath > 0) talEffChainBreath(e.chainBreath),
     if (e.shopDiscountPct > 0) talEffShopDiscount(e.shopDiscountPct),
     if (e.attackStructure > 0) talEffAttackStructure(e.attackStructure),
     if (e.guardPierce > 0) talEffGuardPierce(e.guardPierce),

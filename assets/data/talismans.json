@@ -15,6 +15,7 @@
     { "id": "bolsa",    "hanzi": "囊", "rarity": "common", "effect": { "winJade": 8 } },
     { "id": "vacio",    "hanzi": "空", "rarity": "rare",   "effect": { "firstCardDiscount": 1 } },
     { "id": "quiebre",  "hanzi": "破", "rarity": "rare",   "effect": { "breakDraw": 1 } },
+    { "id": "rueda",  "hanzi": "轮", "rarity": "rare",   "effect": { "chainBreath": 1 } },
     { "id": "espejo",   "hanzi": "镜", "rarity": "common", "effect": { "deflectDamage": 6 } },
     { "id": "luna",     "hanzi": "月", "rarity": "boss",   "effect": { "turnBreath": 1, "maxHp": -5 } },
     { "id": "montana",  "hanzi": "山", "rarity": "boss",   "effect": { "guardKeepPct": 30 } },
