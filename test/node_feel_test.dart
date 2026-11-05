@@ -11,8 +11,8 @@ import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Legado, talismán con costo, fuente seca y eventos con requisito o en dos
-/// partes: lo que se ve y se toca.
+/// Legado, talismán con costo, fuente seca, eventos con requisito o en dos
+/// partes, el élite que es desvío y la vitrina: lo que se ve y se toca.
 void main() {
   Future<ProviderContainer> boot(WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
@@ -161,6 +161,35 @@ void main() {
     go(tester, '/map');
     await settle(tester);
     expect(r.starts.length, greaterThan(1));
-    expect(find.text('Desvío'), findsOneWidget);
+    expect(find.text('Desvío'), findsWidgets);
+
+    // Arriba, la vitrina vende un raro aparte, caro.
+    runs.newRun(Difficulty.normal);
+    r = container.read(runControllerProvider)!;
+    final engine = container.read(runEngineProvider);
+    runs.resume(
+      engine.enter(
+        r.copyWith(
+          stage: 2,
+          jade: 300,
+          map: [const MapNodeDef(id: 'm', type: NodeType.merchant, next: [])],
+        ),
+        'm',
+      ),
+    );
+    go(tester, '/merchant');
+    await settle(tester);
+    final shop = container.read(runControllerProvider)!;
+    expect(find.text('VITRINA'), findsOneWidget);
+    expect(find.text('Selecto'), findsOneWidget);
+    await tester.tap(
+      find.text(container.read(textProvider).talisman(shop.shopRare!)),
+    );
+    await tester.pump();
+    await tester.tap(find.text('Confirmar'));
+    await settle(tester);
+    final after = container.read(runControllerProvider)!;
+    expect(after.talismans, contains(shop.shopRare));
+    expect(after.jade, 300 - engine.merchantOf(shop).rare);
   });
 }

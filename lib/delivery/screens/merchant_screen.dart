@@ -41,6 +41,11 @@ class _TalismanItem extends _Item {
   const _TalismanItem();
 }
 
+/// El raro de la vitrina, aparte y caro.
+class _RareItem extends _Item {
+  const _RareItem();
+}
+
 /// El arma en venta (sin arma) o templar la propia.
 class _WeaponItem extends _Item {
   const _WeaponItem();
@@ -70,6 +75,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
   /// Lo que había en venta al entrar: lo comprado queda con su sello.
   List<String>? _cards;
   String? _talisman;
+  String? _rare;
   String? _weapon;
   _Item? _selected;
 
@@ -91,6 +97,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
       _CardItem(:final id) => id == _sale ? m.salePrice : m.card,
       _TeaItem() => m.tea,
       _TalismanItem() => m.talisman,
+      _RareItem() => m.rare,
       _WeaponItem() => _forging ? m.weaponForge : m.weapon,
       _RemoveItem() => m.remove,
       _UpgradeItem() => m.upgrade,
@@ -124,6 +131,10 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
         ctl.buyCard(id);
       case _TalismanItem():
         ctl.buyTalisman();
+      case _RareItem():
+        ctl.buyRare();
+        // El raro pesa más: un segundo golpe tras el primero.
+        Future.delayed(const Duration(milliseconds: 120), Haptics.heavyImpact);
       case _WeaponItem():
         _forging ? ctl.buyForge() : ctl.buyWeapon();
       case _TeaItem():
@@ -158,6 +169,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     final m = engine.merchantOf(run);
     _cards ??= run.shopCards;
     _talisman ??= run.shopTalisman;
+    _rare ??= run.shopRare;
     _weapon ??= run.shopWeapon;
     _sale ??= run.shopSale;
     final ctl = ref.read(runControllerProvider.notifier);
@@ -196,6 +208,9 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
       _TalismanItem() =>
         '${text.talisman(_talisman!)}\n'
             '${t.talismanEffect(data.talisman(_talisman!).effect, text)}',
+      _RareItem() =>
+        '${text.talisman(_rare!)}\n'
+            '${t.talismanEffect(data.talisman(_rare!).effect, text)}',
       _WeaponItem() =>
         '${text.weapon(_weapon!)}\n'
             '${t.talismanEffect(data.weapon(_weapon!).levels[(_forging ? run.weaponLevel + 1 : 1) - 1].effect, text)}',
@@ -308,6 +323,27 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                           child: _Panel(
                             selected: _selected is _TalismanItem,
                             child: TalismanTile(id: _talisman!, badgeSize: 40),
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (_rare != null) ...[
+                      _Section(t.merchantShowcase),
+                      StaggerIn(
+                        index: 3,
+                        delay: const Duration(milliseconds: 200),
+                        child: _Ware(
+                          price: m.rare,
+                          tag: t.merchantRareTag,
+                          tagColor: Palette.gold,
+                          affordable: affordable(const _RareItem()),
+                          selected: _selected is _RareItem,
+                          sold: _bought.contains(const _RareItem()),
+                          onTap: () => _select(const _RareItem()),
+                          child: _Panel(
+                            selected: _selected is _RareItem,
+                            accent: Palette.gold,
+                            child: TalismanTile(id: _rare!, badgeSize: 40),
                           ),
                         ),
                       ),
@@ -524,10 +560,17 @@ class _Section extends StatelessWidget {
 
 /// Caja clara para lo que no es carta (talismán y servicios).
 class _Panel extends StatelessWidget {
-  const _Panel({required this.selected, required this.child});
+  const _Panel({
+    required this.selected,
+    required this.child,
+    this.accent,
+  });
 
   final bool selected;
   final Widget child;
+
+  /// Borde propio aunque no esté elegido (la vitrina, en oro).
+  final Color? accent;
 
   @override
   Widget build(BuildContext context) => AnimatedContainer(
@@ -538,14 +581,15 @@ class _Panel extends StatelessWidget {
       color: Palette.surface,
       borderRadius: BorderRadius.circular(12),
       border: Border.all(
-        color: selected ? Palette.jade : Palette.line,
+        color: selected ? accent ?? Palette.jade : accent ?? Palette.line,
         width: selected ? 2.5 : 1.5,
       ),
-      boxShadow: selected
+      boxShadow: selected || accent != null
           ? [
               BoxShadow(
-                color: Palette.jade.withValues(alpha: 0.3),
-                blurRadius: 10,
+                color: (accent ?? Palette.jade)
+                    .withValues(alpha: selected ? 0.35 : 0.18),
+                blurRadius: selected ? 12 : 8,
               ),
             ]
           : null,
@@ -566,6 +610,7 @@ class _Ware extends StatelessWidget {
     this.soldLabel,
     this.oldPrice,
     this.tag,
+    this.tagColor = Palette.lacquer,
   });
 
   final int price;
@@ -573,6 +618,7 @@ class _Ware extends StatelessWidget {
   /// Precio tachado y cinta de oferta.
   final int? oldPrice;
   final String? tag;
+  final Color tagColor;
   final bool affordable;
   final bool selected;
   final bool sold;
@@ -631,7 +677,7 @@ class _Ware extends StatelessWidget {
                 ),
               ),
               if (tag != null && !sold)
-                Positioned(top: -4, right: -6, child: _SaleTag(tag!)),
+                Positioned(top: -4, right: -6, child: _SaleTag(tag!, color: tagColor)),
               if (sold)
                 TweenAnimationBuilder<double>(
                   tween: Tween(begin: 1.8, end: 1),
@@ -670,9 +716,10 @@ class _Ware extends StatelessWidget {
 
 /// Cinta de oferta que se balancea apenas, para que se note sin gritar.
 class _SaleTag extends StatefulWidget {
-  const _SaleTag(this.label);
+  const _SaleTag(this.label, {this.color = Palette.lacquer});
 
   final String label;
+  final Color color;
 
   @override
   State<_SaleTag> createState() => _SaleTagState();
@@ -707,11 +754,11 @@ class _SaleTagState extends State<_SaleTag>
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: Palette.lacquer,
+        color: widget.color,
         borderRadius: BorderRadius.circular(6),
         boxShadow: [
           BoxShadow(
-            color: Palette.lacquer.withValues(alpha: 0.35),
+            color: widget.color.withValues(alpha: 0.35),
             blurRadius: 6,
           ),
         ],

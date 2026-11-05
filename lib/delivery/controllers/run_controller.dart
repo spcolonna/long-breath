@@ -211,6 +211,8 @@ class RunController extends Notifier<RunState?> {
 
   void buyTalisman() => _set(_engine.buyTalisman(state!));
 
+  void buyRare() => _set(_engine.buyRare(state!));
+
   void buyWeapon() => _set(_engine.buyWeapon(state!));
 
   void buyForge() => _set(_engine.buyForge(state!));

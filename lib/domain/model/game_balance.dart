@@ -260,6 +260,7 @@ class MerchantDef {
     this.rareTalisman = false,
     this.weapon = 50,
     this.weaponForge = 35,
+    this.rare = 0,
   });
 
   /// Cartas en venta.
@@ -283,6 +284,9 @@ class MerchantDef {
   final int weapon;
   final int weaponForge;
 
+  /// Vitrina: un talismán raro aparte, caro (0 = este mercader no tiene).
+  final int rare;
+
   /// Precio de una carta en oferta.
   int get salePrice => (card * (100 - sale) / 100).round();
 
@@ -303,6 +307,7 @@ class MerchantDef {
       rareTalisman: rareTalisman,
       weapon: off(weapon),
       weaponForge: off(weaponForge),
+      rare: off(rare),
     );
   }
 
@@ -318,6 +323,7 @@ class MerchantDef {
         rareTalisman: j['rareTalisman'] as bool? ?? false,
         weapon: j['weapon'] as int? ?? 50,
         weaponForge: j['weaponForge'] as int? ?? 35,
+        rare: j['rare'] as int? ?? 0,
       );
 }
 

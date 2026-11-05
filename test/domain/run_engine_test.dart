@@ -840,7 +840,7 @@ void main() {
       expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
     });
 
-    test('más arriba el mercader cobra más, ofrece 4 cartas y raros', () {
+    test('más arriba el mercader cobra más, ofrece 4 cartas y una vitrina', () {
       final base = run.merchantOf(fresh(5));
       RunState up(int stage) => run.enter(
         fresh(5).copyWith(
@@ -856,9 +856,29 @@ void main() {
       final t2 = run.data.talisman(r2.shopTalisman!);
       expect(t2.shop || !t2.rare, isTrue);
       expect(run.merchantOf(r3).talisman, greaterThan(run.merchantOf(r2).talisman));
-      expect(run.data.talisman(r3.shopTalisman!).rare, isTrue);
       final bought = run.buyTalisman(r3);
       expect(bought.jade, 200 - run.merchantOf(r3).talisman);
+      // Vitrina: un raro aparte, más caro que el talismán de arriba.
+      final base0 = up(0);
+      expect(base0.shopRare, isNull);
+      for (final r in [r2, r3]) {
+        final m = run.merchantOf(r);
+        expect(run.data.talisman(r.shopRare!).rare, isTrue);
+        expect(r.shopRare, isNot(r.shopTalisman));
+        expect(m.rare, greaterThan(m.talisman));
+      }
+      expect(run.merchantOf(r3).rare, greaterThan(run.merchantOf(r2).rare));
+      expect(RunState.fromJson(r3.toJson()).shopRare, r3.shopRare);
+      final rare = run.buyRare(r3);
+      expect(rare.jade, 200 - run.merchantOf(r3).rare);
+      expect(rare.talismans, contains(r3.shopRare));
+      expect(rare.shopRare, isNull);
+      expect(() => run.buyRare(rare), throwsStateError);
+      expect(run.leaveShop(r3).shopRare, isNull);
+      expect(
+        () => run.buyRare(r3.copyWith(jade: run.merchantOf(r3).rare - 1)),
+        throwsStateError,
+      );
     });
 
     test('el mercader trae a veces los suyos, que solo él vende', () {
@@ -884,6 +904,11 @@ void main() {
       final cheap = run.merchantOf(run.addTalisman(r, 'abaco'));
       expect(cheap.card, lessThan(base.card));
       expect(cheap.talisman, lessThan(base.talisman));
+      final up = r.copyWith(stage: 2);
+      expect(
+        run.merchantOf(run.addTalisman(up, 'abaco')).rare,
+        lessThan(run.merchantOf(up).rare),
+      );
     });
 
     test('cada etapa tiene sus eventos y prefiere los propios', () {

@@ -1231,7 +1231,15 @@ class RunEngine {
           ? rares
           : missingTalismans(r, rare: false),
     );
-    final (sale, rng3) = rng2.nextInt(math.max(1, cards.length));
+    // La vitrina: un raro aparte, caro, distinto del de arriba.
+    final shown = talismans.isEmpty ? null : talismans.first;
+    final (showcase, rng2b) = m.rare > 0
+        ? rng2.shuffle([
+            for (final t in missingTalismans(r, rare: true))
+              if (t != shown) t,
+          ])
+        : (const <String>[], rng2);
+    final (sale, rng3) = rng2b.nextInt(math.max(1, cards.length));
     // Sin arma vende una (la del camino la mitad de las veces); con arma,
     // la templa.
     var rng4 = rng3;
@@ -1254,6 +1262,8 @@ class RunEngine {
       shopTea: false,
       shopTalisman: talismans.isEmpty ? null : talismans.first,
       clearShopTalisman: talismans.isEmpty,
+      shopRare: showcase.isEmpty ? null : showcase.first,
+      clearShopRare: showcase.isEmpty,
       shopRemoved: false,
       shopUpgraded: false,
       rng: rng4,
@@ -1284,6 +1294,15 @@ class RunEngine {
     if (r.shopTalisman == null) throw StateError('No hay talismán');
     return addTalisman(r, r.shopTalisman!)
         .copyWith(jade: r.jade - price, clearShopTalisman: true);
+  }
+
+  /// Comprar el raro de la vitrina.
+  RunState buyRare(RunState r) {
+    final price = merchantOf(r).rare;
+    _checkShop(r, price);
+    if (r.shopRare == null) throw StateError('No hay vitrina');
+    return addTalisman(r, r.shopRare!)
+        .copyWith(jade: r.jade - price, clearShopRare: true);
   }
 
   /// Comprar el arma en venta (sin arma).
@@ -1342,6 +1361,7 @@ class RunEngine {
       phase: RunPhase.map,
       shopCards: const [],
       clearShopTalisman: true,
+      clearShopRare: true,
       clearShopSale: true,
       clearShopWeapon: true,
     );

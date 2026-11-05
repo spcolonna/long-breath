@@ -3118,6 +3118,18 @@ abstract class AppLocalizations {
   /// **'Servicios'**
   String get merchantServices;
 
+  /// No description provided for @merchantShowcase.
+  ///
+  /// In es, this message translates to:
+  /// **'Vitrina'**
+  String get merchantShowcase;
+
+  /// No description provided for @merchantRareTag.
+  ///
+  /// In es, this message translates to:
+  /// **'Selecto'**
+  String get merchantRareTag;
+
   /// No description provided for @merchantRemove.
   ///
   /// In es, this message translates to:

@@ -173,7 +173,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
   - Arte propio: 2 fondos de combate por etapa, los sprites definitivos de los 14 enemigos (prompts en `docs/arte/prompts.md`) y los jefes con silueta propia (hoy el abad es el monje dorado y el Dragón Dormido, el eco recoloreado).
   - Eventos propios de cada etapa: **hecho (07/10/2026)**, 8 nuevos (ver `manual.md`).
   - Dificultades recalibradas para 3 etapas (06/10/2026, `balance.md` §3i). Falta confirmarlas con personas.
-  - Precios del mercader por etapa: **hecho (07/10/2026)**, más caro arriba, 4 cartas desde la etapa 2 y talismán raro en la Cumbre. Sobran ~52 de jade al final, pero es estructural: se gana después del último mercader (pisos 9 a 11).
+  - Precios del mercader por etapa: **hecho (07/10/2026)**, más caro arriba, 4 cartas desde la etapa 2 y talismán raro en la Cumbre. Vitrina (05/11/2026): un raro aparte por 140 / 160 en las etapas 2 y 3, en vez del raro de la Cumbre. Sobran ~52 de jade al final, pero es estructural: se gana después del último mercader (pisos 9 a 11).
   - Duración: **hecho (07/10/2026)**, 11 pisos por etapa; una subida ganada dura unos 44 minutos en el modelo del simulador (un jugador real tarda más). Eventos propios por etapa: **hecho (07/10/2026)**, 2 en la etapa 1 y 3 en las etapas 2 y 3 (16 en total).
 
 ### 3.2 Mapa generado
@@ -187,7 +187,7 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 
 ### 3.3 Nuevos tipos de nodo
 - **Evento:** **en el juego** (02/10/2026): 6 eventos y 2 nodos en la etapa 1. Para crecer: más eventos por etapa, eventos que dependan del camino o de un talismán, y eventos con más de dos opciones.
-- **Mercader de pergaminos:** **en el juego** (02/10/2026), con jade de los combates. **Economía (05/10/2026):** carta en oferta (−40%), té de jengibre (+15 Vida por 15), mercader posible desde el piso 2, la élite ya no da jade (llegaba cuando no quedaban tiendas) y eventos que pagan o cobran jade (ermitaño, dados, peregrino). Simulación: el jade sin gastar al final bajó de ~61 a ~27; promedio 58%. ~~Que el jade sobrante sirva entre subidas~~ **hecho (03/11/2026):** se ofrenda a la escuela, 1 semilla de loto cada 5 de jade. Falta: talismanes raros caros en la tienda y precios que suban por etapa. Idea original: compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
+- **Mercader de pergaminos:** **en el juego** (02/10/2026), con jade de los combates. **Economía (05/10/2026):** carta en oferta (−40%), té de jengibre (+15 Vida por 15), mercader posible desde el piso 2, la élite ya no da jade (llegaba cuando no quedaban tiendas) y eventos que pagan o cobran jade (ermitaño, dados, peregrino). Simulación: el jade sin gastar al final bajó de ~61 a ~27; promedio 58%. ~~Que el jade sobrante sirva entre subidas~~ **hecho (03/11/2026):** se ofrenda a la escuela, 1 semilla de loto cada 5 de jade. ~~Falta: talismanes raros caros en la tienda y precios que suban por etapa.~~ **Hecho:** precios por etapa (07/10/2026) y vitrina con un raro caro (05/11/2026); simulación sin cambios (experto 56% contra 57%, 1000 subidas). Idea original: compra de cartas, mejoras y talismanes con una moneda de la run (por ejemplo, monedas de jade que se ganan en los combates).
 - **Maestro errante:** **en el juego** (02/10/2026): enseña una forma o mejora una carta.
 - **Arte:** 1 ícono por tipo de nodo. Los eventos se resuelven con texto y alguna ilustración reutilizada.
 

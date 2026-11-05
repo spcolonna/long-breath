@@ -207,13 +207,17 @@ class PlannerBot extends Bot {
   bool learnForm(RunEngine run, RunState r, String? cardPick) =>
       prefersForm(run, r, cardPick, 0);
 
-  /// Té si viene golpeado, talismán si alcanza, después la mejor carta y,
+  /// Té si viene golpeado, el raro de la vitrina y el talismán si alcanzan, después la mejor carta y,
   /// con lo que sobre, quitar la carta inicial más floja.
   @override
   RunState shop(RunEngine run, RunState r) {
     final m = run.merchantOf(r);
     if (!r.shopTea && r.hp <= r.maxHp * 0.6 && run.canAfford(r, m.tea)) {
       r = run.buyTea(r);
+    }
+    // La vitrina va primero: un raro vale más que cualquier otra compra.
+    if (r.shopRare != null && run.canAfford(r, m.rare)) {
+      r = run.buyRare(r);
     }
     if (r.shopWeapon != null && r.weapon == null && run.canAfford(r, m.weapon)) {
       r = run.buyWeapon(r);

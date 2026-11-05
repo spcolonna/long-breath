@@ -925,6 +925,8 @@
   "merchantCards": "Cartas",
   "merchantTalisman": "Talismán",
   "merchantServices": "Servicios",
+  "merchantShowcase": "Vitrina",
+  "merchantRareTag": "Selecto",
   "merchantRemove": "Quitar 1 carta del mazo",
   "merchantUpgrade": "Mejorar 1 carta (+{amount})",
   "@merchantUpgrade": {"placeholders": {"amount": {"type": "int"}}},

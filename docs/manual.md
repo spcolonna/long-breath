@@ -223,7 +223,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Ábaco del Mercader 算 | El mercader te cobra un 20% menos | del mercader |
    | Manga Ancha 袖 | +1 carta en cada mano, pero −10 de Vida máxima | del mercader |
 
-   Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader. Los **de camino** solo le salen al discípulo de ese camino (en el élite, los eventos de talismán raro y el mercader de la Cumbre). Los **del mercader** solo los vende él: la mitad de las veces trae uno de esos en lugar del talismán de siempre, al mismo precio.
+   Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader. Los **de camino** solo le salen al discípulo de ese camino (en el élite, los eventos de talismán raro y la vitrina del mercader). Los **del mercader** solo los vende él: la mitad de las veces trae uno de esos en lugar del talismán de siempre, al mismo precio.
 
    **Armas 兵器.** Una sola por subida, con tres niveles. **El primer élite que vencés sin arma te deja elegir una de las tres** (la afín a tu camino va primero), después de su talismán. Cada arma suma sus técnicas al botín de cartas (2 en el nivel I y una más en el II y en el III), da un efecto propio y un extra a su camino afín. Se templa (sube un nivel) en el botín sorpresa, con el mercader o con el maestro (este, solo hasta el II). En combate el héroe la lleva en la mano y la blande al golpear; la borla muestra el nivel (jade, cobalto, oro, y el III brilla). Tocar su sello en el mapa o en el combate explica qué hace.
 
@@ -250,11 +250,13 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
      Reglas: el jefe y el enemigo que se escapa siempre dejan pergaminos; el élite da su talismán y después un botín que no es talismán (si todavía no tenés arma, el arma); con el arma en el nivel III el botín de arma se cambia por jade; con la Vida llena el té se cambia por jade, y sin cartas para templar el temple se cambia por pergaminos; nunca hay más de 2 botines seguidos sin pergaminos. El jade de siempre del combate y su loto se muestran arriba, aparte del cofre.
 9. **Mercader ambulante** 商: no tiene lugar en el mapa. Se cruza en el camino después de la recompensa, más o menos cada 3 combates ganados (2 a 4), y si en la etapa todavía no apareció, después del élite. Nunca después del jefe. Vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. **Más arriba cobra más y trae otras cosas:**
 
-   | Etapa | Cartas | Carta | Talismán | Quitar | Mejorar | Té |
-   |---|---|---|---|---|---|---|
-   | Montaña de las Mil Nubes | 3 | 20 | común, 50 | 30 | 25 | 15 (+15 Vida) |
-   | Monasterio Colgado | 4 | 25 | común, 60 | 35 | 30 | 20 (+20 Vida) |
-   | Cumbre del Dragón Dormido | 4 | 30 | **raro**, 85 | 40 | 35 | 25 (+25 Vida) |
+   | Etapa | Cartas | Carta | Talismán | Vitrina | Quitar | Mejorar | Té |
+   |---|---|---|---|---|---|---|---|
+   | Montaña de las Mil Nubes | 3 | 20 | común, 50 | — | 30 | 25 | 15 (+15 Vida) |
+   | Monasterio Colgado | 4 | 25 | común, 60 | raro, 140 | 35 | 30 | 20 (+20 Vida) |
+   | Cumbre del Dragón Dormido | 4 | 30 | común, 85 | raro, 160 | 40 | 35 | 25 (+25 Vida) |
+
+   **Vitrina:** desde el Monasterio, además del talismán de siempre, un **raro** aparte (nunca el mismo), en un marco dorado con la cinta «Selecto». Cuesta casi dos tiendas de jade: conviene ahorrar para él. Comprarlo vibra dos veces. Los descuentos y recargos también le cambian el precio.
 
    **Armería:** si no tenés arma, vende una (50 / 60 / 75 de jade según la etapa; la mitad de las veces, la de tu camino); si tenés, la templa un nivel (60 / 75 / 90), una vez por visita.
 

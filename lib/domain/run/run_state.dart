@@ -152,6 +152,7 @@ class RunState {
     this.stageMerchants = 0,
     this.shopCards = const [],
     this.shopTalisman,
+    this.shopRare,
     this.shopRemoved = false,
     this.shopUpgraded = false,
     this.shopSale,
@@ -260,6 +261,9 @@ class RunState {
   final List<String> shopCards;
   final String? shopTalisman;
 
+  /// Talismán raro de la vitrina (los mercaderes de más arriba).
+  final String? shopRare;
+
   /// Servicios del mercader ya usados en esta visita.
   final bool shopRemoved;
   final bool shopUpgraded;
@@ -356,6 +360,8 @@ class RunState {
     List<String>? shopCards,
     String? shopTalisman,
     bool clearShopTalisman = false,
+    String? shopRare,
+    bool clearShopRare = false,
     bool? shopRemoved,
     bool? shopUpgraded,
     String? shopSale,
@@ -419,6 +425,7 @@ class RunState {
         shopCards: shopCards ?? this.shopCards,
         shopTalisman:
             clearShopTalisman ? null : shopTalisman ?? this.shopTalisman,
+        shopRare: clearShopRare ? null : shopRare ?? this.shopRare,
         shopRemoved: shopRemoved ?? this.shopRemoved,
         shopUpgraded: shopUpgraded ?? this.shopUpgraded,
         shopSale: clearShopSale ? null : shopSale ?? this.shopSale,
@@ -489,6 +496,7 @@ class RunState {
         'stageMerchants': stageMerchants,
         'shopCards': shopCards,
         'shopTalisman': shopTalisman,
+        'shopRare': shopRare,
         'shopRemoved': shopRemoved,
         'shopUpgraded': shopUpgraded,
         'shopSale': shopSale,
@@ -568,6 +576,7 @@ class RunState {
         stageMerchants: j['stageMerchants'] as int? ?? 0,
         shopCards: ((j['shopCards'] as List?) ?? const []).cast<String>(),
         shopTalisman: j['shopTalisman'] as String?,
+        shopRare: j['shopRare'] as String?,
         shopRemoved: j['shopRemoved'] as bool? ?? false,
         shopUpgraded: j['shopUpgraded'] as bool? ?? false,
         shopSale: j['shopSale'] as String?,

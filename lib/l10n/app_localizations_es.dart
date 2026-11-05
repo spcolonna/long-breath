@@ -1921,6 +1921,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get merchantServices => 'Servicios';
 
   @override
+  String get merchantShowcase => 'Vitrina';
+
+  @override
+  String get merchantRareTag => 'Selecto';
+
+  @override
   String get merchantRemove => 'Quitar 1 carta del mazo';
 
   @override

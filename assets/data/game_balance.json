@@ -147,7 +147,7 @@
         "scenes": ["pasarela", "escalera", "patio_colgado"],
         "lights": ["alba", "niebla", "ocaso"],
         "enemyMods": { "enemyHp": 14, "enemyDamage": 9 },
-        "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20, "weapon": 60, "weaponForge": 75 }
+        "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20, "weapon": 60, "weaponForge": 75, "rare": 140 }
       },
       {
         "id": "wolongding", "hanzi": "卧龙顶", "pinyin": "Wò Lóng Dǐng",
@@ -167,7 +167,7 @@
         "scenes": ["ventisquero", "glaciar", "paso_nevado"],
         "lights": ["alba", "niebla", "ocaso"],
         "enemyMods": { "enemyHp": 22, "enemyDamage": 16 },
-        "merchant": { "cards": 4, "card": 30, "talisman": 85, "rareTalisman": true, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25, "weapon": 75, "weaponForge": 90 }
+        "merchant": { "cards": 4, "card": 30, "talisman": 85, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25, "weapon": 75, "weaponForge": 90, "rare": 160 }
       }
     ]
   }
