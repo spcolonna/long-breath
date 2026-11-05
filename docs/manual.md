@@ -498,6 +498,7 @@ Un toque en una carta la selecciona y muestra la vista previa con los números f
 Hay cinco tipos: **Puño**, **Palma**, **Patada**, **Defensa** y **Técnica**. Cada carta muestra el nombre traducido, el nombre chino como marca de agua y el pinyin.
 
 - Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero pega** con la postura en la que estás y **después te deja** en la suya. Su bonus lo aprovecha la carta siguiente: ordenar la mano o usar Paso en T antes es la clave.
+- **Cadena de postura:** algunas cartas piden una postura de salida y te dejan en otra (la etiqueta dice, por ejemplo, *Caballo → Arco*). Si la jugás estando en la de salida, **encadena**: suma su extra (daño, Estructura, Aliento o robo), la etiqueta se pone dorada con «Encadena» y al jugarla sale «¡Cadena!». Las tres generales cierran el círculo Caballo → Arco → Vacía → Caballo; cada camino tiene una propia (*El tigre se da vuelta*, *La serpiente gira*, *La grulla se posa*).
 - **Agotar:** la carta desaparece por el resto del combate al jugarla.
 
 ## Posturas

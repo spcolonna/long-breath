@@ -73,6 +73,46 @@ void main() {
       expect(s.enemy.structure, 14 - 1 - 2);
     });
 
+    test('cadena de postura: Caballo → Arco → Vacía → Caballo', () {
+      var s = setup([
+        'ma_zhuan_gong',
+        'gong_zhuan_xu',
+        'xu_zhuan_ma',
+        ...filler,
+      ]);
+      var p = engine.preview(s, uidOf(s, 'ma_zhuan_gong'));
+      expect(p.chained, isTrue);
+      expect(p.damage, 4 + 2 + 4, reason: 'puño +2 en mǎbù y +4 de cadena');
+      expect(engine.preview(s, uidOf(s, 'gong_zhuan_xu')).chained, isFalse);
+      var r = play(s, 'ma_zhuan_gong');
+      expect(r.events.whereType<StanceChained>().single.from, Stance.mabu);
+      s = r.state;
+      expect(s.player.stance, Stance.gongbu);
+      expect(s.enemy.hp, 63 - 10);
+      expect(s.enemy.structure, 14 - 2);
+      // Desde Arco, la patada suma 3 de Estructura y 1 de Aliento.
+      s = play(s, 'gong_zhuan_xu').state;
+      expect(s.player.stance, Stance.xubu);
+      expect(s.enemy.structure, 14 - 2 - 6);
+      expect(s.player.breath, 4 - 1 - 1 + 1);
+      // Desde Vacía, la palma suma 2 de daño y roba 1.
+      final hand = s.hand.length;
+      s = play(s, 'xu_zhuan_ma').state;
+      expect(s.player.stance, Stance.mabu);
+      expect(s.enemy.hp, 63 - 10 - 4 - 6);
+      expect(s.hand.length, hand - 1 + 1);
+    });
+
+    test('sin la postura de salida no encadena', () {
+      final s = setup(['gong_zhuan_xu', ...filler]);
+      final p = engine.preview(s, uidOf(s, 'gong_zhuan_xu'));
+      expect(p.chained, isFalse);
+      expect(p.structure, 3);
+      final r = play(s, 'gong_zhuan_xu');
+      expect(r.events.whereType<StanceChained>(), isEmpty);
+      expect(r.state.player.breath, 4 - 2, reason: 'patada en mǎbù +1');
+    });
+
     test('mǎbù: puños +2; patadas cuestan +1', () {
       var s = setup([
         'mabu_chongquan',

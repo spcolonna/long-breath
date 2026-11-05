@@ -33,6 +33,11 @@ class CardDef {
     this.retainedBreath = 0,
     this.breakDraw = 0,
     this.breakBreath = 0,
+    this.chainFrom,
+    this.fromDamage = 0,
+    this.fromStructure = 0,
+    this.fromBreath = 0,
+    this.fromDraw = 0,
     this.pool = 'starter',
     this.copies = 1,
   });
@@ -84,11 +89,23 @@ class CardDef {
   /// [breakDraw] y ganás [breakBreath] de Aliento.
   final int breakDraw;
   final int breakBreath;
+
+  /// Cadena de postura: jugada estando en [chainFrom], suma daño,
+  /// Estructura, Aliento y robo (y te deja en [stance], el siguiente eslabón).
+  final Stance? chainFrom;
+  final int fromDamage;
+  final int fromStructure;
+  final int fromBreath;
+  final int fromDraw;
+
+  /// Si jugarla estando en [current] encadena.
+  bool chainsFrom(Stance current) => chainFrom == current;
   final String pool;
   final int copies;
 
   factory CardDef.fromJson(Map<String, dynamic> j) {
     final ssb = j['stanceStructureBonus'] as Map<String, dynamic>?;
+    final from = j['from'] as Map<String, dynamic>?;
     return CardDef(
       id: j['id'] as String,
       pinyin: j['pinyin'] as String,
@@ -122,6 +139,11 @@ class CardDef {
       retainedBreath: j['retainedBreath'] as int? ?? 0,
       breakDraw: j['breakDraw'] as int? ?? 0,
       breakBreath: j['breakBreath'] as int? ?? 0,
+      chainFrom: Stance.parse(from?['stance'] as String?),
+      fromDamage: from?['damage'] as int? ?? 0,
+      fromStructure: from?['structure'] as int? ?? 0,
+      fromBreath: from?['breath'] as int? ?? 0,
+      fromDraw: from?['draw'] as int? ?? 0,
       pool: j['pool'] as String? ?? 'starter',
       copies: j['copies'] as int? ?? 1,
     );

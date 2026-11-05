@@ -1025,6 +1025,21 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               big: true,
             ),
           );
+        case StanceChained(:final cardId, :final from):
+          // Cadena de postura: un toque doble y la cinta dorada.
+          Haptics.mediumImpact();
+          _after(110, Haptics.lightImpact);
+          _audio.play(Sfx.formStep, variant: 2);
+          final to = data.card(cardId).stance;
+          _queue.add(
+            _Fx(
+              t.chainedFloat,
+              to == null
+                  ? text.stance(from)
+                  : '${text.stance(from)} → ${text.stance(to)}',
+              Palette.gold,
+            ),
+          );
         case FistBonusGained(:final total):
           _queue.add(
             _Fx(t.fistBonusTitle, t.fistBonusNow(total), Palette.lacquer),

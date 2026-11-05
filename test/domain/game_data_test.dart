@@ -13,16 +13,16 @@ import 'package:long_breath/infrastructure/file_game_data_loader.dart';
 void main() {
   final data = loadGameDataFromDir();
 
-  test('cartas: 12 iniciales, 8 generales y las propias de cada camino', () {
-    expect(data.cards.length, 58); // definiciones únicas (12 de armas)
+  test('cartas: 12 iniciales, 11 generales y las propias de cada camino', () {
+    expect(data.cards.length, 64); // definiciones únicas (12 de armas)
     expect(data.starterDeck.length, 12);
-    expect(data.cards.values.where((c) => c.pool == 'reward').length, 8);
-    const own = {Style.tiger: 10, Style.snake: 10, Style.crane: 10};
+    expect(data.cards.values.where((c) => c.pool == 'reward').length, 11);
+    const own = {Style.tiger: 11, Style.snake: 11, Style.crane: 11};
     for (final s in Style.values) {
       expect(data.cards.values.where((c) => c.pool == s.name).length, own[s],
           reason: s.name);
     }
-    expect(data.rewardPool.length, 38);
+    expect(data.rewardPool.length, 44);
   });
 
   test('armas: 3, con 3 niveles y sus cartas propias', () {
@@ -44,21 +44,21 @@ void main() {
       );
     }
     expect(data.rewardPoolFor(Style.crane, weapon: 'gun', weaponLevel: 1),
-        hasLength(20));
+        hasLength(24));
     expect(data.rewardPoolFor(Style.crane, weapon: 'gun', weaponLevel: 3),
-        hasLength(22));
+        hasLength(26));
   });
 
   test('las cartas de cada camino solo le salen a ese camino', () {
     for (final s in Style.values) {
       final pool = data.rewardPoolFor(s);
-      expect(pool.length, 18, reason: s.name);
+      expect(pool.length, 22, reason: s.name);
       expect(
         pool.where((c) => Style.values.any((o) => o.name == c.pool)),
         everyElement(predicate((c) => (c as dynamic).pool == s.name)),
       );
     }
-    expect(data.rewardPoolFor(null).length, 8,
+    expect(data.rewardPoolFor(null).length, 11,
         reason: 'el novicio todavía no eligió');
   });
 

@@ -458,6 +458,9 @@ double cardValue(CardDef d) {
   v += (d.retainedDraw * 2.5 + d.retainedBreath * 3) * 0.5;
   // Quiebre: desequilibra más o menos una de cada tres veces.
   v += (d.breakDraw * 2.5 + d.breakBreath * 3) * 0.35;
+  // Cadena de postura: se juega desde la postura pedida una de cada tres.
+  v += (d.fromDamage + d.fromStructure * 0.8) * 0.3;
+  v += (d.fromDraw * 2.5 + d.fromBreath * 3) * 0.3;
   return v / (d.cost == 0 ? 0.8 : d.cost);
 }
 

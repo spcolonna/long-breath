@@ -55,6 +55,7 @@ class CardPreview {
     this.stanceCost = 0,
     this.styleDamage = 0,
     this.retained = false,
+    this.chained = false,
   });
 
   final int cost;
@@ -83,6 +84,9 @@ class CardPreview {
 
   /// La carta viene retenida del turno anterior.
   final bool retained;
+
+  /// Se juega desde la postura que pide: encadena y suma su extra.
+  final bool chained;
 }
 
 /// Intención del enemigo con los valores finales ya aplicados.
@@ -535,6 +539,10 @@ class CombatEngine {
     if (staggered) dmg += def.bonusDamageIfStaggered;
     final ssb = def.stanceStructureBonus;
     if (ssb != null && ssb.$1 == stance) str += ssb.$2;
+    if (def.chainsFrom(stance)) {
+      if (dmg > 0) dmg += def.fromDamage;
+      str += def.fromStructure;
+    }
     str += turnStructureBonus + styleStructure;
     return (dmg, str);
   }
@@ -549,6 +557,10 @@ class CombatEngine {
     }
     final ssb = def.stanceStructureBonus;
     if (ssb != null && ssb.$1 == stance) str += ssb.$2;
+    if (def.chainsFrom(stance)) {
+      if (def.damage > 0) dmg += def.fromDamage;
+      str += def.fromStructure;
+    }
     final guard = def.guard == 0
         ? 0
         : _guardOf(def, upgrades, stance) - (def.guard + upgrades);
@@ -643,6 +655,7 @@ class CombatEngine {
       stanceCost: sCost,
       styleDamage: style,
       retained: s.retained.contains(uid),
+      chained: def.chainsFrom(stance),
     );
   }
 
@@ -777,6 +790,8 @@ class CombatEngine {
       d.guard = 0;
       d.guardHeight = null;
     }
+    final chained = def.chainsFrom(d.stance);
+    if (chained) events.add(StanceChained(def.id, def.chainFrom!));
 
     // Pega con la postura en la que estabas; recién después te deja en la
     // de la carta. Así preparar la postura (con otra carta o Paso en T) paga.
@@ -787,7 +802,8 @@ class CombatEngine {
     d.breath +=
         def.gainBreath +
         (combo ? def.comboBreath : 0) +
-        (wasRetained ? def.retainedBreath : 0);
+        (wasRetained ? def.retainedBreath : 0) +
+        (chained ? def.fromBreath : 0);
     d.turnStructureBonus += def.turnStructureBonus;
     // Quiebre (Tigre): la carta que lo desequilibra premia.
     if (!wasStaggered && target.staggered && def.breakBreath > 0) {
@@ -800,7 +816,8 @@ class CombatEngine {
         def.draw +
         (combo ? def.comboDraw : 0) +
         (wasRetained ? def.retainedDraw : 0) +
-        (!wasStaggered && target.staggered ? def.breakDraw : 0);
+        (!wasStaggered && target.staggered ? def.breakDraw : 0) +
+        (chained ? def.fromDraw : 0);
     if (draw > 0) _draw(d, draw, events);
 
     if (!d.isOver) _advanceForms(d, def, events);

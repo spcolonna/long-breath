@@ -56,7 +56,8 @@ class CardWidget extends ConsumerWidget {
     // Selección, retenida o forma: un brillo con la forma del marco pintado
     // (no un borde aparte, que se lee como un segundo marco).
     Color? glow;
-    if (advancesForm) glow = Palette.gold;
+    final chained = p?.chained == true;
+    if (advancesForm || chained) glow = Palette.gold;
     if (marked) glow = Palette.jade;
     if (selected) glow = Palette.lacquer;
 
@@ -173,7 +174,10 @@ class CardWidget extends ConsumerWidget {
             // El tipo ya lo dice el color del marco: arriba a la derecha van
             // solo la carta retenida, la postura a la que lleva y el aviso de
             // que corta una forma.
-            if (retained || def.stance != null || interruptsForm)
+            if (retained ||
+                def.stance != null ||
+                def.chainFrom != null ||
+                interruptsForm)
               Positioned(
                 right: hole.right + 2 * s,
                 top: hole.top + 2 * s,
@@ -181,14 +185,27 @@ class CardWidget extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     if (retained) _Tag(t.retainedTag, Palette.jade, scale: s),
-                    if (def.stance != null)
+                    if (def.stance != null || def.chainFrom != null)
                       Padding(
                         padding: EdgeInsets.only(top: retained ? 2 * s : 0),
+                        // Cadena: de qué postura sale y a cuál lleva; dorada
+                        // cuando ya estás en la de salida.
                         child: _Tag(
-                          '→ ${text.stance(def.stance!)}',
-                          Palette.textDim,
+                          [
+                            if (def.chainFrom != null)
+                              text.stance(def.chainFrom!)
+                            else
+                              '',
+                            if (def.stance != null) text.stance(def.stance!),
+                          ].join(' → ').trim(),
+                          chained ? Palette.gold : Palette.textDim,
                           scale: s,
                         ),
+                      ),
+                    if (chained)
+                      Padding(
+                        padding: EdgeInsets.only(top: 2 * s),
+                        child: _Tag(t.chainedTag, Palette.gold, scale: s),
                       ),
                     if (interruptsForm)
                       Icon(

@@ -30,6 +30,13 @@ class StanceChanged extends CombatEvent {
   final Stance stance;
 }
 
+/// La carta se jugó desde la postura que pedía: cadena de postura.
+class StanceChained extends CombatEvent {
+  const StanceChained(this.cardId, this.from);
+  final String cardId;
+  final Stance from;
+}
+
 class GuardGained extends CombatEvent {
   const GuardGained(this.amount, this.height);
   final int amount;

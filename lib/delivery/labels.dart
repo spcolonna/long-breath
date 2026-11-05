@@ -136,6 +136,13 @@ extension Labels on AppLocalizations {
         text.stance(d.stanceStructureBonus!.$1),
         d.stanceStructureBonus!.$2,
       ),
+    if (d.chainFrom != null)
+      effFrom(text.stance(d.chainFrom!), [
+        if (d.fromDamage > 0) '+${previewDamage(d.fromDamage)}',
+        if (d.fromStructure > 0) '+${previewStructure(d.fromStructure)}',
+        if (d.fromBreath > 0) effBreath(d.fromBreath),
+        if (d.fromDraw > 0) effDraw(d.fromDraw).toLowerCase(),
+      ].join(', ')),
     if (d.clearGuard) effClearGuard,
     if (d.turnStructureBonus > 0) effTurnStructure(d.turnStructureBonus),
     if (d.chainDamage > 0) effChain(d.chainDamage),

@@ -4395,6 +4395,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{name} · mejor {have}/{need}'**
   String schoolHitoBest(String name, int have, int need);
+
+  /// No description provided for @effFrom.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde {name}: {bonus}'**
+  String effFrom(String name, String bonus);
+
+  /// No description provided for @chainedTag.
+  ///
+  /// In es, this message translates to:
+  /// **'Encadena'**
+  String get chainedTag;
+
+  /// No description provided for @chainedFloat.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Cadena!'**
+  String get chainedFloat;
 }
 
 class _AppLocalizationsDelegate

@@ -2791,4 +2791,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String schoolHitoBest(String name, int have, int need) {
     return '$name · mejor $have/$need';
   }
+
+  @override
+  String effFrom(String name, String bonus) {
+    return 'Desde $name: $bonus';
+  }
+
+  @override
+  String get chainedTag => 'Encadena';
+
+  @override
+  String get chainedFloat => '¡Cadena!';
 }

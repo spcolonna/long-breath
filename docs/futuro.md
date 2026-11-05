@@ -27,7 +27,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
 ## 2. Ideas de mecánica
 
 ### Posturas
-- **Cartas que piden una postura y te dejan en otra.** Por ejemplo, "desde Caballo, te deja en Arco". Eso arma cadenas (Caballo → Arco → Vacía) y le da todavía más profundidad a las formas. Para el MVP alcanza con la versión actual, donde la carta pega con la postura en la que estás y te deja en la suya.
+- **Cartas que piden una postura y te dejan en otra.** Por ejemplo, "desde Caballo, te deja en Arco". Eso arma cadenas (Caballo → Arco → Vacía) y le da todavía más profundidad a las formas. Para el MVP alcanza con la versión actual, donde la carta pega con la postura en la que estás y te deja en la suya. **Hecho (05/11/2026), primera parte:** 6 cartas con cadena (`from` en `cards.json`): 3 generales que cierran el círculo Caballo → Arco → Vacía → Caballo y una por camino. Jugadas desde su postura de salida suman daño, Estructura, Aliento o robo; en la mano se marcan en dorado («Encadena») y al jugarlas sale «¡Cadena!» con vibración doble. Simulación en Normal (600 subidas): experto 57% igual; promedio 24% contra 26%; Grulla sola 50%/25% contra 52%/24%. Siguiente: cadenas largas que paguen al cerrar el círculo, talismán o despertar que premie encadenar, y arte de las 6 cartas.
 - **Bonus de "postura preparada":** un extra para las cartas que se juegan estando ya en la postura que indican. Recompensa todavía más el orden de la mano. Antes de sumarlo hay que medirlo en el simulador.
 - **Nuevas posturas:** Pūbù 仆步 (barrido bajo), Xiēbù 歇步 (cruzada, giro) y Dúlìbù 独立步 (grulla, sobre una pierna). Cada una con su ventaja y su costo, y con cartas que lleven a ella.
 

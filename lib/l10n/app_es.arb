@@ -1230,5 +1230,9 @@
   "@schoolNextHito": {"placeholders": {"breath": {"type": "int"}}},
   "schoolAllHitos": "Todos los hitos cumplidos",
   "schoolHitoBest": "{name} · mejor {have}/{need}",
-  "@schoolHitoBest": {"placeholders": {"name": {"type": "String"}, "have": {"type": "int"}, "need": {"type": "int"}}}
+  "@schoolHitoBest": {"placeholders": {"name": {"type": "String"}, "have": {"type": "int"}, "need": {"type": "int"}}},
+  "effFrom": "Desde {name}: {bonus}",
+  "@effFrom": {"placeholders": {"name": {"type": "String"}, "bonus": {"type": "String"}}},
+  "chainedTag": "Encadena",
+  "chainedFloat": "¡Cadena!"
 }
