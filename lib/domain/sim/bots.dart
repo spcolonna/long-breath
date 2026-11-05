@@ -43,7 +43,7 @@ abstract class Bot {
   /// Opción elegida en un evento (entre las que puede pagar).
   String pickEventOption(RunEngine run, RunState r) {
     final options = [
-      for (final o in run.data.event(r.eventId!).options)
+      for (final o in run.eventOptions(r, run.data.event(r.eventId!)))
         if (run.canChoose(r, o)) o.id,
     ];
     return options[random.nextInt(options.length)];
@@ -273,7 +273,7 @@ class PlannerBot extends Bot {
   @override
   String pickEventOption(RunEngine run, RunState r) {
     final options = [
-      for (final o in run.data.event(r.eventId!).options)
+      for (final o in run.eventOptions(r, run.data.event(r.eventId!)))
         if (run.canChoose(r, o)) o,
     ];
     return options
@@ -416,7 +416,10 @@ double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
       EventGain.pathCards => 5.0,
       EventGain.pickUpgrade => 5.0,
       EventGain.pathTalisman => 10.0,
+      EventGain.temper => run.canForge(r) ? 8.0 : 4.0,
     };
+    // Lo que se deja marcado vuelve más arriba con premio.
+    if (e.mark != null) v += 6.0;
     return v;
   }
 

@@ -10,7 +10,8 @@ import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Legado, talismán con costo y fuente seca: lo que se ve y se toca.
+/// Legado, talismán con costo, fuente seca y eventos con requisito o en dos
+/// partes: lo que se ve y se toca.
 void main() {
   Future<ProviderContainer> boot(WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
@@ -95,5 +96,43 @@ void main() {
     await tester.tap(find.textContaining('Curar'));
     await settle(tester);
     expect(container.read(runControllerProvider)!.hp, 10);
+
+    // Con la Pluma, el puente se cruza planeando: la opción va primero.
+    runs.newRun(Difficulty.normal);
+    r = container.read(runControllerProvider)!;
+    runs.resume(
+      r.copyWith(
+        phase: RunPhase.event,
+        currentNode: r.starts.first,
+        visited: [r.starts.first],
+        eventId: 'bridge',
+        talismans: ['pluma'],
+      ),
+    );
+    go(tester, '/event');
+    await settle(tester);
+    expect(find.text('Planear con la Pluma'), findsOneWidget);
+    expect(find.textContaining('Con Pluma de la Grulla'), findsOneWidget);
+
+    // Ayudar al herido deja algo para más arriba (la pantalla de evento se
+    // vuelve a armar al pasar por el mapa).
+    go(tester, '/map');
+    await settle(tester);
+    runs.newRun(Difficulty.normal);
+    r = container.read(runControllerProvider)!;
+    runs.resume(
+      r.copyWith(
+        phase: RunPhase.event,
+        currentNode: r.starts.first,
+        visited: [r.starts.first],
+        eventId: 'wounded',
+      ),
+    );
+    go(tester, '/event');
+    await settle(tester);
+    await tester.tap(find.text('Cargarlo hasta el refugio'));
+    await settle(tester);
+    expect(find.text('Esto sigue más arriba'), findsOneWidget);
+    expect(container.read(runControllerProvider)!.marks, {'wounded': 0});
   });
 }

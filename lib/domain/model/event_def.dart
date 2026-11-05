@@ -27,7 +27,10 @@ enum EventGain {
   pickUpgrade,
 
   /// El talismán del camino (si ya se tiene, uno raro).
-  pathTalisman;
+  pathTalisman,
+
+  /// Templa el arma (sin arma o al máximo, mejora una carta al azar).
+  temper;
 
   static EventGain? parse(String? s) =>
       s == null ? null : EventGain.values.byName(s);
@@ -41,6 +44,7 @@ class EventOutcome {
     this.maxHp = 0,
     this.jade = 0,
     this.gain,
+    this.mark,
   });
 
   /// Vida que se pierde (nunca deja al jugador en menos de 1).
@@ -56,13 +60,33 @@ class EventOutcome {
   final int jade;
   final EventGain? gain;
 
+  /// Deja una marca: el evento que la espera sale en una etapa más arriba.
+  final String? mark;
+
   factory EventOutcome.fromJson(Map<String, dynamic> j) => EventOutcome(
     hp: j['hp'] as int? ?? 0,
     heal: j['heal'] as int? ?? 0,
     maxHp: j['maxHp'] as int? ?? 0,
     jade: j['jade'] as int? ?? 0,
     gain: EventGain.parse(j['gain'] as String?),
+    mark: j['mark'] as String?,
   );
+}
+
+/// Qué pide una opción para aparecer.
+enum EventNeedKind { talisman, weapon, form }
+
+/// Requisito de una opción: tener uno de [ids] (vacío = cualquiera).
+class EventNeed {
+  const EventNeed(this.kind, [this.ids = const []]);
+
+  final EventNeedKind kind;
+  final List<String> ids;
+
+  factory EventNeed.fromJson(Map<String, dynamic> j) {
+    final kind = EventNeedKind.values.byName(j.keys.single);
+    return EventNeed(kind, (j[kind.name] as List).cast<String>());
+  }
 }
 
 /// Una opción del evento. Si tiene [chance], sale [success] o [failure].
@@ -74,9 +98,13 @@ class EventOptionDef {
     this.failure,
     this.price = 0,
     this.duel,
+    this.needs,
   });
 
   final String id;
+
+  /// Solo aparece si se cumple (un talismán, el arma o una forma).
+  final EventNeed? needs;
 
   /// Rival de un duelo: elegirla lleva a pelear contra él, y ganarle deja
   /// elegir talismán (el del camino entre ellos).
@@ -102,6 +130,9 @@ class EventOptionDef {
       chance: chance,
       price: j['price'] as int? ?? 0,
       duel: j['duel'] as String?,
+      needs: j['needs'] == null
+          ? null
+          : EventNeed.fromJson(j['needs'] as Map<String, dynamic>),
       outcome: EventOutcome.fromJson(
         (chance == null ? j : j['success']) as Map<String, dynamic>,
       ),
@@ -120,6 +151,7 @@ class EventDef {
     required this.options,
     this.stages,
     this.path,
+    this.after,
   });
 
   final String id;
@@ -131,6 +163,9 @@ class EventDef {
 
   /// Camino al que pertenece: solo le sale a quien lo sigue.
   final Style? path;
+
+  /// Segunda parte: solo sale con esta marca, dejada en una etapa anterior.
+  final String? after;
 
   bool fitsStage(String stageId) => stages == null || stages!.contains(stageId);
 
@@ -145,5 +180,6 @@ class EventDef {
     ],
     stages: (j['stages'] as List?)?.cast<String>(),
     path: j['path'] == null ? null : Style.parse(j['path'] as String),
+    after: j['after'] as String?,
   );
 }

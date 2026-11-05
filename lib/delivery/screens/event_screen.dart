@@ -7,6 +7,7 @@ import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/combat_controller.dart';
+import '../content_text.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
@@ -41,11 +42,13 @@ class _EventScreenState extends ConsumerState<EventScreen> {
   @override
   void initState() {
     super.initState();
-    // Un evento del camino entra con ceremonia: sello, golpe y sonido.
+    // Un evento del camino, o la segunda parte de uno de más abajo, entra
+    // con ceremonia: sello, golpe y sonido.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final id = ref.read(runControllerProvider)?.eventId;
       if (!mounted || id == null) return;
-      if (ref.read(dataProvider).event(id).path == null) return;
+      final event = ref.read(dataProvider).event(id);
+      if (event.path == null && event.after == null) return;
       Haptics.mediumImpact();
       ref.read(audioProvider).play(Sfx.shrineOath);
       setState(() => _seal++);
@@ -78,7 +81,9 @@ class _EventScreenState extends ConsumerState<EventScreen> {
         r.card != null ||
         r.upgraded != null ||
         r.maxHp > 0 ||
-        r.jade > 0;
+        r.jade > 0 ||
+        r.tempered != null ||
+        r.mark != null;
     if (good) {
       Haptics.heavyImpact();
       audio.play(Sfx.rewardTake);
@@ -111,7 +116,12 @@ class _EventScreenState extends ConsumerState<EventScreen> {
     final text = ref.watch(textProvider);
     final event = data.event(id);
     final path = event.path;
-    final accent = path == null ? Palette.blossom : styleColor(path);
+    final back = event.after != null;
+    final accent = path != null
+        ? styleColor(path)
+        : back
+            ? Palette.gold
+            : Palette.blossom;
     return Scaffold(
       // El alto en el camino (pabellón, té y faroles); si faltara, el paisaje
       // de la etapa.
@@ -189,8 +199,11 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                 ),
                 child: Column(
                   children: [
-                    if (path != null) ...[
-                      _PathTag(label: t.eventPath(path), color: accent),
+                    if (path != null || back) ...[
+                      _PathTag(
+                        label: path != null ? t.eventPath(path) : t.eventBack,
+                        color: accent,
+                      ),
                       const SizedBox(height: 8),
                     ],
                     Text(
@@ -241,25 +254,43 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                     ? Column(
                         key: const ValueKey('options'),
                         children: [
-                          for (final (i, o) in event.options.indexed) ...[
+                          for (final (i, o)
+                              in engine.eventOptions(run, event).indexed) ...[
                             StaggerIn(
                               index: i,
                               delay: const Duration(milliseconds: 250),
+                              // Lo que se abre con lo que llevás cae como un
+                              // sello, con su campanada.
+                              scaleFrom: o.needs != null ? 1.12 : 1,
+                              onShow: o.needs == null
+                                  ? null
+                                  : () {
+                                      Haptics.lightImpact();
+                                      ref
+                                          .read(audioProvider)
+                                          .play(Sfx.breathGain);
+                                    },
                               child: ChoiceTile(
                                 title: text.eventOption(id, o.id),
                                 detail: o.duel != null
                                     ? t.eventDuel(text.enemy(o.duel!))
-                                    : t.eventOptionSummary(o),
+                                    : o.needs != null
+                                        ? '${t.eventNeedWith(_needName(text, o.needs!.kind, engine.needMet(run, o)!))} · ${t.eventOptionSummary(o)}'
+                                        : t.eventOptionSummary(o),
                                 accent: o.duel != null
                                     ? Palette.lacquer
-                                    : o.chance != null
-                                        ? Palette.gold
-                                        : null,
+                                    : o.needs != null
+                                        ? Palette.jade
+                                        : o.chance != null
+                                            ? Palette.gold
+                                            : null,
                                 trailing: o.duel != null
                                     ? Icons.sports_martial_arts
-                                    : o.chance != null
-                                        ? Icons.casino_outlined
-                                        : Icons.chevron_right_rounded,
+                                    : o.needs != null
+                                        ? Icons.auto_awesome
+                                        : o.chance != null
+                                            ? Icons.casino_outlined
+                                            : Icons.chevron_right_rounded,
                                 enabled: engine.canChoose(run, o),
                                 blocked: run.hp > o.cost
                                     ? t.merchantNoJade
@@ -326,6 +357,13 @@ class _EventScreenState extends ConsumerState<EventScreen> {
       ),
     );
   }
+
+  String _needName(ContentText text, EventNeedKind kind, String id) =>
+      switch (kind) {
+        EventNeedKind.talisman => text.talisman(id),
+        EventNeedKind.weapon => text.weapon(id),
+        EventNeedKind.form => text.form(id),
+      };
 
   void _leave() {
     Haptics.selectionClick();
@@ -404,6 +442,21 @@ class _ResultCard extends ConsumerWidget {
           Palette.textDim,
           Icons.remove_circle_outline,
         ),
+      if (r.tempered != null)
+        _PopIn(
+          child: _chip(
+            t.eventResultTemper(
+              text.weapon(r.tempered!),
+              ref.watch(runControllerProvider)?.weaponLevel ?? 1,
+            ),
+            Palette.gold,
+            Icons.hardware_rounded,
+          ),
+        ),
+      if (r.mark != null)
+        _PopIn(
+          child: _chip(t.eventResultMark, Palette.gold, Icons.north_rounded),
+        ),
     ];
     return Container(
       width: double.infinity,
@@ -480,9 +533,11 @@ class _ResultCard extends ConsumerWidget {
       children: [
         Icon(icon, size: 16, color: color),
         const SizedBox(width: 4),
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.w700, color: color),
+        Flexible(
+          child: Text(
+            label,
+            style: TextStyle(fontWeight: FontWeight.w700, color: color),
+          ),
         ),
       ],
     ),

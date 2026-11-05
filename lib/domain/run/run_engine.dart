@@ -833,20 +833,27 @@ class RunEngine {
 
   // --------------------------------------------------------------- eventos
 
-  /// Primero el del camino en esta etapa, después los propios de la etapa
-  /// que no viste, los generales que no viste y, si ya viste todo,
-  /// cualquiera de la etapa. Los de otro camino nunca salen.
+  /// Primero el del camino en esta etapa, después la segunda parte de un
+  /// evento de más abajo, los propios de la etapa que no viste, los
+  /// generales que no viste y, si ya viste todo, cualquiera de la etapa. Los
+  /// de otro camino nunca salen; una segunda parte, solo con su marca.
   RunState _rollEvent(RunState r) {
     final stageId = stageOf(r).id;
     final here = [
       for (final e in data.events)
-        if (e.fitsStage(stageId) && (e.path == null || e.path == r.style)) e,
+        if (e.fitsStage(stageId) &&
+            (e.path == null || e.path == r.style) &&
+            (e.after == null || (r.marks[e.after] ?? r.stage) < r.stage))
+          e,
     ];
     final fresh = [for (final e in here) if (!r.seenEvents.contains(e.id)) e];
     final path = [for (final e in fresh) if (e.path != null) e.id];
+    final back = [for (final e in fresh) if (e.after != null) e.id];
     final own = [for (final e in fresh) if (e.stages != null) e.id];
     final pool = path.isNotEmpty
         ? path
+        : back.isNotEmpty
+        ? back
         : own.isNotEmpty
         ? own
         : fresh.isNotEmpty
@@ -856,10 +863,37 @@ class RunEngine {
     return r.copyWith(eventId: shuffled.first, rng: rng);
   }
 
+  /// Lo que habilita una opción con requisito (el talismán, el arma o la
+  /// forma que se tiene), o null si no se cumple o no pide nada.
+  String? needMet(RunState r, EventOptionDef o) {
+    final n = o.needs;
+    if (n == null) return null;
+    final owned = switch (n.kind) {
+      EventNeedKind.talisman => r.talismans,
+      EventNeedKind.weapon => [?r.weapon],
+      EventNeedKind.form => r.knownForms,
+    };
+    for (final id in owned) {
+      if (n.ids.isEmpty || n.ids.contains(id)) return id;
+    }
+    return null;
+  }
+
+  /// Las opciones que se ven: las que piden algo, solo si se tiene, y
+  /// primero (son lo que se ganó con lo que se lleva).
+  List<EventOptionDef> eventOptions(RunState r, EventDef e) => [
+    for (final o in e.options)
+      if (o.needs != null && needMet(r, o) != null) o,
+    for (final o in e.options)
+      if (o.needs == null) o,
+  ];
+
   /// Una opción con costo de Vida solo se puede pagar si no te deja en 0;
-  /// una con precio, si alcanza el jade.
+  /// una con precio, si alcanza el jade; una con requisito, si se cumple.
   bool canChoose(RunState r, EventOptionDef o) =>
-      r.hp > o.cost && r.jade >= o.price;
+      r.hp > o.cost &&
+      r.jade >= o.price &&
+      (o.needs == null || needMet(r, o) != null);
 
   /// Resuelve la opción elegida y vuelve al mapa.
   RunState resolveEvent(RunState r, String optionId) {
@@ -891,7 +925,7 @@ class RunEngine {
     if (outcome.heal > 0) {
       next = next.copyWith(hp: math.min(next.maxHp, next.hp + outcome.heal));
     }
-    String? talisman, card, form, upgraded, lost;
+    String? talisman, card, form, upgraded, lost, tempered;
     // Las ganancias que se eligen pasan por la pantalla del premio.
     RunState? offer;
     switch (outcome.gain) {
@@ -948,11 +982,13 @@ class RunEngine {
           );
         }
       case EventGain.upgrade:
-        final pool = [for (final c in next.deck) if (canUpgrade(c)) c.uid];
-        if (pool.isNotEmpty) {
-          final (uid, rng2) = _pick(next.rng, pool);
-          upgraded = next.deck.firstWhere((c) => c.uid == uid).cardId;
-          next = _upgrade(next, uid).copyWith(rng: rng2);
+        (next, upgraded) = _upgradeAny(next);
+      case EventGain.temper:
+        if (canForge(next)) {
+          tempered = next.weapon;
+          next = forgeWeapon(next);
+        } else {
+          (next, upgraded) = _upgradeAny(next);
         }
       case EventGain.loseStarter:
         final pool = [
@@ -969,6 +1005,9 @@ class RunEngine {
         }
     }
     if (offer != null) next = offer;
+    if (outcome.mark != null) {
+      next = next.copyWith(marks: {...next.marks, outcome.mark!: r.stage});
+    }
     final duel = success == false ? null : option.duel;
     return next.copyWith(
       phase: duel != null
@@ -992,8 +1031,19 @@ class RunEngine {
         upgraded: upgraded,
         lost: lost,
         duel: duel,
+        tempered: tempered,
+        mark: outcome.mark,
       ),
     );
+  }
+
+  /// Mejora una carta al azar de las que se pueden mejorar.
+  (RunState, String?) _upgradeAny(RunState r) {
+    final pool = [for (final c in r.deck) if (canUpgrade(c)) c.uid];
+    if (pool.isEmpty) return (r, null);
+    final (uid, rng) = _pick(r.rng, pool);
+    final id = r.deck.firstWhere((c) => c.uid == uid).cardId;
+    return (_upgrade(r, uid).copyWith(rng: rng), id);
   }
 
   /// Tres cartas del camino de la run para elegir (sin camino, de las de

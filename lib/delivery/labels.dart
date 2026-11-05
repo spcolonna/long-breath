@@ -246,7 +246,9 @@ extension Labels on AppLocalizations {
           EventGain.pathCards => eventGainPathCards,
           EventGain.pickUpgrade => eventGainPickUpgrade,
           EventGain.pathTalisman => eventGainPathTalisman,
+          EventGain.temper => eventGainTemper,
         },
+      if (o.mark != null) eventGainMark,
     ];
     return parts.isEmpty ? eventNothing : parts.join(' · ');
   }

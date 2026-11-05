@@ -50,6 +50,8 @@ class EventResult {
     this.upgraded,
     this.lost,
     this.duel,
+    this.tempered,
+    this.mark,
   });
 
   final String eventId;
@@ -75,6 +77,10 @@ class EventResult {
   /// Rival del duelo que se aceptó.
   final String? duel;
 
+  /// Arma templada (id) y marca que quedó para más arriba.
+  final String? tempered;
+  final String? mark;
+
   Map<String, dynamic> toJson() => {
         'eventId': eventId,
         'optionId': optionId,
@@ -88,6 +94,8 @@ class EventResult {
         'upgraded': upgraded,
         'lost': lost,
         'duel': duel,
+        'tempered': tempered,
+        'mark': mark,
       };
 
   factory EventResult.fromJson(Map<String, dynamic> j) => EventResult(
@@ -103,6 +111,8 @@ class EventResult {
         upgraded: j['upgraded'] as String?,
         lost: j['lost'] as String?,
         duel: j['duel'] as String?,
+        tempered: j['tempered'] as String?,
+        mark: j['mark'] as String?,
       );
 }
 
@@ -131,6 +141,7 @@ class RunState {
     this.locked = const [],
     this.eventId,
     this.seenEvents = const [],
+    this.marks = const {},
     this.lastEvent,
     this.duel,
     required this.map,
@@ -219,6 +230,9 @@ class RunState {
 
   /// Eventos que ya salieron en esta subida (no se repiten).
   final List<String> seenEvents;
+
+  /// Marcas de eventos en dos partes, con la etapa en que se dejaron.
+  final Map<String, int> marks;
 
   /// Resultado del último evento resuelto.
   final EventResult? lastEvent;
@@ -330,6 +344,7 @@ class RunState {
     String? eventId,
     bool clearEventId = false,
     List<String>? seenEvents,
+    Map<String, int>? marks,
     EventResult? lastEvent,
     String? duel,
     bool clearDuel = false,
@@ -392,6 +407,7 @@ class RunState {
         locked: locked,
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
+        marks: marks ?? this.marks,
         lastEvent: lastEvent ?? this.lastEvent,
         duel: clearDuel ? null : duel ?? this.duel,
         map: map ?? this.map,
@@ -462,6 +478,7 @@ class RunState {
         'locked': locked,
         'eventId': eventId,
         'seenEvents': seenEvents,
+        'marks': marks,
         'lastEvent': lastEvent?.toJson(),
         'duel': duel,
         'map': [for (final n in map) n.toJson()],
@@ -532,6 +549,7 @@ class RunState {
         locked: ((j['locked'] as List?) ?? const []).cast<String>(),
         eventId: j['eventId'] as String?,
         seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),
+        marks: ((j['marks'] as Map?) ?? const {}).cast<String, int>(),
         lastEvent: switch (j['lastEvent']) {
           final Map<String, dynamic> e => EventResult.fromJson(e),
           _ => null,

@@ -2488,6 +2488,42 @@ abstract class AppLocalizations {
   /// **'sin cambios'**
   String get eventNothing;
 
+  /// No description provided for @eventGainTemper.
+  ///
+  /// In es, this message translates to:
+  /// **'templar tu arma'**
+  String get eventGainTemper;
+
+  /// No description provided for @eventGainMark.
+  ///
+  /// In es, this message translates to:
+  /// **'sigue más arriba'**
+  String get eventGainMark;
+
+  /// No description provided for @eventNeedWith.
+  ///
+  /// In es, this message translates to:
+  /// **'Con {name}'**
+  String eventNeedWith(String name);
+
+  /// No description provided for @eventBack.
+  ///
+  /// In es, this message translates to:
+  /// **'Un viejo conocido'**
+  String get eventBack;
+
+  /// No description provided for @eventResultTemper.
+  ///
+  /// In es, this message translates to:
+  /// **'Templada: {name} (nivel {n})'**
+  String eventResultTemper(String name, int n);
+
+  /// No description provided for @eventResultMark.
+  ///
+  /// In es, this message translates to:
+  /// **'Esto sigue más arriba'**
+  String get eventResultMark;
+
   /// No description provided for @eventChance.
   ///
   /// In es, this message translates to:

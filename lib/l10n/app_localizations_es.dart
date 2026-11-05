@@ -1466,6 +1466,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventNothing => 'sin cambios';
 
   @override
+  String get eventGainTemper => 'templar tu arma';
+
+  @override
+  String get eventGainMark => 'sigue más arriba';
+
+  @override
+  String eventNeedWith(String name) {
+    return 'Con $name';
+  }
+
+  @override
+  String get eventBack => 'Un viejo conocido';
+
+  @override
+  String eventResultTemper(String name, int n) {
+    return 'Templada: $name (nivel $n)';
+  }
+
+  @override
+  String get eventResultMark => 'Esto sigue más arriba';
+
+  @override
   String eventChance(int pct, String ok, String fail) {
     return '$pct%: $ok · si no: $fail';
   }

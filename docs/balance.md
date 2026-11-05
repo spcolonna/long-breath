@@ -675,3 +675,8 @@ Con élites, talismanes de jefe, formas de camino y armas, todo se había corrid
 Meta en Normal (40 escuelas × 40 subidas): el promedio completa el árbol en la subida 20 y queda en ~60% con todo abierto; el experto, en la 15 y ~86%. Dentro del objetivo (58% / 80%, árbol hacia la subida 22).
 
 Nota: en zsh, `--legacy hp` dentro de una variable sin `${=var}` llega como un solo argumento y el simulador lo ignora (da igual que sin legado).
+
+### 3x. Eventos con requisito y en dos partes (05/11/2026)
+
+Hay 13 opciones que piden un talismán, un arma o una forma, la ganancia nueva `temper` y 3 cadenas de dos partes (`mark` / `after`). El bot valora `temper` en 8 si puede templar (4 si no) y suma 6 a una opción que deja marca. Normal, 1000 subidas: experto 57% (antes 55%), promedio 25% (antes 26%). Sin cambio fuera del ruido.
+

@@ -141,7 +141,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    |---|---|
    | Montaña de las Mil Nubes | El nido en el bambú 巢 (subir el pichón: −6 Vida, mejorás una carta; o mirar: +8 Vida) · El leñador viejo 樵 (cargarle la leña: −5 Vida, +25 jade; o escucharlo: una carta) |
    | Monasterio Colgado | El monje de la campana 钟 (meditar: +14 Vida; o golpear la campana: −6 Vida, una forma) · La viga quebrada 梁 (saltar: 60%, +40 jade o −12 Vida; o buscar otra tabla: −3 Vida) · La biblioteca colgada 经 (estudiar: −4 Vida, mejorás una carta; donar 40 jade: talismán raro; o seguir) |
-   | Cumbre del Dragón Dormido | El ermitaño en la nieve 雪 (desenterrarlo: −8 Vida, talismán raro; o compartir tu fuego: 15 jade, +16 Vida) · La escama en el hielo 鳞 (arrancarla: 50%, +8 Vida máxima o −10 Vida; o escuchar: +10 Vida) · Las banderas del viento 幡 (coserlas: −5 Vida, mejorás una carta; soltar una técnica vieja: +6 Vida y perdés una carta inicial; o seguir) |
+   | Cumbre del Dragón Dormido | El ermitaño en la nieve 雪 (desenterrarlo: −8 Vida, talismán raro; compartir tu fuego: 15 jade, +16 Vida; o llamar a un pastor: nada) · La escama en el hielo 鳞 (arrancarla: 50%, +8 Vida máxima o −10 Vida; o escuchar: +10 Vida) · Las banderas del viento 幡 (coserlas: −5 Vida, mejorás una carta; soltar una técnica vieja: +6 Vida y perdés una carta inicial; o seguir) |
 
    Cada camino tiene además **una prueba por etapa** (cartel «Prueba del Tigre/de la Serpiente/de la Grulla», sello del color del camino). Es el primer evento que sale después del santuario en cada etapa, y nunca le sale a otro camino. Sus opciones son elecciones de verdad:
    - **Cartas del camino:** elegís 1 de 3 cartas de tu camino en la pantalla del botín (volver a tirar también tira del camino).
@@ -165,6 +165,31 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | El altar de los maestros 祠 | Cien reverencias: −7 Vida, un talismán raro · Meditar: +8 Vida |
    | Los dados del arriero 骰 | Apostar: pagás 15, 50% +35 jade · Seguir de largo: nada |
    | El peregrino perdido 旅 | Acompañarlo: −6 Vida, +30 jade · Señalarle el camino: nada |
+
+   **Opciones que abre lo que llevás.** Algunas escenas suman una opción si tenés cierto talismán, arma o forma. Si no lo tenés, la opción no aparece. Si lo tenés, va primero, con borde de jade y el ícono ✦. Entra como un sello, con una vibración suave y una campanada, y su detalle dice qué la abrió (por ejemplo «Con Pluma de la Grulla · un talismán»). Siempre es mejor que las otras opciones y no tiene riesgo:
+
+   | Evento | Pide | Opción |
+   |---|---|---|
+   | El ermitaño del pino 隐 | cualquier forma | Mostrarle una forma: aprendés otra, gratis |
+   | El puente colgante 桥 | Pluma de la Grulla / bastón | Planear o saltar con la pértiga: un talismán |
+   | El mono ladrón 猴 | Garra del Tigre | Rugirle: un talismán, sin perder Vida |
+   | El altar de los maestros 祠 | Horno de Cinabrio | Encender el horno: un talismán raro |
+   | El leñador viejo 樵 | pudao | Partirle la leña: +35 jade |
+   | La viga quebrada 梁 | espada | Cortar una cuerda y columpiarte: +40 jade |
+   | La biblioteca colgada 经 | una forma de camino | Recitarla: elegís qué carta mejorar |
+   | Los títeres de linterna 影 | Escama de la Serpiente | Deslizarte detrás del papel: un talismán |
+   | El ermitaño en la nieve 雪 | Tambor de Bronce | Hacerlo sonar: un talismán raro |
+   | La escama en el hielo 鳞 | Perla del Dragón | Acercarla: +10 Vida máxima |
+   | El sabio en el hielo 冰 | cualquier arma | Mostrársela: **templás el arma** (sin arma o al máximo, mejora una carta) |
+   | Donde nacen las nubes 云 | Perla del Aliento o Luna Llena | Respirar con ella: +10 Vida máxima |
+
+   **Eventos en dos partes.** Algunas decisiones dejan una marca: el resultado lo avisa con «Esto sigue más arriba». En una etapa posterior, la segunda parte sale después de la prueba del camino y antes que los demás eventos. Entra con el cartel dorado «Un viejo conocido», con sello, golpe y sonido. Sin la marca, nunca sale.
+
+   | Primera parte | Marca con | Segunda parte (más arriba) |
+   |---|---|---|
+   | El peregrino herido 伤 (Mil Nubes) | Cargarlo: −7 Vida | El monje que cargaste 报: un talismán raro, o elegís qué mejorar |
+   | El discípulo rival 争 (Mil Nubes) | Aceptar la apuesta: una carta | El rival te espera 峰: duelo con el Discípulo del Viento, o compartirle el agua (+6 Vida máxima) |
+   | La fragua del monasterio 铁 (Monasterio) | Encargarle un trabajo: 30 jade | El aprendiz del herrero 送 (Cumbre): templar el arma, o venderlo por 50 jade |
 
 6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** del piso 9 de cada etapa: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
 

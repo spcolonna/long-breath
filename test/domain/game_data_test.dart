@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/run/ascent.dart';
 import 'package:long_breath/domain/run/feats.dart';
 import 'package:long_breath/domain/model/enums.dart';
+import 'package:long_breath/domain/model/event_def.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
@@ -175,12 +176,48 @@ void main() {
     expect(data.talismans.values.where((t) => t.boss), hasLength(6));
     expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(27),
         reason: 'cada uno se reconoce por su carácter');
-    expect(data.events, hasLength(29));
+    expect(data.events, hasLength(35));
     for (final e in data.events) {
-      expect(e.options.length, inInclusiveRange(2, 3), reason: e.id);
+      final open = [for (final o in e.options) if (o.needs == null) o];
+      expect(open.length, inInclusiveRange(2, 3), reason: e.id);
+      expect(
+        open.any((o) => o.cost == 0 && o.price == 0),
+        isTrue,
+        reason: '${e.id}: siempre queda una opción que se puede tomar',
+      );
       for (final o in e.options) {
         if (o.duel != null) data.enemy(o.duel!);
+        // Lo que pide una opción existe.
+        for (final id in o.needs?.ids ?? const <String>[]) {
+          switch (o.needs!.kind) {
+            case EventNeedKind.talisman:
+              data.talisman(id);
+            case EventNeedKind.weapon:
+              data.weapon(id);
+            case EventNeedKind.form:
+              expect(data.forms.any((f) => f.id == id), isTrue, reason: id);
+          }
+        }
       }
+    }
+    expect(
+      data.events.expand((e) => e.options).where((o) => o.needs != null),
+      hasLength(13),
+    );
+    // Cada segunda parte tiene quien la marque en una etapa más abajo.
+    final order = [for (final st in data.balance.stages) st.id];
+    for (final e in data.events.where((e) => e.after != null)) {
+      final first = data.events.singleWhere(
+        (f) => f.options.any(
+          (o) => o.outcome.mark == e.after || o.failure?.mark == e.after,
+        ),
+      );
+      final from = order.indexOf(first.stages!.single);
+      expect(
+        e.stages!.every((st) => order.indexOf(st) > from),
+        isTrue,
+        reason: e.id,
+      );
     }
     // Un evento por camino en cada etapa, con su duelo.
     for (final s in Style.values) {

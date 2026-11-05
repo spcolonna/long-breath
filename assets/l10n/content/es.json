@@ -599,9 +599,61 @@
     }
   },
   "events": {
+    "wounded": {
+      "name": "El peregrino herido",
+      "text": "Al costado del sendero, un monje joven se agarra el tobillo. Se cayó de la cornisa y nadie se detuvo.",
+      "help": "Cargarlo hasta el refugio",
+      "helpResult": "Lo llevás a cuestas hasta el refugio de abajo. Antes de que te vayas, te agarra la manga: «En el monasterio no me voy a olvidar de vos».",
+      "leave": "Indicarle la bajada y seguir",
+      "leaveResult": "Le dejás tu cantimplora y le marcás el camino. Cuando mirás atrás, ya se puso de pie."
+    },
+    "wounded_return": {
+      "name": "El monje que cargaste",
+      "text": "Un monje te corta el paso con una reverencia. Es el que cargaste en la Montaña de las Mil Nubes: ya camina sin ayuda y trae algo envuelto en seda.",
+      "gift": "Aceptar su regalo",
+      "giftResult": "Desenvuelve un talismán del tesoro del monasterio. «El abad dice que una deuda de montaña se paga en la montaña».",
+      "train": "Pedirle que te enseñe",
+      "trainResult": "Te muestra cómo pelean los monjes del monasterio. Elegís qué golpe pulir con lo que aprendiste."
+    },
+    "rival": {
+      "name": "El discípulo rival",
+      "text": "Un discípulo de otra escuela te alcanza en el sendero. Mira tu cinta y sonríe de costado: «Te apuesto a que llego a la cumbre antes que vos».",
+      "accept": "Aceptar la apuesta",
+      "acceptResult": "Se ríe y sale corriendo. Picado, entrenás más fuerte el resto del día y te sale un golpe nuevo.",
+      "bow": "Inclinarte sin contestar",
+      "bowResult": "Lo dejás pasar. Sin apuro, respirás hondo y seguís a tu ritmo."
+    },
+    "rival_summit": {
+      "name": "El rival te espera",
+      "text": "Sentado en una piedra, el discípulo rival te espera con los brazos cruzados. Llegó primero, pero sin aire. «Ahora veamos quién pelea mejor».",
+      "duel": "Aceptar el duelo",
+      "duelResult": "Se pone en guardia. Esta vez no hay apuesta: solo puños.",
+      "share": "Compartirle tu agua",
+      "shareResult": "Le pasás la cantimplora. Se queda callado, toma y te cuenta de su escuela. Seguís subiendo con el pecho más liviano."
+    },
+    "smith": {
+      "name": "La fragua del monasterio",
+      "text": "Un herrero viejo martilla bajo el alero. El monasterio le encarga campanas, pero lo suyo son las armas: «Pagame ahora y te mando algo a la cumbre».",
+      "order": "Encargarle un trabajo",
+      "orderResult": "Cuenta el jade, lo guarda en el delantal y vuelve al yunque. «Seguí subiendo. Mi aprendiz te va a encontrar».",
+      "fix": "Ayudarlo con los fuelles",
+      "fixResult": "El calor te deja sin aire. A cambio, te muestra cómo endurecer un golpe como se endurece el hierro.",
+      "leave": "Seguir de largo",
+      "leaveResult": "El martilleo te acompaña un buen trecho del sendero."
+    },
+    "smith_delivery": {
+      "name": "El aprendiz del herrero",
+      "text": "Un chico sube corriendo con un bulto envuelto en tela. Llega sin aire: «Lo manda el maestro herrero. Dijo que lo ibas a reconocer».",
+      "take": "Abrir el encargo",
+      "takeResult": "Adentro hay piedras de templar y un mango nuevo, hechos a tu medida. Lo que llevás sale más fuerte.",
+      "sell": "Vendérselo a un peregrino",
+      "sellResult": "Un peregrino rico paga el triple de lo que costó. El aprendiz no entiende nada, pero se ríe."
+    },
     "hermit": {
       "name": "El ermitaño del pino",
       "text": "Bajo un pino torcido medita un anciano. Abre un ojo y sonríe: «Te enseño una forma, si aguantás entrenar conmigo hasta el atardecer».",
+      "show": "Mostrarle una forma que sabés",
+      "showResult": "Hacés la forma entera bajo el pino. El anciano asiente, te corrige un pie y te enseña la que sigue, como quien devuelve un saludo.",
       "pay": "Entrenar con él",
       "payResult": "Entrenás hasta que el sol toca las nubes. Te duele todo, pero aprendiste algo nuevo.",
       "gift": "Dejarle jade para el templo",
@@ -612,6 +664,10 @@
     "bridge": {
       "name": "El puente colgante",
       "text": "Un puente de cuerdas cruza entre dos picos. Del otro lado brilla algo entre las rocas, y las tablas crujen con el viento.",
+      "glide": "Planear con la Pluma",
+      "glideResult": "La Pluma de la Grulla se tensa con el viento. Cruzás el vacío flotando y juntás el talismán sin pisar una tabla.",
+      "vault": "Saltar con el bastón",
+      "vaultResult": "Clavás el bastón en la primera tabla y saltás con todo el cuerpo. Caés del otro lado, junto al talismán.",
       "cross": "Cruzar corriendo",
       "crossResult": "Llegás de un salto y encontrás un talismán entre las rocas.",
       "crossFail": "Una tabla se suelta: te agarrás de la cuerda y subís a los tirones.",
@@ -629,6 +685,8 @@
     "monkey": {
       "name": "El mono ladrón",
       "text": "Un mono dorado te arranca la bolsa de un tirón y trepa a un pino, muerto de risa.",
+      "roar": "Rugirle con la Garra",
+      "roarResult": "La Garra del Tigre te sale en la voz. El mono se queda duro, suelta tu bolsa y, de puro susto, un talismán que tenía escondido.",
       "chase": "Perseguirlo",
       "chaseResult": "Lo alcanzás en la copa. Asustado, suelta tu bolsa… y un talismán que había robado antes.",
       "let": "Dejarlo ir",
@@ -645,6 +703,8 @@
     "altar": {
       "name": "El altar de los maestros",
       "text": "Un altar pequeño, con incienso y flores, mira al valle. Los antiguos maestros parecen observarte.",
+      "burn": "Encender el Horno en el altar",
+      "burnResult": "Las brasas del Horno de Cinabrio prenden el incienso viejo. El humo dibuja un sello en el aire y deja un talismán antiguo sobre la piedra.",
       "offer": "Hacer cien reverencias",
       "offerResult": "Terminás sin aire. Sobre el altar aparece un talismán antiguo.",
       "pray": "Meditar en silencio",
@@ -678,6 +738,8 @@
     "woodcutter": {
       "name": "El leñador viejo",
       "text": "Un leñador de barba blanca sube con un atado de leña más grande que él. Se detiene a tomar aire y te mira las manos vendadas.",
+      "chop": "Partirle la leña con el pudao",
+      "chopResult": "Tres golpes de pudao y el atado queda en astillas parejas. El leñador se ríe, te paga como a un hachero y te pide que vuelvas.",
       "carry": "Cargarle la leña",
       "carryResult": "La leña pesa y el sendero no ayuda. Arriba, te pone unas monedas de jade en la mano y no acepta un no.",
       "listen": "Escuchar su historia",
@@ -694,6 +756,8 @@
     "beam": {
       "name": "La viga quebrada",
       "text": "La pasarela termina en una viga partida sobre el vacío. Del otro lado, una caja de ofrendas olvidada brilla con jade.",
+      "cut": "Cortar una cuerda y columpiarte",
+      "cutResult": "Con la espada cortás una cuerda del andamio y cruzás colgado de ella. La caja de ofrendas se abre sin ruido.",
       "jump": "Saltar",
       "jumpResult": "Caés del otro lado con los pies justos. La caja guarda el jade de muchos peregrinos.",
       "jumpFail": "La viga cede bajo tu talón. Te agarrás de una cuerda y volvés a subir, golpeado.",
@@ -703,6 +767,8 @@
     "library": {
       "name": "La biblioteca colgada",
       "text": "Un monje bibliotecario cuida pergaminos que nadie lee desde hace siglos. Entre ellos, un amuleto envuelto en seda.",
+      "recite": "Recitar la forma de tu camino",
+      "reciteResult": "Le hacés la forma en voz baja, paso por paso. El monje busca un pergamino, te señala una línea y te deja elegir qué golpe pulir.",
       "study": "Estudiar toda la noche",
       "studyResult": "Los ojos te arden al amanecer, pero entendiste por qué tu golpe se quedaba corto.",
       "donate": "Donar para el templo",
@@ -713,6 +779,10 @@
     "snowbound": {
       "name": "El ermitaño en la nieve",
       "text": "Un brazo asoma de un montón de nieve fresca. Abajo, un viejo ermitaño respira apenas, abrazado a un amuleto.",
+      "leave": "Llamar a un pastor del paso",
+      "leaveResult": "Le chiflás a un pastor que baja con su mula. Entre los dos lo sacan de la nieve, y el pastor se lo lleva a su choza a tomar caldo.",
+      "drum": "Hacer sonar el Tambor",
+      "drumResult": "El Tambor de Bronce retumba en el paso. La nieve tiembla y se desliza sola: el ermitaño sale tosiendo y te pone su amuleto en la mano.",
       "dig": "Desenterrarlo",
       "digResult": "Cavás con las manos hasta que no las sentís. Ya a salvo, te pone el amuleto en la palma: «a mí ya me cuidó bastante».",
       "fire": "Compartir tu fuego",
@@ -721,6 +791,8 @@
     "scale": {
       "name": "La escama en el hielo",
       "text": "En la pared de hielo hay una escama enorme, verde y dorada. Si apoyás la oreja se oye algo lento, como una respiración.",
+      "pearl": "Acercar la Perla del Dragón",
+      "pearlResult": "La Perla brilla y la escama le responde. Se suelta sola en tus manos, tibia, y tu pecho se ensancha con ella.",
       "pry": "Arrancarla",
       "pryResult": "La escama se suelta con un crujido. Al tenerla, tu pecho se ensancha como si respiraras con ella.",
       "pryFail": "El hielo se quiebra y te arrastra pendiente abajo. Volvés a subir con la escama todavía en su lugar.",
@@ -750,6 +822,8 @@
     "shadow_puppets": {
       "name": "Los títeres de linterna",
       "text": "Detrás de un papel encerado, un viejo mueve títeres de cuero contra la luz de una linterna. Cuenta la historia de un discípulo que subió hasta las nubes y volvió convertido en maestro.",
+      "slip": "Deslizarte detrás del papel",
+      "slipResult": "Con la Escama de la Serpiente pasás detrás del telón sin mover una sombra. El viejo se ríe al verte y te regala el títere que mejor guardaba.",
       "watch": "Mirar la función",
       "watchResult": "El títere del discípulo llega a la cumbre, se inclina ante un dragón dormido y baja con un cuaderno bajo el brazo. Te reís sin saber por qué y respirás mejor.",
       "tip": "Dejarle una propina",
@@ -758,6 +832,8 @@
     "ice_sage": {
       "name": "El sabio en el hielo",
       "text": "En una cornisa, un monje medita cubierto por una capa fina de hielo transparente. Sonríe. Respira tan despacio que el hielo apenas se empaña.",
+      "forge": "Mostrarle tu arma",
+      "forgeResult": "El monje sopla sobre el filo y el hielo lo templa como una fragua al revés. Tu arma sale más fina, más tuya.",
       "share": "Respirar con él",
       "shareResult": "Te sentás a su lado y acompasás tu aliento al suyo. El frío te muerde, pero al rato tus golpes salen más limpios, como si él te hubiera corregido sin hablar.",
       "bow": "Inclinarte y seguir",
@@ -766,6 +842,8 @@
     "cloud_spring": {
       "name": "Donde nacen las nubes",
       "text": "Una grieta en la roca exhala un aire tibio y lento. Al salir se vuelve nube. Adentro, muy hondo, algo enorme respira.",
+      "breath": "Respirar con tu Aliento",
+      "breathResult": "Tu Aliento encuentra el de la montaña sin buscarlo. Respiran juntos un largo rato. Cuando volvés en vos, el pecho te queda más hondo que nunca.",
       "breathe": "Respirar a su ritmo",
       "breatheResult": "Inhalás cuando la montaña inhala y exhalás cuando exhala. Por un momento tu aliento y el del dragón son uno. Te sentís más hondo por dentro.",
       "gather": "Juntar escarcha de nube",

@@ -5,14 +5,17 @@
       "options": [
         { "id": "pay", "hp": 8, "gain": "form" },
         { "id": "gift", "price": 25, "gain": "form" },
-        { "id": "leave" }
+        { "id": "leave" },
+        { "id": "show", "needs": { "form": [] }, "gain": "form" }
       ]
     },
     {
       "id": "bridge", "hanzi": "桥",
       "options": [
         { "id": "cross", "chance": 50, "success": { "gain": "talisman" }, "failure": { "hp": 10 } },
-        { "id": "around", "hp": 3 }
+        { "id": "around", "hp": 3 },
+        { "id": "glide", "needs": { "talisman": ["pluma"] }, "gain": "talisman" },
+        { "id": "vault", "needs": { "weapon": ["gun"] }, "gain": "talisman" }
       ]
     },
     {
@@ -26,7 +29,8 @@
       "id": "monkey", "hanzi": "猴",
       "options": [
         { "id": "chase", "hp": 6, "gain": "talisman" },
-        { "id": "let", "gain": "loseStarter" }
+        { "id": "let", "gain": "loseStarter" },
+        { "id": "roar", "needs": { "talisman": ["garra"] }, "gain": "talisman" }
       ]
     },
     {
@@ -40,7 +44,8 @@
       "id": "altar", "hanzi": "祠",
       "options": [
         { "id": "offer", "hp": 7, "gain": "rareTalisman" },
-        { "id": "pray", "heal": 8 }
+        { "id": "pray", "heal": 8 },
+        { "id": "burn", "needs": { "talisman": ["horno"] }, "gain": "rareTalisman" }
       ]
     },
     {
@@ -68,7 +73,8 @@
       "id": "woodcutter", "hanzi": "樵", "stages": ["qianyunshan"],
       "options": [
         { "id": "carry", "hp": 5, "jade": 25 },
-        { "id": "listen", "gain": "card" }
+        { "id": "listen", "gain": "card" },
+        { "id": "chop", "needs": { "weapon": ["pudao"] }, "jade": 35 }
       ]
     },
     {
@@ -82,7 +88,8 @@
       "id": "beam", "hanzi": "梁", "stages": ["xuankongsi"],
       "options": [
         { "id": "jump", "chance": 60, "success": { "jade": 40 }, "failure": { "hp": 12 } },
-        { "id": "plank", "hp": 3 }
+        { "id": "plank", "hp": 3 },
+        { "id": "cut", "needs": { "weapon": ["jian"] }, "jade": 40 }
       ]
     },
     {
@@ -90,21 +97,25 @@
       "options": [
         { "id": "study", "hp": 4, "gain": "upgrade" },
         { "id": "donate", "price": 40, "gain": "rareTalisman" },
-        { "id": "leave" }
+        { "id": "leave" },
+        { "id": "recite", "needs": { "form": ["hu_quan", "meng_hu_chu_shan", "fu_hu_quan", "she_quan", "ling_she_chu_dong", "jin_she_chan_si", "he_quan", "he_zhan_chi", "bai_he_quan"] }, "gain": "pickUpgrade" }
       ]
     },
     {
       "id": "snowbound", "hanzi": "雪", "stages": ["wolongding"],
       "options": [
         { "id": "dig", "hp": 8, "gain": "rareTalisman" },
-        { "id": "fire", "price": 15, "heal": 16 }
+        { "id": "fire", "price": 15, "heal": 16 },
+        { "id": "leave" },
+        { "id": "drum", "needs": { "talisman": ["tambor"] }, "gain": "rareTalisman" }
       ]
     },
     {
       "id": "scale", "hanzi": "鳞", "stages": ["wolongding"],
       "options": [
         { "id": "pry", "chance": 50, "success": { "maxHp": 8 }, "failure": { "hp": 10 } },
-        { "id": "listen", "heal": 10 }
+        { "id": "listen", "heal": 10 },
+        { "id": "pearl", "needs": { "talisman": ["perla"] }, "maxHp": 10 }
       ]
     },
     {
@@ -127,14 +138,16 @@
       "id": "shadow_puppets", "hanzi": "影", "stages": ["xuankongsi"],
       "options": [
         { "id": "watch", "heal": 12 },
-        { "id": "tip", "price": 20, "gain": "talisman" }
+        { "id": "tip", "price": 20, "gain": "talisman" },
+        { "id": "slip", "needs": { "talisman": ["escama"] }, "gain": "talisman" }
       ]
     },
     {
       "id": "ice_sage", "hanzi": "冰", "stages": ["wolongding"],
       "options": [
         { "id": "share", "hp": 6, "gain": "upgrade" },
-        { "id": "bow", "heal": 10 }
+        { "id": "bow", "heal": 10 },
+        { "id": "forge", "needs": { "weapon": [] }, "gain": "temper" }
       ]
     },
     {
@@ -142,7 +155,51 @@
       "options": [
         { "id": "breathe", "maxHp": 6 },
         { "id": "gather", "chance": 50, "success": { "jade": 40 }, "failure": { "hp": 8 } },
+        { "id": "leave" },
+        { "id": "breath", "needs": { "talisman": ["aliento", "luna"] }, "maxHp": 10 }
+      ]
+    },
+    {
+      "id": "wounded", "hanzi": "伤", "stages": ["qianyunshan"],
+      "options": [
+        { "id": "help", "hp": 7, "mark": "wounded" },
         { "id": "leave" }
+      ]
+    },
+    {
+      "id": "wounded_return", "hanzi": "报", "stages": ["xuankongsi", "wolongding"], "after": "wounded",
+      "options": [
+        { "id": "gift", "gain": "rareTalisman" },
+        { "id": "train", "gain": "pickUpgrade" }
+      ]
+    },
+    {
+      "id": "rival", "hanzi": "争", "stages": ["qianyunshan"],
+      "options": [
+        { "id": "accept", "gain": "card", "mark": "rival" },
+        { "id": "bow", "heal": 6 }
+      ]
+    },
+    {
+      "id": "rival_summit", "hanzi": "峰", "stages": ["xuankongsi", "wolongding"], "after": "rival",
+      "options": [
+        { "id": "duel", "duel": "wind_disciple" },
+        { "id": "share", "maxHp": 6 }
+      ]
+    },
+    {
+      "id": "smith", "hanzi": "铁", "stages": ["xuankongsi"],
+      "options": [
+        { "id": "order", "price": 30, "mark": "smith" },
+        { "id": "fix", "hp": 4, "gain": "upgrade" },
+        { "id": "leave" }
+      ]
+    },
+    {
+      "id": "smith_delivery", "hanzi": "送", "stages": ["wolongding"], "after": "smith",
+      "options": [
+        { "id": "take", "gain": "temper" },
+        { "id": "sell", "jade": 50 }
       ]
     },
     {

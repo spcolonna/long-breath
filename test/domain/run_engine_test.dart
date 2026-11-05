@@ -461,6 +461,86 @@ void main() {
     });
   });
 
+  group('eventos con requisito y en dos partes', () {
+    RunState at(String id, {RunState? base}) => (base ?? fresh(3))
+        .copyWith(phase: RunPhase.event, eventId: id, hp: 40);
+
+    test('la opción que pide un talismán solo se ve con él, y primero', () {
+      final bridge = run.data.event('bridge');
+      final glide = bridge.option('glide');
+      final plain = at('bridge');
+      expect(run.eventOptions(plain, bridge).map((o) => o.id), [
+        'cross',
+        'around',
+      ]);
+      expect(run.canChoose(plain, glide), isFalse);
+      final crane = at('bridge').copyWith(talismans: ['pluma']);
+      expect(run.eventOptions(crane, bridge).first.id, 'glide');
+      expect(run.needMet(crane, glide), 'pluma');
+      final r = run.resolveEvent(crane, 'glide');
+      expect(r.lastEvent!.talisman, isNotNull);
+      expect(r.lastEvent!.success, isNull, reason: 'sin riesgo');
+    });
+
+    test('arma y forma también abren opciones', () {
+      final wood = run.data.event('woodcutter');
+      expect(run.eventOptions(at('woodcutter'), wood), hasLength(2));
+      final pudao = run.equipWeapon(at('woodcutter'), 'pudao');
+      expect(run.eventOptions(pudao, wood).first.id, 'chop');
+      expect(run.equipWeapon(at('woodcutter'), 'jian').weapon, 'jian');
+      expect(
+        run.eventOptions(run.equipWeapon(at('woodcutter'), 'jian'), wood),
+        hasLength(2),
+      );
+      final hermit = run.data.event('hermit');
+      expect(run.eventOptions(at('hermit'), hermit), hasLength(3));
+      final known = at('hermit').copyWith(knownForms: ['wu_bu_quan']);
+      expect(run.eventOptions(known, hermit).first.id, 'show');
+    });
+
+    test('templar sube el arma; sin arma, mejora una carta', () {
+      final armed = run.equipWeapon(at('ice_sage'), 'gun');
+      final r = run.resolveEvent(armed, 'forge');
+      expect(r.weaponLevel, 2);
+      expect(r.lastEvent!.tempered, 'gun');
+      final delivery = run.resolveEvent(at('smith_delivery'), 'take');
+      expect(delivery.weapon, isNull);
+      expect(delivery.lastEvent!.upgraded, isNotNull);
+    });
+
+    test('la marca de abajo trae la segunda parte en una etapa más arriba', () {
+      var r = run.resolveEvent(at('wounded'), 'help');
+      expect(r.marks, {'wounded': 0});
+      expect(r.lastEvent!.mark, 'wounded');
+      const scene = [
+        MapNodeDef(id: 'x', type: NodeType.event, next: []),
+      ];
+      RunState walk(RunState base, int stage, int seed) => run.enter(
+        base.copyWith(
+          style: Style.tiger,
+          stage: stage,
+          map: scene,
+          clearCurrentNode: true,
+          visited: const [],
+          seenEvents: [...base.seenEvents, 'tiger_drums', 'tiger_boulder'],
+          rng: Rng(seed),
+        ),
+        'x',
+      );
+      for (var seed = 0; seed < 20; seed++) {
+        expect(walk(r, 1, seed).eventId, 'wounded_return');
+        // En la misma etapa no vuelve, y sin marca nunca sale.
+        expect(walk(r, 0, seed).eventId, isNot('wounded_return'));
+        expect(walk(fresh(3), 1, seed).eventId, isNot('wounded_return'));
+      }
+      r = RunState.fromJson(
+        jsonDecode(jsonEncode(r.toJson())) as Map<String, dynamic>,
+      );
+      expect(r.marks, {'wounded': 0});
+      expect(r.lastEvent!.mark, 'wounded');
+    });
+  });
+
   group('eventos de camino', () {
     // Un evento con un combate después (el duelo no es el jefe de etapa).
     const scene = [
