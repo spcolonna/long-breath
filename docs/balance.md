@@ -680,3 +680,18 @@ Nota: en zsh, `--legacy hp` dentro de una variable sin `${=var}` llega como un s
 
 Hay 13 opciones que piden un talismán, un arma o una forma, la ganancia nueva `temper` y 3 cadenas de dos partes (`mark` / `after`). El bot valora `temper` en 8 si puede templar (4 si no) y suma 6 a una opción que deja marca. Normal, 1000 subidas: experto 57% (antes 55%), promedio 25% (antes 26%). Sin cambio fuera del ruido.
 
+
+## 3f. Comunes con más cuerpo (06/11/2026)
+
+El usuario sentía que hasta el gólem o el jefe todo era de trámite: los comunes caían en ~3 turnos y la dificultad se concentraba en pocos picos.
+
+- **Vida +15–22%** a los comunes débiles: murciélago 53 → 64, mono 58 → 70, lingzhi 52 → 62, bandido 66 → 77; en la etapa 3, murciélago de hielo 68 → 80, simio de nieve 74 → 86, espada voladora 54 → 64 y músico del guqin 72 → 84. La salamandra queda en 63 (ya duraba 4 turnos y quitaba 8 de Vida).
+- **El discípulo sale del piso 2** y aparece desde el piso 4 (le bajaba al jugador de 50 a 9 en una subida real).
+
+| Normal, 300 runs | Antes | Después |
+|---|---|---|
+| Promedio: gana | 32% | 26% |
+| Promedio: llega a la etapa 2 / 3 | 58% / 42% | 55% / 36% |
+| Experto: gana | 58% | 59% |
+
+**Hallazgo:** en la etapa 3 subir la Vida no alarga el combate. Con +35% los comunes siguen cayendo en ~2,6 turnos y quitan ~3 de Vida, porque el mazo ya es fuerte. Para darles tensión hace falta daño o una mecánica (guardias, interrupciones), no Vida. El experto no se mueve: no pierde Vida con los comunes.

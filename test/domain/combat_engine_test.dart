@@ -1285,7 +1285,7 @@ void main() {
       final s = pack(['bat']);
       expect(s.waveCount, 2);
       expect(s.enemy.maxHp, (63 * 0.7).round());
-      expect(s.reserve.single.maxHp, (53 * 0.7).round());
+      expect(s.reserve.single.maxHp, (64 * 0.7).round());
       expect(pack(['bat', 'golem']).enemy.maxHp, (63 * 0.58).round());
     });
 
@@ -1351,7 +1351,7 @@ void main() {
       expect(s.target, 0);
       final pct = data.balance.packTogetherHp;
       expect(s.enemies[0].maxHp, (63 * pct / 100).round());
-      expect(s.enemies[1].maxHp, (53 * pct / 100).round());
+      expect(s.enemies[1].maxHp, (64 * pct / 100).round());
       expect(s.enemyDamagePct, data.balance.packTogetherDamage);
     });
 

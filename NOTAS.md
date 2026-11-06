@@ -124,11 +124,14 @@ macOS no tiene `timeout`.
 
 **Conclusión:** la dificultad está concentrada en unos pocos picos y los comunes son de trámite. El objetivo de balance es una escuela nueva con promedio cerca del 26% (ver `docs/balance.md`).
 
-## Pendiente / próximo paso (esperando OK del usuario)
-1. Subir entre 15% y 25% la Vida de los comunes débiles de las etapas 1 y 2 (bat, salamander, monkey, lingzhi, bandit, frost_bat, snow_ape, flying_sword, guqin_player…), para que duren 4 o 5 turnos.
-2. Sacar a `disciple` del pool del piso 2 (`game_balance.json`, línea ~119) y que aparezca desde el piso 4.
-3. Medir con `tool/simulate.dart` (promedio y experto) hasta que el promedio quede cerca del 26%. Después actualizar `docs/balance.md` y el conteo de tests si cambia.
-4. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso.
+## Balance hecho (06/11)
+- Más Vida para los comunes débiles y el discípulo fuera del piso 2. Promedio 32% → **26%**, experto 58% → 59% (Normal, 300 runs). Detalle en `docs/balance.md` §3f.
+- **Hallazgo:** los comunes de la etapa 3 no se alargan subiendo la Vida (siguen en ~2,6 turnos y quitan ~3 de Vida). Si se quiere tensión ahí, hay que tocar el daño o las mecánicas.
+
+## Pendiente
+1. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
+2. Opcional: dar más peligro a los comunes de la etapa 3, con más daño o mecánicas.
+3. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas
 - Si un widget de animación devuelve `child!` cuando está quieto y lo envuelve cuando anima, el subárbol se remonta. Hay que devolver siempre el mismo tipo de widget.
