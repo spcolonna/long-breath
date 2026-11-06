@@ -114,12 +114,12 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
       builder: (context, child) {
         final idle = Curves.easeInOut.transform(_idle.value);
         final st = _strike.value;
-        // Carga un instante hacia atrás y sale disparado.
-        // Más corto que antes: un paso firme, no un ir y venir.
-        final s = 0.6 *
-            (st < 0.25
-                ? -0.2 * Curves.easeOut.transform(st / 0.25)
-                : math.sin(math.pi * (st - 0.25) / 0.75));
+        // Un solo empuje: sale rápido y vuelve despacio. Sin amague hacia
+        // atrás, que con la vuelta se leía como dos idas y venidas.
+        final s = 0.5 *
+            (st < 0.3
+                ? Curves.easeOutCubic.transform(st / 0.3)
+                : 1 - Curves.easeInOutSine.transform((st - 0.3) / 0.7));
         final hv = _hurt.value;
         final hurting = _hurt.isAnimating;
         const stop = 0.15;

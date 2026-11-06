@@ -2320,6 +2320,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get previewGuardHit => 'Su guardia lo frena';
 
   @override
+  String get previewCovers => '✓ cubre su golpe';
+
+  @override
+  String previewHalfCover(String height) {
+    return '⚠ su golpe es $height: cubre la mitad';
+  }
+
+  @override
   String get realmLabel => 'Reino';
 
   @override

@@ -24,6 +24,7 @@ import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/lotus.dart';
+import '../widgets/more_below.dart';
 import '../feel.dart';
 
 class ResultScreen extends ConsumerStatefulWidget {
@@ -39,6 +40,7 @@ class ResultScreen extends ConsumerStatefulWidget {
 /// siguiente. Tocar en cualquier lado adelanta la escena.
 class _ResultScreenState extends ConsumerState<ResultScreen>
     with SingleTickerProviderStateMixin {
+  final _scroll = ScrollController();
   late final _c =
       AnimationController(
           vsync: this,
@@ -113,6 +115,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
   @override
   void dispose() {
     _c.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -177,8 +180,14 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
             child: Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 12),
+                  // Hitos y pergaminos pueden no entrar: el borde se funde y
+                  // avisa que hay más abajo.
+                  child: MoreBelowHint(
+                    controller: _scroll,
+                    label: t.merchantMore,
+                    child: SingleChildScrollView(
+                    controller: _scroll,
+                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 48),
                     child: Column(
                       children: [
                         SizedBox(
@@ -412,6 +421,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         ),
                       ],
                     ),
+                  ),
                   ),
                 ),
                 // La escuela manda al siguiente: siempre a mano, abajo.

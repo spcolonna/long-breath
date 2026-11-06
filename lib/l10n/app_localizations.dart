@@ -3724,6 +3724,18 @@ abstract class AppLocalizations {
   /// **'Su guardia lo frena'**
   String get previewGuardHit;
 
+  /// No description provided for @previewCovers.
+  ///
+  /// In es, this message translates to:
+  /// **'✓ cubre su golpe'**
+  String get previewCovers;
+
+  /// No description provided for @previewHalfCover.
+  ///
+  /// In es, this message translates to:
+  /// **'⚠ su golpe es {height}: cubre la mitad'**
+  String previewHalfCover(String height);
+
   /// No description provided for @realmLabel.
   ///
   /// In es, this message translates to:

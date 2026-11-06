@@ -1326,6 +1326,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     );
 
     final won = live.state.phase == CombatPhase.won;
+    final inset = MediaQuery.paddingOf(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -1381,6 +1382,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             if (_endShown)
               _EndOverlay(
                 won: won,
+                inset: inset,
                 lessonId: live.lessonId,
                 turns: live.state.turn,
                 hp: live.state.player.hp,
@@ -1860,11 +1862,36 @@ class _EnemyStage extends ConsumerWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: slot.pair ? slot.onTap : null,
-      // El globo de intención se pinta encima del enemigo: el arte (y sus
-      // golpes) a veces sube y lo tapaba. En la columna queda un hueco
-      // invisible del mismo tamaño.
+      // El globo de intención va en su propia capa, detrás del enemigo; en
+      // la columna queda un hueco invisible del mismo tamaño y el enemigo se
+      // apoya abajo con aire arriba, así en reposo no se tocan.
       child: Stack(
       children: [
+      Positioned(
+        top: slot.pair ? 46 : 26,
+        left: 0,
+        right: 0,
+        child: Center(
+          child: anchor(
+              'intent',
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 280),
+                switchInCurve: Curves.easeOutBack,
+                transitionBuilder: (child, a) => ScaleTransition(
+                  scale: a,
+                  child: FadeTransition(opacity: a, child: child),
+                ),
+                child: foe.dying
+                    ? const SizedBox(key: ValueKey('none'), height: 50)
+                    : _IntentBubble(
+                        key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
+                        iv: slot.intent,
+                        compact: slot.pair,
+                      ),
+              ),
+            ),
+        ),
+      ),
       Column(
       children: [
         // Con dos, los globos bajan un poco: arriba a la derecha está la pausa.
@@ -1883,18 +1910,23 @@ class _EnemyStage extends ConsumerWidget {
         Expanded(
           child: LayoutBuilder(
             builder: (context, box) {
-              final size = math.min(
-                math.min(box.maxHeight, 220.0),
-                box.maxWidth * 1.15,
+              // Apoyado abajo y con aire arriba: la cabeza no llega al
+              // globo de intención.
+              final size = math.max(
+                0.0,
+                math.min(
+                  math.min(box.maxHeight - 16, 220.0),
+                  box.maxWidth * 1.15,
+                ),
               );
               return Stack(
-                alignment: Alignment.center,
+                alignment: Alignment.bottomCenter,
                 clipBehavior: Clip.none,
                 children: [
                   // A quién apuntás: un halo de oro a sus pies.
                   if (slot.pair)
                     Positioned(
-                      bottom: (box.maxHeight - size) / 2 - 4,
+                      bottom: -4,
                       child: _TargetHalo(on: aimed, width: size * 0.8),
                     ),
                   _Entrance(
@@ -2209,31 +2241,6 @@ class _EnemyStage extends ConsumerWidget {
               : SizedBox(width: double.infinity, height: slot.pair ? 27 : 0),
         ),
       ],
-      ),
-      Positioned(
-        top: slot.pair ? 46 : 26,
-        left: 0,
-        right: 0,
-        child: Center(
-          child: anchor(
-              'intent',
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 280),
-                switchInCurve: Curves.easeOutBack,
-                transitionBuilder: (child, a) => ScaleTransition(
-                  scale: a,
-                  child: FadeTransition(opacity: a, child: child),
-                ),
-                child: foe.dying
-                    ? const SizedBox(key: ValueKey('none'), height: 50)
-                    : _IntentBubble(
-                        key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
-                        iv: slot.intent,
-                        compact: slot.pair,
-                      ),
-              ),
-            ),
-        ),
       ),
       ],
       ),
@@ -3057,6 +3064,19 @@ class _PreviewPanel extends ConsumerWidget {
               ? t.previewGuardHit
               : t.previewGuardMiss)
         : null;
+    // Guardia contra el golpe que viene: a su altura lo cubre entera; a otra
+    // altura, solo la mitad. Lo decimos antes de jugarla.
+    final incoming = engine.intentView(s);
+    final covers = incoming.intent.height == p.height;
+    final coverNote =
+        p.guard > 0 &&
+            !incoming.skipped &&
+            incoming.intent.kind == IntentKind.attack &&
+            incoming.intent.height != null
+        ? (covers
+              ? t.previewCovers
+              : t.previewHalfCover(t.heightLabel(incoming.intent.height!)))
+        : null;
     final parts = <String>[
       if (parried)
         t.previewParried(enemyDef.parry)
@@ -3139,8 +3159,21 @@ class _PreviewPanel extends ConsumerWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Text(
-                    [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        // El aviso de altura va primero y en color: es lo
+                        // que más cuesta leer al defenderse.
+                        if (coverNote != null)
+                          TextSpan(
+                            text: '$coverNote  ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: covers ? Palette.jade : Palette.lacquer,
+                            ),
+                          ),
+                        TextSpan(
+                          text: [
                       ...parts,
                       for (final f in p.completesForms)
                         t.previewCompletes(formName(f)),
@@ -3149,6 +3182,9 @@ class _PreviewPanel extends ConsumerWidget {
                       for (final f in p.interruptsForms)
                         t.previewInterrupts(formName(f)),
                     ].join(' · '),
+                        ),
+                      ],
+                    ),
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 11,
@@ -4416,7 +4452,11 @@ class _EndOverlay extends ConsumerStatefulWidget {
     required this.enemyHp,
     this.quote,
     this.fledWith,
+    this.inset = EdgeInsets.zero,
   });
+
+  /// Lo que la zona segura le quita: el velo lo recupera y llega a los bordes.
+  final EdgeInsets inset;
 
   final bool won;
 
@@ -4521,7 +4561,11 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
       (final l?, false) => (t.lessonRetry, () => _openLesson(l.id)),
     };
     final secondary = lesson != null && !(won && next == null);
-    return Positioned.fill(
+    return Positioned(
+      left: -widget.inset.left,
+      top: -widget.inset.top,
+      right: -widget.inset.right,
+      bottom: -widget.inset.bottom,
       child: AnimatedBuilder(
         animation: Listenable.merge([_c, _loop]),
         builder: (context, _) {
