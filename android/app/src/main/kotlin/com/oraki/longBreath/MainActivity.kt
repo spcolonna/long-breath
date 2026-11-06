@@ -1,4 +1,4 @@
-package com.spcolonna.long_breath
+package com.oraki.longBreath
 
 import io.flutter.embedding.android.FlutterActivity
 
