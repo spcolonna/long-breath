@@ -56,6 +56,7 @@ class CardPreview {
     this.styleDamage = 0,
     this.retained = false,
     this.chained = false,
+    this.closesCircle = false,
   });
 
   final int cost;
@@ -87,6 +88,10 @@ class CardPreview {
 
   /// Se juega desde la postura que pide: encadena y suma su extra.
   final bool chained;
+
+  /// Encadena desde la última postura que faltaba este turno: cierra el
+  /// círculo.
+  final bool closesCircle;
 }
 
 /// Intención del enemigo con los valores finales ya aplicados.
@@ -656,6 +661,9 @@ class CombatEngine {
       styleDamage: style,
       retained: s.retained.contains(uid),
       chained: def.chainsFrom(stance),
+      closesCircle:
+          def.chainsFrom(stance) &&
+          _closes(s.chainedStances, stance),
     );
   }
 
@@ -701,6 +709,17 @@ class CombatEngine {
   }
 
   // --------------------------------------------------------------- jugar
+
+  /// Premio por cerrar el círculo de posturas en un turno.
+  static const circleBreath = 1;
+  static const circleDraw = 2;
+
+  /// Encadenar desde [from] completa las tres posturas (y antes faltaba esa).
+  static bool _closes(int mask, Stance from) {
+    final all = (1 << Stance.values.length) - 1;
+    final bit = 1 << from.index;
+    return mask & bit == 0 && (mask | bit) == all;
+  }
 
   void _playCard(_Draft d, int uid, List<CombatEvent> events) {
     final card = d.hand.firstWhere((c) => c.uid == uid);
@@ -800,6 +819,15 @@ class CombatEngine {
         events.add(_trig(id));
         d.breath += n;
         events.add(BreathGained(n));
+      }
+      // Círculo: encadenar desde las tres posturas en un mismo turno.
+      final closes = _closes(d.chainedStances, d.stance);
+      d.chainedStances |= 1 << d.stance.index;
+      if (closes) {
+        events.add(const StanceCircle());
+        d.breath += circleBreath;
+        events.add(BreathGained(circleBreath));
+        _draw(d, circleDraw, events);
       }
     }
 
@@ -1233,6 +1261,7 @@ class CombatEngine {
       }
     }
     d.cardsThisTurn = 0;
+    d.chainedStances = 0;
     d.deflectBonusDamage = 0;
     d.deflectBonusStructure = 0;
     d.dingbuUsed = false;
@@ -1412,6 +1441,7 @@ class _Draft {
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
     this.cardsThisTurn = 0,
+    this.chainedStances = 0,
     this.drawPenalty = 0,
     this.awakened = AwakeningEffect.none,
     List<int>? retained,
@@ -1466,6 +1496,7 @@ class _Draft {
     retainedDiscount: s.retainedDiscount,
     attacksThisTurn: s.attacksThisTurn,
     cardsThisTurn: s.cardsThisTurn,
+    chainedStances: s.chainedStances,
     drawPenalty: s.drawPenalty,
     awakened: s.awakened,
     retained: [...s.retained],
@@ -1526,6 +1557,7 @@ class _Draft {
   final int retainedDiscount;
   int attacksThisTurn;
   int cardsThisTurn;
+  int chainedStances;
   int drawPenalty;
   final AwakeningEffect awakened;
   final List<int> retained;
@@ -1582,6 +1614,7 @@ class _Draft {
     retainedDiscount: retainedDiscount,
     attacksThisTurn: attacksThisTurn,
     cardsThisTurn: cardsThisTurn,
+    chainedStances: chainedStances,
     retained: List.unmodifiable(retained),
     drawPenalty: drawPenalty,
     awakened: awakened,

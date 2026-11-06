@@ -95,12 +95,48 @@ void main() {
       expect(s.player.stance, Stance.xubu);
       expect(s.enemy.structure, 14 - 2 - 6);
       expect(s.player.breath, 4 - 1 - 1 + 1);
-      // Desde Vacía, la palma suma 2 de daño y roba 1.
+      // Desde Vacía, la palma suma 2 de daño y roba 1. Y es la tercera
+      // postura del turno: cierra el círculo (+1 de Aliento, roba 2).
+      final p3 = engine.preview(s, uidOf(s, 'xu_zhuan_ma'));
+      expect(p3.closesCircle, isTrue);
       final hand = s.hand.length;
-      s = play(s, 'xu_zhuan_ma').state;
+      final breath = s.player.breath;
+      final r3 = play(s, 'xu_zhuan_ma');
+      expect(r3.events.whereType<StanceCircle>(), hasLength(1));
+      s = r3.state;
       expect(s.player.stance, Stance.mabu);
       expect(s.enemy.hp, 63 - 10 - 4 - 6);
-      expect(s.hand.length, hand - 1 + 1);
+      expect(s.hand.length, hand - 1 + 1 + CombatEngine.circleDraw);
+      expect(
+        s.player.breath,
+        breath - 1 + CombatEngine.circleBreath,
+        reason: 'palma en xūbù cuesta 1',
+      );
+    });
+
+    test('el círculo se cierra una vez por turno y se reinicia', () {
+      var s = setup([
+        'ma_zhuan_gong',
+        'gong_zhuan_xu',
+        'xu_zhuan_ma',
+        'ma_zhuan_gong',
+        ...filler,
+      ]);
+      s = s.copyWith(player: s.player.copyWith(breath: 10));
+      expect(engine.preview(s, uidOf(s, 'ma_zhuan_gong')).closesCircle,
+          isFalse);
+      s = play(s, 'ma_zhuan_gong').state;
+      s = play(s, 'gong_zhuan_xu').state;
+      s = play(s, 'xu_zhuan_ma').state;
+      expect(s.chainedStances, 7);
+      // De vuelta en Caballo encadena otra vez, pero el círculo ya se cerró.
+      final p = engine.preview(s, uidOf(s, 'ma_zhuan_gong'));
+      expect(p.chained, isTrue);
+      expect(p.closesCircle, isFalse);
+      final r = play(s, 'ma_zhuan_gong');
+      expect(r.events.whereType<StanceCircle>(), isEmpty);
+      final next = endTurn(r.state).state;
+      expect(next.chainedStances, 0);
     });
 
     test('sin la postura de salida no encadena', () {

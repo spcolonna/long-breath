@@ -1236,5 +1236,9 @@
   "chainedTag": "Encadena",
   "chainedFloat": "¡Cadena!",
   "talEffChainBreath": "Cada carta que encadena desde su postura da +{n} de Aliento.",
-  "@talEffChainBreath": {"placeholders": {"n": {"type": "int"}}}
+  "@talEffChainBreath": {"placeholders": {"n": {"type": "int"}}},
+  "circleTag": "Cierra el círculo",
+  "circleFloat": "¡Círculo cerrado!",
+  "circleSub": "+{breath} de Aliento · robás {draw}",
+  "@circleSub": {"placeholders": {"breath": {"type": "int"}, "draw": {"type": "int"}}}
 }

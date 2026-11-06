@@ -4419,6 +4419,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cada carta que encadena desde su postura da +{n} de Aliento.'**
   String talEffChainBreath(int n);
+
+  /// No description provided for @circleTag.
+  ///
+  /// In es, this message translates to:
+  /// **'Cierra el círculo'**
+  String get circleTag;
+
+  /// No description provided for @circleFloat.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Círculo cerrado!'**
+  String get circleFloat;
+
+  /// No description provided for @circleSub.
+  ///
+  /// In es, this message translates to:
+  /// **'+{breath} de Aliento · robás {draw}'**
+  String circleSub(int breath, int draw);
 }
 
 class _AppLocalizationsDelegate

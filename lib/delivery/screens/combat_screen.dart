@@ -1040,6 +1040,20 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               Palette.gold,
             ),
           );
+        case StanceCircle():
+          // Círculo cerrado: tres toques que suben, la cinta grande.
+          Haptics.heavyImpact();
+          _after(120, Haptics.mediumImpact);
+          _after(240, Haptics.lightImpact);
+          _audio.play(Sfx.formComplete);
+          _queue.add(
+            _Fx(
+              t.circleFloat,
+              t.circleSub(CombatEngine.circleBreath, CombatEngine.circleDraw),
+              Palette.gold,
+              big: true,
+            ),
+          );
         case FistBonusGained(:final total):
           _queue.add(
             _Fx(t.fistBonusTitle, t.fistBonusNow(total), Palette.lacquer),

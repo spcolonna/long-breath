@@ -500,6 +500,7 @@ Hay cinco tipos: **Puño**, **Palma**, **Patada**, **Defensa** y **Técnica**. C
 
 - Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero pega** con la postura en la que estás y **después te deja** en la suya. Su bonus lo aprovecha la carta siguiente: ordenar la mano o usar Paso en T antes es la clave.
 - **Cadena de postura:** algunas cartas piden una postura de salida y te dejan en otra (la etiqueta dice, por ejemplo, *Caballo → Arco*). Si la jugás estando en la de salida, **encadena**: suma su extra (daño, Estructura, Aliento o robo), la etiqueta se pone dorada con «Encadena» y al jugarla sale «¡Cadena!». Las tres generales cierran el círculo Caballo → Arco → Vacía → Caballo; cada camino tiene una propia (*El tigre se da vuelta*, *La serpiente gira*, *La grulla se posa*).
+- **Círculo cerrado:** si en un mismo turno encadenás desde las tres posturas (Caballo, Arco y Vacía, en cualquier orden), el círculo se cierra: **+1 de Aliento y robás 2**, una vez por turno. La carta que lo cerraría dice «Cierra el círculo» en lugar de «Encadena», y al jugarla sale la cinta grande «¡Círculo cerrado!» con vibración triple.
 - **Agotar:** la carta desaparece por el resto del combate al jugarla.
 
 ## Posturas

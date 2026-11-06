@@ -195,6 +195,7 @@ class CombatState {
     this.retainedDiscount = 0,
     this.attacksThisTurn = 0,
     this.cardsThisTurn = 0,
+    this.chainedStances = 0,
     this.retained = const [],
     this.drawPenalty = 0,
     this.awakened = AwakeningEffect.none,
@@ -276,6 +277,10 @@ class CombatState {
   /// Cartas jugadas en este turno (talismán Vacío).
   final int cardsThisTurn;
 
+  /// Posturas desde las que ya encadenaste este turno (máscara por índice).
+  /// Con las tres, el círculo se cierra.
+  final int chainedStances;
+
   /// Cartas que vienen retenidas del turno anterior (Grulla).
   final List<int> retained;
 
@@ -342,6 +347,7 @@ class CombatState {
         retainedDiscount: retainedDiscount,
         attacksThisTurn: attacksThisTurn,
         cardsThisTurn: cardsThisTurn,
+        chainedStances: chainedStances,
         retained: retained,
         drawPenalty: drawPenalty,
         awakened: awakened,

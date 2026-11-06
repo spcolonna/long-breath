@@ -2807,4 +2807,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String talEffChainBreath(int n) {
     return 'Cada carta que encadena desde su postura da +$n de Aliento.';
   }
+
+  @override
+  String get circleTag => 'Cierra el círculo';
+
+  @override
+  String get circleFloat => '¡Círculo cerrado!';
+
+  @override
+  String circleSub(int breath, int draw) {
+    return '+$breath de Aliento · robás $draw';
+  }
 }

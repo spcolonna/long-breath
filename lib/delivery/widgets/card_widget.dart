@@ -205,7 +205,11 @@ class CardWidget extends ConsumerWidget {
                     if (chained)
                       Padding(
                         padding: EdgeInsets.only(top: 2 * s),
-                        child: _Tag(t.chainedTag, Palette.gold, scale: s),
+                        child: _Tag(
+                          p?.closesCircle == true ? t.circleTag : t.chainedTag,
+                          Palette.gold,
+                          scale: s,
+                        ),
                       ),
                     if (interruptsForm)
                       Icon(
