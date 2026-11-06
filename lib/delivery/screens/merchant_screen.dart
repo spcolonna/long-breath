@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -87,6 +89,21 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
 
   /// La carta en oferta al entrar (queda marcada aunque se compre).
   String? _sale;
+
+  /// La vitrina sigue hacia abajo: un aviso invita a bajar hasta que se baja.
+  final _scroll = ScrollController();
+  bool _more = false;
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  void _checkMore(ScrollMetrics m) {
+    final more = m.extentAfter > 40 && m.pixels < 30;
+    if (more != _more) setState(() => _more = more);
+  }
 
   int _price(_Item i) {
     final run = ref.read(runControllerProvider);
@@ -251,7 +268,20 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                 ],
               ),
               Expanded(
-                child: ListView(
+                child: Stack(
+                  children: [
+                NotificationListener<ScrollMetricsNotification>(
+                  onNotification: (n) {
+                    _checkMore(n.metrics);
+                    return false;
+                  },
+                  child: NotificationListener<ScrollNotification>(
+                  onNotification: (n) {
+                    _checkMore(n.metrics);
+                    return false;
+                  },
+                  child: ListView(
+                  controller: _scroll,
                   padding: const EdgeInsets.only(top: 12, bottom: 16),
                   children: [
                     NpcPortrait(
@@ -371,6 +401,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                               from: _forging ? run.weaponLevel : null,
                               style: run.style,
                               artHeight: 90,
+                              showcase: true,
                             ),
                           ),
                         ),
@@ -427,6 +458,52 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                           ),
                         ),
                       ),
+                  ],
+                ),
+                ),
+                ),
+                // Fundido abajo y aviso: hay más mercadería bajando.
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: IgnorePointer(
+                    ignoring: !_more,
+                    child: AnimatedOpacity(
+                      opacity: _more ? 1 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      child: Container(
+                        height: 70,
+                        alignment: Alignment.bottomCenter,
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Palette.bg.withValues(alpha: 0),
+                              Palette.bg,
+                            ],
+                          ),
+                        ),
+                        child: _MoreBelow(
+                          label: t.merchantMore,
+                          onTap: () {
+                            Haptics.selectionClick();
+                            _scroll.animateTo(
+                              math.min(
+                                _scroll.position.maxScrollExtent,
+                                _scroll.offset + 320,
+                              ),
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeOutCubic,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                   ],
                 ),
               ),
@@ -773,4 +850,81 @@ class _SaleTagState extends State<_SaleTag>
       ),
     ),
   );
+}
+
+/// "Hay más abajo": una pastilla con una flecha que sube y baja despacio.
+class _MoreBelow extends StatefulWidget {
+  const _MoreBelow({required this.label, required this.onTap});
+
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  State<_MoreBelow> createState() => _MoreBelowState();
+}
+
+class _MoreBelowState extends State<_MoreBelow>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _c, reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: AnimatedBuilder(
+        animation: _c,
+        builder: (_, child) => Transform.translate(
+          offset: Offset(0, 4 * Curves.easeInOut.transform(_c.value)),
+          child: child,
+        ),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(14, 6, 10, 6),
+          decoration: BoxDecoration(
+            color: Palette.jade,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Palette.jade.withValues(alpha: 0.35),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.label,
+                style: const TextStyle(
+                  color: Palette.onColor,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(width: 4),
+              const Icon(
+                Icons.keyboard_double_arrow_down,
+                color: Palette.onColor,
+                size: 18,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

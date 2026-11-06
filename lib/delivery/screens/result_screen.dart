@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -278,27 +279,41 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           ),
                         ),
                         const SizedBox(height: 14),
-                        for (var i = 0; i < lines.length; i++)
-                          _enter(
-                            lineAt[i],
-                            lineAt[i] + 0.07,
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 6),
-                              child: Text(
-                                lines[i],
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  height: 1.35,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: i == lines.length - 1 && n != null
-                                      ? FontWeight.w700
-                                      : FontWeight.w400,
-                                  color: i == lines.length - 1 && n != null
-                                      ? Palette.text
-                                      : Palette.textDim,
+                        // Sobre papel: el fondo de escena no deja leer el
+                        // epitafio en gris.
+                        if (lines.isNotEmpty)
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(18, 12, 18, 8),
+                            decoration: BoxDecoration(
+                              color: Palette.surface.withValues(alpha: 0.9),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                  color: ink.withValues(alpha: 0.35)),
+                            ),
+                            child: Column(
+                              children: [
+                            for (var i = 0; i < lines.length; i++)
+                              _enter(
+                                lineAt[i],
+                                lineAt[i] + 0.07,
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 6),
+                                  child: Text(
+                                    lines[i],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      height: 1.35,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: i == lines.length - 1 && n != null
+                                          ? FontWeight.w700
+                                          : FontWeight.w500,
+                                      color: Palette.text,
+                                    ),
+                                  ),
                                 ),
                               ),
+                              ],
                             ),
                           ),
                         const SizedBox(height: 14),
@@ -434,6 +449,25 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         Wrap(
                           alignment: WrapAlignment.center,
                           children: [
+                            // El registro de la subida, para pasarlo y
+                            // analizar el balance.
+                            TextButton.icon(
+                              onPressed: () async {
+                                final log =
+                                    await ref.read(runLogProvider).read();
+                                if (log == null || !context.mounted) return;
+                                await Clipboard.setData(
+                                  ClipboardData(text: log),
+                                );
+                                Haptics.selectionClick();
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(t.resultLogCopied)),
+                                );
+                              },
+                              icon: const Icon(Icons.copy_rounded, size: 16),
+                              label: Text(t.resultCopyLog),
+                            ),
                             TextButton.icon(
                               onPressed: () {
                                 ref

@@ -9,6 +9,7 @@ import '../../domain/model/enums.dart';
 import '../../domain/run/feats.dart';
 import '../../domain/run/ghost.dart';
 import '../tutorial/lessons.dart';
+import '../log/run_log.dart';
 import '../providers.dart';
 import 'run_controller.dart';
 
@@ -102,6 +103,26 @@ class CombatController extends Notifier<CombatView?> {
       seq: 1,
       instance: ++_instances,
     );
+    runCtl.log([
+      ...combatHeader(r.state, foes),
+      if (eventsLine(r.events) case final e when e.isNotEmpty) '     al empezar: $e',
+      ...turnSnapshot(r.state, engine),
+    ]);
+  }
+
+  /// Anota la jugada y sus efectos (no en las lecciones).
+  void _log(CombatView before, CombatAction action, CombatResult r) {
+    if (before.tutorial) return;
+    final effects = eventsLine(r.events);
+    ref.read(runControllerProvider.notifier).log([
+      logLine(
+        '  ${actionLine(action, before.state)}'
+        '${effects.isEmpty ? '' : ' → $effects'}',
+      ),
+      // Al empezar cada turno, y al terminar la pelea (cómo quedó cada uno).
+      if (r.events.any((e) => e is TurnStarted) || r.state.isOver)
+        ...turnSnapshot(r.state, engine),
+    ]);
   }
 
   /// Lección contra un muñeco de madera, con el mazo en orden fijo.
@@ -139,6 +160,7 @@ class CombatController extends Notifier<CombatView?> {
       lessonId: v.lessonId,
       instance: v.instance,
     );
+    _log(v, action, r);
   }
 
   void tapCard(int uid) {
@@ -172,6 +194,7 @@ class CombatController extends Notifier<CombatView?> {
     final v = state!;
     if (v.retaining || engine.validate(v.state, Target(index)) != null) return;
     final r = engine.reduce(v.state, Target(index));
+    _log(v, Target(index), r);
     state = CombatView(
       state: r.state,
       events: r.events,

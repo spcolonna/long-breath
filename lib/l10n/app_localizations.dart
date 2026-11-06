@@ -760,6 +760,48 @@ abstract class AppLocalizations {
   /// **'{index} de {total}'**
   String waveOf(int index, int total);
 
+  /// No description provided for @waveGroupTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Grupo de {n}'**
+  String waveGroupTitle(int n);
+
+  /// No description provided for @waveGroupSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Vienen uno tras otro: cuando cae uno, entra el siguiente'**
+  String get waveGroupSub;
+
+  /// No description provided for @waveNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Después:'**
+  String get waveNext;
+
+  /// No description provided for @merchantMore.
+  ///
+  /// In es, this message translates to:
+  /// **'Hay más abajo'**
+  String get merchantMore;
+
+  /// No description provided for @resultCopyLog.
+  ///
+  /// In es, this message translates to:
+  /// **'Copiar registro'**
+  String get resultCopyLog;
+
+  /// No description provided for @resultLogCopied.
+  ///
+  /// In es, this message translates to:
+  /// **'Registro de la subida copiado'**
+  String get resultLogCopied;
+
+  /// No description provided for @lootTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Llevás {before} → {after}'**
+  String lootTotal(int before, int after);
+
   /// No description provided for @comboHits.
   ///
   /// In es, this message translates to:

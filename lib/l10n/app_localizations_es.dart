@@ -421,6 +421,32 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String waveGroupTitle(int n) {
+    return 'Grupo de $n';
+  }
+
+  @override
+  String get waveGroupSub =>
+      'Vienen uno tras otro: cuando cae uno, entra el siguiente';
+
+  @override
+  String get waveNext => 'Después:';
+
+  @override
+  String get merchantMore => 'Hay más abajo';
+
+  @override
+  String get resultCopyLog => 'Copiar registro';
+
+  @override
+  String get resultLogCopied => 'Registro de la subida copiado';
+
+  @override
+  String lootTotal(int before, int after) {
+    return 'Llevás $before → $after';
+  }
+
+  @override
   String get comboHits => 'golpes';
 
   @override

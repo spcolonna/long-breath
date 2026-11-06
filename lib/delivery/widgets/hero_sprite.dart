@@ -115,20 +115,22 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
         final idle = Curves.easeInOut.transform(_idle.value);
         final st = _strike.value;
         // Carga un instante hacia atrás y sale disparado.
-        final s = st < 0.25
-            ? -0.3 * Curves.easeOut.transform(st / 0.25)
-            : math.sin(math.pi * (st - 0.25) / 0.75);
+        // Más corto que antes: un paso firme, no un ir y venir.
+        final s = 0.6 *
+            (st < 0.25
+                ? -0.2 * Curves.easeOut.transform(st / 0.25)
+                : math.sin(math.pi * (st - 0.25) / 0.75));
         final hv = _hurt.value;
         final hurting = _hurt.isAnimating;
         const stop = 0.15;
         final after = hv < stop ? 0.0 : (hv - stop) / (1 - stop);
-        final shake = hurting && hv >= stop ? math.sin(after * math.pi * 6) * 9 * (1 - after) : 0.0;
+        final shake = hurting && hv >= stop ? math.sin(after * math.pi * 4) * 5 * (1 - after) : 0.0;
         final knock = hurting ? (hv < stop ? 1.0 : 1 - Curves.easeOut.transform(after)) : 0.0;
         final flash = hurting ? (hv < stop ? 0.6 : 0.6 * (1 - after)) : 0.0;
         final g = _guard.isAnimating ? math.sin(math.pi * _guard.value) : 0.0;
         final e = Curves.easeInOut.transform(_end.value);
         // Victoria: un salto corto. Derrota: se hunde y pierde el color.
-        final hop = widget.victory ? -math.sin(math.pi * math.min(1, _end.value * 1.6)) * 26 : 0.0;
+        final hop = widget.victory ? -math.sin(math.pi * math.min(1, _end.value * 1.6)) * 12 : 0.0;
         final fall = widget.defeated ? e : 0.0;
         // El arma va dentro del cuerpo: hereda el paso, el retroceso y los
         // filtros, y además se blande al golpear.
@@ -140,12 +142,12 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
           body = Stack(
             clipBehavior: Clip.none,
             children: [
-              body,
+              // Detrás del cuerpo: el héroe la sostiene delante suyo.
               Positioned(
                 left: w * heroHand.dx - len / 6,
                 top: h * heroHand.dy - len * shape.grip,
                 child: Transform.rotate(
-                  angle: shape.angle + 0.7 * s + 0.04 * (idle - 0.5),
+                  angle: shape.angle + 1.1 * s + 0.04 * (idle - 0.5),
                   alignment: Alignment(0, shape.grip * 2 - 1),
                   child: WeaponArt(
                     id: weapon,
@@ -155,6 +157,7 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
                   ),
                 ),
               ),
+              body,
             ],
           );
         }

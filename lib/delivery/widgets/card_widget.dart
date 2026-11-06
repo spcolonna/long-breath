@@ -249,9 +249,9 @@ class CardWidget extends ConsumerWidget {
                               ),
                           ],
                         ),
+                        // Sin cortar: si el nombre es largo, el FittedBox
+                        // achica el bloque entero en vez de poner "…".
                         textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 9.5 * s,
                           fontWeight: FontWeight.w700,

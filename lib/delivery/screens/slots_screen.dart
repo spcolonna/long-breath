@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
+import '../../infrastructure/run_log_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -97,6 +101,7 @@ class SlotsScreen extends ConsumerWidget {
     _tap(ref);
     if (!await _confirmDelete(context, slot, progress)) return;
     await ref.read(slotStorageProvider).delete(slot);
+    unawaited(RunLogStorage(slot).clear());
     Haptics.heavyImpact();
     _refresh(ref, slot);
     if (ref.read(activeSlotProvider) == slot) {

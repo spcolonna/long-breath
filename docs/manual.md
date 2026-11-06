@@ -41,7 +41,7 @@ Antes de subir, los novicios practican en el patio con el **muñeco de madera** 
 - **Gólem de Cuarzo:** cuarzo pálido con vetas turquesa y musgo en los hombros, casi inamovible hasta que se le rompe el equilibrio.
 - **Salamandra de Brasa:** ágil y escurridiza, con la cola encendida como una brasa; se entierra para protegerse.
 - **Mono Ladrón:** un mono dorado que se lleva tu jade en cada manotazo y, si no lo frenás a tiempo, se escapa con el botín.
-- **Bandido del Paso:** un fanfarrón con bastón y sombrero de bambú. Tantea un turno y al siguiente descarga el bastonazo: el contador te avisa.
+- **Bandido del Paso:** un fanfarrón con palo y sombrero de bambú. Tantea un turno y al siguiente descarga el palazo: el contador te avisa.
 - **Hongo Lingzhi:** un hongo de la longevidad, testarudo y sonriente. Se cura antes de cada acción: hay que pegarle fuerte y rápido.
 - **Monje sin Rostro** (élite): un maestro con máscara de porcelana que interrumpe las formas a medio ejecutar.
 - **León de Piedra** 石狮 (élite): el guardián del arco, que se despierta de a poco y pega cada vez más fuerte hasta que lo desequilibrás.
@@ -171,7 +171,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Evento | Pide | Opción |
    |---|---|---|
    | El ermitaño del pino 隐 | cualquier forma | Mostrarle una forma: aprendés otra, gratis |
-   | El puente colgante 桥 | Pluma de la Grulla / bastón | Planear o saltar con la pértiga: un talismán |
+   | El puente colgante 桥 | Pluma de la Grulla / palo | Planear o saltar con la pértiga: un talismán |
    | El mono ladrón 猴 | Garra del Tigre | Rugirle: un talismán, sin perder Vida |
    | El altar de los maestros 祠 | Horno de Cinabrio | Encender el horno: un talismán raro |
    | El leñador viejo 樵 | pudao | Partirle la leña: +35 jade |
@@ -230,7 +230,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    | Arma | Nivel I | Nivel II | Nivel III | Camino afín |
    |---|---|---|---|---|
-   | 棍 Bastón | Barrido bajo, Bastón que cruza | Bastón que levanta; el rival empieza con 1 de Estructura menos | Molinete del bastón; 2 de Estructura menos y cada ataque quita +1 de Estructura | Grulla: +3 de Estructura máxima |
+   | 棍 Palo | Barrido bajo, Palo que cruza | Palo que levanta; el rival empieza con 1 de Estructura menos | Molinete del palo; 2 de Estructura menos y cada ataque quita +1 de Estructura | Grulla: +3 de Estructura máxima |
    | 剑 Espada | Estocada, Punta que pica; los ataques atraviesan 2 de la Guardia del rival (sin gastarla) | Corte que intercepta; atraviesan 2 y cada desvío devuelve 2 | Espada que atraviesa; atraviesan 3 y el desvío devuelve 3 | Serpiente: atraviesa 2 más |
    | 朴刀 Pudao | Tajo que parte, Hoja que ataja; los ataques de 2 o más de Aliento pegan +3 | Hachazo de pudao; +4 | Hoja que envuelve la cabeza; +5 | Tigre: desequilibrar pega un golpe de 4, que entra doble |
 
@@ -292,6 +292,10 @@ Cada subida la hace **un discípulo distinto, con número** (Discípulo nº 1, n
 | Cinco varillas / Lo que el maestro anota | con 5 y 10 caídos |
 
 La Vida **no** se recupera entre combates (solo en la fuente, algunos eventos y talismanes). La Estructura sí, completa.
+
+## Registro de cada subida
+
+Cada subida deja un registro en texto para analizar el balance. Guarda el camino elegido en cada piso con sus alternativas, cada jugada con su efecto, el estado al empezar cada turno (vida, aliento, mano e intención del enemigo), y además botines, compras, eventos, despertares y el final. Está en `Documents/run_logs/slot<N>/actual.log` del contenedor de la app y se guardan las últimas 20 por partida. Al terminar una subida, **Copiar registro** lo copia para pegarlo donde haga falta.
 
 ## Cultivo del aliento 境界
 
@@ -579,7 +583,7 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Gólem de Cuarzo | Común | 64 | 16 | Medio 12 → Carga → Medio 12 | Recibe la mitad del daño salvo que esté Desequilibrado. La Carga suma +6 a su próximo ataque |
 | Salamandra de Brasa | Común | 57 | 14 | Bajo 8 → Se entierra (Guardia 9) → Bajo 10 | Su Guardia frena el daño, pero no el daño a Estructura: usá palmas y empujes |
 | Mono Ladrón | Común | 58 | 13 | Manotazo alto 4×2 → Manotazo bajo 5×2 → Se escapa | **Ladrón:** cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa (con cuenta regresiva): se lleva lo robado y ese combate no da jade, aunque la carta de recompensa se gana igual. Si lo vencés antes, no perdés nada. Desequilibrarlo le hace perder la acción y te da un turno más |
-| Bandido del Paso | Común | 66 | 15 | Tanteo alto 6 → Bastonazo medio 15 | **Bastón:** alterna un golpe liviano y un bastonazo fuerte. El contador muestra cuántos turnos faltan: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe |
+| Bandido del Paso | Común | 66 | 15 | Tanteo alto 6 → Palazo medio 15 | **Palo:** alterna un golpe liviano y un palazo fuerte. El contador muestra cuántos turnos faltan: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe |
 | Hongo Lingzhi | Común | 52 | 13 | Nube de esporas media 7 → Sombrero de laca (Guardia 7) → Latigazo de raíz bajo 9 | **Regeneración 3:** se cura antes de cada acción, salvo que la pierda por Desequilibrio. Presenta la regla antes de la etapa 2 |
 | Monje sin Rostro | Élite | 116 | 21 | Medio 10 → Interrumpir (alto 6) → Bajo 14 | Si no desviás Interrumpir, tus formas en progreso vuelven a 0 |
 | León de Piedra | Élite | 134 | 20 | Medio 9 → Piel de piedra (Guardia 8) → Zarpazo alto 11 | **Despierta:** después de cada acción sus golpes suman +3, y se acumula (se ve en su placa). Desequilibrarlo lo vuelve a dormir: el bonus vuelve a 0 |

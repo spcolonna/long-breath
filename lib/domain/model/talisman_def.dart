@@ -112,7 +112,7 @@ class TalismanEffect {
 
   // Los de las armas.
 
-  /// Estructura extra que quita cada ataque con daño (Bastón).
+  /// Estructura extra que quita cada ataque con daño (Palo).
   final int attackStructure;
 
   /// Guardia del rival que atraviesan los ataques de carta (Espada).

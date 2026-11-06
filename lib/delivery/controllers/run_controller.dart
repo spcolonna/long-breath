@@ -9,6 +9,7 @@ import '../../domain/run/cultivation.dart';
 import '../../domain/run/ghost.dart';
 import '../../domain/run/legacy.dart';
 import '../../infrastructure/progress_storage.dart';
+import '../log/run_log.dart';
 import '../providers.dart';
 import '../screens/map/map_layout.dart';
 
@@ -23,10 +24,28 @@ class RunController extends Notifier<RunState?> {
 
   RunEngine get _engine => ref.read(runEngineProvider);
 
-  void _set(RunState? r) {
+  /// Guarda y anota en el registro lo que cambió ([what]: la decisión;
+  /// [options]: los nodos que se podían elegir).
+  void _set(RunState? r, {String? what, List<String> options = const []}) {
+    final prev = state;
     state = r;
     ref.read(runStorageProvider).save(r);
+    final finished = prev != null &&
+        (prev.phase == RunPhase.victory || prev.phase == RunPhase.defeat);
+    if (prev != null && !(r == null && finished)) {
+      ref.read(runLogProvider).append(
+        runDiff(prev, r, what: what, options: options),
+      );
+    }
   }
+
+  /// Empieza el registro de una subida nueva.
+  void _startLog(RunState r) => ref
+      .read(runLogProvider)
+      .start(runHeader(r, ref.read(activeSlotProvider)));
+
+  /// Anota una línea suelta (combate) en el registro.
+  void log(Iterable<String> lines) => ref.read(runLogProvider).append(lines);
 
   void resume(RunState r) => state = r;
 
@@ -39,8 +58,8 @@ class RunController extends Notifier<RunState?> {
     MetaBonus? meta,
     Ghost? ghost,
     Legacy? legacy,
-  }) =>
-      _set(_engine.newRun(
+  }) {
+    final run = _engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
         difficulty: difficulty,
         pico: pico,
@@ -49,7 +68,10 @@ class RunController extends Notifier<RunState?> {
         meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
         legacy: legacy,
-      ));
+      );
+    _startLog(run);
+    _set(run);
+  }
 
   void abandon() => _set(null);
 
@@ -61,8 +83,8 @@ class RunController extends Notifier<RunState?> {
     int floor, {
     String? weapon,
     int weaponLevel = 1,
-  }) =>
-      _set(_engine.debugStart(
+  }) {
+    final run = _engine.debugStart(
         seed: DateTime.now().microsecondsSinceEpoch,
         difficulty: difficulty,
         pico: pico,
@@ -72,9 +94,15 @@ class RunController extends Notifier<RunState?> {
         ghost: ghostFrom(ref.read(ascentsProvider).value ?? const []),
         weapon: weapon,
         weaponLevel: weaponLevel,
-      ));
+      );
+    _startLog(run);
+    _set(run, what: 'menú de pruebas: etapa $stage piso $floor');
+  }
 
-  void enter(String nodeId) => _set(_engine.enter(state!, nodeId));
+  void enter(String nodeId) => _set(
+    _engine.enter(state!, nodeId),
+    options: _engine.available(state!),
+  );
 
   /// Devuelve la semilla y los enemigos del combate del nodo actual (el
   /// primero y los que entran después).
@@ -98,6 +126,11 @@ class RunController extends Notifier<RunState?> {
         fledWith: fledWith,
         tally: tally,
       ),
+      what: won
+          ? 'gana el combate'
+          : fledWith != null
+          ? 'el enemigo huyó'
+          : 'pierde el combate',
     );
     final phase = state!.phase;
     if (phase == RunPhase.victory || phase == RunPhase.defeat) {
@@ -174,70 +207,70 @@ class RunController extends Notifier<RunState?> {
 
   /// Subir a la etapa siguiente después de vencer a su jefe.
   void advanceStage([String? awakening]) =>
-      _set(_engine.advanceStage(state!, awakening: awakening));
+      _set(_engine.advanceStage(state!, awakening: awakening), what: 'sube de etapa${awakening == null ? '' : ' con $awakening'}');
 
   void chooseReward(String? cardId) =>
-      _set(_engine.chooseReward(state!, cardId));
+      _set(_engine.chooseReward(state!, cardId), what: 'elige carta ${cardId ?? 'ninguna'}');
 
   void chooseForm(String formId) =>
-      _set(_engine.chooseForm(state!, formId));
+      _set(_engine.chooseForm(state!, formId), what: 'elige forma $formId');
 
-  void collectReward() => _set(_engine.collectReward(state!));
+  void collectReward() => _set(_engine.collectReward(state!), what: 'cobra el botín');
 
   void chooseRewardUpgrade(int uid) =>
-      _set(_engine.chooseRewardUpgrade(state!, uid));
+      _set(_engine.chooseRewardUpgrade(state!, uid), what: 'mejora carta $uid');
 
   void chooseRewardTalisman(String id) =>
-      _set(_engine.chooseRewardTalisman(state!, id));
+      _set(_engine.chooseRewardTalisman(state!, id), what: 'elige talismán $id');
 
   void chooseRewardWeapon(String id) =>
-      _set(_engine.chooseRewardWeapon(state!, id));
+      _set(_engine.chooseRewardWeapon(state!, id), what: 'elige arma $id');
 
-  void rerollReward() => _set(_engine.rerollReward(state!));
+  void rerollReward() => _set(_engine.rerollReward(state!), what: 'vuelve a tirar el botín');
 
   /// La presentación de la etapa ya se vio: no se repite al volver al mapa.
   void introSeen() => _set(state!.copyWith(introShown: state!.stage));
 
   void chooseLegacy(LegacyPick pick) =>
-      _set(_engine.chooseLegacy(state!, pick));
+      _set(_engine.chooseLegacy(state!, pick), what: 'elige legado ${pick.name}');
 
   void chooseTalisman(String id) =>
-      _set(_engine.chooseTalisman(state!, id));
+      _set(_engine.chooseTalisman(state!, id), what: 'elige talismán $id');
 
   void resolveEvent(String optionId) =>
-      _set(_engine.resolveEvent(state!, optionId));
+      _set(_engine.resolveEvent(state!, optionId), what: 'evento: elige $optionId');
 
-  void buyCard(String cardId) => _set(_engine.buyCard(state!, cardId));
+  void buyCard(String cardId) => _set(_engine.buyCard(state!, cardId), what: 'compra carta $cardId');
 
-  void buyTalisman() => _set(_engine.buyTalisman(state!));
+  void buyTalisman() => _set(_engine.buyTalisman(state!), what: 'compra talismán');
 
-  void buyRare() => _set(_engine.buyRare(state!));
+  void buyRare() => _set(_engine.buyRare(state!), what: 'compra el de la vitrina');
 
-  void buyWeapon() => _set(_engine.buyWeapon(state!));
+  void buyWeapon() => _set(_engine.buyWeapon(state!), what: 'compra arma');
 
-  void buyForge() => _set(_engine.buyForge(state!));
+  void buyForge() => _set(_engine.buyForge(state!), what: 'templa el arma');
 
-  void buyRemove(int uid) => _set(_engine.buyRemove(state!, uid));
+  void buyRemove(int uid) => _set(_engine.buyRemove(state!, uid), what: 'paga quitar carta');
 
-  void buyUpgrade(int uid) => _set(_engine.buyUpgrade(state!, uid));
+  void buyUpgrade(int uid) => _set(_engine.buyUpgrade(state!, uid), what: 'paga mejorar carta');
 
-  void buyTea() => _set(_engine.buyTea(state!));
+  void buyTea() => _set(_engine.buyTea(state!), what: 'compra té');
 
-  void leaveShop() => _set(_engine.leaveShop(state!));
+  void leaveShop() => _set(_engine.leaveShop(state!), what: 'se va del mercader');
 
-  void masterTeach(String formId) => _set(_engine.masterTeach(state!, formId));
+  void masterTeach(String formId) => _set(_engine.masterTeach(state!, formId), what: 'maestro enseña $formId');
 
-  void masterUpgrade(int uid) => _set(_engine.masterUpgrade(state!, uid));
+  void masterUpgrade(int uid) => _set(_engine.masterUpgrade(state!, uid), what: 'maestro mejora carta');
 
-  void masterForge() => _set(_engine.masterForge(state!));
+  void masterForge() => _set(_engine.masterForge(state!), what: 'maestro templa el arma');
 
-  void choosePath(Style style) => _set(_engine.choosePath(state!, style));
+  void choosePath(Style style) => _set(_engine.choosePath(state!, style), what: 'elige camino ${style.name}');
 
-  void heal() => _set(_engine.fountainHeal(state!));
+  void heal() => _set(_engine.fountainHeal(state!), what: 'fuente: descansa');
 
-  void removeCard(int uid) => _set(_engine.fountainRemove(state!, uid));
+  void removeCard(int uid) => _set(_engine.fountainRemove(state!, uid), what: 'fuente: quita carta');
 
-  void upgradeCard(int uid) => _set(_engine.fountainUpgrade(state!, uid));
+  void upgradeCard(int uid) => _set(_engine.fountainUpgrade(state!, uid), what: 'fuente: mejora carta');
 }
 
 final runControllerProvider =

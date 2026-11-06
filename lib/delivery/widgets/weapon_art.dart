@@ -40,9 +40,11 @@ WeaponShape weaponShapeOf(String id) =>
     weaponShapes[id] ??
     const WeaponShape(grip: 0.7, tassel: 0.8, length: 0.8, angle: 0.4);
 
-/// Dónde está la mano adelantada del héroe, en fracciones de su sprite (los
-/// cuatro sprites comparten silueta; si alguno cambia, va acá).
-const heroHand = Offset(0.72, 0.40);
+/// Dónde está la palma de la mano adelantada del héroe, en fracciones de su
+/// sprite (los cuatro sprites comparten silueta; si alguno cambia, va acá).
+/// El héroe está de espaldas: el arma va detrás del cuerpo y asoma por la
+/// mano, así se ve sostenida y no flotando.
+const heroHand = Offset(0.83, 0.30);
 
 /// Un arma de pie, de alto [height]: su imagen si existe y, si no, dibujada
 /// por código. La borla (del color del nivel) se mece con [sway] (−1 a 1) y

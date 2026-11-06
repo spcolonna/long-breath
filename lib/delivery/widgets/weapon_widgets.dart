@@ -166,6 +166,7 @@ class WeaponTile extends ConsumerWidget {
     required this.style,
     this.from,
     this.artHeight = 120,
+    this.showcase = false,
   });
 
   final String id;
@@ -173,6 +174,9 @@ class WeaponTile extends ConsumerWidget {
   final Style? style;
   final int? from;
   final double artHeight;
+
+  /// En una caja, cruzada y más grande (la vitrina del mercader).
+  final bool showcase;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -186,7 +190,40 @@ class WeaponTile extends ConsumerWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WeaponArt(id: id, level: level, height: artHeight),
+        if (showcase)
+          // En la vitrina: el arma cruzada en su caja, grande y a la vista.
+          Container(
+            width: artHeight * 1.05,
+            height: artHeight * 1.25,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              gradient: RadialGradient(colors: [
+                Colors.white,
+                weaponColor(level).withValues(alpha: 0.18),
+              ]),
+              border: Border.all(
+                color: weaponColor(level).withValues(alpha: 0.6),
+                width: 2,
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: OverflowBox(
+                maxHeight: artHeight * 2,
+                maxWidth: artHeight * 2,
+                child: Transform.rotate(
+                  angle: 0.62,
+                  child: WeaponArt(
+                    id: id,
+                    level: level,
+                    height: artHeight * 1.5,
+                  ),
+                ),
+              ),
+            ),
+          )
+        else
+          WeaponArt(id: id, level: level, height: artHeight),
         const SizedBox(width: 12),
         Expanded(
           child: Column(

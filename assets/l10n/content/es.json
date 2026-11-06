@@ -167,9 +167,9 @@
     "he_mian": "La grulla duerme",
     "he_luo_di": "La grulla se posa",
     "gun_sao": "Barrido bajo",
-    "gun_ge": "Bastón que cruza",
-    "gun_tiao": "Bastón que levanta",
-    "gun_wuhua": "Molinete del bastón",
+    "gun_ge": "Palo que cruza",
+    "gun_tiao": "Palo que levanta",
+    "gun_wuhua": "Molinete del palo",
     "jian_ci": "Estocada",
     "jian_dian": "Punta que pica",
     "jian_jie": "Corte que intercepta",
@@ -254,7 +254,7 @@
     },
     "bandit": {
       "name": "Bandido del Paso",
-      "rule": "Bastón: un turno tantea con un golpe ALTO y al siguiente descarga un bastonazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe."
+      "rule": "Palo: un turno tantea con un golpe ALTO y al siguiente descarga un palazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe."
     },
     "lingzhi": {
       "name": "Hongo Lingzhi",
@@ -467,7 +467,7 @@
     "fan_gust": "Ráfaga del abanico",
     "fan_edge": "Filo de hierro",
     "staff_jab": "Tanteo",
-    "staff_smash": "Bastonazo",
+    "staff_smash": "Palazo",
     "toll": "Repique",
     "bronze_skin": "Piel de bronce",
     "fist_gate": "Cierra el paso a los puños",
@@ -543,7 +543,7 @@
     "manga": "Manga Ancha"
   },
   "weapons": {
-    "gun": { "name": "Bastón", "text": "Madera de fresno, largo como un hombre. Barre bajo y no deja pie firme." },
+    "gun": { "name": "Palo", "text": "Madera de fresno, largo como un hombre. Barre bajo y no deja pie firme." },
     "jian": { "name": "Espada", "text": "Hoja recta de doble filo. Busca el hueco en la guardia y entra." },
     "pudao": { "name": "Pudao", "text": "Mango largo y hoja ancha, arma de campesinos. Lenta, pero lo que toca se parte." }
   },
@@ -673,8 +673,8 @@
       "text": "Un puente de cuerdas cruza entre dos picos. Del otro lado brilla algo entre las rocas, y las tablas crujen con el viento.",
       "glide": "Planear con la Pluma",
       "glideResult": "La Pluma de la Grulla se tensa con el viento. Cruzás el vacío flotando y juntás el talismán sin pisar una tabla.",
-      "vault": "Saltar con el bastón",
-      "vaultResult": "Clavás el bastón en la primera tabla y saltás con todo el cuerpo. Caés del otro lado, junto al talismán.",
+      "vault": "Saltar con el palo",
+      "vaultResult": "Clavás el palo en la primera tabla y saltás con todo el cuerpo. Caés del otro lado, junto al talismán.",
       "cross": "Cruzar corriendo",
       "crossResult": "Llegás de un salto y encontrás un talismán entre las rocas.",
       "crossFail": "Una tabla se suelta: te agarrás de la cuerda y subís a los tirones.",

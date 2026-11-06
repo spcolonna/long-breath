@@ -284,6 +284,15 @@
   "rankElite": "Élite",
   "rankBoss": "Guardián",
   "waveOf": "{index} de {total}",
+  "waveGroupTitle": "Grupo de {n}",
+  "@waveGroupTitle": { "placeholders": { "n": { "type": "int" } } },
+  "waveGroupSub": "Vienen uno tras otro: cuando cae uno, entra el siguiente",
+  "waveNext": "Después:",
+  "merchantMore": "Hay más abajo",
+  "resultCopyLog": "Copiar registro",
+  "resultLogCopied": "Registro de la subida copiado",
+  "lootTotal": "Llevás {before} → {after}",
+  "@lootTotal": { "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } } },
   "comboHits": "golpes",
   "@waveOf": {
     "placeholders": {

@@ -182,9 +182,10 @@ void main() {
     final shop = container.read(runControllerProvider)!;
     expect(find.text('VITRINA'), findsOneWidget);
     expect(find.text('Selecto'), findsOneWidget);
-    await tester.tap(
-      find.text(container.read(textProvider).talisman(shop.shopRare!)),
-    );
+    final rare = find.text(container.read(textProvider).talisman(shop.shopRare!));
+    await tester.ensureVisible(rare);
+    await tester.pump();
+    await tester.tap(rare);
     await tester.pump();
     await tester.tap(find.text('Confirmar'));
     await settle(tester);

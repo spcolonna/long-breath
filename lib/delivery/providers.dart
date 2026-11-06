@@ -15,6 +15,7 @@ import '../domain/run/ascent.dart';
 import '../domain/run/cultivation.dart';
 import '../domain/run/run_state.dart';
 import '../infrastructure/progress_storage.dart';
+import '../infrastructure/run_log_storage.dart';
 import '../infrastructure/run_storage.dart';
 import '../infrastructure/slot_storage.dart';
 import '../infrastructure/tutorial_storage.dart';
@@ -130,6 +131,11 @@ final bestPicoProvider = FutureProvider<int>(
 
 final runStorageProvider = Provider<RunStorage>(
   (ref) => RunStorage(SlotStorage.prefixOf(ref.watch(activeSlotProvider))),
+);
+
+/// Registro de la subida en curso de la partida activa (para el balance).
+final runLogProvider = Provider<RunLogStorage>(
+  (ref) => RunLogStorage(ref.watch(activeSlotProvider)),
 );
 
 final savedRunProvider = FutureProvider(

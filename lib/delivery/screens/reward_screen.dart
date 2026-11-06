@@ -43,6 +43,9 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
   /// El premio tal como se abrió (al cobrarlo, la run ya pasa al mapa).
   late final RunState _run = ref.read(runControllerProvider)!;
   bool _open = false;
+
+  /// El cofre ya se está abriendo (tapa, luz y chispas) antes del premio.
+  bool _opening = false;
   int _flash = 0;
   final _timers = <Timer>[];
 
@@ -65,15 +68,21 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
     super.dispose();
   }
 
+  /// Primero se abre el cofre (se agacha, salta y suelta la luz) y recién
+  /// después aparece lo que trae.
   void _reveal() {
-    if (!mounted || _open) return;
-    Haptics.heavyImpact();
+    if (!mounted || _open || _opening) return;
+    Haptics.mediumImpact();
     final audio = ref.read(audioProvider);
     audio.play(Sfx.rewardFlip);
-    _after(180, () => audio.play(Sfx.victoryStamp));
-    setState(() {
-      _open = true;
-      _flash++;
+    setState(() => _opening = true);
+    _after(_ChestState.openMs - 120, () {
+      Haptics.heavyImpact();
+      audio.play(Sfx.victoryStamp);
+      setState(() {
+        _open = true;
+        _flash++;
+      });
     });
   }
 
@@ -124,6 +133,8 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                           ? _Chest(
                               key: const ValueKey('chest'),
                               onOpen: _reveal,
+                              opening: _opening,
+                              color: color,
                             )
                           : KeyedSubtree(
                               key: const ValueKey('open'),
@@ -364,23 +375,48 @@ class _Keepsake extends ConsumerWidget {
 
 /// El cofre de laca sellado: respira, tiembla y se abre al tocarlo.
 class _Chest extends StatefulWidget {
-  const _Chest({super.key, required this.onOpen});
+  const _Chest({
+    super.key,
+    required this.onOpen,
+    this.opening = false,
+    this.color = Palette.gold,
+  });
 
   final VoidCallback onOpen;
+
+  /// Se está abriendo: se agacha, salta y suelta rayos y chispas.
+  final bool opening;
+
+  /// Color de la luz (el del tipo de premio).
+  final Color color;
 
   @override
   State<_Chest> createState() => _ChestState();
 }
 
-class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
+class _ChestState extends State<_Chest> with TickerProviderStateMixin {
+  /// Cuánto dura la apertura antes de mostrar el premio.
+  static const openMs = 820;
+
   late final _c = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1300),
   )..forward();
+  late final _o = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: openMs),
+  );
+
+  @override
+  void didUpdateWidget(_Chest old) {
+    super.didUpdateWidget(old);
+    if (widget.opening && !old.opening) _o.forward(from: 0);
+  }
 
   @override
   void dispose() {
     _c.dispose();
+    _o.dispose();
     super.dispose();
   }
 
@@ -394,15 +430,58 @@ class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AnimatedBuilder(
-            animation: _c,
+            animation: Listenable.merge([_c, _o]),
             builder: (_, child) {
               final v = _c.value;
+              final o = _o.value;
               // Cae, se asienta y tiembla cada vez más antes de abrirse.
               final drop = Curves.bounceOut.transform(math.min(1, v * 2.2));
-              final shake = v < 0.5 ? 0.0 : math.sin(v * 70) * (v - 0.5) * 0.18;
-              return Transform.translate(
-                offset: Offset(0, -140 * (1 - drop)),
-                child: Transform.rotate(angle: shake, child: child),
+              final shake = widget.opening
+                  ? 0.0
+                  : v < 0.5
+                  ? 0.0
+                  : math.sin(v * 70) * (v - 0.5) * 0.18;
+              // Apertura: se agacha (0–25 %), salta y crece mientras la luz
+              // sale de adentro.
+              final squash = o < 0.25 ? math.sin(math.pi * o / 0.25) : 0.0;
+              final pop = o < 0.25
+                  ? 0.0
+                  : Curves.easeOutBack.transform((o - 0.25) / 0.75);
+              final light = o < 0.2 ? 0.0 : Curves.easeOut.transform((o - 0.2) / 0.8);
+              return SizedBox(
+                width: 320,
+                height: 300,
+                child: Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
+                  children: [
+                    if (widget.opening)
+                      Positioned.fill(
+                        child: CustomPaint(
+                          painter: _OpenLightPainter(
+                            t: light,
+                            spin: o,
+                            color: widget.color,
+                          ),
+                        ),
+                      ),
+                    Transform.translate(
+                      offset: Offset(0, -140 * (1 - drop) - 22 * pop),
+                      child: Transform.rotate(
+                        angle: shake,
+                        child: Transform(
+                          alignment: Alignment.bottomCenter,
+                          transform: Matrix4.diagonal3Values(
+                            1 + 0.08 * squash + 0.1 * pop,
+                            1 - 0.12 * squash + 0.1 * pop,
+                            1,
+                          ),
+                          child: child,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
             child: const _ChestArt(),
@@ -413,6 +492,66 @@ class _ChestState extends State<_Chest> with SingleTickerProviderStateMixin {
       ),
     ));
   }
+}
+
+/// La luz que sale del cofre al abrirse: un sol de rayos que gira y crece,
+/// un resplandor y chispas que salen disparadas hacia arriba.
+class _OpenLightPainter extends CustomPainter {
+  const _OpenLightPainter({
+    required this.t,
+    required this.spin,
+    required this.color,
+  });
+
+  final double t;
+  final double spin;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (t <= 0) return;
+    final c = Offset(size.width / 2, size.height * 0.42);
+    final r = size.width * (0.25 + 0.55 * t);
+    // Resplandor.
+    canvas.drawCircle(
+      c,
+      r,
+      Paint()
+        ..shader = RadialGradient(colors: [
+          Colors.white.withValues(alpha: 0.9 * t),
+          color.withValues(alpha: 0.45 * t),
+          color.withValues(alpha: 0),
+        ], stops: const [0, 0.35, 1])
+            .createShader(Rect.fromCircle(center: c, radius: r)),
+    );
+    // Rayos.
+    final rays = Paint()..color = Palette.gold.withValues(alpha: 0.35 * t);
+    const n = 14;
+    for (var i = 0; i < n; i++) {
+      final a = spin * 0.8 + i * 2 * math.pi / n;
+      final w = 0.09;
+      final path = Path()
+        ..moveTo(c.dx, c.dy)
+        ..lineTo(c.dx + math.cos(a - w) * r * 1.3, c.dy + math.sin(a - w) * r * 1.3)
+        ..lineTo(c.dx + math.cos(a + w) * r * 1.3, c.dy + math.sin(a + w) * r * 1.3)
+        ..close();
+      canvas.drawPath(path, rays);
+    }
+    // Chispas hacia arriba, en abanico.
+    final spark = Paint();
+    for (var i = 0; i < 18; i++) {
+      final a = -math.pi / 2 + (i - 8.5) * 0.16;
+      final d = size.height * (0.15 + 0.5 * t) * (0.7 + 0.3 * ((i * 37) % 10) / 10);
+      final p = c + Offset(math.cos(a) * d, math.sin(a) * d + 40 * t * t);
+      spark.color = (i.isEven ? Palette.gold : Colors.white)
+          .withValues(alpha: (1 - t * 0.7).clamp(0, 1));
+      canvas.drawCircle(p, 3.5 * (1 - t * 0.5), spark);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_OpenLightPainter old) =>
+      old.t != t || old.spin != spin || old.color != color;
 }
 
 /// El cofre de laca pintado (`ui/reward_chest.webp`) con el sello 赏 en la
@@ -829,6 +968,11 @@ class _CoinsLootState extends ConsumerState<_CoinsLoot> {
   (Offset, Offset)? _flight;
   bool _taken = false;
 
+  /// Lo que se llevaba antes de este premio (para mostrar a cuánto llega).
+  late final int _before = widget.kind == RewardKind.jade
+      ? ref.read(runControllerProvider)!.jade
+      : ref.read(runControllerProvider)!.lotus;
+
   Offset? _center(GlobalKey k) {
     final box = k.currentContext?.findRenderObject() as RenderBox?;
     final stack =
@@ -875,14 +1019,23 @@ class _CoinsLootState extends ConsumerState<_CoinsLoot> {
                   ? t.lootHintJade(widget.amount)
                   : t.lootHintLotus(widget.amount),
             ),
-            const Spacer(),
-            AnimatedOpacity(
+            // Se achica si la pantalla es baja, en vez de desbordar.
+            Expanded(
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: AnimatedOpacity(
               opacity: _taken ? 0.25 : 1,
               duration: const Duration(milliseconds: 400),
               child: Column(
                 children: [
-                  KeyedSubtree(key: _from, child: coin(96)),
-                  const SizedBox(height: 14),
+                  _Treasure(
+                    color: color,
+                    coin: coin,
+                    count: math.min(9, math.max(4, widget.amount ~/ 4)),
+                    center: KeyedSubtree(key: _from, child: coin(108)),
+                  ),
+                  const SizedBox(height: 6),
                   TweenAnimationBuilder<double>(
                     tween: Tween(begin: 0, end: widget.amount.toDouble()),
                     duration: const Duration(milliseconds: 900),
@@ -896,10 +1049,38 @@ class _CoinsLootState extends ConsumerState<_CoinsLoot> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 4),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        coin(18),
+                        const SizedBox(width: 6),
+                        Text(
+                          t.lootTotal(_before, _before + widget.amount),
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-            const Spacer(),
+                ),
+              ),
+            ),
             SizedBox(
               width: double.infinity,
               child: FilledButton(
@@ -933,6 +1114,210 @@ class _CoinsLootState extends ConsumerState<_CoinsLoot> {
   }
 
   final _stackOrigin = GlobalKey();
+}
+
+/// El tesoro del premio: un sol de rayos que gira despacio, un halo, un
+/// montoncito de monedas que caen una por una alrededor de la principal y
+/// destellos que titilan. Llena la pantalla en vez de una moneda sola.
+class _Treasure extends StatefulWidget {
+  const _Treasure({
+    required this.color,
+    required this.coin,
+    required this.count,
+    required this.center,
+  });
+
+  final Color color;
+  final Widget Function(double size) coin;
+  final int count;
+  final Widget center;
+
+  @override
+  State<_Treasure> createState() => _TreasureState();
+}
+
+class _TreasureState extends State<_Treasure> with TickerProviderStateMixin {
+  late final _spin = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 14),
+  );
+  late final _in = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  )..forward();
+  int _landed = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loopUnlessCalm(context, _spin);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Cada moneda que cae tintinea en la mano.
+    _in.addListener(() {
+      final n = (widget.count * ((_in.value - 0.15) / 0.7)).floor().clamp(
+        0,
+        widget.count,
+      );
+      if (n > _landed) {
+        _landed = n;
+        Haptics.selectionClick();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _spin.dispose();
+    _in.dispose();
+    super.dispose();
+  }
+
+  // Lugares del montón, alrededor de la moneda principal (x, y, tamaño).
+  static const _spots = [
+    (-78.0, 46.0, 44.0),
+    (80.0, 42.0, 46.0),
+    (-46.0, 70.0, 38.0),
+    (50.0, 72.0, 40.0),
+    (-108.0, 74.0, 32.0),
+    (110.0, 70.0, 34.0),
+    (0.0, 84.0, 36.0),
+    (-62.0, -40.0, 28.0),
+    (66.0, -46.0, 30.0),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 300,
+      height: 250,
+      child: AnimatedBuilder(
+        animation: Listenable.merge([_spin, _in]),
+        builder: (_, _) {
+          final v = _in.value;
+          final halo = Curves.easeOut.transform(math.min(1, v * 2));
+          return Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _SunburstPainter(
+                    turn: _spin.value,
+                    alpha: halo,
+                    color: widget.color,
+                  ),
+                ),
+              ),
+              for (var i = 0; i < widget.count && i < _spots.length; i++)
+                Builder(
+                  builder: (_) {
+                    final (x, y, size) = _spots[i];
+                    final start = 0.15 + 0.7 * i / widget.count;
+                    final p = ((v - start) / 0.25).clamp(0.0, 1.0);
+                    final fall = Curves.bounceOut.transform(p);
+                    return Transform.translate(
+                      offset: Offset(x, y - 120 * (1 - fall)),
+                      child: Opacity(
+                        opacity: p == 0 ? 0 : 1,
+                        child: Transform.rotate(
+                          angle: (i.isEven ? -1 : 1) * 0.25,
+                          child: widget.coin(size),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              // La principal flota despacio sobre el montón.
+              Transform.translate(
+                offset: Offset(0, -10 + 4 * math.sin(_spin.value * math.pi * 8)),
+                child: Transform.scale(
+                  scale: Curves.easeOutBack.transform(math.min(1, v * 2.5)),
+                  child: widget.center,
+                ),
+              ),
+              // Destellos.
+              for (var i = 0; i < 5; i++)
+                Builder(
+                  builder: (_) {
+                    final ph = (_spin.value * 6 + i * 0.37) % 1;
+                    final a = math.sin(math.pi * ph);
+                    final ang = i * 1.3 + 0.4;
+                    return Transform.translate(
+                      offset: Offset(
+                        math.cos(ang) * (70 + 12 * i),
+                        math.sin(ang) * (50 + 8 * i) - 20,
+                      ),
+                      child: Opacity(
+                        opacity: (a * halo).clamp(0, 1),
+                        child: Icon(
+                          Icons.auto_awesome,
+                          size: 14 + 6 * a,
+                          color: i.isEven ? Palette.gold : Colors.white,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Rayos suaves detrás del tesoro, del color del premio.
+class _SunburstPainter extends CustomPainter {
+  const _SunburstPainter({
+    required this.turn,
+    required this.alpha,
+    required this.color,
+  });
+
+  final double turn;
+  final double alpha;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = Offset(size.width / 2, size.height / 2 - 10);
+    final r = size.width * 0.55;
+    canvas.drawCircle(
+      c,
+      r,
+      Paint()
+        ..shader = RadialGradient(colors: [
+          color.withValues(alpha: 0.28 * alpha),
+          color.withValues(alpha: 0),
+        ]).createShader(Rect.fromCircle(center: c, radius: r)),
+    );
+    final ray = Paint()
+      ..shader = RadialGradient(colors: [
+        Palette.gold.withValues(alpha: 0.32 * alpha),
+        Palette.gold.withValues(alpha: 0),
+      ]).createShader(Rect.fromCircle(center: c, radius: r));
+    const n = 16;
+    for (var i = 0; i < n; i++) {
+      final a = turn * 2 * math.pi + i * 2 * math.pi / n;
+      const w = 0.07;
+      canvas.drawPath(
+        Path()
+          ..moveTo(c.dx, c.dy)
+          ..lineTo(c.dx + math.cos(a - w) * r, c.dy + math.sin(a - w) * r)
+          ..lineTo(c.dx + math.cos(a + w) * r, c.dy + math.sin(a + w) * r)
+          ..close(),
+        ray,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_SunburstPainter old) =>
+      old.turn != turn || old.alpha != alpha || old.color != color;
 }
 
 /// Monedas que vuelan en curva de [from] a [to], una detrás de la otra.

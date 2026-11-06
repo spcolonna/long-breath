@@ -238,6 +238,17 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     _after(120, () => _audio.play(Sfx.enemyDrop));
     _after(300, () => _audio.play(Sfx.fightStart));
     _dealSounds(450, live.state.hand.length);
+    // Grupo en oleadas: que se sepa desde el principio cuántos vienen.
+    if (live.state.waveCount > 1) {
+      final n = live.state.waveCount;
+      _after(700, () {
+        if (!mounted) return;
+        final t = AppLocalizations.of(context);
+        Haptics.mediumImpact();
+        _queue.add(_Fx(t.waveGroupTitle(n), t.waveGroupSub, Palette.lacquer));
+        _pump();
+      });
+    }
     // Los talismanes que actúan al empezar se anuncian uno por uno.
     for (final (i, e) in live.events.whereType<TalismanTriggered>().indexed) {
       _after(1500 + 420 * i, () => setState(() => _talismanActs(e.talismanId)));
@@ -342,7 +353,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   }
 
   void _shake(double strength) {
-    _shakeStrength = strength;
+    // La cámara se sacude menos que antes: el héroe va dentro de la escena y
+    // con tanto temblor parecía entrar y salir.
+    _shakeStrength = strength * 0.55;
     _shakeKey++;
     if (strength >= 9) _hitStop(strength >= 14 ? 110 : 70);
   }
@@ -860,7 +873,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       }
       _foe(slot).burst++;
       _goldFlashKey++;
-      _shake(grand ? 20 : 16);
+      _shake(grand ? 14 : 10);
       if (grand) _finishKey++;
     });
     // El último golpe se ve en cámara lenta.
@@ -1216,6 +1229,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                   foe: _foe(i),
                   wave: s.wave,
                   waveCount: s.waveCount,
+                  reserve: [for (final r in s.reserve) data.enemy(r.id)],
                   index: i,
                   pair: s.enemies.length > 1,
                   targeted: i == s.target,
@@ -1416,6 +1430,7 @@ class _EnemySlot {
     required this.onTap,
     this.wave = 0,
     this.waveCount = 1,
+    this.reserve = const [],
     this.index = 0,
     this.pair = false,
     this.targeted = true,
@@ -1428,6 +1443,9 @@ class _EnemySlot {
   /// Lugar en el grupo (0 = el primero) y cuántos son.
   final int wave;
   final int waveCount;
+
+  /// Los que esperan su turno (se muestran en miniatura).
+  final List<EnemyDef> reserve;
 
   /// Sus animaciones (y la marca de dónde está la figura).
   final _FoeFx foe;
@@ -1842,26 +1860,24 @@ class _EnemyStage extends ConsumerWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: slot.pair ? slot.onTap : null,
-      child: Column(
+      // El globo de intención se pinta encima del enemigo: el arte (y sus
+      // golpes) a veces sube y lo tapaba. En la columna queda un hueco
+      // invisible del mismo tamaño.
+      child: Stack(
+      children: [
+      Column(
       children: [
         // Con dos, los globos bajan un poco: arriba a la derecha está la pausa.
         SizedBox(height: slot.pair ? 46 : 26),
-        anchor(
-          'intent',
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 280),
-            switchInCurve: Curves.easeOutBack,
-            transitionBuilder: (child, a) => ScaleTransition(
-              scale: a,
-              child: FadeTransition(opacity: a, child: child),
-            ),
+        IgnorePointer(
+          child: Visibility(
+            visible: false,
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
             child: foe.dying
-                ? const SizedBox(key: ValueKey('none'), height: 50)
-                : _IntentBubble(
-                    key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
-                    iv: slot.intent,
-                    compact: slot.pair,
-                  ),
+                ? const SizedBox(height: 50)
+                : _IntentBubble(iv: slot.intent, compact: slot.pair),
           ),
         ),
         Expanded(
@@ -2069,7 +2085,11 @@ class _EnemyStage extends ConsumerWidget {
                 ),
               ),
               if (slot.waveCount > 1)
-                _WavePips(index: slot.wave, total: slot.waveCount),
+                _WavePips(
+                  index: slot.wave,
+                  total: slot.waveCount,
+                  reserve: slot.reserve,
+                ),
               const SizedBox(height: 6),
               _MiniBar(
                 value: e.hp,
@@ -2190,6 +2210,33 @@ class _EnemyStage extends ConsumerWidget {
         ),
       ],
       ),
+      Positioned(
+        top: slot.pair ? 46 : 26,
+        left: 0,
+        right: 0,
+        child: Center(
+          child: anchor(
+              'intent',
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 280),
+                switchInCurve: Curves.easeOutBack,
+                transitionBuilder: (child, a) => ScaleTransition(
+                  scale: a,
+                  child: FadeTransition(opacity: a, child: child),
+                ),
+                child: foe.dying
+                    ? const SizedBox(key: ValueKey('none'), height: 50)
+                    : _IntentBubble(
+                        key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
+                        iv: slot.intent,
+                        compact: slot.pair,
+                      ),
+              ),
+            ),
+        ),
+      ),
+      ],
+      ),
     );
   }
 }
@@ -2292,18 +2339,36 @@ class _TargetHaloState extends State<_TargetHalo>
 
 /// Grupo de enemigos: uno por punto; los caídos, tachados en tinta.
 class _WavePips extends StatelessWidget {
-  const _WavePips({required this.index, required this.total});
+  const _WavePips({
+    required this.index,
+    required this.total,
+    this.reserve = const [],
+  });
 
   final int index;
   final int total;
 
+  /// Los que vienen después, en miniatura: así se planifica sabiendo quién
+  /// entra cuando cae este.
+  final List<EnemyDef> reserve;
+
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Text(
+            t.waveOf(index + 1, total),
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w800,
+              color: Palette.lacquer,
+            ),
+          ),
+          const SizedBox(width: 4),
           for (var i = 0; i < total; i++)
             AnimatedContainer(
               duration: const Duration(milliseconds: 350),
@@ -2320,6 +2385,39 @@ class _WavePips extends StatelessWidget {
                     : Palette.lacquer.withValues(alpha: 0.3),
               ),
             ),
+          if (reserve.isNotEmpty) ...[
+            const SizedBox(width: 6),
+            Text(
+              t.waveNext,
+              style: const TextStyle(fontSize: 10.5, color: Palette.textDim),
+            ),
+            for (final d in reserve)
+              Container(
+                margin: const EdgeInsets.only(left: 3),
+                width: 26,
+                height: 26,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Palette.surface,
+                  border: Border.all(
+                    color: rankColor(d.rank).withValues(alpha: 0.7),
+                    width: 1.5,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/art/enemies/${d.art}.webp',
+                    fit: BoxFit.cover,
+                    alignment: const Alignment(0, -0.6),
+                    errorBuilder: (_, _, _) => const Icon(
+                      Icons.person,
+                      size: 16,
+                      color: Palette.textDim,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ],
       ),
     );
@@ -3145,11 +3243,18 @@ class _Leaving {
 class _Fan {
   _Fan(this.n, double width) {
     final avail = width - 24;
-    w = n == 0 ? 92.0 : ((avail - 4 * (n - 1)) / n).clamp(66.0, 92.0);
+    // Un poco más grandes que lo que entra justo: se solapan apenas y el
+    // arte se aprecia mejor.
+    w = n == 0
+        ? maxW
+        : ((avail - 4 * (n - 1)) / n * 1.1).clamp(72.0, maxW);
     step = n <= 1 ? 0.0 : math.min(w + 6, (avail - w) / (n - 1));
     final total = n == 0 ? 0.0 : w + step * (n - 1);
     left0 = (width - total) / 2;
   }
+
+  /// Ancho máximo de una carta en la mano.
+  static const maxW = 100.0;
 
   final int n;
   late final double w;
@@ -3163,7 +3268,7 @@ class _Fan {
       16 + (isSelected ? -10.0 : (i - _mid).abs() * 3);
 
   /// Aumento de la carta seleccionada.
-  static const zoom = 1.35;
+  static const zoom = 1.75;
 
   /// Desde dónde crece la carta [i]: los extremos, hacia adentro.
   double growX(int i) => n <= 1 ? 0.0 : ((i - _mid) / _mid).clamp(-1.0, 1.0);
@@ -3242,7 +3347,7 @@ class _HandAreaState extends ConsumerState<_HandArea> {
         _width = box.maxWidth;
         final fan = _Fan(hand.length, box.maxWidth);
         return SizedBox(
-          height: 92 * 1.5 + 28, // fija: la arena no salta al cambiar la mano
+          height: _Fan.maxW * 1.5 + 28, // fija: la arena no salta al cambiar la mano
           child: Stack(
             clipBehavior: Clip.none,
             children: [
