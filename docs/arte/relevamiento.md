@@ -47,11 +47,11 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
 - **Mapa:** `map_node_stone` (textura de los sellos).
 - **UI:** `ui/logo` (menú), los 6 íconos de `icons/` (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
-- **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai`, `gongbu_tuizhang`, `pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li`, `hu_zhao`, `hu_pu`, `hu_bao_tou`, `hu_xiao`, `hu_wei`, `xia_shan_hu`, `hu_ya`, `hu_ben`, `e_hu_pu_shi`, `hu_dun`, `she_xing_shou`, `she_tu_xin`, `she_chan_shen`, `jin_she`, `she_wei`, `she_shan`, `she_hui_tou`, `ling_she`, `she_jiao` y `she_pan` (las 16 comunes, las 10 del Tigre y las 10 de la Serpiente). La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
+- **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai`, `gongbu_tuizhang`, `pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li`, `hu_zhao`, `hu_pu`, `hu_bao_tou`, `hu_xiao`, `hu_wei`, `xia_shan_hu`, `hu_ya`, `hu_ben`, `e_hu_pu_shi`, `hu_dun`, `she_xing_shou`, `she_tu_xin`, `she_chan_shen`, `jin_she`, `she_wei`, `she_shan`, `she_hui_tou`, `ling_she`, `she_jiao`, `she_pan`, las 6 de cadena (`ma_zhuan_gong`, `gong_zhuan_xu`, `xu_zhuan_ma`, `hu_hui_shen`, `she_zhuan_shen`, `he_luo_di`) y las de la Grulla que ya están. La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
 
 ## Reserva de recoloreos
 
-Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda en `VARIANTS` con otro nombre para usarla en un enemigo secundario. Hoy: `dragon_reflection` (en uso, Reflejo del Dragón), `monk_amber` (Monje del Incienso), `monk_slate` (Ermitaño de Pizarra) y `lion_celadon` (León de Celadón), en uso.
+Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda en `VARIANTS` con otro nombre para usarla en un enemigo secundario. Hoy: `dragon_reflection` (Reflejo del Dragón) y `lion_celadon` (León de Celadón), en uso. `monk_amber` (Monje del Incienso) y `monk_slate` (Ermitaño de Pizarra) ya tienen arte propio.
 
 ## Pendiente, por prioridad
 

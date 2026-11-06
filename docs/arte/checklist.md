@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 162 · ✅ 135 · 🎨 4 · ❌ 23
+Total: 162 · ✅ 143 · 🎨 2 · ❌ 17
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -107,9 +107,9 @@ Total: 162 · ✅ 135 · 🎨 4 · ❌ 23
 | ✅ propio | `assets/art/cards/ti_xi.webp` | ilustración de ti_xi | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/tiao_xi.webp` | ilustración de tiao_xi | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/baoquan_li.webp` | ilustración de baoquan_li | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/ma_zhuan_gong.webp` | ilustración de ma_zhuan_gong | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/gong_zhuan_xu.webp` | ilustración de gong_zhuan_xu | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/xu_zhuan_ma.webp` | ilustración de xu_zhuan_ma | hanzi de marca de agua | no |
+| ✅ propio | `assets/art/cards/ma_zhuan_gong.webp` | ilustración de ma_zhuan_gong | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/gong_zhuan_xu.webp` | ilustración de gong_zhuan_xu | hanzi de marca de agua | — |
+| ✅ propio | `assets/art/cards/xu_zhuan_ma.webp` | ilustración de xu_zhuan_ma | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/hu_zhao.webp` | ilustración de hu_zhao | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/hu_pu.webp` | ilustración de hu_pu | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/hu_bao_tou.webp` | ilustración de hu_bao_tou | hanzi de marca de agua | — |
@@ -120,7 +120,7 @@ Total: 162 · ✅ 135 · 🎨 4 · ❌ 23
 | ✅ propio | `assets/art/cards/hu_ben.webp` | ilustración de hu_ben | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/e_hu_pu_shi.webp` | ilustración de e_hu_pu_shi | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/hu_dun.webp` | ilustración de hu_dun | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/hu_hui_shen.webp` | ilustración de hu_hui_shen | hanzi de marca de agua | no |
+| ✅ propio | `assets/art/cards/hu_hui_shen.webp` | ilustración de hu_hui_shen | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_xing_shou.webp` | ilustración de she_xing_shou | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_tu_xin.webp` | ilustración de she_tu_xin | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_chan_shen.webp` | ilustración de she_chan_shen | hanzi de marca de agua | — |
@@ -131,7 +131,7 @@ Total: 162 · ✅ 135 · 🎨 4 · ❌ 23
 | ✅ propio | `assets/art/cards/ling_she.webp` | ilustración de ling_she | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_jiao.webp` | ilustración de she_jiao | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/she_pan.webp` | ilustración de she_pan | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/she_zhuan_shen.webp` | ilustración de she_zhuan_shen | hanzi de marca de agua | no |
+| ✅ propio | `assets/art/cards/she_zhuan_shen.webp` | ilustración de she_zhuan_shen | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/he_chi.webp` | ilustración de he_chi | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/du_li.webp` | ilustración de du_li | hanzi de marca de agua | — |
 | ✅ propio | `assets/art/cards/he_zui.webp` | ilustración de he_zui | hanzi de marca de agua | — |
@@ -142,7 +142,7 @@ Total: 162 · ✅ 135 · 🎨 4 · ❌ 23
 | ❌ falta | `assets/art/cards/bai_he_liang_chi.webp` | ilustración de bai_he_liang_chi | hanzi de marca de agua | listo |
 | ❌ falta | `assets/art/cards/he_zhuo.webp` | ilustración de he_zhuo | hanzi de marca de agua | listo |
 | ❌ falta | `assets/art/cards/he_mian.webp` | ilustración de he_mian | hanzi de marca de agua | listo |
-| ❌ falta | `assets/art/cards/he_luo_di.webp` | ilustración de he_luo_di | hanzi de marca de agua | no |
+| ✅ propio | `assets/art/cards/he_luo_di.webp` | ilustración de he_luo_di | hanzi de marca de agua | — |
 | ❌ falta | `assets/art/cards/gun_sao.webp` | ilustración de gun_sao | hanzi de marca de agua | no |
 | ❌ falta | `assets/art/cards/gun_ge.webp` | ilustración de gun_ge | hanzi de marca de agua | no |
 | ❌ falta | `assets/art/cards/gun_tiao.webp` | ilustración de gun_tiao | hanzi de marca de agua | no |
@@ -214,8 +214,8 @@ Total: 162 · ✅ 135 · 🎨 4 · ❌ 23
 | ✅ propio | `assets/art/enemies/golem_ice.webp` | ice_golem (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/guqin_player.webp` | guqin_player (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lingzhi.webp` | lingzhi (common) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_amber.webp` | incense_monk (common) | enemies/placeholder.webp | no |
-| 🎨 recoloreo de `monk` | `assets/art/enemies/monk_slate.webp` | slate_hermit (common) | enemies/placeholder.webp | no |
+| ✅ propio | `assets/art/enemies/monk_amber.webp` | incense_monk (common) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/monk_slate.webp` | slate_hermit (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monkey.webp` | monkey (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monkey_snow.webp` | snow_ape (common) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/opera_mask.webp` | opera_mask (common) | enemies/placeholder.webp | — |

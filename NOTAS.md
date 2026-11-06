@@ -103,6 +103,8 @@ macOS no tiene `timeout`.
   - Pasaba solo con golpes pesados: los que desequilibran, pegan 10 o más, o matan.
   - Ahora siempre devuelve `Transform.translate`.
 
+- **Arte (06/11):** integradas las 6 cartas de cadena de postura (`ma_zhuan_gong`, `gong_zhuan_xu`, `xu_zhuan_ma`, `hu_hui_shen`, `she_zhuan_shen`, `he_luo_di`) y el arte propio de `monk_amber` (Monje del Incienso) y `monk_slate` (Ermitaño de Pizarra), que salieron de `VARIANTS` en `tool/recolor_enemies.py`. Faltan 5 cartas de la Grulla (`docs/arte/prompts.md`, «Para generar ahora»).
+
 ## Análisis de balance (06/11, Normal, Partida 1)
 
 **Registros del usuario:**

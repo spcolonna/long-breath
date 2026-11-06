@@ -23,10 +23,8 @@ DIR = ROOT / "assets/art/enemies"
 
 VARIANTS = {
     # Etapa 2: Monasterio Colgado (bronce, azafrán, ceniza, hierro, jade, oro).
-    # Reserva: copias de los recoloreos que van a recibir arte propio, para
-    # no perderlos y usarlos en enemigos secundarios más adelante.
-    "monk_amber": ("monk", [("hue", 240, 310, 34, 1.35, 0.14)]),
-    "monk_slate": ("monk", [("hue", 240, 310, 212, 0.3, -0.06)]),
+    # Reserva: recoloreos guardados para enemigos secundarios (monk_amber y
+    # monk_slate ya tienen arte propio).
     "lion_celadon": ("lion", [
         ("gray", 160, 0.38, -0.06),
         ("hue", 60, 140, 160, 1.0, -0.06),
