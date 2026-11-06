@@ -1,3 +1,20 @@
+# Long Breath · Privacy Policy
+
+Last updated: November 6, 2026.
+
+Long Breath is a single-player game that works offline.
+
+- **We collect no data.** The game requires no account, uses no analytics, ads or tracking, and sends no information to any server.
+- **What is stored and where.** Your progress (save slots, disciples, lotuses, sound and motion settings) and the log of each climb are stored only on your device. They are deleted when you uninstall the app or delete a save slot in the game.
+- **Third parties.** We share no data with anyone, because we have none.
+- **Children.** The game collects no information from anyone, including children.
+
+If this policy changes, this page will be updated.
+
+Contact: spcolonna@gmail.com
+
+---
+
 # Long Breath · Política de privacidad
 
 Última actualización: 6 de noviembre de 2026.
