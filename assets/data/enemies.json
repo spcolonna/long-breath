@@ -246,9 +246,9 @@
       ] },
     { "id": "snow_ape", "art": "monkey_snow", "rank": "common", "hp": 86, "structure": 15, "wrath": 2,
       "phases": [ { "pattern": [
-        { "kind": "attack", "height": "high", "damage": 7, "hits": 2, "structure": 1 },
-        { "kind": "attack", "height": "low", "damage": 8, "hits": 2, "structure": 2 },
-        { "kind": "attack", "height": "mid", "damage": 15, "structure": 3 }
+        { "kind": "attack", "labelKey": "ape_leap", "height": "mid", "damage": 15, "structure": 3 },
+        { "kind": "attack", "height": "high", "damage": 7, "hits": 2, "structure": 1, "wear": true },
+        { "kind": "attack", "height": "low", "damage": 8, "hits": 2, "structure": 2, "wear": true }
       ] } ] },
     { "id": "ice_golem", "art": "golem_ice", "rank": "common", "hp": 84, "structure": 19, "immovable": true,
       "phases": [ { "pattern": [
@@ -265,21 +265,21 @@
       ] } ] },
     { "id": "frost_bat", "art": "bat_frost", "rank": "common", "hp": 80, "structure": 14,
       "phases": [ { "pattern": [
-        { "kind": "attack", "labelKey": "frost", "height": "high", "damage": 5, "hits": 2, "structure": 1, "freeze": 1 },
-        { "kind": "attack", "labelKey": "toll", "height": "high", "damage": 12, "structure": 2, "drain": 1 },
+        { "kind": "attack", "labelKey": "frost", "height": "high", "damage": 5, "hits": 2, "structure": 1, "freeze": 1, "wear": true },
+        { "kind": "attack", "labelKey": "toll", "height": "low", "damage": 12, "structure": 2, "drain": 1 },
         { "kind": "discard", "labelKey": "screech", "count": 1 }
       ] } ] },
     { "id": "flying_sword", "hanzi": "飞剑", "pinyin": "Fēi Jiàn", "rank": "common", "hp": 64, "structure": 11,
       "phases": [ { "pattern": [
-        { "kind": "attack", "labelKey": "sword_slash", "height": "high", "damage": 14, "structure": 1 },
-        { "kind": "attack", "labelKey": "sword_slash", "height": "high", "damage": 14, "structure": 1 },
-        { "kind": "attack", "labelKey": "sword_cut", "height": "high", "damage": 14, "structure": 1, "interrupt": true }
+        { "kind": "attack", "labelKey": "sword_slash", "height": "high", "damage": 12, "structure": 1 },
+        { "kind": "attack", "labelKey": "sword_slash", "height": "low", "damage": 12, "structure": 1 },
+        { "kind": "attack", "labelKey": "sword_cut", "height": "mid", "damage": 12, "structure": 1, "interrupt": true }
       ] } ] },
     { "id": "wooden_ox", "hanzi": "木牛", "pinyin": "Mù Niú", "rank": "common", "hp": 96, "structure": 20,
       "phases": [ { "pattern": [
-        { "kind": "charge", "labelKey": "ox_wind_up", "value": 6 },
-        { "kind": "charge", "labelKey": "ox_wind_up", "value": 6 },
-        { "kind": "attack", "labelKey": "ox_stomp", "height": "low", "damage": 21, "structure": 5, "countdown": true }
+        { "kind": "attack", "labelKey": "ox_ram", "height": "mid", "damage": 11, "structure": 4 },
+        { "kind": "charge", "labelKey": "ox_wind_up", "value": 8 },
+        { "kind": "attack", "labelKey": "ox_stomp", "height": "low", "damage": 18, "structure": 5, "countdown": true }
       ] } ] },
     { "id": "slate_hermit", "hanzi": "石隐", "pinyin": "Shí Yǐn", "art": "monk_slate", "rank": "common", "hp": 86, "structure": 19, "thorns": 1,
       "sameStancePunish": { "damage": 5, "structure": 2 },
@@ -290,9 +290,9 @@
       ] } ] },
     { "id": "guqin_player", "hanzi": "琴师", "pinyin": "Qín Shī", "rank": "common", "hp": 84, "structure": 16,
       "phases": [ { "pattern": [
-        { "kind": "attack", "labelKey": "string_ripple", "height": "high", "damage": 5, "hits": 3, "structure": 1 },
+        { "kind": "attack", "labelKey": "string_ripple", "height": "high", "damage": 5, "hits": 3, "structure": 1, "wear": true },
         { "kind": "discard", "labelKey": "dissonance", "count": 1 },
-        { "kind": "attack", "labelKey": "silk_chord", "height": "mid", "damage": 14, "structure": 3, "freeze": 1 }
+        { "kind": "attack", "labelKey": "silk_chord", "height": "mid", "damage": 12, "structure": 3, "freeze": 1 }
       ] } ] },
     { "id": "wind_lady", "hanzi": "风扇", "pinyin": "Fēng Shàn", "art": "fan_wind", "rank": "elite", "hp": 122, "structure": 22, "parry": 4,
       "phases": [ { "pattern": [

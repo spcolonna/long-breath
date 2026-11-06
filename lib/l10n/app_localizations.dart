@@ -3682,6 +3682,18 @@ abstract class AppLocalizations {
   /// **'Si no lo desviás: robás {n} menos'**
   String intentFreeze(int n);
 
+  /// No description provided for @intentWear.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada golpe gasta tu Guardia'**
+  String get intentWear;
+
+  /// No description provided for @previewWear.
+  ///
+  /// In es, this message translates to:
+  /// **'⚠ cada golpe gasta tu Guardia: cubre {n} de {hits}'**
+  String previewWear(int n, int hits);
+
   /// No description provided for @breathDrained.
   ///
   /// In es, this message translates to:

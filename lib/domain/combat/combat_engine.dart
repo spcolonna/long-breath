@@ -1170,58 +1170,127 @@ class CombatEngine {
       d.punishPending = false;
     }
     damage = _enemyDamage(damage, d.enemyDamagePct);
-    final stance = data.stance(d.stance);
+    if (intent.wear) {
+      _wearingAttack(d, def, intent, damage, structure, events);
+      return;
+    }
     final match = d.guard > 0 && d.guardHeight == intent.height;
-    // La Guardia no se consume: en un ataque doble se aplica a cada golpe,
-    // así que si desvía uno los desvía todos. El desvío premia una vez por acción.
+    // La Guardia no se consume (salvo con `wear`): en un ataque doble se
+    // aplica a cada golpe, así que si desvía uno los desvía todos. El desvío premia una vez por acción.
     if (match && d.guard >= damage) {
-      d.deflects++;
-      events.add(const Deflected());
-      d.nextTurnBreathMod += data.balance.deflectBreathBonus +
-          stance.deflectBreathBonus +
-          d.awakened.deflectBreath;
-      var back = 0;
-      for (final id in _slots(d.talismans, d.weaponEffect)) {
-        final fx = _fx(id, d.weaponEffect);
-        if (fx.deflectBreath > 0) d.nextTurnBreathMod += fx.deflectBreath;
-        back += fx.deflectDamage;
-        if (fx.deflectBreath > 0 || fx.deflectDamage > 0) {
-          events.add(_trig(id));
-        }
-      }
-      _hitEnemy(
-        d,
-        d.deflectBonusDamage + back,
-        data.balance.deflectEnemyStructureLoss + d.deflectBonusStructure,
-        events,
-      );
+      _rewardDeflect(d, events);
       return;
     }
     final absorb = d.guard == 0 ? 0 : (match ? d.guard : d.guard ~/ 2);
     final blocked = d.guard > 0;
     for (var hit = 0; hit < intent.hits; hit++) {
-      final taken = math.max(0, damage - absorb);
-      var s = blocked ? structure ~/ 2 : structure;
-      s = (s * stance.incomingStructureMultiplier).floor();
-      if (s > 0) s += stance.incomingStructureBonus;
-      d.hp = math.max(0, d.hp - taken);
-      d.structure = math.max(0, d.structure - s);
-      events.add(PlayerHit(taken, s, blocked: blocked));
-      if (taken > 0 && def.steal > 0) {
-        e.stolen += def.steal;
-        events.add(JadeStolen(def.steal, e.stolen));
-      }
-      if (d.hp == 0) {
-        d.phase = CombatPhase.lost;
-        events.add(const Defeat());
+      if (_landHit(d, def, damage - absorb, structure, blocked, events)) {
         return;
       }
-      if (d.structure == 0) {
-        d.nextTurnBreathMod -= data.balance.playerBreakBreathPenalty;
-        d.structure = d.maxStructure;
-        events.add(const PlayerBroken());
+    }
+    _afterLandedAttack(d, intent, events);
+  }
+
+  /// Desvío: Aliento extra el próximo turno y el enemigo pierde estructura.
+  void _rewardDeflect(_Draft d, List<CombatEvent> events) {
+    final stance = data.stance(d.stance);
+    d.deflects++;
+    events.add(const Deflected());
+    d.nextTurnBreathMod += data.balance.deflectBreathBonus +
+        stance.deflectBreathBonus +
+        d.awakened.deflectBreath;
+    var back = 0;
+    for (final id in _slots(d.talismans, d.weaponEffect)) {
+      final fx = _fx(id, d.weaponEffect);
+      if (fx.deflectBreath > 0) d.nextTurnBreathMod += fx.deflectBreath;
+      back += fx.deflectDamage;
+      if (fx.deflectBreath > 0 || fx.deflectDamage > 0) {
+        events.add(_trig(id));
       }
     }
+    _hitEnemy(
+      d,
+      d.deflectBonusDamage + back,
+      data.balance.deflectEnemyStructureLoss + d.deflectBonusStructure,
+      events,
+    );
+  }
+
+  /// Un golpe que entra. Devuelve true si el combate terminó (derrota).
+  bool _landHit(
+    _Draft d,
+    EnemyDef def,
+    int rawTaken,
+    int structure,
+    bool blocked,
+    List<CombatEvent> events,
+  ) {
+    final stance = data.stance(d.stance);
+    final e = d.enemy;
+    final taken = math.max(0, rawTaken);
+    var s = blocked ? structure ~/ 2 : structure;
+    s = (s * stance.incomingStructureMultiplier).floor();
+    if (s > 0) s += stance.incomingStructureBonus;
+    d.hp = math.max(0, d.hp - taken);
+    d.structure = math.max(0, d.structure - s);
+    events.add(PlayerHit(taken, s, blocked: blocked));
+    if (taken > 0 && def.steal > 0) {
+      e.stolen += def.steal;
+      events.add(JadeStolen(def.steal, e.stolen));
+    }
+    if (d.hp == 0) {
+      d.phase = CombatPhase.lost;
+      events.add(const Defeat());
+      return true;
+    }
+    if (d.structure == 0) {
+      d.nextTurnBreathMod -= data.balance.playerBreakBreathPenalty;
+      d.structure = d.maxStructure;
+      events.add(const PlayerBroken());
+    }
+    return false;
+  }
+
+  /// Ataque que desgasta la Guardia: cada golpe se resuelve contra lo que
+  /// queda de ella y le resta su daño. El desvío premia una vez por acción;
+  /// los efectos (interrumpir, repique, escarcha) entran si algún golpe entró.
+  void _wearingAttack(
+    _Draft d,
+    EnemyDef def,
+    IntentDef intent,
+    int damage,
+    int structure,
+    List<CombatEvent> events,
+  ) {
+    var rewarded = false;
+    var landed = false;
+    for (var hit = 0; hit < intent.hits; hit++) {
+      final match = d.guard > 0 && d.guardHeight == intent.height;
+      if (match && d.guard >= damage) {
+        if (!rewarded) {
+          rewarded = true;
+          _rewardDeflect(d, events);
+          if (d.isOver) return;
+        }
+        d.guard -= damage;
+        continue;
+      }
+      final absorb = d.guard == 0 ? 0 : (match ? d.guard : d.guard ~/ 2);
+      final blocked = d.guard > 0;
+      d.guard = math.max(0, d.guard - damage);
+      landed = true;
+      if (_landHit(d, def, damage - absorb, structure, blocked, events)) {
+        return;
+      }
+    }
+    if (landed) _afterLandedAttack(d, intent, events);
+  }
+
+  void _afterLandedAttack(
+    _Draft d,
+    IntentDef intent,
+    List<CombatEvent> events,
+  ) {
     if (intent.interrupt) {
       d.formProgress.updateAll((_, _) => 0);
       events.add(const FormsResetByEnemy());

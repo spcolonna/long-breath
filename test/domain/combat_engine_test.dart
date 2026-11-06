@@ -1200,6 +1200,36 @@ void main() {
     });
   });
 
+  group('desgaste de Guardia', () {
+    test('golpes que desgastan: desvía el primero y los demás entran', () {
+      // El guqin abre con tres golpes ALTOS de 5 que desgastan la Guardia.
+      var s = setup(
+        ['xubu_liangzhang', ...filler, ...filler],
+        enemy: 'guqin_player',
+      );
+      expect(engine.intentView(s).intent.wear, isTrue);
+      s = play(s, 'xubu_liangzhang').state;
+      final guard = s.player.guard;
+      expect(guard, lessThan(15));
+      final r = endTurn(s);
+      expect(r.events.whereType<Deflected>(), hasLength(1));
+      final hits = r.events.whereType<PlayerHit>().toList();
+      expect(hits, isNotEmpty);
+      expect(hits.any((h) => h.damage > 0), isTrue);
+    });
+
+    test('sin desgaste, la misma Guardia desvía el ataque doble entero', () {
+      var s = setup(
+        ['xubu_liangzhang', ...filler, ...filler],
+        enemy: 'bell_bat',
+      );
+      s = play(s, 'xubu_liangzhang').state;
+      final r = endTurn(s);
+      expect(r.events.whereType<Deflected>(), hasLength(1));
+      expect(r.events.whereType<PlayerHit>(), isEmpty);
+    });
+  });
+
   group('despertares', () {
     test('se suman a la pasiva del camino', () {
       final tiger = setup([...filler], style: Style.tiger, awakenings: ['hu_nu']);

@@ -2705,6 +2705,14 @@ class _IntentBubble extends ConsumerWidget {
                           color: Palette.textDim,
                         ),
                       ),
+                    if (i.wear && i.hits > 1 && i.kind == IntentKind.attack)
+                      Text(
+                        t.intentWear,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Palette.textDim,
+                        ),
+                      ),
                     if (iv.punishIfSameStance)
                       Text(
                         t.intentSameStance,
@@ -3126,7 +3134,15 @@ class _PreviewPanel extends ConsumerWidget {
             !incoming.skipped &&
             incoming.intent.kind == IntentKind.attack &&
             incoming.intent.height != null
-        ? (covers
+        ? (covers && incoming.intent.wear && incoming.intent.hits > 1
+              ? t.previewWear(
+                  math.min(
+                    incoming.intent.hits,
+                    (s.player.guard + p.guard) ~/ math.max(1, incoming.damage),
+                  ),
+                  incoming.intent.hits,
+                )
+              : covers
               ? t.previewCovers
               : t.previewHalfCover(t.heightLabel(incoming.intent.height!)))
         : null;

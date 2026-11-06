@@ -716,3 +716,26 @@ Seguimiento de §3f: en Wòlóngdǐng los comunes quitaban ~3 de Vida por pelea.
 | Experto: gana | 59% | 59% |
 
 **Hallazgo:** el daño sube poco la Vida perdida (+1 por pelea) porque los combates duran ~2,5 turnos y la mayoría de esos golpes son ALTOS y se desvían. Pero se acumula: el promedio llega peor al jefe final y gana 3 puntos menos. Si se quiere más tensión sin bajar más la tasa, el camino es mecánico (golpe fuerte en el primer turno, alturas mixtas), no más números.
+
+## 3i. Etapa 3: mecánica en vez de números (06/11/2026)
+
+Motor: intent con `"wear": true` (**desgasta la Guardia**). Cada golpe se resuelve contra lo que queda de la Guardia y le resta su daño; el desvío premia una vez por acción y los efectos (interrumpir, repique, escarcha) entran solo si algún golpe entró. Antes una sola defensa alta de 7 anulaba los 5×2 y 5×3.
+
+| Enemigo | Cambio |
+|---|---|
+| frost_bat | escarcha alta 5×2 **desgasta**; repique pasa a **bajo** |
+| guqin_player | ondas altas 5×3 **desgastan**; acorde 14 → 12 |
+| snow_ape | **abre** con el salto medio 15; los dobles desgastan |
+| flying_sword | tajos alto → bajo → medio (antes los tres altos); 14 → 12 |
+| wooden_ox | **abre** con embestida media 11; una carga de 8 (antes 2 de 6); pisotón 21 → 18 |
+
+Probado y descartado: subir la estructura (+3) no alargó las peleas (siguen en ~2,5 turnos) y bajó el promedio a 19%.
+
+| Normal, 300 runs | Antes (§3h) | Después |
+|---|---|---|
+| Promedio: gana | 23% | 24% |
+| Promedio: Vida perdida con esos comunes | 4,0–4,8 | 5,7–7,6 (buey 10,3) |
+| Experto: gana | 59% | 56% |
+| Experto: Vida perdida con esos comunes | 1,2–3,9 | 2,2–7,6 |
+
+**Conclusión:** la etapa 3 ahora exige leer la altura y juntar Guardia de verdad, con la tasa de victoria casi igual (se devolvió el daño crudo de §3h). Las peleas siguen cortas: su duración depende del daño del jugador, no de la Vida ni de la estructura del enemigo.

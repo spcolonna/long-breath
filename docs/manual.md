@@ -603,14 +603,19 @@ Los patrones se repiten en ciclo y siempre se ven un turno antes.
 | Guardián de la Campana 守钟人 | Élite (2) | 148 | 23 | Cierra las palmas (Guardia 14) → Repique bajo 11 → **Golpe de campana** alto 26 (−1 Aliento) con cuenta regresiva | Guardia de un tipo y repique |
 | Reflejo del Dragón 龙影 | Élite (2) | 128 | 22 | Zarpazo alto 6×2 → Escama de espejo (guardia 12) → Medio 12 → Aliento del Dragón medio 22 con cuenta regresiva | Escamas 2 |
 | Abad de la Gran Campana 钟师 | Jefe (2) | 215 | 21 | Dos fases | Guardia de un tipo y repique. Al 50%: **Gran Campanada** (medio 30, −2 Aliento) con cuenta regresiva |
-| Simio de las Nieves | Común (3) | 74 | 15 | Alto 5×2 → Bajo 6×2 → Medio 12 | Despierta (+2) |
+| Simio de las Nieves | Común (3) | 86 | 15 | **Salto** medio 15 → Alto 7×2 → Bajo 8×2 | Despierta (+2). Sus golpes dobles **desgastan** la Guardia |
 | Gólem de Escarcha | Común (3) | 84 | 19 | Escarcha medio 12 → Carga → Medio 13 | Inamovible. **Escarcha:** si no la desviás, el próximo turno robás 1 carta menos |
 | Discípulo del Viento | Común (3) | 86 | 20 | Alto 9 → Cierra las palmas (Guardia 12) → Barrido bajo 9 con escarcha | Castiga la misma postura (+6) |
-| Murciélago de Escarcha | Común (3) | 68 | 14 | Escarcha alto 4×2 → Repique alto 9 → Chillido | Escarcha y repique |
+| Murciélago de Escarcha | Común (3) | 80 | 14 | Escarcha alto 5×2 (desgasta) → Repique **bajo** 12 → Chillido | Escarcha y repique |
+| Espada Voladora 飞剑 | Común (3) | 64 | 11 | Tajo alto 12 → Tajo bajo 12 → Corte medio 12 (interrumpe) | Cambia de altura cada turno |
+| Buey de Madera 木牛 | Común (3) | 96 | 20 | **Embestida** medio 11 → Engranajes (+8) → Pisotón bajo 18 con cuenta regresiva | Pega de entrada |
+| Músico del Guqin 琴师 | Común (3) | 84 | 16 | Ondas altas 5×3 (desgasta) → Disonancia (descartás 1) → Acorde medio 12 con escarcha | Desgasta la Guardia |
 | Dama del Viento 风扇 | Élite (3) | 122 | 22 | Ráfaga baja 6×2 con escarcha → Alto 12 → Medio 14 | Abanico: devuelve 4 |
 | León de las Nieves 雪狮 | Élite (3) | 156 | 24 | Como el León de Piedra | Despierta (+3) y espinas 1 |
 | Sueño del Dragón 龙梦 | Élite (3) | 134 | 23 | Escarcha alta 7×2 → Bruma del sueño (descartás 1) → Aliento del Dragón medio 25 con cuenta regresiva | Escamas 3 |
 | Dragón Dormido 卧龙 | Jefe final | 205 | 21 | Tres fases | Escamas 4, escarcha. Al 50%: Aliento del Dragón (medio 28). Al 30%: escamas hasta 3, escarcha doble y Aliento (medio 26) |
+
+**Desgaste:** normalmente la Guardia no se gasta, así que si desvía un golpe de un ataque múltiple los desvía todos. Los golpes que **desgastan** («Cada golpe gasta tu Guardia») le restan su daño a la Guardia uno por uno: con 7 de Guardia contra tres golpes de 5, desviás el primero (y te llevás el premio del desvío) y los otros dos entran. Para desviarlos todos hace falta Guardia por la suma de los golpes.
 
 En la bifurcación conviene elegir según el mazo: el **Gólem** premia romper Estructura; la **Salamandra**, palmas y empujes.
 

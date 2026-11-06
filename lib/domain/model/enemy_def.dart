@@ -27,6 +27,7 @@ class IntentDef {
     this.countdown = false,
     this.drain = 0,
     this.freeze = 0,
+    this.wear = false,
     this.blocks,
     this.mirror = false,
   });
@@ -56,6 +57,10 @@ class IntentDef {
   /// Si el ataque no se desvía: el próximo turno robás esto menos.
   final int freeze;
 
+  /// Desgasta la Guardia: cada golpe le resta su daño (desviado o no), así
+  /// que un ataque de varios golpes no se desvía entero con una sola carta.
+  final bool wear;
+
   /// Guardia que frena un solo tipo de golpe (puño, palma o patada); los
   /// otros la esquivan. null = frena todo.
   final CardType? blocks;
@@ -76,6 +81,7 @@ class IntentDef {
     countdown: j['countdown'] as bool? ?? false,
     drain: j['drain'] as int? ?? 0,
     freeze: j['freeze'] as int? ?? 0,
+    wear: j['wear'] as bool? ?? false,
     blocks: switch (j['blocks']) {
       'mirror' => null,
       final String b => CardType.parse(b),

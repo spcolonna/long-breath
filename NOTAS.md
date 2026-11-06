@@ -69,7 +69,7 @@ grep -E "CAMINO|gana el combate|pierde|compra|evento:|respira|COMBATE" actual.lo
 
 ```bash
 flutter analyze
-flutter test                          # 283 tests, todos pasan
+flutter test                          # 285 tests, todos pasan
 dart run tool/simulate.dart --runs 300 --profile promedio --difficulty normal   # ~45 s
 dart run tool/simulate.dart --runs 300 --profile experto --difficulty normal
 flutter gen-l10n                      # tras editar lib/l10n/app_es.arb
@@ -129,10 +129,11 @@ macOS no tiene `timeout`.
 - Más Vida para los comunes débiles y el discípulo fuera del piso 2. Promedio 32% → **26%**, experto 58% → 59% (Normal, 300 runs). Detalle en `docs/balance.md` §3f.
 - **Hallazgo:** los comunes de la etapa 3 no se alargan subiendo la Vida (siguen en ~2,6 turnos y quitan ~3 de Vida).
 - **Etapa 3 con más daño** (murciélago de hielo, simio de nieve, espada voladora, guqin, buey, discípulo del viento): Vida perdida por pelea ~3,5 → ~4,6; promedio 26% → **23%**, experto 59% (igual). Detalle en `docs/balance.md` §3h. Más números rinden poco: sus golpes son altos y se desvían; lo siguiente sería mecánico.
+- **Etapa 3 con mecánica (06/11):** nuevo `"wear": true` en intents (cada golpe gasta la Guardia; ver `docs/balance.md` §3i). Murciélago y guqin desgastan, simio y buey pegan de entrada, la espada cambia de altura. Se devolvió parte del daño crudo. Promedio **24%**, experto **56%**; Vida perdida con esos comunes 4–5 → 6–7,6. Subir estructura no alarga peleas (descartado).
 
 ## Pendiente
 1. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
-2. Opcional: si la etapa 3 sigue sin tensión, mecánicas (golpe fuerte de entrada, alturas mixtas) en vez de más daño. Si 23% parece duro, devolver algo en etapa 1–2.
+2. Probar en el juego la etapa 3 nueva (desgaste, embestida del buey, espada que cambia de altura) y ver si la línea «Cada golpe gasta tu Guardia» se entiende. Las peleas siguen cortas (~2,5 turnos).
 3. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas

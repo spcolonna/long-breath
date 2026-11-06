@@ -2293,6 +2293,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get intentWear => 'Cada golpe gasta tu Guardia';
+
+  @override
+  String previewWear(int n, int hits) {
+    return '⚠ cada golpe gasta tu Guardia: cubre $n de $hits';
+  }
+
+  @override
   String get breathDrained => 'Repique';
 
   @override
