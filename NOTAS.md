@@ -134,7 +134,7 @@ macOS no tiene `timeout`.
 ## Pendiente
 1. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
 2. Probar en el juego la etapa 3 nueva (desgaste, embestida del buey, espada que cambia de altura) y ver si la línea «Cada golpe gasta tu Guardia» se entiende. Las peleas siguen cortas (~2,5 turnos).
-3. **TestFlight:** pantalla de carga hecha (`71a2648`, logo sobre papel). Hecho también: solo iPhone y solo vertical, `ITSAppUsesNonExemptEncryption=false` y `ios/Runner/PrivacyInfo.xcprivacy` (UserDefaults, CA92.1; no recopila datos). Falta: ícono (prompt en `docs/arte/prompts.md`, integrar con `python3 tool/make_app_icon.py icon <png>`) y `flutter build ipa`. El usuario crea la app en App Store Connect.
+3. **TestFlight:** pantalla de carga hecha (`71a2648`, logo sobre papel). Hecho también: solo iPhone y solo vertical, `ITSAppUsesNonExemptEncryption=false` y `ios/Runner/PrivacyInfo.xcprivacy` (UserDefaults, CA92.1; no recopila datos). Ficha, textos de TestFlight y paso a paso en `docs/testflight.md`; política de privacidad en `docs/privacidad.md` (URL de GitHub, repo público). Falta: ícono (prompt en `docs/arte/prompts.md`, integrar con `python3 tool/make_app_icon.py icon <png>`) y `flutter build ipa`. El usuario crea la app en App Store Connect.
 4. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas
