@@ -47,7 +47,7 @@ claro, color saturado y mucho aire.
 
 No falta ninguna imagen: las 162 del relevamiento están integradas (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
 
-### Ícono de la app (para TestFlight / App Store) — nuevo, no es recoloreo
+### Ícono de la app (para TestFlight / App Store) ✅ integrado (fuente: `docs/arte/app_icon.webp`)
 
 **Destino:** guardar el PNG donde quieras y correr `python3 tool/make_app_icon.py icon <archivo.png>`,
 que lo aplana sobre papel y genera los 19 tamaños de `ios/Runner/Assets.xcassets/AppIcon.appiconset/`.
