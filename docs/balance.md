@@ -695,3 +695,24 @@ El usuario sentía que hasta el gólem o el jefe todo era de trámite: los comun
 | Experto: gana | 58% | 59% |
 
 **Hallazgo:** en la etapa 3 subir la Vida no alarga el combate. Con +35% los comunes siguen cayendo en ~2,6 turnos y quitan ~3 de Vida, porque el mazo ya es fuerte. Para darles tensión hace falta daño o una mecánica (guardias, interrupciones), no Vida. El experto no se mueve: no pierde Vida con los comunes.
+
+## 3h. Comunes de la etapa 3 con más daño (06/11/2026)
+
+Seguimiento de §3f: en Wòlóngdǐng los comunes quitaban ~3 de Vida por pelea.
+
+| Enemigo | Antes | Después |
+|---|---|---|
+| Murciélago de hielo | escarcha 4×2 · repique 9 | 5×2 · 12 |
+| Simio de nieve | 5×2 · 6×2 · 12 | 7×2 · 8×2 · 15 |
+| Espada voladora | tres tajos de 11 | tres de 14 |
+| Músico del guqin | 4×3 · acorde 11 | 5×3 · 14 |
+| Buey de madera | pisotón 17 | 21 |
+| Discípulo del viento | 9 · 9 | 11 · 11 |
+
+| Normal, 300 runs | Antes | Después |
+|---|---|---|
+| Promedio: gana | 26% | 23% |
+| Promedio: Vida perdida con esos comunes | 3,2–4,8 | 4,0–6,1 |
+| Experto: gana | 59% | 59% |
+
+**Hallazgo:** el daño sube poco la Vida perdida (+1 por pelea) porque los combates duran ~2,5 turnos y la mayoría de esos golpes son ALTOS y se desvían. Pero se acumula: el promedio llega peor al jefe final y gana 3 puntos menos. Si se quiere más tensión sin bajar más la tasa, el camino es mecánico (golpe fuerte en el primer turno, alturas mixtas), no más números.
