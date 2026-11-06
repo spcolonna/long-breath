@@ -185,6 +185,8 @@ extension Labels on AppLocalizations {
     if (e.retainedDiscount > 0) awEffRetainedDiscount(e.retainedDiscount),
     if (e.guardBonus > 0) awEffGuardBonus(e.guardBonus),
     if (e.deflectBreath > 0) awEffDeflectBreath(e.deflectBreath),
+    if (e.circleBreath > 0 || e.circleDraw > 0)
+      awEffCircle(e.circleBreath, e.circleDraw),
     if (e.draw > 0) awEffDraw(e.draw),
     if (e.retain > 0) awEffRetain(e.retain),
   ].join(' ');

@@ -1862,6 +1862,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String awEffCircle(int breath, int draw) {
+    return 'Al cerrar el círculo de posturas, ganás +$breath de Aliento y robás $draw más.';
+  }
+
+  @override
   String awEffGuardBonus(int n) {
     return 'Tus defensas dan +$n de Guardia.';
   }

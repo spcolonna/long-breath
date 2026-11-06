@@ -15,6 +15,8 @@ class AwakeningEffect {
     this.retainedDamage = 0,
     this.deflectBreath = 0,
     this.guardBonus = 0,
+    this.circleBreath = 0,
+    this.circleDraw = 0,
   });
 
   /// Se suman a la pasiva del camino (Tigre, Serpiente y Grulla).
@@ -48,6 +50,12 @@ class AwakeningEffect {
   /// Guardia extra de cada defensa.
   final int guardBonus;
 
+  /// Aliento extra al cerrar el círculo de posturas.
+  final int circleBreath;
+
+  /// Cartas extra que se roban al cerrar el círculo de posturas.
+  final int circleDraw;
+
   static const none = AwakeningEffect();
 
   AwakeningEffect operator +(AwakeningEffect o) => AwakeningEffect(
@@ -64,6 +72,8 @@ class AwakeningEffect {
     retainedDamage: retainedDamage + o.retainedDamage,
     deflectBreath: deflectBreath + o.deflectBreath,
     guardBonus: guardBonus + o.guardBonus,
+    circleBreath: circleBreath + o.circleBreath,
+    circleDraw: circleDraw + o.circleDraw,
   );
 
   factory AwakeningEffect.fromJson(Map<String, dynamic> j) => AwakeningEffect(
@@ -80,6 +90,8 @@ class AwakeningEffect {
     retainedDamage: j['retainedDamage'] as int? ?? 0,
     deflectBreath: j['deflectBreath'] as int? ?? 0,
     guardBonus: j['guardBonus'] as int? ?? 0,
+    circleBreath: j['circleBreath'] as int? ?? 0,
+    circleDraw: j['circleDraw'] as int? ?? 0,
   );
 }
 

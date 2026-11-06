@@ -824,10 +824,13 @@ class CombatEngine {
       final closes = _closes(d.chainedStances, d.stance);
       d.chainedStances |= 1 << d.stance.index;
       if (closes) {
-        events.add(const StanceCircle());
-        d.breath += circleBreath;
-        events.add(BreathGained(circleBreath));
-        _draw(d, circleDraw, events);
+        // Despertar de la Serpiente (Muda): el círculo da más.
+        final breath = circleBreath + d.awakened.circleBreath;
+        final draw = circleDraw + d.awakened.circleDraw;
+        events.add(StanceCircle(breath, draw));
+        d.breath += breath;
+        events.add(BreathGained(breath));
+        _draw(d, draw, events);
       }
     }
 

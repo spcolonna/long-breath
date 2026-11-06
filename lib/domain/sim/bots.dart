@@ -327,7 +327,7 @@ class _Search {
     return '${hand.join(',')}|${s.player.stance.index}|${s.player.breath}|'
         '${s.dingbuUsed}|${s.formProgress.values.join(',')}|${s.wave}|${s.target}|'
         '${[for (final e in s.enemies) '${e.hp}/${e.structure}'].join(',')}|'
-        '${s.player.guard}|${s.player.guardHeight?.index}';
+        '${s.player.guard}|${s.player.guardHeight?.index}|${s.chainedStances}';
   }
 
   void _visit(CombatState s, CombatAction? first, [bool targeted = false]) {

@@ -906,6 +906,8 @@
   "@awEffRetainedDamage": {"placeholders": {"n": {"type": "int"}}},
   "awEffDeflectBreath": "Cada desvío da +{n} de Aliento.",
   "@awEffDeflectBreath": {"placeholders": {"n": {"type": "int"}}},
+  "awEffCircle": "Al cerrar el círculo de posturas, ganás +{breath} de Aliento y robás {draw} más.",
+  "@awEffCircle": { "placeholders": { "breath": { "type": "int" }, "draw": { "type": "int" } } },
   "awEffGuardBonus": "Tus defensas dan +{n} de Guardia.",
   "@awEffGuardBonus": {"placeholders": {"n": {"type": "int"}}},
   "awakeningTitle": "DESPERTAR",

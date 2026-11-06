@@ -20,7 +20,7 @@
         { "id": "she_du", "hanzi": "毒", "effect": { "chain": 1 } },
         { "id": "she_chan", "hanzi": "缠", "effect": { "chainStructure": 1 } },
         { "id": "she_xin", "hanzi": "信", "effect": { "thirdAttackDraw": 1 } },
-        { "id": "she_tui", "hanzi": "蜕", "effect": { "draw": 1 } }
+        { "id": "she_tui", "hanzi": "蜕", "effect": { "draw": 1, "circleBreath": 1, "circleDraw": 1 } }
       ] },
     "crane": { "hanzi": "鹤", "pinyin": "Hè", "draw": 4, "breath": 4, "retain": 3, "retainedDiscount": 1,
       "awakenings": [

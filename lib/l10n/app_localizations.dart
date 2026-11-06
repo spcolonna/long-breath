@@ -3016,6 +3016,12 @@ abstract class AppLocalizations {
   /// **'Cada desvío da +{n} de Aliento.'**
   String awEffDeflectBreath(int n);
 
+  /// No description provided for @awEffCircle.
+  ///
+  /// In es, this message translates to:
+  /// **'Al cerrar el círculo de posturas, ganás +{breath} de Aliento y robás {draw} más.'**
+  String awEffCircle(int breath, int draw);
+
   /// No description provided for @awEffGuardBonus.
   ///
   /// In es, this message translates to:

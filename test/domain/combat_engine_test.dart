@@ -114,6 +114,26 @@ void main() {
       );
     });
 
+    test('Muda (despertar de la Serpiente) agranda el círculo', () {
+      var s = setup([
+        'ma_zhuan_gong',
+        'gong_zhuan_xu',
+        'xu_zhuan_ma',
+        ...filler,
+      ], awakenings: ['she_tui']);
+      s = s.copyWith(player: s.player.copyWith(breath: 10));
+      s = play(s, 'ma_zhuan_gong').state;
+      s = play(s, 'gong_zhuan_xu').state;
+      final hand = s.hand.length;
+      final breath = s.player.breath;
+      final r = play(s, 'xu_zhuan_ma');
+      final ev = r.events.whereType<StanceCircle>().single;
+      expect(ev.breath, CombatEngine.circleBreath + 1);
+      expect(ev.draw, CombatEngine.circleDraw + 1);
+      expect(r.state.hand.length, hand - 1 + 1 + ev.draw);
+      expect(r.state.player.breath, breath - 1 + ev.breath);
+    });
+
     test('el círculo se cierra una vez por turno y se reinicia', () {
       var s = setup([
         'ma_zhuan_gong',
@@ -1174,10 +1194,9 @@ void main() {
     test('se suman a la pasiva del camino', () {
       final tiger = setup([...filler], style: Style.tiger, awakenings: ['hu_nu']);
       expect(tiger.firstStrike, 3 + 3);
-      final snake = setup([...filler, ...filler],
-          style: Style.snake, awakenings: ['she_tui']);
-      expect(snake.handSize, 4 + 1);
-      expect(snake.hand, hasLength(5));
+      final crane = setup([...filler, ...filler], awakenings: ['he_zhan']);
+      expect(crane.handSize, 4 + 1);
+      expect(crane.hand, hasLength(5));
     });
 
     test('Garra que quiebra y Salto: el primer ataque quiebra más y cuesta menos',

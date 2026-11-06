@@ -39,7 +39,9 @@ class StanceChained extends CombatEvent {
 
 /// Encadenaste desde las tres posturas en un turno: el círculo se cierra.
 class StanceCircle extends CombatEvent {
-  const StanceCircle();
+  const StanceCircle(this.breath, this.draw);
+  final int breath;
+  final int draw;
 }
 
 class GuardGained extends CombatEvent {

@@ -443,7 +443,7 @@ Al superar la Montaña y el Monasterio, el espíritu de tu camino te ofrece **3 
 | Serpiente | 毒 Veneno lento | La cadena pega +1 más por ataque anterior (+2 en total). |
 | | 缠 Abrazo | Cada ataque quita +1 de Estructura por cada ataque anterior del turno. |
 | | 信 Lengua bífida | Al jugar el tercer ataque del turno, robás 1. |
-| | 蜕 Muda | Robás 1 carta más por turno. |
+| | 蜕 Muda | Robás 1 carta más por turno. Al cerrar el círculo de posturas, +1 de Aliento y robás 1 más. |
 | Grulla | 静 Quietud | Los ataques retenidos pegan +6 y retenés 1 más. |
 | | 羽 Pluma | Las retenidas cuestan 1 menos más (2 en total) y robás 1 más. |
 | | 平 Equilibrio | Tus defensas dan +3 de Guardia y cada desvío da +1 de Aliento. |
@@ -500,7 +500,7 @@ Hay cinco tipos: **Puño**, **Palma**, **Patada**, **Defensa** y **Técnica**. C
 
 - Una carta que lleva a una postura (por ejemplo *Puñetazo a fondo*, que dice → Arco) **primero pega** con la postura en la que estás y **después te deja** en la suya. Su bonus lo aprovecha la carta siguiente: ordenar la mano o usar Paso en T antes es la clave.
 - **Cadena de postura:** algunas cartas piden una postura de salida y te dejan en otra (la etiqueta dice, por ejemplo, *Caballo → Arco*). Si la jugás estando en la de salida, **encadena**: suma su extra (daño, Estructura, Aliento o robo), la etiqueta se pone dorada con «Encadena» y al jugarla sale «¡Cadena!». Las tres generales cierran el círculo Caballo → Arco → Vacía → Caballo; cada camino tiene una propia (*El tigre se da vuelta*, *La serpiente gira*, *La grulla se posa*).
-- **Círculo cerrado:** si en un mismo turno encadenás desde las tres posturas (Caballo, Arco y Vacía, en cualquier orden), el círculo se cierra: **+1 de Aliento y robás 2**, una vez por turno. La carta que lo cerraría dice «Cierra el círculo» en lugar de «Encadena», y al jugarla sale la cinta grande «¡Círculo cerrado!» con vibración triple.
+- **Círculo cerrado:** si en un mismo turno encadenás desde las tres posturas (Caballo, Arco y Vacía, en cualquier orden), el círculo se cierra: **+1 de Aliento y robás 2**, una vez por turno. La carta que lo cerraría dice «Cierra el círculo» en lugar de «Encadena», y al jugarla sale la cinta grande «¡Círculo cerrado!» con vibración triple. El despertar Muda de la Serpiente lo agranda (+1 de Aliento y 1 carta más).
 - **Agotar:** la carta desaparece por el resto del combate al jugarla.
 
 ## Posturas
