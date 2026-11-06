@@ -104,6 +104,15 @@ bool calm(BuildContext context) => MediaQuery.disableAnimationsOf(context);
 abstract final class Haptics {
   static bool enabled = true;
 
+  /// Sonido de toque que acompaña al clic de los botones (lo conecta main).
+  static void Function()? onTap;
+
+  /// Clic háptico + toque sonoro: lo usa todo lo que se hunde al apretar.
+  static void tap() {
+    selectionClick();
+    onTap?.call();
+  }
+
   static Future<void> selectionClick() =>
       enabled ? HapticFeedback.selectionClick() : Future.value();
   static Future<void> lightImpact() =>

@@ -73,7 +73,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       if (def.realmOf(a.breathBefore + a.breath) > def.realmOf(a.breathBefore)) {
         _stamped = true;
         Haptics.heavyImpact();
-        ref.read(audioProvider).play(Sfx.victoryStamp);
+        ref.read(audioProvider).play(Sfx.realmUp);
       }
     }
     // La ofrenda: el jade se va contando y, al volverse loto, suena el cuenco.
@@ -94,7 +94,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       if (_c.value >= at && !_lines.contains(at)) {
         _lines.add(at);
         Haptics.mediumImpact();
-        ref.read(audioProvider).play(Sfx.formComplete);
+        ref.read(audioProvider).play(Sfx.achievement);
+      }
+    }
+    // Cada pergamino nuevo se desenrolla con su papel.
+    for (final (i, _) in (a?.lore ?? const <String>[]).indexed) {
+      final at = 0.74 + i * 0.05;
+      if (_c.value >= at && !_lines.contains(at)) {
+        _lines.add(at);
+        ref.read(audioProvider).play(Sfx.scrollOpen);
       }
     }
     // Cada línea de la narración llega con un toque suave.

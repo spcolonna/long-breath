@@ -290,6 +290,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     if (id == null) return;
     _weaponHits++;
     Haptics.lightImpact();
+    _audio.play(Sfx.weaponTrigger);
     _pop(
       _heroPops,
       '${ref.read(dataProvider).weapon(id).hanzi} '
@@ -306,7 +307,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final def = ref.read(dataProvider).talisman(id);
     _talismanHits[id] = (_talismanHits[id] ?? 0) + 1;
     Haptics.lightImpact();
-    _audio.play(Sfx.breathGain);
+    _audio.play(Sfx.talismanTrigger);
     _pop(
       _heroPops,
       '${def.hanzi} ${ref.read(textProvider).talisman(id)}',
@@ -602,6 +603,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         switch (e) {
           case PlayerHealed(:final amount) when amount > 0:
             _qiKey++;
+            _audio.play(Sfx.heal);
             _pop(
               _heroPops,
               '+$amount',

@@ -20,6 +20,8 @@ Future<void> main() async {
     debugPrint('audio: $e');
     audio = SilentAudio();
   }
+  final tapAudio = audio;
+  Haptics.onTap = () => tapAudio.play(Sfx.tap);
   var feel = const FeelSettings();
   try {
     feel = FeelSettings.read(await SharedPreferences.getInstance());

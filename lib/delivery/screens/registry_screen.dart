@@ -46,7 +46,7 @@ class RegistryScreen extends ConsumerWidget {
             indicatorColor: Palette.lacquer,
             labelColor: Palette.text,
             unselectedLabelColor: Palette.textDim,
-            onTap: (_) => Haptics.selectionClick(),
+            onTap: (_) => Haptics.tap(),
             tabs: [
               for (final label in [
                 t.registryAscents,

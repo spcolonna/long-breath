@@ -42,7 +42,14 @@ enum Sfx {
   shrineOath('shrine_oath'),
   legacySeal('legacy_seal', volume: 0.8),
   offering('offering', volume: 0.8),
-  runResult('run_result');
+  runResult('run_result'),
+  tap('tap', volume: 0.3),
+  scrollOpen('scroll_open', volume: 0.7),
+  realmUp('realm_up'),
+  achievement('achievement', volume: 0.9),
+  heal('heal', volume: 0.7),
+  talismanTrigger('talisman_trigger', volume: 0.6),
+  weaponTrigger('weapon_trigger', volume: 0.7);
 
   const Sfx(this.id, {this.variants = 1, this.volume = 1});
 

@@ -2,6 +2,8 @@
 
 Lista de efectos y música para Long Breath, con el momento exacto del juego en que suena y un prompt para generarlo (ElevenLabs Sound Effects, Stable Audio, Suno/Udio para música). Los prompts están en inglés porque los generadores responden mejor así. **Cada bloque es un prompt completo** (con el estilo incluido): se copia entero y se pega.
 
+> ✅ **Todo generado por síntesis** con `python3 tool/make_audio.py` (efectos, voces de los 49 enemigos, 5 loops y 3 jingles; ~11 MB). No hace falta generar nada con IA. Para cambiar un sonido se edita su función `sfx_<id>` (o `MUSIC`/`jingle`) y se regenera solo ese: `python3 tool/make_audio.py <id>`. Los prompts de abajo quedan como referencia del carácter de cada uno. Efectos agregados después: `tap` (toque de botón), `scroll_open`, `realm_up`, `achievement`, `heal`, `talisman_trigger`, `weapon_trigger`.
+
 **Identidad sonora:** kung fu luminoso y con energía, como la paleta: percusión china seca (tambor dagu, bloque de madera, platillos bo, gong chico), cuerdas pulsadas (guzheng, pipa) y flauta dizi. Golpes cortos, con cuerpo y sin reverb larga. Nada de terror, drones graves ni ambiente oscuro.
 
 ## Formato y destino

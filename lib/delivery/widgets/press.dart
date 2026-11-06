@@ -29,7 +29,7 @@ class _PressState extends State<Press> {
 
   void _set(bool down) {
     if (!widget.enabled || down == _down) return;
-    if (down && widget.haptic) Haptics.selectionClick();
+    if (down && widget.haptic) Haptics.tap();
     setState(() => _down = down);
   }
 
@@ -76,7 +76,7 @@ class _PressedContentState extends State<_PressedContent> {
   void didUpdateWidget(_PressedContent old) {
     super.didUpdateWidget(old);
     if (widget.pressed && !old.pressed && !widget.disabled) {
-      Haptics.selectionClick();
+      Haptics.tap();
     }
   }
 

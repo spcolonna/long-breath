@@ -39,7 +39,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
         .openMeridian(def, n, realm);
     if (!ok || !mounted) return;
     Haptics.heavyImpact();
-    ref.read(audioProvider).play(Sfx.formComplete);
+    ref.read(audioProvider).play(Sfx.realmUp);
     ref
       ..invalidate(meridianProvider)
       ..invalidate(metaBonusProvider);

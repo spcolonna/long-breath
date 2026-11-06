@@ -125,7 +125,7 @@ class WeaponChip extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        Haptics.selectionClick();
+        Haptics.tap();
         showWeaponSheet(context, id: id, level: level, style: style);
       },
       child: Padding(

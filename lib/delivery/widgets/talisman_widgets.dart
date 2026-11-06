@@ -108,7 +108,7 @@ class TalismanRow extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        Haptics.selectionClick();
+        Haptics.tap();
         showTalismansSheet(context, ids);
       },
       child: wrap
