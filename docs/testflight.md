@@ -58,7 +58,7 @@ Roguelike de cartas de kung fu en español. Subís una montaña de tres etapas p
 
 ### Una sola vez
 
-1. **Registrar el bundle ID.** Abrí `ios/Runner.xcworkspace` en Xcode → Runner → *Signing & Capabilities*. Con el equipo `RZGQPAGH53` y *Automatically manage signing*, Xcode registra `com.spcolonna.longBreath`. Si no aparece, crealo a mano en developer.apple.com → Identifiers.
+1. **Registrar el bundle ID.** Abrí `ios/Runner.xcworkspace` en Xcode → Runner → *Signing & Capabilities*. Con el equipo `RZGQPAGH53` y *Automatically manage signing*, Xcode registra `com.oraki.longBreath`. Si no aparece, crealo a mano en developer.apple.com → Identifiers.
 2. **Crear la app.** App Store Connect → Apps → **+** → Nueva app. Plataforma iOS; nombre, idioma y bundle ID como en la ficha; SKU `longbreath-ios`; acceso completo.
 3. **Ícono:** pasame el PNG y corro `python3 tool/make_app_icon.py icon <png>`. Sin ícono propio la build sube igual, con el ícono de Flutter.
 

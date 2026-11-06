@@ -30,14 +30,14 @@ Long Breath: roguelike de cartas de kung fu en Flutter (iOS), en español. Subí
 - **Al terminar cada tarea:** recomendar la siguiente sin que lo pida.
 
 ## Simulador (no perder la partida del usuario)
-- **Dispositivo:** `D3BAFB7A-9E93-47CA-ADBC-349354810298`, bundle `com.spcolonna.longBreath`.
+- **Dispositivo:** `D3BAFB7A-9E93-47CA-ADBC-349354810298`, bundle `com.oraki.longBreath`.
 - **No tocar:** el simulador «Sandora Test» (430B221E) corre otra app, ZenGarden.
 - **Probar** en partidas distintas de la Partida 1.
 - **Antes de instalar, respaldar.** Al reinstalar cambia la ruta del contenedor, así que hay que recalcularla.
 
 ```bash
-C=$(xcrun simctl get_app_container D3BAFB7A-9E93-47CA-ADBC-349354810298 com.spcolonna.longBreath data)
-cp "$C/Library/Preferences/com.spcolonna.longBreath.plist" <scratchpad>/backupN.plist
+C=$(xcrun simctl get_app_container D3BAFB7A-9E93-47CA-ADBC-349354810298 com.oraki.longBreath data)
+cp "$C/Library/Preferences/com.oraki.longBreath.plist" <scratchpad>/backupN.plist
 cp -R "$C/Documents/run_logs" <scratchpad>/runlogsN
 ```
 
@@ -46,7 +46,7 @@ cp -R "$C/Documents/run_logs" <scratchpad>/runlogsN
 ```bash
 flutter build ios --simulator --debug
 xcrun simctl install D3BAFB7A-9E93-47CA-ADBC-349354810298 build/ios/iphonesimulator/Runner.app
-xcrun simctl launch D3BAFB7A-9E93-47CA-ADBC-349354810298 com.spcolonna.longBreath
+xcrun simctl launch D3BAFB7A-9E93-47CA-ADBC-349354810298 com.oraki.longBreath
 ```
 
 - **Después:**
