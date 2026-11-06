@@ -299,7 +299,8 @@ class CombatEngine {
         d.stance = stance;
         _stanceChanged(d, events);
       case Breathe():
-        final n = d.hand.length;
+        // Con la mano vacía (o casi) igual trae cartas nuevas.
+        final n = math.max(d.hand.length, data.balance.breatheMinDraw);
         d.discard.addAll(d.hand);
         d.hand.clear();
         d.retained.clear();
@@ -406,7 +407,7 @@ class CombatEngine {
       final a = Dingbu(st);
       if (validate(s, a) == null) out.add(a);
     }
-    if (s.hand.isNotEmpty && validate(s, const Breathe()) == null) {
+    if (validate(s, const Breathe()) == null) {
       out.add(const Breathe());
     }
     out.add(const EndTurn());

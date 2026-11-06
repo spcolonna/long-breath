@@ -49,20 +49,20 @@ class _ShakeState extends State<Shake> with SingleTickerProviderStateMixin {
     return AnimatedBuilder(
       animation: _c,
       builder: (context, child) {
+        // Siempre el mismo Transform: si quieto devolviera el hijo solo, el
+        // árbol cambiaría al empezar y al terminar, y todo lo de adentro se
+        // rearmaría (las entradas del héroe y el rival se repetían).
         // Con "reducir movimiento" del sistema, la pantalla no se sacude.
-        if (!_c.isAnimating || MediaQuery.disableAnimationsOf(context)) {
-          return child!;
-        }
-        final t = _c.value;
-        final decay = (1 - t) * (1 - t);
-        final s = widget.strength * decay;
-        return Transform.translate(
-          offset: Offset(
+        var offset = Offset.zero;
+        if (_c.isAnimating && !MediaQuery.disableAnimationsOf(context)) {
+          final t = _c.value;
+          final s = widget.strength * (1 - t) * (1 - t);
+          offset = Offset(
             math.sin(t * math.pi * 11) * s,
             math.cos(t * math.pi * 8) * s * 0.5,
-          ),
-          child: child,
-        );
+          );
+        }
+        return Transform.translate(offset: offset, child: child);
       },
       child: widget.child,
     );

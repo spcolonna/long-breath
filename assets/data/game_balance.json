@@ -4,7 +4,8 @@
     "structure": 10,
     "startStance": "mabu",
     "breathesPerCombat": 1,
-    "breatheCost": 1
+    "breatheCost": 1,
+    "breatheMinDraw": 3
   },
   "novice": { "hanzi": "徒", "pinyin": "Tú", "draw": 5, "breath": 3, "retain": 0 },
   "styles": {

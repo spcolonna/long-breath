@@ -513,6 +513,7 @@ class GameBalance {
     required this.startStance,
     required this.breathesPerCombat,
     this.breatheCost = 1,
+    this.breatheMinDraw = 3,
     required this.novice,
     required this.styles,
     required this.pathChoices,
@@ -560,6 +561,9 @@ class GameBalance {
 
   /// Aliento que cuesta Respirar (cambiar toda la mano).
   final int breatheCost;
+
+  /// Cartas que roba Respirar como mínimo (aunque la mano esté vacía).
+  final int breatheMinDraw;
   final StyleStats novice;
   final Map<Style, StyleStats> styles;
 
@@ -701,6 +705,7 @@ class GameBalance {
       startStance: Stance.parse(player['startStance'] as String)!,
       breathesPerCombat: player['breathesPerCombat'] as int,
       breatheCost: player['breatheCost'] as int? ?? 1,
+      breatheMinDraw: player['breatheMinDraw'] as int? ?? 3,
       novice: StyleStats.fromJson(j['novice'] as Map<String, dynamic>),
       styles: {
         for (final e in styles.entries)

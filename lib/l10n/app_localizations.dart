@@ -1225,7 +1225,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutActions.
   ///
   /// In es, this message translates to:
-  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate.'**
+  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate; aunque no te queden cartas, roba 3.'**
   String get tutActions;
 
   /// No description provided for @tutFree.
@@ -2305,7 +2305,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesForms9.
   ///
   /// In es, this message translates to:
-  /// **'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas. Cuesta 1 de Aliento y se usa una vez por combate. Usalo.'**
+  /// **'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas (al menos 3). Cuesta 1 de Aliento y se usa una vez por combate. Usalo.'**
   String get lesForms9;
 
   /// No description provided for @lesForms10.

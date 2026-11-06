@@ -399,6 +399,16 @@ void main() {
       expect(engine.validate(s, const Breathe()), isNotNull);
     });
 
+    test('respirar con la mano vacía igual roba', () {
+      const free = 'she_zhuan_shen';
+      var s = setup([free, free, free, free, ...filler]);
+      while (s.hand.isNotEmpty) {
+        s = engine.reduce(s, PlayCard(s.hand.first.uid)).state;
+      }
+      s = engine.reduce(s, const Breathe()).state;
+      expect(s.hand.length, data.balance.breatheMinDraw);
+    });
+
     test('respirar sin Aliento no se puede', () {
       var s = setup([...filler, ...filler]);
       while (s.player.breath > 0) {

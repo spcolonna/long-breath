@@ -462,7 +462,7 @@ En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista 
 | Vida | 50 (según dificultad: 60 / 50 / 50 / 45) | Si llega a 0 perdés la run |
 | Estructura | 10 | Tu equilibrio. Se recupera al terminar cada combate |
 | Aliento | según camino | Se paga para jugar cartas. Lo que sobra se pierde |
-| Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad, por 1 de Aliento |
+| Respirar | 1 vez por combate | Descartás la mano y robás la misma cantidad (mínimo 3, aunque esté vacía), por 1 de Aliento |
 | Postura inicial | Caballo (马步) | |
 
 ## Presentaciones

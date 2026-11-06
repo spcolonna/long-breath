@@ -709,7 +709,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutActions =>
-      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate.';
+      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate; aunque no te queden cartas, roba 3.';
 
   @override
   String get tutFree =>
@@ -1363,7 +1363,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesForms9 =>
-      'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas. Cuesta 1 de Aliento y se usa una vez por combate. Usalo.';
+      'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas (al menos 3). Cuesta 1 de Aliento y se usa una vez por combate. Usalo.';
 
   @override
   String get lesForms10 => '¡Ahí está! Último paso: Paso atrás.';
