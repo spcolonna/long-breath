@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (5):** las ilustraciones de 5 cartas del camino Grulla (Rodilla, Canto, La grulla blanca abre las alas, Picotazo y La grulla duerme), justo abajo en «Para generar ahora», un prompt por imagen.
+- **Falta (13):** 6 cartas de cadena de postura y 2 enemigos propios que reemplazan recoloreos (prioridad), más las ilustraciones de 5 cartas del camino Grulla (Rodilla, Canto, La grulla blanca abre las alas, Picotazo y La grulla duerme), justo abajo en «Para generar ahora», un prompt por imagen.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
   las 3 armas y 42 ilustraciones de cartas (Tigre y Serpiente completos, 5 de la Grulla). El detalle está en «Estado», más abajo.
@@ -47,6 +47,148 @@ claro, color saturado y mucho aire.
 Faltan **5 ilustraciones de cartas** (las del camino Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 42 que ya están sirven de referencia de estilo.
 
 Cada bloque gris es **una imagen**: copialo, pegalo en ChatGPT y guardá el PNG con el nombre del título. El color de la estela es el del tipo de la carta.
+
+## Prioridad: cadenas de postura y dos enemigos propios
+
+Las 6 cartas de cadena (las de «desde una postura») son las que más se ven sin ilustración: las 3 neutrales salen en casi todas las subidas. Cada una muestra un cambio de postura: la figura en la postura nueva y un fantasma pálido de la anterior detrás. Ninguna es recoloreo.
+
+Los 2 enemigos (7 y 8) **reemplazan recoloreos** del monje (`monk_amber`, `monk_slate`, hoy teñidos por `tool/recolor_enemies.py`). Al llegar, sacarlos de `VARIANTS` en ese script antes de correr `optimize_art.py`.
+
+### 1. `ma_zhuan_gong.png` — Del caballo al arco 马转弓 (Puño) · `assets/art/cards/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a stance change into a strike: the hero pivots out of a wide low horse stance into a long forward bow stance (front knee bent, back leg straight) and drives a straight punch forward at chest height with a closed fist, the other fist pulled back at the hip. A faint pale afterimage of the previous horse stance (feet wide, knees bent, fists at the hips) stays behind the figure.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (a closed fist or a flat open palm with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; both legs are drawn complete with both feet visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs. The faint afterimage is clearly a pale ghost of the same pose, behind the figure, never a second solid person.
+A curved vermilion (#E8453C) ink brush trail sweeps from the afterimage into the punching fist, showing the turn of the hips, with a small burst of vermilion ink at the knuckles.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### 2. `gong_zhuan_xu.png` — Del arco al paso vacío 弓转虚 (Patada) · `assets/art/cards/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a stance change into a kick: the hero shifts back out of a long bow stance into a light empty stance and snaps a low front kick with the front foot at shin height, toes pointed, while both open palms guard in front of the chest. A faint pale afterimage of the previous bow stance (front knee bent, back leg straight) stays behind the figure.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (a closed fist or a flat open palm with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; both legs are drawn complete with both feet visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs. The faint afterimage is clearly a pale ghost of the same pose, behind the figure, never a second solid person.
+A curved gold (#E59A12) ink brush trail follows the kicking foot from the afterimage, with a small gold splash at the toes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### 3. `xu_zhuan_ma.png` — Del vacío al caballo 虚转马 (Palma) · `assets/art/cards/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a stance change into a palm strike: the hero sinks out of a light empty stance into a wide low horse stance and pushes one open palm straight forward at chest height, fingers up, the other palm held in front of the belly. A faint pale afterimage of the previous empty stance (weight on the back leg, front toes lightly touching the ground) stays behind the figure.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (a closed fist or a flat open palm with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; both legs are drawn complete with both feet visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs. The faint afterimage is clearly a pale ghost of the same pose, behind the figure, never a second solid person.
+A violet (#9B5DE5) ink brush trail flows down from the afterimage into the rooted feet and out through the pushing palm, ending in a soft violet ripple in front of the palm.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### 4. `hu_hui_shen.png` — El tigre se da vuelta 虎回身 (Palma) · `assets/art/cards/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a powerful turning palm strike: the hero spins around out of a bow stance, landing in a wide low horse stance, and slams a heavy open palm sideways at chest height like a tiger's paw, fingers slightly curled and the thumb visible, the other hand guarding near the face. A faint pale afterimage of the previous bow stance stays behind the figure, showing the turn.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (a closed fist or a flat open palm with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; both legs are drawn complete with both feet visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs. The faint afterimage is clearly a pale ghost of the same pose, behind the figure, never a second solid person.
+A separate translucent violet (#9B5DE5) ink tiger spirit turns its head and swipes a paw beside the palm, never touching or hiding the hands, with a curved violet brush trail tracing the spin around the hero.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### 5. `she_zhuan_shen.png` — La serpiente gira 蛇转身 (Palma) · `assets/art/cards/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: a quick light turning palm: the hero twists the waist out of an empty stance into a forward bow stance, the lead hand darting forward as an open palm with fingers together at throat height, the rear palm close to the chest. A faint pale afterimage of the previous empty stance stays behind the figure.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (a closed fist or a flat open palm with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; both legs are drawn complete with both feet visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs. The faint afterimage is clearly a pale ghost of the same pose, behind the figure, never a second solid person.
+The arms are human arms in sleeves, never a snake. A separate translucent violet (#9B5DE5) ink snake spirit coils once around the hero's path on the ground and rises beside the darting palm, never wrapping or hiding the hands, with a thin spiral violet brush trail showing the twist.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### 6. `he_luo_di.png` — La grulla se posa 鹤落地 (Patada) · `assets/art/cards/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure inside the frame, clear silhouette readable at small size.
+The move: landing from a crane stance into a low kick: the hero comes down from standing on one leg into a wide low horse stance and sweeps a low side kick with the landing foot at knee height, both arms open to the sides at shoulder height with open palms, elbows soft. A faint pale afterimage of the previous one-legged crane pose (one knee raised) stays behind the figure; both legs of the hero are drawn complete.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (a closed fist or a flat open palm with the fingers together and the thumb visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; both legs are drawn complete with both feet visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs. The faint afterimage is clearly a pale ghost of the same pose, behind the figure, never a second solid person.
+The arms are human arms in sleeves, never wings, with no feathers growing from them. A separate translucent gold (#E59A12) ink crane spirit settles its wings above the hero, plus a few loose white feathers drifting down, never touching or hiding the hands.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### 7. `monk_amber.png` — Monje del Incienso (`incense_monk`, común, etapa 2) — reemplaza un recoloreo del monje · `assets/art/enemies/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game enemy character, full body, facing the viewer, centered, transparent background: a round cheerful temple monk with a shaved head and a calm half-smile, saffron and amber robes with a gold sash, holding a large bronze incense burner on a short chain in one hand, the other hand raised in a blessing with an open palm, thick ribbons of jade-green and gold incense smoke curling around him in spirals, a few glowing embers floating, sturdy stance with sandals visible. Clearly a different character from a plain fighting monk: the incense burner and the swirling smoke are the main shapes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### 8. `monk_slate.png` — Ermitaño de Pizarra (`slate_hermit`, común, etapa 3) — reemplaza un recoloreo del monje · `assets/art/enemies/`
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game enemy character, full body, facing the viewer, centered, transparent background: a tall lean mountain hermit whose skin is partly turned to smooth blue-grey slate stone, with cracked stone plates on the shoulders, forearms and shins and small tufts of jade moss and tiny white mountain flowers growing from the cracks, long white eyebrows and a stern but kind face, cobalt and cream patched robes, a walking staff of twisted pine in one hand, the other hand forward with an open palm, small sharp stone shards floating around him like a protective ring. Clearly a different character from a plain monk: the stone skin and floating shards are the main shapes.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
 
 ## Camino Grulla
 
