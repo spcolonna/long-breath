@@ -13,6 +13,7 @@ import '../../domain/combat/combat_state.dart';
 import '../../domain/model/card_def.dart';
 import '../../domain/model/enemy_def.dart';
 import '../../domain/model/enums.dart';
+import '../../domain/model/form_def.dart';
 import '../../domain/model/game_data.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
@@ -64,11 +65,30 @@ class _CombatBody extends ConsumerStatefulWidget {
 }
 
 class _Fx {
-  const _Fx(this.title, this.subtitle, this.color, {this.big = false});
+  const _Fx(
+    this.title,
+    this.subtitle,
+    this.color, {
+    this.big = false,
+    this.header,
+    this.detail,
+    this.ms,
+  });
   final String title;
   final String? subtitle;
   final Color color;
   final bool big;
+
+  /// Rótulo chico sobre el título (p. ej. «¡Forma completa!»).
+  final String? header;
+
+  /// Lo que hizo, en una píldora debajo (p. ej. «+2 Aliento · roba 1»).
+  final String? detail;
+
+  /// Duración propia; si no, la de su tamaño.
+  final int? ms;
+
+  int get duration => ms ?? (big ? 1400 : 950);
 }
 
 /// Número o texto que salta sobre un personaje.
@@ -175,6 +195,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Destello dorado (desequilibrio, forma, remate) y sello del remate.
   int _goldFlashKey = 0, _finishKey = 0;
+
+  /// Forma recién completada: sus pasos quedan dorados un momento en el
+  /// panel antes de volver a cero.
+  String? _formFlash;
 
   /// Golpes seguidos en este turno (el contador de la arena).
   int _combo = 0;
@@ -1016,8 +1040,15 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         case FormInterrupted():
           _audio.play(Sfx.formBroken);
         case FormCompleted(:final formId):
+          // Tres golpes que bajan, como el eco de la forma.
           Haptics.heavyImpact();
+          _after(140, Haptics.mediumImpact);
+          _after(300, Haptics.lightImpact);
           _audio.play(Sfx.formComplete);
+          _formFlash = formId;
+          _after(1600, () {
+            if (_formFlash == formId) setState(() => _formFlash = null);
+          });
           _formBurstKey++;
           _goldFlashKey++;
           final f = data.forms.firstWhere((f) => f.id == formId);
@@ -1028,14 +1059,20 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           } else {
             _dilate([(8, 90), (2.5, 400)]);
           }
-          _queue.add(
+          // Pasa adelante de los demás carteles y se queda lo bastante
+          // para leer el nombre y lo que dio.
+          _queue.insert(
+            0,
             _Fx(
               text.form(f.id),
-              f.isLong
-                  ? '${t.formLong} · ${f.hanzi} · ${f.pinyin}'
-                  : '${f.hanzi} · ${f.pinyin}',
+              '${f.hanzi} · ${f.pinyin}',
               Palette.lacquer,
               big: true,
+              header: f.isLong
+                  ? '${t.formCompleted} · ${t.formLong}'
+                  : t.formCompleted,
+              detail: t.formEffect(f.effect),
+              ms: f.isLong ? 3000 : 2600,
             ),
           );
         case StanceChained(:final cardId, :final from):
@@ -1108,10 +1145,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _current = _queue.removeAt(0);
       _fxKey++;
     });
-    _after(_current!.big ? 1400 : 950, () {
-      setState(() => _current = null);
-      _pump();
-    });
+    // Se quita al terminar su propia animación (ver _FxBanner.onDone): con
+    // la cámara lenta de los golpes grandes, un reloj de pared lo cortaba
+    // antes de tiempo y sin salida.
+  }
+
+  void _fxDone() {
+    setState(() => _current = null);
+    _pump();
   }
 
   @override
@@ -1247,7 +1288,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         ),
         TutorialAnchor(
           id: 'forms',
-          child: _FormsPanel(s: s, data: data),
+          child: _FormsPanel(s: s, data: data, flash: _formFlash),
         ),
         IgnorePointer(
           ignoring: _busy,
@@ -1376,7 +1417,11 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             if (_current != null)
               Positioned.fill(
                 child: IgnorePointer(
-                  child: _FxBanner(key: ValueKey(_fxKey), fx: _current!),
+                  child: _FxBanner(
+                    key: ValueKey(_fxKey),
+                    fx: _current!,
+                    onDone: _fxDone,
+                  ),
                 ),
               ),
             if (_endShown)
@@ -2877,10 +2922,13 @@ class _StanceChip extends StatelessWidget {
 // ------------------------------------------------------------------ formas
 
 class _FormsPanel extends ConsumerWidget {
-  const _FormsPanel({required this.s, required this.data});
+  const _FormsPanel({required this.s, required this.data, this.flash});
 
   final CombatState s;
   final GameData data;
+
+  /// Forma recién completada: se ve entera en dorado un momento.
+  final String? flash;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -2936,12 +2984,12 @@ class _FormsPanel extends ConsumerWidget {
                   for (var i = 0; i < f.steps.length; i++)
                     Expanded(
                       child: Bounce(
-                        trigger: i < s.formProgress[f.id]!,
+                        trigger: i < _progress(f),
                         scale: 1.15,
                         child: _FormStep(
                           label: text.card(f.steps[i]),
-                          done: i < s.formProgress[f.id]!,
-                          next: i == s.formProgress[f.id]!,
+                          done: i < _progress(f),
+                          next: flash != f.id && i == _progress(f),
                           owned: owned.contains(f.steps[i]),
                         ),
                       ),
@@ -2953,6 +3001,11 @@ class _FormsPanel extends ConsumerWidget {
       ),
     );
   }
+}
+
+extension on _FormsPanel {
+  int _progress(FormDef f) =>
+      flash == f.id ? f.steps.length : s.formProgress[f.id]!;
 }
 
 class _FormStep extends StatelessWidget {
@@ -4339,34 +4392,44 @@ class _Chip extends StatelessWidget {
 /// Cartel de un efecto importante: una franja de color entra barriendo, el
 /// título salta y todo sale hacia el otro lado.
 class _FxBanner extends StatelessWidget {
-  const _FxBanner({super.key, required this.fx});
+  const _FxBanner({super.key, required this.fx, required this.onDone});
 
   final _Fx fx;
+  final VoidCallback onDone;
 
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.sizeOf(context).width;
+    final ms = fx.duration;
+    // Entrada y salida de duración fija; el resto es tiempo para leer.
+    final inF = math.min(0.18, 260 / ms), outF = math.min(0.18, 260 / ms);
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
-      duration: Duration(milliseconds: fx.big ? 1400 : 950),
+      duration: Duration(milliseconds: ms),
+      onEnd: onDone,
       builder: (_, v, _) {
-        final inT = Curves.easeOutCubic.transform(math.min(1, v / 0.18));
-        final outT = v < 0.82
+        final inT = Curves.easeOutCubic.transform(math.min(1, v / inF));
+        final outT = v < 1 - outF
             ? 0.0
-            : Curves.easeInCubic.transform((v - 0.82) / 0.18);
-        final pop = v < 0.1
+            : Curves.easeInCubic.transform((v - (1 - outF)) / outF);
+        double popAt(double from) => v < from
             ? 0.6
             : 0.6 +
                   0.4 *
                       Curves.easeOutBack.transform(
-                        math.min(1, (v - 0.1) / 0.2),
+                        math.min(1, (v - from) / (inF * 1.2)),
                       );
+        final pop = popAt(inF * 0.5);
+        // El detalle aparece un poco después del título, para leer en orden.
+        final late = Curves.easeOut.transform(
+          ((v - inF * 1.6) / inF).clamp(0.0, 1.0),
+        );
         return Stack(
           children: [
             Positioned.fill(
               child: ColoredBox(
                 color: Palette.surface.withValues(
-                  alpha: 0.35 * inT * (1 - outT),
+                  alpha: (fx.detail != null ? 0.5 : 0.35) * inT * (1 - outT),
                 ),
               ),
             ),
@@ -4402,19 +4465,36 @@ class _FxBanner extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            fx.title,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: fx.big ? 44 : 34,
-                              fontWeight: FontWeight.w900,
-                              color: Palette.onColor,
-                              shadows: [
-                                Shadow(
-                                  color: fx.color.withValues(alpha: 0.9),
-                                  blurRadius: 10,
+                          if (fx.header != null)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text(
+                                fx.header!.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  letterSpacing: 2.5,
+                                  fontWeight: FontWeight.w800,
+                                  color: Palette.onColor.withValues(alpha: 0.85),
                                 ),
-                              ],
+                              ),
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: Text(
+                              fx.title,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: fx.big ? 44 : 34,
+                                height: 1.05,
+                                fontWeight: FontWeight.w900,
+                                color: Palette.onColor,
+                                shadows: [
+                                  Shadow(
+                                    color: fx.color.withValues(alpha: 0.9),
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           if (fx.subtitle != null)
@@ -4423,6 +4503,37 @@ class _FxBanner extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Palette.onColor,
+                              ),
+                            ),
+                          if (fx.detail != null && fx.detail!.isNotEmpty)
+                            Opacity(
+                              opacity: late,
+                              child: Transform.translate(
+                                offset: Offset(0, 8 * (1 - late)),
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 5,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Palette.onColor,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Palette.gold,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    fx.detail!,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w800,
+                                      color: fx.color,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                         ],
