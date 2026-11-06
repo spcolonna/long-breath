@@ -143,18 +143,18 @@ Total: 162 · ✅ 143 · 🎨 2 · ❌ 17
 | ❌ falta | `assets/art/cards/he_zhuo.webp` | ilustración de he_zhuo | hanzi de marca de agua | listo |
 | ❌ falta | `assets/art/cards/he_mian.webp` | ilustración de he_mian | hanzi de marca de agua | listo |
 | ✅ propio | `assets/art/cards/he_luo_di.webp` | ilustración de he_luo_di | hanzi de marca de agua | — |
-| ❌ falta | `assets/art/cards/gun_sao.webp` | ilustración de gun_sao | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/gun_ge.webp` | ilustración de gun_ge | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/gun_tiao.webp` | ilustración de gun_tiao | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/gun_wuhua.webp` | ilustración de gun_wuhua | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/jian_ci.webp` | ilustración de jian_ci | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/jian_dian.webp` | ilustración de jian_dian | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/jian_jie.webp` | ilustración de jian_jie | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/jian_chuanxin.webp` | ilustración de jian_chuanxin | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/pudao_pi.webp` | ilustración de pudao_pi | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/pudao_lan.webp` | ilustración de pudao_lan | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/pudao_kan.webp` | ilustración de pudao_kan | hanzi de marca de agua | no |
-| ❌ falta | `assets/art/cards/pudao_chantou.webp` | ilustración de pudao_chantou | hanzi de marca de agua | no |
+| ❌ falta | `assets/art/cards/gun_sao.webp` | ilustración de gun_sao | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/gun_ge.webp` | ilustración de gun_ge | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/gun_tiao.webp` | ilustración de gun_tiao | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/gun_wuhua.webp` | ilustración de gun_wuhua | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/jian_ci.webp` | ilustración de jian_ci | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/jian_dian.webp` | ilustración de jian_dian | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/jian_jie.webp` | ilustración de jian_jie | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/jian_chuanxin.webp` | ilustración de jian_chuanxin | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/pudao_pi.webp` | ilustración de pudao_pi | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/pudao_lan.webp` | ilustración de pudao_lan | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/pudao_kan.webp` | ilustración de pudao_kan | hanzi de marca de agua | listo |
+| ❌ falta | `assets/art/cards/pudao_chantou.webp` | ilustración de pudao_chantou | hanzi de marca de agua | listo |
 
 ## armas
 

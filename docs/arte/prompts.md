@@ -22,7 +22,8 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (5):** las ilustraciones de 5 cartas del camino Grulla (Rodilla, Canto, La grulla blanca abre las alas, Picotazo y La grulla duerme), justo abajo en «Para generar ahora», un prompt por imagen.
+- **Falta (17):** 5 cartas del camino Grulla (Rodilla, Canto, La grulla blanca abre las alas, Picotazo y La grulla duerme) y las 12 cartas de arma (4 de Bastón, 4 de Espada y 4 de Pudao). Están justo abajo en «Para generar ahora», un prompt por imagen. Ninguna es recoloreo.
+- **Recoloreos por diseño (2):** el Reflejo del Dragón (`dragon_reflection`) y el León de Celadón (`lion_celadon`), élites de la etapa 2, usan al dragón y al león teñidos. Se ven bien en el juego; arte propio sería un extra, no algo que falte.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
   las 3 armas y 47 ilustraciones de cartas (Tigre, Serpiente y las 6 de cadena completos, 6 de la Grulla). El detalle está en «Estado», más abajo.
@@ -44,7 +45,7 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Faltan **5 ilustraciones de cartas** (las del camino Grulla), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 47 que ya están sirven de referencia de estilo.
+Faltan **17 ilustraciones de cartas** (5 del camino Grulla y 12 de arma), carpeta `assets/art/cards/`. Ninguna es recoloreo. La carta muestra su ilustración apenas existe `cards/<id>.webp` (sin ella, el hanzi de marca de agua), así que cada una se integra sola y se pueden pasar de a varias, en cualquier orden. Las 47 que ya están sirven de referencia de estilo.
 
 Cada bloque gris es **una imagen**: copialo, pegalo en ChatGPT y guardá el PNG con el nombre del título. El color de la estela es el del tipo de la carta.
 
@@ -139,6 +140,257 @@ Small square illustration of a kung fu move on a transparent background. The her
 The move: resting serenely on one straight leg with eyes closed, the other knee raised with the foot tucked beside the standing knee, both open hands resting one on top of the other in front of the belly, shoulders relaxed.
 ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every visible hand has five fingers with normal joints, drawn in a simple readable shape (flat open palms with the fingers together and the thumb visible, one palm laid on the other, all ten fingers visible); both hands are fully visible, apart from the body and from each other, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; when standing on one leg, both legs are still drawn complete, the raised one clearly bent at the knee with its foot visible; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
 The crane is NOT in the body: the arms are human arms in sleeves, never wings, with no feathers growing from them. The crane is shown only by a separate translucent ink crane spirit in jade green (#1FA38A) that sleeps standing on one leg beside the figure with its head tucked under a wing, plus a few loose white feathers drifting in the air; it never touches or hides the hands.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+
+## Cartas de arma
+
+> Cada arma suma 4 cartas a la baraja. El héroe sostiene la misma arma que ya está en `assets/art/weapons/` (que sirve de referencia: podés adjuntarla en ChatGPT). Las armas largas tientan a ChatGPT a fundir manos con el mango o duplicar el arma: cada prompt pide una sola arma, completa, y las manos cerradas alrededor del mango con los dedos visibles. Si sale mal, en la misma conversación pedí: *«Same image, fix only the hands and the weapon: one single weapon, five fingers on each hand wrapped around the handle»*.
+
+### Bastón 棍
+
+#### 6. `cards/gun_sao.png` — Barrido bajo 扫棍 (Palma)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese long staff (gùn) taller than the hero: a straight round pole of polished wood lacquered warm vermilion-brown, with a gold cap ring at each end and two thin gold rings around the middle. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a low sweeping strike: crouched deep in a wide low stance, both hands on the staff, swinging it flat just above the ground at ankle height.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a long flat ink arc skimming along the ground under the staff, with a few small dust puffs, painted in translucent violet ink (#9B5DE5); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 7. `cards/gun_ge.png` — Palo que cruza 格棍 (Defensa)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese long staff (gùn) taller than the hero: a straight round pole of polished wood lacquered warm vermilion-brown, with a gold cap ring at each end and two thin gold rings around the middle. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a low block: knees bent, the staff held diagonally across the front of the shins with both hands spread wide on it, stopping a blow below.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a round ink ripple bursting from the point where the staff blocks, like a gong being struck, painted in translucent cobalt blue ink (#3E7BE0); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 8. `cards/gun_tiao.png` — Palo que levanta 挑棍 (Palma)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese long staff (gùn) taller than the hero: a straight round pole of polished wood lacquered warm vermilion-brown, with a gold cap ring at each end and two thin gold rings around the middle. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a rising flick: stepping forward, the back hand low near the hip drives the staff tip up from the ground to head height in one upward stroke.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a curved ink stroke rising from the ground along the path of the staff tip, painted in translucent violet ink (#9B5DE5); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 9. `cards/gun_wuhua.png` — Molinete del palo 舞花棍 (Palma)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese long staff (gùn) taller than the hero: a straight round pole of polished wood lacquered warm vermilion-brown, with a gold cap ring at each end and two thin gold rings around the middle. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a staff flourish: standing upright, the staff spinning in a figure-eight beside the body, held lightly in both hands at its middle.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: two overlapping ink circles blurred around the spinning staff, like the petals of a flower, painted in translucent violet ink (#9B5DE5); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### Espada 剑
+
+#### 10. `cards/jian_ci.png` — Estocada 刺剑 (Puño)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese straight double-edged sword (jiàn): a slim bright steel blade with a fine central ridge and pointed tip, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a straight lunging thrust: front knee bent deep, back leg straight, the sword arm extended level at chest height, the free hand in sword-fingers (index and middle finger together, pointing up) raised behind the head.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a sharp straight ink streak shooting forward from the sword tip, painted in translucent vermilion ink (#E8453C); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 11. `cards/jian_dian.png` — Punta que pica 点剑 (Puño)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese straight double-edged sword (jiàn): a slim bright steel blade with a fine central ridge and pointed tip, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a quick light tap: standing tall and relaxed, the wrist snapping the sword tip down in a small pecking motion, the free hand in sword-fingers at the side.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: three small ink sparks popping where the tip pecks, light and quick, painted in translucent vermilion ink (#E8453C); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 12. `cards/jian_jie.png` — Corte que intercepta 截剑 (Defensa)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese straight double-edged sword (jiàn): a slim bright steel blade with a fine central ridge and pointed tip, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: an intercepting cut: turned sideways, the sword held vertical at chest level with the edge outward to cut off an incoming strike, the free hand open at the wrist of the sword hand.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a crisp ink ring flashing at the edge of the blade where the strike is stopped, painted in translucent cobalt blue ink (#3E7BE0); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 13. `cards/jian_chuanxin.png` — Espada que atraviesa 穿心剑 (Puño)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese straight double-edged sword (jiàn): a slim bright steel blade with a fine central ridge and pointed tip, a small gold cloud-shaped crossguard, a grip wrapped in dark cord with vermilion diamond wrapping, and a round gold pommel, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a deep flying lunge: the whole body stretched in one straight line behind the sword, back foot just leaving the ground, the free hand reaching back in sword-fingers.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a long piercing ink streak passing straight through a small ink ring ahead of the tip, painted in translucent vermilion ink (#E8453C); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+### Pudao 朴刀
+
+#### 14. `cards/pudao_pi.png` — Tajo que parte 劈刀 (Palma)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese pudao, a long two-handed saber: a broad single-edged curved steel blade, a gold collar where blade meets handle, and a long straight lacquered vermilion-brown wooden handle with a small gold end cap, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: an overhead downward chop: both hands on the long handle, the blade coming down from above the head to the bottom of the arc in front, knees bent into the cut.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a tall ink crescent tracing the downward path of the blade, painted in translucent violet ink (#9B5DE5); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 15. `cards/pudao_lan.png` — Hoja que ataja 拦刀 (Defensa)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese pudao, a long two-handed saber: a broad single-edged curved steel blade, a gold collar where blade meets handle, and a long straight lacquered vermilion-brown wooden handle with a small gold end cap, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a high block: the pudao held horizontally above the head with both hands far apart on the handle, the blade flat to stop a blow from above.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a broad ink shimmer spreading along the raised blade like a shield, painted in translucent cobalt blue ink (#3E7BE0); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 16. `cards/pudao_kan.png` — Hachazo de pudao 砍刀 (Patada)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese pudao, a long two-handed saber: a broad single-edged curved steel blade, a gold collar where blade meets handle, and a long straight lacquered vermilion-brown wooden handle with a small gold end cap, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: a huge diagonal hacking swing: the whole body turning from the hips, both hands on the handle, the blade cutting down diagonally across the front.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a wide ink crescent along the swing, with a few broken pieces of an ink shield flying apart in front of the blade, painted in translucent gold ink (#E59A12); it never covers the hands or the face.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark, no deformed hands, no extra fingers, no extra limbs.
+```
+
+#### 17. `cards/pudao_chantou.png` — Hoja que envuelve la cabeza 缠头刀 (Palma)
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background).
+
+Small square illustration of a kung fu weapon move on a transparent background. The hero: one young martial artist with long wild brown hair tied with a red ribbon, cream robe with jade and vermilion sashes, deep blue trousers with gold cloud patterns, gold wrist guards. Full body, three-quarter side view, the whole figure and the whole weapon inside the frame, clear silhouette readable at small size.
+The weapon: a Chinese pudao, a long two-handed saber: a broad single-edged curved steel blade, a gold collar where blade meets handle, and a long straight lacquered vermilion-brown wooden handle with a small gold end cap, no tassel. Exactly ONE weapon, drawn complete from end to end, straight and rigid, never bent, never duplicated.
+The move: the head-wrapping cut: the blade circling around the head and behind the shoulders, held in both hands, about to come out the other side.
+ANATOMY (most important, check it before finishing): exactly one person with two arms, two legs and two hands; every hand holding the weapon has its fingers wrapped around the handle with the knuckles and thumb visible, and any free hand has five fingers in a simple readable shape; hands never merge with the handle, never hidden behind the torso, never crossed or tangled; arms and legs keep normal human length and bend only at shoulders, elbows, wrists, hips and knees; the torso stays upright and the head turns with the shoulders, no twisted neck or spine; no extra, missing, merged or rubbery boneless limbs.
+The energy: a full ink ring circling the head along the path of the blade, painted in translucent violet ink (#9B5DE5); it never covers the hands or the face.
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
 cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
 (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
