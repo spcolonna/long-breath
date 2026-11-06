@@ -47,6 +47,24 @@ claro, color saturado y mucho aire.
 
 No falta ninguna imagen: las 162 del relevamiento están integradas (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
 
+### Ícono de la app (para TestFlight / App Store) — nuevo, no es recoloreo
+
+**Destino:** guardar el PNG donde quieras y correr `python3 tool/make_app_icon.py icon <archivo.png>`,
+que lo aplana sobre papel y genera los 19 tamaños de `ios/Runner/Assets.xcassets/AppIcon.appiconset/`.
+Cuadrado, 1024×1024, **sin transparencia y sin texto**. iOS redondea las esquinas solo: no dibujar bordes redondeados.
+
+```
+Square mobile game app icon, 1024x1024, full-bleed, no text, no letters, no rounded corners, no border.
+Warm cream rice-paper background (#F6EEDC) with a subtle paper texture.
+Centered: a bold vermilion (#E8453C) ink-brush ensō circle, slightly open at the top right,
+framing a single jade-green (#1FA38A) mountain peak with three soft layered ridges and a thin wisp of
+white cloud crossing it. From the summit rises one elegant cobalt-blue (#3E7BE0) breath swirl
+that curls upward like a long exhale and ends in a small gold (#E59A12) spark.
+Chinese ink-wash meets clean flat game art, bright and serene, nothing dark, high contrast,
+large simple shapes that stay readable at 60 pixels, generous margin around the circle.
+```
+
+
 ---
 
 # Estado
