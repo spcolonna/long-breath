@@ -107,7 +107,7 @@
     { "enemyDamage": 5, "enemyHp": 8, "enemyStructure": 5 }
   ],
   "run": {
-    "stageClear": { "heal": 100, "jade": 25 },
+    "stageClear": { "heal": 40, "jade": 25 },
     "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5, "escort": { "eliteHpPct": 80, "hpPct": 45, "damagePct": 85 } },
     "wanderingMerchant": { "every": 3, "spread": 1 },
     "awakeningChoices": 3,

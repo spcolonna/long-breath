@@ -233,11 +233,14 @@ void main() {
     r = run.chooseTalisman(r, r.talismanOptions.first);
     r = run.chooseReward(r, null);
     expect(r.phase, RunPhase.stageClear);
-    expect(run.stageHealOf(r), r.maxHp - r.hp, reason: 'cura todo');
+    // Respira hondo: recupera el 40% de lo que le falta, no todo.
+    final heal = ((r.maxHp - r.hp) * 0.4).round();
+    expect(run.stageHealOf(r), heal);
+    final before = r.hp;
     final up = run.advanceStage(r);
     expect(up.stage, 1);
     expect(up.phase, RunPhase.map);
-    expect(up.hp, up.maxHp);
+    expect(up.hp, before + heal);
     expect(up.currentNode, isNull);
     expect(up.visited, isEmpty);
     expect(run.available(up), up.starts);

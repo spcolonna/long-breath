@@ -118,7 +118,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    **Élites opcionales:** en los pisos 5 y 7 de cada etapa, 4 de cada 10 veces uno de los combates es un élite (el sello dorado 精), con los mismos élites de arriba y sin escolta. Es un desvío: el piso siempre tiene otro lugar por donde pasar. Quien lo vence se lleva su talismán (y el arma, si todavía no tiene). El élite de arriba no repite a uno ya cruzado mientras queden otros. En el mapa se distingue: su sello lleva un anillo dorado punteado que gira y la placa «Desvío»; al elegirlo vibra dos veces, como quien acepta el reto.
 
-   Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un maestro. El mercader no está en el mapa: aparece en el camino (ver 9).
+   Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un maestro. **Ningún camino esquiva las peleas:** como mucho 2 lugares seguidos sin combate y al menos 6 combates por etapa contando élite y jefe (si el azar arma un camino así, uno de sus eventos o maestros se vuelve combate). El mercader no está en el mapa: aparece en el camino (ver 9).
 
    **Grupos:** muchos combates comunes traen 2 enemigos (en la etapa 2 y 3, hasta 3). Se pelean de a uno: cuando cae uno, entra el siguiente y vos seguís con tu Vida, tu mano, tu postura y tus formas a medio hacer; no hay recompensa ni descanso en el medio. Para que el nodo no dure el doble, cada uno trae menos Vida (70% si son 2, 58% si son 3), y cada enemigo de más suma 5 de jade. En el mapa, el sello del combate lleva una plaquita con un punto por enemigo; en el combate, unos puntos bajo el nombre marcan cuál va.
 
@@ -263,7 +263,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Elegís un artículo, ves qué hace y confirmás; lo comprado queda con su sello. Lo que no gastes queda para después.
 10. **Maestro errante** (ícono violeta): gratis, pero una sola lección: aprender una de las 2 formas que te ofrece (que todavía no sepas y de tu camino) **o** mejorar una carta +3 **o** templar tu arma (solo hasta el nivel II).
-11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera toda la Vida)** y aparece la siguiente. Antes de los despertares se ve el **Botín de la etapa**: combates ganados, jade y semillas de loto, contados de a uno.
+11. **Entre etapas:** al vencer al jefe de una etapa elegís un talismán (como en el élite), la recompensa de siempre y ganás 25 de jade. Después la etapa queda sellada con 顶, el discípulo **respira hondo (recupera el 40% de la Vida que le falta)** y aparece la siguiente. Antes de los despertares se ve el **Botín de la etapa**: combates ganados, jade y semillas de loto, contados de a uno.
 12. **Fin:** ganás al vencer al **Dragón Dormido**, jefe de la tercera etapa. Si tu Vida llega a 0, la run termina y la próxima empieza de cero con el mazo inicial. El registro cuenta el piso de toda la subida (por ejemplo "Piso 14 de 27").
 
 ### Caer y volver a subir

@@ -375,11 +375,13 @@ void main() {
     await settle();
     expect(find.text('ETAPA SUPERADA'), findsOneWidget);
     expect(find.text('Monasterio Colgado'), findsOneWidget);
+    final hpStage = container.read(runControllerProvider)!.hp;
     await tester.tap(find.text('Seguir subiendo'));
     await settle();
     final up = container.read(runControllerProvider)!;
     expect(up.stage, 1);
-    expect(up.hp, up.maxHp);
+    // Entre etapas se recupera el 40% de la Vida que falta.
+    expect(up.hp, hpStage + ((up.maxHp - hpStage) * 0.4).round());
     expect(find.text('Monasterio Colgado · 悬空寺'), findsOneWidget);
 
     // Perder: el discípulo no vuelve, queda en el registro y sube otro.

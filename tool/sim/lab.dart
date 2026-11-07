@@ -528,6 +528,10 @@ GameData protoData(RawData base, int seed) {
   return d.build();
 }
 
+/// `SIM_AVOID=1`: el bot prefiere eventos y maestros a los combates (como
+/// un jugador que esquiva peleas), para medir el piso de combates del mapa.
+final avoidFights = Platform.environment['SIM_AVOID'] == '1';
+
 /// Elección de camino en el mapa: los perfiles que piensan van a la fuente
 /// si les falta Vida y esquivan la élite si están golpeados.
 String _route(RunEngine run, Bot bot, RunState r) {
@@ -542,8 +546,8 @@ String _route(RunEngine run, Bot bot, RunState r) {
     if (n.type == NodeType.merchant) {
       return r.jade >= run.merchantOf(r).card ? 1.5 : 0.5;
     }
-    if (n.type == NodeType.master) return 1.2;
-    if (n.type != NodeType.combat) return 1;
+    if (n.type == NodeType.master) return avoidFights ? 1.6 : 1.2;
+    if (n.type != NodeType.combat) return avoidFights ? 1.5 : 1;
     final rank = run.data.enemy(n.enemy!).rank;
     if (rank == EnemyRank.elite) return ratio > 0.7 ? 2 : -1;
     return 1;

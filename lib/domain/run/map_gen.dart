@@ -180,12 +180,22 @@ const _required = [NodeType.master];
     rows.add(row);
   }
 
-  final nodes = <MapNodeDef>[];
+  final links = <List<List<int>>>[];
   for (var f = 0; f < rows.length; f++) {
     final next = f + 1 < rows.length
         ? _links(rows[f].length, rows[f + 1].length, rng)
         : (List.generate(rows[f].length, (_) => <int>[]), rng);
     rng = next.$2;
+    links.add(next.$1);
+  }
+
+  // Ningún camino se salta las peleas: a lo sumo [maxRest] lugares seguidos
+  // sin combate y al menos [minFights] combates (contando élite y jefe).
+  rng = _enforceFights(rows, links, floors, scenes, lights, rng);
+
+  final nodes = <MapNodeDef>[];
+  for (var f = 0; f < rows.length; f++) {
+    final next = (links[f], rng);
     for (var i = 0; i < rows[f].length; i++) {
       nodes.add(
         MapNodeDef(
@@ -202,6 +212,127 @@ const _required = [NodeType.master];
     }
   }
   return (nodes, rng);
+}
+
+/// Lugares seguidos sin combate que un camino puede tener, como mucho.
+const maxRest = 2;
+
+/// Combates que tiene todo camino de una etapa (con élite y jefe), como mínimo.
+const minFights = 6;
+
+typedef _Row = List<(NodeType, String?, String?, String?, List<String>, bool)>;
+
+/// Todos los caminos del mapa, como el índice elegido en cada piso.
+List<List<int>> _paths(List<List<List<int>>> links, List<int> widths) {
+  final out = <List<int>>[];
+  void walk(List<int> path) {
+    final f = path.length - 1;
+    if (f == widths.length - 1) {
+      out.add(List.of(path));
+      return;
+    }
+    for (final j in links[f][path.last]) {
+      walk([...path, j]);
+    }
+  }
+
+  for (var i = 0; i < widths[0]; i++) {
+    walk([i]);
+  }
+  return out;
+}
+
+/// Los lugares de [path] que lo hacen fallar (vacío si cumple): los de una
+/// racha de más de [maxRest] sin combate o, si le faltan combates, todos los
+/// que no son combate.
+List<(int, int)> _faults(List<int> path, List<_Row> rows) {
+  bool fight(int f) => rows[f][path[f]].$1 == NodeType.combat;
+  final bad = <(int, int)>{};
+  var run = <(int, int)>[];
+  for (var f = 0; f < path.length; f++) {
+    if (fight(f)) {
+      run = [];
+    } else {
+      run.add((f, path[f]));
+      if (run.length > maxRest) bad.addAll(run);
+    }
+  }
+  final fights = [for (var f = 0; f < path.length; f++) if (fight(f)) f];
+  if (fights.length < minFights) {
+    for (var f = 0; f < path.length; f++) {
+      if (!fight(f)) bad.add((f, path[f]));
+    }
+  }
+  return bad.toList();
+}
+
+Rng _enforceFights(
+  List<_Row> rows,
+  List<List<List<int>>> links,
+  List<FloorDef> floors,
+  List<String> scenes,
+  List<String> lights,
+  Rng rng,
+) {
+  final paths = _paths(links, [for (final r in rows) r.length]);
+  for (var guard = 0; guard < 40; guard++) {
+    final score = <(int, int), int>{};
+    for (final p in paths) {
+      for (final spot in _faults(p, rows)) {
+        score[spot] = (score[spot] ?? 0) + 1;
+      }
+    }
+    if (score.isEmpty) break;
+    final masters = [
+      for (final r in rows)
+        for (final n in r)
+          if (n.$1 == NodeType.master) n,
+    ].length;
+    // Solo se cambian eventos y maestros de pisos con combates (nunca el
+    // último maestro del mapa, ni santuario o fuente).
+    final options = [
+      for (final e in score.entries)
+        if ((floors[e.key.$1].types[NodeType.combat] ?? 0) > 0 &&
+            (rows[e.key.$1][e.key.$2].$1 == NodeType.event ||
+                (rows[e.key.$1][e.key.$2].$1 == NodeType.master &&
+                    masters > 1)))
+          e,
+    ];
+    if (options.isEmpty) break;
+    int rank((int, int) spot) =>
+        score[spot]! * 2 + (rows[spot.$1][spot.$2].$1 == NodeType.event ? 1 : 0);
+    final best = options.map((e) => rank(e.key)).reduce((a, b) => a > b ? a : b);
+    final ties = [for (final e in options) if (rank(e.key) == best) e.key];
+    final (pick, r1) = rng.nextInt(ties.length);
+    rng = r1;
+    final (f, i) = ties[pick];
+    final row = rows[f];
+    final usedFoes = {for (final n in row) n.$2};
+    final usedScenes = {for (final n in row) n.$3};
+    final foes = [
+      ...floors[f].enemies.where((x) => !usedFoes.contains(x)),
+      ...floors[f].enemies,
+    ];
+    final places = [
+      ...scenes.where((x) => !usedScenes.contains(x)),
+      ...scenes,
+    ];
+    String? light;
+    if (lights.isNotEmpty) {
+      final (l, r2) = rng.nextInt(lights.length);
+      rng = r2;
+      light = lights[l];
+    }
+    row[i] = (
+      NodeType.combat,
+      foes.isEmpty ? null : foes.first,
+      floors[f].scene ?? (places.isEmpty ? null : places.first),
+      light,
+      const [],
+      false,
+    );
+  }
+  return rng;
 }
 
 /// Lugar del piso que se puede ceder a un tipo obligatorio, o -1.
