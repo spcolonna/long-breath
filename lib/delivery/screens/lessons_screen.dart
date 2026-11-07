@@ -9,6 +9,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../tutorial/lessons.dart';
 import '../widgets/juice.dart';
+import '../widgets/scroll_panel.dart';
 import '../feel.dart';
 
 /// Lista de lecciones: en orden, cada una se habilita al completar la
@@ -43,8 +44,10 @@ class LessonsScreen extends ConsumerWidget {
         ),
         title: Text(t.lessonsTitle),
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+      body: ScrollPanel(
+        margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        child: ListView(
+        padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
         children: [
           Text(
             allDone ? t.lessonAllDone : t.lessonsIntro,
@@ -72,6 +75,7 @@ class LessonsScreen extends ConsumerWidget {
               delayMs: 60 * i,
             ),
         ],
+      ),
       ),
     );
   }

@@ -11,6 +11,7 @@ import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/paper_panel.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
@@ -107,8 +108,11 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                 ],
               ),
               Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.only(top: 12, bottom: 16),
+                child: ScrollPanel(
+                  opacity: 0.84,
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: ListView(
+                  padding: const EdgeInsets.fromLTRB(12, 12, 12, 16),
                   children: [
                     NpcPortrait(
                       asset: 'assets/art/npc/master.webp',
@@ -330,6 +334,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                         ),
                     ],
                   ],
+                ),
                 ),
               ),
               // Al terminar, el cartel ocupa el lugar del botón.

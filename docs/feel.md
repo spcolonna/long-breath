@@ -26,6 +26,8 @@ Todo lo que se agrega al juego tiene que salir pulido desde el primer commit. Es
 8. **Sin arte nuevo, si se puede.** Nubes, niebla, partículas y sellos se pintan por código (`cloud_drift.dart`, `juice.dart`, `InkSeal`).
 9. **Probar en el simulador** con el movimiento completo y reducido, antes del commit.
 10. **Texto sobre ilustraciones:** nunca suelto. Va sobre `PaperPanel` (papel con borde dorado) o, si es una línea corta, con `Palette.halo`. Nada de `textDim` directo sobre arte.
+12. **Botones:** nunca transparentes. El tema ya les da cuerpo: `OutlinedButton` es papel con borde dorado y sombra, y `TextButton` es una píldora de papel. No les saques el fondo con `styleFrom`.
+13. **Listas que se deslizan:** siempre dentro de `ScrollPanel`, que las enmarca en papel y funde los bordes mientras queda contenido. Usá `framed: false` donde el desplazamiento es solo un respaldo para teléfonos chicos. La barra dorada y el rebote salen solos de `GameScrollBehavior` (en `theme.dart`). Antes de agregar un scroll, probá si con pestañas o compactando entra en una pantalla.
 11. **Sonido:** todo lo que se toca suena. `Press` y los botones de Material ya suenan solos (`Haptics.tap`, efecto `tap`). Los momentos nuevos usan un `Sfx` propio, generado en `tool/make_audio.py`.
 
 ## Piezas
@@ -44,4 +46,5 @@ Todo lo que se agrega al juego tiene que salir pulido desde el primer commit. Es
 | `Cinematic`, `StageIntro`, `FoeIntro` | `widgets/cinematic.dart` | Presentaciones |
 | `InkSeal`, `NpcPortrait`, `FormScroll` | `widgets/` | Sello, retrato que respira, pergamino de forma |
 | `Haptics`, `calm`, `loopUnlessCalm`, `feelProvider` | `delivery/feel.dart` | Vibración y movimiento según Opciones |
+| `PaperPanel`, `ScrollPanel` | `widgets/paper_panel.dart`, `widgets/scroll_panel.dart` | Papel bajo el texto; marco y fundido para las listas |
 | `OptionsButton` | `widgets/options_sheet.dart` | Sonido, música, vibración y movimiento |

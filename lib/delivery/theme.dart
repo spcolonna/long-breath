@@ -74,16 +74,61 @@ ThemeData buildTheme() {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ).copyWith(foregroundBuilder: pressedContent),
     ),
-    outlinedButtonTheme: const OutlinedButtonThemeData(
-      style: ButtonStyle(foregroundBuilder: pressedContent),
+    // Botones secundarios con cuerpo de papel: sobre una ilustración nunca
+    // quedan transparentes (docs/feel.md).
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        backgroundColor: Palette.surface.withValues(alpha: 0.95),
+        foregroundColor: Palette.text,
+        side: BorderSide(color: Palette.gold.withValues(alpha: 0.6), width: 1.3),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 2,
+        shadowColor: Palette.text.withValues(alpha: 0.25),
+        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+      ).copyWith(foregroundBuilder: pressedContent),
     ),
-    textButtonTheme: const TextButtonThemeData(
-      style: ButtonStyle(foregroundBuilder: pressedContent),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        backgroundColor: Palette.surface.withValues(alpha: 0.88),
+        shape: const StadiumBorder(),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        textStyle: const TextStyle(fontWeight: FontWeight.w600),
+      ).copyWith(foregroundBuilder: pressedContent),
     ),
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(foregroundBuilder: pressedContent),
     ),
   );
+}
+
+/// Desplazamiento de la casa: barra fina dorada que aparece al mover (solo
+/// en vertical) y rebote al llegar al borde en todas las plataformas.
+class GameScrollBehavior extends MaterialScrollBehavior {
+  const GameScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) =>
+      const BouncingScrollPhysics();
+
+  @override
+  Widget buildScrollbar(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
+    if (axisDirectionToAxis(details.direction) != Axis.vertical) return child;
+    return RawScrollbar(
+      controller: details.controller,
+      thumbColor: Palette.gold.withValues(alpha: 0.7),
+      thickness: 3,
+      radius: const Radius.circular(3),
+      mainAxisMargin: 6,
+      crossAxisMargin: 2,
+      fadeDuration: const Duration(milliseconds: 250),
+      timeToFade: const Duration(milliseconds: 700),
+      child: child,
+    );
+  }
 }
 
 /// Envuelve toda la app con el degradado de fondo (y barra de estado oscura).

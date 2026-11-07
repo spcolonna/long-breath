@@ -14,6 +14,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/confirm_dialog.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/lotus.dart';
@@ -126,7 +127,9 @@ class SlotsScreen extends ConsumerWidget {
       body: SafeArea(
         child: slots == null
             ? const SizedBox.shrink()
-            : ListView(
+            : ScrollPanel(
+                framed: false,
+                child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
                 children: [
                   Text(
@@ -166,6 +169,7 @@ class SlotsScreen extends ConsumerWidget {
                     const SizedBox(height: 14),
                   ],
                 ],
+              ),
               ),
       ),
     );

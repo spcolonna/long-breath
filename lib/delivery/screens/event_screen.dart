@@ -12,6 +12,8 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
@@ -155,7 +157,9 @@ class _EventScreenState extends ConsumerState<EventScreen> {
               // chicas se desliza y las opciones siguen a mano.
               Expanded(
                 child: LayoutBuilder(
-                  builder: (context, box) => SingleChildScrollView(
+                  builder: (context, box) => ScrollPanel(
+                    framed: false,
+                    child: SingleChildScrollView(
                     child: ConstrainedBox(
                       constraints: BoxConstraints(minHeight: box.maxHeight),
                       child: Column(
@@ -192,12 +196,10 @@ class _EventScreenState extends ConsumerState<EventScreen> {
               ),
               const SizedBox(height: 14),
               // Una nube de papel: el paisaje se ve y el texto se lee.
-              Container(
+              PaperPanel(
                 padding: const EdgeInsets.fromLTRB(18, 14, 18, 16),
-                decoration: BoxDecoration(
-                  color: Palette.surface.withValues(alpha: 0.82),
-                  borderRadius: BorderRadius.circular(20),
-                ),
+                radius: 20,
+                opacity: 0.9,
                 child: Column(
                   children: [
                     if (path != null || back) ...[
@@ -239,6 +241,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                         ],
                       ),
                     ),
+                  ),
                   ),
                 ),
               ),

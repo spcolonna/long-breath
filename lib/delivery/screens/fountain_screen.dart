@@ -7,6 +7,7 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/juice.dart';
@@ -126,8 +127,19 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                     ],
                   ),
                 ),
-                Text(t.fountain, style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 8),
+                PaperPanel(
+                  padding: const EdgeInsets.fromLTRB(24, 10, 24, 12),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                Text(
+                  t.fountain,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 6),
                 Stack(
                   alignment: Alignment.center,
                   clipBehavior: Clip.none,
@@ -142,8 +154,9 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                       builder: (_, v, _) => Text(
                         '${t.life}: ${v.round()}/${run.maxHp}',
                         style: TextStyle(
+                          fontSize: 15,
                           color: _healedFrom == null
-                              ? Palette.textDim
+                              ? Palette.text
                               : Palette.jade,
                           fontWeight: _healedFrom == null
                               ? null
@@ -161,6 +174,9 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                         ),
                       ),
                   ],
+                ),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 option(

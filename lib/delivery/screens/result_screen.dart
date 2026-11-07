@@ -23,6 +23,7 @@ import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/paper_panel.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/lotus.dart';
 import '../widgets/more_below.dart';
@@ -191,12 +192,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                 Expanded(
                   // Hitos y pergaminos pueden no entrar: el borde se funde y
                   // avisa que hay más abajo.
-                  child: MoreBelowHint(
+                  child: ScrollPanel(
+                    opacity: 0.8,
+                    margin: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                    child: MoreBelowHint(
                     controller: _scroll,
                     label: t.merchantMore,
                     child: SingleChildScrollView(
                     controller: _scroll,
-                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 48),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 48),
                     child: Column(
                       children: [
                         SizedBox(
@@ -430,6 +434,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         ),
                       ],
                     ),
+                  ),
                   ),
                   ),
                 ),

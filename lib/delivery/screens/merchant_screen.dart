@@ -22,6 +22,8 @@ import '../widgets/press.dart';
 import '../feel.dart';
 import '../widgets/node_kit.dart';
 import '../widgets/more_below.dart';
+import '../widgets/paper_panel.dart';
+import '../widgets/scroll_panel.dart';
 
 /// Lo que se tiene elegido en la tienda.
 sealed class _Item {
@@ -263,13 +265,15 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
               ),
               Expanded(
                 // Fundido abajo y aviso: hay más mercadería bajando.
-                child: MoreBelowHint(
+                child: ScrollPanel(
+                  opacity: 0.84,
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: MoreBelowHint(
                   controller: _scroll,
                   label: t.merchantMore,
-                  fade: Palette.bg,
                   child: ListView(
                   controller: _scroll,
-                  padding: const EdgeInsets.only(top: 12, bottom: 16),
+                  padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
                   children: [
                     NpcPortrait(
                       asset: 'assets/art/npc/merchant.webp',
@@ -302,8 +306,11 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                         ),
                       ),
                     _Section(t.merchantCards),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 8,
                       children: [
                         for (final (i, id) in _cards!.indexed)
                           StaggerIn(
@@ -325,6 +332,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                             ),
                           ),
                       ],
+                    ),
                     ),
                     if (_talisman != null) ...[
                       _Section(t.merchantTalisman),
@@ -448,10 +456,14 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                   ],
                 ),
                 ),
+                ),
               ),
-              SizedBox(
-                height: 56,
-                child: AnimatedSwitcher(
+              PaperPanel(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: Center(child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child: Text(
                     detail,
@@ -463,6 +475,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                       color: sel == null ? Palette.textDim : Palette.text,
                     ),
                   ),
+                )),
                 ),
               ),
               const SizedBox(height: 8),

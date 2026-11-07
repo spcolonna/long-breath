@@ -10,6 +10,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../widgets/paper_panel.dart';
 import '../widgets/scene_backdrop.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/hito_tile.dart';
@@ -65,7 +66,7 @@ class RegistryScreen extends ConsumerWidget {
           assets: stageArt('qianyunshan', 'school_wall.webp'),
           veil: 0.45,
           child: TabBarView(
-          children: [
+          children: <Widget>[
             ascents.isEmpty
                 ? Center(
                     child: PaperPanel(
@@ -150,7 +151,16 @@ class RegistryScreen extends ConsumerWidget {
                 ],
               ],
             ),
-          ],
+          ]
+              .map(
+                (w) => w is Center
+                    ? w
+                    : ScrollPanel(
+                        margin: const EdgeInsets.fromLTRB(10, 8, 10, 12),
+                        child: w,
+                      ),
+              )
+              .toList(),
         ),
       ),
       ),

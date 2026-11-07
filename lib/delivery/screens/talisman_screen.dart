@@ -7,6 +7,7 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/juice.dart';
 import '../widgets/node_kit.dart';
 import '../widgets/talisman_widgets.dart';
@@ -110,12 +111,19 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
       children: [
         ?widget.top,
         const SizedBox(height: 24),
-        Text(widget.title, style: const TextStyle(fontSize: 26)),
-        const SizedBox(height: 6),
-        Text(
-          widget.hint,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: Palette.textDim),
+        PaperPanel(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(widget.title, style: const TextStyle(fontSize: 26)),
+              const SizedBox(height: 6),
+              Text(
+                widget.hint,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 15, height: 1.35),
+              ),
+            ],
+          ),
         ),
         const Spacer(),
         for (final (i, id) in widget.options.indexed)
@@ -171,6 +179,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: Palette.lacquer,
+                      shadows: Palette.halo,
                     ),
                   ),
                 )

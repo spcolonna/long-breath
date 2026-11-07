@@ -137,6 +137,7 @@ class LongBreathApp extends ConsumerWidget {
         title: 'Long Breath',
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
+        scrollBehavior: const GameScrollBehavior(),
         routerConfig: _router,
         builder: (context, child) =>
             MotionScope(child: backdrop(context, child)),

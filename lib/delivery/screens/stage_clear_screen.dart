@@ -10,6 +10,8 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
@@ -160,10 +162,20 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                 color: styleColor(run.style),
                                 onPick: _pick,
                               )
-                            : Column(
+                            // En teléfonos chicos el papel puede no entrar:
+                            // se desliza en vez de desbordar.
+                            : LayoutBuilder(
                                 key: const ValueKey('clear'),
+                                builder: (context, box) => ScrollPanel(
+                                framed: false,
+                                child: SingleChildScrollView(
+                                child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: box.maxHeight,
+                                ),
+                                child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Spacer(),
                                   // La etapa vencida, sellada.
                                   Opacity(
                                     opacity: 1 - 0.45 * rise,
@@ -283,7 +295,8 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                   ),
                                   Opacity(
                                     opacity: reveal,
-                                    child: Column(
+                                    child: PaperPanel(
+                                      child: Column(
                                       children: [
                                         Text(
                                           text.stage(next.id),
@@ -310,6 +323,7 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                           ),
                                         ),
                                       ],
+                                    ),
                                     ),
                                   ),
                                   const SizedBox(height: 20),
@@ -371,8 +385,11 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                     jade: run.stageJade,
                                     lotus: run.stageLotus,
                                   ),
-                                  const Spacer(),
                                 ],
+                              ),
+                              ),
+                              ),
+                              ),
                               ),
                       ),
                     ),
@@ -436,7 +453,9 @@ class _AwakeningPanel extends ConsumerWidget {
     final text = ref.watch(textProvider);
     final balance = ref.watch(dataProvider).balance;
     return LayoutBuilder(
-      builder: (context, box) => SingleChildScrollView(
+      builder: (context, box) => ScrollPanel(
+        framed: false,
+        child: SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: box.maxHeight),
           child: Column(
@@ -447,19 +466,25 @@ class _AwakeningPanel extends ConsumerWidget {
                 '觉醒',
                 style: TextStyle(fontSize: 44, color: color, height: 1.1),
               ),
-              Text(
-                t.awakeningTitle,
-                style: const TextStyle(
-                  color: Palette.text,
-                  letterSpacing: 2,
-                  shadows: Palette.halo,
+              PaperPanel(
+                child: Column(
+                  children: [
+                    Text(
+                      t.awakeningTitle,
+                      style: const TextStyle(
+                        color: Palette.text,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      t.awakeningHint,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 15, height: 1.4),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                t.awakeningHint,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 15, height: 1.4),
               ),
               const SizedBox(height: 18),
               for (final (i, id) in options.indexed)
@@ -482,6 +507,7 @@ class _AwakeningPanel extends ConsumerWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

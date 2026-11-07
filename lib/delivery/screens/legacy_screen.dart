@@ -8,6 +8,7 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
@@ -85,6 +86,10 @@ class _LegacyScreenState extends ConsumerState<LegacyScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
+                PaperPanel(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
                 StaggerIn(
                   index: 1,
                   step: const Duration(milliseconds: 90),
@@ -100,7 +105,10 @@ class _LegacyScreenState extends ConsumerState<LegacyScreen> {
                   child: Text(
                     t.legacyHint(legacy.n),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Palette.textDim),
+                    style: const TextStyle(fontSize: 15, height: 1.35),
+                  ),
+                ),
+                    ],
                   ),
                 ),
                 const Spacer(),
@@ -161,6 +169,7 @@ class _LegacyScreenState extends ConsumerState<LegacyScreen> {
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                               color: Palette.blossom,
+                              shadows: Palette.halo,
                             ),
                           ),
                         )

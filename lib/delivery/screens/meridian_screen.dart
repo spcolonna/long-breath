@@ -14,6 +14,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/juice.dart';
+import '../widgets/scroll_panel.dart';
 import '../widgets/lotus.dart';
 import '../feel.dart';
 
@@ -93,8 +94,10 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
           ? const SizedBox()
           : SafeArea(
               top: false,
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+              child: ScrollPanel(
+                margin: const EdgeInsets.fromLTRB(10, 0, 10, 12),
+                child: ListView(
+                padding: const EdgeInsets.fromLTRB(14, 14, 14, 20),
                 children: [
                   Text(
                     t.meridiansHint,
@@ -114,6 +117,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
                   const SizedBox(height: 18),
                   _RealmGifts(cultivation: c),
                 ],
+              ),
               ),
             ),
     );

@@ -122,14 +122,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           style: TextStyle(
                             fontSize: 22,
                             letterSpacing: 6,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w500,
+                            shadows: Palette.halo,
                           ),
                         ),
                         Text(
                           '  长息',
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Palette.textDim,
+                            fontSize: 14,
+                            color: Palette.text,
+                            shadows: Palette.halo,
                           ),
                         ),
                       ],
@@ -157,7 +159,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     style: const TextStyle(
                       fontSize: 15,
                       fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w600,
                       color: Palette.text,
+                      shadows: Palette.halo,
                     ),
                   ),
                 ),
