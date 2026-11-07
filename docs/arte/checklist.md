@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 165 · ✅ 160 · 🎨 2 · ❌ 3
+Total: 165 · ✅ 163 · 🎨 2 · ❌ 0
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -81,9 +81,9 @@ Total: 165 · ✅ 160 · 🎨 2 · ❌ 3
 | ✅ propio | `assets/art/icons/deflect.webp` | ícono de deflect | ícono de Material | — |
 | ✅ propio | `assets/art/icons/stagger.webp` | ícono de stagger | ícono de Material | — |
 | ✅ propio | `assets/art/icons/fountain.webp` | ícono de fountain | ícono de Material | — |
-| ❌ falta | `assets/art/icons/heart.webp` | ícono de heart | ícono de Material | no |
-| ❌ falta | `assets/art/icons/charge.webp` | ícono de charge | ícono de Material | no |
-| ❌ falta | `assets/art/icons/stolen.webp` | ícono de stolen | ícono de Material | no |
+| ✅ propio | `assets/art/icons/heart.webp` | ícono de heart | ícono de Material | — |
+| ✅ propio | `assets/art/icons/charge.webp` | ícono de charge | ícono de Material | — |
+| ✅ propio | `assets/art/icons/stolen.webp` | ícono de stolen | ícono de Material | — |
 | ✅ propio | `assets/art/cards/frame_fist.webp` | marco de carta fist | papel teñido sin marco | — |
 | ✅ propio | `assets/art/cards/frame_palm.webp` | marco de carta palm | papel teñido sin marco | — |
 | ✅ propio | `assets/art/cards/frame_kick.webp` | marco de carta kick | papel teñido sin marco | — |

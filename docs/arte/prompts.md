@@ -22,10 +22,10 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (3):** los íconos de Vida, carga y jade robado (`icons/heart`, `icons/charge`, `icons/stolen`); mientras tanto se ve el ícono de Material.
+- **Falta:** nada.
 - **Recoloreos por diseño (2):** el Reflejo del Dragón (`dragon_reflection`) y el León de Celadón (`lion_celadon`), élites de la etapa 2, usan al dragón y al león teñidos. Se ven bien en el juego; arte propio sería un extra, no algo que falte.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
-  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
+  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 9 íconos, 5 marcos de carta y
   las 3 armas y 64 ilustraciones de cartas (Tigre, Serpiente, Grulla, las 6 de cadena y las 12 de arma). El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
@@ -45,11 +45,11 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Faltan 3 íconos chicos de combate (Vida, carga y jade robado); el resto de las 165 está integrado (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
+Nada: las 165 imágenes están integradas (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
 
-### Ícono: Vida (`icons/heart`)
+### Ícono: Vida (`icons/heart`) ✅ integrado
 
-**Destino:** `assets/art/icons/heart.png`, cuadrado 256×256, fondo transparente. Se usa para: corazón de la Vida (barras, curas, fuente, eventos). Hoy se ve el ícono de Material. **No es recoloreo.**
+**Destino:** `assets/art/icons/heart.png`, cuadrado 256×256, fondo transparente. Se usa para: corazón de la Vida (barras, curas, fuente, eventos). **No es recoloreo.**
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -65,9 +65,9 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Ícono: Carga (`icons/charge`)
+### Ícono: Carga (`icons/charge`) ✅ integrado
 
-**Destino:** `assets/art/icons/charge.png`, cuadrado 256×256, fondo transparente. Se usa para: el rival carga o acumula fuerza. Hoy se ve el ícono de Material. **No es recoloreo.**
+**Destino:** `assets/art/icons/charge.png`, cuadrado 256×256, fondo transparente. Se usa para: el rival carga o acumula fuerza. **No es recoloreo.**
 
 ```
 Create ONE single image. Start immediately, without asking questions.
@@ -83,9 +83,9 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Ícono: Jade robado (`icons/stolen`)
+### Ícono: Jade robado (`icons/stolen`) ✅ integrado
 
-**Destino:** `assets/art/icons/stolen.png`, cuadrado 256×256, fondo transparente. Se usa para: el mono te roba jade. Hoy se ve el ícono de Material. **No es recoloreo.**
+**Destino:** `assets/art/icons/stolen.png`, cuadrado 256×256, fondo transparente. Se usa para: el mono te roba jade. **No es recoloreo.**
 
 ```
 Create ONE single image. Start immediately, without asking questions.
