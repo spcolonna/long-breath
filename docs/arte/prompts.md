@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta (0):** no falta ninguna imagen.
+- **Falta (3):** los íconos de Vida, carga y jade robado (`icons/heart`, `icons/charge`, `icons/stolen`); mientras tanto se ve el ícono de Material.
 - **Recoloreos por diseño (2):** el Reflejo del Dragón (`dragon_reflection`) y el León de Celadón (`lion_celadon`), élites de la etapa 2, usan al dragón y al león teñidos. Se ven bien en el juego; arte propio sería un extra, no algo que falte.
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 6 íconos, 5 marcos de carta y
@@ -45,7 +45,61 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-No falta ninguna imagen: las 162 del relevamiento están integradas (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
+Faltan 3 íconos chicos de combate (Vida, carga y jade robado); el resto de las 165 está integrado (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
+
+### Ícono: Vida (`icons/heart`)
+
+**Destino:** `assets/art/icons/heart.png`, cuadrado 256×256, fondo transparente. Se usa para: corazón de la Vida (barras, curas, fuente, eventos). Hoy se ve el ícono de Material. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a plump vermilion (#E8453C) heart with a small jade (#1FA38A) leaf and a soft white highlight, drawn like a lucky charm with a tiny gold knot at the top.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Ícono: Carga (`icons/charge`)
+
+**Destino:** `assets/art/icons/charge.png`, cuadrado 256×256, fondo transparente. Se usa para: el rival carga o acumula fuerza. Hoy se ve el ícono de Material. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a bold gold (#E59A12) lightning bolt wrapped by a short vermilion (#E8453C) ribbon of energy, slightly tilted, with two small spark dots.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
+### Ícono: Jade robado (`icons/stolen`)
+
+**Destino:** `assets/art/icons/stolen.png`, cuadrado 256×256, fondo transparente. Se usa para: el mono te roba jade. Hoy se ve el ícono de Material. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a round jade (#1FA38A) coin with a square hole, tied to a small cobalt (#3E7BE0) cloth pouch, a little gold sparkle on the coin edge.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
 
 ### Ícono de la app (para TestFlight / App Store) ✅ integrado (fuente: `docs/arte/app_icon.webp`)
 

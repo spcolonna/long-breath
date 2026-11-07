@@ -1,6 +1,6 @@
 # NOTAS — estado del trabajo (para seguir desde un chat nuevo)
 
-Última actualización: 06/11/2026 · último commit: `67f200e` (rama `main`, pusheado).
+Última actualización: 06/11/2026 · rama `main`, pusheado.
 
 ## Qué es
 Long Breath: roguelike de cartas de kung fu en Flutter (iOS), en español. Subís una montaña de 3 etapas (11 pisos cada una) peleando con cartas de postura.
@@ -69,7 +69,8 @@ grep -E "CAMINO|gana el combate|pierde|compra|evento:|respira|COMBATE" actual.lo
 
 ```bash
 flutter analyze
-flutter test                          # 285 tests, todos pasan
+flutter test                          # 290 tests, todos pasan
+python3 tool/make_audio.py            # regenera todo el sonido (o: make_audio.py <id>)
 dart run tool/simulate.dart --runs 300 --profile promedio --difficulty normal   # ~45 s
 dart run tool/simulate.dart --runs 300 --profile experto --difficulty normal
 flutter gen-l10n                      # tras editar lib/l10n/app_es.arb
@@ -106,6 +107,29 @@ macOS no tiene `timeout`.
 - **Arte (06/11):** integradas las 6 cartas de cadena de postura (`ma_zhuan_gong`, `gong_zhuan_xu`, `xu_zhuan_ma`, `hu_hui_shen`, `she_zhuan_shen`, `he_luo_di`) y el arte propio de `monk_amber` (Monje del Incienso) y `monk_slate` (Ermitaño de Pizarra), que salieron de `VARIANTS` en `tool/recolor_enemies.py`. 
 - **Arte completo (06/11):** integradas las 17 que faltaban (5 de la Grulla y 12 de arma). `art_status.py`: 160 ✅ · 2 🎨 · 0 ❌. `jian_chuanxin` llegó apaisado (1536×1024) y se recortó al contenido y se dejó cuadrado. Los 2 recoloreos (dragon_reflection, lion_celadon) son por diseño.
 
+## Hecho (06/11, antes de la build +3)
+- **Sonido:** no había ni un archivo, todo era silencio. `tool/make_audio.py` sintetiza:
+  - 109 efectos, con una voz por cada uno de los 49 enemigos;
+  - 5 loops de unos 70–80 s y 3 jingles en OGG, unos 11 MB en total.
+  - `Sfx` nuevos: `tap`, que suena en cada botón vía `Haptics.tap`, más `scroll_open`, `realm_up`, `achievement`, `heal`, `talisman_trigger` y `weapon_trigger`.
+  - `test/audio_assets_test.dart` comprueba que no falte ningún archivo.
+- **Trampa de compilación:** después de `flutter build ipa`, el simulador puede quedarse con el `objective_c.framework` de iPhone. Entonces `path_provider` no carga, el audio cae en silencio y el log muestra `audio: Invalid argument… objective_c`. Se arregla con `flutter clean` antes de compilar para el simulador. Si funciona, el log dice `audio: 109 efectos y 8 pistas`.
+- **Legibilidad:**
+  - `PaperPanel` y `Palette.halo` en santuario, resultado, maestro, recompensa, registro y etapa superada.
+  - El beneficio de cada animal se lee entero.
+- **Rival en pergamino:** `ScrollFrame` (extraído de `LoreScroll`) y `widgets/enemy_scroll.dart`. Se abre al tocar la placa, el globo o las escamas.
+- **Enemigos chicos:**
+  - El globo de intención va al frente y es compacto: con un enemigo muestra chips cortos; con dos, «+N».
+  - El sprite tiene un mínimo de 112 px con dos enemigos y 150 px con uno, y crece hacia arriba (`OverflowBox`).
+  - En el caso de la Dama del Viento con el Murciélago de Escarcha pasó de 58 a 112 px. Lo cubre `test/enemy_size_test.dart`.
+- **Mapa y balance:** ver `docs/balance.md` §3j.
+  - Máximo 2 lugares seguidos sin combate y mínimo 6 combates por camino.
+  - Entre etapas se cura el 40% de lo que falta.
+  - Normal: promedio 24% → 16%, experto 56% → 51%.
+- **Íconos:**
+  - Faltan 3 de combate (`heart`, `charge`, `stolen`). Ya están mapeados en `GameIcon`, que muestra Material mientras tanto, y sus prompts están en `docs/arte/prompts.md` → «Para generar ahora».
+  - Los talismanes y el arma siguen como sellos de hanzi, por diseño.
+
 ## Análisis de balance (06/11, Normal, Partida 1)
 
 **Registros del usuario:**
@@ -132,9 +156,9 @@ macOS no tiene `timeout`.
 - **Etapa 3 con mecánica (06/11):** nuevo `"wear": true` en intents (cada golpe gasta la Guardia; ver `docs/balance.md` §3i). Murciélago y guqin desgastan, simio y buey pegan de entrada, la espada cambia de altura. Se devolvió parte del daño crudo. Promedio **24%**, experto **56%**; Vida perdida con esos comunes 4–5 → 6–7,6. Subir estructura no alarga peleas (descartado).
 
 ## Pendiente
-1. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
+1. Probar la build +3: que suene todo (música por pantalla, toques, golpes) y si la etapa 3 sigue fácil. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
 2. Probar en el juego la etapa 3 nueva (desgaste, embestida del buey, espada que cambia de altura) y ver si la línea «Cada golpe gasta tu Guardia» se entiende. Las peleas siguen cortas (~2,5 turnos).
-3. **TestFlight:** pantalla de carga hecha (`71a2648`, logo sobre papel). Hecho también: solo iPhone y solo vertical, `ITSAppUsesNonExemptEncryption=false` y `ios/Runner/PrivacyInfo.xcprivacy` (UserDefaults, CA92.1; no recopila datos). Ficha, textos de TestFlight y paso a paso en `docs/testflight.md`; política de privacidad en `docs/privacidad.md` (URL de GitHub, repo público). Bundle `com.oraki.longBreath` (iOS y Android). IPA `0.1.0+1` (06/11) con ícono de Flutter e iOS 13. **IPA `0.1.0+2` (06/11): ícono propio (fuente en `docs/arte/app_icon.webp`, integrado con `python3 tool/make_app_icon.py icon <png>`) y target mínimo iOS 15.0** (aviso 90068). El próximo tiene que ser `+3`. El usuario crea la app en App Store Connect.
+3. **TestFlight:** pantalla de carga hecha (`71a2648`, logo sobre papel). Hecho también: solo iPhone y solo vertical, `ITSAppUsesNonExemptEncryption=false` y `ios/Runner/PrivacyInfo.xcprivacy` (UserDefaults, CA92.1; no recopila datos). Ficha, textos de TestFlight y paso a paso en `docs/testflight.md`; política de privacidad en `docs/privacidad.md` (URL de GitHub, repo público). Bundle `com.oraki.longBreath` (iOS y Android). IPA `0.1.0+1` (06/11) con ícono de Flutter e iOS 13. IPA `0.1.0+2` (06/11): ícono propio (fuente en `docs/arte/app_icon.webp`, integrado con `python3 tool/make_app_icon.py icon <png>`) y target mínimo iOS 15.0** (aviso 90068). **IPA `0.1.0+3` (06/11): con sonido, legibilidad, pergamino del rival y el balance de §3j; 64 MB. El próximo tiene que ser `+4`.** El usuario crea la app en App Store Connect.
 4. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas

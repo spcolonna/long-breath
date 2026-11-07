@@ -25,6 +25,8 @@ Todo lo que se agrega al juego tiene que salir pulido desde el primer commit. Es
    - El arte en `.webp`, al tamaño en que se muestra (`cacheWidth`).
 8. **Sin arte nuevo, si se puede.** Nubes, niebla, partículas y sellos se pintan por código (`cloud_drift.dart`, `juice.dart`, `InkSeal`).
 9. **Probar en el simulador** con el movimiento completo y reducido, antes del commit.
+10. **Texto sobre ilustraciones:** nunca suelto. Va sobre `PaperPanel` (papel con borde dorado) o, si es una línea corta, con `Palette.halo`. Nada de `textDim` directo sobre arte.
+11. **Sonido:** todo lo que se toca suena. `Press` y los botones de Material ya suenan solos (`Haptics.tap`, efecto `tap`). Los momentos nuevos usan un `Sfx` propio, generado en `tool/make_audio.py`.
 
 ## Piezas
 

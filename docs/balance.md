@@ -739,3 +739,25 @@ Probado y descartado: subir la estructura (+3) no alargó las peleas (siguen en 
 | Experto: Vida perdida con esos comunes | 1,2–3,9 | 2,2–7,6 |
 
 **Conclusión:** la etapa 3 ahora exige leer la altura y juntar Guardia de verdad, con la tasa de victoria casi igual (se devolvió el daño crudo de §3h). Las peleas siguen cortas: su duración depende del daño del jugador, no de la Vida ni de la estructura del enemigo.
+
+## 3j. Caminos sin esquivar peleas y menos cura entre etapas (06/11/2026)
+
+**Por qué:** en su primera subida (Normal), el usuario hizo evento, evento, maestro, maestro, evento, maestro, evento y élite en la etapa 3, y llegó al dragón con 62/62 y lo venció. El mapa no ponía mínimo de combates por camino, y entre etapas se curaba el 100% de la Vida.
+
+**Cambios:**
+- `map_gen.dart`: ningún camino tiene más de `maxRest` = 2 lugares seguidos sin combate, ni menos de `minFights` = 6 combates por etapa (contando élite y jefe). Si el azar lo arma, se convierte en combate el evento o maestro que más caminos arregla. El último maestro del mapa no se toca. Hay test sobre 500 semillas por etapa (`test/map_fights_test.dart`).
+- `stageClear.heal`: 100 → **40** (% de la Vida que falta).
+- `SIM_AVOID=1 dart run tool/simulate.dart …`: el bot prefiere eventos y maestros, como quien esquiva peleas.
+
+**Resultados** (Normal, 1000 runs):
+
+| | Antes (§3i) | Solo el mapa | Mapa + cura 50% | Mapa + cura 40% |
+|---|---|---|---|---|
+| Promedio: gana | 24% | 18% | 14% | **16%** |
+| Experto: gana | 56% | 54% | 54% | **51%** |
+| Promedio que esquiva peleas: gana (300 runs, cura 40%) | — | — | — | 22% |
+
+**Conclusión:**
+- El mapa pesa más que la cura: la mayoría de los bots que mueren lo hacen antes de la etapa 2.
+- La cura del 40% castiga sobre todo a quien llega golpeado al jefe de etapa.
+- El promedio quedó por debajo del objetivo (~22–26%). Se dejó así a propósito, porque el usuario la sintió demasiado fácil. Si los registros nuevos muestran muertes tempranas en masa, subir la cura a 50–60%.
