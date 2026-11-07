@@ -110,7 +110,8 @@ def main():
     add("ui", "stages/qianyunshan/map_node_stone.webp",
         "textura de los sellos del mapa (opcional)", "disco con degradado")
     add("ui", "ui/logo.webp", "logo 龙 del menú", "carácter 龙 en texto")
-    for f in ("breath", "guard", "structure", "deflect", "stagger", "fountain"):
+    for f in ("breath", "guard", "structure", "deflect", "stagger", "fountain",
+              "heart", "charge", "stolen"):
         add("ui", f"icons/{f}.webp", f"ícono de {f}", "ícono de Material")
     for f in ("fist", "palm", "kick", "defense", "technique"):
         add("ui", f"cards/frame_{f}.webp", f"marco de carta {f}",

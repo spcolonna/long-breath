@@ -14,6 +14,7 @@ import '../theme.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/press.dart';
 import '../feel.dart';
 
@@ -53,12 +54,22 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
             child: Column(
               children: [
-                Text(t.shrineTitle, style: const TextStyle(fontSize: 24)),
-                const SizedBox(height: 6),
-                Text(
-                  t.shrineHint,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Palette.textDim),
+                PaperPanel(
+                  child: Column(
+                    children: [
+                      Text(t.shrineTitle, style: const TextStyle(fontSize: 24)),
+                      const SizedBox(height: 4),
+                      Text(
+                        t.shrineHint,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 14.5,
+                          height: 1.3,
+                          color: Palette.text,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: LayoutBuilder(
@@ -135,8 +146,9 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  height: 54,
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 260),
+                  curve: Curves.easeOutCubic,
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
                     transitionBuilder: (child, anim) => FadeTransition(
@@ -149,17 +161,57 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                         child: child,
                       ),
                     ),
-                    child: Text(
-                      picked == null
-                          ? t.styleBenefitPick
-                          : '${t.styleBenefit(picked)}\n'
-                                '${t.styleSummary(stats.draw, stats.breath, stats.retain)}',
+                    child: SizedBox(
                       key: ValueKey(picked),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
-                        height: 1.3,
-                        color: picked == null ? Palette.textDim : Palette.text,
+                      width: double.infinity,
+                      child: PaperPanel(
+                        accent: picked == null ? null : styleColor(picked),
+                        child: picked == null
+                            ? Text(
+                                t.styleBenefitPick,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  height: 1.35,
+                                  color: Palette.text,
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Text(
+                                    '${stats.hanzi}  ${text.style(picked)}',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w700,
+                                      color: styleColor(picked),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    t.styleBenefit(picked),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 15.5,
+                                      height: 1.35,
+                                      color: Palette.text,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    t.styleSummary(
+                                      stats.draw,
+                                      stats.breath,
+                                      stats.retain,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Palette.text,
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ),
                     ),
                   ),
@@ -273,7 +325,8 @@ class _PathTile extends StatelessWidget {
               motto,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 13,
+                height: 1.25,
                 fontStyle: FontStyle.italic,
                 color: fg,
               ),
@@ -283,9 +336,9 @@ class _PathTile extends StatelessWidget {
               stats,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 12.5,
                 fontWeight: FontWeight.w600,
-                color: selected ? Palette.onColor : Palette.textDim,
+                color: selected ? Palette.onColor : Palette.text,
               ),
             ),
           ],

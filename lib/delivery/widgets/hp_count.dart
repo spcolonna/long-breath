@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
+import 'game_icon.dart';
 import 'juice.dart';
 import 'press.dart';
 
@@ -16,7 +17,7 @@ class HpCount extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      const Icon(Icons.favorite, color: Palette.jade, size: 18),
+      const GameIcon(Icons.favorite, color: Palette.jade, size: 18),
       const SizedBox(width: 4),
       Bounce(
         trigger: '$hp/$maxHp',

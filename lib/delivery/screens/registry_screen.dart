@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/scene_backdrop.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
@@ -67,18 +68,26 @@ class RegistryScreen extends ConsumerWidget {
           children: [
             ascents.isEmpty
                 ? Center(
-                    child: Text(
-                      t.registryEmpty,
-                      style: const TextStyle(color: Palette.textDim),
+                    child: PaperPanel(
+                      child: Text(
+                        t.registryEmpty,
+                        style: const TextStyle(fontSize: 15),
+                      ),
                     ),
                   )
                 : ListView(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                     children: [
                       Center(
-                        child: Text(
-                          t.registrySummary(fallen, ascents.length - fallen),
-                          style: const TextStyle(color: Palette.textDim),
+                        child: PaperPanel(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 6,
+                          ),
+                          child: Text(
+                            t.registrySummary(fallen, ascents.length - fallen),
+                            style: const TextStyle(fontSize: 14.5),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),

@@ -146,32 +146,183 @@ class LoreScroll extends ConsumerWidget {
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
     final number = loreOrder.indexOf(id) + 1;
-    _loadArt();
-    return ValueListenableBuilder(
-      valueListenable: _art,
-      builder: (context, image, _) => image == null
-          ? _scroll(context, t, text, number, null, 0)
-          : LayoutBuilder(
-              builder: (context, box) => _scroll(
-                context,
-                t,
-                text,
-                number,
-                image,
-                box.maxWidth / (_rodR - _rodL),
-              ),
-            ),
+    return ScrollFrame(
+      open: open,
+      sealed: sealed,
+      child: _content(context, t, text, number),
     );
   }
 
-  Widget _scroll(
+  Widget _content(
     BuildContext context,
     AppLocalizations t,
     ContentText text,
     int number,
-    ui.Image? image,
-    double scale,
   ) {
+    return sealed
+          ? Row(
+              children: [
+                Container(
+                  width: 34,
+                  height: 34,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Palette.lacquer.withValues(alpha: 0.85),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Text(
+                    '封',
+                    style: TextStyle(
+                      color: Palette.onColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$number · ${t.scrollSealed}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Palette.textDim,
+                        ),
+                      ),
+                      Text(
+                        text.lore(id, 'hint'),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Palette.textDim,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // El último rollo trae la ilustración del maestro
+                // que entrega el pincel.
+                if (id == 'epilogue') ...[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: AspectRatio(
+                      aspectRatio: 4 / 5,
+                      child: Image.asset(
+                        'assets/art/ui/epilogue_bg.webp',
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, 0.1),
+                        errorBuilder: (_, _, _) => const SizedBox(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                // El secreto del maestro trae su retrato.
+                if (id == 'master_name') ...[
+                  Center(
+                    child: NpcPortrait(
+                      asset: 'assets/art/npc/master.webp',
+                      color: Palette.gold,
+                      height: 150,
+                      badge: const InkSeal(
+                        hanzi: '师',
+                        color: Palette.lacquer,
+                        size: 48,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+                Row(
+                  children: [
+                    // Cada final lleva el sello de su camino.
+                    if (_endingStyle(id) case final style?) ...[
+                      InkSeal(
+                        hanzi: _styleHanzi[style]!,
+                        color: styleColor(style),
+                        size: 40,
+                      ),
+                      const SizedBox(width: 10),
+                    ],
+                    Expanded(
+                      child: Text(
+                        text.lore(id, 'title'),
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    if (fresh)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Palette.gold,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          t.loreNew,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            color: Palette.onColor,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  text.lore(id, 'text'),
+                  style: const TextStyle(
+                    fontSize: 14.5,
+                    height: 1.4,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            );
+  }
+}
+
+/// El rollo pintado (varilla, papel que se estira y varilla) alrededor de
+/// cualquier contenido. [open] lo desenrolla (0..1) para animarlo.
+class ScrollFrame extends StatelessWidget {
+  const ScrollFrame({
+    super.key,
+    required this.child,
+    this.open = 1,
+    this.sealed = false,
+  });
+
+  final Widget child;
+  final double open;
+  final bool sealed;
+
+  @override
+  Widget build(BuildContext context) {
+    _loadArt();
+    return ValueListenableBuilder(
+      valueListenable: _art,
+      builder: (context, image, _) => image == null
+          ? _frame(null, 0)
+          : LayoutBuilder(
+              builder: (context, box) =>
+                  _frame(image, box.maxWidth / (_rodR - _rodL)),
+            ),
+    );
+  }
+
+  Widget _frame(ui.Image? image, double scale) {
     Widget rod(Rect src) => image != null
         ? SizedBox(
             width: double.infinity,
@@ -208,6 +359,7 @@ class LoreScroll extends ConsumerWidget {
                     ? null
                     : _PaperPainter(image, scale, sealed: sealed),
                 child: Container(
+                  width: double.infinity,
                   padding: image != null
                       ? const EdgeInsets.fromLTRB(20, 18, 20, 18)
                       : const EdgeInsets.fromLTRB(16, 12, 16, 14),
@@ -221,138 +373,7 @@ class LoreScroll extends ConsumerWidget {
                             vertical: BorderSide(color: Palette.line),
                           ),
                         ),
-                  child: sealed
-                      ? Row(
-                          children: [
-                            Container(
-                              width: 34,
-                              height: 34,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Palette.lacquer.withValues(alpha: 0.85),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Text(
-                                '封',
-                                style: TextStyle(
-                                  color: Palette.onColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '$number · ${t.scrollSealed}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Palette.textDim,
-                                    ),
-                                  ),
-                                  Text(
-                                    text.lore(id, 'hint'),
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Palette.textDim,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // El último rollo trae la ilustración del maestro
-                            // que entrega el pincel.
-                            if (id == 'epilogue') ...[
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: AspectRatio(
-                                  aspectRatio: 4 / 5,
-                                  child: Image.asset(
-                                    'assets/art/ui/epilogue_bg.webp',
-                                    fit: BoxFit.cover,
-                                    alignment: const Alignment(0, 0.1),
-                                    errorBuilder: (_, _, _) => const SizedBox(),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                            ],
-                            // El secreto del maestro trae su retrato.
-                            if (id == 'master_name') ...[
-                              Center(
-                                child: NpcPortrait(
-                                  asset: 'assets/art/npc/master.webp',
-                                  color: Palette.gold,
-                                  height: 150,
-                                  badge: const InkSeal(
-                                    hanzi: '师',
-                                    color: Palette.lacquer,
-                                    size: 48,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                            ],
-                            Row(
-                              children: [
-                                // Cada final lleva el sello de su camino.
-                                if (_endingStyle(id) case final style?) ...[
-                                  InkSeal(
-                                    hanzi: _styleHanzi[style]!,
-                                    color: styleColor(style),
-                                    size: 40,
-                                  ),
-                                  const SizedBox(width: 10),
-                                ],
-                                Expanded(
-                                  child: Text(
-                                    text.lore(id, 'title'),
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ),
-                                if (fresh)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Palette.gold,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Text(
-                                      t.loreNew,
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w800,
-                                        color: Palette.onColor,
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              text.lore(id, 'text'),
-                              style: const TextStyle(
-                                fontSize: 14.5,
-                                height: 1.4,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ],
-                        ),
+                  child: child,
                 ),
               ),
             ),

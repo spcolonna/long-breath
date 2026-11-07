@@ -10,6 +10,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/lotus.dart';
@@ -171,8 +172,9 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                         Text(
                                           t.stageCleared,
                                           style: const TextStyle(
-                                            color: Palette.textDim,
+                                            color: Palette.text,
                                             letterSpacing: 2,
+                                            shadows: Palette.halo,
                                           ),
                                         ),
                                         const SizedBox(height: 6),
@@ -223,7 +225,8 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                         Text(
                                           text.stage(done.id),
                                           style: const TextStyle(
-                                            color: Palette.textDim,
+                                            color: Palette.text,
+                                            shadows: Palette.halo,
                                           ),
                                         ),
                                       ],
@@ -293,7 +296,8 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                         Text(
                                           next.pinyin,
                                           style: const TextStyle(
-                                            color: Palette.textDim,
+                                            color: Palette.text,
+                                            shadows: Palette.halo,
                                           ),
                                         ),
                                         const SizedBox(height: 12),
@@ -317,14 +321,15 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                         Text(
                                           t.stageBreath,
                                           style: const TextStyle(
-                                            color: Palette.textDim,
+                                            color: Palette.text,
+                                            shadows: Palette.halo,
                                           ),
                                         ),
                                         const SizedBox(height: 4),
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const Icon(
+                                            const GameIcon(
                                               Icons.favorite,
                                               color: Palette.lacquer,
                                               size: 20,
@@ -445,8 +450,9 @@ class _AwakeningPanel extends ConsumerWidget {
               Text(
                 t.awakeningTitle,
                 style: const TextStyle(
-                  color: Palette.textDim,
+                  color: Palette.text,
                   letterSpacing: 2,
+                  shadows: Palette.halo,
                 ),
               ),
               const SizedBox(height: 10),
@@ -729,7 +735,11 @@ class _StageLoot extends StatelessWidget {
                 Text(
                   label,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 11, color: Palette.textDim),
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Palette.text,
+                    shadows: Palette.halo,
+                  ),
                 ),
               ],
             ),

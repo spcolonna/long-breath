@@ -12,6 +12,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/scene_backdrop.dart';
@@ -531,7 +532,7 @@ class _ResultCard extends ConsumerWidget {
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 16, color: color),
+        GameIcon(icon, size: 16, color: color),
         const SizedBox(width: 4),
         Flexible(
           child: Text(

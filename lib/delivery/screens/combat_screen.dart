@@ -18,6 +18,7 @@ import '../../domain/model/game_data.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
+import '../content_text.dart';
 import '../controllers/combat_controller.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
@@ -32,6 +33,7 @@ import '../tutorial/tutorial_overlay.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/cinematic.dart';
 import '../widgets/deck_sheet.dart';
+import '../widgets/enemy_scroll.dart';
 import '../widgets/enemy_sprite.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
@@ -1276,6 +1278,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                   index: i,
                   pair: s.enemies.length > 1,
                   targeted: i == s.target,
+                  anyChips: s.enemies.any((x) => _hasChips(x, data.enemy(x.id))),
                   onTap: () {
                     if (_busy) return;
                     ref.read(combatControllerProvider.notifier).target(i);
@@ -1483,10 +1486,15 @@ class _EnemySlot {
     this.index = 0,
     this.pair = false,
     this.targeted = true,
+    this.anyChips = false,
   });
 
   final EnemyDef def;
   final EnemyCombat enemy;
+
+  /// Alguno de los que están en escena muestra estados: con dos, el otro
+  /// guarda ese lugar para que las placas queden a la misma altura.
+  final bool anyChips;
   final IntentView intent;
 
   /// Lugar en el grupo (0 = el primero) y cuántos son.
@@ -1897,7 +1905,6 @@ class _EnemyStage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
-    final text = ref.watch(textProvider);
     final e = slot.enemy;
     final def = slot.def;
     final foe = slot.foe;
@@ -1914,35 +1921,10 @@ class _EnemyStage extends ConsumerWidget {
       // apoya abajo con aire arriba, así en reposo no se tocan.
       child: Stack(
       children: [
-      Positioned(
-        top: slot.pair ? 46 : 26,
-        left: 0,
-        right: 0,
-        child: Center(
-          child: anchor(
-              'intent',
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 280),
-                switchInCurve: Curves.easeOutBack,
-                transitionBuilder: (child, a) => ScaleTransition(
-                  scale: a,
-                  child: FadeTransition(opacity: a, child: child),
-                ),
-                child: foe.dying
-                    ? const SizedBox(key: ValueKey('none'), height: 50)
-                    : _IntentBubble(
-                        key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
-                        iv: slot.intent,
-                        compact: slot.pair,
-                      ),
-              ),
-            ),
-        ),
-      ),
       Column(
       children: [
         // Con dos, los globos bajan un poco: arriba a la derecha está la pausa.
-        SizedBox(height: slot.pair ? 46 : 26),
+        SizedBox(height: slot.pair ? 46 : 16),
         IgnorePointer(
           child: Visibility(
             visible: false,
@@ -1959,14 +1941,21 @@ class _EnemyStage extends ConsumerWidget {
             builder: (context, box) {
               // Apoyado abajo y con aire arriba: la cabeza no llega al
               // globo de intención.
-              final size = math.max(
-                0.0,
-                math.min(
-                  math.min(box.maxHeight - 16, 220.0),
-                  box.maxWidth * 1.15,
-                ),
+              // Con poco alto el enemigo no baja de un mínimo: crece hacia
+              // arriba, debajo del globo.
+              final fit = math.min(
+                math.min(box.maxHeight - 16, slot.pair ? 220.0 : 260.0),
+                box.maxWidth * 1.15,
               );
-              return Stack(
+              final size = math.max(
+                fit,
+                math.min(slot.pair ? 112.0 : 150.0, box.maxWidth * 1.1),
+              );
+              return OverflowBox(
+                alignment: Alignment.bottomCenter,
+                minHeight: 0,
+                maxHeight: math.max(box.maxHeight, size + 16),
+                child: Stack(
                 alignment: Alignment.bottomCenter,
                 clipBehavior: Clip.none,
                 children: [
@@ -2070,6 +2059,7 @@ class _EnemyStage extends ConsumerWidget {
                     child: IgnorePointer(child: _PopStack(pops: foe.pops)),
                   ),
                 ],
+              ),
               );
             },
           ),
@@ -2089,12 +2079,12 @@ class _EnemyStage extends ConsumerWidget {
               GestureDetector(
                 onTap: slot.pair && !slot.targeted
                     ? slot.onTap
-                    : () => showDialog<void>(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: Text(ref.foe(context, def.id)),
-                          content: Text(text.enemyRule(def.id)),
-                        ),
+                    : () => _showFoeScroll(
+                        context,
+                        ref,
+                        def,
+                        e,
+                        foe.dying ? null : slot.intent,
                       ),
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(12, 4, 8, 4),
@@ -2191,15 +2181,7 @@ class _EnemyStage extends ConsumerWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
-          child:
-              e.guard > 0 ||
-                  e.staggered ||
-                  e.scales > 0 ||
-                  e.wrath > 0 ||
-                  e.parryReady ||
-                  e.stolen > 0 ||
-                  def.thorns + e.thorns > 0 ||
-                  def.regen > 0
+          child: _hasChips(e, def)
               ? Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Wrap(
@@ -2240,12 +2222,12 @@ class _EnemyStage extends ConsumerWidget {
                       // Escamas: se ignoran mientras está Desequilibrado.
                       if (e.scales > 0 && !e.staggered)
                         GestureDetector(
-                          onTap: () => showDialog<void>(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                              title: Text(ref.foe(context, def.id)),
-                              content: Text(text.enemyRule(def.id)),
-                            ),
+                          onTap: () => _showFoeScroll(
+                            context,
+                            ref,
+                            def,
+                            e,
+                            foe.dying ? null : slot.intent,
                           ),
                           child: Bounce(
                             trigger: e.scales,
@@ -2285,9 +2267,50 @@ class _EnemyStage extends ConsumerWidget {
                 )
               // Con dos, el lugar de los estados se guarda igual: así las
               // dos placas quedan a la misma altura.
-              : SizedBox(width: double.infinity, height: slot.pair ? 27 : 0),
+              : SizedBox(
+                  width: double.infinity,
+                  height: slot.pair && slot.anyChips ? 27 : 0,
+                ),
         ),
       ],
+      ),
+      // El globo va adelante: si falta lugar, tapa apenas la cabeza en vez
+      // de achicar al enemigo.
+      Positioned(
+        top: slot.pair ? 46 : 16,
+        left: 0,
+        right: 0,
+        child: Center(
+          child: anchor(
+              'intent',
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 280),
+                switchInCurve: Curves.easeOutBack,
+                transitionBuilder: (child, a) => ScaleTransition(
+                  scale: a,
+                  child: FadeTransition(opacity: a, child: child),
+                ),
+                child: foe.dying
+                    ? const SizedBox(key: ValueKey('none'), height: 50)
+                    : GestureDetector(
+                        key: ValueKey('${e.id}-${e.patternIndex}-${e.phaseIndex}'),
+                        onTap: slot.pair && !slot.targeted
+                            ? slot.onTap
+                            : () => _showFoeScroll(
+                                context,
+                                ref,
+                                def,
+                                e,
+                                slot.intent,
+                              ),
+                        child: _IntentBubble(
+                          iv: slot.intent,
+                          compact: slot.pair,
+                        ),
+                      ),
+              ),
+            ),
+        ),
       ),
       ],
       ),
@@ -2575,23 +2598,26 @@ class _MiniBar extends StatelessWidget {
   }
 }
 
-/// Globo de intención sobre la cabeza del enemigo.
-class _IntentBubble extends ConsumerWidget {
-  const _IntentBubble({super.key, required this.iv, this.compact = false});
+/// El rival muestra fichas de estado (Guardia, espinas, escamas…).
+bool _hasChips(EnemyCombat e, EnemyDef def) =>
+    e.guard > 0 ||
+    e.staggered ||
+    e.scales > 0 ||
+    e.wrath > 0 ||
+    e.parryReady ||
+    e.stolen > 0 ||
+    def.thorns + e.thorns > 0 ||
+    def.regen > 0;
 
-  final IntentView iv;
-
-  /// Con dos en escena el globo es más angosto: letra más chica y el nombre
-  /// en hasta dos renglones.
-  final bool compact;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final t = AppLocalizations.of(context);
-    final text = ref.watch(textProvider);
-    final i = iv.intent;
-    final named = i.labelKey == null ? null : text.intent(i.labelKey!);
-    final (IconData icon, String title, String detail) = switch (i.kind) {
+/// Ícono, nombre y números de lo que prepara el rival.
+(IconData, String, String) _intentSummary(
+  AppLocalizations t,
+  ContentText text,
+  IntentView iv,
+) {
+  final i = iv.intent;
+  final named = i.labelKey == null ? null : text.intent(i.labelKey!);
+  return switch (i.kind) {
       IntentKind.attack => (
         heightIcon(i.height),
         named == null
@@ -2621,7 +2647,75 @@ class _IntentBubble extends ConsumerWidget {
         named ?? t.intentFlee,
         t.intentFleeDetail(iv.stolen),
       ),
-    };
+  };
+}
+
+/// Las reglas extra del golpe: en corto para el globo y enteras para el
+/// pergamino del rival.
+List<(String, String)> _intentExtras(AppLocalizations t, IntentView iv) {
+  final i = iv.intent;
+  final attack = i.kind == IntentKind.attack;
+  return [
+    if (i.interrupt) (t.intentTagInterrupt, t.intentInterrupt),
+    if (i.drain > 0 && attack) (t.intentTagDrain(i.drain), t.intentDrain(i.drain)),
+    if (i.freeze > 0 && attack)
+      (t.intentTagFreeze(i.freeze), t.intentFreeze(i.freeze)),
+    if (i.wear && i.hits > 1 && attack) (t.intentTagWear, t.intentWear),
+    if (iv.punishIfSameStance) (t.intentTagSameStance, t.intentSameStance),
+  ];
+}
+
+/// Abre el pergamino con todo lo del rival.
+void _showFoeScroll(
+  BuildContext context,
+  WidgetRef ref,
+  EnemyDef def,
+  EnemyCombat e,
+  IntentView? iv,
+) {
+  final t = AppLocalizations.of(context);
+  final text = ref.read(textProvider);
+  ref.read(audioProvider).play(Sfx.scrollOpen);
+  final summary = iv == null ? null : _intentSummary(t, text, iv);
+  showEnemyScroll(
+    context,
+    EnemyScrollInfo(
+      def: def,
+      name: ref.foe(context, def.id),
+      rule: text.enemyRule(def.id),
+      hp: e.hp,
+      maxHp: e.maxHp,
+      structure: e.structure,
+      maxStructure: e.maxStructure,
+      scales: e.scales,
+      quote: text.enemyLine(def.id, 'intro'),
+      intentIcon: summary?.$1,
+      intentTitle: summary?.$2,
+      intentDetail: iv == null
+          ? null
+          : (iv.skipped ? t.losesAction : summary!.$3),
+      intentNotes: iv == null ? const [] : [for (final x in _intentExtras(t, iv)) x.$2],
+    ),
+  );
+}
+
+/// Globo de intención sobre la cabeza del enemigo.
+class _IntentBubble extends ConsumerWidget {
+  const _IntentBubble({required this.iv, this.compact = false});
+
+  final IntentView iv;
+
+  /// Con dos en escena el globo es más angosto: letra más chica y el nombre
+  /// en hasta dos renglones.
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final text = ref.watch(textProvider);
+    final (IconData icon, String title, String detail) =
+        _intentSummary(t, text, iv);
+    final extras = _intentExtras(t, iv);
     final color = iv.skipped ? Palette.textDim : Palette.lacquer;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -2665,9 +2759,9 @@ class _IntentBubble extends ConsumerWidget {
                     Text(
                       title,
                       overflow: TextOverflow.ellipsis,
-                      maxLines: compact ? 2 : 1,
+                      maxLines: 1,
                       style: TextStyle(
-                        fontSize: compact ? 12.5 : 14,
+                        fontSize: compact ? 13 : 14.5,
                         height: compact ? 1.15 : null,
                         fontWeight: FontWeight.w700,
                         decoration: iv.skipped
@@ -2675,52 +2769,75 @@ class _IntentBubble extends ConsumerWidget {
                             : null,
                       ),
                     ),
-                    Text(
-                      iv.skipped ? t.losesAction : detail,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: iv.skipped ? Palette.gold : Palette.lacquer,
-                      ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            iv.skipped ? t.losesAction : detail,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: iv.skipped ? Palette.gold : Palette.lacquer,
+                            ),
+                          ),
+                        ),
+                        // Con dos en escena, las reglas extra se cuentan:
+                        // el detalle está en el pergamino (tocá el globo).
+                        if (compact && extras.isNotEmpty && !iv.skipped)
+                          Container(
+                            margin: const EdgeInsets.only(left: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 0.5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Palette.gold,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              '+${extras.length}',
+                              style: const TextStyle(
+                                fontSize: 10.5,
+                                fontWeight: FontWeight.w800,
+                                color: Palette.onColor,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
-                    if (i.interrupt)
-                      Text(
-                        t.intentInterrupt,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Palette.textDim,
-                        ),
-                      ),
-                    if (i.drain > 0 && i.kind == IntentKind.attack)
-                      Text(
-                        t.intentDrain(i.drain),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Palette.textDim,
-                        ),
-                      ),
-                    if (i.freeze > 0 && i.kind == IntentKind.attack)
-                      Text(
-                        t.intentFreeze(i.freeze),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Palette.textDim,
-                        ),
-                      ),
-                    if (i.wear && i.hits > 1 && i.kind == IntentKind.attack)
-                      Text(
-                        t.intentWear,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Palette.textDim,
-                        ),
-                      ),
-                    if (iv.punishIfSameStance)
-                      Text(
-                        t.intentSameStance,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Palette.textDim,
+                    // Las reglas extra, en chips cortos de un renglón: el
+                    // detalle entero está en el pergamino del rival.
+                    if (extras.isNotEmpty && !compact)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Wrap(
+                          spacing: 3,
+                          runSpacing: 2,
+                          children: [
+                            for (final x in extras)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                  vertical: 1,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Palette.lacquer.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Text(
+                                  x.$1,
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    height: 1.2,
+                                    fontWeight: FontWeight.w700,
+                                    color: Palette.text,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                   ],
@@ -3037,7 +3154,7 @@ class _FormStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
-      height: 30,
+      height: 26,
       margin: const EdgeInsets.only(right: 3),
       padding: const EdgeInsets.symmetric(horizontal: 2),
       decoration: BoxDecoration(
@@ -4894,7 +5011,12 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
                             onPressed: _toLessons,
                             child: Text(
                               t.lessonBackToList,
-                              style: const TextStyle(color: Palette.textDim),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Palette.text,
+                                shadows: Palette.halo,
+                              ),
                             ),
                           ),
                         ),

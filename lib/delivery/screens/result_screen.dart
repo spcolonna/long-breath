@@ -22,6 +22,7 @@ import '../widgets/hito_tile.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/lore_scroll.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/lotus.dart';
 import '../widgets/more_below.dart';
@@ -401,7 +402,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         ],
                         for (final (i, id)
                             in (ascent?.lore ?? const <String>[]).indexed) ...[
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 24),
                           AnimatedBuilder(
                             animation: _c,
                             builder: (_, _) {
@@ -434,7 +435,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                 ),
                 // La escuela manda al siguiente: siempre a mano, abajo.
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: PaperPanel(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 6),
                   child: Column(
                     children: [
                       _enter(
@@ -442,7 +445,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         0.88,
                         Text(
                           won ? t.relaySummit : t.relayLine,
-                          style: const TextStyle(color: Palette.textDim),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Palette.text,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -464,7 +472,17 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                       _enter(
                         0.9,
                         1,
-                        Wrap(
+                        TextButtonTheme(
+                          data: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Palette.text,
+                              textStyle: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ).merge(Theme.of(context).textButtonTheme.style),
+                          ),
+                          child: Wrap(
                           alignment: WrapAlignment.center,
                           children: [
                             // El registro de la subida, para pasarlo y
@@ -507,8 +525,10 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                             ),
                           ],
                         ),
+                        ),
                       ),
                     ],
+                  ),
                   ),
                 ),
               ],

@@ -410,7 +410,47 @@ class AppLocalizationsEs extends AppLocalizations {
   String get heightLow => 'bajo';
 
   @override
+  String get rankCommon => 'Rival común';
+
+  @override
   String get rankElite => 'Élite';
+
+  @override
+  String get enemyInfoHp => 'Vida';
+
+  @override
+  String get enemyInfoStructure => 'Estructura';
+
+  @override
+  String get enemyInfoScales => 'Escamas';
+
+  @override
+  String get enemyInfoRule => 'SU ESTILO';
+
+  @override
+  String get enemyInfoNow => 'LO QUE PREPARA';
+
+  @override
+  String get enemyInfoClose => 'Tocá para enrollar';
+
+  @override
+  String get intentTagInterrupt => 'Corta formas';
+
+  @override
+  String get intentTagSameStance => 'Castiga repetir';
+
+  @override
+  String get intentTagWear => 'Gasta Guardia';
+
+  @override
+  String intentTagDrain(int n) {
+    return '−$n Aliento';
+  }
+
+  @override
+  String intentTagFreeze(int n) {
+    return '−$n robo';
+  }
 
   @override
   String get rankBoss => 'Guardián';

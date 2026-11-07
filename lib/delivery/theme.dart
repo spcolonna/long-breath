@@ -25,6 +25,12 @@ abstract final class Palette {
   /// Flor de durazno: los eventos del mapa.
   static const blossom = Color(0xFFE76F9A);
 
+  /// Halo de papel para letras cortas que van sobre una ilustración.
+  static const halo = [
+    Shadow(color: Color(0xF2FFFBF2), blurRadius: 4),
+    Shadow(color: Color(0xCCFFFBF2), blurRadius: 12),
+  ];
+
   /// Degradado de fondo global (papel → jade claro).
   static const backdrop = LinearGradient(
     begin: Alignment.topCenter,

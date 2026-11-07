@@ -10,6 +10,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
@@ -200,10 +201,19 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                       ),
                     ],
                     const SizedBox(height: 18),
-                    Text(
-                      _forms!.isEmpty ? t.masterNoForms : t.masterTeachHint,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Palette.textDim),
+                    PaperPanel(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        _forms!.isEmpty ? t.masterNoForms : t.masterTeachHint,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 14.5,
+                          color: Palette.text,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     for (final (i, id) in _forms!.indexed) ...[

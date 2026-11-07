@@ -742,11 +742,83 @@ abstract class AppLocalizations {
   /// **'bajo'**
   String get heightLow;
 
+  /// No description provided for @rankCommon.
+  ///
+  /// In es, this message translates to:
+  /// **'Rival común'**
+  String get rankCommon;
+
   /// No description provided for @rankElite.
   ///
   /// In es, this message translates to:
   /// **'Élite'**
   String get rankElite;
+
+  /// No description provided for @enemyInfoHp.
+  ///
+  /// In es, this message translates to:
+  /// **'Vida'**
+  String get enemyInfoHp;
+
+  /// No description provided for @enemyInfoStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Estructura'**
+  String get enemyInfoStructure;
+
+  /// No description provided for @enemyInfoScales.
+  ///
+  /// In es, this message translates to:
+  /// **'Escamas'**
+  String get enemyInfoScales;
+
+  /// No description provided for @enemyInfoRule.
+  ///
+  /// In es, this message translates to:
+  /// **'SU ESTILO'**
+  String get enemyInfoRule;
+
+  /// No description provided for @enemyInfoNow.
+  ///
+  /// In es, this message translates to:
+  /// **'LO QUE PREPARA'**
+  String get enemyInfoNow;
+
+  /// No description provided for @enemyInfoClose.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá para enrollar'**
+  String get enemyInfoClose;
+
+  /// No description provided for @intentTagInterrupt.
+  ///
+  /// In es, this message translates to:
+  /// **'Corta formas'**
+  String get intentTagInterrupt;
+
+  /// No description provided for @intentTagSameStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Castiga repetir'**
+  String get intentTagSameStance;
+
+  /// No description provided for @intentTagWear.
+  ///
+  /// In es, this message translates to:
+  /// **'Gasta Guardia'**
+  String get intentTagWear;
+
+  /// No description provided for @intentTagDrain.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} Aliento'**
+  String intentTagDrain(int n);
+
+  /// No description provided for @intentTagFreeze.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} robo'**
+  String intentTagFreeze(int n);
 
   /// No description provided for @rankBoss.
   ///

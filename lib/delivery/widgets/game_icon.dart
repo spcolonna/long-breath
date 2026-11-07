@@ -10,6 +10,9 @@ final _painted = {
   Icons.filter_tilt_shift: 'deflect',
   Icons.blur_on: 'stagger',
   Icons.water_drop: 'fountain',
+  Icons.favorite: 'heart',
+  Icons.bolt: 'charge',
+  Icons.savings_outlined: 'stolen',
 };
 
 class GameIcon extends StatelessWidget {

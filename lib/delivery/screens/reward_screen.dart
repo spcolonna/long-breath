@@ -13,6 +13,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
@@ -885,20 +886,33 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
                             ),
                           ),
                         )
-                      : Text(
-                          t.formScrollHint,
+                      : PaperPanel(
                           key: const ValueKey('form'),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Palette.textDim),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            t.formScrollHint,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 14.5),
+                          ),
                         ))
                 : picked == null
                 ? const SizedBox()
-                : Text(
-                    '${text.card(picked.id)} · ${picked.pinyin} ${picked.hanzi}\n'
-                    '${t.cardEffect(picked, text)}'
-                    '${data.forms.any((f) => (run.knownForms.contains(f.id) || f.id == run.rewardForm) && f.steps.contains(picked.id)) ? '\n${t.partOfForm}' : ''}',
+                : PaperPanel(
                     key: ValueKey(picked.id),
-                    textAlign: TextAlign.center,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
+                    child: Text(
+                      '${text.card(picked.id)} · ${picked.pinyin} ${picked.hanzi}\n'
+                      '${t.cardEffect(picked, text)}'
+                      '${data.forms.any((f) => (run.knownForms.contains(f.id) || f.id == run.rewardForm) && f.steps.contains(picked.id)) ? '\n${t.partOfForm}' : ''}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 14.5, height: 1.3),
+                    ),
                   ),
           ),
         ),
@@ -906,6 +920,14 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: TextButton.icon(
+              style: TextButton.styleFrom(
+                backgroundColor: Palette.surface.withValues(alpha: 0.9),
+                foregroundColor: Palette.text,
+                textStyle: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ).merge(Theme.of(context).textButtonTheme.style),
               onPressed: _taking ? null : reroll,
               icon: const Icon(Icons.autorenew, size: 18),
               label: Text(t.lootReroll(run.rerollsLeft)),

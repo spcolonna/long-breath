@@ -26,6 +26,7 @@ class DebugButton extends ConsumerWidget {
       await showModalBottomSheet<void>(
         context: context,
         backgroundColor: Palette.bg,
+        isScrollControlled: true,
         builder: (_) => const _DebugSheet(),
       );
       onDone?.call();
@@ -88,7 +89,7 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
     final floors = stages[_stage].floors.length;
     final names = ref.watch(textProvider);
     return SafeArea(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
