@@ -18,6 +18,7 @@ class ScrollPanel extends StatefulWidget {
     this.radius = 18,
     this.margin = EdgeInsets.zero,
     this.fade = 28,
+    this.hug = false,
   });
 
   /// La lista o el `SingleChildScrollView`.
@@ -31,6 +32,10 @@ class ScrollPanel extends StatefulWidget {
 
   /// Alto del fundido en cada borde.
   final double fade;
+
+  /// El marco abraza el contenido cuando es corto (arriba, sin hueco vacío
+  /// abajo). La lista tiene que usar `shrinkWrap: true`.
+  final bool hug;
 
   @override
   State<ScrollPanel> createState() => _ScrollPanelState();
@@ -83,7 +88,7 @@ class _ScrollPanelState extends State<ScrollPanel> {
     );
     if (!widget.framed) return Padding(padding: widget.margin, child: list);
     final radius = BorderRadius.circular(widget.radius);
-    return Padding(
+    final framed = Padding(
       padding: widget.margin,
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -104,5 +109,8 @@ class _ScrollPanelState extends State<ScrollPanel> {
         child: ClipRRect(borderRadius: radius, child: list),
       ),
     );
+    return widget.hug
+        ? Align(alignment: Alignment.topCenter, child: framed)
+        : framed;
   }
 }

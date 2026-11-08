@@ -165,10 +165,9 @@ macOS no tiene `timeout`.
    - barra dorada y rebote global (`GameScrollBehavior`);
    - papel o halo bajo el texto suelto en evento, fuente, legado, talismanes, etapa superada, inicio y mercader.
 
-   Falta, si el usuario lo pide:
-   - mercader en pestañas;
-   - los hitos del resultado en fila de sellos;
-   - que el marco se ajuste al contenido cuando la lista es corta (en lecciones queda un hueco abajo).
+   - mercader en pestañas (Cartas · Objetos · Servicios), sin «Hay más abajo»;
+   - hitos del resultado en una fila de sellos (`HitoSealRow`); tocar uno muestra cómo se cumplió;
+   - `ScrollPanel(hug: true)` + `shrinkWrap`: el marco abraza listas cortas (lecciones, meridianos, maestro).
 5. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas

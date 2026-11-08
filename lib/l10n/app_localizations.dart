@@ -3238,6 +3238,12 @@ abstract class AppLocalizations {
   /// **'Servicios'**
   String get merchantServices;
 
+  /// No description provided for @merchantTabItems.
+  ///
+  /// In es, this message translates to:
+  /// **'Objetos'**
+  String get merchantTabItems;
+
   /// No description provided for @merchantShowcase.
   ///
   /// In es, this message translates to:

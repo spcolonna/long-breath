@@ -152,3 +152,123 @@ class HitoTile extends ConsumerWidget {
     );
   }
 }
+
+/// Los hitos recién cumplidos como fila de sellos: cada uno con su nombre y
+/// su aliento debajo. Tocar un sello muestra cómo se cumplió. [wrap] anima la
+/// entrada de cada sello (índice y sello).
+class HitoSealRow extends ConsumerStatefulWidget {
+  const HitoSealRow({super.key, required this.ids, this.wrap});
+
+  final List<String> ids;
+  final Widget Function(int i, Widget seal)? wrap;
+
+  @override
+  ConsumerState<HitoSealRow> createState() => _HitoSealRowState();
+}
+
+class _HitoSealRowState extends ConsumerState<HitoSealRow> {
+  String? _open;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final text = ref.watch(textProvider);
+    final open = _open;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(8, 12, 8, 10),
+      decoration: BoxDecoration(
+        color: Palette.surface.withValues(alpha: 0.95),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Palette.gold, width: 1.3),
+        boxShadow: [
+          BoxShadow(
+            color: Palette.gold.withValues(alpha: 0.25),
+            blurRadius: 12,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(
+            t.hitoNew,
+            style: const TextStyle(
+              fontSize: 11,
+              letterSpacing: 1.2,
+              fontWeight: FontWeight.w800,
+              color: Palette.gold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 6,
+            runSpacing: 10,
+            children: [
+              for (final (i, id) in widget.ids.indexed)
+                (widget.wrap ?? (_, w) => w)(
+                  i,
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => setState(() => _open = open == id ? null : id),
+                    child: SizedBox(
+                      width: 84,
+                      child: Column(
+                        children: [
+                          AnimatedScale(
+                            scale: open == id ? 1.1 : 1,
+                            duration: const Duration(milliseconds: 180),
+                            curve: Curves.easeOutBack,
+                            child: InkSeal(
+                              hanzi: hito(id).hanzi,
+                              color: Palette.lacquer,
+                              size: 50,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            text.hito(id, 'name'),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 12.5,
+                              height: 1.15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            t.hitoBreath(hito(id).breath),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                              color: Palette.gold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOut,
+            child: open == null
+                ? const SizedBox(width: double.infinity)
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(6, 10, 6, 0),
+                    child: Text(
+                      text.hito(open, 'text'),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 13, height: 1.3),
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}

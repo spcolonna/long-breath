@@ -96,7 +96,9 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
               top: false,
               child: ScrollPanel(
                 margin: const EdgeInsets.fromLTRB(10, 0, 10, 12),
+                hug: true,
                 child: ListView(
+                shrinkWrap: true,
                 padding: const EdgeInsets.fromLTRB(14, 14, 14, 20),
                 children: [
                   Text(

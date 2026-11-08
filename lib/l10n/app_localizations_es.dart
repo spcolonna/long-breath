@@ -1992,6 +1992,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get merchantServices => 'Servicios';
 
   @override
+  String get merchantTabItems => 'Objetos';
+
+  @override
   String get merchantShowcase => 'Vitrina';
 
   @override

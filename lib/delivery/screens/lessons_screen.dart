@@ -46,7 +46,9 @@ class LessonsScreen extends ConsumerWidget {
       ),
       body: ScrollPanel(
         margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        hug: true,
         child: ListView(
+        shrinkWrap: true,
         padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
         children: [
           Text(

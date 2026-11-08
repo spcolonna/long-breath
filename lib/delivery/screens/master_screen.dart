@@ -111,7 +111,9 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                 child: ScrollPanel(
                   opacity: 0.84,
                   margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  hug: true,
                   child: ListView(
+                  shrinkWrap: true,
                   padding: const EdgeInsets.fromLTRB(12, 12, 12, 16),
                   children: [
                     NpcPortrait(

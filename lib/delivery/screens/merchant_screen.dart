@@ -21,7 +21,6 @@ import '../widgets/hp_count.dart';
 import '../widgets/press.dart';
 import '../feel.dart';
 import '../widgets/node_kit.dart';
-import '../widgets/more_below.dart';
 import '../widgets/paper_panel.dart';
 import '../widgets/scroll_panel.dart';
 
@@ -91,15 +90,6 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
 
   /// La carta en oferta al entrar (queda marcada aunque se compre).
   String? _sale;
-
-  /// La vitrina sigue hacia abajo: un aviso invita a bajar hasta que se baja.
-  final _scroll = ScrollController();
-
-  @override
-  void dispose() {
-    _scroll.dispose();
-    super.dispose();
-  }
 
   int _price(_Item i) {
     final run = ref.read(runControllerProvider);
@@ -186,6 +176,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
     _weapon ??= run.shopWeapon;
     _sale ??= run.shopSale;
     final ctl = ref.read(runControllerProvider.notifier);
+    final hasItems = _talisman != null || _rare != null || _weapon != null;
 
     if (_picking != null) {
       final upgrade = _picking is _UpgradeItem;
@@ -264,24 +255,18 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                 ],
               ),
               Expanded(
-                // Fundido abajo y aviso: hay más mercadería bajando.
-                child: ScrollPanel(
-                  opacity: 0.84,
-                  margin: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: MoreBelowHint(
-                  controller: _scroll,
-                  label: t.merchantMore,
-                  child: ListView(
-                  controller: _scroll,
-                  padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
+                // Pestañas: cada parte de la tienda entra sin desplazar.
+                child: DefaultTabController(
+                  length: hasItems ? 3 : 2,
+                  child: Column(
                   children: [
                     NpcPortrait(
                       asset: 'assets/art/npc/merchant.webp',
                       color: Palette.jade,
-                      height: 150,
+                      height: 104,
                       badge: _Medallion(hanzi: '商', burst: _burst),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(
                       t.merchantTitle,
                       textAlign: TextAlign.center,
@@ -305,7 +290,30 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                           ),
                         ),
                       ),
-                    _Section(t.merchantCards),
+                    const SizedBox(height: 6),
+                    TabBar(
+                      indicatorColor: Palette.lacquer,
+                      labelColor: Palette.text,
+                      unselectedLabelColor: Palette.textDim,
+                      labelStyle: const TextStyle(fontWeight: FontWeight.w700),
+                      dividerColor: Palette.gold.withValues(alpha: 0.35),
+                      onTap: (_) => Haptics.tap(),
+                      tabs: [
+                        Tab(height: 38, text: t.merchantCards),
+                        if (hasItems) Tab(height: 38, text: t.merchantTabItems),
+                        Tab(height: 38, text: t.merchantServices),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          ScrollPanel(
+                            opacity: 0.84,
+                            margin: const EdgeInsets.only(top: 8, bottom: 10),
+                            child: ListView(
+                            padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
+                            children: [
+                    const SizedBox(height: 4),
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Row(
@@ -334,6 +342,16 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                       ],
                     ),
                     ),
+                            ],
+                            ),
+                          ),
+                          if (hasItems)
+                          ScrollPanel(
+                            opacity: 0.84,
+                            margin: const EdgeInsets.only(top: 8, bottom: 10),
+                            child: ListView(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+                            children: [
                     if (_talisman != null) ...[
                       _Section(t.merchantTalisman),
                       StaggerIn(
@@ -402,7 +420,16 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                         ),
                       ),
                     ],
-                    _Section(t.merchantServices),
+                            ],
+                            ),
+                          ),
+                          ScrollPanel(
+                            opacity: 0.84,
+                            margin: const EdgeInsets.only(top: 8, bottom: 10),
+                            child: ListView(
+                            padding: const EdgeInsets.fromLTRB(8, 12, 8, 16),
+                            children: [
+                    const SizedBox(height: 4),
                     for (final (j, (item, icon, label)) in [
                       (
                         const _RemoveItem() as _Item,
@@ -453,9 +480,14 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                           ),
                         ),
                       ),
+                            ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-                ),
+                  ),
                 ),
               ),
               PaperPanel(

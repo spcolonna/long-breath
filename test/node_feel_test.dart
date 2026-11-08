@@ -180,6 +180,8 @@ void main() {
     go(tester, '/merchant');
     await settle(tester);
     final shop = container.read(runControllerProvider)!;
+    await tester.tap(find.text('Objetos'));
+    await settle(tester);
     expect(find.text('VITRINA'), findsOneWidget);
     expect(find.text('Selecto'), findsOneWidget);
     final rare = find.text(container.read(textProvider).talisman(shop.shopRare!));

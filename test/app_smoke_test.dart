@@ -299,6 +299,8 @@ void main() {
     expect(find.text('Mercader de pergaminos'), findsOneWidget);
     final shop = container.read(runControllerProvider)!;
     final ware = container.read(textProvider).talisman(shop.shopTalisman!);
+    await tester.tap(find.widgetWithText(Tab, 'Objetos'));
+    await settle();
     await tester.tap(find.text(ware));
     await settle();
     await tester.tap(find.text('Confirmar'));
@@ -308,15 +310,14 @@ void main() {
       container.read(runControllerProvider)!.jade,
       100 - container.read(dataProvider).balance.merchant.talisman,
     );
-    // Oferta marcada y té de jengibre.
+    // Oferta marcada y té de jengibre, cada uno en su pestaña.
+    await tester.tap(find.widgetWithText(Tab, 'Cartas'));
+    await settle();
     expect(find.text('Oferta −40%'), findsOneWidget);
     final teaLabel = find.text('Té de jengibre (+15 Vida)');
-    await tester.scrollUntilVisible(
-      teaLabel,
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    // Sin arma, la armería vende una; los servicios van debajo.
+    await tester.tap(find.widgetWithText(Tab, 'Servicios'));
+    await settle();
+    // Sin arma, la armería vende una; los servicios van en su pestaña.
     expect(container.read(runControllerProvider)!.shopWeapon, isNotNull);
     expect(find.text('Quitar 1 carta del mazo'), findsOneWidget);
     await settle();

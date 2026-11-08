@@ -395,13 +395,19 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           ],
                         ],
                         // Hitos 功 que se cumplieron (su aliento ya está arriba).
-                        for (final (i, id)
-                            in (ascent?.hitos ?? const <String>[]).indexed) ...[
-                          const SizedBox(height: 10),
+                        if (ascent?.hitos.isNotEmpty ?? false) ...[
+                          const SizedBox(height: 12),
                           _enter(
-                            0.68 + i * 0.03,
-                            0.76 + i * 0.03,
-                            HitoTile(id: id, fresh: true),
+                            0.66,
+                            0.72,
+                            HitoSealRow(
+                              ids: ascent!.hitos,
+                              wrap: (i, seal) => _enter(
+                                0.68 + i * 0.03,
+                                0.76 + i * 0.03,
+                                seal,
+                              ),
+                            ),
                           ),
                         ],
                         for (final (i, id)
