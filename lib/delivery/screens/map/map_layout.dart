@@ -43,9 +43,9 @@ class MapLayout {
 }
 
 /// Alto mínimo de cada piso; si la montaña no entra en pantalla, se desplaza.
-const mapRowH = 108.0;
+const mapRowH = 126.0;
 const _top = 150.0; // cielo y cumbre por encima del jefe
-const _bottom = 70.0; // pie de la montaña
+const _bottom = 250.0; // pie de la montaña y lugar para la tarjeta de elegir
 const _minGap = 96.0; // dos sellos con su nombre no se pisan
 
 /// Número estable en [0, 1) a partir de un texto (no usa `hashCode`, que
@@ -130,7 +130,7 @@ MapLayout layoutMap(RunState run, GameData data, Size view) {
     rowY: rowY,
     landmarks: landmarks,
     size: Size(w, height),
-    foot: Offset(w / 2, height - 22),
+    foot: Offset(w / 2, height - 172),
   );
 }
 

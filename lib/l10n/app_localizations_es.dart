@@ -1467,6 +1467,49 @@ class AppLocalizationsEs extends AppLocalizations {
   String get optionalEliteTag => 'Desvío';
 
   @override
+  String get mapPickHint => 'Tocá un lugar para ver qué te espera';
+
+  @override
+  String get mapGo => 'Ir';
+
+  @override
+  String get nodeHintCommon =>
+      'Un rival del camino. Si ganás, elegís una carta nueva.';
+
+  @override
+  String get nodeHintElite => 'Un rival fuerte: más riesgo, mejor botín.';
+
+  @override
+  String get nodeHintDetour =>
+      'Un desvío con un rival fuerte. Podés esquivarlo, pero el botín es mejor.';
+
+  @override
+  String get nodeHintBoss => 'El guardián de la cumbre.';
+
+  @override
+  String nodeHintPack(int count) {
+    return 'Vienen $count rivales.';
+  }
+
+  @override
+  String get nodeHintFountain =>
+      'Agua clara: curás Vida, mejorás o quitás una carta.';
+
+  @override
+  String get nodeHintShrine => 'Un animal sagrado te ofrece su bendición.';
+
+  @override
+  String get nodeHintEvent =>
+      'Un encuentro en el sendero. Puede ayudarte o costarte algo.';
+
+  @override
+  String get nodeHintMerchant =>
+      'Cartas, objetos y servicios a cambio de jade.';
+
+  @override
+  String get nodeHintMaster => 'Un maestro te enseña una forma nueva.';
+
+  @override
   String get formMissingShort => 'Faltan cartas';
 
   @override

@@ -127,7 +127,7 @@ macOS no tiene `timeout`.
   - Entre etapas se cura el 40% de lo que falta.
   - Normal: promedio 24% → 16%, experto 56% → 51%.
 - **Íconos:**
-  - Faltan 3 de combate (`heart`, `charge`, `stolen`). Ya están mapeados en `GameIcon`, que muestra Material mientras tanto, y sus prompts están en `docs/arte/prompts.md` → «Para generar ahora».
+  - Los 3 de combate (`heart`, `charge`, `stolen`) ya están integrados (`87c25c2`).
   - Los talismanes y el arma siguen como sellos de hanzi, por diseño.
 
 ## Análisis de balance (06/11, Normal, Partida 1)
@@ -158,7 +158,7 @@ macOS no tiene `timeout`.
 ## Pendiente
 1. Probar la build +2: que suene todo (música por pantalla, toques, golpes) y si la etapa 3 sigue fácil. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
 2. Probar en el juego la etapa 3 nueva (desgaste, embestida del buey, espada que cambia de altura) y ver si la línea «Cada golpe gasta tu Guardia» se entiende. Las peleas siguen cortas (~2,5 turnos).
-3. **TestFlight:** pantalla de carga hecha (`71a2648`, logo sobre papel). Hecho también: solo iPhone y solo vertical, `ITSAppUsesNonExemptEncryption=false` y `ios/Runner/PrivacyInfo.xcprivacy` (UserDefaults, CA92.1; no recopila datos). Ficha, textos de TestFlight y paso a paso en `docs/testflight.md`; política de privacidad en `docs/privacidad.md` (URL de GitHub, repo público). Bundle `com.oraki.longBreath` (iOS y Android). IPA `0.1.0+1` (06/11) con ícono de Flutter e iOS 13. IPA `0.1.0+2` (06/11): ícono propio (fuente en `docs/arte/app_icon.webp`, integrado con `python3 tool/make_app_icon.py icon <png>`) y target mínimo iOS 15.0 (aviso 90068). **Solo se subió el `0.1.0+1`; el +2 y el +3 locales no se subieron. IPA `0.1.0+2` rehecho (06/11) con todo: sonido, legibilidad, pergamino del rival, balance de §3j y los 3 íconos nuevos (Vida, carga, jade robado). El próximo tiene que ser `+3`.** IPA `0.1.0+3` armado (07/11) con la interfaz nueva (`70bdc98`); falta subirlo con Transporter y después borrar `build/`. El usuario crea la app en App Store Connect.
+3. **TestFlight:** pantalla de carga hecha (`71a2648`, logo sobre papel). Hecho también: solo iPhone y solo vertical, `ITSAppUsesNonExemptEncryption=false` y `ios/Runner/PrivacyInfo.xcprivacy` (UserDefaults, CA92.1; no recopila datos). Ficha, textos de TestFlight y paso a paso en `docs/testflight.md`; política de privacidad en `docs/privacidad.md` (URL de GitHub, repo público). Bundle `com.oraki.longBreath` (iOS y Android). IPA `0.1.0+1` (06/11) con ícono de Flutter e iOS 13. IPA `0.1.0+2` (06/11): ícono propio (fuente en `docs/arte/app_icon.webp`, integrado con `python3 tool/make_app_icon.py icon <png>`) y target mínimo iOS 15.0 (aviso 90068). **Solo se subió el `0.1.0+1`; el +2 y el +3 locales no se subieron. IPA `0.1.0+2` rehecho (06/11) con todo: sonido, legibilidad, pergamino del rival, balance de §3j y los 3 íconos nuevos (Vida, carga, jade robado). El próximo tiene que ser `+3`.** IPA `0.1.0+3` (interfaz nueva, `70bdc98`) **subido el 09/11**; `build/` borrado. La próxima es `+4`. El usuario crea la app en App Store Connect.
 4. **Interfaz (07/11), va en la +3:** hecho:
    - botones con cuerpo de papel desde el tema;
    - `ScrollPanel` (marco y fundido) en registro, lecciones, meridianos, maestro, mercader y resultado; fundido solo en partidas, evento y etapa superada;
@@ -168,7 +168,12 @@ macOS no tiene `timeout`.
    - mercader en pestañas (Cartas · Objetos · Servicios), sin «Hay más abajo»;
    - hitos del resultado en una fila de sellos (`HitoSealRow`); tocar uno muestra cómo se cumplió;
    - `ScrollPanel(hug: true)` + `shrinkWrap`: el marco abraza listas cortas (lecciones, meridianos, maestro).
-5. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
+5. **Mapa con niebla (09/11), va en la +4:**
+   - Solo se ven las opciones de ahora, lo ya andado y la cumbre (jefe, atenuado): no se puede leer de antemano el camino fácil. Senderos solo entre lugares vistos.
+   - Sellos más grandes (60/64/72 px, placa 12,5 px) y pisos más altos (`mapRowH` 126); `_bottom` 250 para que la tarjeta no tape el primer piso.
+   - Elegir en dos pasos: tocar un lugar lo agranda y abre una tarjeta abajo (sello, nombre, qué ofrece, «Ir»); tocarlo de nuevo o «Ir» va. Sin elección, pista «Tocá un lugar…». Las opciones nuevas suben de la niebla una tras otra.
+   - Falta probarlo en el teléfono (sobre todo si el paso extra molesta o suma).
+6. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas
 - Si un widget de animación devuelve `child!` cuando está quieto y lo envuelve cuando anima, el subárbol se remonta. Hay que devolver siempre el mismo tipo de widget.

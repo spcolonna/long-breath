@@ -12,8 +12,8 @@ import '../../theme.dart';
 
 /// Ancho y alto de un lugar (sello + nombre); el centro del sello queda en
 /// [sealCenter].
-const nodeBox = Size(104, 92);
-const sealCenter = Offset(52, 30);
+const nodeBox = Size(124, 108);
+const sealCenter = Offset(62, 38);
 
 /// Cómo se ve cada tipo de lugar: el carácter tallado en la piedra y su
 /// color. El combate muestra el rango (común, élite o jefe), no quién es.
@@ -22,15 +22,15 @@ const sealCenter = Offset(52, 30);
   GameData data,
 ) => switch (n.type) {
   NodeType.combat => switch (data.enemy(n.enemy!).rank) {
-    EnemyRank.common => (hanzi: '武', color: Palette.lacquer, size: 48.0),
-    EnemyRank.elite => (hanzi: '精', color: Palette.gold, size: 52.0),
-    EnemyRank.boss => (hanzi: '龙', color: Palette.lacquer, size: 60.0),
+    EnemyRank.common => (hanzi: '武', color: Palette.lacquer, size: 60.0),
+    EnemyRank.elite => (hanzi: '精', color: Palette.gold, size: 64.0),
+    EnemyRank.boss => (hanzi: '龙', color: Palette.lacquer, size: 72.0),
   },
-  NodeType.fountain => (hanzi: '泉', color: Palette.sky, size: 48.0),
-  NodeType.shrine => (hanzi: '庙', color: Palette.gold, size: 52.0),
-  NodeType.event => (hanzi: '缘', color: Palette.blossom, size: 48.0),
-  NodeType.merchant => (hanzi: '商', color: Palette.jade, size: 48.0),
-  NodeType.master => (hanzi: '师', color: Palette.structure, size: 48.0),
+  NodeType.fountain => (hanzi: '泉', color: Palette.sky, size: 60.0),
+  NodeType.shrine => (hanzi: '庙', color: Palette.gold, size: 64.0),
+  NodeType.event => (hanzi: '缘', color: Palette.blossom, size: 60.0),
+  NodeType.merchant => (hanzi: '商', color: Palette.jade, size: 60.0),
+  NodeType.master => (hanzi: '师', color: Palette.structure, size: 60.0),
 };
 
 /// Élite que se puede esquivar: comparte piso con otro lugar (el élite de
@@ -71,6 +71,7 @@ class MapNode extends ConsumerStatefulWidget {
     required this.available,
     required this.onTap,
     this.optional = false,
+    this.selected = false,
   });
 
   final MapNodeDef node;
@@ -79,6 +80,9 @@ class MapNode extends ConsumerStatefulWidget {
   final bool optional;
   final bool visited;
   final bool available;
+
+  /// Elegido para mirar antes de ir: se agranda y deja de flotar.
+  final bool selected;
   final VoidCallback? onTap;
 
   @override
@@ -161,8 +165,9 @@ class _MapNodeState extends ConsumerState<MapNode>
                       look.size / 2 +
                       (available ? -3 - 3 * math.sin(phase) : 0),
                   child: AnimatedScale(
-                    scale: _down ? 0.9 : 1,
-                    duration: const Duration(milliseconds: 110),
+                    scale: _down ? 0.9 : (widget.selected ? 1.14 : 1),
+                    duration: Duration(milliseconds: _down ? 110 : 260),
+                    curve: Curves.easeOutBack,
                     child: _Seal(
                       look: look,
                       available: available,
@@ -525,7 +530,7 @@ class _Ribbon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 100),
+      constraints: const BoxConstraints(maxWidth: 118),
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: Palette.surface.withValues(alpha: strong ? 0.97 : 0.82),
@@ -547,14 +552,14 @@ class _Ribbon extends StatelessWidget {
               : null,
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 2, 8, 3),
+          padding: const EdgeInsets.fromLTRB(9, 3, 9, 4),
           child: Text(
             label,
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 12.5,
               height: 1.1,
               fontWeight: strong ? FontWeight.w700 : FontWeight.w500,
               color: strong ? Palette.text : Palette.textDim,

@@ -96,7 +96,12 @@ void main() {
     final pathName = text.path(firstNode.scene!, firstNode.light!);
     expect(find.text(firstEnemy), findsNothing);
 
+    // Primero se mira el lugar (tarjeta con qué es) y después se va.
+    expect(find.text('Ir'), findsNothing);
     await tester.tap(find.text(pathName).first);
+    await settle();
+    expect(find.text('Ir'), findsOneWidget);
+    await tester.tap(find.text('Ir'));
     // El discípulo camina hasta el lugar antes de entrar.
     await settle();
     await settle();
@@ -123,6 +128,8 @@ void main() {
     await settle();
     expect(find.text('Montaña de las Mil Nubes · 千云山'), findsOneWidget);
     await tester.tap(find.text(pathName).first);
+    await settle();
+    await tester.tap(find.text('Ir'));
     await settle();
     await settle();
     expect(find.text('Turno 1'), findsOneWidget);

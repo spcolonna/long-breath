@@ -2488,6 +2488,78 @@ abstract class AppLocalizations {
   /// **'Desvío'**
   String get optionalEliteTag;
 
+  /// No description provided for @mapPickHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá un lugar para ver qué te espera'**
+  String get mapPickHint;
+
+  /// No description provided for @mapGo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ir'**
+  String get mapGo;
+
+  /// No description provided for @nodeHintCommon.
+  ///
+  /// In es, this message translates to:
+  /// **'Un rival del camino. Si ganás, elegís una carta nueva.'**
+  String get nodeHintCommon;
+
+  /// No description provided for @nodeHintElite.
+  ///
+  /// In es, this message translates to:
+  /// **'Un rival fuerte: más riesgo, mejor botín.'**
+  String get nodeHintElite;
+
+  /// No description provided for @nodeHintDetour.
+  ///
+  /// In es, this message translates to:
+  /// **'Un desvío con un rival fuerte. Podés esquivarlo, pero el botín es mejor.'**
+  String get nodeHintDetour;
+
+  /// No description provided for @nodeHintBoss.
+  ///
+  /// In es, this message translates to:
+  /// **'El guardián de la cumbre.'**
+  String get nodeHintBoss;
+
+  /// No description provided for @nodeHintPack.
+  ///
+  /// In es, this message translates to:
+  /// **'Vienen {count} rivales.'**
+  String nodeHintPack(int count);
+
+  /// No description provided for @nodeHintFountain.
+  ///
+  /// In es, this message translates to:
+  /// **'Agua clara: curás Vida, mejorás o quitás una carta.'**
+  String get nodeHintFountain;
+
+  /// No description provided for @nodeHintShrine.
+  ///
+  /// In es, this message translates to:
+  /// **'Un animal sagrado te ofrece su bendición.'**
+  String get nodeHintShrine;
+
+  /// No description provided for @nodeHintEvent.
+  ///
+  /// In es, this message translates to:
+  /// **'Un encuentro en el sendero. Puede ayudarte o costarte algo.'**
+  String get nodeHintEvent;
+
+  /// No description provided for @nodeHintMerchant.
+  ///
+  /// In es, this message translates to:
+  /// **'Cartas, objetos y servicios a cambio de jade.'**
+  String get nodeHintMerchant;
+
+  /// No description provided for @nodeHintMaster.
+  ///
+  /// In es, this message translates to:
+  /// **'Un maestro te enseña una forma nueva.'**
+  String get nodeHintMaster;
+
   /// No description provided for @formMissingShort.
   ///
   /// In es, this message translates to:

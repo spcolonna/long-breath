@@ -20,6 +20,7 @@ import '../labels.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/jade.dart';
 import '../widgets/lotus.dart';
+import '../widgets/paper_panel.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/ink_reveal.dart';
 import '../widgets/juice.dart';
@@ -202,6 +203,9 @@ class _MapViewState extends ConsumerState<_MapView>
   MapLayout? _layout;
   (Size, List<MapNodeDef>)? _laidFor;
   MapNodeDef? _going;
+
+  /// Lugar que se está mirando antes de ir (tocarlo de nuevo, o «Ir», va).
+  String? _picked;
   Path? _route;
   int _burst = 0;
 
@@ -247,6 +251,16 @@ class _MapViewState extends ConsumerState<_MapView>
     return ys.isEmpty ? null : ys.reduce(math.max);
   }
 
+  void _tapNode(MapNodeDef n) {
+    if (_going != null) return;
+    if (_picked == n.id) {
+      _go(n);
+      return;
+    }
+    Haptics.tap();
+    setState(() => _picked = n.id);
+  }
+
   Future<void> _go(MapNodeDef n) async {
     if (_going != null) return;
     final layout = _layout!;
@@ -256,10 +270,7 @@ class _MapViewState extends ConsumerState<_MapView>
     Haptics.mediumImpact();
     // Tomar el desvío: un segundo golpe, como quien acepta el reto.
     if (isOptionalElite(n, widget.run.map, ref.read(dataProvider))) {
-      Future.delayed(
-        const Duration(milliseconds: 110),
-        Haptics.heavyImpact,
-      );
+      Future.delayed(const Duration(milliseconds: 110), Haptics.heavyImpact);
     }
     setState(() {
       _going = n;
@@ -331,9 +342,23 @@ class _MapViewState extends ConsumerState<_MapView>
         }
         final scroll = _scroll!;
         final current = layout.rowOf[run.currentNode] ?? -1;
-        double fogAt(int row) => row + 3 < layout.rowY.length
-            ? (layout.rowY[row + 2] + layout.rowY[row + 3]) / 2
-            : 0;
+        // La niebla tapa todo lo que está más allá de las opciones de ahora:
+        // no se puede adivinar de antemano el camino fácil.
+        double fogAt(int row) {
+          final r = math.max(row, -1);
+          return r + 2 < layout.rowY.length
+              ? (layout.rowY[r + 1] + layout.rowY[r + 2]) / 2
+              : 0;
+        }
+        final lastRow = layout.rows.isEmpty ? -1 : layout.rows.length - 1;
+        bool seen(MapNodeDef n) =>
+            run.visited.contains(n.id) ||
+            widget.available.contains(n.id) ||
+            layout.rowOf[n.id] == lastRow;
+        final order = [
+          for (final n in run.map)
+            if (widget.available.contains(n.id)) n.id,
+        ];
         final prevRow = run.visited.length >= 2
             ? layout.rowOf[run.visited[run.visited.length - 2]] ?? current
             : current - 1;
@@ -407,21 +432,7 @@ class _MapViewState extends ConsumerState<_MapView>
                           ),
                         ),
                       ),
-                      for (final n in run.map)
-                        Positioned(
-                          left: layout.pos[n.id]!.dx - sealCenter.dx,
-                          top: layout.pos[n.id]!.dy - sealCenter.dy,
-                          child: MapNode(
-                            node: n,
-                            visited: run.visited.contains(n.id),
-                            available:
-                                _going == null &&
-                                widget.available.contains(n.id),
-                            optional: isOptionalElite(n, run.map, data),
-                            onTap: () => _go(n),
-                          ),
-                        ),
-                      // La niebla se despeja hasta dos pisos por encima.
+                      // La niebla se despeja solo hasta las opciones de ahora.
                       Positioned.fill(
                         child: IgnorePointer(
                           child: TweenAnimationBuilder<double>(
@@ -436,6 +447,35 @@ class _MapViewState extends ConsumerState<_MapView>
                           ),
                         ),
                       ),
+                      for (final n in run.map)
+                        if (seen(n))
+                          Positioned(
+                            left: layout.pos[n.id]!.dx - sealCenter.dx,
+                            top: layout.pos[n.id]!.dy - sealCenter.dy,
+                            child: _Arrive(
+                              key: ValueKey('arrive${n.id}'),
+                              index: order.indexOf(n.id),
+                              child: Opacity(
+                                // La cumbre se adivina entre la niebla: es la
+                                // meta, no el camino.
+                                opacity:
+                                    layout.rowOf[n.id] == lastRow &&
+                                        !widget.available.contains(n.id)
+                                    ? 0.7
+                                    : 1,
+                                child: MapNode(
+                                  node: n,
+                                  visited: run.visited.contains(n.id),
+                                  available:
+                                      _going == null &&
+                                      widget.available.contains(n.id),
+                                  selected: _picked == n.id,
+                                  optional: isOptionalElite(n, run.map, data),
+                                  onTap: () => _tapNode(n),
+                                ),
+                              ),
+                            ),
+                          ),
                       _walker(run),
                       if (_going != null)
                         Positioned(
@@ -454,6 +494,21 @@ class _MapViewState extends ConsumerState<_MapView>
                         ),
                     ],
                   ),
+                ),
+              ),
+              Positioned(
+                left: 16,
+                right: 16,
+                bottom: 16 + MediaQuery.paddingOf(context).bottom,
+                child: _PickCard(
+                  node: _going != null || _picked == null
+                      ? null
+                      : run.node(_picked!),
+                  hidden: _going != null,
+                  optional:
+                      _picked != null &&
+                      isOptionalElite(run.node(_picked!), run.map, data),
+                  onGo: () => _go(run.node(_picked!)),
                 ),
               ),
             ],
@@ -677,4 +732,182 @@ class _AltitudePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_AltitudePainter old) => old.p != p;
+}
+
+/// Un lugar que se acaba de abrir sube desde la niebla: se agranda y
+/// aparece, uno tras otro. Lo ya visto aparece quieto.
+class _Arrive extends StatelessWidget {
+  const _Arrive({super.key, required this.index, required this.child});
+
+  /// Orden entre las opciones de ahora; -1 si no es una opción.
+  final int index;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (index < 0 || calm(context)) return child;
+    final start = 0.3 + 0.12 * index;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 1300),
+      curve: Interval(math.min(start, 0.7), 1, curve: Curves.easeOutBack),
+      builder: (_, v, child) => Opacity(
+        opacity: v.clamp(0.0, 1.0),
+        child: Transform.scale(scale: 0.6 + 0.4 * v, child: child),
+      ),
+      child: child,
+    );
+  }
+}
+
+/// Tarjeta de abajo: qué es el lugar elegido y el botón para ir. Sin
+/// elección, una pista corta.
+class _PickCard extends ConsumerWidget {
+  const _PickCard({
+    required this.node,
+    required this.hidden,
+    required this.optional,
+    required this.onGo,
+  });
+
+  final MapNodeDef? node;
+  final bool hidden;
+  final bool optional;
+  final VoidCallback onGo;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final n = node;
+    final Widget body;
+    if (n == null) {
+      body = Center(
+        key: const ValueKey('hint'),
+        child: PaperPanel(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          radius: 22,
+          child: Text(
+            t.mapPickHint,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Palette.text,
+            ),
+          ),
+        ),
+      );
+    } else {
+      final data = ref.watch(dataProvider);
+      final look = nodeLook(n, data);
+      final label = nodeLabel(n, t, ref.watch(textProvider).path);
+      final rank = n.type == NodeType.combat ? data.enemy(n.enemy!).rank : null;
+      final hint = switch (n.type) {
+        NodeType.combat => switch (rank!) {
+          EnemyRank.common => t.nodeHintCommon,
+          EnemyRank.elite => optional ? t.nodeHintDetour : t.nodeHintElite,
+          EnemyRank.boss => t.nodeHintBoss,
+        },
+        NodeType.fountain => t.nodeHintFountain,
+        NodeType.shrine => t.nodeHintShrine,
+        NodeType.event => t.nodeHintEvent,
+        NodeType.merchant => t.nodeHintMerchant,
+        NodeType.master => t.nodeHintMaster,
+      };
+      final pack = n.waves.isEmpty
+          ? ''
+          : ' ${t.nodeHintPack(1 + n.waves.length)}';
+      body = PaperPanel(
+        key: ValueKey(n.id),
+        accent: look.color,
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+        child: Row(
+          children: [
+            Container(
+              width: 52,
+              height: 52,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: look.color.withValues(alpha: 0.14),
+                border: Border.all(color: look.color, width: 2),
+              ),
+              child: Text(
+                look.hanzi,
+                style: TextStyle(
+                  fontSize: 26,
+                  height: 1,
+                  color: look.color,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      color: Palette.text,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '$hint$pack',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      height: 1.25,
+                      color: Palette.text,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            FilledButton(
+              onPressed: onGo,
+              style: FilledButton.styleFrom(
+                backgroundColor: look.color,
+                foregroundColor: Palette.surface,
+                minimumSize: const Size(64, 48),
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              child: Text(t.mapGo),
+            ),
+          ],
+        ),
+      );
+    }
+    return IgnorePointer(
+      ignoring: hidden,
+      child: AnimatedOpacity(
+        opacity: hidden ? 0 : 1,
+        duration: const Duration(milliseconds: 220),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 260),
+          switchInCurve: Curves.easeOutCubic,
+          transitionBuilder: (child, a) => FadeTransition(
+            opacity: a,
+            child: SlideTransition(
+              position: Tween(
+                begin: const Offset(0, 0.25),
+                end: Offset.zero,
+              ).animate(a),
+              child: child,
+            ),
+          ),
+          child: body,
+        ),
+      ),
+    );
+  }
 }

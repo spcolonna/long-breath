@@ -524,7 +524,7 @@ class FogPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (edge <= 0) return;
-    final fog = Palette.surface.withValues(alpha: 0.4);
+    final fog = Palette.surface.withValues(alpha: 0.62);
     canvas.drawRect(
       Rect.fromLTRB(0, 0, size.width, edge - 90),
       Paint()..color = fog,

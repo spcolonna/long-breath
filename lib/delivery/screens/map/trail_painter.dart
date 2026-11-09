@@ -11,7 +11,8 @@ const _stoneShadow = Color(0xFFB9A98A);
 
 /// El sendero entre los lugares: escalones de piedra que siguen una curva.
 /// Lo recorrido queda pintado en tinta dorada; los tramos que se pueden
-/// tomar ahora respiran; el resto se ve tenue.
+/// tomar ahora respiran; lo que está más adelante no se ve (la niebla no
+/// deja adivinar el camino fácil).
 class TrailPainter extends CustomPainter {
   TrailPainter({
     required this.layout,
@@ -50,8 +51,9 @@ class TrailPainter extends CustomPainter {
 
     // Del pie de la montaña al primer piso.
     for (final id in run.starts) {
-      final path = trailPath(layout.foot, pos[id]!, 'foot$id');
       final open = here == null;
+      if (!open && !visited.contains(id)) continue;
+      final path = trailPath(layout.foot, pos[id]!, 'foot$id');
       _steps(
         canvas,
         path,
@@ -63,9 +65,10 @@ class TrailPainter extends CustomPainter {
     }
     for (final n in run.map) {
       for (final next in n.next) {
-        final path = trailPath(pos[n.id]!, pos[next]!, '${n.id}>$next');
         final isWalked = visited.contains(n.id) && visited.contains(next);
         final isOpen = n.id == here && available.contains(next);
+        if (!isWalked && !isOpen) continue;
+        final path = trailPath(pos[n.id]!, pos[next]!, '${n.id}>$next');
         _steps(
           canvas,
           path,
