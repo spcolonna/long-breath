@@ -36,6 +36,12 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - élite con escolta (un élite y un común a la vez). **Hecho (29/10/2026):** `escort` y `escorts` en el piso del élite (etapa 2: 40%, etapa 3: 60%); el élite pelea con 80% de Vida, la escolta con 45% y los dos pegan 85%;
   - formas o cartas de área que peguen a los dos;
   - enemigos que se potencian entre sí (uno cubre al otro, uno cura al otro).
+- **Más de un enfrentamiento por nodo (plan, 09/11/2026).** Hoy ya existe en parte: un combate puede traer 2 rivales en fila (`packs`, entran al caer el anterior) o a la vez (`together`), y el élite puede traer escolta. Lo que falta es que el nodo se sienta como un *tramo* y no como una pelea. Orden propuesto:
+  1. **Oleadas visibles:** indicador «1/3» en la arena y en la tarjeta del mapa; entre oleada y oleada, un respiro corto (pergamino que se cierra, sonido, el siguiente rival baja del fondo). La mano y la Guardia siguen; se descarta y se roba mano nueva. Habilitar grupos de 3 en los pisos altos (`packs: {"3": n}`; `hpPct` ya tiene 3 valores).
+  2. **Respiro entre oleadas:** elegir 1 de 3 mini premios (curar poco, mejorar una carta solo por este combate, +Guardia inicial). Da decisiones dentro del nodo sin pantalla nueva.
+  3. **Nodo «Paso» (desfiladero, 隘):** tipo de nodo nuevo, cadena de 2–3 combates con botín creciente; después de cada uno podés seguir o retirarte con lo ganado (arriesgar o asegurar). Encaja con el mapa con niebla: la tarjeta dice «hasta 3 rivales, botín creciente».
+  4. **Emboscada:** evento que puede terminar en combate según la elección.
+  - Para hacer: `MapNodeDef.waves` ya modela la fila; agregar `stops`/retirada al motor (`run_engine.packOf`), soporte en `tool/sim/lab.dart` para medir el desgaste (la Vida acumulada es la que importa) y tests de motor. Balance: cada oleada extra baja Vida (`hpPct`) y sube jade (`jadePerExtra`); revisar con la simulación que promedio/experto no caigan.
 - **Golpes con peso.** **Hecho (02/11/2026):** cámara lenta breve al desequilibrar, al completar una forma y en el golpe final. Tres tamaños de número de daño (el fuerte con borde dorado) y «×2» si estaba desequilibrado. Las élites y los jefes se rematan con un trazo de pincel y un sello 破. Siguientes pasos posibles:
   - sonido propio de remate (hoy reusa `break` + `victory_stamp`);
   - zoom de cámara al rival en el remate de un jefe;
