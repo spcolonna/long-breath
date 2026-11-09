@@ -716,13 +716,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get passLeave => 'Volver al mapa';
 
   @override
-  String get invalidMustBreathe => 'Primero elegí tu respiro';
+  String get invalidMustBreathe => 'Primero elegí qué hacer en la tregua';
 
   @override
-  String get invalidNoBreather => 'Ahora no hay respiro';
+  String get invalidNoBreather => 'Ahora no hay tregua';
 
   @override
-  String get breatherTitle => 'Respiro';
+  String get breatherTitle => 'Tregua';
 
   @override
   String breatherSub(String name) {
@@ -730,7 +730,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get breatherRest => 'Respirar';
+  String get breatherRest => 'Reponerte';
 
   @override
   String breatherRestHint(int count) {
@@ -1507,7 +1507,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, elegís un respiro y entra el siguiente.';
+      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, hay una tregua corta (curarte, robar o afilar los puños) y entra el siguiente.';
 
   @override
   String get lesClimbSlide3Title => 'Después de cada combate';

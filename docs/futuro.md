@@ -38,7 +38,7 @@ Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y e
   - enemigos que se potencian entre sí (uno cubre al otro, uno cura al otro).
 - **Más de un enfrentamiento por nodo.** **Hecho (09/11/2026):**
   1. Oleadas visibles: ya existían (grupos de hasta 3 en etapas 2–3, «2 de 3» y rivales que esperan en la arena, transición entre uno y otro).
-  2. Respiro entre oleadas (`packs.breather`): al caer uno del grupo se elige curar 10% de la Vida máxima, robar 2 cartas y +1 aliento, o +2 a los puños por el combate (`CombatPhase.breather`, `ChooseBreather`, `BreatherSheet`).
+  2. Tregua entre oleadas (en código, `breather`) (`packs.breather`): al caer uno del grupo se elige curar 10% de la Vida máxima, robar 2 cartas y +1 aliento, o +2 a los puños por el combate (`CombatPhase.breather`, `ChooseBreather`, `BreatherSheet`).
   3. Paso de montaña (隘, `NodeType.pass`, `run.pass`): 3 combates de a uno sin curar; después de cada uno, seguir (+6 de jade por cada uno vencido) o volver al mapa (`RunPhase.passChoice`, `/pass`); el último deja talismán. Peso 1 en los pisos con maestro, uno por piso como mucho; cuenta como pelea para el mínimo de combates.
   4. Emboscada (伏, `ambush_<etapa>`, `"ambush": true`): pelear, escabullirse (55%: +12 de jade; si no, −4 de Vida y pelea) o pagar 20 de jade. La pelea paga como un combate común (sin talismán). `EventOutcome.duel` permite que un resultado termine en pelea.
   - Siguientes pasos posibles: respiros distintos por etapa o por camino; un paso con jefe menor al final; que el rival de la emboscada salga del piso en vez de ser fijo por etapa.

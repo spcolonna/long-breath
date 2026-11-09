@@ -79,7 +79,7 @@ void main() {
     await settle();
     expect(view().state.phase, CombatPhase.breather);
     expect(find.byType(BreatherSheet), findsOneWidget);
-    expect(find.text('Respiro'), findsOneWidget);
+    expect(find.text('Tregua'), findsOneWidget);
 
     await tester.tap(find.text('Concentrarte'));
     await settle();

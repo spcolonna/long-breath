@@ -173,7 +173,7 @@ macOS no tiene `timeout`.
    - Sellos más grandes (60/64/72 px, placa 12,5 px) y pisos más altos (`mapRowH` 126); `_bottom` 250 para que la tarjeta no tape el primer piso.
    - Elegir en dos pasos: tocar un lugar lo agranda y abre una tarjeta abajo (sello, nombre, qué ofrece, «Ir»); tocarlo de nuevo o «Ir» va. Sin elección, pista «Tocá un lugar…». Las opciones nuevas suben de la niebla una tras otra.
    - Falta probarlo en el teléfono (sobre todo si el paso extra molesta o suma).
-6. **Cada nodo como un tramo (09/11), va en la +4:** respiro entre oleadas (`175e101`), paso de montaña con 3 combates y seguir/volver (`a6f2156`) y emboscadas por etapa (ver `docs/futuro.md`). Simulación Normal, 300 runs: antes promedio ~22–24% y experto ~53–58%; con todo, promedio ~26–29% y experto ~61%. Queda un poco fácil: si se confirma en el teléfono, endurecer la emboscada (escabullirse 50%, −6) o el respiro (cura 8%). Falta probar en el teléfono la tarjeta del respiro y la pantalla del paso.
+6. **Cada nodo como un tramo (09/11), va en la +4:** tregua entre oleadas (se llamaba «respiro»; se renombró porque chocaba con el botón Respirar) (`175e101`), paso de montaña con 3 combates y seguir/volver (`a6f2156`) y emboscadas por etapa (ver `docs/futuro.md`). Simulación Normal, 300 runs: antes promedio ~22–24% y experto ~53–58%; con todo, promedio ~26–29% y experto ~61%. Queda un poco fácil: si se confirma en el teléfono, endurecer la emboscada (escabullirse 50%, −6) o la tregua (cura 8%). Falta probar en el teléfono la tarjeta de la tregua y la pantalla del paso.
 7. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas

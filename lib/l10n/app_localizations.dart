@@ -1231,19 +1231,19 @@ abstract class AppLocalizations {
   /// No description provided for @invalidMustBreathe.
   ///
   /// In es, this message translates to:
-  /// **'Primero elegí tu respiro'**
+  /// **'Primero elegí qué hacer en la tregua'**
   String get invalidMustBreathe;
 
   /// No description provided for @invalidNoBreather.
   ///
   /// In es, this message translates to:
-  /// **'Ahora no hay respiro'**
+  /// **'Ahora no hay tregua'**
   String get invalidNoBreather;
 
   /// No description provided for @breatherTitle.
   ///
   /// In es, this message translates to:
-  /// **'Respiro'**
+  /// **'Tregua'**
   String get breatherTitle;
 
   /// No description provided for @breatherSub.
@@ -1255,7 +1255,7 @@ abstract class AppLocalizations {
   /// No description provided for @breatherRest.
   ///
   /// In es, this message translates to:
-  /// **'Respirar'**
+  /// **'Reponerte'**
   String get breatherRest;
 
   /// No description provided for @breatherRestHint.
@@ -2539,7 +2539,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, elegís un respiro y entra el siguiente.'**
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, hay una tregua corta (curarte, robar o afilar los puños) y entra el siguiente.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.
