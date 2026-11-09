@@ -33,6 +33,8 @@ enum Invalid {
   retainTooMany,
   noDiscard,
   badTarget,
+  mustBreathe,
+  noBreather,
 }
 
 /// Valores finales de una carta en el estado actual (lo que muestra la UI).
@@ -316,6 +318,12 @@ class CombatEngine {
         d.discard.add(card);
         d.pendingDiscard--;
         if (d.pendingDiscard == 0) d.phase = CombatPhase.playerTurn;
+      case ChooseBreather(:final breather):
+        _takeBreather(d, breather, events);
+        d.phase = d.pendingDiscard > 0
+            ? CombatPhase.discarding
+            : CombatPhase.playerTurn;
+        _nextWave(d, events);
     }
     _settle(d, events);
     return CombatResult(d.freeze(), events);
@@ -331,8 +339,51 @@ class CombatEngine {
         d.target = d.cur = d.enemies.indexWhere((e) => e.hp > 0);
         events.add(TargetChanged(d.target));
       }
-    } else if (d.enemyDown) {
-      _nextWave(d, events);
+    } else if (d.enemyDown && d.phase != CombatPhase.breather) {
+      if (breathers.isEmpty) {
+        _nextWave(d, events);
+      } else {
+        // Antes del siguiente, un respiro: el jugador elige un premio chico.
+        d.phase = CombatPhase.breather;
+        events.add(BreatherOffered(breathers));
+      }
+    }
+  }
+
+  /// Respiros que ofrece el balance (vacío = las oleadas entran sin pausa).
+  List<Breather> get breathers {
+    final b = data.balance.breather;
+    return [
+      if (b.healPct > 0) Breather.rest,
+      if (b.draw > 0 || b.breath > 0) Breather.focus,
+      if (b.fist > 0) Breather.fist,
+    ];
+  }
+
+  /// Lo que da cada respiro (cantidades en el balance, `packs.breather`).
+  int breatherHeal(CombatState s) =>
+      math.max(1, (s.player.maxHp * data.balance.breather.healPct / 100).round());
+
+  void _takeBreather(_Draft d, Breather b, List<CombatEvent> events) {
+    final cfg = data.balance.breather;
+    events.add(BreatherTaken(b));
+    switch (b) {
+      case Breather.rest:
+        final healed = math.min(
+            math.max(1, (d.maxHp * cfg.healPct / 100).round()), d.maxHp - d.hp);
+        if (healed > 0) {
+          d.hp += healed;
+          events.add(PlayerHealed(healed));
+        }
+      case Breather.focus:
+        if (cfg.breath > 0) {
+          d.breath += cfg.breath;
+          events.add(BreathGained(cfg.breath));
+        }
+        if (cfg.draw > 0) _draw(d, cfg.draw, events);
+      case Breather.fist:
+        d.fistBonus += cfg.fist;
+        events.add(FistBonusGained(cfg.fist, d.fistBonus));
     }
   }
 
@@ -355,6 +406,9 @@ class CombatEngine {
     if (s.isOver) return Invalid.combatOver;
     if (s.phase == CombatPhase.discarding && action is! ChooseDiscard) {
       return Invalid.mustDiscard;
+    }
+    if (s.phase == CombatPhase.breather && action is! ChooseBreather) {
+      return Invalid.mustBreathe;
     }
     switch (action) {
       case Target(:final index):
@@ -383,6 +437,11 @@ class CombatEngine {
       case ChooseDiscard(:final uid):
         if (s.phase != CombatPhase.discarding) return Invalid.noDiscard;
         if (s.handCard(uid) == null) return Invalid.notInHand;
+      case ChooseBreather(:final breather):
+        if (s.phase != CombatPhase.breather ||
+            !breathers.contains(breather)) {
+          return Invalid.noBreather;
+        }
     }
     return null;
   }
@@ -392,6 +451,9 @@ class CombatEngine {
     if (s.isOver) return const [];
     if (s.phase == CombatPhase.discarding) {
       return [for (final c in s.hand) ChooseDiscard(c.uid)];
+    }
+    if (s.phase == CombatPhase.breather) {
+      return [for (final b in breathers) ChooseBreather(b)];
     }
     final out = <CombatAction>[];
     final seen = <String>{};

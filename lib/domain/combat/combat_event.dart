@@ -1,4 +1,5 @@
 import '../model/enums.dart';
+import 'combat_state.dart';
 
 /// Eventos que produce el motor para que la interfaz anime.
 sealed class CombatEvent {
@@ -259,4 +260,15 @@ class HandFrozen extends CombatEvent {
 /// El golpe era de otro tipo y esquivó su Guardia.
 class GuardBypassed extends CombatEvent {
   const GuardBypassed();
+}
+
+/// Cayó un enemigo y queda otro en el grupo: el jugador elige un respiro.
+class BreatherOffered extends CombatEvent {
+  const BreatherOffered(this.options);
+  final List<Breather> options;
+}
+
+class BreatherTaken extends CombatEvent {
+  const BreatherTaken(this.breather);
+  final Breather breather;
 }

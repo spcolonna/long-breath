@@ -120,6 +120,8 @@ extension Labels on AppLocalizations {
     Invalid.retainTooMany => invalidRetainTooMany,
     Invalid.noDiscard => invalidNoDiscard,
     Invalid.badTarget => invalidBadTarget,
+    Invalid.mustBreathe => invalidMustBreathe,
+    Invalid.noBreather => invalidNoBreather,
   };
 
   /// Texto corto con el efecto especial de la carta (lo que no se ve en íconos).

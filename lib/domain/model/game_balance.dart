@@ -432,6 +432,31 @@ enum RewardKind { cards, jade, lotus, upgrade, tea, talisman, weapon }
 /// Legado: la carta del anterior conserva [upgradePct]% de sus mejoras;
 /// la otra opción es [maxHp] de Vida máxima si llegó a la etapa [hpStage]
 /// (0 = la primera) o [jade] si no.
+/// Respiro entre oleadas (`packs.breather`): cuánto da cada premio.
+/// En 0 no se ofrece; sin datos, las oleadas entran sin pausa.
+class BreatherDef {
+  const BreatherDef({this.healPct = 0, this.draw = 0, this.breath = 0, this.fist = 0});
+
+  static const none = BreatherDef();
+
+  /// Respirar: cura este % de la Vida máxima.
+  final int healPct;
+
+  /// Concentrarte: robás [draw] cartas y sumás [breath] de aliento.
+  final int draw;
+  final int breath;
+
+  /// Afilar los puños: + daño a los puños por el resto del combate.
+  final int fist;
+
+  factory BreatherDef.fromJson(Map<String, dynamic> j) => BreatherDef(
+        healPct: j['healPct'] as int? ?? 0,
+        draw: j['draw'] as int? ?? 0,
+        breath: j['breath'] as int? ?? 0,
+        fist: j['fist'] as int? ?? 0,
+      );
+}
+
 class LegacyDef {
   const LegacyDef({
     this.enabled = false,
@@ -543,6 +568,7 @@ class GameBalance {
     this.escortEliteHp = 100,
     this.escortHp = 100,
     this.escortDamage = 100,
+    this.breather = BreatherDef.none,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     required this.difficulties,
@@ -630,6 +656,9 @@ class GameBalance {
   final int escortEliteHp;
   final int escortHp;
   final int escortDamage;
+
+  /// Premio chico entre una oleada y la siguiente.
+  final BreatherDef breather;
 
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
@@ -768,6 +797,10 @@ class GameBalance {
       escortEliteHp: _escort(run, 'eliteHpPct'),
       escortHp: _escort(run, 'hpPct'),
       escortDamage: _escort(run, 'damagePct'),
+      breather: switch ((run['packs'] as Map<String, dynamic>?)?['breather']) {
+        final Map<String, dynamic> m => BreatherDef.fromJson(m),
+        _ => BreatherDef.none,
+      },
       merchantEvery:
           (run['wanderingMerchant'] as Map<String, dynamic>?)?['every'] as int? ??
               0,

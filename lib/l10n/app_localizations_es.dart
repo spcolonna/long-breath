@@ -674,6 +674,44 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invalidBadTarget => 'A ese no se le puede apuntar';
 
   @override
+  String get invalidMustBreathe => 'Primero elegí tu respiro';
+
+  @override
+  String get invalidNoBreather => 'Ahora no hay respiro';
+
+  @override
+  String get breatherTitle => 'Respiro';
+
+  @override
+  String breatherSub(String name) {
+    return 'Antes de que llegue $name';
+  }
+
+  @override
+  String get breatherRest => 'Respirar';
+
+  @override
+  String breatherRestHint(int count) {
+    return 'Recuperás $count de Vida.';
+  }
+
+  @override
+  String get breatherFocus => 'Concentrarte';
+
+  @override
+  String breatherFocusHint(int draw, int breath) {
+    return 'Robás $draw cartas y sumás $breath de aliento.';
+  }
+
+  @override
+  String get breatherFist => 'Afilar los puños';
+
+  @override
+  String breatherFistHint(int count) {
+    return '+$count al daño de tus puños en este combate.';
+  }
+
+  @override
   String get partOfForm => 'Parte de una forma';
 
   @override

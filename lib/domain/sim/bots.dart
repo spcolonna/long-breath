@@ -49,6 +49,14 @@ abstract class Bot {
     return options[random.nextInt(options.length)];
   }
 
+  /// Respiro entre oleadas: cura si está golpeado; si no, se concentra.
+  CombatAction breather(CombatEngine engine, CombatState s) {
+    final options = [for (final a in engine.legalActions(s)) (a as ChooseBreather).breather];
+    final p = s.player;
+    final want = p.hp * 10 <= p.maxHp * 7 ? Breather.rest : Breather.focus;
+    return ChooseBreather(options.contains(want) ? want : options.first);
+  }
+
   CombatAction discard(CombatState s) =>
       ChooseDiscard(s.hand[random.nextInt(s.hand.length)].uid);
 
@@ -332,6 +340,10 @@ class _Search {
 
   void _visit(CombatState s, CombatAction? first, [bool targeted = false]) {
     if (_nodes++ > bot.nodeLimit) return;
+    // Cayó uno del grupo: el respiro se elige solo y la búsqueda sigue.
+    if (s.phase == CombatPhase.breather) {
+      s = engine.reduce(s, bot.breather(engine, s)).state;
+    }
     if (!_seen.add(_key(s))) return;
     // Opción: terminar el turno acá.
     final after = s.isOver

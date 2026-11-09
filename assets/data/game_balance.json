@@ -108,7 +108,7 @@
   ],
   "run": {
     "stageClear": { "heal": 40, "jade": 25 },
-    "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5, "escort": { "eliteHpPct": 80, "hpPct": 45, "damagePct": 85 } },
+    "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5, "breather": { "healPct": 10, "draw": 2, "breath": 1, "fist": 2 }, "escort": { "eliteHpPct": 80, "hpPct": 45, "damagePct": 85 } },
     "wanderingMerchant": { "every": 3, "spread": 1 },
     "awakeningChoices": 3,
     "stages": [

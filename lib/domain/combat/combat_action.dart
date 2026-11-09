@@ -1,4 +1,5 @@
 import '../model/enums.dart';
+import 'combat_state.dart';
 
 sealed class CombatAction {
   const CombatAction();
@@ -35,4 +36,10 @@ class EndTurn extends CombatAction {
 class ChooseDiscard extends CombatAction {
   const ChooseDiscard(this.uid);
   final int uid;
+}
+
+/// Elegir el respiro entre una oleada y la siguiente.
+class ChooseBreather extends CombatAction {
+  const ChooseBreather(this.breather);
+  final Breather breather;
 }

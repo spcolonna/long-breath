@@ -30,6 +30,7 @@ import '../tutorial/illustrations.dart';
 import '../tutorial/lessons.dart';
 import '../tutorial/tutorial_anchor.dart';
 import '../tutorial/tutorial_overlay.dart';
+import '../widgets/breather_sheet.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/cinematic.dart';
 import '../widgets/deck_sheet.dart';
@@ -187,6 +188,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   Set<int> _keep = const {};
   int? _playedUid;
   bool _endShown = false;
+
+  /// Cayó un rival del grupo y se está eligiendo el respiro.
+  bool _breatherOpen = false;
 
   int _strikeKey = 0,
       _hurtKey = 0,
@@ -417,6 +421,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     // La arena arranca mostrando el estado anterior y se pone al día en el impacto.
     _shown ??= prev;
     final ev = next.events;
+    if (ev.any((e) => e is BreatherTaken)) return _afterBreather(next);
     final enemyTurn = ev.any(
       (e) =>
           e is TurnStarted ||
@@ -457,6 +462,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     });
     _audio.play(Sfx.cardPlay);
     final wave = ev.whereType<WaveStarted>().firstOrNull;
+    final rest = ev.any((e) => e is BreatherOffered);
     // La carta le pega al que estaba apuntado (si cae, ya se apunta al otro).
     final slot = prev.state.target;
     _after(hits.isEmpty ? 150 : 240, () {
@@ -466,6 +472,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         _win(slot);
       } else if (ev.any((e) => e is Defeat)) {
         _lose();
+      } else if (rest) {
+        _offerBreather();
       } else if (wave != null) {
         _nextWave(next, wave);
       } else {
@@ -484,6 +492,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   /// Cae el enemigo del grupo (estallido, sin el cartel de victoria) y, ya
   /// despejada la arena, entra el siguiente con su nombre y "2/3".
   void _nextWave(CombatView next, WaveStarted w, {bool unlock = true}) {
+    _waveFalls();
+    _after(_waveGap, () => _waveIn(next, w));
+    if (unlock) _after(_waveGap + 500, () => setState(() => _busy = false));
+  }
+
+  /// El rival del grupo estalla y la arena queda despejada.
+  void _waveFalls() {
     Haptics.heavyImpact();
     _audio.play(Sfx.enemyDeath);
     setState(() {
@@ -494,24 +509,72 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         ..burst += 1;
       _shake(12);
     });
-    _after(_waveGap, () {
-      setState(() {
-        _foe(0).dying = false;
-        _shown = next;
-      });
-      Haptics.mediumImpact();
-      _audio.play(Sfx.enemyDrop);
-      final t = AppLocalizations.of(context);
-      _queue.add(
-        _Fx(
-          ref.foe(context, w.enemyId),
-          t.waveOf(w.index, w.total),
-          Palette.lacquer,
-        ),
-      );
-      _pump();
+  }
+
+  /// Entra el siguiente del grupo, con su nombre y "2 de 3".
+  void _waveIn(CombatView next, WaveStarted w) {
+    setState(() {
+      _foe(0).dying = false;
+      _shown = next;
     });
-    if (unlock) _after(_waveGap + 500, () => setState(() => _busy = false));
+    Haptics.mediumImpact();
+    _audio.play(Sfx.enemyDrop);
+    final t = AppLocalizations.of(context);
+    _queue.add(
+      _Fx(
+        ref.foe(context, w.enemyId),
+        t.waveOf(w.index, w.total),
+        Palette.lacquer,
+      ),
+    );
+    _pump();
+  }
+
+  /// Cae un rival del grupo y, ya despejada la arena, se ofrece el respiro.
+  void _offerBreather() {
+    _waveFalls();
+    _after(_waveGap, () {
+      setState(() => _breatherOpen = true);
+      _audio.play(Sfx.scrollOpen);
+    });
+  }
+
+  void _pickBreather(Breather b) {
+    if (!_breatherOpen) return;
+    Haptics.mediumImpact();
+    _audio.play(Sfx.rewardTake);
+    setState(() => _breatherOpen = false);
+    ref.read(combatControllerProvider.notifier).breather(b);
+  }
+
+  /// Ya elegido el respiro: se ve lo que dio y entra el siguiente.
+  void _afterBreather(CombatView next) {
+    final ev = next.events;
+    final t = AppLocalizations.of(context);
+    setState(() {
+      _busy = true;
+      for (final e in ev) {
+        switch (e) {
+          case PlayerHealed(:final amount) when amount > 0:
+            _qiKey++;
+            _audio.play(Sfx.heal);
+            _pop(_heroPops, '+$amount', Palette.jade,
+                size: 26, icon: Icons.favorite, dx: -30, dy: -20);
+          case BreathGained(:final amount):
+            _qiKey++;
+            _audio.play(Sfx.breathGain);
+            _pop(_heroPops, '+$amount ${t.breath}', Palette.gold,
+                size: 20, icon: Icons.air, dx: 20, dy: -40);
+          default:
+        }
+      }
+    });
+    _banners(ev, 0);
+    final count = ev.whereType<CardsDrawn>().fold(0, (a, e) => a + e.count);
+    if (count > 0) _dealSounds(250, count);
+    final w = ev.whereType<WaveStarted>().first;
+    _after(450, () => _waveIn(next, w));
+    _after(950, () => setState(() => _busy = false));
   }
 
   /// Lo que tarda en despejarse la arena entre un enemigo del grupo y otro.
@@ -707,7 +770,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _after(at - 300, _fled);
       return;
     }
-    if (wave != null) {
+    if (ev.any((e) => e is BreatherOffered)) {
+      _after(at, _offerBreather);
+      at += _waveGap + 200;
+    } else if (wave != null) {
       _after(at, () => _nextWave(next, wave, unlock: false));
       at += _waveGap + 200;
     } else if (segs.length > 1 && segs.last.$2.any((e) => e is EnemyDefeated)) {
@@ -1427,6 +1493,20 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                     fx: _current!,
                     onDone: _fxDone,
                   ),
+                ),
+              ),
+            if (_breatherOpen &&
+                live.state.phase == CombatPhase.breather &&
+                live.state.reserve.isNotEmpty)
+              Positioned.fill(
+                child: BreatherSheet(
+                  options: engine.breathers,
+                  nextName: ref.foe(context, live.state.reserve.first.id),
+                  heal: engine.breatherHeal(live.state),
+                  draw: data.balance.breather.draw,
+                  breath: data.balance.breather.breath,
+                  fist: data.balance.breather.fist,
+                  onPick: _pickBreather,
                 ),
               ),
             if (_endShown)

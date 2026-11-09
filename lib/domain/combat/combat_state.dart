@@ -26,7 +26,10 @@ class CombatCard {
   String toString() => '$cardId#$uid';
 }
 
-enum CombatPhase { playerTurn, discarding, won, lost }
+enum CombatPhase { playerTurn, discarding, breather, won, lost }
+
+/// Respiro entre oleadas: un premio chico antes de que entre el siguiente.
+enum Breather { rest, focus, fist }
 
 class PlayerCombat {
   const PlayerCombat({

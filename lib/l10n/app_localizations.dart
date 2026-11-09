@@ -1168,6 +1168,66 @@ abstract class AppLocalizations {
   /// **'A ese no se le puede apuntar'**
   String get invalidBadTarget;
 
+  /// No description provided for @invalidMustBreathe.
+  ///
+  /// In es, this message translates to:
+  /// **'Primero elegí tu respiro'**
+  String get invalidMustBreathe;
+
+  /// No description provided for @invalidNoBreather.
+  ///
+  /// In es, this message translates to:
+  /// **'Ahora no hay respiro'**
+  String get invalidNoBreather;
+
+  /// No description provided for @breatherTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Respiro'**
+  String get breatherTitle;
+
+  /// No description provided for @breatherSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Antes de que llegue {name}'**
+  String breatherSub(String name);
+
+  /// No description provided for @breatherRest.
+  ///
+  /// In es, this message translates to:
+  /// **'Respirar'**
+  String get breatherRest;
+
+  /// No description provided for @breatherRestHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Recuperás {count} de Vida.'**
+  String breatherRestHint(int count);
+
+  /// No description provided for @breatherFocus.
+  ///
+  /// In es, this message translates to:
+  /// **'Concentrarte'**
+  String get breatherFocus;
+
+  /// No description provided for @breatherFocusHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {draw} cartas y sumás {breath} de aliento.'**
+  String breatherFocusHint(int draw, int breath);
+
+  /// No description provided for @breatherFist.
+  ///
+  /// In es, this message translates to:
+  /// **'Afilar los puños'**
+  String get breatherFist;
+
+  /// No description provided for @breatherFistHint.
+  ///
+  /// In es, this message translates to:
+  /// **'+{count} al daño de tus puños en este combate.'**
+  String breatherFistHint(int count);
+
   /// No description provided for @partOfForm.
   ///
   /// In es, this message translates to:

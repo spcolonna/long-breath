@@ -325,7 +325,9 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
-    final action = bot.act(engine, s);
+    final action = s.phase == CombatPhase.breather
+        ? bot.breather(engine, s)
+        : bot.act(engine, s);
     if (action is PlayCard) {
       log.plays++;
       log.stanceUse[s.player.stance] = (log.stanceUse[s.player.stance] ?? 0) + 1;

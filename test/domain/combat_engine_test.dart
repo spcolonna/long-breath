@@ -1323,10 +1323,17 @@ void main() {
       var s = pack(['bat']);
       s = s.copyWith(enemy: s.enemy.copyWith(hp: 1));
       final hand = s.hand.length;
-      final r = play(s, 'gongbu_chongquan');
+      final down = play(s, 'gongbu_chongquan');
+      expect(down.events.whereType<Victory>(), isEmpty);
+      expect(down.events.whereType<EnemyDefeated>().single.enemyId, 'salamander');
+      // Antes del siguiente, el respiro: no se juega nada hasta elegir.
+      expect(down.events.whereType<WaveStarted>(), isEmpty);
+      expect(down.events.whereType<BreatherOffered>().single.options,
+          Breather.values);
+      expect(down.state.phase, CombatPhase.breather);
+      expect(engine.validate(down.state, const EndTurn()), Invalid.mustBreathe);
+      final r = engine.reduce(down.state, const ChooseBreather(Breather.fist));
       s = r.state;
-      expect(r.events.whereType<Victory>(), isEmpty);
-      expect(r.events.whereType<EnemyDefeated>().single.enemyId, 'salamander');
       final w = r.events.whereType<WaveStarted>().single;
       expect((w.enemyId, w.index, w.total), ('bat', 2, 2));
       expect(s.isOver, isFalse);
@@ -1343,6 +1350,46 @@ void main() {
       final last = play(s, 'gongbu_chongquan');
       expect(last.events.whereType<Victory>(), hasLength(1));
       expect(last.state.phase, CombatPhase.won);
+    });
+
+    group('respiro', () {
+      CombatState down() {
+        var s = pack(['bat']);
+        s = s.copyWith(
+          enemy: s.enemy.copyWith(hp: 1),
+          player: s.player.copyWith(hp: 30),
+        );
+        return play(s, 'gongbu_chongquan').state;
+      }
+
+      test('respirar cura un poco', () {
+        final s0 = down();
+        final r = engine.reduce(s0, const ChooseBreather(Breather.rest));
+        final heal = engine.breatherHeal(s0);
+        expect(heal, (s0.player.maxHp * 0.10).round());
+        expect(r.state.player.hp, 30 + heal);
+        expect(r.events.whereType<PlayerHealed>().single.amount, heal);
+        expect(r.state.phase, CombatPhase.playerTurn);
+      });
+
+      test('concentrarte roba cartas y suma aliento', () {
+        final s0 = down();
+        final r = engine.reduce(s0, const ChooseBreather(Breather.focus));
+        expect(r.state.hand.length, s0.hand.length + 2);
+        expect(r.state.player.breath, s0.player.breath + 1);
+      });
+
+      test('afilar los puños dura todo el combate', () {
+        final s0 = down();
+        final r = engine.reduce(s0, const ChooseBreather(Breather.fist));
+        expect(r.state.fistBonus, s0.fistBonus + 2);
+        expect(r.events.whereType<FistBonusGained>(), hasLength(1));
+      });
+
+      test('fuera del respiro no se puede elegir', () {
+        expect(engine.validate(pack(['bat']), const ChooseBreather(Breather.rest)),
+            Invalid.noBreather);
+      });
     });
 
     test('las espinas del que cae no lastiman en el recambio', () {

@@ -155,6 +155,7 @@ String actionLine(CombatAction a, CombatState s) => switch (a) {
       : 'termina el turno reteniendo ${_cards(s.hand.where((c) => retain.contains(c.uid)))}',
   ChooseDiscard(:final uid) =>
     'descarta ${_cards(s.hand.where((c) => c.uid == uid))}',
+  ChooseBreather(:final breather) => 'respiro: ${breather.name}',
 };
 
 /// Los efectos de una jugada, en una línea.
@@ -207,6 +208,8 @@ String eventsLine(List<CombatEvent> events) {
       EnemyFled(:final stolen) => 'enemigo huye con $stolen jade',
       EnemyDefeated(:final enemyId) => 'VENCE a $enemyId',
       TargetChanged(:final index) => 'blanco $index',
+      BreatherOffered() => 'respiro entre oleadas',
+      BreatherTaken(:final breather) => 'toma ${breather.name}',
       WaveStarted(:final enemyId, :final index, :final total) =>
         'entra $enemyId ($index/$total)',
       Victory() => 'VICTORIA',

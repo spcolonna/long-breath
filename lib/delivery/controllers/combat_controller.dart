@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -206,6 +207,13 @@ class CombatController extends Notifier<CombatView?> {
   }
 
   void breathe() => _dispatch(const Breathe());
+
+  /// Cambia el estado del combate a mano (solo tests).
+  @visibleForTesting
+  void debugReplace(CombatState s) => state = state!.copyWith(state: s);
+
+  /// Respiro elegido entre una oleada y la siguiente.
+  void breather(Breather b) => _dispatch(ChooseBreather(b));
 
   /// Si se puede retener, entra en modo retener; si no, termina el turno.
   void endTurnPressed() {
