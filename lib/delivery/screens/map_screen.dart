@@ -580,11 +580,11 @@ class _MapViewState extends ConsumerState<_MapView>
 
 void _enter(BuildContext context, WidgetRef ref, MapNodeDef n, InkFrom? ink) {
   ref.read(runControllerProvider.notifier).enter(n.id);
-  if (n.type == NodeType.combat) {
+  if (n.type == NodeType.combat || n.type == NodeType.pass) {
     ref.read(combatControllerProvider.notifier).start();
   }
   final route = switch (n.type) {
-    NodeType.combat => '/combat',
+    NodeType.combat || NodeType.pass => '/combat',
     NodeType.fountain => '/fountain',
     NodeType.shrine => '/shrine',
     NodeType.event => '/event',
@@ -813,8 +813,9 @@ class _PickCard extends ConsumerWidget {
         NodeType.event => t.nodeHintEvent,
         NodeType.merchant => t.nodeHintMerchant,
         NodeType.master => t.nodeHintMaster,
+        NodeType.pass => t.nodeHintPass(1 + n.waves.length),
       };
-      final pack = n.waves.isEmpty
+      final pack = n.waves.isEmpty || n.type == NodeType.pass
           ? ''
           : ' ${t.nodeHintPack(1 + n.waves.length)}';
       body = PaperPanel(

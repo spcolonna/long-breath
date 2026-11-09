@@ -65,7 +65,11 @@ enum NodeType {
   merchant,
 
   /// Maestro errante: enseña una forma o mejora una carta.
-  master;
+  master,
+
+  /// Paso de montaña: varios combates seguidos, uno por vez; después de
+  /// cada uno se sigue (botín creciente) o se vuelve al mapa con lo ganado.
+  pass;
 
   static NodeType parse(String s) => NodeType.values.byName(s);
 }
@@ -136,7 +140,8 @@ class MapNodeDef {
   final NodeType type;
   final String? enemy;
 
-  /// Enemigos que entran después de [enemy], uno por vez (grupo).
+  /// Enemigos que entran después de [enemy], uno por vez (grupo). En un
+  /// paso ([NodeType.pass]): los rivales de los combates siguientes.
   final List<String> waves;
 
   /// Los de [waves] no esperan: pelean junto a [enemy], todos en escena.
@@ -569,6 +574,8 @@ class GameBalance {
     this.escortHp = 100,
     this.escortDamage = 100,
     this.breather = BreatherDef.none,
+    this.passFights = 3,
+    this.passJade = 0,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     required this.difficulties,
@@ -659,6 +666,11 @@ class GameBalance {
 
   /// Premio chico entre una oleada y la siguiente.
   final BreatherDef breather;
+
+  /// Paso de montaña: cuántos combates tiene y cuánto jade extra da cada
+  /// combate por cada uno ya vencido en el paso (el botín crece).
+  final int passFights;
+  final int passJade;
 
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
@@ -797,6 +809,9 @@ class GameBalance {
       escortEliteHp: _escort(run, 'eliteHpPct'),
       escortHp: _escort(run, 'hpPct'),
       escortDamage: _escort(run, 'damagePct'),
+      passFights: (run['pass'] as Map<String, dynamic>?)?['fights'] as int? ?? 3,
+      passJade:
+          (run['pass'] as Map<String, dynamic>?)?['jadePerStep'] as int? ?? 0,
       breather: switch ((run['packs'] as Map<String, dynamic>?)?['breather']) {
         final Map<String, dynamic> m => BreatherDef.fromJson(m),
         _ => BreatherDef.none,

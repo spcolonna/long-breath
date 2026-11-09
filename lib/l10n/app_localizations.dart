@@ -1168,6 +1168,66 @@ abstract class AppLocalizations {
   /// **'A ese no se le puede apuntar'**
   String get invalidBadTarget;
 
+  /// No description provided for @passNode.
+  ///
+  /// In es, this message translates to:
+  /// **'Paso de montaña'**
+  String get passNode;
+
+  /// No description provided for @nodeHintPass.
+  ///
+  /// In es, this message translates to:
+  /// **'Hasta {count} rivales seguidos, sin curarte. Después de cada uno podés seguir o volver con lo ganado; el último deja un talismán.'**
+  String nodeHintPass(int count);
+
+  /// No description provided for @passTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El paso sigue'**
+  String get passTitle;
+
+  /// No description provided for @passProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'Venciste {done} de {total}'**
+  String passProgress(int done, int total);
+
+  /// No description provided for @passNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Más arriba espera {name}.'**
+  String passNext(String name);
+
+  /// No description provided for @passLoot.
+  ///
+  /// In es, this message translates to:
+  /// **'Si lo vencés: +{jade} de jade de más.'**
+  String passLoot(int jade);
+
+  /// No description provided for @passLootLast.
+  ///
+  /// In es, this message translates to:
+  /// **'Si lo vencés: +{jade} de jade de más y un talismán.'**
+  String passLootLast(int jade);
+
+  /// No description provided for @passHp.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguís con {hp} de {max} de Vida.'**
+  String passHp(int hp, int max);
+
+  /// No description provided for @passGo.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir'**
+  String get passGo;
+
+  /// No description provided for @passLeave.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver al mapa'**
+  String get passLeave;
+
   /// No description provided for @invalidMustBreathe.
   ///
   /// In es, this message translates to:
@@ -2479,7 +2539,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos y el maestro errante. Algunos combates traen un grupo: cuando cae uno, entra el siguiente.'**
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, elegís un respiro y entra el siguiente.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.

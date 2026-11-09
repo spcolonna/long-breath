@@ -786,6 +786,10 @@ void main() {
                 expect(run.packable(id), isTrue, reason: id);
               }
             }
+          } else if (n.type == NodeType.pass) {
+            // El paso: tres rivales comunes, uno por combate.
+            expect([n.enemy!, ...n.waves], hasLength(3));
+            expect(n.together, isFalse);
           } else {
             expect(n.enemy, isNull);
             expect(n.waves, isEmpty);
@@ -1154,6 +1158,63 @@ void main() {
       expect(run.packOf(run.enter(base, 'h')), ['bat', 'golem']);
       expect(group.jadeGained - solo.jadeGained,
           run.data.balance.packJade);
+    });
+  });
+
+  group('paso de montaña', () {
+    RunState base() => fresh(7).copyWith(map: [
+          const MapNodeDef(
+              id: 'p',
+              type: NodeType.pass,
+              enemy: 'bat',
+              waves: ['golem', 'salamander'],
+              next: ['x']),
+          const MapNodeDef(
+              id: 'x', type: NodeType.combat, enemy: 'dragon', next: []),
+        ]);
+    // Sale del premio sin tomar nada (o con lo que no se elige).
+    RunState leave(RunState r) => r.rewardKind == RewardKind.cards
+        ? run.chooseReward(r, null)
+        : run.collectReward(r);
+
+    test('un rival por combate; después de cada uno se elige seguir', () {
+      var r = run.enter(base(), 'p');
+      expect(r.phase, RunPhase.combat);
+      expect(run.packOf(r), ['bat']);
+      expect(run.togetherOf(r), isFalse);
+      r = run.finishCombat(r, won: true, hp: 30);
+      expect(r.talismanOptions, isEmpty, reason: 'el talismán es al final');
+      r = leave(r);
+      expect(r.phase, RunPhase.passChoice);
+      r = run.passContinue(r);
+      expect((r.phase, r.passStep, r.hp), (RunPhase.combat, 1, 30));
+      expect(run.packOf(r), ['golem']);
+      expect(run.enemyOf(r), 'golem');
+    });
+
+    test('el botín crece y el último deja talismán', () {
+      var r = run.enter(base(), 'p');
+      final first = run.finishCombat(r, won: true, hp: 30);
+      r = run.passContinue(leave(first));
+      r = run.passContinue(leave(run.finishCombat(r, won: true, hp: 30)));
+      expect(run.packOf(r), ['salamander']);
+      final last = run.finishCombat(r, won: true, hp: 30);
+      expect(last.phase, RunPhase.talisman);
+      expect(last.talismanOptions, isNotEmpty);
+      expect(run.passBonus(r), run.data.balance.passJade * 2);
+      // Terminado el paso, se vuelve al mapa.
+      final out = leave(run.chooseTalisman(last, last.talismanOptions.first));
+      expect(out.phase, RunPhase.map);
+      expect(run.available(out), ['x']);
+    });
+
+    test('retirarse vuelve al mapa con lo ganado', () {
+      var r = leave(run.finishCombat(run.enter(base(), 'p'), won: true, hp: 30));
+      final jade = r.jade;
+      r = run.passRetreat(r);
+      expect((r.phase, r.passStep, r.jade), (RunPhase.map, 0, jade));
+      expect(run.available(r), ['x']);
+      expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
     });
   });
 

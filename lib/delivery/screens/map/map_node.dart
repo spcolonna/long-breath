@@ -31,6 +31,7 @@ const sealCenter = Offset(62, 38);
   NodeType.event => (hanzi: '缘', color: Palette.blossom, size: 60.0),
   NodeType.merchant => (hanzi: '商', color: Palette.jade, size: 60.0),
   NodeType.master => (hanzi: '师', color: Palette.structure, size: 60.0),
+  NodeType.pass => (hanzi: '隘', color: Palette.lacquer, size: 64.0),
 };
 
 /// Élite que se puede esquivar: comparte piso con otro lugar (el élite de
@@ -58,6 +59,7 @@ String nodeLabel(
   NodeType.event => t.eventNode,
   NodeType.merchant => t.merchantNode,
   NodeType.master => t.masterNode,
+  NodeType.pass => t.passNode,
 };
 
 /// Un lugar del mapa: un sello de piedra con su carácter tallado. El que se

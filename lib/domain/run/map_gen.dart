@@ -7,6 +7,7 @@ const _oncePerFloor = {
   NodeType.fountain,
   NodeType.merchant,
   NodeType.master,
+  NodeType.pass,
 };
 
 /// Tipos que tienen que aparecer al menos una vez en el mapa si algún piso
@@ -31,6 +32,7 @@ const _required = [NodeType.master];
   List<String> scenes = const [],
   List<String> lights = const [],
   bool Function(String enemy)? packable,
+  int passFights = 3,
 }) {
   final types = <List<NodeType>>[];
   for (final f in floors) {
@@ -119,7 +121,8 @@ const _required = [NodeType.master];
     ];
     for (var i = 0; i < shuffled.length; i++) {
       final t = shuffled[i];
-      if (t != NodeType.combat) {
+      final pass = t == NodeType.pass;
+      if (t != NodeType.combat && !pass) {
         row.add((t, null, null, null, const [], false));
         continue;
       }
@@ -134,13 +137,25 @@ const _required = [NodeType.master];
           (places.isEmpty ? null : places[e % places.length]);
       final lead = i == optional
           ? optionalFoe
+          : pass && followers.isNotEmpty
+          ? followers[e % followers.length]
           : enemies.isEmpty
           ? null
           : enemies[e % enemies.length];
       if (lead != null && eliteIds.contains(lead)) usedElites.add(lead);
       final waves = <String>[];
       var together = false;
-      if (lead != null &&
+      if (pass && lead != null) {
+        // Paso: los rivales de los combates que siguen, de a uno y sin
+        // repetir mientras alcancen.
+        final (pool, r5) = rng.shuffle(
+          followers.where((x) => x != lead).toList(),
+        );
+        rng = r5;
+        for (var k = 1; k < passFights; k++) {
+          waves.add(pool.isEmpty ? lead : pool[(k - 1) % pool.length]);
+        }
+      } else if (lead != null &&
           packs.length > 1 &&
           followers.isNotEmpty &&
           (packable?.call(lead) ?? false)) {
@@ -246,7 +261,9 @@ List<List<int>> _paths(List<List<List<int>>> links, List<int> widths) {
 /// racha de más de [maxRest] sin combate o, si le faltan combates, todos los
 /// que no son combate.
 List<(int, int)> _faults(List<int> path, List<_Row> rows) {
-  bool fight(int f) => rows[f][path[f]].$1 == NodeType.combat;
+  bool fight(int f) =>
+      rows[f][path[f]].$1 == NodeType.combat ||
+      rows[f][path[f]].$1 == NodeType.pass;
   final bad = <(int, int)>{};
   var run = <(int, int)>[];
   for (var f = 0; f < path.length; f++) {

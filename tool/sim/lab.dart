@@ -442,6 +442,11 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.legacy:
         r = runEngine.chooseLegacy(
             r, legacy == 'card' ? LegacyPick.card : LegacyPick.stat);
+      case RunPhase.passChoice:
+        // Sigue por el paso si le queda Vida; el novato sigue siempre.
+        r = bot is NoviceBot || r.hp * 100 >= r.maxHp * 55
+            ? runEngine.passContinue(r)
+            : runEngine.passRetreat(r);
       case RunPhase.talisman:
         final t = bot.pickTalisman(runEngine, r);
         log.talismans.add(t);
@@ -549,6 +554,9 @@ String _route(RunEngine run, Bot bot, RunState r) {
       return r.jade >= run.merchantOf(r).card ? 1.5 : 0.5;
     }
     if (n.type == NodeType.master) return avoidFights ? 1.6 : 1.2;
+    if (n.type == NodeType.pass) {
+      return avoidFights ? 0.5 : (ratio > 0.65 ? 1.3 : 0.6);
+    }
     if (n.type != NodeType.combat) return avoidFights ? 1.5 : 1;
     final rank = run.data.enemy(n.enemy!).rank;
     if (rank == EnemyRank.elite) return ratio > 0.7 ? 2 : -1;

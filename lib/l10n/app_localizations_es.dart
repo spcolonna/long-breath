@@ -674,6 +674,48 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invalidBadTarget => 'A ese no se le puede apuntar';
 
   @override
+  String get passNode => 'Paso de montaña';
+
+  @override
+  String nodeHintPass(int count) {
+    return 'Hasta $count rivales seguidos, sin curarte. Después de cada uno podés seguir o volver con lo ganado; el último deja un talismán.';
+  }
+
+  @override
+  String get passTitle => 'El paso sigue';
+
+  @override
+  String passProgress(int done, int total) {
+    return 'Venciste $done de $total';
+  }
+
+  @override
+  String passNext(String name) {
+    return 'Más arriba espera $name.';
+  }
+
+  @override
+  String passLoot(int jade) {
+    return 'Si lo vencés: +$jade de jade de más.';
+  }
+
+  @override
+  String passLootLast(int jade) {
+    return 'Si lo vencés: +$jade de jade de más y un talismán.';
+  }
+
+  @override
+  String passHp(int hp, int max) {
+    return 'Seguís con $hp de $max de Vida.';
+  }
+
+  @override
+  String get passGo => 'Seguir';
+
+  @override
+  String get passLeave => 'Volver al mapa';
+
+  @override
   String get invalidMustBreathe => 'Primero elegí tu respiro';
 
   @override
@@ -1465,7 +1507,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos y el maestro errante. Algunos combates traen un grupo: cuando cae uno, entra el siguiente.';
+      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, elegís un respiro y entra el siguiente.';
 
   @override
   String get lesClimbSlide3Title => 'Después de cada combate';

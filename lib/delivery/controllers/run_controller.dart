@@ -104,6 +104,12 @@ class RunController extends Notifier<RunState?> {
     options: _engine.available(state!),
   );
 
+  /// Paso de montaña: seguir al próximo combate o volver al mapa.
+  void passContinue() =>
+      _set(_engine.passContinue(state!), what: 'sigue por el paso');
+  void passRetreat() =>
+      _set(_engine.passRetreat(state!), what: 'vuelve del paso');
+
   /// Devuelve la semilla y los enemigos del combate del nodo actual (el
   /// primero y los que entran después).
   (int, List<String>) beginCombat() {

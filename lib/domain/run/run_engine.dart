@@ -144,6 +144,7 @@ class RunEngine {
       scenes: st.scenes,
       lights: st.lights,
       packable: packable,
+      passFights: data.balance.passFights,
     );
   }
 
@@ -172,6 +173,7 @@ class RunEngine {
   /// Termina la recompensa: al mapa, o al descanso de la etapa vencida, donde
   /// el camino ofrece sus despertares.
   RunState _leaveReward(RunState r) {
+    if (_passGoesOn(r)) return r.copyWith(phase: RunPhase.passChoice);
     final phase = _afterReward(r);
     if (phase == RunPhase.map && _merchantDue(r)) return _wanderingMerchant(r);
     if (phase != RunPhase.stageClear) return r.copyWith(phase: phase);
@@ -333,8 +335,9 @@ class RunEngine {
     final entered = r.copyWith(
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
+      passStep: 0,
       phase: switch (n.type) {
-        NodeType.combat => RunPhase.combat,
+        NodeType.combat || NodeType.pass => RunPhase.combat,
         NodeType.fountain => RunPhase.fountain,
         NodeType.shrine => RunPhase.shrine,
         NodeType.event => RunPhase.event,
@@ -379,18 +382,55 @@ class RunEngine {
     return (seed, r.copyWith(rng: rng));
   }
 
-  String enemyOf(RunState r) => r.duel ?? r.node(r.currentNode!).enemy!;
+  String enemyOf(RunState r) => r.duel ?? packOf(r).first;
 
   /// Enemigos del combate actual, en el orden en que entran.
   List<String> packOf(RunState r) {
     if (r.duel != null) return [r.duel!];
     final n = r.node(r.currentNode!);
+    if (n.type == NodeType.pass) return [passChain(n)[r.passStep]];
     return [n.enemy!, ...n.waves];
   }
 
   /// Si el grupo del combate actual pelea todo junto (no en oleadas).
   bool togetherOf(RunState r) =>
-      r.duel == null && r.node(r.currentNode!).together;
+      r.duel == null &&
+      r.node(r.currentNode!).type != NodeType.pass &&
+      r.node(r.currentNode!).together;
+
+  // ------------------------------------------------------------------ paso
+
+  /// Los rivales de un paso de montaña, en el orden en que se enfrentan.
+  List<String> passChain(MapNodeDef n) => [n.enemy!, ...n.waves];
+
+  /// Se está en un paso y el combate actual es el último de la cadena.
+  bool _passEnd(RunState r) {
+    if (r.duel != null || r.currentNode == null) return false;
+    final n = r.node(r.currentNode!);
+    return n.type == NodeType.pass && r.passStep >= passChain(n).length - 1;
+  }
+
+  /// En un paso y todavía quedan combates después del actual.
+  bool _passGoesOn(RunState r) {
+    if (r.currentNode == null) return false;
+    final n = r.node(r.currentNode!);
+    return n.type == NodeType.pass && r.passStep < passChain(n).length - 1;
+  }
+
+  /// Jade de más del combate actual del paso: crece con cada uno vencido.
+  int passBonus(RunState r, [int? step]) => data.balance.passJade * (step ?? r.passStep);
+
+  /// Seguir por el paso: el próximo combate, sin curar.
+  RunState passContinue(RunState r) {
+    if (r.phase != RunPhase.passChoice) throw StateError('No estás en un paso');
+    return r.copyWith(phase: RunPhase.combat, passStep: r.passStep + 1);
+  }
+
+  /// Volver al mapa con lo ganado en el paso.
+  RunState passRetreat(RunState r) {
+    if (r.phase != RunPhase.passChoice) throw StateError('No estás en un paso');
+    return r.copyWith(phase: RunPhase.map, passStep: 0);
+  }
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
   /// lo venciste). Escapado no deja jade ni loto. [tally]: lo que pasó en
@@ -403,7 +443,8 @@ class RunEngine {
     Map<String, int> tally = const {},
   }) {
     final boss = _atStageBoss(r);
-    final elite = !boss && data.enemy(enemyOf(r)).rank == EnemyRank.elite;
+    final elite = !boss && data.enemy(packOf(r).first).rank == EnemyRank.elite;
+    final passEnd = _passEnd(r);
     final fled = fledWith != null;
     final beaten = won && !fled;
     final flawless = beaten && hp >= r.hp;
@@ -443,6 +484,7 @@ class RunEngine {
       // Cada enemigo de más en el grupo suma jade.
       final jade = rolled +
           b.packJade * (packOf(r).length - 1) +
+          passBonus(r) +
           talismanSum(r, (e) => e.winJade);
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
@@ -463,7 +505,8 @@ class RunEngine {
     // El élite, el jefe y el rival de un duelo dejan elegir un talismán
     // antes del premio (el duelo, con el del camino entre ellos).
     final duel = r.duel != null;
-    final (talismans, rngT) = elite || boss || (duel && !fled)
+    // El último del paso también: es el premio por llegar hasta el final.
+    final (talismans, rngT) = elite || boss || passEnd || (duel && !fled)
         ? _rollTalismans(
             r.rng,
             r,
@@ -479,7 +522,7 @@ class RunEngine {
         ? (RewardKind.cards, r.rng)
         : elite && r.weapon == null && data.weapons.isNotEmpty
         ? (RewardKind.weapon, r.rng)
-        : _rollRewardKind(r, allowTalisman: !elite && !duel);
+        : _rollRewardKind(r, allowTalisman: !elite && !duel && !passEnd);
     return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       talismanOptions: kind == RewardKind.talisman ? null : talismans,

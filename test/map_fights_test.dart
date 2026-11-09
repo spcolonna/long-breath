@@ -25,7 +25,8 @@ void main() {
           expect(n.enemy, isNotNull, reason: '${st.id} ${n.id}');
         }
         void walk(MapNodeDef n, int rest, int fights, String trail) {
-          final fight = n.type == NodeType.combat;
+          final fight =
+              n.type == NodeType.combat || n.type == NodeType.pass;
           final r = fight ? 0 : rest + 1;
           final f = fights + (fight ? 1 : 0);
           final path = '$trail ${n.id}:${n.type.name}';
