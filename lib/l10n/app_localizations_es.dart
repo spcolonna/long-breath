@@ -1658,6 +1658,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventNothing => 'sin cambios';
 
   @override
+  String get eventGainFight => 'te toca pelear';
+
+  @override
   String get eventGainTemper => 'templar tu arma';
 
   @override

@@ -608,6 +608,39 @@
     }
   },
   "events": {
+    "ambush_qianyunshan": {
+      "name": "La emboscada del pinar",
+      "text": "Entre los pinos, una rama se quiebra a tus espaldas. Un bandido sale al sendero con el bastón en alto: «La bolsa o los dientes».",
+      "fight": "Plantarte y pelear",
+      "fightResult": "«Mejor así», dice, y se pone en guardia.",
+      "sneak": "Escabullirte",
+      "sneakResult": "Te pegás a las rocas y pasás sin que te vean. En el camino encontrás jade caído.",
+      "sneakFail": "Una piedra rueda bajo tu pie. Te alcanzan antes de que te escondas.",
+      "pay": "Pagar el peaje",
+      "payResult": "Dejás caer el jade en el sendero y seguís sin mirar atrás."
+    },
+    "ambush_xuankongsi": {
+      "name": "La máscara en la pasarela",
+      "text": "En la pasarela colgada, una figura con máscara de ópera te corta el paso. La máscara cambia de color: roja, negra, blanca.",
+      "fight": "Plantarte y pelear",
+      "fightResult": "La máscara se vuelve roja de golpe. Va a pelear.",
+      "sneak": "Escabullirte",
+      "sneakResult": "Te pegás a las rocas y pasás sin que te vean. En el camino encontrás jade caído.",
+      "sneakFail": "Una piedra rueda bajo tu pie. Te alcanzan antes de que te escondas.",
+      "pay": "Pagar el peaje",
+      "payResult": "Dejás caer el jade en el sendero y seguís sin mirar atrás."
+    },
+    "ambush_wolongding": {
+      "name": "La espada en la nieve",
+      "text": "Algo silba sobre la nieve: una espada vuela sola y se clava frente a tus pies. Se suelta, gira y te apunta.",
+      "fight": "Plantarte y pelear",
+      "fightResult": "La espada vibra en el aire y se lanza.",
+      "sneak": "Escabullirte",
+      "sneakResult": "Te pegás a las rocas y pasás sin que te vean. En el camino encontrás jade caído.",
+      "sneakFail": "Una piedra rueda bajo tu pie. Te alcanzan antes de que te escondas.",
+      "pay": "Pagar el peaje",
+      "payResult": "Dejás caer el jade en el sendero y seguís sin mirar atrás."
+    },
     "wounded": {
       "name": "El peregrino herido",
       "text": "Al costado del sendero, un monje joven se agarra el tobillo. Se cayó de la cornisa y nadie se detuvo.",

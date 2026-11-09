@@ -504,7 +504,11 @@ class RunEngine {
     r = _ghostDrop(r.copyWith(hp: healed));
     // El élite, el jefe y el rival de un duelo dejan elegir un talismán
     // antes del premio (el duelo, con el del camino entre ellos).
-    final duel = r.duel != null;
+    // La pelea de una emboscada paga como un combate común.
+    final ambush = r.duel != null &&
+        r.lastEvent != null &&
+        data.event(r.lastEvent!.eventId).ambush;
+    final duel = r.duel != null && !ambush;
     // El último del paso también: es el premio por llegar hasta el final.
     final (talismans, rngT) = elite || boss || passEnd || (duel && !fled)
         ? _rollTalismans(
@@ -1051,7 +1055,8 @@ class RunEngine {
     if (outcome.mark != null) {
       next = next.copyWith(marks: {...next.marks, outcome.mark!: r.stage});
     }
-    final duel = success == false ? null : option.duel;
+    // El duelo de la opción; o el del resultado (escabullirse y que te vean).
+    final duel = success == false ? outcome.duel : option.duel ?? outcome.duel;
     return next.copyWith(
       phase: duel != null
           ? RunPhase.combat

@@ -261,6 +261,7 @@ extension Labels on AppLocalizations {
           EventGain.temper => eventGainTemper,
         },
       if (o.mark != null) eventGainMark,
+      if (o.duel != null) eventGainFight,
     ];
     return parts.isEmpty ? eventNothing : parts.join(' · ');
   }

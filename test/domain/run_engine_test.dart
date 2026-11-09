@@ -1161,6 +1161,45 @@ void main() {
     });
   });
 
+  group('emboscada', () {
+    RunState at(int seed) {
+      var r = fresh(seed);
+      return r.copyWith(phase: RunPhase.event, eventId: 'ambush_qianyunshan');
+    }
+
+    test('pelear lleva al duelo; pagar cuesta jade y vuelve al mapa', () {
+      final fight = run.resolveEvent(at(1), 'fight');
+      expect((fight.phase, fight.duel), (RunPhase.combat, 'bandit'));
+      final rich = at(1).copyWith(jade: 30);
+      final paid = run.resolveEvent(rich, 'pay');
+      expect((paid.phase, paid.jade), (RunPhase.map, 10));
+    });
+
+    test('escabullirse sale bien (jade) o te alcanzan (duelo)', () {
+      final seen = <String>{};
+      for (var seed = 0; seed < 40; seed++) {
+        final r = run.resolveEvent(at(seed), 'sneak');
+        if (r.lastEvent!.success!) {
+          expect((r.phase, r.duel), (RunPhase.map, null));
+          seen.add('ok');
+        } else {
+          expect((r.phase, r.duel), (RunPhase.combat, 'bandit'));
+          expect(r.hp, at(seed).hp - 4);
+          seen.add('caught');
+        }
+      }
+      expect(seen, {'ok', 'caught'});
+    });
+
+    test('ganarle paga como un combate común: sin talismán', () {
+      final fight = run.resolveEvent(at(1), 'fight');
+      final won = run.finishCombat(fight, won: true, hp: fight.hp);
+      expect(won.phase, RunPhase.reward);
+      expect(won.talismanOptions, isEmpty);
+      expect(won.duel, isNull);
+    });
+  });
+
   group('paso de montaña', () {
     RunState base() => fresh(7).copyWith(map: [
           const MapNodeDef(

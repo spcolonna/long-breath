@@ -2800,6 +2800,12 @@ abstract class AppLocalizations {
   /// **'sin cambios'**
   String get eventNothing;
 
+  /// No description provided for @eventGainFight.
+  ///
+  /// In es, this message translates to:
+  /// **'te toca pelear'**
+  String get eventGainFight;
+
   /// No description provided for @eventGainTemper.
   ///
   /// In es, this message translates to:

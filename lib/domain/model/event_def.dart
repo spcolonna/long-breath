@@ -45,6 +45,7 @@ class EventOutcome {
     this.jade = 0,
     this.gain,
     this.mark,
+    this.duel,
   });
 
   /// Vida que se pierde (nunca deja al jugador en menos de 1).
@@ -63,6 +64,9 @@ class EventOutcome {
   /// Deja una marca: el evento que la espera sale en una etapa más arriba.
   final String? mark;
 
+  /// Termina en pelea contra este rival (la emboscada que sale mal).
+  final String? duel;
+
   factory EventOutcome.fromJson(Map<String, dynamic> j) => EventOutcome(
     hp: j['hp'] as int? ?? 0,
     heal: j['heal'] as int? ?? 0,
@@ -70,6 +74,7 @@ class EventOutcome {
     jade: j['jade'] as int? ?? 0,
     gain: EventGain.parse(j['gain'] as String?),
     mark: j['mark'] as String?,
+    duel: j['duel'] as String?,
   );
 }
 
@@ -152,6 +157,7 @@ class EventDef {
     this.stages,
     this.path,
     this.after,
+    this.ambush = false,
   });
 
   final String id;
@@ -167,6 +173,9 @@ class EventDef {
   /// Segunda parte: solo sale con esta marca, dejada en una etapa anterior.
   final String? after;
 
+  /// Emboscada: su pelea paga como un combate común (sin talismán).
+  final bool ambush;
+
   bool fitsStage(String stageId) => stages == null || stages!.contains(stageId);
 
   EventOptionDef option(String id) => options.firstWhere((o) => o.id == id);
@@ -181,5 +190,6 @@ class EventDef {
     stages: (j['stages'] as List?)?.cast<String>(),
     path: j['path'] == null ? null : Style.parse(j['path'] as String),
     after: j['after'] as String?,
+    ambush: j['ambush'] as bool? ?? false,
   );
 }

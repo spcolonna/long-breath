@@ -273,6 +273,30 @@
         { "id": "spar", "duel": "wind_disciple" },
         { "id": "watch", "maxHp": 5 }
       ]
+    },
+    {
+      "id": "ambush_qianyunshan", "hanzi": "伏", "stages": ["qianyunshan"], "ambush": true,
+      "options": [
+        { "id": "fight", "duel": "bandit" },
+        { "id": "sneak", "chance": 55, "success": { "jade": 12 }, "failure": { "hp": 4, "duel": "bandit" } },
+        { "id": "pay", "price": 20 }
+      ]
+    },
+    {
+      "id": "ambush_xuankongsi", "hanzi": "伏", "stages": ["xuankongsi"], "ambush": true,
+      "options": [
+        { "id": "fight", "duel": "opera_mask" },
+        { "id": "sneak", "chance": 55, "success": { "jade": 12 }, "failure": { "hp": 4, "duel": "opera_mask" } },
+        { "id": "pay", "price": 20 }
+      ]
+    },
+    {
+      "id": "ambush_wolongding", "hanzi": "伏", "stages": ["wolongding"], "ambush": true,
+      "options": [
+        { "id": "fight", "duel": "flying_sword" },
+        { "id": "sneak", "chance": 55, "success": { "jade": 12 }, "failure": { "hp": 4, "duel": "flying_sword" } },
+        { "id": "pay", "price": 20 }
+      ]
     }
   ]
 }
