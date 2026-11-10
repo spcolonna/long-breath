@@ -63,4 +63,24 @@ void main() {
   test('todos los pergaminos tienen su texto', () {
     expect(loreOrder.toSet(), hasLength(loreOrder.length));
   });
+
+  test('el campamento da la carta del maestro y después los sueños, en orden',
+      () {
+    expect(campLore(0, const {}), 'letter_1');
+    expect(campLore(1, const {'letter_1'}), 'letter_2');
+    expect(campLore(0, const {'letter_1'}), 'dream_1');
+    expect(campLore(1, const {'letter_2', 'dream_1'}), 'dream_2');
+    expect(campLore(1, {'letter_2', ...dreamOrder}), isNull);
+  });
+
+  test('caer trae el próximo sueño del dragón', () {
+    final fell = ascent(fell: true);
+    expect(earnedLore(fell, const [], const {}), contains('dream_1'));
+    expect(
+      earnedLore(fell, const [], const {'dream_1', 'dream_2'}),
+      contains('dream_3'),
+    );
+    expect(earnedLore(ascent(fell: false, stage: 2), const [], const {}),
+        isNot(contains('dream_1')));
+  });
 }

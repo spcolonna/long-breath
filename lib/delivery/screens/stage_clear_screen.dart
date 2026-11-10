@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
+import '../../domain/run/ascent.dart';
+import '../../infrastructure/progress_storage.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
@@ -16,6 +18,7 @@ import '../widgets/game_icon.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/lotus.dart';
+import '../widgets/camp_panel.dart';
 import '../widgets/scene_backdrop.dart';
 import '../feel.dart';
 
@@ -42,6 +45,11 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
   bool _choosing = false;
   String? _picked;
   int _pickBurst = 0;
+
+  /// Después, el campamento: la carta o el sueño y el voto opcional.
+  bool _camping = false;
+  String? _campLore;
+  String? _vow;
 
   @override
   void initState() {
@@ -88,11 +96,38 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
       return;
     }
     if (run.awakeningOptions.isNotEmpty && _picked == null) return;
+    if (!_camping) {
+      _camp(run.stage);
+      return;
+    }
     _leaving = true;
     Haptics.heavyImpact();
     ref.read(audioProvider).play(Sfx.uiButton);
-    ref.read(runControllerProvider.notifier).advanceStage(_picked);
+    ref.read(runControllerProvider.notifier).advanceStage(_picked, _vow);
     context.go('/map');
+  }
+
+  /// Se arma la fogata: la carta del maestro o el próximo sueño queda
+  /// abierto en el registro en el momento, no al final de la subida.
+  Future<void> _camp(int stage) async {
+    Haptics.mediumImpact();
+    ref.read(audioProvider).play(Sfx.shrineOath);
+    final have = ref.read(loreProvider).value ?? const <String>{};
+    final lore = campLore(stage, have);
+    setState(() {
+      _camping = true;
+      _campLore = lore;
+    });
+    if (lore != null) {
+      await ref.read(progressStorageProvider).unlockLore(lore);
+      ref.invalidate(loreProvider);
+    }
+  }
+
+  void _pickVow(String? id) {
+    Haptics.selectionClick();
+    ref.read(audioProvider).play(Sfx.uiButton);
+    setState(() => _vow = id);
   }
 
   void _pick(String id) {
@@ -153,7 +188,15 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                             child: child,
                           ),
                         ),
-                        child: _choosing
+                        child: _camping
+                            ? CampPanel(
+                                key: const ValueKey('camp'),
+                                lore: _campLore,
+                                vows: run.vowOptions,
+                                picked: _vow,
+                                onPick: _pickVow,
+                              )
+                            : _choosing
                             ? _AwakeningPanel(
                                 key: const ValueKey('awakening'),
                                 options: run.awakeningOptions,
@@ -407,7 +450,11 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                 : null,
                             icon: const Icon(Icons.terrain),
                             label: Text(
-                              !_choosing
+                              _camping
+                                  ? _vow == null
+                                        ? t.campClimbFree
+                                        : t.campClimbVow
+                                  : !_choosing
                                   ? t.stageClimb
                                   : _picked == null
                                   ? t.awakeningPick

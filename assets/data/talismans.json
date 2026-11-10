@@ -27,6 +27,12 @@
     { "id": "escama",   "hanzi": "鳞", "rarity": "rare",   "pool": "snake", "effect": { "thirdAttackDraw": 1 } },
     { "id": "pluma",    "hanzi": "羽", "rarity": "rare",   "pool": "crane", "effect": { "retainedGuard": 3 } },
     { "id": "abaco",    "hanzi": "算", "rarity": "rare",   "shop": true,    "effect": { "shopDiscountPct": 20 } },
-    { "id": "manga",    "hanzi": "袖", "rarity": "rare",   "shop": true,    "effect": { "handSize": 1, "maxHp": -10 } }
+    { "id": "manga",    "hanzi": "袖", "rarity": "rare",   "shop": true,    "effect": { "handSize": 1, "maxHp": -10 } },
+    { "id": "voto_silencio",  "hanzi": "静", "rarity": "vow", "effect": { "firstTurnBreath": 1, "structure": -4 } },
+    { "id": "voto_ayuno",     "hanzi": "斋", "rarity": "vow", "effect": { "shopDiscountPct": 25, "maxHp": -8 } },
+    { "id": "voto_penitencia","hanzi": "苦", "rarity": "vow", "effect": { "winJade": 10, "fountainHeal": -10 } },
+    { "id": "voto_firmeza",   "hanzi": "坚", "rarity": "vow", "effect": { "guardKeepPct": 25, "maxHp": -6 } },
+    { "id": "voto_tigre",     "hanzi": "猛", "rarity": "vow", "effect": { "heavyDamage": 2, "structure": -4 } },
+    { "id": "voto_loto",      "hanzi": "莲", "rarity": "vow", "effect": { "formHeal": 8, "shopDiscountPct": -20 } }
   ]
 }

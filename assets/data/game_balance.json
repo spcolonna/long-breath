@@ -112,6 +112,7 @@
     "stay": { "hpPct": [75, 70, 65, 65], "healPct": 0, "jadePct": 50 },
     "wanderingMerchant": { "every": 3, "spread": 1 },
     "awakeningChoices": 3,
+    "vowChoices": 3,
     "stages": [
       {
         "id": "qianyunshan", "hanzi": "千云山", "pinyin": "Qiān Yún Shān",

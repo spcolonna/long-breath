@@ -1757,6 +1757,36 @@ class AppLocalizationsEs extends AppLocalizations {
   String get talismanRare => 'Raro';
 
   @override
+  String get talismanVow => 'Voto · una etapa';
+
+  @override
+  String get campTitle => 'El campamento';
+
+  @override
+  String get campLetter =>
+      'Entre tus cosas aparece una carta que no habías visto.';
+
+  @override
+  String get campDream => 'La fogata se apaga despacio. Esa noche soñaste.';
+
+  @override
+  String get campQuiet =>
+      'La fogata cruje y el dragón duerme sin sueños. Mañana se sigue.';
+
+  @override
+  String get campVowTitle => '¿Hacés un voto para la etapa que viene?';
+
+  @override
+  String get campVowHint =>
+      'Una ventaja con un costo, hasta la próxima fogata. Podés no votar.';
+
+  @override
+  String get campClimbVow => 'Subir con el voto';
+
+  @override
+  String get campClimbFree => 'Seguir sin voto';
+
+  @override
   String get talismanBoss => 'De jefe';
 
   @override

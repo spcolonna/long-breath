@@ -650,6 +650,7 @@ class GameBalance {
     required this.difficulties,
     this.picos = const [],
     this.awakeningChoices = 3,
+    this.vowChoices = 3,
     this.cultivation = CultivationDef.none,
     this.meridians = MeridianDef.none,
     this.combatRewards = CombatRewardsDef.none,
@@ -791,6 +792,9 @@ class GameBalance {
   /// Cuántos despertares se ofrecen al superar una etapa.
   final int awakeningChoices;
 
+  /// Votos que ofrece el campamento entre etapas.
+  final int vowChoices;
+
   /// Reinos del cultivo y cuánto aliento deja cada subida.
   final CultivationDef cultivation;
 
@@ -870,6 +874,7 @@ class GameBalance {
           }),
       ],
       awakeningChoices: run['awakeningChoices'] as int? ?? 3,
+      vowChoices: run['vowChoices'] as int? ?? 3,
       packHp: ((run['packs'] as Map<String, dynamic>?)?['hpPct'] as List?)
               ?.cast<int>() ??
           const [100],

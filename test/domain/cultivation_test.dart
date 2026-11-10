@@ -104,7 +104,7 @@ void main() {
     expect(a.locked, isEmpty);
     expect(engine.missingTalismans(a).length,
         data.talismans.values
-            .where((t) => !t.boss && !t.shop && t.pool == null)
+            .where((t) => !t.boss && !t.shop && !t.vow && t.pool == null)
             .length);
   });
 

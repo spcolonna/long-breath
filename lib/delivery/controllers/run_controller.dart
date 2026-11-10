@@ -226,8 +226,11 @@ class RunController extends Notifier<RunState?> {
   }
 
   /// Subir a la etapa siguiente después de vencer a su jefe.
-  void advanceStage([String? awakening]) =>
-      _set(_engine.advanceStage(state!, awakening: awakening), what: 'sube de etapa${awakening == null ? '' : ' con $awakening'}');
+  void advanceStage([String? awakening, String? vow]) => _set(
+    _engine.advanceStage(state!, awakening: awakening, vow: vow),
+    what: 'sube de etapa${awakening == null ? '' : ' con $awakening'}'
+        '${vow == null ? '' : ', voto $vow'}',
+  );
 
   void chooseReward(String? cardId) =>
       _set(_engine.chooseReward(state!, cardId), what: 'elige carta ${cardId ?? 'ninguna'}');

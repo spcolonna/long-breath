@@ -15,6 +15,7 @@ Color talismanColor(TalismanDef def) => switch (def.tier) {
   TalismanTier.boss => Palette.lacquer,
   TalismanTier.rare => Palette.gold,
   TalismanTier.common => Palette.jade,
+  TalismanTier.vow => Palette.sky,
 };
 
 /// Talismán dibujado con su carácter: no hace falta arte.
@@ -221,7 +222,11 @@ class TalismanTile extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        def.boss ? t.talismanBoss : t.talismanRare,
+                        def.vow
+                            ? t.talismanVow
+                            : def.boss
+                            ? t.talismanBoss
+                            : t.talismanRare,
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,

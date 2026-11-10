@@ -169,12 +169,12 @@ void main() {
   });
 
   test('talismanes y eventos', () {
-    expect(data.talismans, hasLength(28));
+    expect(data.talismans, hasLength(34));
     expect(data.talismans.values.where((t) => t.rare), hasLength(12));
     expect(data.talismans.values.where((t) => t.pool != null), hasLength(3));
     expect(data.talismans.values.where((t) => t.shop), hasLength(2));
     expect(data.talismans.values.where((t) => t.boss), hasLength(6));
-    expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(28),
+    expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(34),
         reason: 'cada uno se reconoce por su carácter');
     expect(data.events, hasLength(38));
     for (final e in data.events) {
@@ -314,6 +314,10 @@ void main() {
     for (final s in Style.values) {
       expect(data.balance.statsOf(s).awakenings, hasLength(awakeningsPerPath));
     }
-    expect(data.talismans, hasLength(talismanCount));
+    // Los votos del campamento no cuentan para el hito de los talismanes.
+    expect(
+      data.talismans.values.where((t) => !t.vow),
+      hasLength(talismanCount),
+    );
   });
 }

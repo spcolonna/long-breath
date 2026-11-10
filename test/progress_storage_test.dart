@@ -99,9 +99,10 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final storage = ProgressStorage();
     final a = await storage.recordAscent(fell('disciple', style: Style.snake));
-    expect(a.lore, ['reach_shrine', 'first_fall', 'fell_disciple']);
+    expect(a.lore, ['reach_shrine', 'first_fall', 'fell_disciple', 'dream_1']);
+    // Lo ya abierto no se repite; cada caída trae el sueño siguiente.
     final b = await storage.recordAscent(fell('disciple'));
-    expect(b.lore, isEmpty);
+    expect(b.lore, ['dream_2']);
     for (var i = 0; i < 3; i++) {
       await storage.recordAscent(fell('bat'));
     }

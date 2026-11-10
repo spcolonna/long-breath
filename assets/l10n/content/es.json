@@ -542,20 +542,53 @@
     "escama": "Escama de la Serpiente",
     "pluma": "Pluma de la Grulla",
     "abaco": "Ábaco del Mercader",
-    "manga": "Manga Ancha"
+    "manga": "Manga Ancha",
+    "voto_silencio": "Voto de silencio",
+    "voto_ayuno": "Voto de ayuno",
+    "voto_penitencia": "Voto de penitencia",
+    "voto_firmeza": "Voto de firmeza",
+    "voto_tigre": "Voto de fiereza",
+    "voto_loto": "Voto del loto"
   },
   "weapons": {
-    "gun": { "name": "Palo", "text": "Madera de fresno, largo como un hombre. Barre bajo y no deja pie firme." },
-    "jian": { "name": "Espada", "text": "Hoja recta de doble filo. Busca el hueco en la guardia y entra." },
-    "pudao": { "name": "Pudao", "text": "Mango largo y hoja ancha, arma de campesinos. Lenta, pero lo que toca se parte." }
+    "gun": {
+      "name": "Palo",
+      "text": "Madera de fresno, largo como un hombre. Barre bajo y no deja pie firme."
+    },
+    "jian": {
+      "name": "Espada",
+      "text": "Hoja recta de doble filo. Busca el hueco en la guardia y entra."
+    },
+    "pudao": {
+      "name": "Pudao",
+      "text": "Mango largo y hoja ancha, arma de campesinos. Lenta, pero lo que toca se parte."
+    }
   },
   "realms": {
-    "lianqi": { "name": "Aliento templado", "text": "La escuela recién aprende a respirar con vos." },
-    "zhuji": { "name": "Cimientos", "text": "Los que cayeron dejaron una base firme. La Grulla baja a enseñar." },
-    "kaimai": { "name": "Meridianos abiertos", "text": "El aliento ya corre por toda la escuela." },
-    "ningshen": { "name": "Espíritu sereno", "text": "Los caminos animales comparten sus formas." },
-    "tongxuan": { "name": "Lo profundo", "text": "Se recuerdan técnicas que nadie había vuelto a usar." },
-    "guizhen": { "name": "Volver a lo verdadero", "text": "Todo lo que la escuela sabe, ya es tuyo." }
+    "lianqi": {
+      "name": "Aliento templado",
+      "text": "La escuela recién aprende a respirar con vos."
+    },
+    "zhuji": {
+      "name": "Cimientos",
+      "text": "Los que cayeron dejaron una base firme. La Grulla baja a enseñar."
+    },
+    "kaimai": {
+      "name": "Meridianos abiertos",
+      "text": "El aliento ya corre por toda la escuela."
+    },
+    "ningshen": {
+      "name": "Espíritu sereno",
+      "text": "Los caminos animales comparten sus formas."
+    },
+    "tongxuan": {
+      "name": "Lo profundo",
+      "text": "Se recuerdan técnicas que nadie había vuelto a usar."
+    },
+    "guizhen": {
+      "name": "Volver a lo verdadero",
+      "text": "Todo lo que la escuela sabe, ya es tuyo."
+    }
   },
   "awakenings": {
     "hu_nu": {
@@ -1046,7 +1079,7 @@
     },
     "fell_monk": {
       "title": "El rostro borrado",
-      "text": "Los viejos dicen que el Monje sin Rostro fue maestro antes que el maestro. Subió para ver al dragón con sus propios ojos y la montaña le quitó la cara. Desde entonces cuida las campanas para que nadie pase.",
+      "text": "Los viejos dicen que el Monje sin Rostro fue maestro antes que el maestro. Subió para ver al dragón con sus propios ojos y la montaña le quitó la cara. Desde entonces cuida el sendero de piedra para que nadie suba sin estar listo.",
       "hint": "Caé ante el Monje sin Rostro."
     },
     "fell_dragon": {
@@ -1076,7 +1109,7 @@
     },
     "summit": {
       "title": "La cumbre",
-      "text": "Cuando el Dragón Dormido cerró los ojos, las nubes volvieron a nacer de la roca, lentas como una respiración. En la piedra de la cumbre estaban tallados los nombres de todos los discípulos que la escuela mandó a subir. El tuyo ya estaba. Alguien lo había escrito antes de que llegaras.",
+      "text": "Cuando el Dragón Dormido cerró los ojos, las nubes volvieron a nacer de la roca, lentas como una respiración. En la piedra de la cumbre estaban los nombres de todos los discípulos que la escuela mandó a subir, completos, no a medio tallar como en las vigas del monasterio. El tuyo ya estaba. Alguien lo había escrito antes de que llegaras.",
       "hint": "Llegá a la cumbre."
     },
     "fallen_5": {
@@ -1091,8 +1124,68 @@
     },
     "master_name": {
       "title": "El nombre que falta",
-      "text": "Cuando volviste de la cumbre por el tercer camino, el maestro cerró el cuaderno y te llevó al patio. «Nunca llegué arriba», te dijo. «Me quedé sin aliento en la nieve, frente a la Dama del Viento, y el dragón soñó que yo bajaba. Esas huellas que viste eran mías». Por eso anota pisos y no nombres: mide lo cerca que llega cada uno del lugar donde él se detuvo. «Ustedes suben por los tres caminos que yo no supe elegir. Cada vez que uno llega, respiro un poco más hondo». Esa noche, en la viga más alta del monasterio, talló junto a la tuya la última letra de su nombre.",
+      "text": "Cuando volviste de la cumbre por el tercer camino, el maestro cerró el cuaderno y te llevó al patio. «Nunca llegué arriba», te dijo. «Me quedé sin aliento en la nieve, frente a la Dama del Viento, y el dragón soñó que yo bajaba. Esas huellas que viste eran mías». Por eso anota pisos y no nombres: mide lo cerca que llega cada uno del lugar donde él se detuvo. «Ustedes suben por los tres caminos que yo no supe elegir. Cada vez que uno llega, respiro un poco más hondo». Esa noche, en la viga más alta del monasterio, talló junto a la tuya la última letra de su nombre: 松, Song, el pino. La misma S con la que firmaba las cartas.",
       "hint": "Llegá a la cumbre por los tres caminos."
+    },
+    "letter_1": {
+      "title": "Carta del maestro: el monasterio",
+      "text": "Si estás leyendo esto, pasaste el eco. No te lo dije abajo para que no subieras con peso de más: los monjes del monasterio van a querer que te quedes. No es una trampa, es una invitación; muchos la aceptaron y fueron felices. Decidí vos. Yo voy a estar anotando. —S.",
+      "hint": "Superá la primera etapa."
+    },
+    "letter_2": {
+      "title": "Carta del maestro: la nieve",
+      "text": "Más arriba no hay sendero y no puedo decirte cómo es: nunca lo vi entero. Cuando la Dama del Viento te corte el paso, no le pidas permiso. Respirá hondo y pasá. Yo le pedí permiso. —S.",
+      "hint": "Superá la segunda etapa."
+    },
+    "dream_1": {
+      "title": "Un sueño de nubes",
+      "text": "Soñaste que eras una nube. Salías despacio de una boca enorme, tibia, y bajabas sobre un valle verde. Abajo había una escuela del tamaño de un grano de arroz. Alguien te había respirado.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_2": {
+      "title": "El primero que subió",
+      "text": "En el sueño, un muchacho sube una montaña sin sendero, mucho antes de que existiera ninguna escuela. Va solo. Respira igual que vos cuando estás cansado: dos cortas, una larga.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_3": {
+      "title": "La promesa",
+      "text": "El muchacho llega arriba sin fuerzas para bajar. Mira el valle seco y le promete a la montaña que va a seguir respirando por los de abajo. Se acuesta en la nieve, sonriendo, y cierra los ojos.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_4": {
+      "title": "Escamas",
+      "text": "El sueño pasa años en un solo aliento. La nieve sobre el muchacho se vuelve escamas; su respiración, nubes. Las nubes bajan, llueve, y el valle se pone verde. Todavía sonríe.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_5": {
+      "title": "La primera puerta",
+      "text": "La gente sube a ver al que duerme y no lo puede despertar. Una mujer se queda al pie de la montaña y levanta una puerta de madera: la primera escuela. Decide mandar a uno por vez, para que nadie lo despierte de golpe.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_6": {
+      "title": "Los que se quedan",
+      "text": "Ves a los discípulos que no volvieron. No están tristes: caminan dentro de las nubes que cruzaste, y cada uno empuja un poco de aliento hacia el valle. Uno te saluda con la mano. Tiene tu misma cinta.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_7": {
+      "title": "La niña del viento",
+      "text": "Una niña llega primero que nadie al templo helado. El dragón, dormido, le regala el viento de la cumbre para que elija quién sigue. Ella tiene tanto miedo de elegir mal que, desde entonces, no deja pasar a nadie con ganas.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_8": {
+      "title": "Unas sandalias en la nieve",
+      "text": "Un joven con las sandalias de tu maestro cae de rodillas frente a la Dama del Viento. Le pide permiso. El dragón, que lo sueña, no quiere que se quede ahí: sueña que baja. El joven despierta en la puerta de la escuela, con nieve en el pelo.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_9": {
+      "title": "Las cartas sin enviar",
+      "text": "El dragón escribe nombres en la piedra mientras sueña. Escribe el tuyo mucho antes de que nacieras, con cuidado, como quien escribe una carta que algún día alguien va a venir a buscar.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "dream_10": {
+      "title": "Descansar un rato",
+      "text": "El dragón está cansado. Sueña con un discípulo que llegue arriba y respire por él un rato, para poder dormir sin soñar. Lo soñó muchas veces y cada vez tenía otra cara. Esta vez, la tuya.",
+      "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
     }
   },
   "masterLines": {
@@ -1113,49 +1206,190 @@
     "wolongding": "Nieve, viento y silencio. Arriba, algo enorme respira despacio entre las nubes."
   },
   "meridians": {
-    "body_1": { "name": "Zúsānlǐ", "hanzi": "足三里", "text": "El punto de las piernas que no se cansan." },
-    "body_2": { "name": "Yǒngquán", "hanzi": "涌泉", "text": "Fuente que brota bajo los pies." },
-    "body_3": { "name": "Qìhǎi", "hanzi": "气海", "text": "El mar del aliento, debajo del ombligo." },
-    "body_4": { "name": "Mìngmén", "hanzi": "命门", "text": "La puerta de la vida, en la espalda." },
-    "body_5": { "name": "Dāntián", "hanzi": "丹田", "text": "El centro: de ahí sale cada golpe." },
-    "spirit_1": { "name": "Hégǔ", "hanzi": "合谷", "text": "El valle donde se juntan los dedos." },
-    "spirit_2": { "name": "Shénmén", "hanzi": "神门", "text": "La puerta del espíritu, en la muñeca." },
-    "spirit_3": { "name": "Nèiguān", "hanzi": "内关", "text": "El paso interior: calma para negociar." },
-    "spirit_4": { "name": "Dànzhōng", "hanzi": "膻中", "text": "El centro del pecho, donde se guarda la alegría." },
-    "spirit_5": { "name": "Bǎihuì", "hanzi": "百会", "text": "Las cien reuniones, en la coronilla." },
-    "tech_1": { "name": "Láogōng", "hanzi": "劳宫", "text": "El palacio del trabajo, en la palma." },
-    "tech_2": { "name": "Qūchí", "hanzi": "曲池", "text": "El estanque del codo doblado." },
-    "tech_3": { "name": "Fēngchí", "hanzi": "风池", "text": "El estanque del viento, en la nuca." },
-    "tech_4": { "name": "Tàichōng", "hanzi": "太冲", "text": "El gran paso del pie." },
-    "tech_5": { "name": "Yìntáng", "hanzi": "印堂", "text": "El sello entre las cejas." }
+    "body_1": {
+      "name": "Zúsānlǐ",
+      "hanzi": "足三里",
+      "text": "El punto de las piernas que no se cansan."
+    },
+    "body_2": {
+      "name": "Yǒngquán",
+      "hanzi": "涌泉",
+      "text": "Fuente que brota bajo los pies."
+    },
+    "body_3": {
+      "name": "Qìhǎi",
+      "hanzi": "气海",
+      "text": "El mar del aliento, debajo del ombligo."
+    },
+    "body_4": {
+      "name": "Mìngmén",
+      "hanzi": "命门",
+      "text": "La puerta de la vida, en la espalda."
+    },
+    "body_5": {
+      "name": "Dāntián",
+      "hanzi": "丹田",
+      "text": "El centro: de ahí sale cada golpe."
+    },
+    "spirit_1": {
+      "name": "Hégǔ",
+      "hanzi": "合谷",
+      "text": "El valle donde se juntan los dedos."
+    },
+    "spirit_2": {
+      "name": "Shénmén",
+      "hanzi": "神门",
+      "text": "La puerta del espíritu, en la muñeca."
+    },
+    "spirit_3": {
+      "name": "Nèiguān",
+      "hanzi": "内关",
+      "text": "El paso interior: calma para negociar."
+    },
+    "spirit_4": {
+      "name": "Dànzhōng",
+      "hanzi": "膻中",
+      "text": "El centro del pecho, donde se guarda la alegría."
+    },
+    "spirit_5": {
+      "name": "Bǎihuì",
+      "hanzi": "百会",
+      "text": "Las cien reuniones, en la coronilla."
+    },
+    "tech_1": {
+      "name": "Láogōng",
+      "hanzi": "劳宫",
+      "text": "El palacio del trabajo, en la palma."
+    },
+    "tech_2": {
+      "name": "Qūchí",
+      "hanzi": "曲池",
+      "text": "El estanque del codo doblado."
+    },
+    "tech_3": {
+      "name": "Fēngchí",
+      "hanzi": "风池",
+      "text": "El estanque del viento, en la nuca."
+    },
+    "tech_4": {
+      "name": "Tàichōng",
+      "hanzi": "太冲",
+      "text": "El gran paso del pie."
+    },
+    "tech_5": {
+      "name": "Yìntáng",
+      "hanzi": "印堂",
+      "text": "El sello entre las cejas."
+    }
   },
   "hitos": {
-    "first_climb": { "name": "El primer paso", "text": "Terminá una subida, llegues hasta donde llegues." },
-    "reach_monastery": { "name": "Sobre las nubes", "text": "Llegá al Monasterio Colgado." },
-    "reach_peak": { "name": "Donde duerme el dragón", "text": "Llegá a la Cumbre del Dragón Dormido." },
-    "summit": { "name": "La cumbre", "text": "Vencé al Dragón Dormido." },
-    "elites_0": { "name": "Los guardianes de las campanas", "text": "Vencé al Monje sin Rostro, al León de Piedra y a la Dama del Abanico, en las subidas que hagan falta." },
-    "elites_1": { "name": "El campanario en silencio", "text": "Vencé a los seis élites del Monasterio Colgado, en las subidas que hagan falta." },
-    "elites_2": { "name": "Hielo que se rinde", "text": "Vencé a la Dama del Viento, al León de las Nieves, al Sueño del Dragón y al Qilin." },
-    "flawless_boss": { "name": "Ni un pelo fuera de lugar", "text": "Vencé a un jefe sin perder Vida." },
-    "win_tiger": { "name": "Garra del Tigre", "text": "Ganá una subida por el camino del Tigre." },
-    "win_snake": { "name": "Paciencia de la Serpiente", "text": "Ganá una subida por el camino de la Serpiente." },
-    "win_crane": { "name": "Vuelo de la Grulla", "text": "Ganá una subida por el camino de la Grulla." },
-    "three_paths": { "name": "Los tres animales", "text": "Ganá con el Tigre, la Serpiente y la Grulla." },
-    "win_hard": { "name": "Montaña áspera", "text": "Ganá una subida en Difícil o más." },
-    "win_shifu": { "name": "Digno del maestro", "text": "Ganá una subida en Shifu." },
-    "pico_1": { "name": "El primer Pico", "text": "Ganá una subida con el Pico 1 o más." },
-    "pico_5": { "name": "Cinco Picos", "text": "Ganá una subida con el Pico 5 o más." },
-    "pico_10": { "name": "La cima de las cimas", "text": "Ganá una subida con el Pico 10." },
-    "forms_10": { "name": "Cuerpo que recuerda", "text": "Completá 10 formas en una misma subida." },
-    "deflects_20": { "name": "Agua que no se rompe", "text": "Desviá 20 golpes en una misma subida." },
-    "flawless_5": { "name": "Sin un rasguño", "text": "Ganá 5 combates sin perder Vida en una misma subida." },
-    "awaken_path": { "name": "El animal despierto", "text": "Conocé los cuatro despertares de un mismo camino, entre todas tus subidas." },
-    "awaken_all": { "name": "Tres animales despiertos", "text": "Conocé los doce despertares de los tres caminos." },
-    "talismans_6": { "name": "Cinturón cargado", "text": "Terminá una subida llevando 6 talismanes." },
-    "talisman_boss": { "name": "El sello del jefe", "text": "Terminá una subida llevando un talismán de jefe." },
-    "talismans_all": { "name": "El cofre de la escuela", "text": "Llevá cada uno de los 27 talismanes alguna vez, al terminar una subida (los de camino, con su camino)." },
-    "light_deck": { "name": "Lo justo", "text": "Ganá una subida con 16 cartas o menos en el mazo." },
-    "ten_disciples": { "name": "Diez discípulos", "text": "Mandá a la montaña al décimo discípulo de la escuela." }
+    "first_climb": {
+      "name": "El primer paso",
+      "text": "Terminá una subida, llegues hasta donde llegues."
+    },
+    "reach_monastery": {
+      "name": "Sobre las nubes",
+      "text": "Llegá al Monasterio Colgado."
+    },
+    "reach_peak": {
+      "name": "Donde duerme el dragón",
+      "text": "Llegá a la Cumbre del Dragón Dormido."
+    },
+    "summit": {
+      "name": "La cumbre",
+      "text": "Vencé al Dragón Dormido."
+    },
+    "elites_0": {
+      "name": "Los guardianes de las campanas",
+      "text": "Vencé al Monje sin Rostro, al León de Piedra y a la Dama del Abanico, en las subidas que hagan falta."
+    },
+    "elites_1": {
+      "name": "El campanario en silencio",
+      "text": "Vencé a los seis élites del Monasterio Colgado, en las subidas que hagan falta."
+    },
+    "elites_2": {
+      "name": "Hielo que se rinde",
+      "text": "Vencé a la Dama del Viento, al León de las Nieves, al Sueño del Dragón y al Qilin."
+    },
+    "flawless_boss": {
+      "name": "Ni un pelo fuera de lugar",
+      "text": "Vencé a un jefe sin perder Vida."
+    },
+    "win_tiger": {
+      "name": "Garra del Tigre",
+      "text": "Ganá una subida por el camino del Tigre."
+    },
+    "win_snake": {
+      "name": "Paciencia de la Serpiente",
+      "text": "Ganá una subida por el camino de la Serpiente."
+    },
+    "win_crane": {
+      "name": "Vuelo de la Grulla",
+      "text": "Ganá una subida por el camino de la Grulla."
+    },
+    "three_paths": {
+      "name": "Los tres animales",
+      "text": "Ganá con el Tigre, la Serpiente y la Grulla."
+    },
+    "win_hard": {
+      "name": "Montaña áspera",
+      "text": "Ganá una subida en Difícil o más."
+    },
+    "win_shifu": {
+      "name": "Digno del maestro",
+      "text": "Ganá una subida en Shifu."
+    },
+    "pico_1": {
+      "name": "El primer Pico",
+      "text": "Ganá una subida con el Pico 1 o más."
+    },
+    "pico_5": {
+      "name": "Cinco Picos",
+      "text": "Ganá una subida con el Pico 5 o más."
+    },
+    "pico_10": {
+      "name": "La cima de las cimas",
+      "text": "Ganá una subida con el Pico 10."
+    },
+    "forms_10": {
+      "name": "Cuerpo que recuerda",
+      "text": "Completá 10 formas en una misma subida."
+    },
+    "deflects_20": {
+      "name": "Agua que no se rompe",
+      "text": "Desviá 20 golpes en una misma subida."
+    },
+    "flawless_5": {
+      "name": "Sin un rasguño",
+      "text": "Ganá 5 combates sin perder Vida en una misma subida."
+    },
+    "awaken_path": {
+      "name": "El animal despierto",
+      "text": "Conocé los cuatro despertares de un mismo camino, entre todas tus subidas."
+    },
+    "awaken_all": {
+      "name": "Tres animales despiertos",
+      "text": "Conocé los doce despertares de los tres caminos."
+    },
+    "talismans_6": {
+      "name": "Cinturón cargado",
+      "text": "Terminá una subida llevando 6 talismanes."
+    },
+    "talisman_boss": {
+      "name": "El sello del jefe",
+      "text": "Terminá una subida llevando un talismán de jefe."
+    },
+    "talismans_all": {
+      "name": "El cofre de la escuela",
+      "text": "Llevá cada uno de los 27 talismanes alguna vez, al terminar una subida (los de camino, con su camino)."
+    },
+    "light_deck": {
+      "name": "Lo justo",
+      "text": "Ganá una subida con 16 cartas o menos en el mazo."
+    },
+    "ten_disciples": {
+      "name": "Diez discípulos",
+      "text": "Mandá a la montaña al décimo discípulo de la escuela."
+    }
   }
 }

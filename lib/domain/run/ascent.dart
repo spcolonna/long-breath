@@ -182,10 +182,12 @@ const loreOrder = [
   'fell_monk',
   'fell_dragon',
   'reach_monastery',
+  'letter_1',
   'fell_bell_keeper',
   'monastery_beams',
   'fell_abbot',
   'reach_peak',
+  'letter_2',
   'fell_wind_lady',
   'snow_footprints',
   'fell_sleeping_dragon',
@@ -196,8 +198,28 @@ const loreOrder = [
   'ending_crane',
   'fallen_5',
   'fallen_10',
+  ...dreamOrder,
   'master_name',
 ];
+
+/// Los sueños del dragón: cuentan su historia en orden, uno por vez, al
+/// acampar entre etapas o al caer.
+const dreamOrder = [
+  'dream_1', 'dream_2', 'dream_3', 'dream_4', 'dream_5', //
+  'dream_6', 'dream_7', 'dream_8', 'dream_9', 'dream_10',
+];
+
+/// El próximo sueño que todavía no se tuvo (null: ya se soñaron todos).
+String? nextDream(Set<String> have) =>
+    dreamOrder.where((d) => !have.contains(d)).firstOrNull;
+
+/// Lo que se lee en el campamento después de vencer la etapa [stage]: la
+/// carta del maestro la primera vez y, después, el próximo sueño.
+String? campLore(int stage, Set<String> have) {
+  final letter = 'letter_${stage + 1}';
+  if (stage < 2 && !have.contains(letter)) return letter;
+  return nextDream(have);
+}
 
 /// El final de cada camino: se abre al llegar a la cumbre con ese camino.
 String endingOf(Style s) => 'ending_${s.name}';
@@ -231,5 +253,7 @@ List<String> earnedLore(Ascent a, List<Ascent> before, Set<String> have) {
     if (fallen >= 5) 'fallen_5',
     if (fallen >= 10) 'fallen_10',
     if (allEndings) 'master_name',
+    // Al caer, el dragón sueña con vos.
+    if (a.fell) ?nextDream(have),
   ].where((id) => !have.contains(id)).toList();
 }

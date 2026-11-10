@@ -200,7 +200,10 @@ class TalismanEffect {
 enum TalismanTier {
   common,
   rare,
-  boss;
+  boss,
+
+  /// Voto del campamento: dura una etapa y no sale como premio.
+  vow;
 
   static TalismanTier parse(String? s) =>
       values.firstWhere((t) => t.name == s, orElse: () => common);
@@ -233,6 +236,7 @@ class TalismanDef {
 
   bool get rare => tier == TalismanTier.rare;
   bool get boss => tier == TalismanTier.boss;
+  bool get vow => tier == TalismanTier.vow;
 
   factory TalismanDef.fromJson(Map<String, dynamic> j) => TalismanDef(
     id: j['id'] as String,

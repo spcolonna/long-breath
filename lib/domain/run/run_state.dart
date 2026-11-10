@@ -151,6 +151,8 @@ class RunState {
     this.talismanOptions = const [],
     this.awakenings = const [],
     this.awakeningOptions = const [],
+    this.vow,
+    this.vowOptions = const [],
     this.locked = const [],
     this.eventId,
     this.seenEvents = const [],
@@ -236,6 +238,13 @@ class RunState {
 
   /// Despertares que se ofrecen (solo en la fase stageClear).
   final List<String> awakeningOptions;
+
+  /// Voto del campamento que rige la etapa en curso (un talismán de voto
+  /// que se quita al subir a la etapa siguiente).
+  final String? vow;
+
+  /// Votos que ofrece el campamento (solo en la fase stageClear).
+  final List<String> vowOptions;
 
   /// Lo que la escuela todavía no abrió cuando empezó la subida (caminos,
   /// cartas, talismanes y formas del cultivo). Queda fijo toda la run.
@@ -367,6 +376,9 @@ class RunState {
     List<String>? talismanOptions,
     List<String>? awakenings,
     List<String>? awakeningOptions,
+    String? vow,
+    bool clearVow = false,
+    List<String>? vowOptions,
     String? eventId,
     bool clearEventId = false,
     List<String>? seenEvents,
@@ -435,6 +447,8 @@ class RunState {
         talismanOptions: talismanOptions ?? this.talismanOptions,
         awakenings: awakenings ?? this.awakenings,
         awakeningOptions: awakeningOptions ?? this.awakeningOptions,
+        vow: clearVow ? null : vow ?? this.vow,
+        vowOptions: vowOptions ?? this.vowOptions,
         locked: locked,
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
@@ -510,6 +524,8 @@ class RunState {
         'talismanOptions': talismanOptions,
         'awakenings': awakenings,
         'awakeningOptions': awakeningOptions,
+        if (vow != null) 'vow': vow,
+        if (vowOptions.isNotEmpty) 'vowOptions': vowOptions,
         'locked': locked,
         'eventId': eventId,
         'seenEvents': seenEvents,
@@ -588,6 +604,8 @@ class RunState {
         awakenings: ((j['awakenings'] as List?) ?? const []).cast<String>(),
         awakeningOptions:
             ((j['awakeningOptions'] as List?) ?? const []).cast<String>(),
+        vow: j['vow'] as String?,
+        vowOptions: ((j['vowOptions'] as List?) ?? const []).cast<String>(),
         locked: ((j['locked'] as List?) ?? const []).cast<String>(),
         eventId: j['eventId'] as String?,
         seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),

@@ -2944,6 +2944,60 @@ abstract class AppLocalizations {
   /// **'Raro'**
   String get talismanRare;
 
+  /// No description provided for @talismanVow.
+  ///
+  /// In es, this message translates to:
+  /// **'Voto · una etapa'**
+  String get talismanVow;
+
+  /// No description provided for @campTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El campamento'**
+  String get campTitle;
+
+  /// No description provided for @campLetter.
+  ///
+  /// In es, this message translates to:
+  /// **'Entre tus cosas aparece una carta que no habías visto.'**
+  String get campLetter;
+
+  /// No description provided for @campDream.
+  ///
+  /// In es, this message translates to:
+  /// **'La fogata se apaga despacio. Esa noche soñaste.'**
+  String get campDream;
+
+  /// No description provided for @campQuiet.
+  ///
+  /// In es, this message translates to:
+  /// **'La fogata cruje y el dragón duerme sin sueños. Mañana se sigue.'**
+  String get campQuiet;
+
+  /// No description provided for @campVowTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Hacés un voto para la etapa que viene?'**
+  String get campVowTitle;
+
+  /// No description provided for @campVowHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Una ventaja con un costo, hasta la próxima fogata. Podés no votar.'**
+  String get campVowHint;
+
+  /// No description provided for @campClimbVow.
+  ///
+  /// In es, this message translates to:
+  /// **'Subir con el voto'**
+  String get campClimbVow;
+
+  /// No description provided for @campClimbFree.
+  ///
+  /// In es, this message translates to:
+  /// **'Seguir sin voto'**
+  String get campClimbFree;
+
   /// No description provided for @talismanBoss.
   ///
   /// In es, this message translates to:

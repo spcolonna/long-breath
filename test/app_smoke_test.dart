@@ -376,6 +376,7 @@ void main() {
         phase: RunPhase.stageClear,
         currentNode: atBoss.map.firstWhere((n) => n.enemy == 'dragon').id,
         hp: 10,
+        vowOptions: const ['voto_loto', 'voto_ayuno'],
       ),
     );
     GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/stage');
@@ -385,6 +386,12 @@ void main() {
     expect(find.text('Monasterio Colgado'), findsOneWidget);
     final hpStage = container.read(runControllerProvider)!.hp;
     await tester.tap(find.text('Seguir subiendo'));
+    await settle();
+    // El campamento: la carta del maestro y un voto que se puede no hacer.
+    expect(find.text('El campamento'), findsOneWidget);
+    expect(find.text('Carta del maestro: el monasterio'), findsOneWidget);
+    expect(find.text('¿Hacés un voto para la etapa que viene?'), findsOneWidget);
+    await tester.tap(find.text('Seguir sin voto'));
     await settle();
     final up = container.read(runControllerProvider)!;
     expect(up.stage, 1);

@@ -176,7 +176,13 @@ class RunEngine {
     if (phase == RunPhase.map && _merchantDue(r)) return _wanderingMerchant(r);
     if (phase != RunPhase.stageClear) return r.copyWith(phase: phase);
     final (options, rng) = _rollAwakenings(r);
-    return r.copyWith(phase: phase, awakeningOptions: options, rng: rng);
+    final (vows, rng2) = _rollVows(r, rng);
+    return r.copyWith(
+      phase: phase,
+      awakeningOptions: options,
+      vowOptions: vows,
+      rng: rng2,
+    );
   }
 
   /// Toca el mercader ambulante: se ganaron sus combates, o se venció al
@@ -224,21 +230,53 @@ class RunEngine {
     return (shuffled.take(data.balance.awakeningChoices).toList(), rng);
   }
 
+  /// Los votos que ofrece el campamento entre etapas.
+  (List<String>, Rng) _rollVows(RunState r, Rng rng) {
+    final all = [
+      for (final t in data.talismans.values)
+        if (t.vow && t.id != r.vow) t.id,
+    ];
+    final (shuffled, next) = rng.shuffle(all);
+    return (shuffled.take(data.balance.vowChoices).toList(), next);
+  }
+
+  /// Saca un talismán (y lo que sumaba a la Vida máxima).
+  RunState removeTalisman(RunState r, String id) {
+    if (!r.talismans.contains(id)) return r;
+    final extra = data.talisman(id).effect.maxHp;
+    final maxHp = math.max(1, r.maxHp - extra);
+    return r.copyWith(
+      talismans: [...r.talismans]..remove(id),
+      maxHp: maxHp,
+      hp: r.hp.clamp(1, maxHp),
+    );
+  }
+
   /// Vida que se recupera al pasar a la etapa siguiente.
   int stageHealOf(RunState r) =>
       ((r.maxHp - r.hp) * data.balance.stageHeal / 100).round();
 
   /// Subir a la etapa siguiente: cura, mapa nuevo y se empieza desde abajo.
   /// Si el camino ofreció despertares, hay que elegir uno ([awakening]).
-  RunState advanceStage(RunState r, {String? awakening}) {
+  /// El campamento puede dejar un [vow] (opcional) que rige la etapa nueva;
+  /// el voto anterior, si había, se cumple y se quita.
+  RunState advanceStage(RunState r, {String? awakening, String? vow}) {
     if (r.phase != RunPhase.stageClear) throw StateError('No hay etapa vencida');
     if (awakening != null
         ? !r.awakeningOptions.contains(awakening)
         : r.awakeningOptions.isNotEmpty) {
       throw StateError('Despertar no ofrecido: $awakening');
     }
+    if (vow != null && !r.vowOptions.contains(vow)) {
+      throw StateError('Voto no ofrecido: $vow');
+    }
+    if (r.vow != null) r = removeTalisman(r, r.vow!);
+    if (vow != null) r = addTalisman(r, vow);
     final (map, rng) = _stageMap(r.stage + 1, r.rng);
     return r.copyWith(
+      vow: vow,
+      clearVow: vow == null,
+      vowOptions: const [],
       awakenings: [...r.awakenings, ?awakening],
       awakeningOptions: const [],
       stage: r.stage + 1,
@@ -556,8 +594,9 @@ class RunEngine {
   Map<String, int> finalFeats(RunState r) => {
     ...r.feats,
     for (final a in r.awakenings) Feat.awakening(a): 1,
-    for (final t in r.talismans) Feat.talisman(t): 1,
-    Feat.talismans: r.talismans.length,
+    for (final t in r.talismans)
+      if (!data.talisman(t).vow) Feat.talisman(t): 1,
+    Feat.talismans: r.talismans.where((t) => !data.talisman(t).vow).length,
     if (r.talismans.any((t) => data.talisman(t).tier == TalismanTier.boss))
       Feat.bossTalisman: 1,
   };
@@ -834,7 +873,8 @@ class RunEngine {
     bool shop = false,
   }) => [
     for (final t in data.talismans.values)
-      if (!r.talismans.contains(t.id) &&
+      if (!t.vow &&
+          !r.talismans.contains(t.id) &&
           !r.locked.contains(t.id) &&
           t.boss == boss &&
           t.shop == shop &&

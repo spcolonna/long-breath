@@ -251,6 +251,37 @@ void main() {
     expect(() => run.advanceStage(up), throwsStateError);
   });
 
+  test('el campamento ofrece votos que duran una sola etapa', () {
+    var r = fresh(1).copyWith(currentNode: 'n6', hp: 30);
+    r = run.finishCombat(r, won: true, hp: 30);
+    r = run.chooseTalisman(r, r.talismanOptions.first);
+    r = run.chooseReward(r, null);
+    expect(r.phase, RunPhase.stageClear);
+    expect(r.vowOptions, hasLength(3));
+    expect(r.vowOptions.every((v) => run.data.talisman(v).vow), isTrue);
+    expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
+    expect(() => run.advanceStage(r, vow: 'roca'), throwsStateError);
+    // Los votos nunca salen como premio.
+    expect(
+      run.missingTalismans(r).any((t) => run.data.talisman(t).vow),
+      isFalse,
+    );
+    // El ayuno resta Vida máxima mientras rige y la devuelve al cumplirse.
+    final ayuno = r.copyWith(vowOptions: const ['voto_ayuno', 'voto_loto']);
+    final up = run.advanceStage(ayuno, vow: 'voto_ayuno');
+    expect(up.vow, 'voto_ayuno');
+    expect(up.talismans, contains('voto_ayuno'));
+    expect(up.maxHp, r.maxHp - 8);
+    expect(up.vowOptions, isEmpty);
+    expect(run.finalFeats(up).keys.where((k) => k.contains('voto')), isEmpty);
+    final next = run.advanceStage(
+      up.copyWith(phase: RunPhase.stageClear, vowOptions: const ['voto_loto']),
+    );
+    expect(next.vow, isNull);
+    expect(next.talismans, isNot(contains('voto_ayuno')));
+    expect(next.maxHp, r.maxHp);
+  });
+
   test('superar una etapa ofrece despertares del camino', () {
     var r = fresh(1).copyWith(currentNode: 'n6', style: Style.crane);
     r = run.finishCombat(r, won: true, hp: 10);
