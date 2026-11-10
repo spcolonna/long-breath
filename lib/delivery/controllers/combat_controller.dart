@@ -244,6 +244,7 @@ class CombatController extends Notifier<CombatView?> {
           won: s.phase == CombatPhase.won,
           hp: s.player.hp,
           fledWith: s.enemy.fled ? s.enemy.stolen : null,
+          foe: s.enemy.id,
           tally: {
             Feat.forms: s.formsCompleted.values.fold(0, (a, n) => a + n),
             Feat.deflects: s.deflects,

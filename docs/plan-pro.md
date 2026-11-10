@@ -137,7 +137,7 @@ La idea central es que **la montaña recuerda**. Cada subida deja huella y la si
 Cada paso termina con `flutter analyze`, `flutter test`, la simulación cuando toca balance, una nota en `NOTAS.md`, commit y push.
 Al final, build +5 📱 con todo junto, para probar de corrido.
 
-## Decisiones abiertas
-- Nombres: ¿los propongo yo (en pinyin con traducción, estilo actual) o tenés alguno?
-- Votos del campamento: ¿obligatorios (siempre elegís uno) u opcionales (podés no votar)?
-- Arte nuevo para hilos (retrato del rival, fogata): ¿se pide o se reusa lo que hay?
+## Decisiones (10/11)
+- Nombres: los propongo yo, en pinyin con traducción; se revisan en el texto.
+- Votos del campamento: opcionales (se puede no votar).
+- Arte: reusar lo que hay; dejar 2–3 prompts sueltos (rival, fogata) para más adelante.

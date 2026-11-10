@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/model/enums.dart';
@@ -64,14 +65,23 @@ class SlotStorage {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_key);
     if (raw != null) {
-      final j = jsonDecode(raw) as Map<String, dynamic>;
-      return {
-        for (final e in j.entries)
-          int.parse(e.key): SlotInfo.fromJson(
-            int.parse(e.key),
-            e.value as Map<String, dynamic>,
-          ),
-      };
+      // Una partida con la ficha rota se saltea; las demás siguen.
+      final out = <int, SlotInfo>{};
+      try {
+        final j = jsonDecode(raw) as Map<String, dynamic>;
+        for (final e in j.entries) {
+          final n = int.tryParse(e.key);
+          if (n == null) continue;
+          try {
+            out[n] = SlotInfo.fromJson(n, e.value as Map<String, dynamic>);
+          } on Object catch (err) {
+            debugPrint('Ficha de partida $n ilegible: $err');
+          }
+        }
+      } on Object catch (err) {
+        debugPrint('Lista de partidas ilegible: $err');
+      }
+      return out;
     }
     final legacy = ProgressStorage.slotKeys.any(
       (k) => prefs.containsKey('${prefixOf(1)}$k'),

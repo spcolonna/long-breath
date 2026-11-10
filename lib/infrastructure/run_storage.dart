@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/run/run_state.dart';
@@ -16,7 +17,10 @@ class RunStorage {
     if (raw == null) return null;
     try {
       return RunState.fromJson(jsonDecode(raw) as Map<String, dynamic>);
-    } on Object {
+    } on Object catch (e) {
+      // No se pierde: queda aparte para poder recuperarla o mirar qué pasó.
+      debugPrint('Guardado de la subida ilegible, respaldado: $e');
+      await prefs.setString('${_key}_corrupt', raw);
       await prefs.remove(_key);
       return null;
     }

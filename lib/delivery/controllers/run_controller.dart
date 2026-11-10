@@ -25,6 +25,9 @@ class RunController extends Notifier<RunState?> {
 
   RunEngine get _engine => ref.read(runEngineProvider);
 
+  /// El enemigo en pie al terminar el último combate (para el registro).
+  String? _lastFoe;
+
   /// Guarda y anota en el registro lo que cambió ([what]: la decisión;
   /// [options]: los nodos que se podían elegir).
   void _set(RunState? r, {String? what, List<String> options = const []}) {
@@ -123,8 +126,12 @@ class RunController extends Notifier<RunState?> {
     required bool won,
     required int hp,
     int? fledWith,
+    String? foe,
     Map<String, int> tally = const {},
   }) {
+    // Quién quedó en pie: en una estancia o un grupo no es el enemigo del
+    // nodo (ese es el guardián de la última sala).
+    _lastFoe = foe;
     _set(
       _engine.finishCombat(
         state!,
@@ -158,6 +165,12 @@ class RunController extends Notifier<RunState?> {
   void _record(RunState run) {
     final rows = mapRows(run);
     final node = run.currentNode == null ? null : run.node(run.currentNode!);
+    final alive = _lastFoe;
+    final foe = alive != null && isGhostFoe(alive)
+        ? ghostEnemy
+        : alive ??
+        (node == null ? null : _engine.packOf(run).firstOrNull ?? node.enemy);
+    _lastFoe = null;
     // El piso se cuenta en toda la subida: las etapas anteriores suman.
     final stages = ref.read(dataProvider).balance.stages;
     final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);
@@ -173,7 +186,7 @@ class RunController extends Notifier<RunState?> {
       stage: run.stage,
       difficulty: run.difficulty,
       pico: run.pico,
-      enemy: node?.enemy,
+      enemy: foe,
       scene: node?.scene,
       light: node?.light,
       style: run.style,
@@ -182,7 +195,7 @@ class RunController extends Notifier<RunState?> {
       keepsake: keepsake?.cardId,
       keepsakeUp: keepsake?.upgrades ?? 0,
       // Si lo venció el Discípulo Perdido, queda quién lo llevaba.
-      ghost: node?.enemy == ghostEnemy || (node?.waves.contains(ghostEnemy) ?? false)
+      ghost: foe == ghostEnemy
           ? run.ghost?.n
           : null,
     );

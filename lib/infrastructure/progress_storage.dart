@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/model/enums.dart';
@@ -94,11 +95,16 @@ extension SchoolRecord on ProgressStorage {
 
   Future<List<Ascent>> ascents() async {
     final prefs = await SharedPreferences.getInstance();
-    return [
-      for (final s in prefs.getStringList(_ascentsKey) ??
-          const <String>[])
-        Ascent.fromJson(jsonDecode(s) as Map<String, dynamic>),
-    ];
+    // Una tablilla ilegible se saltea sola; no tira abajo el registro.
+    final out = <Ascent>[];
+    for (final s in prefs.getStringList(_ascentsKey) ?? const <String>[]) {
+      try {
+        out.add(Ascent.fromJson(jsonDecode(s) as Map<String, dynamic>));
+      } on Object catch (e) {
+        debugPrint('Tablilla ilegible, se saltea: $e');
+      }
+    }
+    return out;
   }
 
   Future<Set<String>> lore() async {

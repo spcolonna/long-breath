@@ -7,10 +7,12 @@ import 'app.dart';
 import 'delivery/audio/game_audio.dart';
 import 'delivery/feel.dart';
 import 'delivery/providers.dart';
+import 'infrastructure/error_log.dart';
 import 'infrastructure/soloud_audio.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ErrorLog().install();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   GameAudio audio;
   try {

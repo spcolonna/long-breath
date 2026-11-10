@@ -6,6 +6,15 @@ import '../rng.dart';
 import 'ghost.dart';
 import 'legacy.dart';
 
+/// Versión del formato de guardado de la subida. Subirla cuando un cambio
+/// necesite migrar datos viejos en [RunState.fromJson].
+const runSaveVersion = 1;
+
+/// Lee un enum por nombre; un valor desconocido (de una versión vieja o
+/// futura) cae en [fallback] en vez de romper el guardado.
+T _enumOr<T extends Enum>(List<T> values, Object? name, T fallback) =>
+    name is String ? values.asNameMap()[name] ?? fallback : fallback;
+
 enum RunPhase {
   map,
   combat,
@@ -481,6 +490,7 @@ class RunState {
   }
 
   Map<String, dynamic> toJson() => {
+        'v': runSaveVersion,
         'style': style?.name,
         'hp': hp,
         'maxHp': maxHp,
@@ -559,7 +569,7 @@ class RunState {
         phase: switch (j['phase'] as String) {
           // Guardados con el viejo paso de montaña.
           'passChoice' => RunPhase.roomBreak,
-          final p => RunPhase.values.byName(p),
+          final p => _enumOr(RunPhase.values, p, RunPhase.map),
         },
         currentNode: j['currentNode'] as String?,
         visited: (j['visited'] as List).cast<String>(),
@@ -598,7 +608,7 @@ class RunState {
         combatsSinceMerchant: j['combatsSinceMerchant'] as int? ?? 0,
         roomStep: j['roomStep'] as int? ?? j['passStep'] as int? ?? 0,
         roomBoon: switch (j['roomBoon']) {
-          final String b => Breather.values.byName(b),
+          final String b => _enumOr(Breather.values, b, Breather.rest),
           _ => null,
         },
         nextMerchantAt: j['nextMerchantAt'] as int? ?? 0,
@@ -625,7 +635,7 @@ class RunState {
         lotus: j['lotus'] as int? ?? 0,
         lotusGained: j['lotusGained'] as int? ?? 0,
         rewardKind: switch (j['rewardKind']) {
-          final String k => RewardKind.values.byName(k),
+          final String k => _enumOr(RewardKind.values, k, RewardKind.cards),
           _ => RewardKind.cards,
         },
         rewardAmount: j['rewardAmount'] as int? ?? 0,
