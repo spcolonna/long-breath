@@ -117,7 +117,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                   const SizedBox(height: 8),
                   _Spoils(jade: _run.jadeGained, lotus: _run.lotusGained),
                   // Al final de una estancia, el premio es su cofre.
-                  if (!_open && _run.roomStep > 0) ...[
+                  if (_run.roomStep > 0) ...[
                     const SizedBox(height: 6),
                     Text(
                       t.chestTitle,
