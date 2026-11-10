@@ -1,4 +1,5 @@
 import '../../domain/combat/combat_action.dart';
+import '../../domain/model/game_balance.dart';
 import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
@@ -24,8 +25,10 @@ int floorOf(RunState r, String nodeId) =>
 
 String _node(RunState r, String id) {
   final n = r.node(id);
-  final foes = [?n.enemy, ...n.waves];
-  return '${n.type.name}${foes.isEmpty ? '' : '(${foes.join('+')}${n.together ? ' juntos' : ''})'}';
+  if (n.stay.isEmpty) return n.type.name;
+  String room(RoomDef r) =>
+      '${r.foes.join('+')}${r.together ? ' juntos' : ''}';
+  return '${n.type.name}(${n.stay.map(room).join(' › ')})';
 }
 
 String _cards(Iterable<CombatCard> cards) => cards

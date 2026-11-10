@@ -674,46 +674,53 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invalidBadTarget => 'A ese no se le puede apuntar';
 
   @override
-  String get passNode => 'Paso de montaña';
+  String get stayTitle => 'Sala superada';
 
   @override
-  String nodeHintPass(int count) {
-    return 'Hasta $count rivales seguidos, sin curarte. Después de cada uno podés seguir o volver con lo ganado; el último deja un talismán.';
+  String stayProgress(int done, int total) {
+    return 'Sala $done de $total';
   }
 
   @override
-  String get passTitle => 'El paso sigue';
-
-  @override
-  String passProgress(int done, int total) {
-    return 'Venciste $done de $total';
+  String stayNext(String name) {
+    return 'En la sala que sigue espera $name.';
   }
 
   @override
-  String passNext(String name) {
-    return 'Más arriba espera $name.';
+  String stayNextLast(String name) {
+    return 'En la última sala espera $name. Detrás, el cofre.';
   }
 
   @override
-  String passLoot(int jade) {
-    return 'Si lo vencés: +$jade de jade de más.';
-  }
-
-  @override
-  String passLootLast(int jade) {
-    return 'Si lo vencés: +$jade de jade de más y un talismán.';
-  }
-
-  @override
-  String passHp(int hp, int max) {
+  String stayHp(int hp, int max) {
     return 'Seguís con $hp de $max de Vida.';
   }
 
   @override
-  String get passGo => 'Seguir';
+  String get stayPick => 'Elegí tu tregua antes de seguir';
 
   @override
-  String get passLeave => 'Volver al mapa';
+  String stayFocusHint(int draw, int breath) {
+    return 'Arrancás la próxima sala con $draw cartas y $breath de aliento de más.';
+  }
+
+  @override
+  String stayFistHint(int n) {
+    return 'Tus golpes pegan +$n durante toda la próxima sala.';
+  }
+
+  @override
+  String nodeHintStay(int count) {
+    return '$count salas seguidas, sin volver; al final, un cofre.';
+  }
+
+  @override
+  String combatRoom(int n, int total) {
+    return 'Sala $n/$total';
+  }
+
+  @override
+  String get chestTitle => 'El cofre de la estancia';
 
   @override
   String get invalidMustBreathe => 'Primero elegí qué hacer en la tregua';
@@ -1507,14 +1514,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, hay una tregua corta (curarte, robar o afilar los puños) y entra el siguiente.';
+      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, y el maestro errante. Cada lugar de combate es una estancia: varias salas seguidas, sin volver al mapa, con una tregua entre sala y sala (curarte, entrar concentrado o afilar los puños) y un cofre al final.';
 
   @override
-  String get lesClimbSlide3Title => 'Después de cada combate';
+  String get lesClimbSlide3Title => 'El cofre de la estancia';
 
   @override
   String get lesClimbSlide3 =>
-      'Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
+      'Al ganar la última sala se abre el cofre. Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
 
   @override
   String get lesClimbSlide4Title => 'Vida y Estructura';

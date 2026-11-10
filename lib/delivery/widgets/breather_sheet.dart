@@ -10,7 +10,7 @@ import 'lotus.dart';
 import 'paper_panel.dart';
 import 'press.dart';
 
-/// Respiro entre oleadas: cae un rival del grupo y, antes de que entre el
+/// Tregua entre oleadas: cae un rival del grupo y, antes de que entre el
 /// siguiente, el jugador elige un premio chico. Cubre la arena y la mano
 /// (nada se juega hasta elegir) con un velo claro, nunca oscuro.
 class BreatherSheet extends StatelessWidget {
@@ -86,11 +86,11 @@ class BreatherSheet extends StatelessWidget {
                           still: still,
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 8),
-                            child: _Option(
+                            child: BreatherOption(
                               key: ValueKey(b),
-                              hanzi: _hanzi(b),
-                              color: _color(b),
-                              title: _title(t, b),
+                              hanzi: hanziOf(b),
+                              color: colorOf(b),
+                              title: titleOf(t, b),
                               hint: _hint(t, b),
                               onTap: () => onPick(b),
                             ),
@@ -107,19 +107,19 @@ class BreatherSheet extends StatelessWidget {
     );
   }
 
-  static String _hanzi(Breather b) => switch (b) {
+  static String hanziOf(Breather b) => switch (b) {
     Breather.rest => '息',
     Breather.focus => '凝',
     Breather.fist => '拳',
   };
 
-  static Color _color(Breather b) => switch (b) {
+  static Color colorOf(Breather b) => switch (b) {
     Breather.rest => Palette.jade,
     Breather.focus => Palette.gold,
     Breather.fist => Palette.lacquer,
   };
 
-  static String _title(AppLocalizations t, Breather b) => switch (b) {
+  static String titleOf(AppLocalizations t, Breather b) => switch (b) {
     Breather.rest => t.breatherRest,
     Breather.focus => t.breatherFocus,
     Breather.fist => t.breatherFist,
@@ -132,8 +132,8 @@ class BreatherSheet extends StatelessWidget {
   };
 }
 
-class _Option extends StatelessWidget {
-  const _Option({
+class BreatherOption extends StatelessWidget {
+  const BreatherOption({
     super.key,
     required this.hanzi,
     required this.color,

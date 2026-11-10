@@ -7,7 +7,6 @@ const _oncePerFloor = {
   NodeType.fountain,
   NodeType.merchant,
   NodeType.master,
-  NodeType.pass,
 };
 
 /// Tipos que tienen que aparecer al menos una vez en el mapa si algún piso
@@ -32,7 +31,6 @@ const _required = [NodeType.master];
   List<String> scenes = const [],
   List<String> lights = const [],
   bool Function(String enemy)? packable,
-  int passFights = 3,
 }) {
   final types = <List<NodeType>>[];
   for (final f in floors) {
@@ -121,8 +119,7 @@ const _required = [NodeType.master];
     ];
     for (var i = 0; i < shuffled.length; i++) {
       final t = shuffled[i];
-      final pass = t == NodeType.pass;
-      if (t != NodeType.combat && !pass) {
+      if (t != NodeType.combat) {
         row.add((t, null, null, null, const [], false));
         continue;
       }
@@ -137,25 +134,13 @@ const _required = [NodeType.master];
           (places.isEmpty ? null : places[e % places.length]);
       final lead = i == optional
           ? optionalFoe
-          : pass && followers.isNotEmpty
-          ? followers[e % followers.length]
           : enemies.isEmpty
           ? null
           : enemies[e % enemies.length];
       if (lead != null && eliteIds.contains(lead)) usedElites.add(lead);
       final waves = <String>[];
       var together = false;
-      if (pass && lead != null) {
-        // Paso: los rivales de los combates que siguen, de a uno y sin
-        // repetir mientras alcancen.
-        final (pool, r5) = rng.shuffle(
-          followers.where((x) => x != lead).toList(),
-        );
-        rng = r5;
-        for (var k = 1; k < passFights; k++) {
-          waves.add(pool.isEmpty ? lead : pool[(k - 1) % pool.length]);
-        }
-      } else if (lead != null &&
+      if (lead != null &&
           packs.length > 1 &&
           followers.isNotEmpty &&
           (packable?.call(lead) ?? false)) {
@@ -212,6 +197,14 @@ const _required = [NodeType.master];
   for (var f = 0; f < rows.length; f++) {
     final next = (links[f], rng);
     for (var i = 0; i < rows[f].length; i++) {
+      var rooms = const <RoomDef>[];
+      final lead = rows[f][i].$2;
+      if (rows[f][i].$1 == NodeType.combat && lead != null) {
+        final (made, r) = _antechambers(floors[f], lead, rows[f][i].$5,
+            packable, rng);
+        rooms = made;
+        rng = r;
+      }
       nodes.add(
         MapNodeDef(
           id: _id(f, i),
@@ -219,6 +212,7 @@ const _required = [NodeType.master];
           enemy: rows[f][i].$2,
           waves: rows[f][i].$5,
           together: rows[f][i].$6,
+          rooms: rooms,
           scene: rows[f][i].$3,
           light: rows[f][i].$4,
           next: [for (final j in next.$1[i]) _id(f + 1, j)],
@@ -227,6 +221,65 @@ const _required = [NodeType.master];
     }
   }
   return (nodes, rng);
+}
+
+/// Las salas que se pelean antes de la última de una estancia (la de
+/// [lead]): tantas como diga `rooms` del piso, menos una. Cada una con un
+/// común del piso sin repetir en la estancia mientras alcancen, solo o con
+/// un compañero (nunca de a tres: la estancia ya es larga).
+(List<RoomDef>, Rng) _antechambers(
+  FloorDef floor,
+  String lead,
+  List<String> guards,
+  bool Function(String enemy)? packable,
+  Rng rng,
+) {
+  final weights = {
+    for (final e in floor.rooms.entries)
+      if (e.value > 0 && e.key > 0) e.key: e.value,
+  };
+  if (weights.isEmpty) return (const [], rng);
+  final (count, r1) = _weighted(rng, weights);
+  rng = r1;
+  if (count <= 1) return (const [], rng);
+  final commons = [
+    for (final id in floor.enemies)
+      if (packable?.call(id) ?? false) id,
+  ];
+  if (commons.isEmpty) return (const [], rng);
+  final used = <String>{lead, ...guards};
+  String pick() {
+    final fresh = commons.where((x) => !used.contains(x)).toList();
+    final from = fresh.isEmpty ? commons : fresh;
+    final (k, r) = rng.nextInt(from.length);
+    rng = r;
+    used.add(from[k]);
+    return from[k];
+  }
+
+  final packs = {
+    for (final p in floor.packs.entries)
+      if (p.value > 0 && p.key <= 2) p.key: p.value,
+  };
+  final rooms = <RoomDef>[];
+  for (var k = 1; k < count; k++) {
+    final enemy = pick();
+    var size = 1;
+    if (packs.length > 1) {
+      final (s, r) = _weighted(rng, packs);
+      rng = r;
+      size = s;
+    }
+    final waves = [for (var w = 1; w < size; w++) pick()];
+    var together = false;
+    if (waves.isNotEmpty && floor.together > 0) {
+      final (roll, r) = rng.nextInt(100);
+      rng = r;
+      together = roll < floor.together;
+    }
+    rooms.add(RoomDef(enemy, waves: waves, together: together));
+  }
+  return (rooms, rng);
 }
 
 /// Lugares seguidos sin combate que un camino puede tener, como mucho.
@@ -262,8 +315,7 @@ List<List<int>> _paths(List<List<List<int>>> links, List<int> widths) {
 /// que no son combate.
 List<(int, int)> _faults(List<int> path, List<_Row> rows) {
   bool fight(int f) =>
-      rows[f][path[f]].$1 == NodeType.combat ||
-      rows[f][path[f]].$1 == NodeType.pass;
+      rows[f][path[f]].$1 == NodeType.combat;
   final bad = <(int, int)>{};
   var run = <(int, int)>[];
   for (var f = 0; f < path.length; f++) {

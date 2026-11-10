@@ -1225,6 +1225,18 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     _pump();
   }
 
+  /// «Sala n/N» si el combate es parte de una estancia.
+  String? _room(CombatView live) {
+    final run = ref.read(runControllerProvider);
+    if (run == null || run.duel != null || run.currentNode == null) {
+      return null;
+    }
+    if (live.tutorial) return null;
+    final total = ref.read(runEngineProvider).roomsOf(run);
+    if (total <= 1) return null;
+    return AppLocalizations.of(context).combatRoom(run.roomStep + 1, total);
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(combatControllerProvider, (prev, next) {
@@ -1318,6 +1330,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             stageId: stageId,
             scene: node?.scene,
             light: node?.light,
+            room: _room(live),
             turn: s.turn,
             style: live.tutorial
                 ? null
@@ -1611,9 +1624,13 @@ class _Arena extends StatelessWidget {
     required this.heroKey,
     required this.introTitle,
     required this.slots,
+    this.room,
   });
 
   final String stageId;
+
+  /// En una estancia, «Sala 2/3» (null en un combate suelto).
+  final String? room;
 
   /// Escenario y luz del camino (null en las lecciones: la terraza al alba).
   final String? scene;
@@ -1798,6 +1815,14 @@ class _Arena extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (room != null) ...[
+                  const SizedBox(height: 6),
+                  _Chip(
+                    icon: Icons.door_sliding_outlined,
+                    text: room!,
+                    color: Palette.text,
+                  ),
+                ],
                 if (style != null) ...[
                   const SizedBox(height: 6),
                   _StyleChip(style: style!),
@@ -1831,7 +1856,7 @@ class _Arena extends StatelessWidget {
               child: fx.turnKey == 0
                   ? _Ribbon(
                       title: introTitle,
-                      subtitle: t.fightStart,
+                      subtitle: room ?? t.fightStart,
                       delayMs: 250,
                     )
                   : _Ribbon(
@@ -5137,6 +5162,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
     ref.read(combatControllerProvider.notifier).finish();
     final run = ref.read(runControllerProvider)!;
     context.go(switch (run.phase) {
+      RunPhase.roomBreak => '/stay',
       RunPhase.talisman => '/talisman',
       RunPhase.reward => '/reward',
       RunPhase.stageClear => '/stage',

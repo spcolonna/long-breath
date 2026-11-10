@@ -1168,65 +1168,71 @@ abstract class AppLocalizations {
   /// **'A ese no se le puede apuntar'**
   String get invalidBadTarget;
 
-  /// No description provided for @passNode.
+  /// No description provided for @stayTitle.
   ///
   /// In es, this message translates to:
-  /// **'Paso de montaña'**
-  String get passNode;
+  /// **'Sala superada'**
+  String get stayTitle;
 
-  /// No description provided for @nodeHintPass.
+  /// No description provided for @stayProgress.
   ///
   /// In es, this message translates to:
-  /// **'Hasta {count} rivales seguidos, sin curarte. Después de cada uno podés seguir o volver con lo ganado; el último deja un talismán.'**
-  String nodeHintPass(int count);
+  /// **'Sala {done} de {total}'**
+  String stayProgress(int done, int total);
 
-  /// No description provided for @passTitle.
+  /// No description provided for @stayNext.
   ///
   /// In es, this message translates to:
-  /// **'El paso sigue'**
-  String get passTitle;
+  /// **'En la sala que sigue espera {name}.'**
+  String stayNext(String name);
 
-  /// No description provided for @passProgress.
+  /// No description provided for @stayNextLast.
   ///
   /// In es, this message translates to:
-  /// **'Venciste {done} de {total}'**
-  String passProgress(int done, int total);
+  /// **'En la última sala espera {name}. Detrás, el cofre.'**
+  String stayNextLast(String name);
 
-  /// No description provided for @passNext.
-  ///
-  /// In es, this message translates to:
-  /// **'Más arriba espera {name}.'**
-  String passNext(String name);
-
-  /// No description provided for @passLoot.
-  ///
-  /// In es, this message translates to:
-  /// **'Si lo vencés: +{jade} de jade de más.'**
-  String passLoot(int jade);
-
-  /// No description provided for @passLootLast.
-  ///
-  /// In es, this message translates to:
-  /// **'Si lo vencés: +{jade} de jade de más y un talismán.'**
-  String passLootLast(int jade);
-
-  /// No description provided for @passHp.
+  /// No description provided for @stayHp.
   ///
   /// In es, this message translates to:
   /// **'Seguís con {hp} de {max} de Vida.'**
-  String passHp(int hp, int max);
+  String stayHp(int hp, int max);
 
-  /// No description provided for @passGo.
+  /// No description provided for @stayPick.
   ///
   /// In es, this message translates to:
-  /// **'Seguir'**
-  String get passGo;
+  /// **'Elegí tu tregua antes de seguir'**
+  String get stayPick;
 
-  /// No description provided for @passLeave.
+  /// No description provided for @stayFocusHint.
   ///
   /// In es, this message translates to:
-  /// **'Volver al mapa'**
-  String get passLeave;
+  /// **'Arrancás la próxima sala con {draw} cartas y {breath} de aliento de más.'**
+  String stayFocusHint(int draw, int breath);
+
+  /// No description provided for @stayFistHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus golpes pegan +{n} durante toda la próxima sala.'**
+  String stayFistHint(int n);
+
+  /// No description provided for @nodeHintStay.
+  ///
+  /// In es, this message translates to:
+  /// **'{count} salas seguidas, sin volver; al final, un cofre.'**
+  String nodeHintStay(int count);
+
+  /// No description provided for @combatRoom.
+  ///
+  /// In es, this message translates to:
+  /// **'Sala {n}/{total}'**
+  String combatRoom(int n, int total);
+
+  /// No description provided for @chestTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El cofre de la estancia'**
+  String get chestTitle;
 
   /// No description provided for @invalidMustBreathe.
   ///
@@ -2539,19 +2545,19 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, el maestro errante y el paso de montaña (varios combates seguidos: después de cada uno elegís seguir o volver). Algunos combates traen un grupo: cuando cae uno, hay una tregua corta (curarte, robar o afilar los puños) y entra el siguiente.'**
+  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, y el maestro errante. Cada lugar de combate es una estancia: varias salas seguidas, sin volver al mapa, con una tregua entre sala y sala (curarte, entrar concentrado o afilar los puños) y un cofre al final.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.
   ///
   /// In es, this message translates to:
-  /// **'Después de cada combate'**
+  /// **'El cofre de la estancia'**
   String get lesClimbSlide3Title;
 
   /// No description provided for @lesClimbSlide3.
   ///
   /// In es, this message translates to:
-  /// **'Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
+  /// **'Al ganar la última sala se abre el cofre. Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
   String get lesClimbSlide3;
 
   /// No description provided for @lesClimbSlide4Title.

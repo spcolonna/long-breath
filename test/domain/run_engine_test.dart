@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:long_breath/domain/combat/combat_state.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
@@ -786,10 +787,19 @@ void main() {
                 expect(run.packable(id), isTrue, reason: id);
               }
             }
-          } else if (n.type == NodeType.pass) {
-            // El paso: tres rivales comunes, uno por combate.
-            expect([n.enemy!, ...n.waves], hasLength(3));
-            expect(n.together, isFalse);
+            // Las salas de antes: comunes que no se escapan, de a uno o dos,
+            // sin repetir en la estancia mientras alcancen.
+            for (final room in n.rooms) {
+              expect(room.waves.length, lessThanOrEqualTo(1));
+              for (final id in room.foes) {
+                expect(run.packable(id), isTrue, reason: id);
+              }
+            }
+            expect(n.stay.length, lessThanOrEqualTo(4));
+            if (n.next.isEmpty || n.next.any(
+                (x) => r.node(x).type == NodeType.fountain)) {
+              expect(n.rooms, isEmpty, reason: 'jefe y élite fijo: una sala');
+            }
           } else {
             expect(n.enemy, isNull);
             expect(n.waves, isEmpty);
@@ -950,6 +960,8 @@ void main() {
       r = run.buyTalisman(r);
       expect(r.talismans, [t]);
       expect(r.shopTalisman, isNull);
+      // Precios después del talismán (el ábaco abarata la tienda).
+      final after = run.merchantOf(r);
       final size = r.deck.length;
       r = run.buyRemove(r, r.deck.first.uid);
       expect(r.deck, hasLength(size - 1));
@@ -957,7 +969,7 @@ void main() {
           reason: 'una vez por visita');
       r = run.buyUpgrade(r, r.deck.first.uid);
       expect(r.deck.first.upgrades, run.data.balance.fountainUpgrade);
-      expect(r.jade, 200 - m.card - m.talisman - m.remove - m.upgrade);
+      expect(r.jade, 200 - m.card - m.talisman - after.remove - after.upgrade);
       r = run.leaveShop(r);
       expect(r.phase, RunPhase.map);
       expect(r.shopCards, isEmpty);
@@ -1200,13 +1212,16 @@ void main() {
     });
   });
 
-  group('paso de montaña', () {
+  group('estancias', () {
     RunState base() => fresh(7).copyWith(map: [
           const MapNodeDef(
               id: 'p',
-              type: NodeType.pass,
-              enemy: 'bat',
-              waves: ['golem', 'salamander'],
+              type: NodeType.combat,
+              enemy: 'salamander',
+              rooms: [
+                RoomDef('bat'),
+                RoomDef('golem', waves: ['monkey'], together: true),
+              ],
               next: ['x']),
           const MapNodeDef(
               id: 'x', type: NodeType.combat, enemy: 'dragon', next: []),
@@ -1216,44 +1231,67 @@ void main() {
         ? run.chooseReward(r, null)
         : run.collectReward(r);
 
-    test('un rival por combate; después de cada uno se elige seguir', () {
+    test('sala por sala, sin premio de cartas hasta el cofre', () {
       var r = run.enter(base(), 'p');
       expect(r.phase, RunPhase.combat);
+      expect(run.roomsOf(r), 3);
       expect(run.packOf(r), ['bat']);
-      expect(run.togetherOf(r), isFalse);
+      expect(run.roomHpPct(r), run.data.balance.stayHpPct(0));
+      final jade = r.jade;
       r = run.finishCombat(r, won: true, hp: 30);
-      expect(r.talismanOptions, isEmpty, reason: 'el talismán es al final');
-      r = leave(r);
-      expect(r.phase, RunPhase.passChoice);
-      r = run.passContinue(r);
-      expect((r.phase, r.passStep, r.hp), (RunPhase.combat, 1, 30));
-      expect(run.packOf(r), ['golem']);
-      expect(run.enemyOf(r), 'golem');
+      expect(r.phase, RunPhase.roomBreak);
+      expect(r.rewardOptions, isEmpty);
+      expect(r.jade, greaterThan(jade), reason: 'cada sala da jade');
+      expect(r.combatsSinceMerchant, 0, reason: 'el mercader cuenta estancias');
+      r = run.roomContinue(r, Breather.focus);
+      expect((r.phase, r.roomStep, r.roomBoon), (RunPhase.combat, 1, Breather.focus));
+      expect(run.packOf(r), ['golem', 'monkey']);
+      expect(run.togetherOf(r), isTrue);
+      expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
     });
 
-    test('el botín crece y el último deja talismán', () {
-      var r = run.enter(base(), 'p');
-      final first = run.finishCombat(r, won: true, hp: 30);
-      r = run.passContinue(leave(first));
-      r = run.passContinue(leave(run.finishCombat(r, won: true, hp: 30)));
+    test('reponerse cura entre salas; la última abre el cofre', () {
+      var r = run.finishCombat(run.enter(base(), 'p'), won: true, hp: 20);
+      r = run.roomContinue(r, Breather.rest);
+      expect(r.hp, 20 + run.restHeal(r));
+      expect(r.roomBoon, isNull);
+      r = run.roomContinue(run.finishCombat(r, won: true, hp: 20), Breather.fist);
       expect(run.packOf(r), ['salamander']);
-      final last = run.finishCombat(r, won: true, hp: 30);
-      expect(last.phase, RunPhase.talisman);
-      expect(last.talismanOptions, isNotEmpty);
-      expect(run.passBonus(r), run.data.balance.passJade * 2);
-      // Terminado el paso, se vuelve al mapa.
-      final out = leave(run.chooseTalisman(last, last.talismanOptions.first));
+      expect(run.lastRoom(r), isTrue);
+      final last = run.finishCombat(r, won: true, hp: 20);
+      expect([RunPhase.reward, RunPhase.talisman], contains(last.phase));
+      expect(last.combatsSinceMerchant, 1);
+      final out = leave(last.phase == RunPhase.talisman
+          ? run.chooseTalisman(last, last.talismanOptions.first)
+          : last);
       expect(out.phase, RunPhase.map);
       expect(run.available(out), ['x']);
     });
 
-    test('retirarse vuelve al mapa con lo ganado', () {
-      var r = leave(run.finishCombat(run.enter(base(), 'p'), won: true, hp: 30));
-      final jade = r.jade;
-      r = run.passRetreat(r);
-      expect((r.phase, r.passStep, r.jade), (RunPhase.map, 0, jade));
-      expect(run.available(r), ['x']);
-      expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
+    test('a mitad de la estancia no se vuelve al mapa', () {
+      var r = run.finishCombat(run.enter(base(), 'p'), won: true, hp: 30);
+      r = run.roomContinue(r, Breather.focus);
+      r = run.retreat(r);
+      expect((r.phase, r.roomStep), (RunPhase.roomBreak, 0));
+      expect(run.available(r), isEmpty);
+    });
+
+    test('el viejo paso guardado se lee como estancia', () {
+      final n = MapNodeDef.fromJson({
+        'id': 'p',
+        'type': 'pass',
+        'enemy': 'bat',
+        'waves': ['golem', 'salamander'],
+        'next': ['x'],
+      });
+      expect(n.type, NodeType.combat);
+      expect([for (final room in n.stay) room.enemy], ['bat', 'golem', 'salamander']);
+      final r = RunState.fromJson({
+        ...base().toJson(),
+        'phase': 'passChoice',
+        'passStep': 1,
+      });
+      expect((r.phase, r.roomStep), (RunPhase.roomBreak, 1));
     });
   });
 

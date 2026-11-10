@@ -144,7 +144,6 @@ class RunEngine {
       scenes: st.scenes,
       lights: st.lights,
       packable: packable,
-      passFights: data.balance.passFights,
     );
   }
 
@@ -173,7 +172,6 @@ class RunEngine {
   /// Termina la recompensa: al mapa, o al descanso de la etapa vencida, donde
   /// el camino ofrece sus despertares.
   RunState _leaveReward(RunState r) {
-    if (_passGoesOn(r)) return r.copyWith(phase: RunPhase.passChoice);
     final phase = _afterReward(r);
     if (phase == RunPhase.map && _merchantDue(r)) return _wanderingMerchant(r);
     if (phase != RunPhase.stageClear) return r.copyWith(phase: phase);
@@ -318,6 +316,15 @@ class RunEngine {
         clearDuel: true,
       );
     }
+    // A mitad de una estancia no se sale: se vuelve a la pausa antes de la
+    // sala que quedó a medias.
+    if (r.roomStep > 0) {
+      return r.copyWith(
+        phase: RunPhase.roomBreak,
+        roomStep: r.roomStep - 1,
+        clearRoomBoon: true,
+      );
+    }
     final visited = r.visited.sublist(0, r.visited.length - 1);
     return r.copyWith(
       phase: RunPhase.map,
@@ -335,9 +342,10 @@ class RunEngine {
     final entered = r.copyWith(
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
-      passStep: 0,
+      roomStep: 0,
+      clearRoomBoon: true,
       phase: switch (n.type) {
-        NodeType.combat || NodeType.pass => RunPhase.combat,
+        NodeType.combat => RunPhase.combat,
         NodeType.fountain => RunPhase.fountain,
         NodeType.shrine => RunPhase.shrine,
         NodeType.event => RunPhase.event,
@@ -385,51 +393,50 @@ class RunEngine {
   String enemyOf(RunState r) => r.duel ?? packOf(r).first;
 
   /// Enemigos del combate actual, en el orden en que entran.
-  List<String> packOf(RunState r) {
-    if (r.duel != null) return [r.duel!];
-    final n = r.node(r.currentNode!);
-    if (n.type == NodeType.pass) return [passChain(n)[r.passStep]];
-    return [n.enemy!, ...n.waves];
-  }
+  List<String> packOf(RunState r) =>
+      r.duel != null ? [r.duel!] : roomOf(r).foes;
 
   /// Si el grupo del combate actual pelea todo junto (no en oleadas).
-  bool togetherOf(RunState r) =>
-      r.duel == null &&
-      r.node(r.currentNode!).type != NodeType.pass &&
-      r.node(r.currentNode!).together;
+  bool togetherOf(RunState r) => r.duel == null && roomOf(r).together;
 
-  // ------------------------------------------------------------------ paso
+  // -------------------------------------------------------------- estancia
 
-  /// Los rivales de un paso de montaña, en el orden en que se enfrentan.
-  List<String> passChain(MapNodeDef n) => [n.enemy!, ...n.waves];
-
-  /// Se está en un paso y el combate actual es el último de la cadena.
-  bool _passEnd(RunState r) {
-    if (r.duel != null || r.currentNode == null) return false;
-    final n = r.node(r.currentNode!);
-    return n.type == NodeType.pass && r.passStep >= passChain(n).length - 1;
+  /// La sala que toca en la estancia del nodo actual.
+  RoomDef roomOf(RunState r) {
+    final stay = r.node(r.currentNode!).stay;
+    return stay[r.roomStep.clamp(0, stay.length - 1)];
   }
 
-  /// En un paso y todavía quedan combates después del actual.
-  bool _passGoesOn(RunState r) {
-    if (r.currentNode == null) return false;
-    final n = r.node(r.currentNode!);
-    return n.type == NodeType.pass && r.passStep < passChain(n).length - 1;
-  }
+  /// Cuántas salas tiene la estancia actual (1: un combate suelto).
+  int roomsOf(RunState r) => r.duel != null || r.currentNode == null
+      ? 1
+      : r.node(r.currentNode!).stay.length;
 
-  /// Jade de más del combate actual del paso: crece con cada uno vencido.
-  int passBonus(RunState r, [int? step]) => data.balance.passJade * (step ?? r.passStep);
+  /// El combate actual es la última sala: al ganarla se abre el cofre.
+  bool lastRoom(RunState r) => r.roomStep >= roomsOf(r) - 1;
 
-  /// Seguir por el paso: el próximo combate, sin curar.
-  RunState passContinue(RunState r) {
-    if (r.phase != RunPhase.passChoice) throw StateError('No estás en un paso');
-    return r.copyWith(phase: RunPhase.combat, passStep: r.passStep + 1);
-  }
+  /// Vida (%) de los comunes en la sala actual: baja en las estancias
+  /// largas para que no se vuelvan una pared.
+  int roomHpPct(RunState r) =>
+      roomsOf(r) <= 1 ? 100 : data.balance.stayHpPct(r.roomStep);
 
-  /// Volver al mapa con lo ganado en el paso.
-  RunState passRetreat(RunState r) {
-    if (r.phase != RunPhase.passChoice) throw StateError('No estás en un paso');
-    return r.copyWith(phase: RunPhase.map, passStep: 0);
+  /// Vida que repone la tregua de reponerse.
+  int restHeal(RunState r) =>
+      math.max(1, (r.maxHp * data.balance.breather.healPct / 100).round());
+
+  /// Elegir la tregua entre salas y pasar a la siguiente. Reponerse cura
+  /// ahora; concentrarse y afilar valen al arrancar la próxima sala.
+  RunState roomContinue(RunState r, Breather b) {
+    if (r.phase != RunPhase.roomBreak) {
+      throw StateError('No estás entre salas');
+    }
+    final next = r.copyWith(phase: RunPhase.combat, roomStep: r.roomStep + 1);
+    return b == Breather.rest
+        ? next.copyWith(
+            hp: math.min(r.maxHp, r.hp + restHeal(r)),
+            clearRoomBoon: true,
+          )
+        : next.copyWith(roomBoon: b);
   }
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
@@ -444,7 +451,7 @@ class RunEngine {
   }) {
     final boss = _atStageBoss(r);
     final elite = !boss && data.enemy(packOf(r).first).rank == EnemyRank.elite;
-    final passEnd = _passEnd(r);
+    final last = r.duel != null || lastRoom(r);
     final fled = fledWith != null;
     final beaten = won && !fled;
     final flawless = beaten && hp >= r.hp;
@@ -482,15 +489,16 @@ class RunEngine {
     } else {
       final (rolled, rngJ) = _rollJade(r);
       // Cada enemigo de más en el grupo suma jade.
-      final jade = rolled +
-          b.packJade * (packOf(r).length - 1) +
-          passBonus(r) +
+      // Las salas de antes del final pagan menos: el botín está en el cofre.
+      final base = rolled + b.packJade * (packOf(r).length - 1);
+      final jade = (last ? base : (base * b.stayJade / 100).round()) +
           talismanSum(r, (e) => e.winJade);
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
     final gained = lotusOf(r, lotusBase);
     r = r.copyWith(
-      combatsSinceMerchant: r.combatsSinceMerchant + 1,
+      // El mercader cuenta estancias, no salas.
+      combatsSinceMerchant: r.combatsSinceMerchant + (last ? 1 : 0),
       lotus: r.lotus + gained,
       lotusGained: gained,
       stageWins: r.stageWins + 1,
@@ -502,6 +510,16 @@ class RunEngine {
       hp + talismanSum(r, (e) => e.winHeal) + r.meta.winHeal,
     );
     r = _ghostDrop(r.copyWith(hp: healed));
+    // Sala ganada y la estancia sigue: sin premio de cartas (eso es el
+    // cofre del final), a la pausa antes de la próxima.
+    if (!last) {
+      final mend = (r.maxHp * b.stayHeal / 100).round();
+      return r.copyWith(
+        hp: math.min(r.maxHp, r.hp + mend),
+        phase: RunPhase.roomBreak,
+        clearRoomBoon: true,
+      );
+    }
     // El élite, el jefe y el rival de un duelo dejan elegir un talismán
     // antes del premio (el duelo, con el del camino entre ellos).
     // La pelea de una emboscada paga como un combate común.
@@ -509,8 +527,7 @@ class RunEngine {
         r.lastEvent != null &&
         data.event(r.lastEvent!.eventId).ambush;
     final duel = r.duel != null && !ambush;
-    // El último del paso también: es el premio por llegar hasta el final.
-    final (talismans, rngT) = elite || boss || passEnd || (duel && !fled)
+    final (talismans, rngT) = elite || boss || (duel && !fled)
         ? _rollTalismans(
             r.rng,
             r,
@@ -526,7 +543,7 @@ class RunEngine {
         ? (RewardKind.cards, r.rng)
         : elite && r.weapon == null && data.weapons.isNotEmpty
         ? (RewardKind.weapon, r.rng)
-        : _rollRewardKind(r, allowTalisman: !elite && !duel && !passEnd);
+        : _rollRewardKind(r, allowTalisman: !elite && !duel);
     return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       talismanOptions: kind == RewardKind.talisman ? null : talismans,

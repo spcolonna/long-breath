@@ -300,7 +300,9 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     bool together = false,
     MetaBonus meta = MetaBonus.none,
     String? weapon,
-    int weaponLevel = 1}) {
+    int weaponLevel = 1,
+    int roomHpPct = 100,
+    Breather? opening}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length;
   var s = engine
@@ -321,6 +323,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           awakenings: awakenings,
           waves: waves,
           together: together,
+          roomHpPct: roomHpPct,
+          opening: opening,
           meta: meta)
       .state;
   var steps = 0;
@@ -415,7 +419,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
             awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1),
             together: runEngine.togetherOf(r), meta: r.meta,
-            weapon: r.weapon, weaponLevel: r.weaponLevel);
+            weapon: r.weapon, weaponLevel: r.weaponLevel,
+            roomHpPct: runEngine.roomHpPct(r), opening: r.roomBoon);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
@@ -442,11 +447,17 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.legacy:
         r = runEngine.chooseLegacy(
             r, legacy == 'card' ? LegacyPick.card : LegacyPick.stat);
-      case RunPhase.passChoice:
-        // Sigue por el paso si le queda Vida; el novato sigue siempre.
-        r = bot is NoviceBot || r.hp * 100 >= r.maxHp * 55
-            ? runEngine.passContinue(r)
-            : runEngine.passRetreat(r);
+      case RunPhase.roomBreak:
+        // Tregua entre salas: se repone si está golpeado; si no, se
+        // concentra (el novato elige al azar).
+        r = runEngine.roomContinue(
+          r,
+          bot is NoviceBot
+              ? Breather.values[bot.random.nextInt(Breather.values.length)]
+              : r.hp * 10 <= r.maxHp * 7
+              ? Breather.rest
+              : Breather.focus,
+        );
       case RunPhase.talisman:
         final t = bot.pickTalisman(runEngine, r);
         log.talismans.add(t);
@@ -554,9 +565,6 @@ String _route(RunEngine run, Bot bot, RunState r) {
       return r.jade >= run.merchantOf(r).card ? 1.5 : 0.5;
     }
     if (n.type == NodeType.master) return avoidFights ? 1.6 : 1.2;
-    if (n.type == NodeType.pass) {
-      return avoidFights ? 0.5 : (ratio > 0.65 ? 1.3 : 0.6);
-    }
     if (n.type != NodeType.combat) return avoidFights ? 1.5 : 1;
     final rank = run.data.enemy(n.enemy!).rank;
     if (rank == EnemyRank.elite) return ratio > 0.7 ? 2 : -1;

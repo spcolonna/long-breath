@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/model/meta_bonus.dart';
 import '../../domain/run/run_engine.dart';
@@ -104,11 +105,11 @@ class RunController extends Notifier<RunState?> {
     options: _engine.available(state!),
   );
 
-  /// Paso de montaña: seguir al próximo combate o volver al mapa.
-  void passContinue() =>
-      _set(_engine.passContinue(state!), what: 'sigue por el paso');
-  void passRetreat() =>
-      _set(_engine.passRetreat(state!), what: 'vuelve del paso');
+  /// Estancia: la tregua elegida y a la próxima sala.
+  void roomContinue(Breather b) => _set(
+    _engine.roomContinue(state!, b),
+    what: 'sala ${state!.roomStep + 2}, tregua ${b.name}',
+  );
 
   /// Devuelve la semilla y los enemigos del combate del nodo actual (el
   /// primero y los que entran después).
