@@ -303,18 +303,18 @@ Cada subida deja un registro en texto para analizar el balance. Guarda el camino
 
 Cada subida, se gane o se pierda, deja **aliento** a la escuela. Con aliento acumulado la escuela sube de **reino** y les abre a los próximos discípulos caminos, cartas y formas. Caer nunca resta.
 
-- **Cuánto aliento:** 2 por piso alcanzado, 10 por etapa superada y 25 por llegar a la cumbre. Se multiplica por la dificultad (Fácil 50%, Normal 100%, Difícil 130%, Shifu 160%) y suma 10% por cada Pico.
+- **Cuánto aliento:** 2 por sala alcanzada, 10 por etapa superada y 25 por llegar a la cumbre. Se multiplica por la dificultad (Fácil 50%, Normal 100%, Difícil 130%, Shifu 160%) y suma 10% por cada Pico.
 - **Variedad y un don:** lo que se abre son opciones nuevas (los talismanes raros y las cartas generales están abiertos desde el principio) y cada reino regala además un **don** permanente y abre una fila del **árbol de meridianos** (ver abajo).
 - **Lo cerrado se fija al empezar la subida:** si subís de reino a mitad de una subida guardada, lo nuevo aparece en la próxima.
 
 | Reino | Aliento | Abre |
 |---|---|---|
 | 炼气 Aliento templado | 0 | Tigre y Serpiente, cartas generales, todos los talismanes |
-| 筑基 Cimientos | 90 | El camino de la Grulla |
-| 开脉 Meridianos abiertos | 250 | Cola de tigre, Cola de serpiente, Rodilla de grulla |
-| 凝神 Espíritu sereno | 460 | Puño del Tigre, de la Serpiente y de la Grulla (formas) |
-| 通玄 Lo profundo | 720 | Tigre que baja de la montaña, Serpiente que se escurre, Canto de la grulla |
-| 归真 Volver a lo verdadero | 1050 | Gran Puño Rojo (forma) |
+| 筑基 Cimientos | 135 | El camino de la Grulla |
+| 开脉 Meridianos abiertos | 375 | Cola de tigre, Cola de serpiente, Rodilla de grulla |
+| 凝神 Espíritu sereno | 690 | Puño del Tigre, de la Serpiente y de la Grulla (formas) |
+| 通玄 Lo profundo | 1080 | Tigre que baja de la montaña, Serpiente que se escurre, Canto de la grulla |
+| 归真 Volver a lo verdadero | 1575 | Gran Puño Rojo (forma) |
 
 - **Dónde se ve:**
   - en el inicio, bajo el número de discípulo, el sello del reino y una barra hasta el siguiente; el aura dorada del héroe crece con cada reino;
@@ -360,22 +360,22 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 
 La segunda moneda de la escuela, la que **no se pierde al caer**. Hace que cada subida, aunque termine mal, deje al próximo discípulo un poco más fuerte.
 
-- **Cómo se gana:** 1 por combate ganado, +4 el élite, +8 cada jefe y +15 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10, y el **jade que sobra** al terminar se ofrenda: 1 semilla cada 5 de jade (con el % del árbol). Se ve arriba en el sendero (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
+- **Cómo se gana:** 2 por combate ganado, +5 el élite, +10 cada jefe y +20 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10, y el **jade que sobra** al terminar se ofrenda: 1 semilla cada 5 de jade (con el % del árbol). Se ve arriba en el sendero (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
 - **Dónde se gasta:** en el inicio, el botón **Meridianos** (con un punto que late cuando alcanza para algo) abre el árbol. También se llega desde la pantalla final.
 - **El árbol:** tres canales de tinta, **Cuerpo 身**, **Espíritu 神** y **Técnica 技**, de cinco puntos de acupuntura cada uno. Cada punto pide el anterior de su canal y un reino del cultivo. Al abrirlo, la tinta corre por el canal. Vale desde la próxima subida (la que está guardada no cambia).
 
   | Fila (reino) | Costo | Cuerpo 身 | Espíritu 神 | Técnica 技 |
   |---|---|---|---|---|
   | 1 炼气 | 25 | 足三里 +2 Vida máxima | 合谷 Empezás con 10 de jade | 劳宫 Una carta inicial empieza templada (+3) |
-  | 2 筑基 | 50 | 涌泉 La fuente cura 3 más | 神门 +20% de loto | 曲池 Volver a tirar los pergaminos 1 vez por subida |
-  | 3 开脉 | 75 | 气海 +1 de Estructura | 内关 El mercader cobra 10% menos | 风池 +1 carta para elegir en los pergaminos |
-  | 4 凝神 | 110 | 命门 +2 Vida máxima | 膻中 Empezás con 10 de jade más | 太冲 +1 talismán para elegir en el élite |
-  | 5 归真 | 160 | 丹田 La fuente cura 4 más | 百会 El mercader cobra 10% menos | 印堂 Elegís un talismán al empezar la subida |
+  | 2 筑基 | 50 | 涌泉 Curás 1 al ganar cada sala | 神门 +25% de loto | 曲池 Volver a tirar los pergaminos 1 vez por subida |
+  | 3 开脉 | 75 | 气海 +2 de Estructura | 内关 El mercader cobra 10% menos | 风池 +1 carta para elegir en los pergaminos |
+  | 4 凝神 | 110 | 命门 +8 Vida máxima | 膻中 +1 de Aliento en el primer turno | 太冲 +1 talismán para elegir y otra carta inicial templada |
+  | 5 归真 | 160 | 丹田 Curás 1 más al ganar cada sala | 百会 +1 Respirar por combate | 印堂 Elegís un talismán al empezar la subida |
 
   En total cuesta 1260 semillas.
 
 - **Dones de los reinos** (gratis, al llegar): 筑基 +2 Vida máxima · 开脉 empezás con 10 de jade · 凝神 la fuente cura 3 más · 通玄 el mercader cobra 5% menos · 归真 empezás con 10 de jade más. Se ven arriba en el árbol.
-- **Cuánto pesa** (simulador, Normal): el bot promedio gana 25% sin nada y ~58% con todo; el experto, 55% y ~80%. Una escuela que juega como el promedio completa el árbol hacia la subida 22.
+- **Cuánto pesa** (simulador, Normal, 11/11): sin árbol el bot promedio gana 4% y el experto 26%; con medio árbol, el promedio 29%; con el árbol completo, 52% y 83%. Una escuela que juega como el promedio gana su primera cumbre hacia la subida 9 (entre la 6 y la 12) y completa el árbol hacia la 26.
 
 ## Dificultad
 
@@ -383,10 +383,10 @@ Al empezar cada subida elegís la dificultad. Cambia tu Vida inicial, cuánto cu
 
 | Dificultad | Vida | Fuente | Enemigos |
 |---|---|---|---|
-| Fácil 易 | 60 | +25 | 109% de Vida, 108% de daño |
-| Normal 常 | 50 | +20 | 115% de Vida, 114% de daño |
-| Difícil 难 | 50 | +15 | 118% de Vida, 117% de daño |
-| Shifu 师 | 45 | +15 | 120% de Vida, 118% de daño, 108% de Estructura |
+| Fácil 易 | 60 | +25 | 97% de Vida, 98% de daño |
+| Normal 常 | 50 | +20 | 105% de Vida, 106% de daño |
+| Difícil 难 | 50 | +15 | 108% de Vida, 110% de daño |
+| Shifu 师 | 45 | +15 | 112% de Vida, 113% de daño, 108% de Estructura |
 
 Los porcentajes se aplican sobre la tabla de enemigos.
 

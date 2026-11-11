@@ -761,3 +761,18 @@ Probado y descartado: subir la estructura (+3) no alargó las peleas (siguen en 
 - El mapa pesa más que la cura: la mayoría de los bots que mueren lo hacen antes de la etapa 2.
 - La cura del 40% castiga sobre todo a quien llega golpeado al jefe de etapa.
 - El promedio quedó por debajo del objetivo (~22–26%). Se dejó así a propósito, porque el usuario la sintió demasiado fácil. Si los registros nuevos muestran muertes tempranas en masa, subir la cura a 50–60%.
+
+## 3y. Sendero de salas y dificultad «Duro» (11/11/2026)
+
+Sin mapa: 13 salas por etapa, una pelea por sala con el premio en la puerta, sin cura entre salas ni entre oleadas. Meta del usuario: varias subidas para la cumbre, el árbol con peso real.
+
+| Normal, 300 runs, todo abierto | promedio | experto |
+|---|---|---|
+| sin dones | 4% | 26% |
+| solo reinos | 5% | 30% |
+| medio árbol | 29% | 56% |
+| árbol completo | 52% | 83% |
+
+Escuelas (`--section meta --schools 40 --ascents 30`): primera cumbre del promedio en la subida 9 (6–12), árbol completo hacia la 26; experto 3 y 18.
+
+Palancas: enemigos Normal 115/114 → 105/106 (las salas ya no traen 75% de Vida), árbol rehecho (cura al ganar, Vida +8, Aliento del primer turno, Respirar), loto 2 por pelea, reinos ×1,5. Base sin balancear (solo el sendero): promedio 1%, experto 11%.

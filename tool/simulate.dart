@@ -246,9 +246,23 @@ Future<void> _perks(
   final top = math.max(0, c.realms.length - 1);
   final all = [for (final n in b.meridians.nodes) n.id];
   final rows = <List<String>>[];
+  // Medio árbol: el reino del medio y los puntos más baratos que pide,
+  // hasta la mitad del costo total (lo que tiene una escuela a las ~8
+  // subidas).
+  final midRealm = top ~/ 2 + 1;
+  final total = b.meridians.nodes.fold(0, (a, n) => a + n.cost);
+  final half = <String>[];
+  var spent = 0;
+  for (final n in [...b.meridians.nodes]
+    ..sort((x, y) => x.cost.compareTo(y.cost))) {
+    if (n.realm > midRealm || spent + n.cost > total ~/ 2) continue;
+    half.add(n.id);
+    spent += n.cost;
+  }
   for (final (name, meta) in [
     ('sin dones', MetaBonus.none),
     ('solo reinos', b.meridians.bonusOf(c, top, const [])),
+    ('medio árbol', b.meridians.bonusOf(c, midRealm, half)),
     ('árbol completo', b.meridians.bonusOf(c, top, all)),
   ]) {
     final cfg = Config(raw: raw, stages: stages, talismans: proto, meta: meta);
