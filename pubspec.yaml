@@ -1,7 +1,7 @@
 name: long_breath
 description: "Long Breath — roguelike de cartas de kung fu (MVP de combate)."
 publish_to: 'none'
-version: 0.1.0+5
+version: 0.1.0+6
 
 environment:
   sdk: ^3.11.4
