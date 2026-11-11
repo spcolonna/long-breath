@@ -35,6 +35,7 @@ import '../widgets/card_widget.dart';
 import '../widgets/cinematic.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/enemy_scroll.dart';
+import '../widgets/altitude_bar.dart';
 import '../widgets/enemy_sprite.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
@@ -1225,16 +1226,19 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     _pump();
   }
 
-  /// «Sala n/N» si el combate es parte de una estancia.
+  /// La altura del sendero: metros y sala de la etapa («1.240 m · 4/13»).
   String? _room(CombatView live) {
     final run = ref.read(runControllerProvider);
     if (run == null || run.duel != null || run.currentNode == null) {
       return null;
     }
     if (live.tutorial) return null;
-    final total = ref.read(runEngineProvider).roomsOf(run);
-    if (total <= 1) return null;
-    return AppLocalizations.of(context).combatRoom(run.roomStep + 1, total);
+    final engine = ref.read(runEngineProvider);
+    return AppLocalizations.of(context).combatAltitude(
+      meters(engine.altitudeOf(run)),
+      engine.climbed(run),
+      engine.depthsOf(run),
+    );
   }
 
   @override
@@ -1818,7 +1822,7 @@ class _Arena extends StatelessWidget {
                 if (room != null) ...[
                   const SizedBox(height: 6),
                   _Chip(
-                    icon: Icons.door_sliding_outlined,
+                    icon: Icons.landscape_rounded,
                     text: room!,
                     color: Palette.text,
                   ),

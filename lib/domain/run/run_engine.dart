@@ -14,7 +14,7 @@ import 'ascent.dart';
 import 'feats.dart';
 import 'ghost.dart';
 import 'legacy.dart';
-import 'map_gen.dart';
+import 'path_gen.dart';
 import 'run_state.dart';
 
 /// Reglas de la run: mapa, recompensas, santuario, eventos, talismanes,
@@ -41,9 +41,8 @@ class RunEngine {
         meta.maxHp;
     // El mapa sale de la misma semilla: la subida entera es reproducible.
     final fixed = data.balance.fixedMap;
-    final (map, rng) = fixed != null
-        ? (fixed, Rng.seeded(seed))
-        : _stageMap(0, Rng.seeded(seed));
+    final map = fixed ?? const <MapNodeDef>[];
+    final rng = Rng.seeded(seed);
     var r = RunState(
       difficulty: difficulty,
       pico: pico,
@@ -67,6 +66,7 @@ class RunEngine {
       rerollsLeft: meta.rerolls,
       ghost: ghost,
     );
+    if (fixed == null) r = _openDepth(r, 0);
     if (meta.upgradedStarters > 0) {
       final (pool, rng2) =
           r.rng.shuffle([for (final c in r.deck) if (canUpgrade(c)) c.uid]);
@@ -136,16 +136,145 @@ class RunEngine {
     };
   }
 
-  (List<MapNodeDef>, Rng) _stageMap(int stage, Rng rng) {
-    final st = data.balance.stages[stage];
-    return generateMap(
+  // -------------------------------------------------------------- sendero
+
+  /// Tira las puertas de la profundidad [depth] de la etapa actual y las
+  /// suma al mapa (colgando de [parent], la sala recién entrada). Lo que
+  /// había más arriba de una puerta abandonada (retirada) se descarta.
+  RunState _openDepth(RunState r, int depth, {MapNodeDef? parent}) {
+    final st = stageOf(r);
+    final b = data.balance;
+    final trail = [for (final id in r.visited) r.node(id)];
+    var rest = 0;
+    for (final n in trail.reversed) {
+      if (n.type == NodeType.combat) break;
+      rest++;
+    }
+    final kept = [
+      for (final n in r.map)
+        if (n.depth < depth) n,
+    ];
+    final elites = {
+      for (final n in kept)
+        if (n.enemy != null && data.enemy(n.enemy!).rank == EnemyRank.elite)
+          n.enemy!,
+    };
+    final detour = kept.any(
+      (n) =>
+          n.enemy != null &&
+          n.depth < st.floors.length &&
+          st.floors[n.depth].elite > 0 &&
+          data.enemy(n.enemy!).rank == EnemyRank.elite,
+    );
+    final recent = <String>{
+      for (final n in trail.reversed
+          .where((n) => n.type == NodeType.combat)
+          .take(2))
+        for (final room in n.stay) ...room.foes,
+    };
+    final every = b.merchantEvery;
+    final due = r.nextMerchantAt > 0 ? r.nextMerchantAt : every;
+    final fought =
+        r.combatsSinceMerchant + (parent?.type == NodeType.combat ? 1 : 0);
+    final merchantDue = every > 0 &&
+        parent?.type != NodeType.merchant &&
+        (fought >= due ||
+            (r.stageMerchants == 0 && depth + 1 >= b.path.merchantBy));
+    final (doors, rng) = rollDoors(
       st.floors,
-      rng,
+      DoorContext(
+        depth: depth,
+        restStreak: rest,
+        fights: trail.where((n) => n.type == NodeType.combat).length,
+        masterOffered: kept.any((n) => n.type == NodeType.master),
+        detourOffered: detour,
+        merchantDue: merchantDue,
+        usedElites: elites,
+        recent: recent,
+        rules: b.path,
+      ),
+      r.rng,
       scenes: st.scenes,
       lights: st.lights,
       packable: packable,
     );
+    r = r.copyWith(rng: rng);
+    final (rewarded, r2) = _assignRewards(r, doors, parent);
+    final ids = [for (final d in rewarded) d.id];
+    return r2.copyWith(
+      map: [
+        for (final n in kept)
+          n.id == parent?.id
+              ? n.withNext(ids)
+              : n.depth == depth - 1
+              ? n.withNext(const [])
+              : n,
+        ...rewarded,
+      ],
+    );
   }
+
+  /// El premio que muestra cada puerta de pelea común: sin repetir entre
+  /// las puertas y con cartas si ya se va una racha sin ellas.
+  (List<MapNodeDef>, RunState) _assignRewards(
+    RunState r,
+    List<MapNodeDef> doors,
+    MapNodeDef? parent,
+  ) {
+    final def = data.balance.combatRewards;
+    final streak = r.cardlessStreak +
+        (parent?.reward != null && parent!.reward != RewardKind.cards ? 1 : 0);
+    var forceCards = streak >= def.maxWithoutCards;
+    final used = <RewardKind>{};
+    final out = <MapNodeDef>[];
+    final free = r.copyWith(cardlessStreak: 0);
+    var rng = r.rng;
+    for (final d in doors) {
+      final common = d.type == NodeType.combat &&
+          d.enemy != null &&
+          data.enemy(d.enemy!).rank == EnemyRank.common;
+      if (!common) {
+        out.add(d);
+        continue;
+      }
+      RewardKind kind;
+      if (forceCards) {
+        kind = RewardKind.cards;
+        forceCards = false;
+      } else {
+        var tries = 0;
+        do {
+          final (k, next) =
+              _rollRewardKind(free.copyWith(rng: rng), allowTalisman: true);
+          kind = k;
+          rng = next;
+        } while (used.contains(kind) && ++tries < 4);
+      }
+      used.add(kind);
+      out.add(d.withReward(kind));
+    }
+    return (out, r.copyWith(rng: rng));
+  }
+
+  /// Salas que tiene la etapa actual (la última es su jefe).
+  int depthsOf(RunState r) => stageOf(r).floors.length;
+
+  /// Salas ya pisadas en la etapa (0 = al pie).
+  int climbed(RunState r) => r.visited.length;
+
+  /// Metros a los que está el discípulo: de la base a la cima de la etapa,
+  /// según las salas pisadas.
+  int altitudeOf(RunState r) {
+    final (from, to) = stageOf(r).altitude;
+    final n = depthsOf(r);
+    return n <= 0 ? from : from + ((to - from) * climbed(r) / n).round();
+  }
+
+  /// La sala [n] es el jefe de la etapa (no hay puertas después).
+  bool _isBossRoom(MapNodeDef n) =>
+      n.type == NodeType.combat &&
+      n.enemy != null &&
+      data.enemy(n.enemy!).rank == EnemyRank.boss;
 
   /// Puede ir en grupo: los comunes que no se escapan.
   bool packable(String id) {
@@ -161,8 +290,13 @@ class RunEngine {
   bool isLastStage(RunState r) => r.stage >= data.balance.stages.length - 1;
 
   /// El nodo actual es el jefe de la etapa (no tiene nada después).
-  bool _atStageBoss(RunState r) =>
-      r.currentNode != null && r.node(r.currentNode!).next.isEmpty;
+  bool _atStageBoss(RunState r) {
+    if (r.currentNode == null) return false;
+    final n = r.node(r.currentNode!);
+    // En el sendero, las salas de arriba se abren al entrar: solo el jefe
+    // no tiene nada después. Los mapas armados a mano, por sus enlaces.
+    return n.depth >= 0 ? _isBossRoom(n) : n.next.isEmpty;
+  }
 
   /// Después de la recompensa: al mapa, o al descanso si se venció al jefe
   /// de una etapa intermedia.
@@ -173,7 +307,6 @@ class RunEngine {
   /// el camino ofrece sus despertares.
   RunState _leaveReward(RunState r) {
     final phase = _afterReward(r);
-    if (phase == RunPhase.map && _merchantDue(r)) return _wanderingMerchant(r);
     if (phase != RunPhase.stageClear) return r.copyWith(phase: phase);
     final (options, rng) = _rollAwakenings(r);
     final (vows, rng2) = _rollVows(r, rng);
@@ -185,33 +318,6 @@ class RunEngine {
     );
   }
 
-  /// Toca el mercader ambulante: se ganaron sus combates, o se venció al
-  /// élite y en la etapa todavía no hubo ninguno. Nunca después del jefe.
-  bool _merchantDue(RunState r) {
-    final every = data.balance.merchantEvery;
-    if (every <= 0 || r.currentNode == null || _atStageBoss(r)) return false;
-    if (r.node(r.currentNode!).type != NodeType.combat) return false;
-    final due = r.nextMerchantAt > 0 ? r.nextMerchantAt : every;
-    if (r.combatsSinceMerchant >= due) return true;
-    return r.stageMerchants == 0 &&
-        data.enemy(enemyOf(r)).rank == EnemyRank.elite;
-  }
-
-  /// Un mercader en el camino: la tienda se abre sin nodo propio y, al
-  /// salir, se vuelve al mapa.
-  RunState _wanderingMerchant(RunState r) {
-    final b = data.balance;
-    final (roll, rng) = r.rng.nextInt(b.merchantSpread * 2 + 1);
-    return _rollShop(
-      r.copyWith(
-        phase: RunPhase.merchant,
-        combatsSinceMerchant: 0,
-        nextMerchantAt: math.max(1, b.merchantEvery - b.merchantSpread + roll),
-        stageMerchants: r.stageMerchants + 1,
-        rng: rng,
-      ),
-    );
-  }
 
   /// El mercader actual está en el camino (no es un nodo del mapa).
   bool isWanderingMerchant(RunState r) =>
@@ -272,8 +378,7 @@ class RunEngine {
     }
     if (r.vow != null) r = removeTalisman(r, r.vow!);
     if (vow != null) r = addTalisman(r, vow);
-    final (map, rng) = _stageMap(r.stage + 1, r.rng);
-    return r.copyWith(
+    final next = r.copyWith(
       vow: vow,
       clearVow: vow == null,
       vowOptions: const [],
@@ -285,12 +390,12 @@ class RunEngine {
       stageJade: 0,
       stageLotus: 0,
       hp: r.hp + stageHealOf(r),
-      map: map,
-      rng: rng,
+      map: const [],
       visited: const [],
       clearCurrentNode: true,
       phase: RunPhase.map,
     );
+    return _openDepth(next, 0);
   }
 
   /// Menú de pruebas: una subida nueva que arranca en la etapa [stage]
@@ -320,19 +425,11 @@ class RunEngine {
     for (var s = 0; s < stage.clamp(0, last); s++) {
       r = advanceStage(r.copyWith(phase: RunPhase.stageClear));
     }
-    // Recorre un camino real hasta el piso anterior al pedido.
-    final path = <String>[];
-    var next = r.starts;
-    for (var f = 1; f < floor && next.isNotEmpty; f++) {
-      path.add(next.first);
-      next = r.node(next.first).next;
+    // Recorre un sendero real hasta la profundidad anterior a la pedida.
+    for (var f = 1; f < floor && available(r).isNotEmpty; f++) {
+      r = enter(r, available(r).first).copyWith(phase: RunPhase.map);
     }
-    return r.copyWith(
-      visited: path,
-      currentNode: path.isEmpty ? null : path.last,
-      clearCurrentNode: path.isEmpty,
-      phase: RunPhase.map,
-    );
+    return r;
   }
 
   /// Nodos a los que se puede avanzar desde la posición actual.
@@ -376,8 +473,8 @@ class RunEngine {
     if (!available(r).contains(nodeId)) {
       throw StateError('Nodo no disponible: $nodeId');
     }
-    final n = r.node(nodeId);
-    final entered = r.copyWith(
+    var n = r.node(nodeId);
+    var entered = r.copyWith(
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
       roomStep: 0,
@@ -391,13 +488,25 @@ class RunEngine {
         NodeType.master => RunPhase.master,
       },
     );
+    // Las puertas de arriba se tiran al entrar: retirarse y reanudar
+    // muestran las mismas.
+    if (n.next.isEmpty &&
+        n.depth >= 0 &&
+        !_isBossRoom(n) &&
+        n.depth + 1 < stageOf(r).floors.length) {
+      entered = _openDepth(entered, n.depth + 1, parent: n);
+      n = entered.node(nodeId);
+    }
     if (n.type == NodeType.event) return _rollEvent(entered);
     if (n.type == NodeType.merchant) {
-      // Mapas guardados antes del mercader ambulante: cuenta como uno.
+      final b = data.balance;
+      final (roll, rng) = entered.rng.nextInt(b.merchantSpread * 2 + 1);
       return _rollShop(
         entered.copyWith(
           combatsSinceMerchant: 0,
+          nextMerchantAt: math.max(1, b.merchantEvery - b.merchantSpread + roll),
           stageMerchants: entered.stageMerchants + 1,
+          rng: rng,
         ),
       );
     }
@@ -577,10 +686,15 @@ class RunEngine {
     r = r.copyWith(rng: rngT, clearDuel: true);
     // El jefe deja cartas; el que se escapó, también (no hay otro premio).
     // El primer élite sin arma la garantiza.
+    final door = r.duel == null && r.currentNode != null
+        ? r.node(r.currentNode!).reward
+        : null;
     final (kind, rngK) = boss || fled
         ? (RewardKind.cards, r.rng)
         : elite && r.weapon == null && data.weapons.isNotEmpty
         ? (RewardKind.weapon, r.rng)
+        : door != null
+        ? (_usable(r, door), r.rng)
         : _rollRewardKind(r, allowTalisman: !elite && !duel);
     return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
@@ -669,16 +783,17 @@ class RunEngine {
       }
       roll -= e.value;
     }
-    // Si el premio no sirve de nada, se cambia por otro.
-    kind = switch (kind) {
-      RewardKind.tea when r.hp >= r.maxHp => RewardKind.jade,
-      RewardKind.upgrade when !r.deck.any(canUpgrade) => RewardKind.cards,
-      RewardKind.talisman when missingTalismans(r).isEmpty => RewardKind.jade,
-      RewardKind.weapon when !canGainWeapon(r) => RewardKind.jade,
-      _ => kind,
-    };
-    return (kind, rng);
+    return (_usable(r, kind), rng);
   }
+
+  /// Si el premio no sirve de nada, se cambia por otro.
+  RewardKind _usable(RunState r, RewardKind kind) => switch (kind) {
+    RewardKind.tea when r.hp >= r.maxHp => RewardKind.jade,
+    RewardKind.upgrade when !r.deck.any(canUpgrade) => RewardKind.cards,
+    RewardKind.talisman when missingTalismans(r).isEmpty => RewardKind.jade,
+    RewardKind.weapon when !canGainWeapon(r) => RewardKind.jade,
+    _ => kind,
+  };
 
   /// Prepara el premio [kind]: cartas y forma, talismanes o una cantidad.
   RunState _offer(RunState r, RewardKind kind) {

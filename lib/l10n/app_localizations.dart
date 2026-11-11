@@ -2617,8 +2617,26 @@ abstract class AppLocalizations {
   /// No description provided for @mapPickHint.
   ///
   /// In es, this message translates to:
-  /// **'Tocá un lugar para ver qué te espera'**
+  /// **'Elegí por dónde seguir subiendo'**
   String get mapPickHint;
+
+  /// No description provided for @pathTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Sala {n} de {total}'**
+  String pathTitle(int n, int total);
+
+  /// No description provided for @pathReward.
+  ///
+  /// In es, this message translates to:
+  /// **'Del otro lado: {kind}.'**
+  String pathReward(String kind);
+
+  /// No description provided for @combatAltitude.
+  ///
+  /// In es, this message translates to:
+  /// **'{meters} · {n}/{total}'**
+  String combatAltitude(String meters, int n, int total);
 
   /// No description provided for @mapGo.
   ///
@@ -2629,13 +2647,13 @@ abstract class AppLocalizations {
   /// No description provided for @nodeHintCommon.
   ///
   /// In es, this message translates to:
-  /// **'Un rival del camino. Si ganás, elegís una carta nueva.'**
+  /// **'Un rival del camino.'**
   String get nodeHintCommon;
 
   /// No description provided for @nodeHintElite.
   ///
   /// In es, this message translates to:
-  /// **'Un rival fuerte: más riesgo, mejor botín.'**
+  /// **'El guardián de la etapa: más riesgo, y un talismán.'**
   String get nodeHintElite;
 
   /// No description provided for @nodeHintDetour.

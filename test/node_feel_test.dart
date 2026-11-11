@@ -140,7 +140,7 @@ void main() {
     runs.newRun(Difficulty.normal);
     r = container.read(runControllerProvider)!;
     final data = container.read(dataProvider);
-    final elite = data.balance.stages[0].floors[8].enemies.first;
+    final elite = data.balance.stages[0].floors[10].enemies.first;
     final first = r.map.firstWhere((n) => n.id == r.starts.first);
     runs.resume(
       r.copyWith(

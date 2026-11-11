@@ -27,10 +27,8 @@ import '../widgets/juice.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/weapon_widgets.dart';
 import '../widgets/hp_count.dart';
-import 'map/map_layout.dart';
+import '../widgets/altitude_bar.dart';
 import 'map/map_node.dart';
-import 'map/mountain_backdrop.dart';
-import 'map/trail_painter.dart';
 import '../feel.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -126,17 +124,9 @@ class MapScreen extends ConsumerWidget {
         bottom: false,
         child: Column(
           children: [
-            _RunHeader(
-              run: run,
-              floor:
-                  mapRows(run).indexWhere(
-                    (row) => row.any((n) => n.id == run.currentNode),
-                  ) +
-                  1,
-              floors: mapRows(run).length,
-            ),
+            _RunHeader(run: run, altitude: engine.altitudeOf(run)),
             Expanded(
-              child: _MapView(run: run, available: available),
+              child: _PathView(run: run, available: available),
             ),
           ],
         ),
@@ -168,90 +158,51 @@ class MapScreen extends ConsumerWidget {
   }
 }
 
-/// El mapa se recorre de abajo hacia arriba: una montaña en capas, un
-/// sendero de escalones y el discípulo que camina de un lugar al otro.
-class _MapView extends ConsumerStatefulWidget {
-  const _MapView({required this.run, required this.available});
+/// El sendero: la ladera de la etapa sube a medida que se pisan salas; a
+/// la izquierda la altitud, arriba las puertas que siguen (cada pelea con
+/// su premio a la vista) y abajo el discípulo, que trepa hasta la elegida.
+class _PathView extends ConsumerStatefulWidget {
+  const _PathView({required this.run, required this.available});
 
   final RunState run;
   final Set<String> available;
 
   @override
-  ConsumerState<_MapView> createState() => _MapViewState();
+  ConsumerState<_PathView> createState() => _PathViewState();
 }
 
-class _MapViewState extends ConsumerState<_MapView>
+class _PathViewState extends ConsumerState<_PathView>
     with TickerProviderStateMixin {
-  ScrollController? _scroll;
   final _content = GlobalKey();
   late final _breath = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 2600),
   );
-  late final _drift = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 50),
-  );
-  late final _reveal = AnimationController(
+  late final _walk = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 750),
   );
-  late final _walk = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 700),
-  );
-  MapLayout? _layout;
-  (Size, List<MapNodeDef>)? _laidFor;
   MapNodeDef? _going;
 
-  /// Lugar que se está mirando antes de ir (tocarlo de nuevo, o «Ir», va).
+  /// Puerta que se está mirando antes de ir (tocarla de nuevo, o «Ir», va).
   String? _picked;
-  Path? _route;
   int _burst = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    // El último tramo se pinta de a poco al volver al mapa.
-    Future.delayed(const Duration(milliseconds: 350), () {
-      if (mounted) _reveal.forward();
-    });
-  }
+  Offset _target = Offset.zero;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     loopUnlessCalm(context, _breath);
-    loopUnlessCalm(context, _drift);
   }
 
   @override
   void dispose() {
-    _scroll?.dispose();
     _breath.dispose();
-    _drift.dispose();
-    _reveal.dispose();
     _walk.dispose();
     super.dispose();
   }
 
-  Offset get _here {
-    return _layout!.pos[widget.run.currentNode] ?? _layout!.foot;
-  }
-
-  /// Desplazamiento que deja la altura [y] en la fracción [frac] de la
-  /// pantalla (0 arriba, 1 abajo).
-  double _offsetFor(double y, double view, double frac) {
-    final h = _layout!.size.height;
-    return (h - view - (y - frac * view)).clamp(0.0, math.max(0.0, h - view));
-  }
-
-  double? _nextY() {
-    final ys = [for (final id in widget.available) _layout!.pos[id]!.dy];
-    return ys.isEmpty ? null : ys.reduce(math.max);
-  }
-
-  void _tapNode(MapNodeDef n) {
+  void _tapDoor(MapNodeDef n) {
     if (_going != null) return;
     if (_picked == n.id) {
       _go(n);
@@ -263,36 +214,17 @@ class _MapViewState extends ConsumerState<_MapView>
 
   Future<void> _go(MapNodeDef n) async {
     if (_going != null) return;
-    final layout = _layout!;
-    final from = _here;
-    final to = layout.pos[n.id]!;
+    final data = ref.read(dataProvider);
     ref.read(audioProvider).play(Sfx.mapNode);
     Haptics.mediumImpact();
     // Tomar el desvío: un segundo golpe, como quien acepta el reto.
-    if (isOptionalElite(n, widget.run.map, ref.read(dataProvider))) {
+    if (isOptionalElite(n, widget.run.map, data)) {
       Future.delayed(const Duration(milliseconds: 110), Haptics.heavyImpact);
     }
-    setState(() {
-      _going = n;
-      final cur = widget.run.currentNode;
-      _route = trailPath(
-        from,
-        to,
-        cur == null ? 'foot${n.id}' : '$cur>${n.id}',
-      );
-    });
-    final view = _scroll!.position.viewportDimension;
-    _scroll!.animateTo(
-      _offsetFor(to.dy, view, 0.5),
-      duration: _walk.duration!,
-      curve: Curves.easeInOutCubic,
-    );
+    setState(() => _going = n);
     await _walk.forward(from: 0);
     if (!mounted) return;
-    // Llegar ante un élite o el jefe pesa más que ante un combate común.
-    final rank = n.type == NodeType.combat
-        ? ref.read(dataProvider).enemy(n.enemy!).rank
-        : null;
+    final rank = n.type == NodeType.combat ? data.enemy(n.enemy!).rank : null;
     rank == EnemyRank.elite || rank == EnemyRank.boss
         ? Haptics.heavyImpact()
         : Haptics.lightImpact();
@@ -300,12 +232,13 @@ class _MapViewState extends ConsumerState<_MapView>
     await Future.delayed(const Duration(milliseconds: 160));
     if (!mounted) return;
     final box = _content.currentContext?.findRenderObject() as RenderBox?;
-    final color = nodeLook(n, ref.read(dataProvider)).color;
     _enter(
       context,
       ref,
       n,
-      box == null ? null : InkFrom(box.localToGlobal(to), color),
+      box == null
+          ? null
+          : InkFrom(box.localToGlobal(_target), nodeLook(n, data).color),
     );
   }
 
@@ -313,189 +246,157 @@ class _MapViewState extends ConsumerState<_MapView>
   Widget build(BuildContext context) {
     final run = widget.run;
     final data = ref.watch(dataProvider);
+    final engine = ref.watch(runEngineProvider);
+    final t = AppLocalizations.of(context);
+    final stage = data.balance.stages[run.stage];
+    final depths = engine.depthsOf(run);
+    final climbed = engine.climbed(run);
+    final doors = [
+      for (final n in run.map)
+        if (widget.available.contains(n.id)) n,
+    ];
+    // Hitos de la etapa: el guardián, la fuente y el jefe.
+    final milestones = <int, String>{
+      for (var d = 0; d < stage.floors.length; d++)
+        if (stage.floors[d].maxWidth == 1 &&
+            stage.floors[d].types.length == 1)
+          d: switch (stage.floors[d].types.keys.single) {
+            NodeType.fountain => '泉',
+            NodeType.shrine => '庙',
+            NodeType.combat when d == stage.floors.length - 1 => '龙',
+            NodeType.combat => '精',
+            _ => '·',
+          },
+    };
     return LayoutBuilder(
       builder: (context, box) {
-        final view = box.biggest;
-        if (_laidFor?.$1 != view || !identical(_laidFor?.$2, run.map)) {
-          _layout = layoutMap(run, data, view);
-          _laidFor = (view, run.map);
+        final w = box.maxWidth;
+        final h = box.maxHeight;
+        const left = 58.0;
+        final area = w - left - 8;
+        final slot = doors.isEmpty ? area : area / doors.length;
+        final doorsTop = math.max(56.0, h * 0.14);
+        Offset doorCenter(int i) {
+          final arc = doors.length == 3 && i == 1 ? -34.0 : 0.0;
+          return Offset(left + slot * (i + 0.5), doorsTop + arc + 40);
         }
-        final layout = _layout!;
-        final size = layout.size;
-        if (_scroll == null) {
-          // Arranca donde quedó el discípulo y la cámara sube sola hasta el
-          // piso siguiente.
-          _scroll = ScrollController(
-            initialScrollOffset: _offsetFor(_here.dy, view.height, 0.6),
-          );
-          final next = _nextY();
-          if (next != null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (!mounted || !_scroll!.hasClients) return;
-              _scroll!.animateTo(
-                _offsetFor(next, view.height, 0.42),
-                duration: const Duration(milliseconds: 1100),
-                curve: Curves.easeInOutCubic,
-              );
-            });
-          }
-        }
-        final scroll = _scroll!;
-        final current = layout.rowOf[run.currentNode] ?? -1;
-        // La niebla tapa todo lo que está más allá de las opciones de ahora:
-        // no se puede adivinar de antemano el camino fácil.
-        double fogAt(int row) {
-          final r = math.max(row, -1);
-          return r + 2 < layout.rowY.length
-              ? (layout.rowY[r + 1] + layout.rowY[r + 2]) / 2
-              : 0;
-        }
-        final lastRow = layout.rows.isEmpty ? -1 : layout.rows.length - 1;
-        bool seen(MapNodeDef n) =>
-            run.visited.contains(n.id) ||
-            widget.available.contains(n.id) ||
-            layout.rowOf[n.id] == lastRow;
-        final order = [
-          for (final n in run.map)
-            if (widget.available.contains(n.id)) n.id,
-        ];
-        final prevRow = run.visited.length >= 2
-            ? layout.rowOf[run.visited[run.visited.length - 2]] ?? current
-            : current - 1;
+
+        final feet = Offset(left + area / 2, h - 118);
+        final going = _going == null ? -1 : doors.indexOf(_going!);
+        if (going >= 0) _target = doorCenter(going);
+        final p = depths <= 0 ? 0.0 : climbed / depths;
+        final from = depths <= 0
+            ? 0.0
+            : (climbed - 1).clamp(0, depths) / depths;
         return ClipRect(
+          key: _content,
           child: Stack(
+            clipBehavior: Clip.none,
             children: [
-              // Cielo y cordilleras: quietos en pantalla, se corren despacio.
+              // La ladera pintada de la etapa: se corre hacia arriba con
+              // cada sala, como quien levanta la vista al subir.
               Positioned.fill(
-                child: RepaintBoundary(
-                  child: AnimatedBuilder(
-                    animation: scroll,
-                    builder: (_, _) => CustomPaint(
-                      painter: SkyPainter(
-                        scroll: scroll.hasClients
-                            ? scroll.offset
-                            : scroll.initialScrollOffset,
-                        maxScroll: size.height - view.height,
-                        tint: MountainTint.of(widget.run.stage),
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween(begin: calm(context) ? p : from, end: p),
+                  duration: const Duration(milliseconds: 1400),
+                  curve: Curves.easeInOutCubic,
+                  builder: (_, v, _) => Image.asset(
+                    'assets/art/stages/${stage.id}/map_bg.webp',
+                    fit: BoxFit.cover,
+                    alignment: Alignment(0, 1 - 2 * v),
+                    cacheWidth: 900,
+                    errorBuilder: (_, _, _) => const ColoredBox(
+                      color: Palette.bgAlt,
+                    ),
+                  ),
+                ),
+              ),
+              // Papel arriba: las puertas se leen sobre cualquier fondo.
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: doorsTop + 150,
+                child: IgnorePointer(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Palette.bg.withValues(alpha: 0.85),
+                          Palette.bg.withValues(alpha: 0),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-              SingleChildScrollView(
-                controller: scroll,
-                reverse: true,
-                child: SizedBox.fromSize(
-                  key: _content,
-                  size: size,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      // El fondo pintado de la etapa ya trae sus hitos; si
-                      // falta, se dibujan por código.
-                      Positioned.fill(
-                        child: Image.asset(
-                          'assets/art/stages/${data.balance.stages[run.stage].id}/map_bg.webp',
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, _, _) => RepaintBoundary(
-                            child: CustomPaint(
-                              painter: LandmarkPainter(
-                                layout,
-                                stage: widget.run.stage,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: RepaintBoundary(
-                          child: CustomPaint(
-                            painter: TrailPainter(
-                              layout: layout,
-                              run: run,
-                              available: widget.available,
-                              breath: _breath,
-                              reveal: _reveal,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: IgnorePointer(
-                          child: RepaintBoundary(
-                            child: CustomPaint(
-                              painter: CloudPainter(
-                                layout: layout,
-                                drift: _drift,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // La niebla se despeja solo hasta las opciones de ahora.
-                      Positioned.fill(
-                        child: IgnorePointer(
-                          child: TweenAnimationBuilder<double>(
-                            tween: Tween(
-                              begin: fogAt(prevRow),
-                              end: fogAt(current),
-                            ),
-                            duration: const Duration(milliseconds: 1400),
-                            curve: Curves.easeOutCubic,
-                            builder: (_, edge, _) =>
-                                CustomPaint(painter: FogPainter(edge)),
-                          ),
-                        ),
-                      ),
-                      for (final n in run.map)
-                        if (seen(n))
-                          Positioned(
-                            left: layout.pos[n.id]!.dx - sealCenter.dx,
-                            top: layout.pos[n.id]!.dy - sealCenter.dy,
-                            child: _Arrive(
-                              key: ValueKey('arrive${n.id}'),
-                              index: order.indexOf(n.id),
-                              child: Opacity(
-                                // La cumbre se adivina entre la niebla: es la
-                                // meta, no el camino.
-                                opacity:
-                                    layout.rowOf[n.id] == lastRow &&
-                                        !widget.available.contains(n.id)
-                                    ? 0.7
-                                    : 1,
-                                child: MapNode(
-                                  node: n,
-                                  visited: run.visited.contains(n.id),
-                                  available:
-                                      _going == null &&
-                                      widget.available.contains(n.id),
-                                  selected: _picked == n.id,
-                                  optional: isOptionalElite(n, run.map, data),
-                                  onTap: () => _tapNode(n),
-                                ),
-                              ),
-                            ),
-                          ),
-                      _walker(run),
-                      if (_going != null)
-                        Positioned(
-                          left: layout.pos[_going!.id]!.dx - 120,
-                          top: layout.pos[_going!.id]!.dy - 120,
-                          width: 240,
-                          height: 240,
-                          child: InkBurst(
-                            trigger: _burst,
-                            colors: [
-                              nodeLook(_going!, data).color,
-                              Palette.gold,
-                            ],
-                            radius: 90,
-                          ),
-                        ),
-                    ],
+              Positioned(
+                left: 10,
+                top: 10,
+                bottom: 112 + MediaQuery.paddingOf(context).bottom,
+                width: 40,
+                child: AltitudeBar(
+                  depths: depths,
+                  climbed: climbed,
+                  altitude: engine.altitudeOf(run),
+                  summit: stage.altitude.$2,
+                  milestones: milestones,
+                  style: run.style,
+                ),
+              ),
+              Positioned(
+                top: 8,
+                left: left,
+                right: 8,
+                child: Text(
+                  t.pathTitle(math.min(climbed + 1, depths), depths),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.4,
+                    color: Palette.text,
                   ),
                 ),
               ),
+              for (var i = 0; i < doors.length; i++)
+                Positioned(
+                  left: doorCenter(i).dx - slot / 2,
+                  top: doorCenter(i).dy - 40,
+                  width: slot,
+                  child: _Arrive(
+                    key: ValueKey('arrive${doors[i].id}'),
+                    index: i,
+                    child: AnimatedOpacity(
+                      opacity: _going == null || _going == doors[i] ? 1 : 0.35,
+                      duration: const Duration(milliseconds: 260),
+                      child: _Door(
+                        node: doors[i],
+                        available: _going == null,
+                        selected: _picked == doors[i].id,
+                        optional: isOptionalElite(doors[i], run.map, data),
+                        onTap: () => _tapDoor(doors[i]),
+                      ),
+                    ),
+                  ),
+                ),
+              _climber(run, feet),
+              if (going >= 0)
+                Positioned(
+                  left: _target.dx - 120,
+                  top: _target.dy - 120,
+                  width: 240,
+                  height: 240,
+                  child: IgnorePointer(
+                    child: InkBurst(
+                      trigger: _burst,
+                      colors: [nodeLook(_going!, data).color, Palette.gold],
+                      radius: 90,
+                    ),
+                  ),
+                ),
               Positioned(
                 left: 16,
                 right: 16,
@@ -518,35 +419,32 @@ class _MapViewState extends ConsumerState<_MapView>
     );
   }
 
-  /// El discípulo (de espaldas, con la ropa de su camino) parado donde
-  /// quedó; al elegir un lugar camina el sendero hasta él.
-  Widget _walker(RunState run) {
-    const h = 50.0;
+  /// El discípulo (de espaldas, con la ropa de su camino) al pie de las
+  /// puertas; al elegir una, trepa hasta ella y se achica en la distancia.
+  Widget _climber(RunState run, Offset feet) {
+    const h = 96.0;
     return AnimatedBuilder(
       animation: Listenable.merge([_walk, _breath]),
       builder: (_, child) {
-        // Quieto, espera al costado de su sello (no lo tapa).
-        final aside = widget.run.currentNode == null
-            ? const Offset(0, 4)
-            : const Offset(-40, 22);
-        var feet = _here + aside;
-        var lift = 0.0;
-        if (_route != null) {
-          final m = _route!.computeMetrics().first;
+        var at = feet;
+        var scale = 1.0;
+        var lift = math.sin(_breath.value * 2 * math.pi) * 1.5;
+        if (_going != null) {
           final t = Curves.easeInOut.transform(_walk.value);
-          feet =
-              m.getTangentForOffset(m.length * t)!.position +
-              Offset.lerp(aside, const Offset(0, 10), math.min(1, t * 3))!;
-          lift = (math.sin(_walk.value * math.pi * 6)).abs() * 5;
-        } else {
-          lift = math.sin(_breath.value * 2 * math.pi) * 1.2;
+          at = Offset.lerp(feet, _target + const Offset(0, 30), t)!;
+          scale = 1 - 0.55 * t;
+          lift = (math.sin(_walk.value * math.pi * 6)).abs() * 6;
         }
         return Positioned(
-          left: feet.dx - h / 2,
-          top: feet.dy - h - lift,
+          left: at.dx - h / 2,
+          top: at.dy - h - lift,
           width: h,
           height: h,
-          child: child!,
+          child: Transform.scale(
+            scale: scale,
+            alignment: Alignment.bottomCenter,
+            child: child,
+          ),
         );
       },
       child: IgnorePointer(
@@ -555,12 +453,12 @@ class _MapViewState extends ConsumerState<_MapView>
           alignment: Alignment.bottomCenter,
           children: [
             Positioned(
-              bottom: -3,
+              bottom: -4,
               child: Container(
-                width: 26,
-                height: 7,
+                width: 46,
+                height: 10,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(8),
                   color: const Color(0x33806A45),
                 ),
               ),
@@ -573,6 +471,94 @@ class _MapViewState extends ConsumerState<_MapView>
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Una puerta del sendero: el sello del lugar y, si es pelea, el premio
+/// que espera del otro lado.
+class _Door extends ConsumerWidget {
+  const _Door({
+    required this.node,
+    required this.available,
+    required this.selected,
+    required this.optional,
+    required this.onTap,
+  });
+
+  final MapNodeDef node;
+  final bool available;
+  final bool selected;
+  final bool optional;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final data = ref.watch(dataProvider);
+    final rank = node.type == NodeType.combat
+        ? data.enemy(node.enemy!).rank
+        : null;
+    final reward =
+        node.reward ?? (rank == EnemyRank.elite ? RewardKind.talisman : null);
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MapNode(
+            node: node,
+            visited: false,
+            available: available,
+            selected: selected,
+            optional: optional,
+            onTap: onTap,
+          ),
+          if (reward != null) ...[
+            const SizedBox(height: 2),
+            GestureDetector(
+              onTap: available ? onTap : null,
+              child: _RewardBadge(kind: reward, label: t.lootKind(reward)),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// El premio de una puerta: su sello y su nombre.
+class _RewardBadge extends StatelessWidget {
+  const _RewardBadge({required this.kind, required this.label});
+
+  final RewardKind kind;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final (hanzi, color) = lootLook(kind);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(4, 3, 10, 3),
+      decoration: BoxDecoration(
+        color: Palette.surface.withValues(alpha: 0.94),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withValues(alpha: 0.7), width: 1.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          InkSeal(hanzi: hanzi, color: color, size: 22),
+          const SizedBox(width: 5),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+              color: color,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -610,17 +596,12 @@ Future<void> _confirmAbandon(BuildContext context, WidgetRef ref) async {
 }
 
 class _RunHeader extends StatelessWidget {
-  const _RunHeader({
-    required this.run,
-    required this.floor,
-    required this.floors,
-  });
+  const _RunHeader({required this.run, required this.altitude});
 
   final RunState run;
 
-  /// Piso alcanzado (0 = al pie de la montaña) sobre el total.
-  final int floor;
-  final int floors;
+  /// Metros a los que está el discípulo.
+  final int altitude;
 
   @override
   Widget build(BuildContext context) {
@@ -666,39 +647,11 @@ class _RunHeader extends StatelessWidget {
           // El arma y los talismanes de la subida; tocarlos explica qué hacen.
           WeaponChip(id: run.weapon, level: run.weaponLevel, style: run.style),
           Expanded(child: TalismanRow(ids: run.talismans, wrap: false)),
-          _Altitude(floor: floor, floors: floors),
-        ],
-      ),
-    );
-  }
-}
-
-/// Cuánto falta para la cumbre: una regla vertical con el piso marcado.
-class _Altitude extends StatelessWidget {
-  const _Altitude({required this.floor, required this.floors});
-
-  final int floor;
-  final int floors;
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
-    return Tooltip(
-      message: t.mapFloor(floor, floors),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: 6,
-            height: 30,
-            child: CustomPaint(painter: _AltitudePainter(floor / floors)),
-          ),
-          const SizedBox(width: 5),
           Text(
-            '$floor/$floors',
+            meters(altitude),
             style: const TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w800,
               color: Palette.textDim,
             ),
           ),
@@ -706,32 +659,6 @@ class _Altitude extends StatelessWidget {
       ),
     );
   }
-}
-
-class _AltitudePainter extends CustomPainter {
-  _AltitudePainter(this.p);
-
-  final double p;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final track = RRect.fromRectAndRadius(
-      Offset.zero & size,
-      const Radius.circular(3),
-    );
-    canvas.drawRRect(track, Paint()..color = Palette.line);
-    final h = size.height * p.clamp(0.0, 1.0);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, size.height - h, size.width, h),
-        const Radius.circular(3),
-      ),
-      Paint()..color = Palette.gold,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_AltitudePainter old) => old.p != p;
 }
 
 /// Un lugar que se acaba de abrir sube desde la niebla: se agranda y
@@ -814,14 +741,13 @@ class _PickCard extends ConsumerWidget {
         NodeType.merchant => t.nodeHintMerchant,
         NodeType.master => t.nodeHintMaster,
       };
-      // Estancia: cuántas salas tiene y el cofre al final; si no, el
-      // grupo del combate suelto.
-      final rooms = n.stay.length;
-      final pack = rooms > 1
-          ? ' ${t.nodeHintStay(rooms)}'
-          : n.waves.isEmpty
+      // El grupo, si viene más de uno, y el premio del otro lado.
+      final pack = n.waves.isEmpty
           ? ''
           : ' ${t.nodeHintPack(1 + n.waves.length)}';
+      final reward = n.reward == null
+          ? ''
+          : ' ${t.pathReward(t.lootKind(n.reward!))}';
       body = PaperPanel(
         key: ValueKey(n.id),
         accent: look.color,
@@ -863,7 +789,7 @@ class _PickCard extends ConsumerWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '$hint$pack',
+                    '$hint$pack$reward',
                     style: const TextStyle(
                       fontSize: 14,
                       height: 1.25,

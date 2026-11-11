@@ -411,7 +411,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
         r = next;
         final pack = runEngine.packOf(r);
         final enemy = pack.first;
-        if (r.node(r.currentNode!).next.isEmpty &&
+        if (runEngine.data.enemy(enemy).rank == EnemyRank.boss &&
             runEngine.isLastStage(r)) {
           log.hpAtBoss = r.hp;
         }
@@ -568,7 +568,18 @@ String _route(RunEngine run, Bot bot, RunState r) {
     if (n.type != NodeType.combat) return avoidFights ? 1.5 : 1;
     final rank = run.data.enemy(n.enemy!).rank;
     if (rank == EnemyRank.elite) return ratio > 0.7 ? 2 : -1;
-    return 1;
+    // El premio que muestra la puerta.
+    return 1 +
+        switch (n.reward) {
+          RewardKind.tea => (1 - ratio) * 3,
+          RewardKind.cards => r.stage == 0 ? 1.2 : 0.8,
+          RewardKind.upgrade => 1.0,
+          RewardKind.talisman => 1.6,
+          RewardKind.weapon => r.weapon == null ? 1.6 : 0.6,
+          RewardKind.jade => 0.5,
+          RewardKind.lotus => 0.3,
+          null => 0.0,
+        };
   }
 
   // Desempate al azar: entre dos combates comunes cualquiera vale.

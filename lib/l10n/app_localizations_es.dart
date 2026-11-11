@@ -1554,17 +1554,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get optionalEliteTag => 'Desvío';
 
   @override
-  String get mapPickHint => 'Tocá un lugar para ver qué te espera';
+  String get mapPickHint => 'Elegí por dónde seguir subiendo';
+
+  @override
+  String pathTitle(int n, int total) {
+    return 'Sala $n de $total';
+  }
+
+  @override
+  String pathReward(String kind) {
+    return 'Del otro lado: $kind.';
+  }
+
+  @override
+  String combatAltitude(String meters, int n, int total) {
+    return '$meters · $n/$total';
+  }
 
   @override
   String get mapGo => 'Ir';
 
   @override
-  String get nodeHintCommon =>
-      'Un rival del camino. Si ganás, elegís una carta nueva.';
+  String get nodeHintCommon => 'Un rival del camino.';
 
   @override
-  String get nodeHintElite => 'Un rival fuerte: más riesgo, mejor botín.';
+  String get nodeHintElite =>
+      'El guardián de la etapa: más riesgo, y un talismán.';
 
   @override
   String get nodeHintDetour =>

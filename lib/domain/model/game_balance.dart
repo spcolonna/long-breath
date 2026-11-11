@@ -72,6 +72,37 @@ enum NodeType {
       s == 'pass' ? NodeType.combat : NodeType.values.byName(s);
 }
 
+/// Reglas del sendero de salas: las puertas no dejan esquivar las peleas.
+class PathRules {
+  const PathRules({
+    this.minFights = 8,
+    this.maxRest = 2,
+    this.masterBy = 8,
+    this.merchantBy = 10,
+  });
+
+  /// Peleas que tiene toda etapa (con élite y jefe), como mínimo.
+  final int minFights;
+
+  /// Salas seguidas sin pelea, como mucho.
+  final int maxRest;
+
+  /// Profundidad (1 = la primera) a la que ya se ofreció un maestro.
+  final int masterBy;
+
+  /// Profundidad a la que ya se ofreció un mercader en la etapa.
+  final int merchantBy;
+
+  factory PathRules.fromJson(Map<String, dynamic>? j) => j == null
+      ? const PathRules()
+      : PathRules(
+          minFights: j['minFights'] as int? ?? 8,
+          maxRest: j['maxRest'] as int? ?? 2,
+          masterBy: j['masterBy'] as int? ?? 8,
+          merchantBy: j['merchantBy'] as int? ?? 10,
+        );
+}
+
 /// Una etapa de la subida: su nombre, sus pisos (el último es su jefe) y los
 /// escenarios y luces que se reparten entre sus combates.
 class StageDef {
@@ -83,7 +114,11 @@ class StageDef {
     this.scenes = const ['terraza'],
     this.lights = const ['alba'],
     this.enemyMods = const PicoDef(),
+    this.altitude = (0, 1000),
   });
+
+  /// Metros al pie y en la cima de la etapa (la barra de altitud).
+  final (int, int) altitude;
 
   final String id;
   final String hanzi;
@@ -117,6 +152,10 @@ class StageDef {
       enemyMods: switch (j['enemyMods']) {
         final Map<String, dynamic> m => PicoDef.fromJson(m),
         _ => const PicoDef(),
+      },
+      altitude: switch (j['altitude']) {
+        final List a => (a[0] as int, a[1] as int),
+        _ => (0, 1000),
       },
     );
   }
@@ -156,10 +195,50 @@ class MapNodeDef {
     this.rooms = const [],
     this.scene,
     this.light,
+    this.reward,
   });
 
   final String id;
   final NodeType type;
+
+  /// Premio que la puerta muestra antes de entrar (salas de pelea comunes);
+  /// null: el de siempre (élite, jefe) o mapas viejos.
+  final RewardKind? reward;
+
+  /// Profundidad en la etapa (0 = la primera), sacada del id `f{n}x`; -1
+  /// si el id no sigue ese formato (mapas armados a mano).
+  int get depth {
+    final m = _depthRe.firstMatch(id);
+    return m == null ? -1 : int.parse(m.group(1)!) - 1;
+  }
+
+  static final _depthRe = RegExp(r'^f(\d+)[a-z]$');
+
+  MapNodeDef withNext(List<String> next) => MapNodeDef(
+        id: id,
+        type: type,
+        next: next,
+        enemy: enemy,
+        waves: waves,
+        together: together,
+        rooms: rooms,
+        scene: scene,
+        light: light,
+        reward: reward,
+      );
+
+  MapNodeDef withReward(RewardKind? reward) => MapNodeDef(
+        id: id,
+        type: type,
+        next: next,
+        enemy: enemy,
+        waves: waves,
+        together: together,
+        rooms: rooms,
+        scene: scene,
+        light: light,
+        reward: reward,
+      );
 
   /// El de la última sala de la estancia: el guardián (élite, jefe) o el
   /// último común. Las salas de antes están en [rooms].
@@ -217,6 +296,10 @@ class MapNodeDef {
       next: (j['next'] as List).cast<String>(),
       scene: j['scene'] as String?,
       light: j['light'] as String?,
+      reward: switch (j['reward']) {
+        final String k => RewardKind.values.asNameMap()[k],
+        _ => null,
+      },
     );
   }
 
@@ -230,6 +313,7 @@ class MapNodeDef {
         'next': next,
         if (scene != null) 'scene': scene,
         if (light != null) 'light': light,
+        if (reward != null) 'reward': reward!.name,
       };
 }
 
@@ -647,6 +731,7 @@ class GameBalance {
     this.stayJade = 100,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
+    this.path = const PathRules(),
     required this.difficulties,
     this.picos = const [],
     this.awakeningChoices = 3,
@@ -756,6 +841,9 @@ class GameBalance {
   /// (± [merchantSpread]); 0 = solo en sus nodos del mapa.
   final int merchantEvery;
   final int merchantSpread;
+
+  /// Reglas de las puertas del sendero.
+  final PathRules path;
 
   MerchantDef merchantAt(int stage) =>
       stage < stageMerchants.length ? stageMerchants[stage] : merchant;
@@ -906,6 +994,7 @@ class GameBalance {
           (run['wanderingMerchant'] as Map<String, dynamic>?)?['spread']
                   as int? ??
               0,
+      path: PathRules.fromJson(run['path'] as Map<String, dynamic>?),
       masterForms:
           ((j['master'] as Map<String, dynamic>?) ?? const {})['forms'] as int? ??
               2,

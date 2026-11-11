@@ -97,7 +97,7 @@ void main() {
 
   test('pisos del mapa: enemigos válidos, santuario, fuente, élite y jefe', () {
     final floors = data.balance.floors;
-    expect(floors, hasLength(11));
+    expect(floors, hasLength(13));
     for (final f in floors) {
       for (final e in f.enemies) {
         expect(data.enemies.containsKey(e), isTrue, reason: e);
@@ -106,11 +106,11 @@ void main() {
     }
     expect(floors[2].types.keys, [NodeType.shrine]);
     // Élite, después la fuente y arriba el jefe.
-    expect(floors[8].enemies, ['monk', 'lion', 'fan']);
-    expect(floors[9].types.keys, [NodeType.fountain]);
+    expect(floors[10].enemies, ['monk', 'lion', 'fan']);
+    expect(floors[11].types.keys, [NodeType.fountain]);
     expect(floors.last.enemies, ['dragon']);
     expect(data.balance.jadeElite, 0, reason: 'la élite paga con un talismán');
-    // El mercader aparece en el camino, no en el mapa.
+    // El mercader es una puerta que aparece cuando toca, no un tipo de piso.
     for (final st in data.balance.stages) {
       for (final f in st.floors) {
         expect(f.types.keys, isNot(contains(NodeType.merchant)));
@@ -120,14 +120,14 @@ void main() {
     expect(floors[3].packs.keys, contains(2));
   });
 
-  test('tres etapas de 11 pisos, cada una con élite, fuente y jefe', () {
+  test('tres etapas de 13 salas, cada una con élite, fuente y jefe', () {
     final stages = data.balance.stages;
     expect(stages.map((s) => s.id), ['qianyunshan', 'xuankongsi', 'wolongding']);
-    expect(data.balance.totalFloors, 33);
+    expect(data.balance.totalFloors, 39);
     for (final st in stages) {
-      expect(st.floors, hasLength(11), reason: st.id);
-      expect(st.floors[9].types.keys, [NodeType.fountain], reason: st.id);
-      for (final e in st.floors[8].enemies) {
+      expect(st.floors, hasLength(13), reason: st.id);
+      expect(st.floors[11].types.keys, [NodeType.fountain], reason: st.id);
+      for (final e in st.floors[10].enemies) {
         expect(data.enemy(e).rank, EnemyRank.elite, reason: e);
       }
       expect(data.enemy(st.floors.last.enemies.single).rank, EnemyRank.boss);
@@ -137,7 +137,7 @@ void main() {
         }
         // Los élites opcionales son los mismos élites de la etapa.
         for (final e in f.elites) {
-          expect(st.floors[8].enemies, contains(e), reason: e);
+          expect(st.floors[10].enemies, contains(e), reason: e);
         }
       }
     }

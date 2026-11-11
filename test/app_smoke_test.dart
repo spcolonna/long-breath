@@ -139,15 +139,24 @@ void main() {
     final container = ProviderScope.containerOf(context);
     final runs = container.read(runControllerProvider.notifier);
     final current = container.read(runControllerProvider)!;
-    final shrine = current.map.singleWhere((n) => n.type == NodeType.shrine);
-    final before = current.map.firstWhere((n) => n.next.contains(shrine.id));
+    // El sendero se abre de a una sala: se sube hasta la puerta del
+    // santuario.
+    final eng = container.read(runEngineProvider);
+    var walk = eng.retreat(current);
+    bool shrineAhead(RunState r) =>
+        eng.available(r).any((id) => r.node(id).type == NodeType.shrine);
+    while (!shrineAhead(walk)) {
+      walk = eng
+          .enter(walk, eng.available(walk).first)
+          .copyWith(phase: RunPhase.map);
+    }
     runs.resume(
-      container
-          .read(runEngineProvider)
-          .enter(
-            current.copyWith(phase: RunPhase.map, currentNode: before.id),
-            shrine.id,
-          ),
+      eng.enter(
+        walk,
+        eng.available(walk).firstWhere(
+          (id) => walk.node(id).type == NodeType.shrine,
+        ),
+      ),
     );
     GoRouter.of(context).go('/shrine');
     await settle();
@@ -274,8 +283,25 @@ void main() {
     expect(after.phase, RunPhase.reward);
 
     // El combate siguiente arranca con los talismanes de la run.
-    final fountain = after.map.singleWhere((n) => n.type == NodeType.fountain);
-    runs.resume(after.copyWith(phase: RunPhase.map, currentNode: fountain.id));
+    const fountain = MapNodeDef(
+      id: 'q',
+      type: NodeType.fountain,
+      next: ['x'],
+    );
+    const summit = MapNodeDef(
+      id: 'x',
+      type: NodeType.combat,
+      enemy: 'dragon',
+      next: [],
+    );
+    const manual = [fountain, summit];
+    runs.resume(
+      after.copyWith(
+        phase: RunPhase.map,
+        currentNode: fountain.id,
+        map: manual,
+      ),
+    );
     runs.enter(fountain.next.single);
     container.read(combatControllerProvider.notifier).start();
     expect(container.read(combatControllerProvider)!.state.talismans, ['vida']);
@@ -291,7 +317,7 @@ void main() {
           jade: 100,
         ).copyWith(
           map: [
-            for (final n in after.map)
+            for (final n in manual)
               n.id == fountain.id
                   ? MapNodeDef(id: n.id, type: n.type, next: ['m'])
                   : n,
@@ -374,7 +400,8 @@ void main() {
     runs.resume(
       atBoss.copyWith(
         phase: RunPhase.stageClear,
-        currentNode: atBoss.map.firstWhere((n) => n.enemy == 'dragon').id,
+        map: [...atBoss.map, summit],
+        currentNode: summit.id,
         hp: 10,
         vowOptions: const ['voto_loto', 'voto_ayuno'],
       ),

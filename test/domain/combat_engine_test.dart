@@ -1328,8 +1328,9 @@ void main() {
       expect(down.events.whereType<EnemyDefeated>().single.enemyId, 'salamander');
       // Antes del siguiente, el respiro: no se juega nada hasta elegir.
       expect(down.events.whereType<WaveStarted>(), isEmpty);
+      // Sin curarse entre oleadas: concentrarte o afilar.
       expect(down.events.whereType<BreatherOffered>().single.options,
-          Breather.values);
+          [Breather.focus, Breather.fist]);
       expect(down.state.phase, CombatPhase.breather);
       expect(engine.validate(down.state, const EndTurn()), Invalid.mustBreathe);
       final r = engine.reduce(down.state, const ChooseBreather(Breather.fist));
@@ -1362,14 +1363,11 @@ void main() {
         return play(s, 'gongbu_chongquan').state;
       }
 
-      test('respirar cura un poco', () {
-        final s0 = down();
-        final r = engine.reduce(s0, const ChooseBreather(Breather.rest));
-        final heal = engine.breatherHeal(s0);
-        expect(heal, (s0.player.maxHp * 0.10).round());
-        expect(r.state.player.hp, 30 + heal);
-        expect(r.events.whereType<PlayerHealed>().single.amount, heal);
-        expect(r.state.phase, CombatPhase.playerTurn);
+      test('sin cura entre oleadas: reponerse no se ofrece', () {
+        expect(
+          () => engine.reduce(down(), const ChooseBreather(Breather.rest)),
+          throwsStateError,
+        );
       });
 
       test('concentrarte roba cartas y suma aliento', () {

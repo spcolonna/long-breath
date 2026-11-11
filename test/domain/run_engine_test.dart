@@ -10,7 +10,6 @@ import 'package:long_breath/domain/rng.dart';
 import 'package:long_breath/domain/run/ascent.dart';
 import 'package:long_breath/domain/run/feats.dart';
 import 'package:long_breath/domain/run/legacy.dart';
-import 'package:long_breath/domain/run/map_gen.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/infrastructure/file_game_data_loader.dart';
@@ -119,12 +118,8 @@ void main() {
     r = run.enter(r, 'n3b');
     r = run.finishCombat(r, won: true, hp: 30);
     r = run.chooseReward(r, null);
-    // Tercer combate ganado: un mercader en el camino, sin nodo propio.
-    expect(r.phase, RunPhase.merchant);
-    expect(run.isWanderingMerchant(r), isTrue);
-    expect(r.shopCards, isNotEmpty);
-    r = run.leaveShop(r);
-    expect(r.combatsSinceMerchant, 0);
+    // El mercader ya no aparece solo: es una puerta del sendero.
+    expect(r.phase, RunPhase.map);
     expect(run.available(r), ['e2']);
     r = run.enter(r, 'e2');
     expect(r.phase, RunPhase.event);
@@ -245,8 +240,12 @@ void main() {
     expect(up.currentNode, isNull);
     expect(up.visited, isEmpty);
     expect(run.available(up), up.starts);
-    // El mapa nuevo es el del monasterio: su jefe es el abad.
-    expect(up.map.singleWhere((n) => n.next.isEmpty).enemy, 'bell_abbot');
+    // El sendero nuevo es el del monasterio: arranca con sus puertas.
+    expect(up.map.every((n) => n.depth == 0), isTrue);
+    final monastery = run.data.balance.stages[1].floors.first.enemies;
+    for (final n in up.map) {
+      expect(monastery, contains(n.enemy));
+    }
     expect(RunState.fromJson(up.toJson()).toJson(), up.toJson());
     expect(() => run.advanceStage(up), throwsStateError);
   });
@@ -314,7 +313,7 @@ void main() {
       var r = run.newRun(seed: seed);
       for (var st = 0; st < stages.length; st++) {
         expect(r.stage, st);
-        expect(r.map.singleWhere((n) => n.next.isEmpty).enemy, bosses[st]);
+        expect(stages[st].floors.last.enemies, [bosses[st]]);
         for (final n in r.map) {
           if (n.enemy != null) {
             expect(stages[st].floors.any((f) => f.enemies.contains(n.enemy)),
@@ -322,10 +321,7 @@ void main() {
           }
         }
         if (st == stages.length - 1) break;
-        r = run.advanceStage(r.copyWith(
-          phase: RunPhase.stageClear,
-          currentNode: r.map.singleWhere((n) => n.next.isEmpty).id,
-        ));
+        r = run.advanceStage(r.copyWith(phase: RunPhase.stageClear));
       }
     }
   });
@@ -781,67 +777,6 @@ void main() {
   });
 
   group('mapa generado', () {
-    test('cada semilla arma un mapa válido con sus reglas', () {
-      final shapes = <String>{};
-      for (var seed = 1; seed <= 200; seed++) {
-        final r = run.newRun(seed: seed);
-        final map = r.map;
-        final ids = {for (final n in map) n.id};
-        shapes.add([for (final n in map) '${n.id}:${n.type.name}:${n.next}'].join());
-        // Todo nodo es alcanzable y todos llegan al jefe.
-        final reached = {...r.starts};
-        for (final n in map) {
-          expect(ids.containsAll(n.next), isTrue);
-          if (reached.contains(n.id)) reached.addAll(n.next);
-        }
-        expect(reached, ids);
-        final boss = map.where((n) => n.next.isEmpty).toList();
-        expect(boss, hasLength(1));
-        expect(boss.single.enemy, 'dragon');
-        expect(r.starts, hasLength(2));
-        // Un solo santuario y una sola fuente, entre el élite y el jefe.
-        expect(map.where((n) => n.type == NodeType.shrine), hasLength(1));
-        final fountain = map.singleWhere((n) => n.type == NodeType.fountain);
-        expect(r.node(fountain.next.single).enemy, 'dragon');
-        final elite = map.singleWhere((n) => n.next.contains(fountain.id));
-        expect(['monk', 'lion', 'fan'], contains(elite.enemy));
-        // Siempre hay maestro; el mercader ya no es un nodo del mapa.
-        expect(map.any((n) => n.type == NodeType.merchant), isFalse);
-        expect(map.any((n) => n.type == NodeType.master), isTrue);
-        for (final n in map) {
-          if (n.type == NodeType.combat) {
-            expect(run.data.enemies.containsKey(n.enemy), isTrue);
-            // Los grupos: solo comunes que no se escapan, de 2 o 3.
-            if (n.waves.isNotEmpty) {
-              expect(n.waves.length, lessThanOrEqualTo(2));
-              for (final id in [n.enemy!, ...n.waves]) {
-                expect(run.packable(id), isTrue, reason: id);
-              }
-            }
-            // Las salas de antes: comunes que no se escapan, de a uno o dos,
-            // sin repetir en la estancia mientras alcancen.
-            for (final room in n.rooms) {
-              expect(room.waves.length, lessThanOrEqualTo(1));
-              for (final id in room.foes) {
-                expect(run.packable(id), isTrue, reason: id);
-              }
-            }
-            expect(n.stay.length, lessThanOrEqualTo(4));
-            if (n.next.isEmpty || n.next.any(
-                (x) => r.node(x).type == NodeType.fountain)) {
-              expect(n.rooms, isEmpty, reason: 'jefe y élite fijo: una sala');
-            }
-          } else {
-            expect(n.enemy, isNull);
-            expect(n.waves, isEmpty);
-          }
-        }
-        // Se puede llegar al jefe sin pasar dos veces por el mismo piso.
-        expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
-      }
-      expect(shapes.length, greaterThan(150), reason: 'mapas distintos');
-    });
-
     test('la misma semilla da el mismo mapa', () {
       expect(run.newRun(seed: 7).toJson(), run.newRun(seed: 7).toJson());
     });
@@ -1075,15 +1010,6 @@ void main() {
       return run.chooseReward(r, null);
     }
 
-    test('el élite lo garantiza si la etapa no tuvo ninguno', () {
-      var r = fresh(5);
-      r = r.copyWith(currentNode: 'n4', visited: ['n1', 'n4']);
-      expect(r.stageMerchants, 0);
-      r = winAt(r, 'n5');
-      expect(r.phase, RunPhase.merchant);
-      expect(r.stageMerchants, 1);
-    });
-
     test('nunca después del jefe', () {
       var r = fresh(5).copyWith(combatsSinceMerchant: 9, stageMerchants: 1);
       r = r.copyWith(currentNode: 'n5', visited: ['n1', 'n5']);
@@ -1110,77 +1036,6 @@ void main() {
       expect(run.isWanderingMerchant(r), isFalse);
       r = run.leaveShop(r);
       expect(run.available(r), ['b']);
-    });
-
-    test('élite opcional: a veces un combate intermedio, siempre con salida', () {
-      for (final st in run.data.balance.stages) {
-        var seen = 0;
-        for (var seed = 0; seed < 200; seed++) {
-          final (map, _) = generateMap(
-            st.floors,
-            Rng.seeded(seed),
-            packable: run.packable,
-          );
-          for (var f = 0; f < st.floors.length; f++) {
-            final row = map.where((n) => n.id.startsWith('f${f + 1}')).toList();
-            final elites = row.where(
-              (n) =>
-                  n.type == NodeType.combat &&
-                  run.data.enemy(n.enemy!).rank == EnemyRank.elite,
-            );
-            if (st.floors[f].elite == 0) {
-              if (f != 8) expect(elites, isEmpty, reason: '${st.id} $f');
-              continue;
-            }
-            expect(elites.length, lessThanOrEqualTo(1));
-            if (elites.isEmpty) continue;
-            seen++;
-            expect(row.length, greaterThan(1), reason: 'tiene que haber otro lugar');
-            expect(elites.single.waves, isEmpty);
-          }
-          // Mientras queden otros, el élite del piso 9 no repite uno opcional.
-          final ids = [
-            for (final n in map)
-              if (n.type == NodeType.combat &&
-                  run.data.enemy(n.enemy!).rank == EnemyRank.elite)
-                n.enemy,
-          ];
-          if (ids.length <= st.floors[8].enemies.length) {
-            expect(ids.toSet(), hasLength(ids.length), reason: '${st.id} $seed');
-          }
-        }
-        // 2 pisos al 40%: unos 160 en 200 mapas, ni siempre ni nunca.
-        expect(seen, inInclusiveRange(100, 220), reason: st.id);
-      }
-    });
-
-    test('el élite a veces trae escolta: un común de la etapa, a la vez', () {
-      final st = run.data.balance.stages[2];
-      final floor = st.floors.firstWhere((f) => f.escort > 0);
-      var escorted = 0;
-      for (var seed = 0; seed < 200; seed++) {
-        final (map, _) = generateMap(
-          st.floors,
-          Rng.seeded(seed),
-          packable: run.packable,
-        );
-        final elite = map.firstWhere(
-          (n) => n.id.startsWith('f9') && n.type == NodeType.combat,
-        );
-        if (elite.waves.isEmpty) {
-          expect(elite.together, isFalse);
-          continue;
-        }
-        escorted++;
-        expect(elite.together, isTrue);
-        expect(floor.escorts, contains(elite.waves.single));
-        expect(run.data.enemy(elite.enemy!).rank, EnemyRank.elite);
-      }
-      // Cerca del porcentaje del piso, ni siempre ni nunca.
-      expect(
-        escorted,
-        inInclusiveRange(floor.escort * 2 - 40, floor.escort * 2 + 40),
-      );
     });
 
     test('un grupo paga jade extra por cada enemigo de más', () {
@@ -1538,12 +1393,12 @@ void main() {
   });
 
   test('menú de pruebas: arranca en la etapa y el piso pedidos', () {
-    final r = run.debugStart(seed: 5, stage: 2, floor: 9);
+    final r = run.debugStart(seed: 5, stage: 2, floor: 11);
     expect(r.stage, 2);
     expect(r.phase, RunPhase.map);
     expect(r.style, isNotNull);
-    expect(r.visited, hasLength(8));
-    // Lo siguiente es el piso 9: el élite de la cumbre.
+    expect(r.visited, hasLength(10));
+    // Lo siguiente es la profundidad 11: el élite de la cumbre.
     final next = run.available(r).map(r.node).toList();
     expect(next.single.enemy, isNotNull);
     expect(next.single.type, NodeType.combat);
