@@ -2052,9 +2052,14 @@ class _EnemyStage extends ConsumerWidget {
                 math.min(box.maxHeight - 16, slot.pair ? 220.0 : 260.0),
                 box.maxWidth * 1.15,
               );
-              final size = math.max(
-                fit,
-                math.min(slot.pair ? 112.0 : 150.0, box.maxWidth * 1.1),
+              // Sin pasarse más de 24 px: la cabeza no se esconde
+              // entera bajo el globo.
+              final size = math.min(
+                math.max(
+                  fit,
+                  math.min(slot.pair ? 112.0 : 150.0, box.maxWidth * 1.1),
+                ),
+                box.maxHeight + 24,
               );
               return OverflowBox(
                 alignment: Alignment.bottomCenter,

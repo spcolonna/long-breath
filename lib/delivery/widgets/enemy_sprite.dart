@@ -82,6 +82,13 @@ class _EnemySpriteState extends State<EnemySprite>
     if (widget.attackKey != old.attackKey) _attack.forward(from: 0);
     if (widget.pulseKey != old.pulseKey) _pulse.forward(from: 0);
     if (widget.dying && !old.dying) _death.forward(from: 0);
+    // Una oleada nueva reusa este estado (GlobalKey): la caída anterior no
+    // puede quedar aplicada al que entra.
+    if ((!widget.dying && old.dying) || widget.def.id != old.def.id) {
+      _death
+        ..stop()
+        ..value = 0;
+    }
   }
 
   @override
@@ -136,8 +143,8 @@ class _EnemySpriteState extends State<EnemySprite>
         final squash = hitting ? 0.06 * knock : 0.0;
         final (atkDy, atkScale) = _attackPose(_attack.value);
         final pulse = math.sin(math.pi * _pulse.value);
-        final d = _death.value;
         final dying = widget.dying;
+        final d = dying ? _death.value : 0.0;
         final wobble = widget.staggered
             ? -0.08 + 0.05 * math.sin(_idle.value * math.pi * 2)
             : 0.0;
