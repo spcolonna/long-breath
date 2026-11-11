@@ -288,7 +288,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String tabletFloor(int floor, int floors) {
-    return 'Piso $floor de $floors';
+    return 'Sala $floor de $floors';
   }
 
   @override
@@ -720,7 +720,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get chestTitle => 'El cofre de la estancia';
+  String get chestTitle => 'El cofre de la sala';
 
   @override
   String get invalidMustBreathe => 'Primero elegí qué hacer en la tregua';
@@ -1095,7 +1095,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbBlurb =>
-      'El mapa, las recompensas, la fuente y los caminos.';
+      'El sendero, las puertas, los premios, la fuente y los caminos.';
 
   @override
   String get pauseTitle => 'Pausa';
@@ -1111,7 +1111,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get pauseToMenuHint =>
-      'La subida queda guardada: con \"Continuar\" volvés al mapa, antes de este combate.';
+      'La subida queda guardada: con \"Continuar\" volvés a las puertas, antes de este combate.';
 
   @override
   String get pauseRestartLesson => 'Reiniciar lección';
@@ -1507,28 +1507,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesClimbSlide1 =>
-      'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre, decidís vos. Cada subida arma un mapa distinto: deslizá para verlo entero.';
+      'Cada etapa es un sendero de 13 salas montaña arriba. Al terminar cada sala elegís entre dos o tres puertas, y cada pelea muestra qué premio hay del otro lado. La barra de altitud dice cuánto subiste y dónde esperan el guardián, la fuente y el jefe.';
 
   @override
-  String get lesClimbSlide2Title => 'Los lugares del mapa';
+  String get lesClimbSlide2Title => 'Las puertas';
 
   @override
   String get lesClimbSlide2 =>
-      'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, y el maestro errante. Cada lugar de combate es una estancia: varias salas seguidas, sin volver al mapa, con una tregua entre sala y sala (curarte, entrar concentrado o afilar los puños) y un cofre al final.';
+      'Cada sello es un lugar: una pelea común (武), el guardián o un desvío con un rival fuerte que deja talismán (精), el jefe (龙), la fuente (泉), el santuario (庙), un evento (缘), el maestro errante (师) y el mercader (商). Las peleas no se pueden esquivar todas: el sendero siempre te pone rivales.';
 
   @override
-  String get lesClimbSlide3Title => 'El cofre de la estancia';
+  String get lesClimbSlide3Title => 'El cofre';
 
   @override
   String get lesClimbSlide3 =>
-      'Al ganar la última sala se abre el cofre. Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
+      'Al ganar una sala se abre su cofre, con el premio que mostraba la puerta. Si son pergaminos, elegís UNA cosa: 1 de 3 cartas para tu mazo, aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.';
 
   @override
   String get lesClimbSlide4Title => 'Vida y Estructura';
 
   @override
   String get lesClimbSlide4 =>
-      'Tu Vida NO se recupera sola entre combates: cuidala. En la fuente podés curarte, mejorar una carta o sacar una del mazo. La Estructura sí vuelve completa en cada combate.';
+      'Tu Vida NO se recupera entre salas: cuidala. Curan la fuente, el té (premio de algunas puertas o del mercader), algunos talismanes y respirar hondo al superar la etapa. La Estructura sí vuelve completa en cada combate.';
 
   @override
   String get lesClimbSlide5Title => 'El santuario';
@@ -2956,7 +2956,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String slotClimbing(String stage, int floor) {
-    return 'Subiendo: $stage, piso $floor';
+    return 'Subiendo: $stage, sala $floor';
   }
 
   @override
@@ -3004,12 +3004,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String ghostIntro(int n, int floor) {
-    return 'Fui el nº $n. Caí en el piso $floor y la niebla no me deja bajar.';
+    return 'Fui el nº $n. Caí en la sala $floor y la niebla no me deja bajar.';
   }
 
   @override
   String ghostIntroPath(int n, String path, int floor) {
-    return 'Fui el nº $n, mi camino era $path. Caí en el piso $floor y la niebla no me deja bajar.';
+    return 'Fui el nº $n, mi camino era $path. Caí en la sala $floor y la niebla no me deja bajar.';
   }
 
   @override
@@ -3030,12 +3030,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String schoolFellTo(String enemy, int floor) {
-    return '$enemy · piso $floor';
+    return '$enemy · sala $floor';
   }
 
   @override
   String schoolFellAt(int floor) {
-    return 'Cayó en el piso $floor';
+    return 'Cayó en la sala $floor';
   }
 
   @override

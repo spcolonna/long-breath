@@ -66,10 +66,10 @@ class AltitudeBar extends StatelessWidget {
               Positioned(
                 top: 0,
                 left: 0,
-                right: 0,
+                right: -60,
                 child: Text(
                   meters(summit),
-                  textAlign: TextAlign.center,
+                  maxLines: 1,
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,

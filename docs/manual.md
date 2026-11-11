@@ -93,40 +93,38 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
 ## Una partida (run)
 
-1. **Inicio:** el menú principal (común a todas) tiene **Aprender** y **Jugar**. Jugar muestra las **tres partidas**: cada una tiene su escuela, su registro, su loto y una **dificultad fija** que se elige al crearla. Una partida se puede **empezar de cero** o **borrar** (pide confirmación; si tiene progreso, dos veces). Las lecciones y el sonido son comunes. Dentro de la partida, **La subida** empieza como novicio sin preguntar la dificultad (el Pico se ajusta con − y +), y **Continuar run** retoma la subida guardada; si la dejaste en medio de un combate, vuelve al mapa antes de ese combate.
+1. **Inicio:** el menú principal (común a todas) tiene **Aprender** y **Jugar**. Jugar muestra las **tres partidas**: cada una tiene su escuela, su registro, su loto y una **dificultad fija** que se elige al crearla. Una partida se puede **empezar de cero** o **borrar** (pide confirmación; si tiene progreso, dos veces). Las lecciones y el sonido son comunes. Dentro de la partida, **La subida** empieza como novicio sin preguntar la dificultad (el Pico se ajusta con − y +), y **Continuar run** retoma la subida guardada; si la dejaste en medio de un combate, vuelve a las puertas de antes de ese combate.
    - **Legado 承:** desde la segunda subida, el discípulo anterior (haya ganado o caído) te deja algo y elegís una de dos herencias: **su carta** (la que guardó en el registro, con la mitad de sus mejoras) o **lo que alcanzó** (+3 de Vida máxima si pasó de la primera etapa; si no, +15 de jade). Si solo tenía cartas iniciales, queda la segunda. Se elige antes del talismán de los meridianos.
    - **Pruebas (solo en builds de desarrollo):** el ícono del bicho en la escuela arranca una subida en cualquier etapa y piso, y suma loto.
-2. **Mapa:** se genera con la semilla de la subida, así que **cada subida tiene un mapa distinto**. Son 11 pisos por etapa, de abajo hacia arriba, con 1 a 3 lugares por piso; tocás uno de los que están unidos al tuyo para avanzar. Si no entra en la pantalla, se desliza (arranca mostrando tu piso). Arriba a la derecha, la regla de altura marca tu piso sobre el total; el número junto al ícono del mazo es la cantidad de cartas (tocalo para verlas).
+2. **Sendero de salas:** cada etapa es una cadena de **13 salas** montaña arriba, que se abre de a una: al terminar cada sala elegís entre **2 o 3 puertas**. Lo que hay detrás de cada puerta sale de la semilla de la subida en el momento en que se abre, así que **cada subida es distinta**; retirarse de una pelea o cerrar la app vuelve a mostrar las mismas puertas.
 
-   Los combates no dicen a quién vas a enfrentar: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…). Cada nombre es un escenario (terraza, bambú, cristales, campanas; la cumbre para el Dragón) con una luz (alba, niebla u ocaso), y ese es el fondo del combate. Al llegar, el rival se presenta.
+   Cada puerta es un **sello de piedra con su carácter**: 武 pelea común, 精 el guardián (élite) o un desvío con un rival fuerte, 龙 el jefe, 泉 fuente, 庙 santuario, 缘 evento, 师 maestro errante y 商 mercader. Las de pelea común **muestran su premio** (卷 pergaminos, 玉 jade, 莲 loto, 炼 temple, 茶 té, 符 talismán, 兵 arma) y el élite, su talismán. El rival no se ve: el camino tiene **nombre de lugar** ("Bambú en la niebla", "Terraza del ocaso"…), que es el fondo del combate. Tocás una puerta, la tarjeta de abajo dice qué es y qué premio trae, y con **Ir** el discípulo trepa hasta ella y la pantalla nueva entra con una mancha de tinta.
 
-   **Cómo se ve:** una montaña pintada en capas (las cordilleras lejanas se mueven más despacio al desplazar, el cielo se vuelve dorado y rosa cerca de la cumbre) con nubes que van y vienen. Cada lugar es un **sello de piedra con su carácter tallado**: 武 combate (精 élite con aro dorado, 龙 jefe), 泉 fuente, 庙 santuario, 缘 evento, 师 maestro (商 mercader solo en subidas guardadas antes del mercader ambulante). Los que podés tomar flotan y laten; los ya andados llevan el sello rojo 印. Los une un **sendero de escalones**: lo recorrido queda en tinta dorada y el último tramo se pinta al volver al mapa. Los pisos a más de 2 del tuyo quedan bajo la niebla y se despejan al subir. El santuario tiene su arco, la fuente su estanque, el élite su pagoda y en la cumbre se adivina el dragón entre las nubes. Arriba a la derecha, una regla marca el piso (por ejemplo 3/11).
+   **Cómo se ve la subida:** la ladera pintada de la etapa sube con cada sala, y a la izquierda una **barra de altitud** dorada marca las salas pisadas, la cabeza del discípulo y los metros (la etapa 1 va de 0 a 1.400 m, la 2 hasta 2.700 y la 3 hasta 3.900), con los hitos tallados a su altura: 庙 santuario, 精 guardián, 泉 fuente y 龙 jefe. La cabecera muestra los metros, y en combate un cartel dice la altura y la sala ("646 m · 7/13").
 
-   Al tocar un lugar, tu discípulo (de espaldas, con la ropa de su camino) **camina el sendero** hasta él, la cámara lo sigue y la pantalla nueva entra con una **mancha de tinta** del color del lugar.
-
-   | Piso | Qué puede salir |
+   | Sala | Qué puede salir |
    |---|---|
-   | 1 | Dos combates (Murciélago y Salamandra): elegís por dónde empezar |
-   | 2 | Combates o eventos (aparece el Mono Ladrón) |
-   | 3 | **Santuario** (siempre) |
-   | 4 a 6 | Sobre todo combates, algún evento y el **maestro errante** (en 4 y 6 aparece el Bandido del Paso; en 5 y 6, el Hongo Lingzhi) |
-   | 7 | Élite: Monje sin Rostro, León de Piedra o Dama del Abanico (al azar) |
-   | 8 | Fuente (siempre): se descansa antes del jefe |
-   | 9 | Eco del Dragón (jefe de la etapa) |
+   | 1 | Dos peleas: elegís por cuál empezar (y su premio) |
+   | 2 | Peleas o eventos |
+   | 3 | **Santuario** en la etapa 1 (siempre); en las otras, como las del medio |
+   | 4 a 10 | Sobre todo peleas, eventos, el **maestro errante** y, cuando toca, el **mercader** |
+   | 11 | El guardián: un élite de la etapa (en la 2 y la 3, a veces con escolta) |
+   | 12 | Fuente (siempre): se descansa antes del jefe |
+   | 13 | Jefe de la etapa |
 
-   Las etapas 2 y 3 tienen la misma forma (11 pisos: élite, fuente y jefe arriba), sin santuario: el camino se elige una sola vez. El mapa se tiñe según la etapa (jade, piedra tibia, nieve) y el título dice "Etapa 2 de 3".
+   Las etapas 2 y 3 tienen la misma forma, sin santuario: el camino se elige una sola vez. El título dice "Etapa 2 de 3".
 
-   **Élites opcionales:** en los pisos 5 y 7 de cada etapa, 4 de cada 10 veces uno de los combates es un élite (el sello dorado 精), con los mismos élites de arriba y sin escolta. Es un desvío: el piso siempre tiene otro lugar por donde pasar. Quien lo vence se lleva su talismán (y el arma, si todavía no tiene). El élite de arriba no repite a uno ya cruzado mientras queden otros. En el mapa se distingue: su sello lleva un anillo dorado punteado que gira y la placa «Desvío»; al elegirlo vibra dos veces, como quien acepta el reto.
+   **Reglas de las puertas:** donde puede haber pelea hay al menos una puerta de pelea. **Las peleas no se esquivan:** como mucho 2 salas seguidas sin pelear y al menos 8 peleas por etapa contando guardián y jefe; si el sendero se queda sin margen, todas las puertas son de pelea. El **maestro** se ofrece al menos una vez por etapa, a más tardar en la sala 8. El **mercader** aparece como puerta cada 4 peleas más o menos (3 a 5) y, si en la etapa no apareció, en la sala 10. Las puertas de un mismo momento no repiten premio, y si llevás 2 peleas sin pergaminos, una de las puertas los trae.
 
-   Reglas: cada piso de combate tiene al menos un combate, los enemigos no se repiten en un mismo piso, los caminos no se cruzan y toda subida tiene al menos un maestro. **Ningún camino esquiva las peleas:** como mucho 2 lugares seguidos sin combate y al menos 6 combates por etapa contando élite y jefe (si el azar arma un camino así, uno de sus eventos o maestros se vuelve combate). El mercader no está en el mapa: aparece en el camino (ver 9).
+   **Desvío:** en las salas 5 y 8, 4 de cada 10 veces una de las peleas es un élite (el sello dorado 精 con anillo punteado y la placa «Desvío»), como mucho uno por etapa. Siempre hay otra puerta. Quien lo vence se lleva su talismán (y el arma, si todavía no tiene). El guardián no repite a uno ya cruzado mientras queden otros.
 
-   **Grupos:** muchos combates comunes traen 2 enemigos (en la etapa 2 y 3, hasta 3). Se pelean de a uno: cuando cae uno, entra el siguiente y vos seguís con tu Vida, tu mano, tu postura y tus formas a medio hacer; no hay recompensa en el medio, solo una **tregua**: antes de que entre el siguiente elegís entre reponerte (10% de la Vida máxima), concentrarte (robás 2 cartas y +1 de aliento) o afilar los puños (+2 a los puños hasta el final del combate). Para que el nodo no dure el doble, cada uno trae menos Vida (70% si son 2, 58% si son 3), y cada enemigo de más suma 5 de jade. En el mapa, el sello del combate lleva una plaquita con un punto por enemigo; en el combate, unos puntos bajo el nombre marcan cuál va.
+   **Sin curarse entre salas:** la Vida que perdés en una sala la llevás a la siguiente. Curan la fuente, el té (premio de algunas puertas o del mercader), algunos talismanes, algunos eventos y respirar hondo al superar la etapa.
 
-   **Estancias** (todo combate del mapa salvo el élite fijo y el jefe): un lugar con varias **salas** seguidas, 2 en los primeros pisos y 3 más arriba; en el mapa la tarjeta dice cuántas. Cada sala es un combate (solo o en grupo) contra un común distinto; el último de la estancia puede ser un élite, que hace de guardián. **Entrando no se vuelve al mapa**: si salís a mitad de una sala, se retoma desde la pausa. Entre sala y sala, una pantalla muestra quién espera y tu Vida, y elegís la **tregua**: reponerte (10% de la Vida máxima ya), concentrarte (arrancás la sala siguiente con 2 cartas y +1 de aliento) o afilar los puños (+2 a los puños toda la sala siguiente). Las salas dan jade (la mitad que un combate suelto) y lotos, pero **no cartas**: el premio está en el **cofre** del final, que se abre al ganar la última sala (cartas, forma, arma, talismán o mejora, como siempre; el del élite deja además elegir talismán). Para que la estancia no sea una pared, los comunes traen menos Vida según la sala (75%, 70%, 65%). El mercader ambulante cuenta estancias, no salas.
+   **Grupos:** muchas peleas comunes traen 2 enemigos (en la etapa 2 y 3, hasta 3). Se pelean de a uno: cuando cae uno, entra el siguiente y vos seguís con tu Vida, tu mano, tu postura y tus formas a medio hacer; antes de que entre elegís la **tregua**: concentrarte (robás 2 cartas y +1 de aliento) o afilar los puños (+2 a los puños hasta el final del combate). Cada uno trae menos Vida (70% si son 2, 58% si son 3) y cada enemigo de más suma 5 de jade. En la puerta, el sello lleva un punto por enemigo; en el combate, unos puntos bajo el nombre marcan cuál va.
+
+   **Dos a la vez:** algunos grupos de dos no esperan turno y pelean juntos, los dos en escena (en la etapa 1 en el 35% de los grupos de dos; en la etapa 2, el 50%; en la etapa 3, el 60%). Cada uno trae el 55% de su Vida y pega el 80% de lo que pegaría solo. En la puerta, los puntos van unidos por un trazo.
 
    **Emboscadas** 伏: un evento por etapa (Bandido del Paso en la 1, Ópera de las Mil Caras en la 2, Espada Voladora en la 3). Plantarte y pelear (paga como un combate común), escabullirte (55%: +12 de jade; si te ven, −4 de Vida y peleás igual) o pagar 20 de jade.
-
-   **Dos a la vez:** algunos grupos de dos no esperan turno y pelean juntos, los dos en escena (en la etapa 1 desde el piso 2, en el 35% de los grupos de dos; en la etapa 2, el 50%; en la etapa 3, el 60%). Cada uno trae el 55% de su Vida y pega el 80% de lo que pegaría solo. En el mapa, los puntos de la plaquita van unidos por un trazo.
 
    **Élite con escolta:** desde la etapa 2, el élite puede traer a su lado un común de la etapa (40% en la etapa 2, 60% en la 3). Pelean a la vez: el élite con el 80% de su Vida, la escolta con el 45%, y los dos pegan el 85%. La presentación del élite nombra a su escolta. La escolta paga el jade de un enemigo de más.
    - **Apuntar:** las cartas, las formas y el contragolpe de tus golpes le pegan al enemigo apuntado, que tiene un halo de oro a los pies y la placa con borde dorado. Para cambiar, tocá al otro (su figura o su placa); no cuesta nada y la carta elegida sigue elegida. Si cae el apuntado, se apunta solo al que queda.
@@ -195,7 +193,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | El discípulo rival 争 (Mil Nubes) | Aceptar la apuesta: una carta | El rival te espera 峰: duelo con el Discípulo del Viento, o compartirle el agua (+6 Vida máxima) |
    | La fragua del monasterio 铁 (Monasterio) | Encargarle un trabajo: 30 jade | El aprendiz del herrero 送 (Cumbre): templar el arma, o venderlo por 50 jade |
 
-6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** del piso 9 de cada etapa: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el mapa y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
+6. **Talismanes** 护符: objetos que actúan solos toda la subida. Se consiguen en eventos y **al vencer al élite** (el guardián de la sala 11 o un desvío) de cada etapa: ahí elegís 1 de 3 antes de la recompensa de siempre. Se ven arriba en el sendero y en el combate (con su carácter); tocarlos explica cada uno. Cuando uno actúa, su ficha rebota y su nombre sale del héroe.
 
    | Talismán | Efecto | Rareza |
    |---|---|---|
@@ -230,7 +228,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader. Los **de camino** solo le salen al discípulo de ese camino (en el élite, los eventos de talismán raro y la vitrina del mercader). Los **del mercader** solo los vende él: la mitad de las veces trae uno de esos en lugar del talismán de siempre, al mismo precio.
 
-   **Armas 兵器.** Una sola por subida, con tres niveles. **El primer élite que vencés sin arma te deja elegir una de las tres** (la afín a tu camino va primero), después de su talismán. Cada arma suma sus técnicas al botín de cartas (2 en el nivel I y una más en el II y en el III), da un efecto propio y un extra a su camino afín. Se templa (sube un nivel) en el botín sorpresa, con el mercader o con el maestro (este, solo hasta el II). En combate el héroe la lleva en la mano y la blande al golpear; la borla muestra el nivel (jade, cobalto, oro, y el III brilla). Tocar su sello en el mapa o en el combate explica qué hace.
+   **Armas 兵器.** Una sola por subida, con tres niveles. **El primer élite que vencés sin arma te deja elegir una de las tres** (la afín a tu camino va primero), después de su talismán. Cada arma suma sus técnicas al botín de cartas (2 en el nivel I y una más en el II y en el III), da un efecto propio y un extra a su camino afín. Se templa (sube un nivel) en el botín sorpresa, con el mercader o con el maestro (este, solo hasta el II). En combate el héroe la lleva en la mano y la blande al golpear; la borla muestra el nivel (jade, cobalto, oro, y el III brilla). Tocar su sello en el sendero o en el combate explica qué hace.
 
    | Arma | Nivel I | Nivel II | Nivel III | Camino afín |
    |---|---|---|---|---|
@@ -239,7 +237,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | 朴刀 Pudao | Tajo que parte, Hoja que ataja; los ataques de 2 o más de Aliento pegan +3 | Hachazo de pudao; +4 | Hoja que envuelve la cabeza; +5 | Tigre: desequilibrar pega un golpe de 4, que entra doble |
 
 7. **Fuente de meditación:** elegís una opción entre curar 20 de Vida, eliminar 1 carta del mazo o mejorar 1 carta (+3 a su daño o a su Guardia).
-8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el mapa y en la recompensa.
+8. **Jade** 玉: cada combate común ganado da 14 a 20 de jade (el élite paga con un talismán, no con jade). También se gana o se paga en algunos eventos. Se ve arriba en el sendero y en la recompensa.
    - **Botín sorpresa 赏:** al ganar un combate aparece un cofre de laca que se abre solo (o al tocarlo) y estampa qué trae. No se sabe antes de pelear:
 
      | Premio | Qué da | Etapa 1 / 2 / 3 |
@@ -253,7 +251,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
      | 兵 Arma | Sin arma, elegís 1 de 3; con arma, la templás | 1% / 1% / 1% |
 
      Reglas: el jefe y el enemigo que se escapa siempre dejan pergaminos; el élite da su talismán y después un botín que no es talismán (si todavía no tenés arma, el arma); con el arma en el nivel III el botín de arma se cambia por jade; con la Vida llena el té se cambia por jade, y sin cartas para templar el temple se cambia por pergaminos; nunca hay más de 2 botines seguidos sin pergaminos. El jade de siempre del combate y su loto se muestran arriba, aparte del cofre.
-9. **Mercader ambulante** 商: no tiene lugar en el mapa. Se cruza en el camino después de la recompensa, más o menos cada 3 combates ganados (2 a 4), y si en la etapa todavía no apareció, después del élite. Nunca después del jefe. Vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. **Más arriba cobra más y trae otras cosas:**
+9. **Mercader** 商: aparece como una puerta del sendero, más o menos cada 4 peleas (3 a 5), y si en la etapa todavía no apareció, en la sala 10. Vende 3 cartas (20 de jade cada una), 1 talismán común (50) y tres servicios por visita: quitar una carta del mazo (30), mejorar una carta +3 (25) y un té de jengibre que cura 15 (15). Una de las cartas está **en oferta** (−40%, 12 de jade), con una cinta roja y el precio viejo tachado. **Más arriba cobra más y trae otras cosas:**
 
    | Etapa | Cartas | Carta | Talismán | Vitrina | Quitar | Mejorar | Té |
    |---|---|---|---|---|---|---|---|
@@ -362,7 +360,7 @@ Logros de la partida. Cada uno se cumple **una sola vez por partida** y deja ali
 
 La segunda moneda de la escuela, la que **no se pierde al caer**. Hace que cada subida, aunque termine mal, deje al próximo discípulo un poco más fuerte.
 
-- **Cómo se gana:** 1 por combate ganado, +4 el élite, +8 cada jefe y +15 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10, y el **jade que sobra** al terminar se ofrenda: 1 semilla cada 5 de jade (con el % del árbol). Se ve arriba en el mapa (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
+- **Cómo se gana:** 1 por combate ganado, +4 el élite, +8 cada jefe y +15 al llegar a la cumbre; además el botín 莲 da 6 / 8 / 10, y el **jade que sobra** al terminar se ofrenda: 1 semilla cada 5 de jade (con el % del árbol). Se ve arriba en el sendero (al lado del jade) y en el botín. Al terminar la subida, se gane o se pierda, todo pasa a la escuela ("+N semillas de loto · la escuela tiene M").
 - **Dónde se gasta:** en el inicio, el botón **Meridianos** (con un punto que late cuando alcanza para algo) abre el árbol. También se llega desde la pantalla final.
 - **El árbol:** tres canales de tinta, **Cuerpo 身**, **Espíritu 神** y **Técnica 技**, de cinco puntos de acupuntura cada uno. Cada punto pide el anterior de su canal y un reino del cultivo. Al abrirlo, la tinta corre por el canal. Vale desde la próxima subida (la que está guardada no cambia).
 
@@ -412,7 +410,7 @@ Los Picos son Normal con reglas extra, para quien ya gana. Aparecen debajo de la
 | 10 | Rivales +5% de daño, +8% de Vida y +5% de Estructura |
 
 - **Selector:** la tarjeta de Picos muestra el número, la regla nueva y cuántas arrastra. Con − y + se elige entre el 1 y el más alto abierto; tocar la tarjeta empieza la subida.
-- **En la subida:** el mapa muestra "Normal · Pico N" en morado.
+- **En la subida:** el sendero muestra "Normal · Pico N" en morado.
 - **Al ganar:** la pantalla final avisa "¡Se abrió el Pico N!".
 
 ## Tu camino

@@ -275,7 +275,7 @@ class _PathViewState extends ConsumerState<_PathView>
         const left = 58.0;
         final area = w - left - 8;
         final slot = doors.isEmpty ? area : area / doors.length;
-        final doorsTop = math.max(56.0, h * 0.14);
+        final doorsTop = math.max(64.0, h * 0.2);
         Offset doorCenter(int i) {
           final arc = doors.length == 3 && i == 1 ? -34.0 : 0.0;
           return Offset(left + slot * (i + 0.5), doorsTop + arc + 40);

@@ -153,7 +153,7 @@ void main() {
     await tap('Salir a las lecciones');
     await tester.scrollUntilVisible(find.text('La subida'), 200);
     await tap('La subida');
-    sees('camino de combates');
+    sees('sendero de 13 salas');
     for (var i = 0; i < 7; i++) {
       await tap('Siguiente');
     }

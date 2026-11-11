@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/model/enums.dart';
+import '../../domain/model/game_balance.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../providers.dart';
@@ -12,6 +13,7 @@ import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/jade.dart';
+import '../widgets/lotus.dart';
 import '../widgets/talisman_widgets.dart';
 import '../feel.dart';
 
@@ -187,36 +189,75 @@ Widget _node(IconData icon, Color color, {double size = 50}) => Container(
   child: GameIcon(icon, color: color, size: size * 0.5),
 );
 
+/// Tres puertas con su premio a la vista y la regla de altitud al costado.
 class _MapPath extends StatelessWidget {
   const _MapPath();
 
   @override
   Widget build(BuildContext context) {
-    final nodes = [
-      (Icons.military_tech, Palette.lacquer),
-      (Icons.whatshot, Palette.structure),
-      (Icons.water_drop, Palette.sky),
-      (Icons.sports_martial_arts, Palette.jade),
-      (Icons.temple_buddhist, Palette.gold),
-      (Icons.sports_martial_arts, Palette.jade),
+    final doors = [
+      ('武', Palette.lacquer, RewardKind.cards),
+      ('缘', Palette.blossom, null),
+      ('武', Palette.lacquer, RewardKind.tea),
     ];
     return FittedBox(
-      child: Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          for (final (i, (icon, color)) in nodes.indexed) ...[
-            if (i > 0) Container(width: 2, height: 18, color: Palette.line),
-            if (i == 3)
-              Row(
-                mainAxisSize: MainAxisSize.min,
+          Column(
+            children: [
+              Container(
+                width: 6,
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  gradient: const LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [Palette.gold, Palette.gold, Palette.line],
+                    stops: [0, 0.45, 0.46],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(width: 22),
+          for (final (i, (hanzi, color, reward)) in doors.indexed)
+            Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, i == 1 ? 40 : 0),
+              child: Column(
                 children: [
-                  _node(icon, color, size: 44),
-                  const SizedBox(width: 40),
-                  _node(icon, color, size: 44),
+                  Container(
+                    width: 58,
+                    height: 58,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Palette.surface,
+                      border: Border.all(color: color, width: 3),
+                    ),
+                    child: Text(
+                      hanzi,
+                      style: TextStyle(
+                        fontSize: 28,
+                        height: 1,
+                        fontWeight: FontWeight.w700,
+                        color: color,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  if (reward != null)
+                    InkSeal(
+                      hanzi: lootLook(reward).$1,
+                      color: lootLook(reward).$2,
+                      size: 30,
+                    )
+                  else
+                    const SizedBox(height: 30),
                 ],
-              )
-            else
-              _node(icon, color, size: 44),
-          ],
+              ),
+            ),
         ],
       ),
     );
@@ -237,6 +278,7 @@ class _NodeLegend extends StatelessWidget {
       (Icons.temple_buddhist, Palette.gold, t.shrineNode),
       (Icons.question_mark_rounded, Palette.blossom, t.eventNode),
       (Icons.self_improvement_rounded, Palette.structure, t.masterNode),
+      (Icons.storefront_rounded, Palette.jade, t.merchantNode),
     ];
     return Wrap(
       alignment: WrapAlignment.center,

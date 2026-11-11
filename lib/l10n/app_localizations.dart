@@ -523,7 +523,7 @@ abstract class AppLocalizations {
   /// No description provided for @tabletFloor.
   ///
   /// In es, this message translates to:
-  /// **'Piso {floor} de {floors}'**
+  /// **'Sala {floor} de {floors}'**
   String tabletFloor(int floor, int floors);
 
   /// No description provided for @tabletStats.
@@ -1231,7 +1231,7 @@ abstract class AppLocalizations {
   /// No description provided for @chestTitle.
   ///
   /// In es, this message translates to:
-  /// **'El cofre de la estancia'**
+  /// **'El cofre de la sala'**
   String get chestTitle;
 
   /// No description provided for @invalidMustBreathe.
@@ -1849,7 +1849,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbBlurb.
   ///
   /// In es, this message translates to:
-  /// **'El mapa, las recompensas, la fuente y los caminos.'**
+  /// **'El sendero, las puertas, los premios, la fuente y los caminos.'**
   String get lesClimbBlurb;
 
   /// No description provided for @pauseTitle.
@@ -1879,7 +1879,7 @@ abstract class AppLocalizations {
   /// No description provided for @pauseToMenuHint.
   ///
   /// In es, this message translates to:
-  /// **'La subida queda guardada: con \"Continuar\" volvés al mapa, antes de este combate.'**
+  /// **'La subida queda guardada: con \"Continuar\" volvés a las puertas, antes de este combate.'**
   String get pauseToMenuHint;
 
   /// No description provided for @pauseRestartLesson.
@@ -2533,31 +2533,31 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide1.
   ///
   /// In es, this message translates to:
-  /// **'La subida es un camino de combates por la montaña. En el mapa elegís a qué lugar ir; cuando el camino se abre, decidís vos. Cada subida arma un mapa distinto: deslizá para verlo entero.'**
+  /// **'Cada etapa es un sendero de 13 salas montaña arriba. Al terminar cada sala elegís entre dos o tres puertas, y cada pelea muestra qué premio hay del otro lado. La barra de altitud dice cuánto subiste y dónde esperan el guardián, la fuente y el jefe.'**
   String get lesClimbSlide1;
 
   /// No description provided for @lesClimbSlide2Title.
   ///
   /// In es, this message translates to:
-  /// **'Los lugares del mapa'**
+  /// **'Las puertas'**
   String get lesClimbSlide2Title;
 
   /// No description provided for @lesClimbSlide2.
   ///
   /// In es, this message translates to:
-  /// **'Cada ícono es un lugar distinto: combates comunes, élites (más fuertes, mejor premio), el jefe al final, la fuente, el santuario, los eventos, y el maestro errante. Cada lugar de combate es una estancia: varias salas seguidas, sin volver al mapa, con una tregua entre sala y sala (curarte, entrar concentrado o afilar los puños) y un cofre al final.'**
+  /// **'Cada sello es un lugar: una pelea común (武), el guardián o un desvío con un rival fuerte que deja talismán (精), el jefe (龙), la fuente (泉), el santuario (庙), un evento (缘), el maestro errante (师) y el mercader (商). Las peleas no se pueden esquivar todas: el sendero siempre te pone rivales.'**
   String get lesClimbSlide2;
 
   /// No description provided for @lesClimbSlide3Title.
   ///
   /// In es, this message translates to:
-  /// **'El cofre de la estancia'**
+  /// **'El cofre'**
   String get lesClimbSlide3Title;
 
   /// No description provided for @lesClimbSlide3.
   ///
   /// In es, this message translates to:
-  /// **'Al ganar la última sala se abre el cofre. Elegís UNA cosa: 1 de 3 cartas para sumar a tu mazo, o aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
+  /// **'Al ganar una sala se abre su cofre, con el premio que mostraba la puerta. Si son pergaminos, elegís UNA cosa: 1 de 3 cartas para tu mazo, aprender la forma que te ofrecen, o nada. Arrancás sin formas: cada una que aprendas queda para toda la subida y tiene su efecto propio (golpe, Aliento, curación…). Un mazo más grande no siempre es mejor: tus mejores cartas salen menos seguido.'**
   String get lesClimbSlide3;
 
   /// No description provided for @lesClimbSlide4Title.
@@ -2569,7 +2569,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesClimbSlide4.
   ///
   /// In es, this message translates to:
-  /// **'Tu Vida NO se recupera sola entre combates: cuidala. En la fuente podés curarte, mejorar una carta o sacar una del mazo. La Estructura sí vuelve completa en cada combate.'**
+  /// **'Tu Vida NO se recupera entre salas: cuidala. Curan la fuente, el té (premio de algunas puertas o del mercader), algunos talismanes y respirar hondo al superar la etapa. La Estructura sí vuelve completa en cada combate.'**
   String get lesClimbSlide4;
 
   /// No description provided for @lesClimbSlide5Title.
@@ -4663,7 +4663,7 @@ abstract class AppLocalizations {
   /// No description provided for @slotClimbing.
   ///
   /// In es, this message translates to:
-  /// **'Subiendo: {stage}, piso {floor}'**
+  /// **'Subiendo: {stage}, sala {floor}'**
   String slotClimbing(String stage, int floor);
 
   /// No description provided for @slotResting.
@@ -4741,13 +4741,13 @@ abstract class AppLocalizations {
   /// No description provided for @ghostIntro.
   ///
   /// In es, this message translates to:
-  /// **'Fui el nº {n}. Caí en el piso {floor} y la niebla no me deja bajar.'**
+  /// **'Fui el nº {n}. Caí en la sala {floor} y la niebla no me deja bajar.'**
   String ghostIntro(int n, int floor);
 
   /// No description provided for @ghostIntroPath.
   ///
   /// In es, this message translates to:
-  /// **'Fui el nº {n}, mi camino era {path}. Caí en el piso {floor} y la niebla no me deja bajar.'**
+  /// **'Fui el nº {n}, mi camino era {path}. Caí en la sala {floor} y la niebla no me deja bajar.'**
   String ghostIntroPath(int n, String path, int floor);
 
   /// No description provided for @ghostRank.
@@ -4777,13 +4777,13 @@ abstract class AppLocalizations {
   /// No description provided for @schoolFellTo.
   ///
   /// In es, this message translates to:
-  /// **'{enemy} · piso {floor}'**
+  /// **'{enemy} · sala {floor}'**
   String schoolFellTo(String enemy, int floor);
 
   /// No description provided for @schoolFellAt.
   ///
   /// In es, this message translates to:
-  /// **'Cayó en el piso {floor}'**
+  /// **'Cayó en la sala {floor}'**
   String schoolFellAt(int floor);
 
   /// No description provided for @schoolGhostWaits.
