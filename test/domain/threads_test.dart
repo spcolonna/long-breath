@@ -8,6 +8,8 @@ import 'package:long_breath/infrastructure/file_game_data_loader.dart';
 
 /// Los hilos: Shuang y Tío Bao avanzan un capítulo por subida y recuerdan
 /// lo que hiciste.
+const _foe = 'bat';
+
 void main() {
   final run = RunEngine(loadGameDataFromDir());
 
@@ -18,12 +20,13 @@ void main() {
     Set<String> threads = const {},
     List<String> threadRun = const [],
     int seed = 1,
+    String? enemy,
   }) => run.enter(
     run
         .newRun(seed: seed, threads: threads)
         .copyWith(
           stage: stage,
-          map: [MapNodeDef(id: 'x', type: type, next: const [])],
+          map: [MapNodeDef(id: 'x', type: type, enemy: enemy, next: const [])],
           clearCurrentNode: true,
           visited: const [],
           threadRun: threadRun,
@@ -135,5 +138,40 @@ void main() {
         if (e.chapter < 5) expect(o.bond, isNotNull, reason: '${e.id} ${o.id}');
       }
     }
+  });
+
+  group('páginas sueltas', () {
+    RunState won(RunState r) =>
+        run.finishCombat(r, won: true, hp: r.hp);
+
+    test('a veces el cofre trae la próxima página, en orden', () {
+      var found = 0;
+      for (var seed = 0; seed < 400; seed++) {
+        final r = won(at(NodeType.combat, enemy: _foe, seed: seed, threads: {'page_1'}));
+        if (r.threadLine != null) {
+          found++;
+          expect(r.threadLine, 'page_2');
+          expect(r.threads, contains('page_2'));
+          expect(r.threadRun, [threadPage]);
+        }
+      }
+      // pagePct = 15: entre 30 y 90 de 400.
+      expect(found, inInclusiveRange(30, 90));
+    });
+
+    test('como mucho una por subida y no mueve la suerte de la subida', () {
+      for (var seed = 0; seed < 100; seed++) {
+        final r = at(NodeType.combat, enemy: _foe, seed: seed);
+        final again = won(r.copyWith(threadRun: [threadPage]));
+        expect(again.threads.where((t) => t.startsWith('page_')), isEmpty);
+        expect(again.threadLine, isNull);
+        expect(won(r).rng.state, again.rng.state);
+      }
+    });
+
+    test('con todas las páginas no sale ninguna', () {
+      final r = won(at(NodeType.combat, enemy: _foe, threads: {...pageLore}));
+      expect(r.threadLine, isNull);
+    });
   });
 }

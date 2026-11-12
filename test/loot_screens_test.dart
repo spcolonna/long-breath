@@ -8,6 +8,7 @@ import 'package:long_breath/delivery/providers.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/run/run_state.dart';
+import 'package:long_breath/infrastructure/progress_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -121,5 +122,35 @@ void main() {
     final m = await container.read(meridianProvider.future);
     expect(m.owned, ['body_1']);
     expect(m.lotus, 40 - 25);
+    // Un cofre con página suelta: se lee antes del botín.
+    runs.newRun(Difficulty.normal);
+    final pr = container.read(runControllerProvider)!;
+    runs.resume(
+      pr.copyWith(
+        phase: RunPhase.reward,
+        currentNode: pr.starts.first,
+        visited: [pr.starts.first],
+        rewardKind: RewardKind.jade,
+        rewardAmount: 20,
+        threads: {'page_1'},
+        threadLine: 'page_1',
+      ),
+    );
+    final router2 = GoRouter.of(tester.element(find.byType(Scaffold).first));
+    router2.go('/reward');
+    await tester.pump();
+    await settle(tester);
+    expect(find.text('Entre el botín, una página suelta.'), findsOneWidget);
+    expect(find.text('Bolsa de jade'), findsNothing);
+    await tester.tap(find.text('Guardarla y ver el botín'));
+    await settle(tester);
+    expect(find.text('Bolsa de jade'), findsOneWidget);
+
+    await container.read(progressStorageProvider).addSightings(won: ['bat']);
+    container.invalidate(bestiaryProvider);
+    router2.go('/registry?tab=4');
+    await settle(tester);
+    expect(find.textContaining('Crónica 1/'), findsOneWidget);
+    expect(find.text('Vencido 1 · Te venció 0'), findsOneWidget);
   });
 }

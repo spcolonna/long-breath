@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:long_breath/domain/run/ascent.dart';
+import 'package:long_breath/domain/run/chronicle.dart';
 import 'package:long_breath/domain/run/feats.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/event_def.dart';
@@ -272,6 +273,16 @@ void main() {
     final lore = content['lore'] as Map<String, dynamic>;
     for (final id in loreOrder) {
       expect(lore.containsKey(id), isTrue, reason: id);
+    }
+    // La crónica: todo rival (menos los muñecos) tiene su ficha y su
+    // historia.
+    final chronicle = chronicleOrder(data);
+    expect(chronicle.toSet().length, chronicle.length);
+    for (final id in data.enemies.keys) {
+      if (id.startsWith('dummy')) continue;
+      expect(chronicle, contains(id));
+      final lore = (content['enemies'][id] as Map<String, dynamic>?)?['lore'];
+      expect(lore, isA<String>(), reason: id);
     }
     final events = content['events'] as Map<String, dynamic>;
     for (final e in data.events) {

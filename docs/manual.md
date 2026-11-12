@@ -277,6 +277,8 @@ Cada subida la hace **un discípulo distinto, con número** (Discípulo nº 1, n
 - Tocar la pantalla adelanta la escena; los botones siempre quedan abajo.
 
 **Registro de la escuela 名册** (en el inicio, después de la primera subida terminada): una tablilla por subida (败 o 顶) y los **pergaminos** de la historia. Perder no da nada mecánico: da historia.
+   - **Páginas sueltas:** a veces (15%, como mucho una por subida) el cofre de una pelea ganada trae una página suelta. Se lee ahí mismo, antes del botín, y queda entre los pergaminos. Son 12, en orden: 4 del diario del maestro, 4 de discípulos y 4 del monasterio.
+   - **Crónica 山志:** una ficha por rival, agrupada por la etapa donde aparece primero (los discípulos perdidos van aparte). Sellada hasta que lo cruzás; después muestra su retrato, una línea de historia y «Vencido N · Te venció M». Cuenta por partida.
 
 | Pergamino | Se abre |
 |---|---|

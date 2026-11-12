@@ -1312,5 +1312,13 @@
   "circleTag": "Cierra el círculo",
   "circleFloat": "¡Círculo cerrado!",
   "circleSub": "+{breath} de Aliento · robás {draw}",
-  "@circleSub": {"placeholders": {"breath": {"type": "int"}, "draw": {"type": "int"}}}
+  "@circleSub": {"placeholders": {"breath": {"type": "int"}, "draw": {"type": "int"}}},
+  "chestPage": "Entre el botín, una página suelta.",
+  "chestPageGo": "Guardarla y ver el botín",
+  "registryChronicle": "Crónica",
+  "chronicleSummary": "La crónica de la montaña: cada rival que cruzás deja su ficha.",
+  "chronicleSealed": "Todavía no lo cruzaste.",
+  "chronicleLost": "Sin etapa",
+  "chronicleCount": "Vencido {wins} · Te venció {falls}",
+  "@chronicleCount": {"placeholders": {"wins": {"type": "int"}, "falls": {"type": "int"}}}
 }

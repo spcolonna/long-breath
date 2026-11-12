@@ -19,6 +19,7 @@ import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/lore_scroll.dart';
 import '../widgets/lotus.dart';
 import 'home_screen.dart';
 import 'talisman_screen.dart';
@@ -44,6 +45,13 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
   /// El premio tal como se abrió (al cobrarlo, la run ya pasa al mapa).
   late final RunState _run = ref.read(runControllerProvider)!;
   bool _open = false;
+
+  /// La página suelta que trajo el cofre (se lee antes del botín).
+  late final String? _page = switch (_run.threadLine) {
+    final id? when id.startsWith('page_') => id,
+    _ => null,
+  };
+  bool _paged = false;
 
   /// El cofre ya se está abriendo (tapa, luz y chispas) antes del premio.
   bool _opening = false;
@@ -151,6 +159,14 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                               opening: _opening,
                               color: color,
                             )
+                          : _page != null && !_paged
+                          ? KeyedSubtree(
+                              key: const ValueKey('page'),
+                              child: _PageFound(
+                                id: _page,
+                                onDone: () => setState(() => _paged = true),
+                              ),
+                            )
                           : KeyedSubtree(
                               key: const ValueKey('open'),
                               child: _contents(t, kind),
@@ -212,6 +228,61 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
         },
       ),
     };
+  }
+}
+
+/// Una página suelta entre el botín: se lee ahí mismo y queda en el
+/// registro.
+class _PageFound extends StatelessWidget {
+  const _PageFound({required this.id, required this.onDone});
+
+  final String id;
+  final VoidCallback onDone;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            StaggerIn(
+              index: 0,
+              child: Text(
+                t.chestPage,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: Palette.text,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            StaggerIn(
+              index: 1,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: 1),
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.easeOutCubic,
+                builder: (_, v, _) => LoreScroll(id: id, fresh: true, open: v),
+              ),
+            ),
+            const SizedBox(height: 16),
+            StaggerIn(
+              index: 3,
+              child: Press(
+                child: FilledButton(
+                  onPressed: onDone,
+                  child: Text(t.chestPageGo),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

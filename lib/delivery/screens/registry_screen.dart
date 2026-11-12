@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/run/ascent.dart';
+import '../../domain/run/chronicle.dart';
 import '../../domain/run/feats.dart';
 import '../../l10n/app_localizations.dart';
 import '../labels.dart';
@@ -14,6 +15,7 @@ import '../widgets/scroll_panel.dart';
 import '../widgets/lore_scroll.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/hito_tile.dart';
+import '../widgets/chronicle_view.dart';
 import '../feel.dart';
 
 /// 名册: el registro de la escuela. Una tablilla por cada discípulo que
@@ -28,6 +30,9 @@ class RegistryScreen extends ConsumerWidget {
     final ascents = ref.watch(ascentsProvider).value ?? const <Ascent>[];
     final lore = ref.watch(loreProvider).value ?? const <String>{};
     final got = ref.watch(hitosProvider).value ?? const <String>{};
+    final seen = ref.watch(bestiaryProvider).value ?? const {};
+    final chronicle = chronicleOrder(ref.watch(dataProvider));
+    final met = chronicle.where((id) => seen[id]?.seen ?? false).length;
     final fallen = ascents.where((a) => a.fell).length;
     // `/registry?tab=3` abre directo en una pestaña (por ejemplo, Hitos).
     final tab = int.tryParse(
@@ -35,8 +40,8 @@ class RegistryScreen extends ConsumerWidget {
         ) ??
         0;
     return DefaultTabController(
-      length: 4,
-      initialIndex: tab.clamp(0, 3),
+      length: 5,
+      initialIndex: tab.clamp(0, 4),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -55,6 +60,7 @@ class RegistryScreen extends ConsumerWidget {
                 '${t.registryScrolls} ${lore.length}/${loreOrder.length}',
                 t.registryTabCultivation,
                 '${t.registryHitos} ${got.length}/${hitos.length}',
+                '${t.registryChronicle} $met/${chronicle.length}',
               ])
                 Tab(
                   child: FittedBox(fit: BoxFit.scaleDown, child: Text(label)),
@@ -151,6 +157,7 @@ class RegistryScreen extends ConsumerWidget {
                 ],
               ],
             ),
+            const ChronicleList(),
           ]
               .map(
                 (w) => w is Center

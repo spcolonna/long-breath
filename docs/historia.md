@@ -40,6 +40,8 @@ Al pie de la Montaña de las Mil Nubes, la escuela del Dragón Dormido (卧龙�
 | **Al caer** | El próximo sueño del dragón (`dream_1`…`dream_10`, en orden) | **Hecho (10/11)** |
 | Final de la subida | Cumbre, epílogo, final por camino, «El nombre que falta» | Hecho |
 | Entre subidas | Hilos: Shuang y Tío Bao, un capítulo por subida, que recuerdan lo que hiciste. Herido y herrero, pendientes. | **Hecho (12/11)**: Shuang y Tío Bao |
+| En el cofre | Páginas sueltas (`page_1`…`page_12`, en orden): diario del maestro (firma —S.), notas de discípulos y del monasterio | **Hecho (12/11)** |
+| Registro | Crónica de la montaña: una línea de historia por rival (`enemies.<id>.lore`) | **Hecho (12/11)** |
 
 ## Los sueños del dragón (orden fijo)
 1. Un sueño de nubes: te respiran desde arriba.

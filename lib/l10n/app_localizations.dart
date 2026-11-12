@@ -4815,6 +4815,48 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'+{breath} de Aliento · robás {draw}'**
   String circleSub(int breath, int draw);
+
+  /// No description provided for @chestPage.
+  ///
+  /// In es, this message translates to:
+  /// **'Entre el botín, una página suelta.'**
+  String get chestPage;
+
+  /// No description provided for @chestPageGo.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardarla y ver el botín'**
+  String get chestPageGo;
+
+  /// No description provided for @registryChronicle.
+  ///
+  /// In es, this message translates to:
+  /// **'Crónica'**
+  String get registryChronicle;
+
+  /// No description provided for @chronicleSummary.
+  ///
+  /// In es, this message translates to:
+  /// **'La crónica de la montaña: cada rival que cruzás deja su ficha.'**
+  String get chronicleSummary;
+
+  /// No description provided for @chronicleSealed.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no lo cruzaste.'**
+  String get chronicleSealed;
+
+  /// No description provided for @chronicleLost.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin etapa'**
+  String get chronicleLost;
+
+  /// No description provided for @chronicleCount.
+  ///
+  /// In es, this message translates to:
+  /// **'Vencido {wins} · Te venció {falls}'**
+  String chronicleCount(int wins, int falls);
 }
 
 class _AppLocalizationsDelegate

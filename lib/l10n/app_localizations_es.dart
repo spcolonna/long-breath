@@ -3045,4 +3045,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String circleSub(int breath, int draw) {
     return '+$breath de Aliento · robás $draw';
   }
+
+  @override
+  String get chestPage => 'Entre el botín, una página suelta.';
+
+  @override
+  String get chestPageGo => 'Guardarla y ver el botín';
+
+  @override
+  String get registryChronicle => 'Crónica';
+
+  @override
+  String get chronicleSummary =>
+      'La crónica de la montaña: cada rival que cruzás deja su ficha.';
+
+  @override
+  String get chronicleSealed => 'Todavía no lo cruzaste.';
+
+  @override
+  String get chronicleLost => 'Sin etapa';
+
+  @override
+  String chronicleCount(int wins, int falls) {
+    return 'Vencido $wins · Te venció $falls';
+  }
 }

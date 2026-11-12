@@ -258,4 +258,24 @@ void main() {
     expect(await storage.meridians(), ['a', 'b']);
     expect(await storage.lotus(), 5);
   });
+
+  test('la crónica suma victorias y caídas por partida', () async {
+    SharedPreferences.setMockInitialValues({});
+    final a = ProgressStorage();
+    final b = ProgressStorage('long_breath.slot2.');
+    expect(await a.bestiary(), isEmpty);
+    await a.addSightings(won: ['monkey', 'monkey']);
+    await a.addSightings(won: ['monk'], fellTo: 'monkey');
+    final got = await a.bestiary();
+    expect(got['monkey']!.wins, 2);
+    expect(got['monkey']!.falls, 1);
+    expect(got['monk']!.wins, 1);
+    expect(got['monk']!.seen, isTrue);
+    expect(await b.bestiary(), isEmpty);
+  });
+
+  test('una crónica ilegible no rompe nada', () async {
+    SharedPreferences.setMockInitialValues({'long_breath.bestiary': '{roto'});
+    expect(await ProgressStorage().bestiary(), isEmpty);
+  });
 }
