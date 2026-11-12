@@ -674,52 +674,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invalidBadTarget => 'A ese no se le puede apuntar';
 
   @override
-  String get stayTitle => 'Sala superada';
-
-  @override
-  String stayProgress(int done, int total) {
-    return 'Sala $done de $total';
-  }
-
-  @override
-  String stayNext(String name) {
-    return 'En la sala que sigue espera $name.';
-  }
-
-  @override
-  String stayNextLast(String name) {
-    return 'En la última sala espera $name. Detrás, el cofre.';
-  }
-
-  @override
-  String stayHp(int hp, int max) {
-    return 'Seguís con $hp de $max de Vida.';
-  }
-
-  @override
-  String get stayPick => 'Elegí tu tregua antes de seguir';
-
-  @override
-  String stayFocusHint(int draw, int breath) {
-    return 'Arrancás la próxima sala con $draw cartas y $breath de aliento de más.';
-  }
-
-  @override
-  String stayFistHint(int n) {
-    return 'Tus golpes pegan +$n durante toda la próxima sala.';
-  }
-
-  @override
-  String nodeHintStay(int count) {
-    return '$count salas seguidas, sin volver; al final, un cofre.';
-  }
-
-  @override
-  String combatRoom(int n, int total) {
-    return 'Sala $n/$total';
-  }
-
-  @override
   String get chestTitle => 'El cofre de la sala';
 
   @override
@@ -1124,11 +1078,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mapMore => 'Más opciones';
-
-  @override
-  String mapFloor(int floor, int floors) {
-    return 'Piso $floor de $floors';
-  }
 
   @override
   String get abandonConfirmTitle => '¿Abandonar la subida?';

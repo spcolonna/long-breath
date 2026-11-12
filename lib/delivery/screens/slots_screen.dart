@@ -19,7 +19,7 @@ import '../widgets/confirm_dialog.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/lotus.dart';
 import '../widgets/slot_badge.dart';
-import 'map/map_layout.dart';
+import '../../domain/run/map_rows.dart';
 import '../feel.dart';
 
 const _numerals = ['一', '二', '三'];

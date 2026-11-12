@@ -1,10 +1,9 @@
 import '../../domain/combat/combat_action.dart';
-import '../../domain/model/game_balance.dart';
 import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
 import '../../domain/run/run_state.dart';
-import '../screens/map/map_layout.dart';
+import '../../domain/run/map_rows.dart';
 
 /// Texto del registro de una subida: ids (no nombres traducidos) para que se
 /// pueda analizar el balance. Funciones puras; quien escribe es
@@ -25,10 +24,8 @@ int floorOf(RunState r, String nodeId) =>
 
 String _node(RunState r, String id) {
   final n = r.node(id);
-  if (n.stay.isEmpty) return n.type.name;
-  String room(RoomDef r) =>
-      '${r.foes.join('+')}${r.together ? ' juntos' : ''}';
-  return '${n.type.name}(${n.stay.map(room).join(' › ')})';
+  if (n.foes.isEmpty) return n.type.name;
+  return '${n.type.name}(${n.foes.join('+')}${n.together ? ' juntos' : ''})';
 }
 
 String _cards(Iterable<CombatCard> cards) => cards

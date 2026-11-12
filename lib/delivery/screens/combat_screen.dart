@@ -5171,7 +5171,6 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
     ref.read(combatControllerProvider.notifier).finish();
     final run = ref.read(runControllerProvider)!;
     context.go(switch (run.phase) {
-      RunPhase.roomBreak => '/stay',
       RunPhase.talisman => '/talisman',
       RunPhase.reward => '/reward',
       RunPhase.stageClear => '/stage',

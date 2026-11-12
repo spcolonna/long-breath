@@ -10,7 +10,6 @@ import 'delivery/screens/climb_lesson_screen.dart';
 import 'delivery/screens/combat_screen.dart';
 import 'delivery/screens/event_screen.dart';
 import 'delivery/screens/merchant_screen.dart';
-import 'delivery/screens/stay_screen.dart';
 import 'delivery/screens/master_screen.dart';
 import 'delivery/screens/fountain_screen.dart';
 import 'delivery/screens/home_screen.dart';
@@ -108,7 +107,6 @@ final _router = GoRouter(
     _route('/event', const EventScreen()),
     _route('/merchant', const MerchantScreen()),
     _route('/master', const MasterScreen()),
-    _route('/stay', const StayScreen()),
     _route('/legacy', const LegacyScreen()),
     _route('/talisman', const TalismanScreen()),
     _route('/stage', const StageClearScreen(), fx: scrollUnroll, fxMs: 1100),

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/model/meta_bonus.dart';
 import '../../domain/run/run_engine.dart';
@@ -12,7 +11,7 @@ import '../../domain/run/legacy.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../log/run_log.dart';
 import '../providers.dart';
-import '../screens/map/map_layout.dart';
+import '../../domain/run/map_rows.dart';
 
 /// Run en curso. Cada cambio se guarda localmente.
 class RunController extends Notifier<RunState?> {
@@ -106,12 +105,6 @@ class RunController extends Notifier<RunState?> {
   void enter(String nodeId) => _set(
     _engine.enter(state!, nodeId),
     options: _engine.available(state!),
-  );
-
-  /// Estancia: la tregua elegida y a la próxima sala.
-  void roomContinue(Breather b) => _set(
-    _engine.roomContinue(state!, b),
-    what: 'sala ${state!.roomStep + 2}, tregua ${b.name}',
   );
 
   /// Devuelve la semilla y los enemigos del combate del nodo actual (el

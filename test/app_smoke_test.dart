@@ -92,7 +92,7 @@ void main() {
       tester.element(find.byType(Scaffold).first),
     ).read(textProvider);
     final firstNode = run.node(run.starts.first);
-    final firstEnemy = text.enemy(firstNode.stay.first.enemy);
+    final firstEnemy = text.enemy(firstNode.enemy!);
     final pathName = text.path(firstNode.scene!, firstNode.light!);
     expect(find.text(firstEnemy), findsNothing);
 

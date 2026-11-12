@@ -161,29 +161,6 @@ class StageDef {
   }
 }
 
-/// Una sala de una estancia: un combate (solo o en grupo).
-class RoomDef {
-  const RoomDef(this.enemy, {this.waves = const [], this.together = false});
-
-  final String enemy;
-  final List<String> waves;
-  final bool together;
-
-  List<String> get foes => [enemy, ...waves];
-
-  factory RoomDef.fromJson(Map<String, dynamic> j) => RoomDef(
-        j['enemy'] as String,
-        waves: ((j['waves'] as List?) ?? const []).cast<String>(),
-        together: j['together'] as bool? ?? false,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'enemy': enemy,
-        if (waves.isNotEmpty) 'waves': waves,
-        if (together) 'together': true,
-      };
-}
-
 class MapNodeDef {
   const MapNodeDef({
     required this.id,
@@ -192,7 +169,6 @@ class MapNodeDef {
     this.enemy,
     this.waves = const [],
     this.together = false,
-    this.rooms = const [],
     this.scene,
     this.light,
     this.reward,
@@ -221,7 +197,6 @@ class MapNodeDef {
         enemy: enemy,
         waves: waves,
         together: together,
-        rooms: rooms,
         scene: scene,
         light: light,
         reward: reward,
@@ -234,28 +209,20 @@ class MapNodeDef {
         enemy: enemy,
         waves: waves,
         together: together,
-        rooms: rooms,
         scene: scene,
         light: light,
         reward: reward,
       );
 
-  /// El de la última sala de la estancia: el guardián (élite, jefe) o el
-  /// último común. Las salas de antes están en [rooms].
+  /// El que espera en la sala: el común que encabeza el grupo, el élite o
+  /// el jefe.
   final String? enemy;
 
   /// Enemigos que entran después de [enemy], uno por vez (grupo).
   final List<String> waves;
 
-  /// Salas que se pelean antes de la de [enemy], en orden. Vacío: la
-  /// estancia es un solo combate (jefe, élite fijo, mapas viejos).
-  final List<RoomDef> rooms;
-
-  /// Todas las salas de la estancia, en el orden en que se pelean.
-  List<RoomDef> get stay => [
-        ...rooms,
-        if (enemy != null) RoomDef(enemy!, waves: waves, together: together),
-      ];
+  /// Todos los de la sala, en el orden en que entran.
+  List<String> get foes => [?enemy, ...waves];
 
   /// Los de [waves] no esperan: pelean junto a [enemy], todos en escena.
   final bool together;
@@ -269,15 +236,13 @@ class MapNodeDef {
   factory MapNodeDef.fromJson(Map<String, dynamic> j) {
     final waves = ((j['waves'] as List?) ?? const []).cast<String>();
     final enemy = j['enemy'] as String?;
-    // Mapas guardados con el viejo paso de montaña: sus combates en
-    // cadena pasan a ser las salas de la estancia.
+    // Guardados con el viejo paso de montaña: un combate contra el último
+    // de la cadena (las salas de antes ya no existen).
     if (j['type'] == 'pass' && enemy != null && waves.isNotEmpty) {
-      final chain = [enemy, ...waves];
       return MapNodeDef(
         id: j['id'] as String,
         type: NodeType.combat,
-        enemy: chain.last,
-        rooms: [for (final e in chain.take(chain.length - 1)) RoomDef(e)],
+        enemy: waves.last,
         next: (j['next'] as List).cast<String>(),
         scene: j['scene'] as String?,
         light: j['light'] as String?,
@@ -289,10 +254,6 @@ class MapNodeDef {
       enemy: enemy,
       waves: waves,
       together: j['together'] as bool? ?? false,
-      rooms: [
-        for (final r in (j['rooms'] as List?) ?? const [])
-          RoomDef.fromJson(r as Map<String, dynamic>),
-      ],
       next: (j['next'] as List).cast<String>(),
       scene: j['scene'] as String?,
       light: j['light'] as String?,
@@ -309,7 +270,6 @@ class MapNodeDef {
         if (enemy != null) 'enemy': enemy,
         if (waves.isNotEmpty) 'waves': waves,
         if (together) 'together': true,
-        if (rooms.isNotEmpty) 'rooms': [for (final r in rooms) r.toJson()],
         'next': next,
         if (scene != null) 'scene': scene,
         if (light != null) 'light': light,
@@ -326,7 +286,6 @@ class FloorDef {
     required this.types,
     this.enemies = const [],
     this.packs = const {1: 1},
-    this.rooms = const {1: 1},
     this.together = 0,
     this.escort = 0,
     this.escorts = const [],
@@ -342,10 +301,6 @@ class FloorDef {
 
   /// Peso de cada tamaño de grupo en los combates comunes ({1: 3, 2: 2}).
   final Map<int, int> packs;
-
-  /// Peso de cada cantidad de salas de las estancias del piso ({3: 2, 4: 1});
-  /// sin dato, un solo combate (jefe, élite fijo).
-  final Map<int, int> rooms;
 
   /// Chance (en %) de que un grupo de dos pelee a la vez en vez de en
   /// oleadas.
@@ -382,12 +337,6 @@ class FloorDef {
       },
       enemies: ((j['enemies'] as List?) ?? const []).cast<String>(),
       packs: switch (j['packs']) {
-        final Map<String, dynamic> m => {
-            for (final e in m.entries) int.parse(e.key): e.value as int,
-          },
-        _ => const {1: 1},
-      },
-      rooms: switch (j['rooms']) {
         final Map<String, dynamic> m => {
             for (final e in m.entries) int.parse(e.key): e.value as int,
           },
@@ -726,9 +675,6 @@ class GameBalance {
     this.escortHp = 100,
     this.escortDamage = 100,
     this.breather = BreatherDef.none,
-    this.stayHp = const [100],
-    this.stayHeal = 0,
-    this.stayJade = 100,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     this.path = const PathRules(),
@@ -821,18 +767,6 @@ class GameBalance {
 
   /// Premio chico entre una oleada y la siguiente.
   final BreatherDef breather;
-
-  /// Estancias: Vida (%) de los comunes según la sala (0 = la primera), así
-  /// varias salas seguidas no se vuelven una pared; y Vida (% del máximo)
-  /// que se repone al pasar de sala, antes de la tregua.
-  final List<int> stayHp;
-  final int stayHeal;
-
-  /// Jade (%) que dan las salas de antes de la última.
-  final int stayJade;
-
-  int stayHpPct(int room) =>
-      stayHp.isEmpty ? 100 : stayHp[room.clamp(0, stayHp.length - 1)];
 
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
@@ -978,11 +912,6 @@ class GameBalance {
       escortEliteHp: _escort(run, 'eliteHpPct'),
       escortHp: _escort(run, 'hpPct'),
       escortDamage: _escort(run, 'damagePct'),
-      stayHp: ((run['stay'] as Map<String, dynamic>?)?['hpPct'] as List?)
-              ?.cast<int>() ??
-          const [100],
-      stayHeal: (run['stay'] as Map<String, dynamic>?)?['healPct'] as int? ?? 0,
-      stayJade: (run['stay'] as Map<String, dynamic>?)?['jadePct'] as int? ?? 100,
       breather: switch ((run['packs'] as Map<String, dynamic>?)?['breather']) {
         final Map<String, dynamic> m => BreatherDef.fromJson(m),
         _ => BreatherDef.none,

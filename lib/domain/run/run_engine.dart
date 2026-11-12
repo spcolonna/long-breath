@@ -170,7 +170,7 @@ class RunEngine {
       for (final n in trail.reversed
           .where((n) => n.type == NodeType.combat)
           .take(2))
-        for (final room in n.stay) ...room.foes,
+        ...n.foes,
     };
     final every = b.merchantEvery;
     final due = r.nextMerchantAt > 0 ? r.nextMerchantAt : every;
@@ -451,15 +451,6 @@ class RunEngine {
         clearDuel: true,
       );
     }
-    // A mitad de una estancia no se sale: se vuelve a la pausa antes de la
-    // sala que quedó a medias.
-    if (r.roomStep > 0) {
-      return r.copyWith(
-        phase: RunPhase.roomBreak,
-        roomStep: r.roomStep - 1,
-        clearRoomBoon: true,
-      );
-    }
     final visited = r.visited.sublist(0, r.visited.length - 1);
     return r.copyWith(
       phase: RunPhase.map,
@@ -477,8 +468,6 @@ class RunEngine {
     var entered = r.copyWith(
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
-      roomStep: 0,
-      clearRoomBoon: true,
       phase: switch (n.type) {
         NodeType.combat => RunPhase.combat,
         NodeType.fountain => RunPhase.fountain,
@@ -541,50 +530,11 @@ class RunEngine {
 
   /// Enemigos del combate actual, en el orden en que entran.
   List<String> packOf(RunState r) =>
-      r.duel != null ? [r.duel!] : roomOf(r).foes;
+      r.duel != null ? [r.duel!] : r.node(r.currentNode!).foes;
 
   /// Si el grupo del combate actual pelea todo junto (no en oleadas).
-  bool togetherOf(RunState r) => r.duel == null && roomOf(r).together;
-
-  // -------------------------------------------------------------- estancia
-
-  /// La sala que toca en la estancia del nodo actual.
-  RoomDef roomOf(RunState r) {
-    final stay = r.node(r.currentNode!).stay;
-    return stay[r.roomStep.clamp(0, stay.length - 1)];
-  }
-
-  /// Cuántas salas tiene la estancia actual (1: un combate suelto).
-  int roomsOf(RunState r) => r.duel != null || r.currentNode == null
-      ? 1
-      : r.node(r.currentNode!).stay.length;
-
-  /// El combate actual es la última sala: al ganarla se abre el cofre.
-  bool lastRoom(RunState r) => r.roomStep >= roomsOf(r) - 1;
-
-  /// Vida (%) de los comunes en la sala actual: baja en las estancias
-  /// largas para que no se vuelvan una pared.
-  int roomHpPct(RunState r) =>
-      roomsOf(r) <= 1 ? 100 : data.balance.stayHpPct(r.roomStep);
-
-  /// Vida que repone la tregua de reponerse.
-  int restHeal(RunState r) =>
-      math.max(1, (r.maxHp * data.balance.breather.healPct / 100).round());
-
-  /// Elegir la tregua entre salas y pasar a la siguiente. Reponerse cura
-  /// ahora; concentrarse y afilar valen al arrancar la próxima sala.
-  RunState roomContinue(RunState r, Breather b) {
-    if (r.phase != RunPhase.roomBreak) {
-      throw StateError('No estás entre salas');
-    }
-    final next = r.copyWith(phase: RunPhase.combat, roomStep: r.roomStep + 1);
-    return b == Breather.rest
-        ? next.copyWith(
-            hp: math.min(r.maxHp, r.hp + restHeal(r)),
-            clearRoomBoon: true,
-          )
-        : next.copyWith(roomBoon: b);
-  }
+  bool togetherOf(RunState r) =>
+      r.duel == null && r.node(r.currentNode!).together;
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
   /// lo venciste). Escapado no deja jade ni loto. [tally]: lo que pasó en
@@ -598,7 +548,6 @@ class RunEngine {
   }) {
     final boss = _atStageBoss(r);
     final elite = !boss && data.enemy(packOf(r).first).rank == EnemyRank.elite;
-    final last = r.duel != null || lastRoom(r);
     final fled = fledWith != null;
     final beaten = won && !fled;
     final flawless = beaten && hp >= r.hp;
@@ -636,16 +585,14 @@ class RunEngine {
     } else {
       final (rolled, rngJ) = _rollJade(r);
       // Cada enemigo de más en el grupo suma jade.
-      // Las salas de antes del final pagan menos: el botín está en el cofre.
-      final base = rolled + b.packJade * (packOf(r).length - 1);
-      final jade = (last ? base : (base * b.stayJade / 100).round()) +
+      final jade = rolled +
+          b.packJade * (packOf(r).length - 1) +
           talismanSum(r, (e) => e.winJade);
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
     final gained = lotusOf(r, lotusBase);
     r = r.copyWith(
-      // El mercader cuenta estancias, no salas.
-      combatsSinceMerchant: r.combatsSinceMerchant + (last ? 1 : 0),
+      combatsSinceMerchant: r.combatsSinceMerchant + 1,
       lotus: r.lotus + gained,
       lotusGained: gained,
       stageWins: r.stageWins + 1,
@@ -657,16 +604,6 @@ class RunEngine {
       hp + talismanSum(r, (e) => e.winHeal) + r.meta.winHeal,
     );
     r = _ghostDrop(r.copyWith(hp: healed));
-    // Sala ganada y la estancia sigue: sin premio de cartas (eso es el
-    // cofre del final), a la pausa antes de la próxima.
-    if (!last) {
-      final mend = (r.maxHp * b.stayHeal / 100).round();
-      return r.copyWith(
-        hp: math.min(r.maxHp, r.hp + mend),
-        phase: RunPhase.roomBreak,
-        clearRoomBoon: true,
-      );
-    }
     // El élite, el jefe y el rival de un duelo dejan elegir un talismán
     // antes del premio (el duelo, con el del camino entre ellos).
     // La pelea de una emboscada paga como un combate común.

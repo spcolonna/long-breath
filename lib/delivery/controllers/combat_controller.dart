@@ -84,8 +84,6 @@ class CombatController extends Notifier<CombatView?> {
       enemyId: foes.first,
       waves: foes.sublist(1),
       together: ref.read(runEngineProvider).togetherOf(run),
-      roomHpPct: ref.read(runEngineProvider).roomHpPct(run),
-      opening: run.roomBoon,
       style: run.style,
       playerHp: run.hp,
       maxHp: run.maxHp,

@@ -300,9 +300,7 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     bool together = false,
     MetaBonus meta = MetaBonus.none,
     String? weapon,
-    int weaponLevel = 1,
-    int roomHpPct = 100,
-    Breather? opening}) {
+    int weaponLevel = 1}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length;
   var s = engine
@@ -323,8 +321,6 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           awakenings: awakenings,
           waves: waves,
           together: together,
-          roomHpPct: roomHpPct,
-          opening: opening,
           meta: meta)
       .state;
   var steps = 0;
@@ -419,8 +415,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
             awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1),
             together: runEngine.togetherOf(r), meta: r.meta,
-            weapon: r.weapon, weaponLevel: r.weaponLevel,
-            roomHpPct: runEngine.roomHpPct(r), opening: r.roomBoon);
+            weapon: r.weapon, weaponLevel: r.weaponLevel);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
@@ -447,17 +442,6 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.legacy:
         r = runEngine.chooseLegacy(
             r, legacy == 'card' ? LegacyPick.card : LegacyPick.stat);
-      case RunPhase.roomBreak:
-        // Tregua entre salas: se repone si está golpeado; si no, se
-        // concentra (el novato elige al azar).
-        r = runEngine.roomContinue(
-          r,
-          bot is NoviceBot
-              ? Breather.values[bot.random.nextInt(Breather.values.length)]
-              : r.hp * 10 <= r.maxHp * 7
-              ? Breather.rest
-              : Breather.focus,
-        );
       case RunPhase.talisman:
         final t = bot.pickTalisman(runEngine, r);
         log.talismans.add(t);

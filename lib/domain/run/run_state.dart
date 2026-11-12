@@ -41,9 +41,6 @@ enum RunPhase {
   /// la siguiente.
   stageClear,
 
-  /// En una estancia: se ganó una sala y, antes de la siguiente, se elige
-  /// la tregua.
-  roomBreak,
   victory,
   defeat,
 }
@@ -163,8 +160,6 @@ class RunState {
     this.jade = 0,
     this.jadeGained = 0,
     this.combatsSinceMerchant = 0,
-    this.roomStep = 0,
-    this.roomBoon,
     this.nextMerchantAt = 0,
     this.stageMerchants = 0,
     this.shopCards = const [],
@@ -279,12 +274,6 @@ class RunState {
   /// aparece el próximo (0 = el valor base) y cuántos hubo en la etapa.
   final int combatsSinceMerchant;
 
-  /// En una estancia: qué sala toca (0 = la primera).
-  final int roomStep;
-
-  /// Tregua elegida entre salas que vale al arrancar la sala siguiente
-  /// (concentrarse o afilar los puños; reponerse cura en el momento).
-  final Breather? roomBoon;
   final int nextMerchantAt;
   final int stageMerchants;
 
@@ -389,9 +378,6 @@ class RunState {
     int? jade,
     int? jadeGained,
     int? combatsSinceMerchant,
-    int? roomStep,
-    Breather? roomBoon,
-    bool clearRoomBoon = false,
     int? nextMerchantAt,
     int? stageMerchants,
     List<String>? shopCards,
@@ -459,8 +445,6 @@ class RunState {
         jade: jade ?? this.jade,
         jadeGained: jadeGained ?? this.jadeGained,
         combatsSinceMerchant: combatsSinceMerchant ?? this.combatsSinceMerchant,
-        roomStep: roomStep ?? this.roomStep,
-        roomBoon: clearRoomBoon ? null : roomBoon ?? this.roomBoon,
         nextMerchantAt: nextMerchantAt ?? this.nextMerchantAt,
         stageMerchants: stageMerchants ?? this.stageMerchants,
         shopCards: shopCards ?? this.shopCards,
@@ -536,8 +520,6 @@ class RunState {
         'jade': jade,
         'jadeGained': jadeGained,
         'combatsSinceMerchant': combatsSinceMerchant,
-        if (roomStep > 0) 'roomStep': roomStep,
-        if (roomBoon != null) 'roomBoon': roomBoon!.name,
         'nextMerchantAt': nextMerchantAt,
         'stageMerchants': stageMerchants,
         'shopCards': shopCards,
@@ -583,8 +565,9 @@ class RunState {
         ],
         nextUid: j['nextUid'] as int,
         phase: switch (j['phase'] as String) {
-          // Guardados con el viejo paso de montaña.
-          'passChoice' => RunPhase.roomBreak,
+          // Guardados con la vieja pausa entre salas de una estancia (o del
+          // paso de montaña): siguen por las puertas.
+          'roomBreak' || 'passChoice' => RunPhase.map,
           final p => _enumOr(RunPhase.values, p, RunPhase.map),
         },
         currentNode: j['currentNode'] as String?,
@@ -624,11 +607,6 @@ class RunState {
         jade: j['jade'] as int? ?? 0,
         jadeGained: j['jadeGained'] as int? ?? 0,
         combatsSinceMerchant: j['combatsSinceMerchant'] as int? ?? 0,
-        roomStep: j['roomStep'] as int? ?? j['passStep'] as int? ?? 0,
-        roomBoon: switch (j['roomBoon']) {
-          final String b => _enumOr(Breather.values, b, Breather.rest),
-          _ => null,
-        },
         nextMerchantAt: j['nextMerchantAt'] as int? ?? 0,
         stageMerchants: j['stageMerchants'] as int? ?? 0,
         shopCards: ((j['shopCards'] as List?) ?? const []).cast<String>(),

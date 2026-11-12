@@ -42,7 +42,7 @@ void main() {
                     type: n.type,
                     next: n.next,
                     enemy: 'salamander',
-                    rooms: const [RoomDef('bat')],
+                    waves: const ['bat'],
                     scene: n.scene,
                     light: n.light,
                   )

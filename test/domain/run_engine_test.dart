@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:long_breath/domain/combat/combat_state.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
@@ -1098,86 +1097,28 @@ void main() {
     });
   });
 
-  group('estancias', () {
-    RunState base() => fresh(7).copyWith(map: [
-          const MapNodeDef(
-              id: 'p',
-              type: NodeType.combat,
-              enemy: 'salamander',
-              rooms: [
-                RoomDef('bat'),
-                RoomDef('golem', waves: ['monkey'], together: true),
-              ],
-              next: ['x']),
-          const MapNodeDef(
-              id: 'x', type: NodeType.combat, enemy: 'dragon', next: []),
-        ]);
-    // Sale del premio sin tomar nada (o con lo que no se elige).
-    RunState leave(RunState r) => r.rewardKind == RewardKind.cards
-        ? run.chooseReward(r, null)
-        : run.collectReward(r);
-
-    test('sala por sala, sin premio de cartas hasta el cofre', () {
-      var r = run.enter(base(), 'p');
-      expect(r.phase, RunPhase.combat);
-      expect(run.roomsOf(r), 3);
-      expect(run.packOf(r), ['bat']);
-      expect(run.roomHpPct(r), run.data.balance.stayHpPct(0));
-      final jade = r.jade;
-      r = run.finishCombat(r, won: true, hp: 30);
-      expect(r.phase, RunPhase.roomBreak);
-      expect(r.rewardOptions, isEmpty);
-      expect(r.jade, greaterThan(jade), reason: 'cada sala da jade');
-      expect(r.combatsSinceMerchant, 0, reason: 'el mercader cuenta estancias');
-      r = run.roomContinue(r, Breather.focus);
-      expect((r.phase, r.roomStep, r.roomBoon), (RunPhase.combat, 1, Breather.focus));
-      expect(run.packOf(r), ['golem', 'monkey']);
-      expect(run.togetherOf(r), isTrue);
-      expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
-    });
-
-    test('reponerse cura entre salas; la última abre el cofre', () {
-      var r = run.finishCombat(run.enter(base(), 'p'), won: true, hp: 20);
-      r = run.roomContinue(r, Breather.rest);
-      expect(r.hp, 20 + run.restHeal(r));
-      expect(r.roomBoon, isNull);
-      r = run.roomContinue(run.finishCombat(r, won: true, hp: 20), Breather.fist);
-      expect(run.packOf(r), ['salamander']);
-      expect(run.lastRoom(r), isTrue);
-      final last = run.finishCombat(r, won: true, hp: 20);
-      expect([RunPhase.reward, RunPhase.talisman], contains(last.phase));
-      expect(last.combatsSinceMerchant, 1);
-      final out = leave(last.phase == RunPhase.talisman
-          ? run.chooseTalisman(last, last.talismanOptions.first)
-          : last);
-      expect(out.phase, RunPhase.map);
-      expect(run.available(out), ['x']);
-    });
-
-    test('a mitad de la estancia no se vuelve al mapa', () {
-      var r = run.finishCombat(run.enter(base(), 'p'), won: true, hp: 30);
-      r = run.roomContinue(r, Breather.focus);
-      r = run.retreat(r);
-      expect((r.phase, r.roomStep), (RunPhase.roomBreak, 0));
-      expect(run.available(r), isEmpty);
-    });
-
-    test('el viejo paso guardado se lee como estancia', () {
+  group('guardados viejos', () {
+    test('el paso de montaña y la pausa entre salas siguen por las puertas', () {
       final n = MapNodeDef.fromJson({
         'id': 'p',
         'type': 'pass',
         'enemy': 'bat',
         'waves': ['golem', 'salamander'],
+        'rooms': [
+          {'enemy': 'bat'},
+        ],
         'next': ['x'],
       });
       expect(n.type, NodeType.combat);
-      expect([for (final room in n.stay) room.enemy], ['bat', 'golem', 'salamander']);
-      final r = RunState.fromJson({
-        ...base().toJson(),
-        'phase': 'passChoice',
-        'passStep': 1,
-      });
-      expect((r.phase, r.roomStep), (RunPhase.roomBreak, 1));
+      expect(n.foes, ['salamander']);
+      for (final phase in ['passChoice', 'roomBreak']) {
+        final r = RunState.fromJson({
+          ...fresh(7).toJson(),
+          'phase': phase,
+          'roomStep': 1,
+        });
+        expect(r.phase, RunPhase.map);
+      }
     });
   });
 

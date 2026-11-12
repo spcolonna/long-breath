@@ -1168,66 +1168,6 @@ abstract class AppLocalizations {
   /// **'A ese no se le puede apuntar'**
   String get invalidBadTarget;
 
-  /// No description provided for @stayTitle.
-  ///
-  /// In es, this message translates to:
-  /// **'Sala superada'**
-  String get stayTitle;
-
-  /// No description provided for @stayProgress.
-  ///
-  /// In es, this message translates to:
-  /// **'Sala {done} de {total}'**
-  String stayProgress(int done, int total);
-
-  /// No description provided for @stayNext.
-  ///
-  /// In es, this message translates to:
-  /// **'En la sala que sigue espera {name}.'**
-  String stayNext(String name);
-
-  /// No description provided for @stayNextLast.
-  ///
-  /// In es, this message translates to:
-  /// **'En la última sala espera {name}. Detrás, el cofre.'**
-  String stayNextLast(String name);
-
-  /// No description provided for @stayHp.
-  ///
-  /// In es, this message translates to:
-  /// **'Seguís con {hp} de {max} de Vida.'**
-  String stayHp(int hp, int max);
-
-  /// No description provided for @stayPick.
-  ///
-  /// In es, this message translates to:
-  /// **'Elegí tu tregua antes de seguir'**
-  String get stayPick;
-
-  /// No description provided for @stayFocusHint.
-  ///
-  /// In es, this message translates to:
-  /// **'Arrancás la próxima sala con {draw} cartas y {breath} de aliento de más.'**
-  String stayFocusHint(int draw, int breath);
-
-  /// No description provided for @stayFistHint.
-  ///
-  /// In es, this message translates to:
-  /// **'Tus golpes pegan +{n} durante toda la próxima sala.'**
-  String stayFistHint(int n);
-
-  /// No description provided for @nodeHintStay.
-  ///
-  /// In es, this message translates to:
-  /// **'{count} salas seguidas, sin volver; al final, un cofre.'**
-  String nodeHintStay(int count);
-
-  /// No description provided for @combatRoom.
-  ///
-  /// In es, this message translates to:
-  /// **'Sala {n}/{total}'**
-  String combatRoom(int n, int total);
-
   /// No description provided for @chestTitle.
   ///
   /// In es, this message translates to:
@@ -1905,12 +1845,6 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Más opciones'**
   String get mapMore;
-
-  /// No description provided for @mapFloor.
-  ///
-  /// In es, this message translates to:
-  /// **'Piso {floor} de {floors}'**
-  String mapFloor(int floor, int floors);
 
   /// No description provided for @abandonConfirmTitle.
   ///

@@ -157,10 +157,6 @@ class CombatEngine {
     List<String> waves = const [],
     // Con [together], los de [waves] entran junto al primero (no en oleadas).
     bool together = false,
-    // Estancias: Vida (%) de los comunes en esta sala y la tregua elegida
-    // antes de entrar (concentrarse o afilar).
-    int roomHpPct = 100,
-    Breather? opening,
     // Dones de la escuela (reinos y meridianos).
     MetaBonus meta = MetaBonus.none,
   }) {
@@ -198,10 +194,7 @@ class CombatEngine {
             EnemyRank.boss => pm.bossHp,
           };
       final hp = pct(
-        pct(
-          pct(enemy.hp, dif.enemyHp, rankHp),
-          enemy.rank == EnemyRank.common ? roomHpPct : 100,
-        ),
+        pct(enemy.hp, dif.enemyHp, rankHp),
         !escorted
             ? packHp
             : enemy.rank == EnemyRank.elite
@@ -286,9 +279,6 @@ class CombatEngine {
       if (wfx != null && wfx.atStart) const WeaponTriggered(),
     ];
     _startPlayerTurn(d, events);
-    if (opening != null && opening != Breather.rest) {
-      _takeBreather(d, opening, events);
-    }
     return CombatResult(d.freeze(), events);
   }
 

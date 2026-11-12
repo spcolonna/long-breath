@@ -69,7 +69,7 @@ grep -E "CAMINO|gana el combate|pierde|compra|evento:|respira|COMBATE" actual.lo
 
 ```bash
 flutter analyze
-flutter test                          # 290 tests, todos pasan
+flutter test                          # 300 tests, todos pasan
 python3 tool/make_audio.py            # regenera todo el sonido (o: make_audio.py <id>)
 dart run tool/simulate.dart --runs 300 --profile promedio --difficulty normal   # ~45 s
 dart run tool/simulate.dart --runs 300 --profile experto --difficulty normal
@@ -181,7 +181,8 @@ macOS no tiene `timeout`.
    - **Textos, lección y manual** (`8f060a3`).
    - **Balance «Duro»** (este commit): Normal enemigos 105/106 (Fácil 97/98, Difícil 108/110, Shifu 112/113); árbol con Vida +2/+8, cura al ganar +1/+1, Estructura +2, Aliento primer turno, +1 Respirar, 2 cartas templadas; loto 2 por pelea (élite 5, jefe 10, cumbre 20); reinos ×1,5 (135/375/690/1080/1575). Simulación Normal 300 runs (todo abierto): sin árbol promedio **4%** / experto **26%**; medio árbol **29%**; árbol completo **52% / 83%**. Escuelas (`--section meta`): el promedio gana su primera cumbre en la subida **9** (p25 6, p75 12) y completa el árbol hacia la **26**; el experto, en la 3 y la 18.
    - Ver la pantalla: `test/zz_shot_test.dart` (local, excluido de git) saca una captura de 440×956 con `flutter test test/zz_shot_test.dart --dart-define=OUT=<png> --dart-define=STEPS=6`.
-   - Pendiente: probar en el teléfono; limpiar estancias/`/stay`; música por etapa y resto del plan pro.
+   - Limpieza (12/11): fuera estancias (`RoomDef`, `rooms`, `roomStep`/`roomBoon`, fase `roomBreak`, `/stay`), `map_gen`, `map_layout`/`trail_painter`/`mountain_backdrop` y claves `stay*`. `mapRows` vive en `lib/domain/run/map_rows.dart`. Guardados viejos: la pausa entre salas o el paso siguen por las puertas.
+   - Pendiente: probar en el teléfono; música por etapa y resto del plan pro.
 9. **Plan «juego pro» (10/11):** `docs/plan-pro.md` (orden y decisiones) y `docs/historia.md` (biblia: nombres, sueños, votos).
    - **Hecho:** paso 1 (caída bien atribuida, guardados robustos, `errors.log` en Documents) y paso 3 parcial (campamento entre etapas con carta del maestro o sueño del dragón y voto opcional; un sueño nuevo en cada caída).
    - **Falta medir con simulación:** si conviene que los bots usen votos (hoy los bots no votan).
