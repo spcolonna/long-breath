@@ -636,11 +636,31 @@ class RunEngine {
         : door != null
         ? (_usable(r, door), r.rng)
         : _rollRewardKind(r, allowTalisman: !elite && !duel);
+    if (!fled) r = _page(r);
     return _offer(r.copyWith(rng: rngK), kind).copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       talismanOptions: kind == RewardKind.talisman ? null : talismans,
       cardlessStreak: kind == RewardKind.cards ? 0 : r.cardlessStreak + 1,
     );
+  }
+
+  /// A veces el cofre trae una página suelta (la próxima que falta). Se
+  /// tira con su propio generador para no mover el resto de la subida.
+  RunState _page(RunState r) {
+    final b = data.balance;
+    final page = nextPage(r.threads);
+    final found = r.threadRun.where((t) => t == threadPage).length;
+    if (page != null && found < b.pagesPerRun) {
+      final (roll, _) = Rng.seeded(r.rng.state ^ 0x5BD1E995).nextInt(100);
+      if (roll < b.pagePct) {
+        return r.copyWith(
+          threads: {...r.threads, page},
+          threadRun: [...r.threadRun, threadPage],
+          threadLine: page,
+        );
+      }
+    }
+    return r.threadLine == null ? r : r.copyWith(clearThreadLine: true);
   }
 
   /// Los contadores de la subida al terminar, con lo que se llevaba:

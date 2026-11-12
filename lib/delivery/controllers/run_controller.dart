@@ -52,7 +52,7 @@ class RunController extends Notifier<RunState?> {
     final progress = ref.read(progressStorageProvider);
     await progress.addThreads(fresh);
     for (final id in fresh) {
-      if (threadLore.contains(id)) await progress.unlockLore(id);
+      if (threadLore.contains(id) || pageLore.contains(id)) await progress.unlockLore(id);
     }
     ref.invalidate(threadsProvider);
     ref.invalidate(loreProvider);
@@ -143,6 +143,7 @@ class RunController extends Notifier<RunState?> {
     // Quién quedó en pie: en una estancia o un grupo no es el enemigo del
     // nodo (ese es el guardián de la última sala).
     _lastFoe = foe;
+    if (won && fledWith == null) _chronicle(won: _engine.packOf(state!));
     _set(
       _engine.finishCombat(
         state!,
@@ -171,6 +172,21 @@ class RunController extends Notifier<RunState?> {
     }
   }
 
+  /// La crónica de la montaña: los vencidos de cada pelea y ante quién se
+  /// cayó.
+  void _chronicle({Iterable<String> won = const [], String? fellTo}) {
+    final data = ref.read(dataProvider);
+    bool known(String id) =>
+        data.enemies.containsKey(id) && !id.startsWith('dummy');
+    ref
+        .read(progressStorageProvider)
+        .addSightings(
+          won: won.where(known).toSet(),
+          fellTo: fellTo != null && known(fellTo) ? fellTo : null,
+        )
+        .then((_) => ref.invalidate(bestiaryProvider));
+  }
+
   /// La subida terminó: queda en el registro de la escuela y el próximo
   /// en subir es otro discípulo.
   void _record(RunState run) {
@@ -182,6 +198,7 @@ class RunController extends Notifier<RunState?> {
         : alive ??
         (node == null ? null : _engine.packOf(run).firstOrNull ?? node.enemy);
     _lastFoe = null;
+    if (run.phase == RunPhase.defeat) _chronicle(fellTo: foe);
     // El piso se cuenta en toda la subida: las etapas anteriores suman.
     final stages = ref.read(dataProvider).balance.stages;
     final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);

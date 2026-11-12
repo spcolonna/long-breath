@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../domain/model/enums.dart';
 import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
+import '../domain/run/chronicle.dart';
 import '../domain/run/feats.dart';
 
 /// Progreso de una partida: en qué dificultades ganó, la escuela, el
@@ -30,6 +31,7 @@ class ProgressStorage {
     'run',
     'hitos',
     'threads',
+    'bestiary',
   ];
 
   String get _key => '${prefix}winsByDifficulty';
@@ -43,6 +45,7 @@ class ProgressStorage {
   String get _cinematicsKey => '${prefix}cinematics';
   String get _hitosKey => '${prefix}hitos';
   String get _threadsKey => '${prefix}threads';
+  String get _bestiaryKey => '${prefix}bestiary';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -121,6 +124,45 @@ extension SchoolRecord on ProgressStorage {
     final have = await threads();
     if (have.containsAll(marks)) return;
     await prefs.setStringList(_threadsKey, [...have, ...marks.where((m) => !have.contains(m))]);
+  }
+
+  /// La crónica de la montaña: por enemigo, cuántas veces se lo venció y
+  /// cuántas veces te venció.
+  Future<Map<String, Sighting>> bestiary() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_bestiaryKey);
+    if (raw == null) return {};
+    try {
+      return {
+        for (final e in (jsonDecode(raw) as Map<String, dynamic>).entries)
+          e.key: Sighting.fromJson(e.value as List<dynamic>),
+      };
+    } on Object catch (e) {
+      debugPrint('Crónica ilegible, se empieza de nuevo: $e');
+      return {};
+    }
+  }
+
+  /// Suma victorias ([won]) o una caída ([fellTo]) a la crónica.
+  Future<void> addSightings({
+    Iterable<String> won = const [],
+    String? fellTo,
+  }) async {
+    if (won.isEmpty && fellTo == null) return;
+    final prefs = await SharedPreferences.getInstance();
+    final have = await bestiary();
+    for (final id in won) {
+      final s = have[id] ?? const Sighting();
+      have[id] = Sighting(wins: s.wins + 1, falls: s.falls);
+    }
+    if (fellTo != null) {
+      final s = have[fellTo] ?? const Sighting();
+      have[fellTo] = Sighting(wins: s.wins, falls: s.falls + 1);
+    }
+    await prefs.setString(
+      _bestiaryKey,
+      jsonEncode({for (final e in have.entries) e.key: e.value.toJson()}),
+    );
   }
 
   Future<Set<String>> lore() async {

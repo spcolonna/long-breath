@@ -186,31 +186,38 @@
     },
     "bat": {
       "name": "Murciélago de Jade",
-      "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección."
+      "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección.",
+      "lore": "Nace del eco de un grito en la quebrada. Si subís cantando, te sigue un rato y se va."
     },
     "salamander": {
       "name": "Salamandra de Brasa",
-      "rule": "Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes."
+      "rule": "Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes.",
+      "lore": "Duerme entre las brasas de los fogones que dejan los que suben. Por eso los novicios apagan bien el fuego."
     },
     "golem": {
       "name": "Gólem de Cuarzo",
-      "rule": "Inamovible: recibe la mitad del daño salvo que esté Desequilibrado."
+      "rule": "Inamovible: recibe la mitad del daño salvo que esté Desequilibrado.",
+      "lore": "El cuarzo de la ladera se cansó de que lo pisaran y se puso de pie. Todavía no decidió adónde ir."
     },
     "disciple": {
       "name": "Discípulo Perdido",
-      "rule": "Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +5 de daño y +2 a Estructura."
+      "rule": "Si terminás el turno en la misma postura que el anterior, su próximo ataque hace +5 de daño y +2 a Estructura.",
+      "lore": "Subió, se cansó y se olvidó de bajar. Repite la postura que le enseñaron porque es lo único que se acuerda."
     },
     "disciple_tiger": {
       "name": "Discípulo Perdido",
-      "rule": "Camino del Tigre. Despierta: cada acción suma +1 a sus golpes. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura."
+      "rule": "Camino del Tigre. Despierta: cada acción suma +1 a sus golpes. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura.",
+      "lore": "Lleva la cinta de un caído del Tigre. Pega como pegaba él: sin pensar y cada vez más fuerte."
     },
     "disciple_snake": {
       "name": "Discípulo Perdido",
-      "rule": "Camino de la Serpiente. Recupera 2 de Vida antes de cada acción. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura."
+      "rule": "Camino de la Serpiente. Recupera 2 de Vida antes de cada acción. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura.",
+      "lore": "Lleva la cinta de un caído de la Serpiente. Respira despacio, se cura despacio y no tiene apuro."
     },
     "disciple_crane": {
       "name": "Discípulo Perdido",
-      "rule": "Camino de la Grulla. Abanico: el primer golpe de cada turno no le hace daño y te devuelve 3. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura."
+      "rule": "Camino de la Grulla. Abanico: el primer golpe de cada turno no le hace daño y te devuelve 3. Si repetís postura, su próximo ataque hace +5 de daño y +2 a Estructura.",
+      "lore": "Lleva la cinta de un caído de la Grulla. Abre los brazos como alas y devuelve lo que le das."
     },
     "monk": {
       "name": "Monje sin Rostro",
@@ -218,7 +225,8 @@
       "intro": "Las campanas no suenan para vos. Suenan para que te des vuelta.",
       "reply": "Vine a escucharlas de cerca.",
       "defeat": "Pasá… y no mires la cara que no tengo.",
-      "triumph": "Volvé a la escuela. Las campanas te van a esperar."
+      "triumph": "Volvé a la escuela. Las campanas te van a esperar.",
+      "lore": "Fue maestro antes que el maestro. Cuida el sendero de piedra y no deja terminar nada a medias."
     },
     "dragon": {
       "name": "Eco del Dragón",
@@ -226,7 +234,8 @@
       "intro": "¿Otro aliento pequeño que quiere tocar las nubes?",
       "reply": "No vengo a tocarlas. Vengo a ver de dónde salen.",
       "defeat": "Solo soy el eco… lo que duerme arriba respira más hondo.",
-      "triumph": "Las nubes se tragan a los que corren. Respirá más lento la próxima."
+      "triumph": "Las nubes se tragan a los que corren. Respirá más lento la próxima.",
+      "lore": "No es el dragón: es lo que queda de su voz cuando rebota en las nubes de abajo."
     },
     "dummy_basic": {
       "name": "Muñeco de madera",
@@ -250,15 +259,18 @@
     },
     "monkey": {
       "name": "Mono Ladrón",
-      "rule": "Ladrón: cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa con lo robado y no deja jade. Si lo vencés antes, recuperás todo. Desequilibrarlo le hace perder la acción y le da más tiempo."
+      "rule": "Ladrón: cada golpe que te hace daño te roba 4 de jade. En su tercera acción se escapa con lo robado y no deja jade. Si lo vencés antes, recuperás todo. Desequilibrarlo le hace perder la acción y le da más tiempo.",
+      "lore": "Junta jade porque brilla. Lo esconde en un nido que nadie encontró, ni él."
     },
     "bandit": {
       "name": "Bandido del Paso",
-      "rule": "Palo: un turno tantea con un golpe ALTO y al siguiente descarga un palazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe."
+      "rule": "Palo: un turno tantea con un golpe ALTO y al siguiente descarga un palazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe.",
+      "lore": "Cobra peaje en un paso que no es suyo. Nadie le paga, pero él anota todo en una tablita."
     },
     "lingzhi": {
       "name": "Hongo Lingzhi",
-      "rule": "Antes de cada acción recupera 3 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido."
+      "rule": "Antes de cada acción recupera 3 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido.",
+      "lore": "El hongo de los mil años. Los monjes juran que sonríe más cuando lo pisan."
     },
     "lion": {
       "name": "León de Piedra",
@@ -266,7 +278,8 @@
       "intro": "Piedra que despierta, piedra que no deja pasar.",
       "reply": "Entonces voy a ser más paciente que la piedra.",
       "defeat": "Vuelvo a dormir… cuidá el camino que te abrí.",
-      "triumph": "Otra piedra más en la escalera."
+      "triumph": "Otra piedra más en la escalera.",
+      "lore": "Talló el arco de la entrada y después se quedó a cuidarlo. Despierta de a poco, como todos los viejos."
     },
     "fan": {
       "name": "Dama del Abanico",
@@ -274,23 +287,28 @@
       "intro": "Un golpe por vez, discípulo. El primero siempre es mío.",
       "reply": "Entonces el segundo va a ser el que cuente.",
       "defeat": "El viento cambió… y no a mi favor.",
-      "triumph": "Bailaste lindo. Pero el abanico marca el compás."
+      "triumph": "Bailaste lindo. Pero el abanico marca el compás.",
+      "lore": "Su abanico de hierro era de una abuela que espantaba moscas. Ella lo usa para algo más serio."
     },
     "bell_bat": {
       "name": "Murciélago del Campanario",
-      "rule": "Repique: si no desviás su golpe doble, el próximo turno tenés 1 de Aliento menos. Su chillido te hace descartar una carta."
+      "rule": "Repique: si no desviás su golpe doble, el próximo turno tenés 1 de Aliento menos. Su chillido te hace descartar una carta.",
+      "lore": "Vive adentro de la campana grande. Cada repique le despeina las alas y se enoja con el que pasa."
     },
     "bronze_man": {
       "name": "Hombre de Bronce",
-      "rule": "Inamovible: recibe la mitad del daño. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Desequilibrado no tiene espinas y recibe el doble."
+      "rule": "Inamovible: recibe la mitad del daño. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Desequilibrado no tiene espinas y recibe el doble.",
+      "lore": "Los monjes lo fundieron para practicar. Un día practicó solo y no paró más."
     },
     "temple_guard": {
       "name": "Guardián del Pasadizo",
-      "rule": "Su Guardia frena un solo tipo de golpe: primero los puños, después las patadas. Golpeá con otro tipo y la esquivás entera (las formas sí las frena)."
+      "rule": "Su Guardia frena un solo tipo de golpe: primero los puños, después las patadas. Golpeá con otro tipo y la esquivás entera (las formas sí las frena).",
+      "lore": "Cuida un pasadizo que lleva a otro pasadizo. Se toma el trabajo muy en serio."
     },
     "ash_salamander": {
       "name": "Salamandra de Ceniza",
-      "rule": "Antes de cada acción recupera 4 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido."
+      "rule": "Antes de cada acción recupera 4 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido.",
+      "lore": "Prima de la de brasa. Vive en los incensarios y huele a sándalo."
     },
     "iron_abbot": {
       "name": "Abad de Hierro",
@@ -298,7 +316,8 @@
       "intro": "Mi camisa es de hierro y mi paciencia también.",
       "reply": "La mía es de lino, pero no se rompe.",
       "defeat": "El hierro se dobla… el voto no.",
-      "triumph": "Bajá, y volvé cuando tu lino aguante un golpe."
+      "triumph": "Bajá, y volvé cuando tu lino aguante un golpe.",
+      "lore": "Rezó tanto tiempo sin moverse que se le volvió de hierro la piel. Dice que vale la pena."
     },
     "jade_lion": {
       "name": "León de Jade",
@@ -306,7 +325,8 @@
       "intro": "Cada rugido me despierta un poco más.",
       "reply": "Entonces terminemos antes de que te despiertes del todo.",
       "defeat": "El jade se raja… y adentro hay luz.",
-      "triumph": "Dormís en la nieve de abajo, como los otros."
+      "triumph": "Dormís en la nieve de abajo, como los otros.",
+      "lore": "El león del portón, pulido por mil manos que lo tocaron para tener suerte."
     },
     "bell_keeper": {
       "name": "Guardián de la Campana",
@@ -314,7 +334,8 @@
       "intro": "Cuando la campana suena tres veces, nadie sigue subiendo.",
       "reply": "Entonces no la voy a dejar sonar la tercera.",
       "defeat": "Dos campanadas… y el silencio te deja pasar.",
-      "triumph": "Tercera campanada. Bajá con ella en los oídos."
+      "triumph": "Tercera campanada. Bajá con ella en los oídos.",
+      "lore": "Toca la campana al alba desde hace tantos años que ya no oye otra cosa."
     },
     "bell_abbot": {
       "name": "Abad de la Gran Campana",
@@ -322,23 +343,28 @@
       "intro": "Rezo por cada uno que sube. Hoy rezo por vos.",
       "reply": "Rezá por los de abajo. Yo sigo subiendo.",
       "defeat": "La campana está rajada… ahora entiendo quién la rajó la última vez.",
-      "triumph": "Que la montaña te devuelva. Yo no puedo."
+      "triumph": "Que la montaña te devuelva. Yo no puedo.",
+      "lore": "Guarda la Gran Campana. Dice que un buen golpe se oye en el valle; uno malo, solo en la cabeza."
     },
     "snow_ape": {
       "name": "Simio de las Nieves",
-      "rule": "Despierta: después de cada acción sus golpes suman 2 más. Desequilibrarlo lo calma."
+      "rule": "Despierta: después de cada acción sus golpes suman 2 más. Desequilibrarlo lo calma.",
+      "lore": "Grande, blanco y curioso. Se enoja de a poco, como la tormenta."
     },
     "ice_golem": {
       "name": "Gólem de Escarcha",
-      "rule": "Inamovible: recibe la mitad del daño. Escarcha: si no desviás su golpe, el próximo turno robás una carta menos."
+      "rule": "Inamovible: recibe la mitad del daño. Escarcha: si no desviás su golpe, el próximo turno robás una carta menos.",
+      "lore": "Hielo viejo que se acuerda de cuando era río. Camina despacio para no derretirse."
     },
     "wind_disciple": {
       "name": "Discípulo del Viento",
-      "rule": "Si terminás dos turnos seguidos en la misma postura, su próximo golpe pega más fuerte. Su Guardia solo frena palmas y su barrido trae escarcha (robás una carta menos)."
+      "rule": "Si terminás dos turnos seguidos en la misma postura, su próximo golpe pega más fuerte. Su Guardia solo frena palmas y su barrido trae escarcha (robás una carta menos).",
+      "lore": "Alumna de la Dama del Viento. Aprendió a no dejar pasar a nadie antes que a pelear."
     },
     "frost_bat": {
       "name": "Murciélago de Escarcha",
-      "rule": "Escarcha: si no desviás su golpe doble, robás una carta menos. Repique: si no lo desviás, tenés 1 de Aliento menos. Su chillido te hace descartar."
+      "rule": "Escarcha: si no desviás su golpe doble, robás una carta menos. Repique: si no lo desviás, tenés 1 de Aliento menos. Su chillido te hace descartar.",
+      "lore": "El primo del campanario que se mudó a la nieve. Llegó con frío y no se le pasó."
     },
     "wind_lady": {
       "name": "Dama del Viento",
@@ -346,7 +372,8 @@
       "intro": "El viento de la cumbre no sopla: decide.",
       "reply": "Entonces que decida a favor de los que suben.",
       "defeat": "Pasá. El viento ya te eligió.",
-      "triumph": "El viento te llevó de vuelta a casa. Agradecéselo."
+      "triumph": "El viento te llevó de vuelta a casa. Agradecéselo.",
+      "lore": "La primera que llegó al templo helado. Tiene miedo de elegir mal, y por eso no deja pasar a nadie."
     },
     "snow_lion": {
       "name": "León de las Nieves",
@@ -354,7 +381,8 @@
       "intro": "Cada copo que cae me hace más grande.",
       "reply": "Y cada paso mío te deja más chico.",
       "defeat": "La nieve se derrite… vuelve a ser agua.",
-      "triumph": "Tu huella ya se borró. Así es la cumbre."
+      "triumph": "Tu huella ya se borró. Así es la cumbre.",
+      "lore": "Un león de las nieves que baja a las nubes a jugar. Juega fuerte."
     },
     "dragon_reflection": {
       "name": "Reflejo del Dragón",
@@ -362,7 +390,8 @@
       "intro": "Soy lo que el dragón ve cuando se mira en el agua.",
       "reply": "Entonces veamos qué ve cuando me mira a mí.",
       "defeat": "El agua tiembla… el reflejo se va.",
-      "triumph": "Te miraste en mí y no te reconociste."
+      "triumph": "Te miraste en mí y no te reconociste.",
+      "lore": "El dragón de la cumbre, visto en el estanque. Si tirás una piedra, se enoja la mitad de él."
     },
     "dragon_dream": {
       "name": "Sueño del Dragón",
@@ -370,7 +399,8 @@
       "intro": "Estás adentro del sueño del dragón. ¿Querés despertar?",
       "reply": "No. Quiero llegar hasta el que sueña.",
       "defeat": "El sueño te deja seguir… pero recordalo.",
-      "triumph": "Dormí, discípulo. Acá nadie se cansa."
+      "triumph": "Dormí, discípulo. Acá nadie se cansa.",
+      "lore": "Lo que el Dragón Dormido sueña antes de despertar. Tiene su forma, pero no su peso."
     },
     "sleeping_dragon": {
       "name": "Dragón Dormido",
@@ -378,23 +408,28 @@
       "intro": "Llevo siglos respirando para que las nubes sigan naciendo. ¿Vos por qué respirás?",
       "reply": "Porque la escuela me enseñó a respirar despacio. Vine a ver para qué.",
       "defeat": "Al fin… alguien con el aliento largo. Ahora podés ver la piedra.",
-      "triumph": "Dormí un poco más vos también. Abajo te espera el próximo."
+      "triumph": "Dormí un poco más vos también. Abajo te espera el próximo.",
+      "lore": "El primer muchacho que subió. Prometió respirar por el valle y sigue cumpliendo."
     },
     "paper_crane": {
       "name": "Grulla de Papel",
-      "rule": "Un talismán plegado que cobró vida: poca Vida y golpes altos y rápidos. Suele llegar en bandada; repartí bien los golpes."
+      "rule": "Un talismán plegado que cobró vida: poca Vida y golpes altos y rápidos. Suele llegar en bandada; repartí bien los golpes.",
+      "lore": "Un talismán plegado por un novicio que tenía miedo de subir solo. Vuela delante, por las dudas."
     },
     "opera_mask": {
       "name": "Ópera de las Mil Caras",
-      "rule": "Cambia de máscara en cada guardia: la roja frena los puños, la dorada las palmas y la azul las patadas. Mirá la máscara y golpeá con otro tipo (las formas sí las frena). Ataca alto, medio y bajo, en ese orden."
+      "rule": "Cambia de máscara en cada guardia: la roja frena los puños, la dorada las palmas y la azul las patadas. Mirá la máscara y golpeá con otro tipo (las formas sí las frena). Ataca alto, medio y bajo, en ese orden.",
+      "lore": "Cambia de cara más rápido de lo que vos cambiás de idea. Nadie vio la cara de abajo."
     },
     "pixiu": {
       "name": "Pixiu",
-      "rule": "Devora jade: cada golpe que te hace daño te roba 5. No se escapa: si lo vencés, lo devuelve todo. Escama de oro: cada golpe tuyo hace 1 menos hasta que lo desequilibres."
+      "rule": "Devora jade: cada golpe que te hace daño te roba 5. No se escapa: si lo vencés, lo devuelve todo. Escama de oro: cada golpe tuyo hace 1 menos hasta que lo desequilibres.",
+      "lore": "Come jade y no tiene por dónde sacarlo. Por eso, si lo vencés, lo devuelve todo."
     },
     "incense_monk": {
       "name": "Monje del Incienso",
-      "rule": "Se cura 4 antes de cada acción mientras arde su incienso. Su humo, si no lo desviás, te deja con 1 de Aliento menos. Desequilibralo para cortarle la curación."
+      "rule": "Se cura 4 antes de cada acción mientras arde su incienso. Su humo, si no lo desviás, te deja con 1 de Aliento menos. Desequilibralo para cortarle la curación.",
+      "lore": "Reza mientras arde el incienso. Cuando se apaga, se acuerda de que tenía que pelear."
     },
     "celadon_lion": {
       "name": "León de Celadón",
@@ -402,23 +437,28 @@
       "intro": "Porcelana del patio, guardiana de los que dudan.",
       "reply": "Hoy no dudo.",
       "defeat": "Una grieta… como las de las tazas viejas que el maestro no tira.",
-      "triumph": "Lo frágil también sabe pisar fuerte."
+      "triumph": "Lo frágil también sabe pisar fuerte.",
+      "lore": "Porcelana del patio, verde como el agua quieta. Se rajó una vez y lo pegaron con oro."
     },
     "flying_sword": {
       "name": "Espada Voladora",
-      "rule": "Una espada que vuela sola. Poca Vida y tres tajos altos seguidos; el tercero te corta la forma que estés armando. Guardia alta o terminala rápido."
+      "rule": "Una espada que vuela sola. Poca Vida y tres tajos altos seguidos; el tercero te corta la forma que estés armando. Guardia alta o terminala rápido.",
+      "lore": "Una espada que perdió a su dueño y lo sigue buscando cuesta arriba."
     },
     "wooden_ox": {
       "name": "Buey de Madera",
-      "rule": "Autómata de los mohistas. Se carga dos veces y después pisa abajo con todo lo acumulado; el pisotón se anuncia con cuenta regresiva."
+      "rule": "Autómata de los mohistas. Se carga dos veces y después pisa abajo con todo lo acumulado; el pisotón se anuncia con cuenta regresiva.",
+      "lore": "Los mohistas lo hicieron para cargar arroz. Le sobra fuerza y le falta arroz."
     },
     "slate_hermit": {
       "name": "Ermitaño de Pizarra",
-      "rule": "Piel de piedra: cada carta que le hace daño te quita 1 de Vida (desequilibrado no). Castiga repetir postura: cambiá de postura entre turnos."
+      "rule": "Piel de piedra: cada carta que le hace daño te quita 1 de Vida (desequilibrado no). Castiga repetir postura: cambiá de postura entre turnos.",
+      "lore": "Se sentó a meditar en la ladera y la piedra lo fue tapando. No se quejó."
     },
     "guqin_player": {
       "name": "Músico del Guqin",
-      "rule": "Un ermitaño que pelea tocando. Tres notas altas seguidas, después una disonancia que te hace descartar y un acorde que congela. Guardia alta contra las ondas."
+      "rule": "Un ermitaño que pelea tocando. Tres notas altas seguidas, después una disonancia que te hace descartar y un acorde que congela. Guardia alta contra las ondas.",
+      "lore": "Toca para el dragón dormido. Si lo interrumpís, desafina a propósito."
     },
     "qilin": {
       "name": "Qilin",
@@ -426,7 +466,8 @@
       "intro": "El qilin aparece cuando nace alguien que va a cambiar las cosas.",
       "reply": "¿Y por qué me cerrás el paso?",
       "defeat": "Porque tenía que estar seguro. Ahora lo estoy.",
-      "triumph": "Todavía no es tu momento. Va a llegar."
+      "triumph": "Todavía no es tu momento. Va a llegar.",
+      "lore": "Bestia de buen augurio. Pisa nubes y no aplasta ni una flor, pero a vos sí."
     },
     "nine_tail_fox": {
       "name": "Zorro de Nueve Colas",
@@ -434,11 +475,13 @@
       "intro": "¿Cuál de nosotras es la verdadera? Elegí bien.",
       "reply": "La que no tiembla cuando respiro.",
       "defeat": "Me viste… Hacía siglos que nadie me veía.",
-      "triumph": "Te perdiste mirando las colas equivocadas."
+      "triumph": "Te perdiste mirando las colas equivocadas.",
+      "lore": "Tiene nueve colas y una sola respuesta para cada pregunta: otra pregunta."
     },
     "shadow_puppet": {
       "name": "Títere de Sombras",
-      "rule": "Guerrero de cuero pintado que cobra vida con la linterna. Copia tu último golpe: su guardia frena ese mismo tipo. Si terminás con un puño, la próxima vez golpeá con palma o patada."
+      "rule": "Guerrero de cuero pintado que cobra vida con la linterna. Copia tu último golpe: su guardia frena ese mismo tipo. Si terminás con un puño, la próxima vez golpeá con palma o patada.",
+      "lore": "Cuero pintado que baila cuando alguien prende la linterna. Te copia porque no sabe otra cosa."
     }
   },
   "intents": {
@@ -1268,6 +1311,66 @@
       "title": "Precio de amigo",
       "text": "«Fui discípulo del Dragón Dormido, como vos. Tu maestro me ganó una carrera hasta el santuario y nunca se lo perdoné... bueno, un poco sí. Desde hoy, a vos te cobro como a la familia». Tío Bao vende un 10% más barato.",
       "hint": "Tío Bao habla más con quien le compra."
+    },
+    "page_1": {
+      "title": "Diario del maestro, primera hoja",
+      "text": "«Hoy subió el número uno de mi tanda. Le até la cinta mal y no me animé a decírselo. Llegó igual al santuario.» —S.",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_2": {
+      "title": "Diario del maestro, el arroz",
+      "text": "«Tío Bao dice que mi arroz está pasado. Tiene razón. Mañana lo hago otra vez para el que sube.» —S.",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_3": {
+      "title": "Diario del maestro, la nieve",
+      "text": "«Soñé con nieve y me desperté con frío. Alguien estaba cerca del templo helado. Dejé la ventana abierta.» —S.",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_4": {
+      "title": "Diario del maestro, los pisos",
+      "text": "«Anoto los pisos y no los nombres. Si anoto los nombres, los voy a esperar.» —S.",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_5": {
+      "title": "Nota en una piedra",
+      "text": "Alguien escribió con carbón: «Hasta acá llegué. Arriba se ve el valle entero. Mañana sigo.» Abajo, otra letra: «Yo también.»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_6": {
+      "title": "Lista de un novicio",
+      "text": "«Llevar: dos panes, una manta, la cinta. No llevar: miedo. (Lo llevé igual.)»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_7": {
+      "title": "Carta que no se mandó",
+      "text": "«Mamá: la montaña es más alta de lo que dicen. Los murciélagos son más chicos. Estoy bien.»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_8": {
+      "title": "Dibujo de un discípulo",
+      "text": "Un dragón dibujado con prisa, durmiendo enroscado en una nube. Al lado, una flecha y una palabra: «yo».",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_9": {
+      "title": "Cuentas del monasterio",
+      "text": "«Velas: 40. Incienso: 12 atados. Nombres tallados en las vigas este año: 9. A todos les falta la última letra.»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_10": {
+      "title": "Regla del campanario",
+      "text": "«La campana se toca al alba para los que suben y al ocaso para los que se quedaron. Nunca para despertar al dragón.»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_11": {
+      "title": "Queja del cocinero",
+      "text": "«Otra vez un mono se llevó el jade de las ofrendas. Otra vez lo devolvió el pixiu. No entiendo esta montaña.»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "page_12": {
+      "title": "Nota del abad",
+      "text": "«Si alguien encuentra estas hojas, que las devuelva a la escuela. No por las hojas: por el que las lleva.»",
+      "hint": "Una página suelta. A veces aparece en un cofre."
     }
   },
   "masterLines": {

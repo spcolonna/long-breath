@@ -202,6 +202,7 @@ const loreOrder = [
   ...dreamOrder,
   'master_name',
   ...threadLore,
+  ...pageLore,
 ];
 
 /// Los sueños del dragón: cuentan su historia en orden, uno por vez, al

@@ -28,6 +28,7 @@ class ContentText {
   String form(String id) => _get('forms', id);
   String enemy(String id) => _get('enemies', id, 'name');
   String enemyRule(String id) => _get('enemies', id, 'rule');
+  String enemyLore(String id) => _get('enemies', id, 'lore');
 
   /// Lo que dice el maestro errante la [n]-ésima vez (desde 1) que se lo
   /// cruza en la etapa; las líneas se repiten en ronda. Null si no hay.

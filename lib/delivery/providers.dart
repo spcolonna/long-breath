@@ -12,6 +12,7 @@ import 'content_text.dart';
 import '../domain/model/enums.dart';
 import '../domain/model/meta_bonus.dart';
 import '../domain/run/ascent.dart';
+import '../domain/run/chronicle.dart';
 import '../domain/run/cultivation.dart';
 import '../domain/run/run_state.dart';
 import '../infrastructure/progress_storage.dart';
@@ -178,6 +179,11 @@ final loreProvider = FutureProvider<Set<String>>(
 /// Marcas de los hilos que cruzan subidas.
 final threadsProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(progressStorageProvider).threads(),
+);
+
+/// La crónica de la montaña: lo que se sabe de cada enemigo.
+final bestiaryProvider = FutureProvider<Map<String, Sighting>>(
+  (ref) => ref.watch(progressStorageProvider).bestiary(),
 );
 
 /// Hitos 功 cumplidos en la partida.

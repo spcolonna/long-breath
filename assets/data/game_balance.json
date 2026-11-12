@@ -111,7 +111,7 @@
     "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5, "breather": { "healPct": 0, "draw": 2, "breath": 1, "fist": 2 }, "escort": { "eliteHpPct": 80, "hpPct": 45, "damagePct": 85 } },
     "wanderingMerchant": { "every": 4, "spread": 1 },
     "path": { "minFights": 8, "maxRest": 2, "masterBy": 8, "merchantBy": 10 },
-    "threads": { "baoFriendPct": 10 },
+    "threads": { "baoFriendPct": 10, "pagePct": 15, "pagesPerRun": 1 },
     "awakeningChoices": 3,
     "vowChoices": 3,
     "stages": [

@@ -51,3 +51,22 @@ const threadLore = [
   'shuang_1', 'shuang_2', 'shuang_3', 'shuang_4', 'shuang_5', //
   'bao_1', 'bao_2', 'bao_3', 'bao_4', 'bao_5',
 ];
+
+/// Las páginas sueltas que trae a veces un cofre (diario del maestro,
+/// notas de los que subieron, cuentas del monasterio). Salen en orden y
+/// cada una queda como marca y como pergamino.
+const pageLore = [
+  'page_1', 'page_2', 'page_3', 'page_4', 'page_5', 'page_6', //
+  'page_7', 'page_8', 'page_9', 'page_10', 'page_11', 'page_12',
+];
+
+/// Marca de `threadRun` por cada página encontrada en la subida.
+const threadPage = 'page';
+
+/// La próxima página que falta, o null si ya están todas.
+String? nextPage(Set<String> marks) {
+  for (final p in pageLore) {
+    if (!marks.contains(p)) return p;
+  }
+  return null;
+}
