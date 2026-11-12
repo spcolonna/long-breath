@@ -690,21 +690,53 @@
       "train": "Pedirle que te enseñe",
       "trainResult": "Te muestra cómo pelean los monjes del monasterio. Elegís qué golpe pulir con lo que aprendiste."
     },
-    "rival": {
-      "name": "El discípulo rival",
-      "text": "Un discípulo de otra escuela te alcanza en el sendero. Mira tu cinta y sonríe de costado: «Te apuesto a que llego a la cumbre antes que vos».",
+    "shuang_1": {
+      "name": "Escarcha",
+      "text": "Una discípula con cinta celeste te alcanza en el sendero y camina hacia atrás para mirarte. «Shuang, de la escuela del Ave Azul. ¿Y vos? Bah, da igual: te apuesto a que llego a la cumbre antes».",
       "accept": "Aceptar la apuesta",
-      "acceptResult": "Se ríe y sale corriendo. Picado, entrenás más fuerte el resto del día y te sale un golpe nuevo.",
+      "acceptResult": "«¡Trato!» Sale corriendo entre las piedras. Picado, entrenás más fuerte el resto del día y te sale un golpe nuevo.",
       "bow": "Inclinarte sin contestar",
-      "bowResult": "Lo dejás pasar. Sin apuro, respirás hondo y seguís a tu ritmo."
+      "bowResult": "Te mira raro, como si nadie le hubiera hecho una reverencia nunca. «Sos de los tranquilos, eh». Se va despacio. Respirás hondo y seguís a tu ritmo."
     },
-    "rival_summit": {
-      "name": "El rival te espera",
-      "text": "Sentado en una piedra, el discípulo rival te espera con los brazos cruzados. Llegó primero, pero sin aire. «Ahora veamos quién pelea mejor».",
-      "duel": "Aceptar el duelo",
-      "duelResult": "Se pone en guardia. Esta vez no hay apuesta: solo puños.",
-      "share": "Compartirle tu agua",
-      "shareResult": "Le pasás la cantimplora. Se queda callado, toma y te cuenta de su escuela. Seguís subiendo con el pecho más liviano."
+    "shuang_2": {
+      "name": "Los escalones del monasterio",
+      "text": "En los escalones del monasterio, Shuang está sentada con un tobillo hinchado y la cinta celeste atada como venda. Te ve y levanta el mentón. «No es nada. Seguí, que la apuesta corre».",
+      "help": "Ayudarla a subir",
+      "helpResult": "Le hacés de bastón tres tramos largos. Arriba, sin mirarte, te corrige la postura de un golpe: «Así se hace en el Ave Azul. No le digas a nadie».",
+      "pass": "Seguir: la apuesta es la apuesta",
+      "passResult": "«¡Eso!», te grita, y se ríe aunque le duela. Más arriba encontrás su bolsa de jade colgada de una rama, con una nota: «Por las dudas, para que no digas que gané con ventaja»."
+    },
+    "shuang_3": {
+      "name": "El puente de cuerdas",
+      "text": "Shuang te espera en la mitad de un puente de cuerdas, con las nubes abajo. «Ya sé que subís. Ahora quiero saber cómo pegás».",
+      "duel": "Medir los puños",
+      "duelResult": "Se pone en guardia. El puente se mece con cada paso.",
+      "spar": "Entrenar sin golpearse",
+      "sparResult": "Practican hasta que se va el sol, corrigiéndose mutuamente. Aprendés más de lo que pensabas enseñar."
+    },
+    "shuang_4": {
+      "name": "La maestra del Ave Azul",
+      "text": "Al reparo de una roca, Shuang mira la nieve. «Mi maestra subió y no bajó. Dicen que la Dama del Viento no la dejó pasar». Te mira de reojo. «¿A tu maestro le pasó algo así?».",
+      "share": "Contarle lo que te enseñó el maestro",
+      "shareResult": "Le contás del cuaderno, de las cartas firmadas con una S. Shuang se ríe bajito y por primera vez no apuesta nada. Compartiendo el fuego, se les pasa el frío.",
+      "silence": "Quedarte en silencio",
+      "silenceResult": "Asiente como si hubieras contestado. «Bueno. Cada escuela con lo suyo». Se levanta y te deja la piedra de afilar del Ave Azul."
+    },
+    "shuang_5_kind": {
+      "name": "La pluma azul",
+      "text": "En la última curva antes de la cumbre, Shuang te espera sin apuro. «Llegué primero, pero te esperé. No tiene gracia ganar sola». Te tiende una pluma azul.",
+      "take": "Aceptar la pluma",
+      "takeResult": "«Es de mi maestra. Ella habría querido que la lleve alguien que sube bien». La pluma pesa menos que el aire y te da coraje.",
+      "climb": "Subir a la par el último tramo",
+      "climbResult": "Suben hombro con hombro, sin hablar. Nadie cuenta quién pone el pie primero. El pecho se te ensancha."
+    },
+    "shuang_5_proud": {
+      "name": "La cumbre es mía",
+      "text": "Shuang te cierra el paso en la última curva, con la cinta celeste bien apretada. «Todas las veces me ganaste en algo. Hoy no». Ya está en guardia.",
+      "duel": "Pelear por la cumbre",
+      "duelResult": "No hay apuesta ni risa. Solo dos escuelas y una montaña.",
+      "yield": "Dejarla pasar primero",
+      "yieldResult": "Te mira mucho rato. «...Gracias». Sube primero. Al pasar te deja una mano en el hombro, y el aliento te vuelve entero."
     },
     "smith": {
       "name": "La fragua del monasterio",
@@ -1186,6 +1218,56 @@
       "title": "Descansar un rato",
       "text": "El dragón está cansado. Sueña con un discípulo que llegue arriba y respire por él un rato, para poder dormir sin soñar. Lo soñó muchas veces y cada vez tenía otra cara. Esta vez, la tuya.",
       "hint": "Un sueño del dragón: llega acampando entre etapas o al caer."
+    },
+    "shuang_1": {
+      "title": "Escarcha",
+      "text": "Shuang, de la escuela del Ave Azul (青鸾派). Su nombre quiere decir escarcha, pero se ríe fácil. Apuesta carreras a la cumbre con cualquiera que lleve cinta.",
+      "hint": "Una discípula de otra escuela anda por el sendero de piedra."
+    },
+    "shuang_2": {
+      "title": "Los escalones del monasterio",
+      "text": "Shuang se torció un tobillo en los escalones del monasterio y no pidió ayuda. Lo que hiciste ahí, ella no lo olvida: en el Ave Azul se cuentan las deudas y los favores.",
+      "hint": "Shuang sigue subiendo. Buscala en el monasterio."
+    },
+    "shuang_3": {
+      "title": "El puente de cuerdas",
+      "text": "En el puente, con las nubes abajo, Shuang quiso saber cómo pegás. Dos escuelas que se miran a los ojos aprenden más que dos que se dan la espalda.",
+      "hint": "Shuang te va a esperar más arriba."
+    },
+    "shuang_4": {
+      "title": "La maestra del Ave Azul",
+      "text": "La maestra de Shuang también subió y no bajó: la Dama del Viento no la dejó pasar. Shuang sube para preguntarle por qué. Igual que vos, tiene a alguien que se quedó en la nieve.",
+      "hint": "Shuang tiene algo para contar cerca de la cumbre."
+    },
+    "shuang_5": {
+      "title": "Dos escuelas, una cumbre",
+      "text": "Al final, Shuang ya no apuesta: sube. A veces a tu lado, a veces delante, a veces enfrente. El Ave Azul y el Dragón Dormido se conocen mejor que antes.",
+      "hint": "La última curva antes de la cumbre."
+    },
+    "bao_1": {
+      "title": "El del fardo",
+      "text": "«Me dicen Tío Bao. Subo y bajo esta montaña desde antes de que tu maestro tuviera canas. No peleo: vendo. También es una forma de llegar arriba».",
+      "hint": "Buscá al mercader en el sendero."
+    },
+    "bao_2": {
+      "title": "Las sandalias gastadas",
+      "text": "«¿Ves estas sandalias? Son las terceras del año. Ustedes suben una vez; yo, todas las semanas. Si alguien sabe dónde patina la piedra, soy yo. Comprá tranquilo, que no te vendo nada que resbale».",
+      "hint": "Tío Bao habla más con quien le compra."
+    },
+    "bao_3": {
+      "title": "La cinta del fardo",
+      "text": "«Esta cinta la guardo de cuando tenía tu edad. No, esa no está en venta. Algunas cosas se cargan para no olvidarse de dónde uno viene».",
+      "hint": "Tío Bao habla más con quien le compra."
+    },
+    "bao_4": {
+      "title": "El monasterio",
+      "text": "«En el monasterio me quedé sin aliento. No me caí, eh: me senté. Desde la piedra vi pasar a los demás y pensé que alguien tenía que subirles té. Y acá estoy, con el té».",
+      "hint": "Tío Bao habla más con quien le compra."
+    },
+    "bao_5": {
+      "title": "Precio de amigo",
+      "text": "«Fui discípulo del Dragón Dormido, como vos. Tu maestro me ganó una carrera hasta el santuario y nunca se lo perdoné... bueno, un poco sí. Desde hoy, a vos te cobro como a la familia». Tío Bao vende un 10% más barato.",
+      "hint": "Tío Bao habla más con quien le compra."
     }
   },
   "masterLines": {

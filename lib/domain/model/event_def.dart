@@ -104,9 +104,14 @@ class EventOptionDef {
     this.price = 0,
     this.duel,
     this.needs,
+    this.bond,
   });
 
   final String id;
+
+  /// En un capítulo de hilo: cómo deja el lazo con el personaje (`kind`
+  /// amable, `proud` orgulloso).
+  final String? bond;
 
   /// Solo aparece si se cumple (un talismán, el arma o una forma).
   final EventNeed? needs;
@@ -135,6 +140,7 @@ class EventOptionDef {
       chance: chance,
       price: j['price'] as int? ?? 0,
       duel: j['duel'] as String?,
+      bond: j['bond'] as String?,
       needs: j['needs'] == null
           ? null
           : EventNeed.fromJson(j['needs'] as Map<String, dynamic>),
@@ -158,7 +164,17 @@ class EventDef {
     this.path,
     this.after,
     this.ambush = false,
+    this.thread,
+    this.chapter = 0,
+    this.bond,
   });
+
+  /// Capítulo [chapter] del hilo [thread]: sale una vez, en la subida que
+  /// le toca, y antes que cualquier otro evento. Con [bond], solo si el
+  /// lazo con el personaje es ese (dos versiones del mismo capítulo).
+  final String? thread;
+  final int chapter;
+  final String? bond;
 
   final String id;
   final String hanzi;
@@ -191,5 +207,8 @@ class EventDef {
     path: j['path'] == null ? null : Style.parse(j['path'] as String),
     after: j['after'] as String?,
     ambush: j['ambush'] as bool? ?? false,
+    thread: j['thread'] as String?,
+    chapter: j['chapter'] as int? ?? 0,
+    bond: j['bond'] as String?,
   );
 }

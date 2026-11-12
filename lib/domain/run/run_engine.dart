@@ -16,6 +16,7 @@ import 'ghost.dart';
 import 'legacy.dart';
 import 'path_gen.dart';
 import 'run_state.dart';
+import 'threads.dart';
 
 /// Reglas de la run: mapa, recompensas, santuario, eventos, talismanes,
 /// mercader, maestro errante y fuente de meditación.
@@ -34,6 +35,7 @@ class RunEngine {
     MetaBonus meta = MetaBonus.none,
     Ghost? ghost,
     Legacy? legacy,
+    Set<String> threads = const {},
   }) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp +
@@ -65,6 +67,7 @@ class RunEngine {
       jade: meta.startJade,
       rerollsLeft: meta.rerolls,
       ghost: ghost,
+      threads: threads,
     );
     if (fixed == null) r = _openDepth(r, 0);
     if (meta.upgradedStarters > 0) {
@@ -491,7 +494,7 @@ class RunEngine {
       final b = data.balance;
       final (roll, rng) = entered.rng.nextInt(b.merchantSpread * 2 + 1);
       return _rollShop(
-        entered.copyWith(
+        _baoChapter(entered).copyWith(
           combatsSinceMerchant: 0,
           nextMerchantAt: math.max(1, b.merchantEvery - b.merchantSpread + roll),
           stageMerchants: entered.stageMerchants + 1,
@@ -989,21 +992,38 @@ class RunEngine {
 
   // --------------------------------------------------------------- eventos
 
-  /// Primero el del camino en esta etapa, después la segunda parte de un
+  /// Primero el del camino en esta etapa, después el capítulo de hilo que
+  /// toca, la segunda parte de un
   /// evento de más abajo, los propios de la etapa que no viste, los
   /// generales que no viste y, si ya viste todo, cualquiera de la etapa. Los
   /// de otro camino nunca salen; una segunda parte, solo con su marca.
   RunState _rollEvent(RunState r) {
     final stageId = stageOf(r).id;
+    // El capítulo de hilo que toca en esta subida (uno por hilo).
+    final chapters = [
+      for (final e in data.events)
+        if (e.thread != null &&
+            e.fitsStage(stageId) &&
+            !r.threadRun.contains(e.thread) &&
+            e.chapter == chapterOf(r.threads, e.thread!) + 1 &&
+            (e.bond == null || e.bond == bondOf(r.threads, e.thread!)))
+          e.id,
+    ];
     final here = [
       for (final e in data.events)
-        if (e.fitsStage(stageId) &&
+        if (e.thread == null &&
+            e.fitsStage(stageId) &&
             (e.path == null || e.path == r.style) &&
             (e.after == null || (r.marks[e.after] ?? r.stage) < r.stage))
           e,
     ];
     final fresh = [for (final e in here) if (!r.seenEvents.contains(e.id)) e];
     final path = [for (final e in fresh) if (e.path != null) e.id];
+    // Después del propio del camino, el capítulo de hilo que toca.
+    if (path.isEmpty && chapters.isNotEmpty) {
+      final (picked, rng) = _pick(r.rng, chapters);
+      return r.copyWith(eventId: picked, rng: rng);
+    }
     final back = [for (final e in fresh) if (e.after != null) e.id];
     final own = [for (final e in fresh) if (e.stages != null) e.id];
     final pool = path.isNotEmpty
@@ -1163,6 +1183,17 @@ class RunEngine {
     if (offer != null) next = offer;
     if (outcome.mark != null) {
       next = next.copyWith(marks: {...next.marks, outcome.mark!: r.stage});
+    }
+    if (event.thread case final thread?) {
+      final chapter = '${thread}_${event.chapter}';
+      next = next.copyWith(
+        threads: {
+          ...next.threads,
+          chapter,
+          if (option.bond != null) '${chapter}_${option.bond}',
+        },
+        threadRun: [...next.threadRun, thread],
+      );
     }
     // El duelo de la opción; o el del resultado (escabullirse y que te vean).
     final duel = success == false ? outcome.duel : option.duel ?? outcome.duel;
@@ -1369,9 +1400,23 @@ class RunEngine {
       .merchantAt(r.stage)
       .discounted(
         r.meta.merchantDiscountPct +
+            (baoFriend(r.threads) ? data.balance.baoFriendPct : 0) +
             talismanSum(r, (e) => e.shopDiscountPct) -
             data.balance.picoMods(r.pico).merchantPct,
       );
+
+  /// Tío Bao cuenta un capítulo más de su historia si le toca en esta
+  /// subida (uno por subida, y si la otra vez le compraste algo).
+  RunState _baoChapter(RunState r) {
+    final n = r.threadRun.contains(threadBao) ? null : nextBaoChapter(r.threads);
+    if (n == null) return r.copyWith(clearThreadLine: true);
+    final mark = '${threadBao}_$n';
+    return r.copyWith(
+      threads: {...r.threads, mark},
+      threadRun: [...r.threadRun, threadBao],
+      threadLine: mark,
+    );
+  }
 
   RunState _rollShop(RunState r) {
     final m = merchantOf(r);
@@ -1437,20 +1482,20 @@ class RunEngine {
     final price = cardPrice(r, cardId);
     _checkShop(r, price);
     if (!r.shopCards.contains(cardId)) throw StateError('No está en venta');
-    return r.copyWith(
+    return _trust(r.copyWith(
       jade: r.jade - price,
       deck: [...r.deck, CombatCard(uid: r.nextUid, cardId: cardId)],
       nextUid: r.nextUid + 1,
       shopCards: [for (final c in r.shopCards) if (c != cardId) c],
-    );
+    ));
   }
 
   RunState buyTalisman(RunState r) {
     final price = merchantOf(r).talisman;
     _checkShop(r, price);
     if (r.shopTalisman == null) throw StateError('No hay talismán');
-    return addTalisman(r, r.shopTalisman!)
-        .copyWith(jade: r.jade - price, clearShopTalisman: true);
+    return _trust(addTalisman(r, r.shopTalisman!)
+        .copyWith(jade: r.jade - price, clearShopTalisman: true));
   }
 
   /// Comprar el raro de la vitrina.
@@ -1458,8 +1503,8 @@ class RunEngine {
     final price = merchantOf(r).rare;
     _checkShop(r, price);
     if (r.shopRare == null) throw StateError('No hay vitrina');
-    return addTalisman(r, r.shopRare!)
-        .copyWith(jade: r.jade - price, clearShopRare: true);
+    return _trust(addTalisman(r, r.shopRare!)
+        .copyWith(jade: r.jade - price, clearShopRare: true));
   }
 
   /// Comprar el arma en venta (sin arma).
@@ -1468,10 +1513,10 @@ class RunEngine {
     _checkShop(r, price);
     final w = r.shopWeapon;
     if (w == null || r.weapon != null) throw StateError('No hay arma');
-    return equipWeapon(r, w).copyWith(
+    return _trust(equipWeapon(r, w).copyWith(
       jade: r.jade - price,
       clearShopWeapon: true,
-    );
+    ));
   }
 
   /// Templar el arma con el mercader (una vez por tienda).
@@ -1479,25 +1524,25 @@ class RunEngine {
     final price = merchantOf(r).weaponForge;
     _checkShop(r, price);
     if (r.shopForged || r.shopWeapon != r.weapon) throw StateError('Ya se usó');
-    return forgeWeapon(r).copyWith(jade: r.jade - price, shopForged: true);
+    return _trust(forgeWeapon(r).copyWith(jade: r.jade - price, shopForged: true));
   }
 
   RunState buyRemove(RunState r, int uid) {
     final price = merchantOf(r).remove;
     _checkShop(r, price);
     if (r.shopRemoved) throw StateError('Ya se usó');
-    return r.copyWith(
+    return _trust(r.copyWith(
       jade: r.jade - price,
       deck: [for (final c in r.deck) if (c.uid != uid) c],
       shopRemoved: true,
-    );
+    ));
   }
 
   RunState buyUpgrade(RunState r, int uid) {
     final price = merchantOf(r).upgrade;
     _checkShop(r, price);
     if (r.shopUpgraded) throw StateError('Ya se usó');
-    return _upgrade(r, uid).copyWith(jade: r.jade - price, shopUpgraded: true);
+    return _trust(_upgrade(r, uid).copyWith(jade: r.jade - price, shopUpgraded: true));
   }
 
   /// Té de jengibre: cura un poco, una vez por tienda.
@@ -1505,17 +1550,27 @@ class RunEngine {
     final m = merchantOf(r);
     _checkShop(r, m.tea);
     if (r.shopTea) throw StateError('Ya se usó');
-    return r.copyWith(
+    return _trust(r.copyWith(
       jade: r.jade - m.tea,
       hp: math.min(r.maxHp, r.hp + m.teaHeal),
       shopTea: true,
-    );
+    ));
+  }
+
+  /// Comprarle algo a Tío Bao suma confianza: abre su próximo capítulo
+  /// para otra subida.
+  RunState _trust(RunState r) {
+    final n = chapterOf(r.threads, threadBao);
+    final mark = '${threadBao}_${n}_trust';
+    if (n == 0 || r.threads.contains(mark)) return r;
+    return r.copyWith(threads: {...r.threads, mark});
   }
 
   RunState leaveShop(RunState r) {
     if (r.phase != RunPhase.merchant) throw StateError('No hay mercader');
     return r.copyWith(
       phase: RunPhase.map,
+      clearThreadLine: true,
       shopCards: const [],
       clearShopTalisman: true,
       clearShopRare: true,

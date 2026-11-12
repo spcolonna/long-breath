@@ -29,6 +29,7 @@ class ProgressStorage {
     'cinematics',
     'run',
     'hitos',
+    'threads',
   ];
 
   String get _key => '${prefix}winsByDifficulty';
@@ -41,6 +42,7 @@ class ProgressStorage {
   String get _meridiansKey => '${prefix}meridians';
   String get _cinematicsKey => '${prefix}cinematics';
   String get _hitosKey => '${prefix}hitos';
+  String get _threadsKey => '${prefix}threads';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -105,6 +107,20 @@ extension SchoolRecord on ProgressStorage {
       }
     }
     return out;
+  }
+
+  /// Marcas de los hilos (ver `threads.dart`).
+  Future<Set<String>> threads() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {...?prefs.getStringList(_threadsKey)};
+  }
+
+  /// Suma marcas de los hilos (nunca se borran).
+  Future<void> addThreads(Iterable<String> marks) async {
+    final prefs = await SharedPreferences.getInstance();
+    final have = await threads();
+    if (have.containsAll(marks)) return;
+    await prefs.setStringList(_threadsKey, [...have, ...marks.where((m) => !have.contains(m))]);
   }
 
   Future<Set<String>> lore() async {

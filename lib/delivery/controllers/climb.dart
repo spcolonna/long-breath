@@ -15,6 +15,7 @@ Future<void> startClimb(BuildContext context, WidgetRef ref) async {
   final locked = (await ref.read(cultivationProvider.future)).locked;
   final meta = await ref.read(metaBonusProvider.future);
   final ascents = await ref.read(ascentsProvider.future);
+  final threads = await ref.read(threadsProvider.future);
   if (!context.mounted) return;
   final difficulty = info?.difficulty ?? Difficulty.normal;
   ref
@@ -25,6 +26,7 @@ Future<void> startClimb(BuildContext context, WidgetRef ref) async {
         locked: locked,
         meta: meta,
         ghost: ghostFrom(ascents),
+        threads: threads,
         legacy: ref
             .read(runEngineProvider)
             .legacyOf(ascents.isEmpty ? null : ascents.last),

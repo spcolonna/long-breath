@@ -69,7 +69,7 @@ grep -E "CAMINO|gana el combate|pierde|compra|evento:|respira|COMBATE" actual.lo
 
 ```bash
 flutter analyze
-flutter test                          # 300 tests, todos pasan
+flutter test                          # 306 tests, todos pasan
 python3 tool/make_audio.py            # regenera todo el sonido (o: make_audio.py <id>)
 dart run tool/simulate.dart --runs 300 --profile promedio --difficulty normal   # ~45 s
 dart run tool/simulate.dart --runs 300 --profile experto --difficulty normal
@@ -186,7 +186,8 @@ macOS no tiene `timeout`.
 9. **Plan «juego pro» (10/11):** `docs/plan-pro.md` (orden y decisiones) y `docs/historia.md` (biblia: nombres, sueños, votos).
    - **Hecho:** paso 1 (caída bien atribuida, guardados robustos, `errors.log` en Documents) y paso 3 parcial (campamento entre etapas con carta del maestro o sueño del dragón y voto opcional; un sueño nuevo en cada caída).
    - **Falta medir con simulación:** si conviene que los bots usen votos (hoy los bots no votan).
-   - **Siguiente:** hilos entre subidas (rival Shuang, Tío Bao).
+   - **Hilos (12/11):** Shuang (5 capítulos de evento, uno por subida, con lazo amable u orgulloso y dos finales) y Tío Bao (se presenta y cuenta un capítulo por subida si le compraste algo; en el 5, 10% de descuento). Marcas en `ProgressStorage.threads`, pergaminos `shuang_*` y `bao_*` en el registro. Detalle en `docs/historia.md`. Simulación sin cambios (promedio 4%, experto 28% sin árbol).
+   - **Siguiente:** herido y herrero como hilos; páginas sueltas en el cofre y bestiario (plan pro 1.4).
 8. Opcional: un lugar lacrado de la Grulla en el santuario, que muestre «se abre en 筑基 · 58/90».
 
 ## Notas técnicas

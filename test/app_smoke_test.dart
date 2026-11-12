@@ -329,7 +329,11 @@ void main() {
     );
     GoRouter.of(tester.element(find.byType(Scaffold).first)).go('/merchant');
     await settle();
-    expect(find.text('Mercader de pergaminos'), findsOneWidget);
+    // La primera vez, Tío Bao se presenta antes de abrir el fardo.
+    expect(find.text('El del fardo'), findsOneWidget);
+    await tester.tap(find.text('Ver la mercancía'));
+    await settle();
+    expect(find.text('Tío Bao, el del fardo'), findsOneWidget);
     final shop = container.read(runControllerProvider)!;
     final ware = container.read(textProvider).talisman(shop.shopTalisman!);
     await tester.tap(find.widgetWithText(Tab, 'Objetos'));

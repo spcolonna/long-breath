@@ -21,8 +21,8 @@ Al pie de la Montaña de las Mil Nubes, la escuela del Dragón Dormido (卧龙�
 | Dragón Dormido | — | El primer muchacho que subió. Prometió respirar por el valle. Escribe en la piedra de la cumbre los nombres que sueña. | Sueños, jefe final |
 | Dama del Viento | — | La primera que llegó al templo helado. Tiene miedo de elegir mal y por eso no deja pasar a nadie. | Élite de la etapa 3, sueño 7 |
 | Monje sin Rostro | — | Fue maestro antes que el maestro. Cuida el **sendero de piedra** (etapa 1, no las campanas). | Élite de la etapa 1 |
-| Mercader | 包叔 **Tío Bao**, «el del fardo» *(planeado, hilo 1.1)* | Fue discípulo, se quedó sin aliento en el monasterio y eligió bajar y subir vendiendo, sin pelear. | Mercader |
-| Rival | 霜 **Shuang**, «Escarcha», de la escuela del Ave Azul (青鸾派) *(planeado)* | Apuesta carreras a la cumbre. La cadena `rival` → `rival_summit`. | Eventos |
+| Mercader | 包叔 **Tío Bao**, «el del fardo» | Fue discípulo, se quedó sin aliento en el monasterio y eligió bajar y subir vendiendo, sin pelear. El maestro Song le ganó una carrera hasta el santuario. | Mercader (hilo `bao_1`…`bao_5`) |
+| Rival | 霜 **Shuang**, «Escarcha», de la escuela del Ave Azul (青鸾派) | Apuesta carreras a la cumbre. Su maestra tampoco pasó a la Dama del Viento. | Eventos del hilo `shuang_1`…`shuang_5` (reemplazan a `rival` → `rival_summit`) |
 | Monje herido | 明 **Hermano Ming** *(planeado)* | Cadena `wounded` → `wounded_return`. | Eventos |
 | Herrero | 铁 **Maestro Tie** *(planeado)* | Cadena `smith` → `smith_delivery`. | Eventos |
 
@@ -39,7 +39,7 @@ Al pie de la Montaña de las Mil Nubes, la escuela del Dragón Dormido (卧龙�
 | **Campamento entre etapas** | Carta del maestro la primera vez (`letter_1`, `letter_2`). Después, el próximo sueño del dragón. Voto opcional para la etapa siguiente. | **Hecho (10/11)** |
 | **Al caer** | El próximo sueño del dragón (`dream_1`…`dream_10`, en orden) | **Hecho (10/11)** |
 | Final de la subida | Cumbre, epílogo, final por camino, «El nombre que falta» | Hecho |
-| Entre subidas | Hilos con personajes (rival, mercader, herido, herrero) que recuerdan lo que hiciste | Planeado (`docs/plan-pro.md` 1.1) |
+| Entre subidas | Hilos: Shuang y Tío Bao, un capítulo por subida, que recuerdan lo que hiciste. Herido y herrero, pendientes. | **Hecho (12/11)**: Shuang y Tío Bao |
 
 ## Los sueños del dragón (orden fijo)
 1. Un sueño de nubes: te respiran desde arriba.
@@ -64,3 +64,18 @@ Son talismanes de rareza `vow` en `talismans.json`: duran una etapa, no salen co
 | Firmeza | 坚 | Conservás el 25% de la Guardia | −6 Vida máxima |
 | Fiereza | 猛 | +2 de daño en los golpes pesados | −4 Estructura |
 | Loto | 莲 | Las formas curan 8 | Mercader 20% más caro |
+
+## Hilos (12/11)
+Reglas en `lib/domain/run/threads.dart`. Las marcas se guardan por partida (`ProgressStorage.threads`) apenas pasan, y cada capítulo abre su pergamino en el registro.
+
+**Shuang** (eventos con `thread`/`chapter` en `events.json`). Sale como mucho un capítulo por subida, después del evento propio del camino y antes que los demás. Cada opción deja un lazo: `kind` (amable) u `proud` (orgulloso).
+
+| Cap. | Etapa | Escena | Amable | Orgulloso |
+|---|---|---|---|---|
+| 1 | 1 | La apuesta en el sendero | Inclinarte: cura 6 | Aceptar: carta |
+| 2 | 2 | Tobillo torcido en los escalones | Ayudarla: −4 Vida, mejora | Seguir: +25 jade |
+| 3 | 2–3 | El puente de cuerdas | Entrenar: mejora a elección | Duelo |
+| 4 | 3 | Su maestra y la Dama del Viento | Contarle: cura 10 | Silencio: temple |
+| 5 | 3 | Si ganó lo amable: la pluma azul (talismán raro o +6 Vida máx.). Si ganó lo orgulloso: te cierra el paso (duelo o dejarla pasar: cura 12). | | |
+
+**Tío Bao** (la tienda). La primera vez se presenta. Después cuenta el capítulo siguiente en otra subida, solo si después del anterior le compraste algo (`bao_<n>_trust`). En el capítulo 5 confiesa que fue discípulo y desde entonces vende un 10% más barato (`run.threads.baoFriendPct`).

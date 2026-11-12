@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/model/game_balance.dart';
+import '../../domain/run/threads.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
@@ -23,6 +24,8 @@ import '../feel.dart';
 import '../widgets/node_kit.dart';
 import '../widgets/paper_panel.dart';
 import '../widgets/scroll_panel.dart';
+import '../widgets/lore_scroll.dart';
+import '../widgets/lotus.dart';
 
 /// Lo que se tiene elegido en la tienda.
 sealed class _Item {
@@ -87,6 +90,9 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
   final _bought = <_Item>{};
   int _burst = 0;
   int? _spent;
+
+  /// Ya se escuchó lo que Tío Bao tenía para contar en esta visita.
+  bool _heard = false;
 
   /// La carta en oferta al entrar (queda marcada aunque se compre).
   String? _sale;
@@ -256,7 +262,13 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
               ),
               Expanded(
                 // Pestañas: cada parte de la tienda entra sin desplazar.
-                child: DefaultTabController(
+                // Antes, si le toca, Tío Bao cuenta un capítulo suyo.
+                child: run.threadLine != null && !_heard
+                    ? _BaoTale(
+                        id: run.threadLine!,
+                        onDone: () => setState(() => _heard = true),
+                      )
+                    : DefaultTabController(
                   length: hasItems ? 3 : 2,
                   child: Column(
                   children: [
@@ -268,7 +280,9 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      t.merchantTitle,
+                      run.threads.contains('${threadBao}_1')
+                          ? t.merchantBao
+                          : t.merchantTitle,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 22,
@@ -837,4 +851,65 @@ class _SaleTagState extends State<_SaleTag>
       ),
     ),
   );
+}
+
+/// Tío Bao se sienta y cuenta un capítulo de su historia (queda como
+/// pergamino en el registro); después, la tienda.
+class _BaoTale extends StatelessWidget {
+  const _BaoTale({required this.id, required this.onDone});
+
+  final String id;
+  final VoidCallback onDone;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Column(
+        children: [
+          StaggerIn(
+            index: 0,
+            child: NpcPortrait(
+              asset: 'assets/art/npc/merchant.webp',
+              color: Palette.jade,
+              height: 120,
+              badge: const InkSeal(hanzi: '包', color: Palette.jade, size: 40),
+            ),
+          ),
+          const SizedBox(height: 6),
+          StaggerIn(
+            index: 1,
+            child: Text(
+              t.merchantTale,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+                color: Palette.textDim,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          StaggerIn(
+            index: 2,
+            delay: const Duration(milliseconds: 200),
+            child: LoreScroll(id: id, fresh: true),
+          ),
+          const SizedBox(height: 14),
+          StaggerIn(
+            index: 3,
+            delay: const Duration(milliseconds: 350),
+            child: FilledButton(
+              onPressed: () {
+                Haptics.tap();
+                onDone();
+              },
+              child: Text(t.merchantTaleGo),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

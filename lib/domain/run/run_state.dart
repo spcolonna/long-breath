@@ -154,6 +154,9 @@ class RunState {
     this.eventId,
     this.seenEvents = const [],
     this.marks = const {},
+    this.threads = const {},
+    this.threadRun = const [],
+    this.threadLine,
     this.lastEvent,
     this.duel,
     required this.map,
@@ -253,6 +256,17 @@ class RunState {
 
   /// Marcas de eventos en dos partes, con la etapa en que se dejaron.
   final Map<String, int> marks;
+
+  /// Marcas de los hilos que cruzan subidas (ver `threads.dart`): las que
+  /// la partida traía al empezar más las que dejó esta subida.
+  final Set<String> threads;
+
+  /// Hilos que ya avanzaron un capítulo en esta subida.
+  final List<String> threadRun;
+
+  /// Capítulo del hilo que se cuenta en el lugar de ahora (el pergamino que
+  /// dice Tío Bao al abrir la tienda), o null.
+  final String? threadLine;
 
   /// Resultado del último evento resuelto.
   final EventResult? lastEvent;
@@ -372,6 +386,10 @@ class RunState {
     bool clearEventId = false,
     List<String>? seenEvents,
     Map<String, int>? marks,
+    Set<String>? threads,
+    List<String>? threadRun,
+    String? threadLine,
+    bool clearThreadLine = false,
     EventResult? lastEvent,
     String? duel,
     bool clearDuel = false,
@@ -439,6 +457,9 @@ class RunState {
         eventId: clearEventId ? null : eventId ?? this.eventId,
         seenEvents: seenEvents ?? this.seenEvents,
         marks: marks ?? this.marks,
+        threads: threads ?? this.threads,
+        threadRun: threadRun ?? this.threadRun,
+        threadLine: clearThreadLine ? null : threadLine ?? this.threadLine,
         lastEvent: lastEvent ?? this.lastEvent,
         duel: clearDuel ? null : duel ?? this.duel,
         map: map ?? this.map,
@@ -514,6 +535,9 @@ class RunState {
         'eventId': eventId,
         'seenEvents': seenEvents,
         'marks': marks,
+        if (threads.isNotEmpty) 'threads': [...threads],
+        if (threadRun.isNotEmpty) 'threadRun': threadRun,
+        if (threadLine != null) 'threadLine': threadLine,
         'lastEvent': lastEvent?.toJson(),
         'duel': duel,
         'map': [for (final n in map) n.toJson()],
@@ -593,6 +617,9 @@ class RunState {
         eventId: j['eventId'] as String?,
         seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),
         marks: ((j['marks'] as Map?) ?? const {}).cast<String, int>(),
+        threads: {...((j['threads'] as List?) ?? const []).cast<String>()},
+        threadRun: ((j['threadRun'] as List?) ?? const []).cast<String>(),
+        threadLine: j['threadLine'] as String?,
         lastEvent: switch (j['lastEvent']) {
           final Map<String, dynamic> e => EventResult.fromJson(e),
           _ => null,

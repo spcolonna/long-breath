@@ -1,3 +1,4 @@
+import 'threads.dart';
 import '../model/enums.dart';
 
 /// Una subida terminada, tal como queda en el registro de la escuela: quién
@@ -200,6 +201,7 @@ const loreOrder = [
   'fallen_10',
   ...dreamOrder,
   'master_name',
+  ...threadLore,
 ];
 
 /// Los sueños del dragón: cuentan su historia en orden, uno por vez, al

@@ -678,6 +678,7 @@ class GameBalance {
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     this.path = const PathRules(),
+    this.baoFriendPct = 0,
     required this.difficulties,
     this.picos = const [],
     this.awakeningChoices = 3,
@@ -778,6 +779,9 @@ class GameBalance {
 
   /// Reglas de las puertas del sendero.
   final PathRules path;
+
+  /// Descuento (%) de Tío Bao cuando ya contó toda su historia.
+  final int baoFriendPct;
 
   MerchantDef merchantAt(int stage) =>
       stage < stageMerchants.length ? stageMerchants[stage] : merchant;
@@ -924,6 +928,8 @@ class GameBalance {
                   as int? ??
               0,
       path: PathRules.fromJson(run['path'] as Map<String, dynamic>?),
+      baoFriendPct:
+          (run['threads'] as Map<String, dynamic>?)?['baoFriendPct'] as int? ?? 0,
       masterForms:
           ((j['master'] as Map<String, dynamic>?) ?? const {})['forms'] as int? ??
               2,

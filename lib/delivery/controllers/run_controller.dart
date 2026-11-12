@@ -11,6 +11,7 @@ import '../../domain/run/legacy.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../log/run_log.dart';
 import '../providers.dart';
+import '../../domain/run/threads.dart';
 import '../../domain/run/map_rows.dart';
 
 /// Run en curso. Cada cambio se guarda localmente.
@@ -33,6 +34,9 @@ class RunController extends Notifier<RunState?> {
     final prev = state;
     state = r;
     ref.read(runStorageProvider).save(r);
+    if (r != null && prev != null && r.threads.length != prev.threads.length) {
+      _saveThreads(r.threads.difference(prev.threads));
+    }
     final finished = prev != null &&
         (prev.phase == RunPhase.victory || prev.phase == RunPhase.defeat);
     if (prev != null && !(r == null && finished)) {
@@ -40,6 +44,18 @@ class RunController extends Notifier<RunState?> {
         runDiff(prev, r, what: what, options: options),
       );
     }
+  }
+
+  /// Los hilos se guardan en la partida apenas avanzan (salir a mitad de
+  /// la subida no los pierde) y cada capítulo abre su pergamino.
+  Future<void> _saveThreads(Set<String> fresh) async {
+    final progress = ref.read(progressStorageProvider);
+    await progress.addThreads(fresh);
+    for (final id in fresh) {
+      if (threadLore.contains(id)) await progress.unlockLore(id);
+    }
+    ref.invalidate(threadsProvider);
+    ref.invalidate(loreProvider);
   }
 
   /// Empieza el registro de una subida nueva.
@@ -61,6 +77,7 @@ class RunController extends Notifier<RunState?> {
     MetaBonus? meta,
     Ghost? ghost,
     Legacy? legacy,
+    Set<String>? threads,
   }) {
     final run = _engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
@@ -71,6 +88,7 @@ class RunController extends Notifier<RunState?> {
         meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
         legacy: legacy,
+        threads: threads ?? ref.read(threadsProvider).value ?? const {},
       );
     _startLog(run);
     _set(run);

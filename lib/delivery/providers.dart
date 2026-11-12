@@ -175,6 +175,11 @@ final loreProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(progressStorageProvider).lore(),
 );
 
+/// Marcas de los hilos que cruzan subidas.
+final threadsProvider = FutureProvider<Set<String>>(
+  (ref) => ref.watch(progressStorageProvider).threads(),
+);
+
 /// Hitos 功 cumplidos en la partida.
 final hitosProvider = FutureProvider<Set<String>>((ref) {
   final def = ref.watch(dataProvider).balance.cultivation;

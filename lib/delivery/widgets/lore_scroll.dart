@@ -239,6 +239,22 @@ class LoreScroll extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                 ],
+                // Los capítulos de Tío Bao, con su cara (en el registro).
+                if (id.startsWith('bao_') && !fresh) ...[
+                  Center(
+                    child: NpcPortrait(
+                      asset: 'assets/art/npc/merchant.webp',
+                      color: Palette.jade,
+                      height: 110,
+                      badge: const InkSeal(
+                        hanzi: '包',
+                        color: Palette.jade,
+                        size: 40,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
                 Row(
                   children: [
                     // Cada final lleva el sello de su camino.

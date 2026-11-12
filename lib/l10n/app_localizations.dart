@@ -3424,6 +3424,24 @@ abstract class AppLocalizations {
   /// **'Mercader de pergaminos'**
   String get merchantTitle;
 
+  /// No description provided for @merchantBao.
+  ///
+  /// In es, this message translates to:
+  /// **'Tío Bao, el del fardo'**
+  String get merchantBao;
+
+  /// No description provided for @merchantTale.
+  ///
+  /// In es, this message translates to:
+  /// **'Tío Bao deja el fardo en el suelo y se sienta un momento.'**
+  String get merchantTale;
+
+  /// No description provided for @merchantTaleGo.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver la mercancía'**
+  String get merchantTaleGo;
+
   /// No description provided for @merchantHint.
   ///
   /// In es, this message translates to:

@@ -180,6 +180,10 @@ void main() {
     go(tester, '/merchant');
     await settle(tester);
     final shop = container.read(runControllerProvider)!;
+    if (find.text('Ver la mercancía').evaluate().isNotEmpty) {
+      await tester.tap(find.text('Ver la mercancía'));
+      await settle(tester);
+    }
     await tester.tap(find.text('Objetos'));
     await settle(tester);
     expect(find.text('VITRINA'), findsOneWidget);

@@ -2106,6 +2106,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get merchantTitle => 'Mercader de pergaminos';
 
   @override
+  String get merchantBao => 'Tío Bao, el del fardo';
+
+  @override
+  String get merchantTale =>
+      'Tío Bao deja el fardo en el suelo y se sienta un momento.';
+
+  @override
+  String get merchantTaleGo => 'Ver la mercancía';
+
+  @override
   String get merchantHint =>
       'Cambiá jade por cartas, un talismán o un servicio. Lo que no gastes te queda para después.';
 
