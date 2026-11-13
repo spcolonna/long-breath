@@ -22,18 +22,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DIR = ROOT / "assets/art/enemies"
 
 VARIANTS = {
-    # Etapa 2: Monasterio Colgado (bronce, azafrán, ceniza, hierro, jade, oro).
-    # Reserva: recoloreos guardados para enemigos secundarios (monk_amber y
-    # monk_slate ya tienen arte propio).
-    "lion_celadon": ("lion", [
-        ("gray", 160, 0.38, -0.06),
-        ("hue", 60, 140, 160, 1.0, -0.06),
-    ]),
-    # Etapa 3: monkey_snow, golem_ice, disciple_wind y bat_frost ya tienen
-    # arte propio.
-    # Reflejo del Dragón (élite de la etapa 2): el recoloreo que tenía el
-    # Dragón Dormido antes de tener arte propio.
-    "dragon_reflection": ("dragon", [("hue", 150, 210, 228, 1.0, -0.05)]),
+    # Vacío: todos los enemigos tienen arte propio (lion_celadon y
+    # dragon_reflection lo recibieron el 13/11). Si vuelve a hacer falta un
+    # recoloreo, se agrega acá: "variante": ("base", [reglas]).
 }
 
 

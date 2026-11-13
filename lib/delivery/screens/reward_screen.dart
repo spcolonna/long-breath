@@ -13,6 +13,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/paper_panel.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/deck_sheet.dart';
@@ -247,6 +248,25 @@ class _PageFound extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // La página sale del cofre girando un poco y se asienta.
+            StaggerIn(
+              index: 0,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0, end: 1),
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeOutBack,
+                builder: (_, v, child) => Transform.rotate(
+                  angle: (1 - v) * -0.35,
+                  child: Transform.scale(scale: 0.6 + 0.4 * v, child: child),
+                ),
+                child: const GameIcon(
+                  Icons.history_edu,
+                  size: 64,
+                  color: Palette.lacquer,
+                ),
+              ),
+            ),
+            const SizedBox(height: 6),
             StaggerIn(
               index: 0,
               child: Text(

@@ -13,6 +13,7 @@ final _painted = {
   Icons.favorite: 'heart',
   Icons.bolt: 'charge',
   Icons.savings_outlined: 'stolen',
+  Icons.history_edu: 'page',
 };
 
 class GameIcon extends StatelessWidget {

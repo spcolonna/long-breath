@@ -111,7 +111,7 @@ def main():
         "textura de los sellos del mapa (opcional)", "disco con degradado")
     add("ui", "ui/logo.webp", "logo 龙 del menú", "carácter 龙 en texto")
     for f in ("breath", "guard", "structure", "deflect", "stagger", "fountain",
-              "heart", "charge", "stolen"):
+              "heart", "charge", "stolen", "page"):
         add("ui", f"icons/{f}.webp", f"ícono de {f}", "ícono de Material")
     for f in ("fist", "palm", "kick", "defense", "technique"):
         add("ui", f"cards/frame_{f}.webp", f"marco de carta {f}",
@@ -127,6 +127,11 @@ def main():
             "arma dibujada por código")
     add("npc", "npc/master.webp", "maestro", "vacío")
     add("npc", "npc/merchant.webp", "mercader", "vacío")
+    add("npc", "npc/shuang.webp", "Shuang (su hilo de eventos y pergaminos)",
+        "sello del evento")
+    add("npc", "npc/ming.webp", "hermano Ming (peregrino herido)",
+        "sello del evento")
+    add("npc", "npc/tie.webp", "maestro Tie (herrero)", "sello del evento")
     for p in ("novice", "tiger", "snake", "crane"):
         add("héroe", f"player/hero_{p}.webp", f"héroe ({p})", "vacío")
 

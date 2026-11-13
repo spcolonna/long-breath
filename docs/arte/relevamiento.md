@@ -38,26 +38,26 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 - **Etapa 2:** `combat_bg` más sus 3 tramos (`ladera`, `bifurcacion` y `templo`, el Gran Campanario), `map_bg` y `fountain_bg`.
 - **Etapa 3:** `combat_bg` más sus 4 tramos (con `cumbre`, el Lecho del Dragón), `map_bg` y `fountain_bg`.
 - **UI:** `stage_clear_bg`, `lotus_seed` (semilla de loto) y `reward_chest` (cofre del botín).
-- **NPC:** `master` y `merchant`.
+- **NPC:** `master`, `merchant` y los retratos de los hilos (13/11): `shuang` (eventos y pergaminos de su hilo), `ming` (peregrino herido) y `tie` (herrero).
 - **Héroe:** `hero.png`. Los 4 caminos salen de él por recoloreo, que es así por diseño (`tool/recolor_hero.py`).
 - **Enemigos:**
   - etapa 1: dummy, bat, salamander, golem, disciple, bandit, lingzhi, monkey, monk, lion, fan y dragon;
   - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3);
-  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza), `disciple_wind` (Discípulo del Viento), `golem_ice` (Gólem de Escarcha), `monkey_snow` (Simio de las Nieves) y `bat_frost` (Murciélago de Escarcha);
+  - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza), `disciple_wind` (Discípulo del Viento), `golem_ice` (Gólem de Escarcha), `monkey_snow` (Simio de las Nieves), `bat_frost` (Murciélago de Escarcha), y los élites `dragon_reflection` (Reflejo del Dragón) y `lion_celadon` (León de Celadón), con arte propio desde el 13/11;
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
 - **Mapa:** `map_node_stone` (textura de los sellos).
-- **UI:** `ui/logo` (menú), los 6 íconos de `icons/` (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
+- **UI:** `ui/logo` (menú), los íconos de `icons/`, incluido `page` (página suelta: cofre y pergaminos `page_*`), (Aliento, Guardia, Estructura, desvío, desequilibrio y fuente, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
 - **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai`, `gongbu_tuizhang`, `pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li`, `hu_zhao`, `hu_pu`, `hu_bao_tou`, `hu_xiao`, `hu_wei`, `xia_shan_hu`, `hu_ya`, `hu_ben`, `e_hu_pu_shi`, `hu_dun`, `she_xing_shou`, `she_tu_xin`, `she_chan_shen`, `jin_she`, `she_wei`, `she_shan`, `she_hui_tou`, `ling_she`, `she_jiao`, `she_pan`, las 6 de cadena (`ma_zhuan_gong`, `gong_zhuan_xu`, `xu_zhuan_ma`, `hu_hui_shen`, `she_zhuan_shen`, `he_luo_di`) las 11 de la Grulla y las 12 de arma (`gun_sao`, `gun_ge`, `gun_tiao`, `gun_wuhua`, `jian_ci`, `jian_dian`, `jian_jie`, `jian_chuanxin`, `pudao_pi`, `pudao_lan`, `pudao_kan`, `pudao_chantou`). La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
 
 ## Reserva de recoloreos
 
-Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda en `VARIANTS` con otro nombre para usarla en un enemigo secundario. Hoy: `dragon_reflection` (Reflejo del Dragón) y `lion_celadon` (León de Celadón), en uso. `monk_amber` (Monje del Incienso) y `monk_slate` (Ermitaño de Pizarra) ya tienen arte propio.
+Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda en `VARIANTS` con otro nombre para usarla en un enemigo secundario. Hoy está vacía: `dragon_reflection` y `lion_celadon` recibieron arte propio el 13/11 y salieron de `VARIANTS`. `monk_amber` (Monje del Incienso) y `monk_slate` (Ermitaño de Pizarra) ya tienen arte propio.
 
 ## Pendiente, por prioridad
 
 ### 1. Enemigos y fondos
 
-Ya no falta ninguno: todos los enemigos tienen arte propio o un recoloreo de la reserva, y existen todos los fondos que busca el juego.
+Ya no falta ninguno: todos los enemigos tienen arte propio (ya no queda ningún recoloreo), y existen todos los fondos que busca el juego.
 
 ### 2. Sonido: no hay ningún archivo
 

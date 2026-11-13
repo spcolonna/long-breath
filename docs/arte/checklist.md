@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 165 · ✅ 163 · 🎨 2 · ❌ 0
+Total: 169 · ✅ 169 · 🎨 0 · ❌ 0
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -84,6 +84,7 @@ Total: 165 · ✅ 163 · 🎨 2 · ❌ 0
 | ✅ propio | `assets/art/icons/heart.webp` | ícono de heart | ícono de Material | — |
 | ✅ propio | `assets/art/icons/charge.webp` | ícono de charge | ícono de Material | — |
 | ✅ propio | `assets/art/icons/stolen.webp` | ícono de stolen | ícono de Material | — |
+| ✅ propio | `assets/art/icons/page.webp` | ícono de page | ícono de Material | — |
 | ✅ propio | `assets/art/cards/frame_fist.webp` | marco de carta fist | papel teñido sin marco | — |
 | ✅ propio | `assets/art/cards/frame_palm.webp` | marco de carta palm | papel teñido sin marco | — |
 | ✅ propio | `assets/art/cards/frame_kick.webp` | marco de carta kick | papel teñido sin marco | — |
@@ -173,6 +174,9 @@ Total: 165 · ✅ 163 · 🎨 2 · ❌ 0
 |---|---|---|---|---|
 | ✅ propio | `assets/art/npc/master.webp` | maestro | vacío | — |
 | ✅ propio | `assets/art/npc/merchant.webp` | mercader | vacío | — |
+| ✅ propio | `assets/art/npc/shuang.webp` | Shuang (su hilo de eventos y pergaminos) | sello del evento | — |
+| ✅ propio | `assets/art/npc/ming.webp` | hermano Ming (peregrino herido) | sello del evento | — |
+| ✅ propio | `assets/art/npc/tie.webp` | maestro Tie (herrero) | sello del evento | — |
 
 ## héroe
 
@@ -192,11 +196,11 @@ Total: 165 · ✅ 163 · 🎨 2 · ❌ 0
 | ✅ propio | `assets/art/enemies/monk_gold.webp` | bell_abbot (boss) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bell_keeper.webp` | bell_keeper (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/dragon_dream.webp` | dragon_dream (elite) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `dragon` | `assets/art/enemies/dragon_reflection.webp` | dragon_reflection (elite) | enemies/placeholder.webp | no |
+| ✅ propio | `assets/art/enemies/dragon_reflection.webp` | dragon_reflection (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/fan.webp` | fan (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/fan_wind.webp` | wind_lady (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lion.webp` | lion (elite) | enemies/placeholder.webp | — |
-| 🎨 recoloreo de `lion` | `assets/art/enemies/lion_celadon.webp` | celadon_lion (elite) | enemies/placeholder.webp | no |
+| ✅ propio | `assets/art/enemies/lion_celadon.webp` | celadon_lion (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lion_jade.webp` | jade_lion (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/lion_snow.webp` | snow_lion (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk.webp` | monk (elite) | enemies/placeholder.webp | — |

@@ -89,6 +89,11 @@ macOS no tiene `timeout`.
 - **Textos de UI:** `lib/l10n/app_es.arb`. **Textos de contenido:** `assets/l10n/content/es.json`, que se edita como texto, nunca con `json.dumps`.
 
 ## Hecho en esta sesión
+- **13/11 — 6 imágenes nuevas (169/169 en `art_status`, sin recoloreos de enemigos):**
+  - Retratos `npc/shuang`, `npc/ming` y `npc/tie`: en los eventos (`eventPortrait` en `event_screen.dart`; `NpcPortrait` de 150 con el sello del evento en lugar del círculo con hanzi) y Shuang en sus pergaminos del registro.
+  - Élites `dragon_reflection` y `lion_celadon` con arte propio; `VARIANTS` de `tool/recolor_enemies.py` quedó vacío.
+  - Ícono `icons/page` (vía `GameIcon(Icons.history_edu)`): en la página que sale del cofre y en los pergaminos `page_*`.
+  - Test `test/event_portrait_test.dart`. Prompts marcados ✅ en `docs/arte/prompts.md`.
 - **`c0119ca` — cartel de «¡Forma completa!»:**
   - Antes se cortaba porque el slow motion (`timeDilation`) estiraba la animación mientras un timer de reloj lo quitaba.
   - Ahora se quita en `onEnd` de la animación.

@@ -23,6 +23,8 @@ import '../widgets/hp_count.dart';
 import '../widgets/press.dart';
 import '../feel.dart';
 import '../widgets/node_kit.dart';
+import '../widgets/lotus.dart';
+import '../widgets/npc_portrait.dart';
 
 /// Evento del mapa: una escena, dos opciones y lo que pasó.
 class EventScreen extends ConsumerStatefulWidget {
@@ -120,6 +122,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
     final event = data.event(id);
     final path = event.path;
     final back = event.after != null;
+    final portrait = eventPortrait(event);
     final accent = path != null
         ? styleColor(path)
         : back
@@ -168,7 +171,20 @@ class _EventScreenState extends ConsumerState<EventScreen> {
               Bounce(
                 trigger: _seal,
                 scale: 1.25,
-                child: Container(
+                // Los personajes de los hilos se muestran con su retrato y el
+                // sello del evento; el resto, con el sello solo.
+                child: portrait != null
+                    ? NpcPortrait(
+                        asset: portrait,
+                        color: accent,
+                        height: 150,
+                        badge: InkSeal(
+                          hanzi: event.hanzi,
+                          color: accent,
+                          size: 42,
+                        ),
+                      )
+                    : Container(
                 width: 92,
                 height: 92,
                 alignment: Alignment.center,
@@ -640,4 +656,16 @@ class _Rival extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// El retrato del personaje de un evento, si tiene: Shuang en su hilo, el
+/// hermano Ming (el peregrino herido) y el maestro Tie (el herrero).
+String? eventPortrait(EventDef event) {
+  final who = switch (event.id) {
+    _ when event.thread == 'shuang' => 'shuang',
+    'wounded' || 'wounded_return' => 'ming',
+    'smith' || 'smith_delivery' => 'tie',
+    _ => null,
+  };
+  return who == null ? null : 'assets/art/npc/$who.webp';
 }

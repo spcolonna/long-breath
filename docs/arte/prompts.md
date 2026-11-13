@@ -23,9 +23,9 @@ claro, color saturado y mucho aire.
 ## Resumen: qué está y qué falta
 
 - **Falta:** nada.
-- **Recoloreos por diseño (2):** el Reflejo del Dragón (`dragon_reflection`) y el León de Celadón (`lion_celadon`), élites de la etapa 2, usan al dragón y al león teñidos. Se ven bien en el juego; arte propio sería un extra, no algo que falte.
-- **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC, fondos y mapas
-  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 9 íconos, 5 marcos de carta y
+- **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
+- **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
+  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 10 íconos (con la página suelta), 5 marcos de carta y
   las 3 armas y 64 ilustraciones de cartas (Tigre, Serpiente, Grulla, las 6 de cadena y las 12 de arma). El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
@@ -45,7 +45,85 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Nada: las 165 imágenes están integradas (los 2 recoloreos son por diseño). Los prompts nuevos van acá, sueltos, uno por imagen.
+Nada: las 169 imágenes están integradas y ya no queda ningún recoloreo de enemigo. Los prompts nuevos van acá, sueltos, uno por imagen.
+
+### Retrato: Shuang (`npc/shuang`) ✅ integrado
+
+**Destino:** `assets/art/npc/shuang.png`, 2:3, fondo transparente. Se usa para: eventos de su hilo (`shuang_*`) y sus pergaminos en el registro. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game character portrait, full body, facing the viewer, centered, transparent background: Shuang "Frost", a cheeky teenage martial-arts girl of the Azure Phoenix school, light sky-blue and white training robe, a long cobalt ribbon tied in her hair fluttering in the wind, a small silver phoenix-feather pin, confident grin, one hand on her hip and the other pointing up toward the summit as if making a bet, light on her feet mid-step, faint frost sparkles around her sleeves, competitive but friendly, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Retrato: hermano Ming (`npc/ming`) ✅ integrado
+
+**Destino:** `assets/art/npc/ming.png`, 2:3, fondo transparente. Se usa para: eventos `wounded` y `wounded_return`. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game character portrait, full body, facing the viewer, centered, transparent background: Brother Ming, a young gentle Buddhist pilgrim monk with a shaved head, saffron and jade travel robe, a bandaged ankle, leaning lightly on a simple wooden walking stick, prayer-bead necklace, a small cloth bundle on his back, warm grateful smile, one hand raised in a small bow of thanks, humble and kind, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Retrato: maestro Tie (`npc/tie`) ✅ integrado
+
+**Destino:** `assets/art/npc/tie.png`, 2:3, fondo transparente. Se usa para: eventos `smith` y `smith_delivery`. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game character portrait, full body, facing the viewer, centered, transparent background: Master Tie, a sturdy old blacksmith of a mountain monastery, bald head, big grey moustache, strong forearms, leather apron over a rolled-up gold and vermilion work robe, a forging hammer resting on his shoulder, a small bronze bell and a half-finished jian sword hanging at his belt, warm glowing sparks floating around him, proud gruff smile, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Élite: Reflejo del Dragón (`enemies/dragon_reflection`) ✅ integrado
+
+**Destino:** `assets/art/enemies/dragon_reflection.png`, 2:3, fondo transparente. Élite de la etapa 2; reemplaza al recoloreo del dragón. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game enemy character, full body, facing the viewer, centered, transparent background: the Reflection of the Sleeping Dragon, an elegant Chinese dragon made of rippling pond water with mirror-like silver and cobalt scales, its body coiling up from a small circle of lotus-pond water, outline slightly wavy and doubled as if seen in water, faint mirrored afterimages, pale jade and violet glints, calm glowing eyes, a misty breath gathering in its mouth, cool serene and reflective (clearly not a fire dragon), majestic elite enemy.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Élite: León de Celadón (`enemies/lion_celadon`) ✅ integrado
+
+**Destino:** `assets/art/enemies/lion_celadon.png`, 2:3, fondo transparente. Élite de la etapa 2; reemplaza al recoloreo del león. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game enemy character, full body, facing the viewer, centered, transparent background: a celadon porcelain guardian lion from a monastery courtyard, glossy pale jade-green glaze with fine crackle lines, gold-trimmed curly mane, one paw resting on an embroidered ball, standing on a small stone pedestal, a few thin cracks glowing gold where it is waking up, stern but noble face, heavy and powerful elite enemy.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
+
+### Ícono: página suelta (`icons/page`) ✅ integrado
+
+**Destino:** `assets/art/icons/page.png`, cuadrado 256×256, fondo transparente. Se usa para: la página que sale del cofre y los pergaminos `page_*` del registro. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 32 pixels: a single loose old paper page, slightly curled, cream (#F6EEDC) with a torn left edge, a few faint ink brush lines, a small vermilion (#E8453C) seal stamp in the corner, tied with a tiny jade (#1FA38A) string.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no text, no watermark.
+```
 
 ### Ícono: Vida (`icons/heart`) ✅ integrado
 

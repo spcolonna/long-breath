@@ -10,6 +10,7 @@ import '../../l10n/app_localizations.dart';
 import '../content_text.dart';
 import '../providers.dart';
 import '../theme.dart';
+import 'game_icon.dart';
 import 'lotus.dart';
 import 'npc_portrait.dart';
 
@@ -255,8 +256,33 @@ class LoreScroll extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                 ],
+                // Los capítulos de Shuang, con su cara (en el registro).
+                if (id.startsWith('shuang_') && !fresh) ...[
+                  Center(
+                    child: NpcPortrait(
+                      asset: 'assets/art/npc/shuang.webp',
+                      color: Palette.sky,
+                      height: 110,
+                      badge: const InkSeal(
+                        hanzi: '霜',
+                        color: Palette.sky,
+                        size: 40,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
                 Row(
                   children: [
+                    // Las páginas sueltas llevan su ícono.
+                    if (id.startsWith('page_')) ...[
+                      const GameIcon(
+                        Icons.history_edu,
+                        size: 36,
+                        color: Palette.lacquer,
+                      ),
+                      const SizedBox(width: 10),
+                    ],
                     // Cada final lleva el sello de su camino.
                     if (_endingStyle(id) case final style?) ...[
                       InkSeal(
