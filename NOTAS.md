@@ -209,3 +209,5 @@ macOS no tiene `timeout`.
 - Los banners de combate se sacan con `onEnd` de la animación, nunca con timers de reloj, por `timeDilation`.
 - El evento `FormCompleted` se emite en `combat_engine.dart` (`_advanceForms`).
 - 12/11 Cofre y crónica (base, sin UI todavía): páginas sueltas `page_1..12` (15% por cofre, 1 por subida, marcas en `threads`, pergamino en el registro; motor `_page` con generador aparte) y crónica de enemigos (`chronicle.dart`, clave `bestiary` con victorias/caídas, `bestiaryProvider`, `enemies.<id>.lore` en es.json). **UI hecha (12/11):** la página se lee en reward_screen antes del botín (`_PageFound`) y el registro tiene la 5.ª pestaña «Crónica» (`widgets/chronicle_view.dart`, `/registry?tab=4`). Tests de motor, guardado, datos y pantalla; 311 en verde. Falta probarlo en el simulador/teléfono.
+
+- Fase A (4/n): `combat_screen.dart` partido con `part` en `screens/combat/` (arena, enemy_stage, player, hand, action_bar, end_overlay); el estado (`_CombatScreenState`, ~1570 líneas) queda en el archivo principal. Sin cambios de código: contenido idéntico línea a línea, 314 tests.
