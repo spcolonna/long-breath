@@ -2896,6 +2896,24 @@ abstract class AppLocalizations {
   /// **'Raro'**
   String get talismanRare;
 
+  /// No description provided for @cardRare.
+  ///
+  /// In es, this message translates to:
+  /// **'Carta rara'**
+  String get cardRare;
+
+  /// No description provided for @cardLegendary.
+  ///
+  /// In es, this message translates to:
+  /// **'Carta legendaria'**
+  String get cardLegendary;
+
+  /// No description provided for @cardTypeName.
+  ///
+  /// In es, this message translates to:
+  /// **'{type, select, fist{Puño} palm{Palma} kick{Patada} defense{Defensa} technique{Técnica} other{Carta}}'**
+  String cardTypeName(String type);
+
   /// No description provided for @talismanVow.
   ///
   /// In es, this message translates to:

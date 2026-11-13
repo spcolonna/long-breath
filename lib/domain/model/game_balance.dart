@@ -654,6 +654,8 @@ class GameBalance {
     required this.enemyBreakDamageMultiplier,
     required this.rewardChoices,
     required this.rewardPools,
+    this.rarityWeights = const {},
+    this.raritySurcharge = const {},
     this.talismanChoices = 3,
     required this.fountainHeal,
     required this.fountainUpgrade,
@@ -712,6 +714,15 @@ class GameBalance {
   final int enemyBreakDamageMultiplier;
   final int rewardChoices;
   final List<String> rewardPools;
+
+  /// Peso de cada rareza al sortear premios y tienda (sin dato: 1).
+  final Map<CardRarity, int> rarityWeights;
+
+  /// Recargo en la tienda según la rareza (sin dato: 0).
+  final Map<CardRarity, int> raritySurcharge;
+
+  int rarityWeight(CardRarity r) => rarityWeights[r] ?? 1;
+  int surchargeFor(CardRarity r) => raritySurcharge[r] ?? 0;
 
   /// Talismanes que ofrece el élite al vencerlo.
   final int talismanChoices;
@@ -874,6 +885,18 @@ class GameBalance {
           (j['enemyBreak'] as Map<String, dynamic>)['damageMultiplier'] as int,
       rewardChoices: rewards['choices'] as int,
       rewardPools: (rewards['pools'] as List).cast<String>(),
+      rarityWeights: {
+        for (final e in ((rewards['rarityWeights'] as Map<String, dynamic>?) ??
+                const {})
+            .entries)
+          CardRarity.parse(e.key): e.value as int,
+      },
+      raritySurcharge: {
+        for (final e in ((rewards['raritySurcharge'] as Map<String, dynamic>?) ??
+                const {})
+            .entries)
+          CardRarity.parse(e.key): e.value as int,
+      },
       talismanChoices: rewards['talismanChoices'] as int? ?? 3,
       fountainHeal: fountain['heal'] as int,
       fountainUpgrade: fountain['upgrade'] as int,

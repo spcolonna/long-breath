@@ -54,3 +54,13 @@ enum Difficulty {
   static Difficulty parse(String? s) =>
       s == null ? normal : Difficulty.values.byName(s);
 }
+
+/// Rareza de una carta: cuánto cuesta encontrarla y cómo luce su marco.
+enum CardRarity {
+  common,
+  rare,
+  legendary;
+
+  static CardRarity parse(String? s) =>
+      s == null ? common : CardRarity.values.byName(s);
+}

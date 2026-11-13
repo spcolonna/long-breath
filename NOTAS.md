@@ -165,7 +165,8 @@ macOS no tiene `timeout`.
 
 ## 13/11 — Aplicando docs/salto-de-calidad.md (fase A en curso)
 - Hecho: tipografías (Alegreya cuerpo, Cormorant títulos ≥20 pt, Ma Shan Zheng respaldo de hanzi; `docs/arte/fuentes.md`) y grano de papel por shader (`shaders/paper.frag`, `PaperGrain` en `backdrop`).
-- Sigue en A: cartas con rareza y tipo por forma, bordes de pincel y oro con brillo, HUD de combate, glosario y `Semantics`; antes del HUD, partir `combat_screen.dart`.
+- Hecho: rareza de cartas (`CardRarity`, clave `rarity` en `cards.json`): 21 raras y 1 legendaria por camino (hu_pu, jin_she, he_ming); iniciales y armas, comunes. Premios y tienda sortean con peso común 4 / rara 3 / legendaria 1 y recargo en tienda +5 / +15 (`rewards.rarityWeights` y `raritySurcharge` en `game_balance.json`). En la carta: forma del tipo bajo el costo (palma círculo, puño cuadrado, patada triángulo, defensa escudo, técnica rombo), gema de rareza en el adorno del pie y destello de oro que cruza el marco de las legendarias (quieto con movimiento reducido); todo con `Semantics`. Simulación Normal, 300 runs: promedio 4% y experto 23% igual que sin pesos (el bot promedio sigue sin representar al jugador; fase C).
+- Sigue en A: bordes de pincel y oro con brillo en el resto de la interfaz, HUD de combate, glosario tocable; antes del HUD, partir `combat_screen.dart`.
 - Ojo: no correr `dart format` en archivos viejos (reformatea miles de líneas); hacer cambios mínimos.
 
 ## Pendiente

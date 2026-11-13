@@ -1314,12 +1314,25 @@ class RunEngine {
     return ([own.first, ...shuffled.where((id) => id != own.first)], next2);
   }
 
+  /// Sorteo sin reposición pesado por rareza: lo común sale más seguido y
+  /// lo legendario es un hallazgo.
   (List<String>, Rng) _rollRewards(Rng rng, RunState r, int n) {
-    final pool = [
-      for (final c in _pool(r)) c.id,
-    ];
-    final (shuffled, next) = rng.shuffle(pool);
-    return (shuffled.take(n).toList(), next);
+    final pool = [..._pool(r)];
+    final picked = <String>[];
+    var next = rng;
+    while (picked.length < n && pool.isNotEmpty) {
+      final weights = [for (final c in pool) data.balance.rarityWeight(c.rarity)];
+      final total = weights.fold(0, (a, b) => a + b);
+      final (roll, n2) = next.nextInt(total);
+      next = n2;
+      var acc = 0, i = 0;
+      while (roll >= acc + weights[i]) {
+        acc += weights[i];
+        i++;
+      }
+      picked.add(pool.removeAt(i).id);
+    }
+    return (picked, next);
   }
 
   /// Elegir una recompensa o saltear (cardId null).
@@ -1495,8 +1508,10 @@ class RunEngine {
   bool canAfford(RunState r, int price) => r.jade >= price;
 
   /// Precio de una carta de la tienda (la de oferta sale más barata).
+  /// Las raras y legendarias llevan recargo.
   int cardPrice(RunState r, String cardId) =>
-      cardId == r.shopSale ? merchantOf(r).salePrice : merchantOf(r).card;
+      (cardId == r.shopSale ? merchantOf(r).salePrice : merchantOf(r).card) +
+      data.balance.surchargeFor(data.card(cardId).rarity);
 
   RunState buyCard(RunState r, String cardId) {
     final price = cardPrice(r, cardId);

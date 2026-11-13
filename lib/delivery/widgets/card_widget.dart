@@ -160,6 +160,30 @@ class CardWidget extends ConsumerWidget {
                 ),
               ),
             ),
+            // Legendaria: un brillo de oro recorre el marco cada tanto.
+            if (def.rarity == CardRarity.legendary)
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: _GoldSheen(
+                    frame: frame,
+                    cacheWidth: (width * dpr).ceil(),
+                  ),
+                ),
+              ),
+            // Tipo por forma además de color (círculo, cuadrado, triángulo,
+            // escudo o rombo), debajo del costo.
+            Positioned(
+              left: width * 0.146 - 6 * s,
+              top: h * 0.111 + badge / 2 + 1.5 * s,
+              child: TypeMark(def.type, size: 12 * s),
+            ),
+            // Rareza: una gema sobre el adorno del pie (las comunes no llevan).
+            if (def.rarity != CardRarity.common)
+              Positioned(
+                left: width / 2 - 7 * s,
+                top: h * 0.835 - 7 * s,
+                child: RarityGem(def.rarity, size: 14 * s),
+              ),
             Positioned(
               left: width * 0.146 - badge / 2,
               top: h * 0.111 - badge / 2,
@@ -171,7 +195,7 @@ class CardWidget extends ConsumerWidget {
                 scale: s,
               ),
             ),
-            // El tipo ya lo dice el color del marco: arriba a la derecha van
+            // El tipo lo dicen el marco y su forma: arriba a la derecha van
             // solo la carta retenida, la postura a la que lleva y el aviso de
             // que corta una forma.
             if (retained ||
@@ -484,4 +508,201 @@ class _Stats extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Forma del tipo de carta: se lee aunque no se distinga el color.
+class TypeMark extends StatelessWidget {
+  const TypeMark(this.type, {super.key, this.size = 12});
+
+  final CardType type;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    label: AppLocalizations.of(context).cardTypeName(type.name),
+    child: CustomPaint(
+      size: Size.square(size),
+      painter: _TypeShapePainter(type),
+    ),
+  );
+}
+
+class _TypeShapePainter extends CustomPainter {
+  _TypeShapePainter(this.type);
+
+  final CardType type;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final r = Rect.fromLTWH(w * 0.12, w * 0.12, w * 0.76, w * 0.76);
+    final path = switch (type) {
+      CardType.palm => Path()..addOval(r),
+      CardType.fist => Path()
+        ..addRRect(RRect.fromRectAndRadius(r, Radius.circular(w * 0.12))),
+      CardType.kick => Path()
+        ..moveTo(w / 2, w * 0.08)
+        ..lineTo(w * 0.94, w * 0.9)
+        ..lineTo(w * 0.06, w * 0.9)
+        ..close(),
+      CardType.defense => Path()
+        ..moveTo(w * 0.12, w * 0.12)
+        ..lineTo(w * 0.88, w * 0.12)
+        ..lineTo(w * 0.88, w * 0.48)
+        ..quadraticBezierTo(w * 0.86, w * 0.82, w / 2, w * 0.95)
+        ..quadraticBezierTo(w * 0.14, w * 0.82, w * 0.12, w * 0.48)
+        ..close(),
+      CardType.technique => Path()
+        ..moveTo(w / 2, w * 0.04)
+        ..lineTo(w * 0.94, w / 2)
+        ..lineTo(w / 2, w * 0.96)
+        ..lineTo(w * 0.06, w / 2)
+        ..close(),
+    };
+    canvas.drawShadow(path, Palette.text, w * 0.08, false);
+    canvas.drawPath(path, Paint()..color = typeColor(type));
+    canvas.drawPath(
+      path,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = w * 0.12
+        ..color = Palette.surface,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_TypeShapePainter old) => old.type != type;
+}
+
+/// Gema de rareza: rombo de jade (rara) u oro con destello (legendaria).
+class RarityGem extends StatelessWidget {
+  const RarityGem(this.rarity, {super.key, this.size = 12});
+
+  final CardRarity rarity;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Semantics(
+      label: rarity == CardRarity.legendary ? t.cardLegendary : t.cardRare,
+      child: CustomPaint(
+        size: Size.square(size),
+        painter: _GemPainter(rarity),
+      ),
+    );
+  }
+}
+
+class _GemPainter extends CustomPainter {
+  _GemPainter(this.rarity);
+
+  final CardRarity rarity;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final gem = Path()
+      ..moveTo(w / 2, 0)
+      ..lineTo(w, w / 2)
+      ..lineTo(w / 2, w)
+      ..lineTo(0, w / 2)
+      ..close();
+    final (light, dark) = switch (rarity) {
+      CardRarity.legendary => (const Color(0xFFFFE08A), Palette.gold),
+      _ => (const Color(0xFF8FE3CF), Palette.jade),
+    };
+    canvas.drawShadow(gem, Palette.text, w * 0.1, false);
+    canvas.drawPath(
+      gem,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [light, dark],
+        ).createShader(Offset.zero & size),
+    );
+    canvas.drawPath(
+      gem,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = w * 0.1
+        ..color = Palette.surface,
+    );
+    // Faceta de luz.
+    canvas.drawCircle(
+      Offset(w * 0.4, w * 0.36),
+      w * 0.1,
+      Paint()..color = Colors.white.withValues(alpha: 0.85),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_GemPainter old) => old.rarity != rarity;
+}
+
+/// Destello de oro que cruza el marco de una legendaria (quieto con
+/// movimiento reducido).
+class _GoldSheen extends StatefulWidget {
+  const _GoldSheen({required this.frame, required this.cacheWidth});
+
+  final String frame;
+  final int cacheWidth;
+
+  @override
+  State<_GoldSheen> createState() => _GoldSheenState();
+}
+
+class _GoldSheenState extends State<_GoldSheen>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 3200),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _c
+        ..stop()
+        ..value = 0.32;
+    } else if (!_c.isAnimating) {
+      _c.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: _c,
+    // El barrido ocupa el primer tercio del ciclo; el resto, reposo.
+    builder: (context, child) {
+      final x = -1.6 + _c.value * 3 * 3.2;
+      return ShaderMask(
+        blendMode: BlendMode.srcIn,
+        shaderCallback: (r) => LinearGradient(
+          begin: Alignment(x - 0.5, -1),
+          end: Alignment(x + 0.5, 1),
+          colors: const [
+            Color(0x00FFE08A),
+            Color(0xB3FFF3C4),
+            Color(0x00FFE08A),
+          ],
+        ).createShader(r),
+        child: child,
+      );
+    },
+    child: Image.asset(
+      widget.frame,
+      fit: BoxFit.fill,
+      cacheWidth: widget.cacheWidth,
+      errorBuilder: (_, _, _) => const SizedBox(),
+    ),
+  );
 }

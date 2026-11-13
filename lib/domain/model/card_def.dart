@@ -40,6 +40,7 @@ class CardDef {
     this.fromDraw = 0,
     this.pool = 'starter',
     this.copies = 1,
+    this.rarity = CardRarity.common,
   });
 
   final String id;
@@ -103,6 +104,9 @@ class CardDef {
   final String pool;
   final int copies;
 
+  /// Rareza: pesa en premios y tienda, y se ve en el marco.
+  final CardRarity rarity;
+
   factory CardDef.fromJson(Map<String, dynamic> j) {
     final ssb = j['stanceStructureBonus'] as Map<String, dynamic>?;
     final from = j['from'] as Map<String, dynamic>?;
@@ -146,6 +150,7 @@ class CardDef {
       fromDraw: from?['draw'] as int? ?? 0,
       pool: j['pool'] as String? ?? 'starter',
       copies: j['copies'] as int? ?? 1,
+      rarity: CardRarity.parse(j['rarity'] as String?),
     );
   }
 }

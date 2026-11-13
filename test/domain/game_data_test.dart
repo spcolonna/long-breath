@@ -26,6 +26,25 @@ void main() {
     expect(data.rewardPool.length, 44);
   });
 
+  test('rareza: iniciales comunes, una legendaria por camino', () {
+    expect(
+        data.starterDeck.every((id) => data.card(id).rarity == CardRarity.common),
+        isTrue);
+    for (final s in Style.values) {
+      final own = data.cards.values.where((c) => c.pool == s.name);
+      expect(own.where((c) => c.rarity == CardRarity.legendary), hasLength(1),
+          reason: s.name);
+      expect(own.where((c) => c.rarity == CardRarity.rare).length,
+          greaterThanOrEqualTo(3), reason: s.name);
+    }
+    final b = data.balance;
+    expect(b.rarityWeight(CardRarity.common),
+        greaterThan(b.rarityWeight(CardRarity.legendary)));
+    expect(b.surchargeFor(CardRarity.common), 0);
+    expect(b.surchargeFor(CardRarity.legendary),
+        greaterThan(b.surchargeFor(CardRarity.rare)));
+  });
+
   test('armas: 3, con 3 niveles y sus cartas propias', () {
     expect(data.weapons.keys, ['gun', 'jian', 'pudao']);
     expect({for (final w in data.weapons.values) w.path}, hasLength(3),

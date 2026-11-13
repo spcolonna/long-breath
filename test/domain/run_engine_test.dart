@@ -945,12 +945,14 @@ void main() {
       var r = shop().copyWith(hp: 20);
       expect(r.shopCards, contains(r.shopSale));
       expect(m.salePrice, lessThan(m.card));
-      expect(run.cardPrice(r, r.shopSale!), m.salePrice);
+      final sale = m.salePrice +
+          run.data.balance.surchargeFor(run.data.card(r.shopSale!).rarity);
+      expect(run.cardPrice(r, r.shopSale!), sale);
       r = run.buyCard(r, r.shopSale!);
-      expect(r.jade, 200 - m.salePrice);
+      expect(r.jade, 200 - sale);
       r = run.buyTea(r);
       expect(r.hp, 20 + m.teaHeal);
-      expect(r.jade, 200 - m.salePrice - m.tea);
+      expect(r.jade, 200 - sale - m.tea);
       expect(() => run.buyTea(r), throwsStateError, reason: 'una vez');
       expect(RunState.fromJson(r.toJson()).toJson(), r.toJson());
       r = run.leaveShop(r);

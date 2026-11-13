@@ -1721,6 +1721,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get talismanRare => 'Raro';
 
   @override
+  String get cardRare => 'Carta rara';
+
+  @override
+  String get cardLegendary => 'Carta legendaria';
+
+  @override
+  String cardTypeName(String type) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'fist': 'Puño',
+      'palm': 'Palma',
+      'kick': 'Patada',
+      'defense': 'Defensa',
+      'technique': 'Técnica',
+      'other': 'Carta',
+    });
+    return '$_temp0';
+  }
+
+  @override
   String get talismanVow => 'Voto · una etapa';
 
   @override
