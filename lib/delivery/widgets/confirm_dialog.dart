@@ -94,7 +94,7 @@ class _ConfirmCard extends StatelessWidget {
                         title,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 20, fontFamily: Fonts.display,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -144,7 +144,7 @@ class _ConfirmCard extends StatelessWidget {
                   child: Text(
                     seal,
                     style: const TextStyle(
-                      fontSize: 26,
+                      fontSize: 26, fontFamily: Fonts.display,
                       height: 1,
                       color: Palette.onColor,
                       fontWeight: FontWeight.w700,

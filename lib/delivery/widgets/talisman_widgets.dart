@@ -160,7 +160,7 @@ class _TalismansSheet extends ConsumerWidget {
           children: [
             Text(
               t.talismansTitle,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+              style: const TextStyle(fontSize: 20, fontFamily: Fonts.display, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 2),
             Text(

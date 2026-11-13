@@ -645,7 +645,7 @@ class _NodeSheet extends ConsumerWidget {
             const SizedBox(height: 10),
             Text(
               text.meridian(node.id),
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 22, fontFamily: Fonts.display, fontWeight: FontWeight.w700),
             ),
             Text(
               '${t.branchName(node.branch)} · ${text.meridianText(node.id)}',

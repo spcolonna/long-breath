@@ -1983,7 +1983,7 @@ class _RibbonState extends State<_Ribbon> with SingleTickerProviderStateMixin {
                     widget.title,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 24, fontFamily: Fonts.display,
                       fontWeight: FontWeight.w800,
                       color: Palette.lacquer,
                     ),
@@ -2964,7 +2964,7 @@ class _IntentBubble extends ConsumerWidget {
                     Text(
                       '${iv.countdown}',
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 20, fontFamily: Fonts.display,
                         color: Palette.gold,
                         fontWeight: FontWeight.bold,
                       ),
@@ -4985,7 +4985,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
                                     ? t.victory
                                     : t.defeat,
                                 style: TextStyle(
-                                  fontSize: 54,
+                                  fontSize: 54, fontFamily: Fonts.display,
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 1,
                                   color: accent,
@@ -5034,7 +5034,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
                                     child: Text(
                                       won ? '胜' : '败',
                                       style: const TextStyle(
-                                        fontSize: 32,
+                                        fontSize: 32, fontFamily: Fonts.display,
                                         height: 1,
                                         color: Palette.onColor,
                                         fontWeight: FontWeight.w700,

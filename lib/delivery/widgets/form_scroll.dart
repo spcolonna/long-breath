@@ -51,7 +51,7 @@ class FormScroll extends StatelessWidget {
               Text(
                 form.hanzi,
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 24, fontFamily: Fonts.display,
                   height: 1.1,
                   color: Palette.lacquer,
                   fontWeight: FontWeight.w700,

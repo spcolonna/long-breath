@@ -108,7 +108,7 @@ class _ChronicleCard extends ConsumerWidget {
                     child: Text(
                       '封',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 24, fontFamily: Fonts.display,
                         fontWeight: FontWeight.w700,
                         color: Palette.textDim,
                       ),
@@ -122,7 +122,7 @@ class _ChronicleCard extends ConsumerWidget {
                       errorBuilder: (_, _, _) => Center(
                         child: Text(
                           def.hanzi ?? '?',
-                          style: TextStyle(fontSize: 24, color: color),
+                          style: TextStyle(fontSize: 24, fontFamily: Fonts.display, color: color),
                         ),
                       ),
                     ),

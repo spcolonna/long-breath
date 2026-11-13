@@ -766,7 +766,7 @@ class _PickCard extends ConsumerWidget {
               child: Text(
                 look.hanzi,
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 26, fontFamily: Fonts.display,
                   height: 1,
                   color: look.color,
                   fontWeight: FontWeight.w700,

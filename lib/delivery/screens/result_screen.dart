@@ -248,7 +248,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                                 child: Text(
                                   won ? '龙' : '败',
                                   style: TextStyle(
-                                    fontSize: 92,
+                                    fontSize: 92, fontFamily: Fonts.display,
                                     height: 1.2,
                                     color: ink,
                                   ),
@@ -297,7 +297,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           0.24,
                           Text(
                             won ? t.runWon : t.runLost,
-                            style: const TextStyle(fontSize: 24),
+                            style: const TextStyle(fontSize: 24, fontFamily: Fonts.display),
                           ),
                         ),
                         const SizedBox(height: 14),
@@ -601,7 +601,7 @@ class _Tablet extends ConsumerWidget {
             ),
             child: Text(
               hanzi,
-              style: TextStyle(fontSize: 26, color: color, height: 1),
+              style: TextStyle(fontSize: 26, fontFamily: Fonts.display, color: color, height: 1),
             ),
           ),
           const SizedBox(width: 14),

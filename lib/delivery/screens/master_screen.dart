@@ -153,7 +153,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                                 child: const Text(
                                   '师',
                                   style: TextStyle(
-                                    fontSize: 42,
+                                    fontSize: 42, fontFamily: Fonts.display,
                                     height: 1,
                                     color: Palette.structure,
                                     fontWeight: FontWeight.w700,
@@ -182,7 +182,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                       t.masterTitle,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 22,
+                        fontSize: 22, fontFamily: Fonts.display,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -360,7 +360,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                               _done!,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 20,
+                                fontSize: 20, fontFamily: Fonts.display,
                                 fontWeight: FontWeight.w700,
                                 color: Palette.structure,
                               ),

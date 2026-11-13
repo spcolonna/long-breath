@@ -115,7 +115,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(widget.title, style: const TextStyle(fontSize: 26)),
+              Text(widget.title, style: const TextStyle(fontSize: 26, fontFamily: Fonts.display)),
               const SizedBox(height: 6),
               Text(
                 widget.hint,
@@ -176,7 +176,7 @@ class _TalismanChoiceState extends ConsumerState<TalismanChoice> {
                   child: Text(
                     t.talismanGained(text.talisman(_picked!)),
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 20, fontFamily: Fonts.display,
                       fontWeight: FontWeight.w700,
                       color: Palette.lacquer,
                       shadows: Palette.halo,

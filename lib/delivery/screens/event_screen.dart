@@ -202,7 +202,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                 child: Text(
                   event.hanzi,
                   style: TextStyle(
-                    fontSize: 46,
+                    fontSize: 46, fontFamily: Fonts.display,
                     height: 1,
                     color: accent,
                     fontWeight: FontWeight.w700,
@@ -229,7 +229,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                       text.event(id),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 24, fontFamily: Fonts.display,
                         fontWeight: FontWeight.w800,
                       ),
                     ),

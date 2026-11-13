@@ -496,7 +496,7 @@ Future<bool?> _prologue(BuildContext context) => showModalBottomSheet<bool>(
                 child: const Text(
                   '师',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 30, fontFamily: Fonts.display,
                     color: Palette.onColor,
                     fontWeight: FontWeight.w700,
                   ),

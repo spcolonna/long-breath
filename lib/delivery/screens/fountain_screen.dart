@@ -108,7 +108,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                         scale: 1.2,
                         child: const Text(
                           '泉',
-                          style: TextStyle(fontSize: 96, color: Palette.sky),
+                          style: TextStyle(fontSize: 96, fontFamily: Fonts.display, color: Palette.sky),
                         ),
                       ),
                       Positioned.fill(
@@ -135,7 +135,7 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                 Text(
                   t.fountain,
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 24, fontFamily: Fonts.display,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

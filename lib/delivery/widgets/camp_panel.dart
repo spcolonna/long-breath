@@ -41,7 +41,7 @@ class CampPanel extends ConsumerWidget {
                 const Text(
                   '火',
                   style: TextStyle(
-                    fontSize: 44,
+                    fontSize: 44, fontFamily: Fonts.display,
                     fontWeight: FontWeight.w700,
                     color: Palette.gold,
                   ),
@@ -49,7 +49,7 @@ class CampPanel extends ConsumerWidget {
                 Text(
                   t.campTitle,
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 24, fontFamily: Fonts.display,
                     fontWeight: FontWeight.w700,
                     color: Palette.text,
                   ),

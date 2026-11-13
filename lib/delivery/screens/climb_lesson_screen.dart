@@ -124,7 +124,7 @@ class _ClimbLessonScreenState extends ConsumerState<ClimbLessonScreen> {
                         titles[i],
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 22,
+                          fontSize: 22, fontFamily: Fonts.display,
                           fontWeight: FontWeight.w800,
                           color: Palette.lacquer,
                         ),
@@ -239,7 +239,7 @@ class _MapPath extends StatelessWidget {
                     child: Text(
                       hanzi,
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 28, fontFamily: Fonts.display,
                         height: 1,
                         fontWeight: FontWeight.w700,
                         color: color,

@@ -65,7 +65,7 @@ class BreatherSheet extends StatelessWidget {
                       Text(
                         t.breatherTitle,
                         style: const TextStyle(
-                          fontSize: 22,
+                          fontSize: 22, fontFamily: Fonts.display,
                           fontWeight: FontWeight.w700,
                           color: Palette.text,
                         ),

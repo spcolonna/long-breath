@@ -133,7 +133,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                     Text(
                       t.chestTitle,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 20, fontFamily: Fonts.display,
                         fontWeight: FontWeight.w700,
                         color: Palette.text,
                       ),
@@ -327,7 +327,7 @@ class _Header extends StatelessWidget {
       children: [
         Text(
           t.lootTitle,
-          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
+          style: const TextStyle(fontSize: 26, fontFamily: Fonts.display, fontWeight: FontWeight.w700),
         ),
         const Spacer(),
         KeyedSubtree(
@@ -769,7 +769,7 @@ class _KindTitle extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 10),
-        Text(t.lootKind(kind), style: const TextStyle(fontSize: 26)),
+        Text(t.lootKind(kind), style: const TextStyle(fontSize: 26, fontFamily: Fonts.display)),
         const SizedBox(height: 6),
         Text(
           hint,
@@ -985,7 +985,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
                             t.formLearned(text.form(offered.id)),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 20, fontFamily: Fonts.display,
                               fontWeight: FontWeight.w700,
                               color: Palette.lacquer,
                             ),
@@ -1170,7 +1170,7 @@ class _CoinsLootState extends ConsumerState<_CoinsLoot> {
                     builder: (_, v, _) => Text(
                       '+${v.round()}',
                       style: TextStyle(
-                        fontSize: 44,
+                        fontSize: 44, fontFamily: Fonts.display,
                         fontWeight: FontWeight.w800,
                         color: color,
                       ),

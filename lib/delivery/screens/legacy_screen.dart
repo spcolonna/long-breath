@@ -95,7 +95,7 @@ class _LegacyScreenState extends ConsumerState<LegacyScreen> {
                   step: const Duration(milliseconds: 90),
                   child: Text(
                     t.legacyTitle,
-                    style: const TextStyle(fontSize: 26),
+                    style: const TextStyle(fontSize: 26, fontFamily: Fonts.display),
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -166,7 +166,7 @@ class _LegacyScreenState extends ConsumerState<LegacyScreen> {
                             t.legacyGained(_gained(t, legacy, _picked!)),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 20, fontFamily: Fonts.display,
                               fontWeight: FontWeight.w700,
                               color: Palette.blossom,
                               shadows: Palette.halo,

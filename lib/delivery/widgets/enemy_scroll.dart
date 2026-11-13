@@ -129,7 +129,7 @@ class _EnemyScroll extends StatelessWidget {
                                 Text(
                                   info.name,
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 20, fontFamily: Fonts.display,
                                     fontWeight: FontWeight.w800,
                                     height: 1.15,
                                   ),

@@ -290,7 +290,7 @@ class _Plate extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 26,
+              fontSize: 26, fontFamily: Fonts.display,
               fontWeight: FontWeight.w900,
               color: Palette.text,
             ),

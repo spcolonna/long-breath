@@ -285,7 +285,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                           : t.merchantTitle,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 22,
+                        fontSize: 22, fontFamily: Fonts.display,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -595,7 +595,7 @@ class _Medallion extends StatelessWidget {
             child: Text(
               hanzi,
               style: const TextStyle(
-                fontSize: 42,
+                fontSize: 42, fontFamily: Fonts.display,
                 height: 1,
                 color: Palette.jade,
                 fontWeight: FontWeight.w700,

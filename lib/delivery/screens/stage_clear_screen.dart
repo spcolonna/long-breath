@@ -242,7 +242,7 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                               Text(
                                                 done.hanzi,
                                                 style: const TextStyle(
-                                                  fontSize: 52,
+                                                  fontSize: 52, fontFamily: Fonts.display,
                                                   color: Palette.text,
                                                 ),
                                               ),
@@ -312,7 +312,7 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                             child: Text(
                                               next.hanzi,
                                               style: const TextStyle(
-                                                fontSize: 84,
+                                                fontSize: 84, fontFamily: Fonts.display,
                                                 color: Palette.jade,
                                               ),
                                             ),
@@ -345,7 +345,7 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                           text.stage(next.id),
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                            fontSize: 24,
+                                            fontSize: 24, fontFamily: Fonts.display,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
@@ -511,7 +511,7 @@ class _AwakeningPanel extends ConsumerWidget {
               const SizedBox(height: 12),
               Text(
                 '觉醒',
-                style: TextStyle(fontSize: 44, color: color, height: 1.1),
+                style: TextStyle(fontSize: 44, fontFamily: Fonts.display, color: color, height: 1.1),
               ),
               PaperPanel(
                 child: Column(
@@ -659,7 +659,7 @@ class _AwakeningTile extends StatelessWidget {
                       child: Text(
                         hanzi,
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 26, fontFamily: Fonts.display,
                           color: selected ? Palette.onColor : color,
                         ),
                       ),
@@ -734,7 +734,7 @@ class _Seal extends StatelessWidget {
       ),
       child: Text(
         char,
-        style: const TextStyle(fontSize: 24, color: Palette.onColor),
+        style: const TextStyle(fontSize: 24, fontFamily: Fonts.display, color: Palette.onColor),
       ),
     );
   }
@@ -799,7 +799,7 @@ class _StageLoot extends StatelessWidget {
                 Text(
                   '${(value * v).round()}',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 22, fontFamily: Fonts.display,
                     fontWeight: FontWeight.w800,
                     color: color,
                     fontFeatures: const [FontFeature.tabularFigures()],

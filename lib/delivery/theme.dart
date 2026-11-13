@@ -40,9 +40,20 @@ abstract final class Palette {
   );
 }
 
+/// Tipografías de la casa: serif caligráfica para leer, romana de títulos y
+/// pincel para los hanzi (entra sola como respaldo de cualquier texto).
+abstract final class Fonts {
+  static const body = 'Alegreya';
+  static const display = 'Cormorant';
+  static const brush = 'MaShanZheng';
+  static const fallback = [brush];
+}
+
 ThemeData buildTheme() {
   final base = ThemeData(
     useMaterial3: true,
+    fontFamily: Fonts.body,
+    fontFamilyFallback: Fonts.fallback,
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSeed(
       seedColor: Palette.lacquer,
@@ -63,10 +74,32 @@ ThemeData buildTheme() {
     ),
   );
   return base.copyWith(
-    textTheme: base.textTheme.apply(
-      bodyColor: Palette.text,
-      displayColor: Palette.text,
-    ),
+    textTheme: base.textTheme
+        .apply(
+          bodyColor: Palette.text,
+          displayColor: Palette.text,
+          fontFamily: Fonts.body,
+        )
+        .copyWith(
+          displayLarge: base.textTheme.displayLarge?.copyWith(
+            fontFamily: Fonts.display,
+          ),
+          displayMedium: base.textTheme.displayMedium?.copyWith(
+            fontFamily: Fonts.display,
+          ),
+          displaySmall: base.textTheme.displaySmall?.copyWith(
+            fontFamily: Fonts.display,
+          ),
+          headlineLarge: base.textTheme.headlineLarge?.copyWith(
+            fontFamily: Fonts.display,
+          ),
+          headlineMedium: base.textTheme.headlineMedium?.copyWith(
+            fontFamily: Fonts.display,
+          ),
+          headlineSmall: base.textTheme.headlineSmall?.copyWith(
+            fontFamily: Fonts.display,
+          ),
+        ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: Palette.lacquer,
@@ -80,7 +113,10 @@ ThemeData buildTheme() {
       style: OutlinedButton.styleFrom(
         backgroundColor: Palette.surface.withValues(alpha: 0.95),
         foregroundColor: Palette.text,
-        side: BorderSide(color: Palette.gold.withValues(alpha: 0.6), width: 1.3),
+        side: BorderSide(
+          color: Palette.gold.withValues(alpha: 0.6),
+          width: 1.3,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 2,
         shadowColor: Palette.text.withValues(alpha: 0.25),
@@ -142,32 +178,32 @@ Widget backdrop(BuildContext context, Widget? child) =>
     );
 
 IconData heightIcon(Height? h) => switch (h) {
-      Height.high => Icons.north,
-      Height.mid => Icons.east,
-      Height.low => Icons.south,
-      null => Icons.remove,
-    };
+  Height.high => Icons.north,
+  Height.mid => Icons.east,
+  Height.low => Icons.south,
+  null => Icons.remove,
+};
 
 Color typeColor(CardType t) => switch (t) {
-      CardType.fist => Palette.lacquer,
-      CardType.palm => Palette.structure,
-      CardType.kick => Palette.gold,
-      CardType.defense => Palette.sky,
-      CardType.technique => Palette.jade,
-    };
+  CardType.fist => Palette.lacquer,
+  CardType.palm => Palette.structure,
+  CardType.kick => Palette.gold,
+  CardType.defense => Palette.sky,
+  CardType.technique => Palette.jade,
+};
 
 /// Color de acento según el rango del enemigo (mapa, aura y placa de nombre).
 /// Color del camino: tiñe la ropa del héroe, su aura y el selector. El
 /// novicio (sin camino) usa el oro del aliento.
 Color styleColor(Style? s) => switch (s) {
-      null => Palette.gold,
-      Style.tiger => Palette.lacquer,
-      Style.snake => Palette.structure,
-      Style.crane => Palette.sky,
-    };
+  null => Palette.gold,
+  Style.tiger => Palette.lacquer,
+  Style.snake => Palette.structure,
+  Style.crane => Palette.sky,
+};
 
 Color rankColor(EnemyRank r) => switch (r) {
-      EnemyRank.common => Palette.jade,
-      EnemyRank.elite => Palette.structure,
-      EnemyRank.boss => Palette.lacquer,
-    };
+  EnemyRank.common => Palette.jade,
+  EnemyRank.elite => Palette.structure,
+  EnemyRank.boss => Palette.lacquer,
+};

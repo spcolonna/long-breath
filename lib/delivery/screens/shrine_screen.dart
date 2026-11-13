@@ -57,7 +57,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                 PaperPanel(
                   child: Column(
                     children: [
-                      Text(t.shrineTitle, style: const TextStyle(fontSize: 24)),
+                      Text(t.shrineTitle, style: const TextStyle(fontSize: 24, fontFamily: Fonts.display)),
                       const SizedBox(height: 4),
                       Text(
                         t.shrineHint,
@@ -307,7 +307,7 @@ class _PathTile extends StatelessWidget {
             Text(
               hanzi,
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 28, fontFamily: Fonts.display,
                 height: 1.1,
                 color: selected ? Palette.onColor : color,
               ),

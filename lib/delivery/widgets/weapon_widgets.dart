@@ -380,7 +380,7 @@ class _WeaponChoiceState extends ConsumerState<WeaponChoice> {
         const SizedBox(height: 24),
         Text(
           forging ? t.weaponForgeTitle : t.weaponPickTitle,
-          style: const TextStyle(fontSize: 26),
+          style: const TextStyle(fontSize: 26, fontFamily: Fonts.display),
         ),
         const SizedBox(height: 6),
         Text(
@@ -449,7 +449,7 @@ class _WeaponChoiceState extends ConsumerState<WeaponChoice> {
                         ? t.weaponForged(text.weapon(_picked!), level + 1)
                         : t.weaponGained(text.weapon(_picked!)),
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 20, fontFamily: Fonts.display,
                       fontWeight: FontWeight.w700,
                       color: Palette.lacquer,
                     ),

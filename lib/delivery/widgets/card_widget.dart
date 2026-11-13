@@ -139,7 +139,7 @@ class CardWidget extends ConsumerWidget {
                           child: Text(
                             def.hanzi,
                             style: TextStyle(
-                              fontSize: 40 * s,
+                              fontSize: 40 * s, fontFamily: Fonts.display,
                               height: 1,
                               color: color.withValues(alpha: 0.2),
                               fontWeight: FontWeight.w700,

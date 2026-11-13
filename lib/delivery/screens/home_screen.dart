@@ -100,7 +100,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     errorBuilder: (_, _, _) => const Text(
                       '龙',
                       style: TextStyle(
-                        fontSize: 44,
+                        fontSize: 44, fontFamily: Fonts.display,
                         color: Palette.lacquer,
                         height: 1,
                       ),
@@ -120,7 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         Text(
                           'LONG BREATH',
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 22, fontFamily: Fonts.display,
                             letterSpacing: 6,
                             fontWeight: FontWeight.w500,
                             shadows: Palette.halo,

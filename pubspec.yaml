@@ -47,3 +47,25 @@ flutter:
     - assets/art/player/hero_tiger.webp
     - assets/art/player/hero_snake.webp
     - assets/art/player/hero_crane.webp
+  # Tipografías libres (OFL), recortadas a los caracteres del juego (docs/arte/fuentes.md).
+  fonts:
+    - family: Alegreya
+      fonts:
+        - asset: assets/fonts/Alegreya-400.ttf
+        - asset: assets/fonts/Alegreya-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Alegreya-600.ttf
+          weight: 600
+        - asset: assets/fonts/Alegreya-700.ttf
+          weight: 700
+        - asset: assets/fonts/Alegreya-800.ttf
+          weight: 800
+    - family: Cormorant
+      fonts:
+        - asset: assets/fonts/CormorantGaramond-600.ttf
+          weight: 600
+        - asset: assets/fonts/CormorantGaramond-700.ttf
+          weight: 700
+    - family: MaShanZheng
+      fonts:
+        - asset: assets/fonts/MaShanZheng-subset.ttf

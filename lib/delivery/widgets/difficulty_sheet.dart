@@ -106,7 +106,7 @@ class _DifficultySheetState extends ConsumerState<_DifficultySheet> {
             Text(
               t.difficultyTitle,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+              style: const TextStyle(fontSize: 20, fontFamily: Fonts.display, fontWeight: FontWeight.w800),
             ),
             Text(
               t.difficultySubtitle,
@@ -211,7 +211,7 @@ class _Option extends StatelessWidget {
                 decoration: BoxDecoration(color: color, shape: BoxShape.circle),
                 child: Text(
                   hanzi,
-                  style: const TextStyle(fontSize: 24, color: Palette.onColor),
+                  style: const TextStyle(fontSize: 24, fontFamily: Fonts.display, color: Palette.onColor),
                 ),
               ),
               const SizedBox(width: 12),
@@ -309,7 +309,7 @@ class _LockedOption extends StatelessWidget {
                       child: Text(
                         hanzi,
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 24, fontFamily: Fonts.display,
                           color: color?.withValues(alpha: 0.45) ??
                               Palette.textDim,
                         ),
@@ -433,7 +433,7 @@ class _PicoOption extends StatelessWidget {
                   child: Text(
                     '$pico',
                     style: const TextStyle(
-                      fontSize: 22,
+                      fontSize: 22, fontFamily: Fonts.display,
                       height: 1,
                       fontWeight: FontWeight.w800,
                       color: Palette.onColor,
