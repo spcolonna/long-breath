@@ -163,6 +163,11 @@ macOS no tiene `timeout`.
 - **13/11 — Relevamiento de salto de calidad:** `docs/salto-de-calidad.md` (solo propuestas, nada implementado). Ejes: pelea viva (Flujo, Respirar recargable, contragolpe, enemigos que reaccionan), romper la estrategia «siempre Vida», etapa en 3 actos con dominio propio, mapa como sendero ilustrado, escuela que crece, historia, lavado de interfaz (tipografías, íconos pintados, shaders) y audio real. Se sugiere empezar por las fases A (lavado visual, 0 arte) y B (pelea viva, 5 imágenes).
   - **Dato del usuario:** la etapa 1 se termina en ≤15 min y eligiendo siempre Vida se llega muy alto sin esfuerzo. El bot promedio (4% sin árbol) **no representa** a una persona: hace falta un bot «prudente» (Vida primero) y comparar con los `run_logs`. El usuario prefiere etapas más largas con progresión dentro de la etapa, no más cortas.
 
+## 13/11 — Aplicando docs/salto-de-calidad.md (fase A en curso)
+- Hecho: tipografías (Alegreya cuerpo, Cormorant títulos ≥20 pt, Ma Shan Zheng respaldo de hanzi; `docs/arte/fuentes.md`) y grano de papel por shader (`shaders/paper.frag`, `PaperGrain` en `backdrop`).
+- Sigue en A: cartas con rareza y tipo por forma, bordes de pincel y oro con brillo, HUD de combate, glosario y `Semantics`; antes del HUD, partir `combat_screen.dart`.
+- Ojo: no correr `dart format` en archivos viejos (reformatea miles de líneas); hacer cambios mínimos.
+
 ## Pendiente
 1. Probar la build +2: que suene todo (música por pantalla, toques, golpes) y si la etapa 3 sigue fácil. Seguir juntando registros del usuario y comparar turnos y Vida perdida por piso con la simulación.
 2. Probar en el juego la etapa 3 nueva (desgaste, embestida del buey, espada que cambia de altura) y ver si la línea «Cada golpe gasta tu Guardia» se entiende. Las peleas siguen cortas (~2,5 turnos).
