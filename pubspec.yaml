@@ -47,6 +47,8 @@ flutter:
     - assets/art/player/hero_tiger.webp
     - assets/art/player/hero_snake.webp
     - assets/art/player/hero_crane.webp
+  shaders:
+    - shaders/paper.frag
   # Tipografías libres (OFL), recortadas a los caracteres del juego (docs/arte/fuentes.md).
   fonts:
     - family: Alegreya

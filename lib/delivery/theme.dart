@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../domain/model/enums.dart';
+import 'widgets/paper_grain.dart';
 import 'widgets/press.dart';
 
 /// Paleta de día: papel de arroz, jade claro y acentos saturados.
@@ -173,7 +174,11 @@ Widget backdrop(BuildContext context, Widget? child) =>
       value: SystemUiOverlayStyle.dark,
       child: DecoratedBox(
         decoration: const BoxDecoration(gradient: Palette.backdrop),
-        child: child,
+        // Grano de papel entre el degradado y las pantallas.
+        child: Stack(
+          fit: StackFit.expand,
+          children: [const PaperGrain(), ?child],
+        ),
       ),
     );
 
