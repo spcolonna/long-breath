@@ -42,7 +42,6 @@ import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/press.dart';
 import '../widgets/stage_scene.dart';
-import '../widgets/stat_bar.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/weapon_art.dart';
 import '../widgets/weapon_widgets.dart';
@@ -1379,7 +1378,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         ),
         TutorialAnchor(
           id: 'player',
-          child: _PlayerStrip(s: s),
+          child: _PlayerStrip(s: s, engine: engine, locked: _busy),
         ),
         TutorialAnchor(
           id: 'forms',

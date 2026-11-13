@@ -1,5 +1,7 @@
 part of '../combat_screen.dart';
 
+/// Pie de la pelea: el medallón de Aliento con Respirar al lado y el sello
+/// grande de Terminar turno. El Paso en T vive en el sello de postura.
 class _ActionBar extends ConsumerWidget {
   const _ActionBar({
     required this.view,
@@ -18,7 +20,6 @@ class _ActionBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
-    final text = ref.watch(textProvider);
     final s = view.state;
     final ctl = ref.read(combatControllerProvider.notifier);
     final busy = locked || s.isOver || s.phase == CombatPhase.discarding;
@@ -48,8 +49,6 @@ class _ActionBar extends ConsumerWidget {
       );
     }
 
-    final canDingbu =
-        !busy && !s.dingbuUsed && s.player.breath >= engine.dingbuCost(s);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
       child: Row(
@@ -62,48 +61,43 @@ class _ActionBar extends ConsumerWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Expanded(
-            child: TutorialAnchor(
-              id: 'dingbu',
-              child: OutlinedButton(
-                onPressed: canDingbu
-                    ? () => _pickStance(context, ref, ctl, s)
-                    : null,
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                ),
-                child: _CostLabel(
-                  label: text.dingbu(),
-                  cost: engine.dingbuCost(s),
-                ),
+          TutorialAnchor(
+            id: 'breathe',
+            child: OutlinedButton(
+              onPressed: !busy && engine.validate(s, const Breathe()) == null
+                  ? ctl.breathe
+                  : null,
+              style: OutlinedButton.styleFrom(
+                shape: const StadiumBorder(),
+                minimumSize: const Size(0, 44),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+              ),
+              child: _CostLabel(
+                label: t.breathe,
+                cost: data.balance.breatheCost,
               ),
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 10),
           Expanded(
-            child: TutorialAnchor(
-              id: 'breathe',
-              child: OutlinedButton(
-                onPressed: !busy && engine.validate(s, const Breathe()) == null
-                    ? ctl.breathe
-                    : null,
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                ),
-                child: _CostLabel(
-                  label: t.breathe,
-                  cost: data.balance.breatheCost,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 6),
-          Expanded(
-            flex: 2,
             child: TutorialAnchor(
               id: 'endTurn',
               child: FilledButton(
                 onPressed: busy ? null : ctl.endTurnPressed,
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size(0, 52),
+                  side: BorderSide(
+                    color: Palette.gold.withValues(alpha: busy ? 0.3 : 0.9),
+                    width: 1.5,
+                  ),
+                  elevation: busy ? 0 : 3,
+                  shadowColor: Palette.lacquer.withValues(alpha: 0.5),
+                  textStyle: const TextStyle(
+                    fontFamily: Fonts.display,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 child: Text(t.endTurn, maxLines: 1),
               ),
             ),
@@ -112,76 +106,42 @@ class _ActionBar extends ConsumerWidget {
       ),
     );
   }
-
-  void _pickStance(
-    BuildContext context,
-    WidgetRef ref,
-    CombatController ctl,
-    CombatState s,
-  ) {
-    final t = AppLocalizations.of(context);
-    final text = ref.read(textProvider);
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: Palette.surface,
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '${text.dingbu()} 丁步 · ${t.changeStance(t.breath)}',
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-            for (final st in Stance.values)
-              if (st != s.player.stance &&
-                  (TutorialOverlay.stanceGate.value ?? st) == st)
-                ListTile(
-                  leading: Text(
-                    _stanceHanzi[st]!,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Palette.textDim,
-                    ),
-                  ),
-                  title: Text(
-                    text.stance(st),
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                  subtitle: Text(t.stanceHint(st)),
-                  onTap: () {
-                    Navigator.pop(ctx);
-                    ctl.dingbu(st);
-                  },
-                ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 /// Nombre de una acción con lo que cuesta en Aliento, en un punto celeste.
 class _CostLabel extends StatelessWidget {
-  const _CostLabel({required this.label, required this.cost});
+  const _CostLabel({
+    required this.label,
+    required this.cost,
+    this.small = false,
+  });
 
   final String label;
   final int cost;
+  final bool small;
 
   @override
   Widget build(BuildContext context) {
+    final dot = small ? 14.0 : 16.0;
     return FittedBox(
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, maxLines: 1),
+          Text(
+            label,
+            maxLines: 1,
+            style: small
+                ? const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Palette.text,
+                  )
+                : null,
+          ),
           const SizedBox(width: 4),
           Container(
-            width: 16,
-            height: 16,
+            width: dot,
+            height: dot,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
@@ -189,8 +149,8 @@ class _CostLabel extends StatelessWidget {
             ),
             child: Text(
               '$cost',
-              style: const TextStyle(
-                fontSize: 10,
+              style: TextStyle(
+                fontSize: small ? 9 : 10,
                 fontWeight: FontWeight.w800,
                 color: Palette.onColor,
               ),
@@ -202,54 +162,104 @@ class _CostLabel extends StatelessWidget {
   }
 }
 
+/// Medallón de Aliento: el número grande al centro y un punto por cada
+/// Aliento alrededor del aro, que se vacía encogiéndose.
 class _BreathPips extends StatelessWidget {
   const _BreathPips({required this.breath, required this.perTurn});
 
   final int breath;
   final int perTurn;
 
+  static const _size = 60.0;
+
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final n = math.max(breath, perTurn);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
+    final pip = n > 6 ? 7.0 : 9.0;
+    // Los puntos se reparten por el arco de arriba, de izquierda a derecha.
+    const r = _size / 2 - 1;
+    final span = math.min(math.pi * 1.4, n * 0.42);
+    return Semantics(
+      label: '${t.breath} $breath',
+      child: SizedBox(
+        width: _size,
+        height: _size,
+        child: Stack(
+          clipBehavior: Clip.none,
           children: [
-            for (var i = 0; i < n; i++)
-              // Cada punto de Aliento se vacía encogiéndose y vuelve con un rebote.
-              AnimatedScale(
-                scale: i < breath ? 1 : 0.7,
-                duration: Duration(milliseconds: 240 + 60 * i),
-                curve: Curves.easeOutBack,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: n > 4 ? 9 : 12,
-                  height: n > 4 ? 9 : 12,
-                  margin: const EdgeInsets.symmetric(horizontal: 1.5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: i < breath ? Palette.sky : Colors.transparent,
-                    border: Border.all(color: Palette.sky),
+            Positioned.fill(
+              child: Container(
+                margin: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Palette.surface,
+                  border: Border.all(color: Palette.sky, width: 2.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Palette.sky.withValues(alpha: 0.25),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: ExcludeSemantics(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CountUp(
+                        value: breath,
+                        duration: const Duration(milliseconds: 300),
+                        style: const TextStyle(
+                          fontFamily: Fonts.display,
+                          fontSize: 24,
+                          height: 1,
+                          fontWeight: FontWeight.w700,
+                          color: Palette.sky,
+                        ),
+                      ),
+                      Text(
+                        t.breath,
+                        style: const TextStyle(
+                          fontSize: 9,
+                          height: 1.1,
+                          color: Palette.sky,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-          ],
-        ),
-        const SizedBox(height: 2),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const GameIcon(Icons.air, size: 13, color: Palette.sky),
-            const SizedBox(width: 2),
-            Text(
-              '${AppLocalizations.of(context).breath} $breath',
-              style: const TextStyle(fontSize: 10, color: Palette.sky),
             ),
+            for (var i = 0; i < n; i++)
+              Builder(
+                builder: (_) {
+                  final a = n == 1
+                      ? -math.pi / 2
+                      : -math.pi / 2 - span / 2 + span * i / (n - 1);
+                  return Positioned(
+                    left: _size / 2 + r * math.cos(a) - pip / 2,
+                    top: _size / 2 + r * math.sin(a) - pip / 2,
+                    child: AnimatedScale(
+                      scale: i < breath ? 1 : 0.7,
+                      duration: Duration(milliseconds: 240 + 60 * i),
+                      curve: Curves.easeOutBack,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: pip,
+                        height: pip,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: i < breath ? Palette.sky : Palette.surface,
+                          border: Border.all(color: Palette.sky, width: 1.5),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
