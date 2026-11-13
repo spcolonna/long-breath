@@ -2,6 +2,8 @@
 
 Lo que queda para después del MVP: pendientes concretos, ideas de mecánica y el plan para que el juego completo tenga la profundidad y la duración de un juego pago. Cuando algo se implementa, se saca de acá y se documenta en `manual.md` / `reglas-implementadas.md`.
 
+> **Propuestas de salto de calidad (13/11):** el relevamiento completo con qué mejorar y cómo (peleas, mecánicas, etapa, mapa, progresión, historia, interfaz, audio) está en [`salto-de-calidad.md`](salto-de-calidad.md). Son propuestas; lo que se decida hacer se anota acá.
+
 ---
 
 ## 1. Pendientes inmediatos
