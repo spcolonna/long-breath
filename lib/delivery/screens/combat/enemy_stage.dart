@@ -297,7 +297,9 @@ class _EnemyStage extends ConsumerWidget {
                     alignment: WrapAlignment.center,
                     children: [
                       if (e.guard > 0)
-                        Bounce(
+                        GlossaryTap(
+                          term: Term.guard,
+                          child: Bounce(
                           trigger: e.guard,
                           child: _Chip(
                             icon: Icons.shield,
@@ -310,23 +312,33 @@ class _EnemyStage extends ConsumerWidget {
                             color: Palette.sky,
                           ),
                         ),
+                        ),
                       if (def.thorns + e.thorns > 0 && !e.staggered)
-                        _Chip(
-                          icon: Icons.grass,
-                          text: t.thornsChip(def.thorns + e.thorns),
-                          color: Palette.lacquer,
+                        GlossaryTap(
+                          term: Term.thorns,
+                          child: _Chip(
+                            icon: Icons.grass,
+                            text: t.thornsChip(def.thorns + e.thorns),
+                            color: Palette.lacquer,
+                          ),
                         ),
                       if (def.regen > 0 && e.hp < e.maxHp)
-                        _Chip(
-                          icon: Icons.favorite_border,
-                          text: t.regenChip(def.regen),
-                          color: Palette.jade,
+                        GlossaryTap(
+                          term: Term.regen,
+                          child: _Chip(
+                            icon: Icons.favorite_border,
+                            text: t.regenChip(def.regen),
+                            color: Palette.jade,
+                          ),
                         ),
                       if (e.staggered)
-                        _Chip(
-                          icon: Icons.blur_on,
-                          text: t.staggeredDouble,
-                          color: Palette.gold,
+                        GlossaryTap(
+                          term: Term.staggered,
+                          child: _Chip(
+                            icon: Icons.blur_on,
+                            text: t.staggeredDouble,
+                            color: Palette.gold,
+                          ),
                         ),
                       // Escamas: se ignoran mientras está Desequilibrado.
                       if (e.scales > 0 && !e.staggered)
@@ -348,7 +360,9 @@ class _EnemyStage extends ConsumerWidget {
                           ),
                         ),
                       if (e.wrath > 0)
-                        Bounce(
+                        GlossaryTap(
+                          term: Term.wrath,
+                          child: Bounce(
                           trigger: e.wrath,
                           child: _Chip(
                             icon: Icons.local_fire_department,
@@ -356,20 +370,27 @@ class _EnemyStage extends ConsumerWidget {
                             color: Palette.lacquer,
                           ),
                         ),
+                        ),
                       if (e.parryReady && !e.staggered)
-                        _Chip(
-                          icon: Icons.filter_tilt_shift,
-                          text: t.parryChip,
-                          color: Palette.structure,
+                        GlossaryTap(
+                          term: Term.parry,
+                          child: _Chip(
+                            icon: Icons.filter_tilt_shift,
+                            text: t.parryChip,
+                            color: Palette.structure,
+                          ),
                         ),
                       if (e.stolen > 0)
-                        Bounce(
+                        GlossaryTap(
+                          term: Term.steal,
+                          child: Bounce(
                           trigger: e.stolen,
                           child: _Chip(
                             icon: Icons.savings_outlined,
                             text: t.stolenChip(e.stolen),
                             color: Palette.gold,
                           ),
+                        ),
                         ),
                     ],
                   ),

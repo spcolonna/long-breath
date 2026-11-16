@@ -1321,7 +1321,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutHand.
   ///
   /// In es, this message translates to:
-  /// **'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde.'**
+  /// **'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde. Mantené apretada una carta para leerla; las palabras subrayadas se tocan.'**
   String get tutHand;
 
   /// No description provided for @tutPlayFist.
@@ -4875,6 +4875,234 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Vencido {wins} · Te venció {falls}'**
   String chronicleCount(int wins, int falls);
+
+  /// No description provided for @glossTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Glosario'**
+  String get glossTitle;
+
+  /// No description provided for @glossRelated.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver también'**
+  String get glossRelated;
+
+  /// No description provided for @glossCardHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Mantené apretada una carta para leerla'**
+  String get glossCardHint;
+
+  /// No description provided for @glossGuard.
+  ///
+  /// In es, this message translates to:
+  /// **'Escudo que absorbe el golpe del rival. Cada defensa cubre una altura: a la misma altura absorbe todo, a otra solo la mitad. Dura hasta el final del turno del rival.'**
+  String get glossGuard;
+
+  /// No description provided for @glossHeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada golpe y cada Guardia tienen altura: ↑ alta, → media, ↓ baja. Mirá la flecha del globo del rival y defendete a la misma altura.'**
+  String get glossHeight;
+
+  /// No description provided for @glossDeflect.
+  ///
+  /// In es, this message translates to:
+  /// **'Si tu Guardia está a la altura del golpe y alcanza para cubrirlo, lo desviás (化): no recibís nada, el rival pierde Estructura y ganás Aliento para tu próximo turno.'**
+  String get glossDeflect;
+
+  /// No description provided for @glossStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'El equilibrio de cada luchador. Los golpes con el hexágono violeta la bajan. Si llega a 0, queda Desequilibrado.'**
+  String get glossStructure;
+
+  /// No description provided for @glossStaggered.
+  ///
+  /// In es, this message translates to:
+  /// **'Con la Estructura en 0, el rival pierde su próxima acción y recibe el doble de daño hasta el final de tu próximo turno. Si te pasa a vos, empezás el turno siguiente con 2 de Aliento menos.'**
+  String get glossStaggered;
+
+  /// No description provided for @glossBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Con Aliento pagás las cartas: el número de arriba a la izquierda es su costo. Se renueva al empezar cada turno y lo que no gastás se pierde.'**
+  String get glossBreath;
+
+  /// No description provided for @glossBreathe.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiás toda la mano por cartas nuevas a cambio de Aliento. Tiene usos contados por combate.'**
+  String get glossBreathe;
+
+  /// No description provided for @glossStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Caballo, Arco o Vacía. Cada postura cambia lo que hacen tus cartas, y algunas cartas te mueven de una a otra.'**
+  String get glossStance;
+
+  /// No description provided for @glossDingbu.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiás de postura pagando Aliento, una vez por turno. Tocá el sello de tu postura para usarlo.'**
+  String get glossDingbu;
+
+  /// No description provided for @glossChain.
+  ///
+  /// In es, this message translates to:
+  /// **'La carta rinde más si la jugás desde la postura que indica («Desde…»).'**
+  String get glossChain;
+
+  /// No description provided for @glossCircle.
+  ///
+  /// In es, this message translates to:
+  /// **'Si en un mismo turno encadenás desde las tres posturas, cerrás el círculo: ganás Aliento y robás cartas.'**
+  String get glossCircle;
+
+  /// No description provided for @glossRetain.
+  ///
+  /// In es, this message translates to:
+  /// **'Al terminar el turno podés guardar algunas cartas en la mano en vez de descartarlas. Algunas rinden más si las retuviste.'**
+  String get glossRetain;
+
+  /// No description provided for @glossExhaust.
+  ///
+  /// In es, this message translates to:
+  /// **'Al jugarla sale del combate y no vuelve hasta la próxima pelea.'**
+  String get glossExhaust;
+
+  /// No description provided for @glossForm.
+  ///
+  /// In es, this message translates to:
+  /// **'Una secuencia de cartas jugadas en orden. Si la completás, se desata un golpe grande. Las defensas no la interrumpen.'**
+  String get glossForm;
+
+  /// No description provided for @glossThorns.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada carta tuya que le hace daño te quita esa Vida (las formas no). No funciona mientras está Desequilibrado.'**
+  String get glossThorns;
+
+  /// No description provided for @glossRegen.
+  ///
+  /// In es, this message translates to:
+  /// **'Antes de cada acción recupera esa Vida. Si está Desequilibrado y pierde la acción, tampoco se cura.'**
+  String get glossRegen;
+
+  /// No description provided for @glossWrath.
+  ///
+  /// In es, this message translates to:
+  /// **'Después de cada acción sus golpes suman ese daño, y se acumula. Desequilibrarlo lo vuelve a dormir.'**
+  String get glossWrath;
+
+  /// No description provided for @glossParry.
+  ///
+  /// In es, this message translates to:
+  /// **'El primer golpe con daño de cada turno no le hace daño y te devuelve un poco. No funciona mientras está Desequilibrado.'**
+  String get glossParry;
+
+  /// No description provided for @glossSteal.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada golpe que te hace daño te roba jade. Si se escapa, se lo lleva; si lo vencés, lo recuperás.'**
+  String get glossSteal;
+
+  /// No description provided for @glossScales.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada golpe pierde ese daño, salvo con el rival Desequilibrado. Cada vez que lo desequilibrás pierde una escama.'**
+  String get glossScales;
+
+  /// No description provided for @termHeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Altura'**
+  String get termHeight;
+
+  /// No description provided for @termDeflect.
+  ///
+  /// In es, this message translates to:
+  /// **'Desvío'**
+  String get termDeflect;
+
+  /// No description provided for @termStaggered.
+  ///
+  /// In es, this message translates to:
+  /// **'Desequilibrado'**
+  String get termStaggered;
+
+  /// No description provided for @termStance.
+  ///
+  /// In es, this message translates to:
+  /// **'Postura'**
+  String get termStance;
+
+  /// No description provided for @termChain.
+  ///
+  /// In es, this message translates to:
+  /// **'Encadenar'**
+  String get termChain;
+
+  /// No description provided for @termCircle.
+  ///
+  /// In es, this message translates to:
+  /// **'Círculo'**
+  String get termCircle;
+
+  /// No description provided for @termRetain.
+  ///
+  /// In es, this message translates to:
+  /// **'Retener'**
+  String get termRetain;
+
+  /// No description provided for @termExhaust.
+  ///
+  /// In es, this message translates to:
+  /// **'Agotar'**
+  String get termExhaust;
+
+  /// No description provided for @termForm.
+  ///
+  /// In es, this message translates to:
+  /// **'Forma'**
+  String get termForm;
+
+  /// No description provided for @termThorns.
+  ///
+  /// In es, this message translates to:
+  /// **'Espinas'**
+  String get termThorns;
+
+  /// No description provided for @termRegen.
+  ///
+  /// In es, this message translates to:
+  /// **'Curación'**
+  String get termRegen;
+
+  /// No description provided for @termWrath.
+  ///
+  /// In es, this message translates to:
+  /// **'Despierto'**
+  String get termWrath;
+
+  /// No description provided for @termParry.
+  ///
+  /// In es, this message translates to:
+  /// **'Abanico'**
+  String get termParry;
+
+  /// No description provided for @termSteal.
+  ///
+  /// In es, this message translates to:
+  /// **'Ladrón'**
+  String get termSteal;
+
+  /// No description provided for @termScales.
+  ///
+  /// In es, this message translates to:
+  /// **'Escamas'**
+  String get termScales;
 }
 
 class _AppLocalizationsDelegate

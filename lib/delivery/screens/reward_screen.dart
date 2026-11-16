@@ -16,6 +16,7 @@ import '../theme.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/paper_panel.dart';
 import '../widgets/card_widget.dart';
+import '../widgets/glossary.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/form_scroll.dart';
 import '../widgets/jade.dart';
@@ -1011,7 +1012,7 @@ class _CardsLootState extends ConsumerState<_CardsLoot> {
                       horizontal: 14,
                       vertical: 6,
                     ),
-                    child: Text(
+                    child: GlossaryText(
                       '${text.card(picked.id)} · ${picked.pinyin} ${picked.hanzi}\n'
                       '${t.cardEffect(picked, text)}'
                       '${data.forms.any((f) => (run.knownForms.contains(f.id) || f.id == run.rewardForm) && f.steps.contains(picked.id)) ? '\n${t.partOfForm}' : ''}',

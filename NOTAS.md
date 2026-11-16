@@ -212,3 +212,12 @@ macOS no tiene `timeout`.
 
 - Fase A (4/n): `combat_screen.dart` partido con `part` en `screens/combat/` (arena, enemy_stage, player, hand, action_bar, end_overlay); el estado (`_CombatScreenState`, ~1570 líneas) queda en el archivo principal. Sin cambios de código: contenido idéntico línea a línea, 314 tests.
 - Fase A (5/n): HUD de combate. Placa del héroe (escudo de Guardia, Vida y Estructura en una pieza de papel con filo de oro) y sello de laca de la postura a la derecha: tocarlo es el Paso en T (el botón de la barra se fue; anclas de tutorial `stances`/`dingbu`/`guard` intactas). Abajo: medallón de Aliento con puntos en el arco, Respirar en píldora y Terminar turno grande. La fila de 3 posturas desapareció: la escena gana alto. Lugar previsto para el Flujo (fase B): a la izquierda de la placa. Captura de revisión: `test/zz_combat_shot_test.dart` (excluido de git, `--dart-define=OUT=...`).
+
+### Fase A (6/n): glosario tocable (2026-11-16)
+- `lib/delivery/widgets/glossary.dart`: 20 términos (`Term`, cada uno con hanzi y relacionados), explicaciones en `gloss*`/`term*` del ARB.
+- `GlossaryText`: subraya en oro punteado los términos dentro de un texto (tabla de patrones en castellano; al traducir hace falta una por idioma). Se usa en el detalle de premio y del mercader.
+- `showGlossary`: hoja de papel con sello, explicación y «Ver también»; tocar un relacionado cambia el contenido en el lugar.
+- `showCardDetail`: pulsación larga sobre una carta (mano en combate y hoja del mazo) muestra la carta grande, su efecto y pastillas de términos. Antes el efecto solo se leía en premios y tienda.
+- Tocables en combate: escudo de Guardia, fila de Estructura, medallón de Aliento y los chips del rival (Guardia, Espinas, Curación, Desequilibrado, Despierto, Abanico, Ladrón). Escamas sigue abriendo el pergamino del rival.
+- Descubrimiento: pista en la hoja del mazo y una frase nueva en `tutHand`.
+- Tests: `test/glossary_test.dart` (patrones, textos completos, ficha → glosario → relacionado). 319 pasan. No probado en el simulador.

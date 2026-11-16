@@ -12,6 +12,7 @@ import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/card_widget.dart';
+import '../widgets/glossary.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
@@ -511,12 +512,11 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                 width: double.infinity,
                 child: Center(child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
-                  child: Text(
+                  child: GlossaryText(
                     detail,
                     key: ValueKey(detail),
                     textAlign: TextAlign.center,
                     maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: sel == null ? Palette.textDim : Palette.text,
                     ),

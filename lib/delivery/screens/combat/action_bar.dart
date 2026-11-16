@@ -55,9 +55,12 @@ class _ActionBar extends ConsumerWidget {
         children: [
           TutorialAnchor(
             id: 'breath',
-            child: _BreathPips(
-              breath: s.player.breath,
-              perTurn: s.breathPerTurn,
+            child: GlossaryTap(
+              term: Term.breath,
+              child: _BreathPips(
+                breath: s.player.breath,
+                perTurn: s.breathPerTurn,
+              ),
             ),
           ),
           const SizedBox(width: 8),

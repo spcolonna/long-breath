@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/combat/combat_state.dart';
+import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../providers.dart';
 import '../theme.dart';
 import 'card_widget.dart';
+import 'glossary.dart';
 import 'juice.dart';
 import 'press.dart';
 import '../feel.dart';
@@ -122,6 +124,13 @@ class _DeckGridState extends ConsumerState<DeckGrid>
           haptic: false,
           child: GestureDetector(
             onTap: tappable ? () => _pick(c) : null,
+            onLongPress: _picked == null
+                ? () => showCardDetail(
+                    context,
+                    data.card(c.cardId),
+                    upgrades: c.upgrades,
+                  )
+                : null,
             child: child,
           ),
         );
@@ -229,7 +238,18 @@ void showDeckSheet(BuildContext context, List<CombatCard> deck) {
     backgroundColor: Palette.surface,
     builder: (_) => SizedBox(
       height: MediaQuery.of(context).size.height * 0.75,
-      child: DeckGrid(cards: deck),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+            child: Text(
+              AppLocalizations.of(context).glossCardHint,
+              style: const TextStyle(fontSize: 13, color: Palette.textDim),
+            ),
+          ),
+          Expanded(child: DeckGrid(cards: deck)),
+        ],
+      ),
     ),
   );
 }

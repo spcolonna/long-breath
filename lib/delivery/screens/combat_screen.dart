@@ -27,6 +27,7 @@ import '../foe_name.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../tutorial/illustrations.dart';
+import '../widgets/glossary.dart';
 import '../tutorial/lessons.dart';
 import '../tutorial/tutorial_anchor.dart';
 import '../tutorial/tutorial_overlay.dart';

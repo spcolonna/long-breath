@@ -58,9 +58,12 @@ class _PlayerStrip extends ConsumerWidget {
                     scale: 1.25,
                     child: TutorialAnchor(
                       id: 'guard',
-                      child: _GuardBadge(
-                        guard: p.guard,
-                        height: p.guardHeight,
+                      child: GlossaryTap(
+                        term: Term.guard,
+                        child: _GuardBadge(
+                          guard: p.guard,
+                          height: p.guardHeight,
+                        ),
                       ),
                     ),
                   ),
@@ -98,7 +101,9 @@ class _PlayerStrip extends ConsumerWidget {
                           height: 13,
                         ),
                         const SizedBox(height: 4),
-                        Row(
+                        GlossaryTap(
+                          term: Term.structure,
+                          child: Row(
                           children: [
                             Flexible(
                               child: Text(
@@ -132,6 +137,7 @@ class _PlayerStrip extends ConsumerWidget {
                               ),
                             ),
                           ],
+                          ),
                         ),
                       ],
                     ),

@@ -459,6 +459,8 @@ class _HandAreaState extends ConsumerState<_HandArea> {
                     }
                     ref.read(combatControllerProvider.notifier).tapCard(c.uid);
                   },
+                  onLongPress: () =>
+                      showCardDetail(context, def, upgrades: c.upgrades),
                   child: CardWidget(
                     def: def,
                     upgrades: c.upgrades,

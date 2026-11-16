@@ -762,7 +762,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutHand =>
-      'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde.';
+      'Tu mano. El número de arriba a la izquierda de cada carta es su costo en Aliento. Tenés 3 por turno y lo que no gastes se pierde. Mantené apretada una carta para leerla; las palabras subrayadas se tocan.';
 
   @override
   String get tutPlayFist =>
@@ -3088,4 +3088,138 @@ class AppLocalizationsEs extends AppLocalizations {
   String chronicleCount(int wins, int falls) {
     return 'Vencido $wins · Te venció $falls';
   }
+
+  @override
+  String get glossTitle => 'Glosario';
+
+  @override
+  String get glossRelated => 'Ver también';
+
+  @override
+  String get glossCardHint => 'Mantené apretada una carta para leerla';
+
+  @override
+  String get glossGuard =>
+      'Escudo que absorbe el golpe del rival. Cada defensa cubre una altura: a la misma altura absorbe todo, a otra solo la mitad. Dura hasta el final del turno del rival.';
+
+  @override
+  String get glossHeight =>
+      'Cada golpe y cada Guardia tienen altura: ↑ alta, → media, ↓ baja. Mirá la flecha del globo del rival y defendete a la misma altura.';
+
+  @override
+  String get glossDeflect =>
+      'Si tu Guardia está a la altura del golpe y alcanza para cubrirlo, lo desviás (化): no recibís nada, el rival pierde Estructura y ganás Aliento para tu próximo turno.';
+
+  @override
+  String get glossStructure =>
+      'El equilibrio de cada luchador. Los golpes con el hexágono violeta la bajan. Si llega a 0, queda Desequilibrado.';
+
+  @override
+  String get glossStaggered =>
+      'Con la Estructura en 0, el rival pierde su próxima acción y recibe el doble de daño hasta el final de tu próximo turno. Si te pasa a vos, empezás el turno siguiente con 2 de Aliento menos.';
+
+  @override
+  String get glossBreath =>
+      'Con Aliento pagás las cartas: el número de arriba a la izquierda es su costo. Se renueva al empezar cada turno y lo que no gastás se pierde.';
+
+  @override
+  String get glossBreathe =>
+      'Cambiás toda la mano por cartas nuevas a cambio de Aliento. Tiene usos contados por combate.';
+
+  @override
+  String get glossStance =>
+      'Caballo, Arco o Vacía. Cada postura cambia lo que hacen tus cartas, y algunas cartas te mueven de una a otra.';
+
+  @override
+  String get glossDingbu =>
+      'Cambiás de postura pagando Aliento, una vez por turno. Tocá el sello de tu postura para usarlo.';
+
+  @override
+  String get glossChain =>
+      'La carta rinde más si la jugás desde la postura que indica («Desde…»).';
+
+  @override
+  String get glossCircle =>
+      'Si en un mismo turno encadenás desde las tres posturas, cerrás el círculo: ganás Aliento y robás cartas.';
+
+  @override
+  String get glossRetain =>
+      'Al terminar el turno podés guardar algunas cartas en la mano en vez de descartarlas. Algunas rinden más si las retuviste.';
+
+  @override
+  String get glossExhaust =>
+      'Al jugarla sale del combate y no vuelve hasta la próxima pelea.';
+
+  @override
+  String get glossForm =>
+      'Una secuencia de cartas jugadas en orden. Si la completás, se desata un golpe grande. Las defensas no la interrumpen.';
+
+  @override
+  String get glossThorns =>
+      'Cada carta tuya que le hace daño te quita esa Vida (las formas no). No funciona mientras está Desequilibrado.';
+
+  @override
+  String get glossRegen =>
+      'Antes de cada acción recupera esa Vida. Si está Desequilibrado y pierde la acción, tampoco se cura.';
+
+  @override
+  String get glossWrath =>
+      'Después de cada acción sus golpes suman ese daño, y se acumula. Desequilibrarlo lo vuelve a dormir.';
+
+  @override
+  String get glossParry =>
+      'El primer golpe con daño de cada turno no le hace daño y te devuelve un poco. No funciona mientras está Desequilibrado.';
+
+  @override
+  String get glossSteal =>
+      'Cada golpe que te hace daño te roba jade. Si se escapa, se lo lleva; si lo vencés, lo recuperás.';
+
+  @override
+  String get glossScales =>
+      'Cada golpe pierde ese daño, salvo con el rival Desequilibrado. Cada vez que lo desequilibrás pierde una escama.';
+
+  @override
+  String get termHeight => 'Altura';
+
+  @override
+  String get termDeflect => 'Desvío';
+
+  @override
+  String get termStaggered => 'Desequilibrado';
+
+  @override
+  String get termStance => 'Postura';
+
+  @override
+  String get termChain => 'Encadenar';
+
+  @override
+  String get termCircle => 'Círculo';
+
+  @override
+  String get termRetain => 'Retener';
+
+  @override
+  String get termExhaust => 'Agotar';
+
+  @override
+  String get termForm => 'Forma';
+
+  @override
+  String get termThorns => 'Espinas';
+
+  @override
+  String get termRegen => 'Curación';
+
+  @override
+  String get termWrath => 'Despierto';
+
+  @override
+  String get termParry => 'Abanico';
+
+  @override
+  String get termSteal => 'Ladrón';
+
+  @override
+  String get termScales => 'Escamas';
 }
