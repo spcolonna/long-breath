@@ -204,6 +204,7 @@ class CombatState {
     this.awakened = AwakeningEffect.none,
     this.reserve = const [],
     this.wave = 0,
+    this.flow = 0,
   });
 
   final int turn;
@@ -299,6 +300,11 @@ class CombatState {
   /// Oleada actual (0 = el primero del grupo).
   final int wave;
 
+  /// Flujo (0–[CombatEngine.flowMax]): sube al encadenar, desviar y cerrar
+  /// formas; baja con los golpes que entran sin Guardia y los turnos sin
+  /// jugar. Cada nivel suma algo (ver [CombatEngine.flowDamage]).
+  final int flow;
+
   /// Enemigos del grupo: los caídos, el actual y los que esperan.
   int get waveCount => wave + 1 + reserve.length;
 
@@ -308,6 +314,7 @@ class CombatState {
     PlayerCombat? player,
     EnemyCombat? enemy,
     List<EnemyCombat>? enemies,
+    int? flow,
   }) =>
       CombatState(
         turn: turn,
@@ -356,6 +363,7 @@ class CombatState {
         awakened: awakened,
         reserve: reserve,
         wave: wave,
+        flow: flow ?? this.flow,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

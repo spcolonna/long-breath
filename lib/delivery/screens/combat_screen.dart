@@ -1182,6 +1182,18 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               big: true,
             ),
           );
+        case FlowChanged(:final level, :final delta):
+          // El medidor ya se anima; la cinta solo al llegar al máximo.
+          if (delta < 0) {
+            Haptics.lightImpact();
+          } else if (level >= CombatEngine.flowMax) {
+            Haptics.heavyImpact();
+            _after(140, Haptics.mediumImpact);
+            _audio.play(Sfx.formStep, variant: 4);
+            _queue.add(_Fx(t.flowUp(level), t.flowMaxSub, Palette.gold));
+          } else {
+            Haptics.selectionClick();
+          }
         case FistBonusGained(:final total):
           _queue.add(
             _Fx(t.fistBonusTitle, t.fistBonusNow(total), Palette.lacquer),

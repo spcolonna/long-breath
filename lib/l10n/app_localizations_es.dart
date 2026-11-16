@@ -3197,6 +3197,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String get termCircle => 'Círculo';
 
   @override
+  String get termFlow => 'Flujo';
+
+  @override
+  String get glossFlow =>
+      'Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más.';
+
+  @override
+  String flowLevel(int level, int max) {
+    return 'Flujo $level de $max';
+  }
+
+  @override
+  String flowUp(int level) {
+    return 'Flujo $level';
+  }
+
+  @override
+  String get flowMaxSub => 'Ataques +1 · robás 1 más · +1 Aliento';
+
+  @override
   String get termRetain => 'Retener';
 
   @override

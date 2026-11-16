@@ -105,7 +105,9 @@ void main() {
       expect(r3.events.whereType<StanceCircle>(), hasLength(1));
       s = r3.state;
       expect(s.player.stance, Stance.mabu);
-      expect(s.enemy.hp, 63 - 10 - 4 - 6);
+      // Desde la primera cadena hay Flujo: +1 en cada ataque que sigue.
+      expect(s.flow, 3);
+      expect(s.enemy.hp, 63 - 10 - (4 + 1) - (6 + 1));
       expect(s.hand.length, hand - 1 + 1 + CombatEngine.circleDraw);
       expect(
         s.player.breath,
@@ -518,10 +520,12 @@ void main() {
       final r = play(s, 'mabu_chongquan');
       expect(r.events.whereType<FistBonusGained>().single.total, 2);
       expect(r.state.fistBonus, 2);
-      // Mismo puño, misma postura (mǎbù) que al principio: +2.
+      // Mismo puño, misma postura (mǎbù) que al principio: +2 (y el Flujo
+      // de cerrar la forma, +1).
       final after =
           engine.preview(r.state, uidOf(r.state, 'gongbu_chongquan')).damage;
-      expect(after, before + 2);
+      expect(r.state.flow, greaterThan(0));
+      expect(after, before + 2 + CombatEngine.flowDamage);
     });
 
     test('un ataque fuera de secuencia interrumpe; una defensa no', () {
@@ -1531,6 +1535,74 @@ void main() {
       final crane = setup(deck, weapon: 'gun');
       final tiger = setup(deck, weapon: 'gun', style: Style.tiger);
       expect(crane.player.maxStructure, tiger.player.maxStructure + 3);
+    });
+  });
+
+  group('Flujo', () {
+    test('desviar sube el Flujo', () {
+      var s = setup(['an_zhang', 'ti_xi', ...filler]);
+      s = play(s, 'an_zhang').state;
+      s = play(s, 'ti_xi').state;
+      final r = endTurn(s);
+      final f = r.events.whereType<FlowChanged>().single;
+      expect((f.level, f.delta, f.cause), (1, 1, FlowCause.deflect));
+      expect(r.state.flow, 1);
+    });
+
+    test('un golpe sin Guardia o un turno sin jugar lo bajan', () {
+      final s = setup(filler).copyWith(flow: 3);
+      final r = endTurn(s); // sin jugar y sin Guardia
+      final causes = r.events.whereType<FlowChanged>().map((e) => e.cause);
+      expect(causes, [FlowCause.idle, FlowCause.hit]);
+      expect(r.state.flow, 1);
+      // En 0 no baja más ni avisa.
+      final r0 = endTurn(setup(filler));
+      expect(r0.events.whereType<FlowChanged>(), isEmpty);
+      expect(r0.state.flow, 0);
+    });
+
+    test('nunca pasa de ${CombatEngine.flowMax}', () {
+      final s = setup([
+        'ma_zhuan_gong',
+        'gong_zhuan_xu',
+        'xu_zhuan_ma',
+        ...filler,
+      ]).copyWith(flow: CombatEngine.flowMax - 1);
+      var r = play(s, 'ma_zhuan_gong');
+      expect(r.state.flow, CombatEngine.flowMax);
+      r = play(r.state, 'gong_zhuan_xu');
+      expect(r.state.flow, CombatEngine.flowMax);
+      expect(r.events.whereType<FlowChanged>(), isEmpty);
+    });
+
+    test('cada nivel suma: daño, carta y Aliento', () {
+      final base = setup(['gongbu_chongquan', ...filler]);
+      final uid = uidOf(base, 'gongbu_chongquan');
+      final dmg = engine.preview(base, uid).damage;
+      expect(
+        engine.preview(base.copyWith(flow: 1), uid).damage,
+        dmg + CombatEngine.flowDamage,
+      );
+      // La Guardia de una defensa no cambia.
+      final g = uidOf(base, 'ge_dang');
+      expect(
+        engine.preview(base.copyWith(flow: 3), g).damage,
+        engine.preview(base, g).damage,
+      );
+      // Al empezar el turno: Flujo 2 roba una más y Flujo 3 da Aliento.
+      CombatState next(int flow) {
+        // Desvío seguro para no perder Flujo por el golpe.
+        var s = setup(['an_zhang', 'ti_xi', ...filler, ...filler])
+            .copyWith(flow: flow);
+        s = play(s, 'an_zhang').state;
+        s = play(s, 'ti_xi').state;
+        return endTurn(s).state;
+      }
+      final f1 = next(0), f2 = next(1), f3 = next(2);
+      expect((f1.flow, f2.flow, f3.flow), (1, 2, 3));
+      expect(f2.hand.length, f1.hand.length + 1);
+      expect(f2.player.breath, f1.player.breath);
+      expect(f3.player.breath, f1.player.breath + 1);
     });
   });
 }

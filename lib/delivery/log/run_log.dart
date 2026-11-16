@@ -171,6 +171,8 @@ String eventsLine(List<CombatEvent> events) {
         'encadena $cardId desde ${from.name}',
       StanceCircle(:final breath, :final draw) =>
         'CÍRCULO +$breath aliento +$draw cartas',
+      FlowChanged(:final level, :final delta, :final cause) =>
+        'flujo ${delta > 0 ? '+' : ''}$delta → $level (${cause.name})',
       GuardGained(:final amount, :final height) =>
         'guardia +$amount${height == null ? '' : ' ${height.name}'}',
       EnemyDamaged(:final damage, :final structure, :final absorbed) =>

@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   testWidgets('la carta que encadena se marca y se anuncia', (tester) async {
     SharedPreferences.setMockInitialValues({});
+    final semantics = tester.ensureSemantics();
     tester.view.physicalSize = const Size(1206, 2622);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
@@ -84,6 +85,11 @@ void main() {
       Stance.gongbu,
     );
     expect(find.text('Encadena'), findsNothing);
+
+    // La cadena subió el Flujo y el medidor lo dice.
+    expect(container.read(combatControllerProvider)!.state.flow, 1);
+    expect(find.bySemanticsLabel('Flujo 1 de 3'), findsOneWidget);
+    semantics.dispose();
     expect(tester.takeException(), isNull);
   });
 }

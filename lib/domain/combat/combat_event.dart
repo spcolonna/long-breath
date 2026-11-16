@@ -45,6 +45,17 @@ class StanceCircle extends CombatEvent {
   final int draw;
 }
 
+/// Por qué cambió el Flujo.
+enum FlowCause { chain, deflect, form, hit, idle }
+
+/// El Flujo cambió a [level] (ya acotado) por [cause].
+class FlowChanged extends CombatEvent {
+  const FlowChanged(this.level, this.delta, this.cause);
+  final int level;
+  final int delta;
+  final FlowCause cause;
+}
+
 class GuardGained extends CombatEvent {
   const GuardGained(this.amount, this.height);
   final int amount;

@@ -221,3 +221,10 @@ macOS no tiene `timeout`.
 - Tocables en combate: escudo de Guardia, fila de Estructura, medallón de Aliento y los chips del rival (Guardia, Espinas, Curación, Desequilibrado, Despierto, Abanico, Ladrón). Escamas sigue abriendo el pergamino del rival.
 - Descubrimiento: pista en la hoja del mazo y una frase nueva en `tutHand`.
 - Tests: `test/glossary_test.dart` (patrones, textos completos, ficha → glosario → relacionado). 319 pasan. No probado en el simulador.
+
+### Fase B (1/n): Flujo (2026-11-16)
+- Motor: `CombatState.flow` (0–3, `CombatEngine.flowMax`). Sube +1 al encadenar postura, desviar y cerrar forma; baja −1 con un golpe que entra sin Guardia (`!blocked && taken > 0`) y al terminar un turno sin jugar cartas. Evento `FlowChanged(level, delta, cause)`; también en el registro de subidas.
+- Qué da: Flujo ≥1 → ataques +1 (`flowDamage`, va por `_styleDamage`, así la vista previa lo muestra); ≥2 → +1 carta al empezar el turno; 3 → también +1 Aliento. Todavía no hay Técnica del Camino (gasta el Flujo 3) ni capas de música/fondo.
+- Vista: medidor 流 con tres tramos (jade, jade, oro) a la izquierda de la placa del héroe; con el máximo se dora. Vibra en cada cambio; cinta «Flujo 3» al llegar al tope. Tocarlo abre el término nuevo del glosario (`Term.flow`). Entra en 375 pt.
+- Simulación Normal, 150 runs: promedio 2% → 3%, experto 23% → 27%. Sube algo; el ajuste fino va con la fase C (bot prudente).
+- Tests: grupo `Flujo` en `combat_engine_test.dart` (desvío, golpe y turno quieto, tope, beneficios por nivel), medidor en `stance_chain_test.dart`. 323 pasan. No probado en el simulador.

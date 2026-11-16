@@ -33,6 +33,14 @@ class _PlayerStrip extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          GlossaryTap(
+            term: Term.flow,
+            child: Semantics(
+              label: t.flowLevel(s.flow, CombatEngine.flowMax),
+              child: _FlowGauge(level: s.flow),
+            ),
+          ),
+          const SizedBox(width: 8),
           Expanded(
             child: Container(
               padding: const EdgeInsets.fromLTRB(8, 6, 12, 8),
@@ -568,6 +576,97 @@ class _FormStep extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Medidor de Flujo: el hanzi 流 sobre tres tramos que se llenan de abajo
+/// hacia arriba (jade, jade, oro). Con el máximo, el borde se dora y brilla.
+class _FlowGauge extends StatelessWidget {
+  const _FlowGauge({required this.level});
+
+  final int level;
+
+  static const _w = 40.0;
+
+  Color _fill(int i) => i == CombatEngine.flowMax - 1 ? Palette.gold : Palette.jade;
+
+  @override
+  Widget build(BuildContext context) {
+    final full = level >= CombatEngine.flowMax;
+    final reduce = MediaQuery.disableAnimationsOf(context);
+    final d = reduce ? Duration.zero : const Duration(milliseconds: 320);
+    return ExcludeSemantics(
+      child: Bounce(
+        trigger: level,
+        scale: 1.15,
+        child: AnimatedContainer(
+          duration: d,
+          curve: Curves.easeOutCubic,
+          width: _w,
+          padding: const EdgeInsets.fromLTRB(5, 4, 5, 6),
+          decoration: BoxDecoration(
+            color: Palette.surface.withValues(alpha: 0.94),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: full ? Palette.gold : Palette.gold.withValues(alpha: 0.55),
+              width: full ? 2 : 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: full
+                    ? Palette.gold.withValues(alpha: 0.45)
+                    : const Color(0xFF8A5A1E).withValues(alpha: 0.16),
+                blurRadius: full ? 14 : 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedDefaultTextStyle(
+                duration: d,
+                style: TextStyle(
+                  fontFamily: Fonts.brush,
+                  fontSize: 20,
+                  height: 1.1,
+                  color: level == 0
+                      ? Palette.textDim
+                      : full
+                      ? Palette.gold
+                      : Palette.jade,
+                ),
+                child: const Text('流'),
+              ),
+              const SizedBox(height: 3),
+              for (var i = CombatEngine.flowMax - 1; i >= 0; i--)
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: AnimatedContainer(
+                    duration: d + Duration(milliseconds: reduce ? 0 : 60 * i),
+                    curve: Curves.easeOutBack,
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: i < level
+                          ? _fill(i)
+                          : Palette.line.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: i < level
+                          ? [
+                              BoxShadow(
+                                color: _fill(i).withValues(alpha: 0.45),
+                                blurRadius: 5,
+                              ),
+                            ]
+                          : null,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

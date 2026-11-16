@@ -559,9 +559,11 @@ class CombatEngine {
     required int chain,
     AwakeningEffect awakened = AwakeningEffect.none,
     int heavy = 0,
+    int flow = 0,
   }) {
     if (!def.type.isAttack || def.damage == 0) return 0;
-    return (def.cost >= 2 ? heavy : 0) +
+    return flowDamageOf(flow) +
+        (def.cost >= 2 ? heavy : 0) +
         (attacks == 0 ? firstStrike : 0) +
         (chain + def.chainDamage) * attacks +
         (retained ? def.retainedDamage + awakened.retainedDamage : 0);
@@ -669,6 +671,7 @@ class CombatEngine {
       chain: s.chain,
       awakened: s.awakened,
       heavy: _tal(s.talismans, (e) => e.heavyDamage, s.weaponEffect),
+      flow: s.flow,
     );
     final (dmg, str) = _cardHit(
       def,
@@ -777,6 +780,28 @@ class CombatEngine {
   static const circleBreath = 1;
   static const circleDraw = 2;
 
+  /// Flujo: tope y lo que da cada nivel.
+  static const flowMax = 3;
+
+  /// Daño extra de cada ataque con Flujo 1 o más.
+  static const flowDamage = 1;
+
+  /// Con Flujo 2 o más, una carta más al empezar el turno.
+  static const flowDrawAt = 2;
+
+  /// Con Flujo 3, un Aliento más al empezar el turno.
+  static const flowBreathAt = 3;
+
+  static int flowDamageOf(int flow) => flow >= 1 ? flowDamage : 0;
+
+  void _flow(_Draft d, int delta, FlowCause cause, List<CombatEvent> events) {
+    final next = (d.flow + delta).clamp(0, flowMax);
+    if (next == d.flow) return;
+    final real = next - d.flow;
+    d.flow = next;
+    events.add(FlowChanged(next, real, cause));
+  }
+
   /// Encadenar desde [from] completa las tres posturas (y antes faltaba esa).
   static bool _closes(int mask, Stance from) {
     final all = (1 << Stance.values.length) - 1;
@@ -831,6 +856,7 @@ class CombatEngine {
         chain: d.chain,
         awakened: d.awakened,
         heavy: _tal(d.talismans, (e) => e.heavyDamage, d.weaponEffect),
+        flow: d.flow,
       ),
       _styleStructure(
         def,
@@ -875,6 +901,7 @@ class CombatEngine {
     final chained = def.chainsFrom(d.stance);
     if (chained) {
       events.add(StanceChained(def.id, def.chainFrom!));
+      _flow(d, 1, FlowCause.chain, events);
       // Rueda de las Posturas: cada cadena da Aliento.
       for (final id in _slots(d.talismans, d.weaponEffect)) {
         final n = _fx(id, d.weaponEffect).chainBreath;
@@ -936,6 +963,7 @@ class CombatEngine {
           d.formProgress[f.id] = 0;
           d.formsCompleted[f.id] = (d.formsCompleted[f.id] ?? 0) + 1;
           events.add(FormCompleted(f.id));
+          _flow(d, 1, FlowCause.form, events);
           _applyForm(d, f.effect, events);
           if (d.isOver) return;
           _talismansOnForm(d, events);
@@ -1126,6 +1154,7 @@ class CombatEngine {
   // ------------------------------------------------------------- turnos
 
   void _endTurn(_Draft d, Set<int> retain, List<CombatEvent> events) {
+    if (d.cardsThisTurn == 0) _flow(d, -1, FlowCause.idle, events);
     final kept = d.hand.where((c) => retain.contains(c.uid)).toList();
     d.discard.addAll(d.hand.where((c) => !retain.contains(c.uid)));
     d.hand
@@ -1258,6 +1287,7 @@ class CombatEngine {
     final stance = data.stance(d.stance);
     d.deflects++;
     events.add(const Deflected());
+    _flow(d, 1, FlowCause.deflect, events);
     d.nextTurnBreathMod += data.balance.deflectBreathBonus +
         stance.deflectBreathBonus +
         d.awakened.deflectBreath;
@@ -1296,6 +1326,7 @@ class CombatEngine {
     d.hp = math.max(0, d.hp - taken);
     d.structure = math.max(0, d.structure - s);
     events.add(PlayerHit(taken, s, blocked: blocked));
+    if (!blocked && taken > 0) _flow(d, -1, FlowCause.hit, events);
     if (taken > 0 && def.steal > 0) {
       e.stolen += def.steal;
       events.add(JadeStolen(def.steal, e.stolen));
@@ -1404,12 +1435,19 @@ class CombatEngine {
     for (final e in d.enemies) {
       e.parryReady = e.hp > 0 && data.enemy(e.id).parry > 0;
     }
-    d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod);
+    d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod) +
+        (d.flow >= flowBreathAt ? 1 : 0);
     d.nextTurnBreathMod = 0;
     events.add(TurnStarted(d.turn, d.breath));
     // Las cartas retenidas son extra: siempre se roba la mano completa
-    // (menos la escarcha, pero nunca menos de una carta).
-    _draw(d, math.max(1, d.handSize - d.drawPenalty), events);
+    // (menos la escarcha, pero nunca menos de una carta). El Flujo alto
+    // suma una.
+    _draw(
+      d,
+      math.max(1, d.handSize - d.drawPenalty) +
+          (d.flow >= flowDrawAt ? 1 : 0),
+      events,
+    );
     d.drawPenalty = 0;
     if (d.pendingDiscard > 0 && d.hand.isNotEmpty) {
       d.pendingDiscard = math.min(d.pendingDiscard, d.hand.length);
@@ -1554,6 +1592,7 @@ class _Draft {
     required this.rng,
     List<EnemyCombat>? reserve,
     this.wave = 0,
+    this.flow = 0,
     this.nextTurnBreathMod = 0,
     this.dingbuUsed = false,
     this.turnStructureBonus = 0,
@@ -1609,6 +1648,7 @@ class _Draft {
     rng: s.rng,
     reserve: [...s.reserve],
     wave: s.wave,
+    flow: s.flow,
     nextTurnBreathMod: s.nextTurnBreathMod,
     dingbuUsed: s.dingbuUsed,
     turnStructureBonus: s.turnStructureBonus,
@@ -1660,6 +1700,7 @@ class _Draft {
   set enemy(_EnemyDraft e) => enemies[cur] = e;
   final List<EnemyCombat> reserve;
   int wave;
+  int flow;
 
   /// El enemigo cayó en esta acción y queda otro esperando.
   bool enemyDown = false;
@@ -1755,5 +1796,6 @@ class _Draft {
     awakened: awakened,
     reserve: List.unmodifiable(reserve),
     wave: wave,
+    flow: flow,
   );
 }

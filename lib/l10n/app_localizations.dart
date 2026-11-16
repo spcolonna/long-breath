@@ -5050,6 +5050,36 @@ abstract class AppLocalizations {
   /// **'Círculo'**
   String get termCircle;
 
+  /// No description provided for @termFlow.
+  ///
+  /// In es, this message translates to:
+  /// **'Flujo'**
+  String get termFlow;
+
+  /// No description provided for @glossFlow.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más.'**
+  String get glossFlow;
+
+  /// No description provided for @flowLevel.
+  ///
+  /// In es, this message translates to:
+  /// **'Flujo {level} de {max}'**
+  String flowLevel(int level, int max);
+
+  /// No description provided for @flowUp.
+  ///
+  /// In es, this message translates to:
+  /// **'Flujo {level}'**
+  String flowUp(int level);
+
+  /// No description provided for @flowMaxSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Ataques +1 · robás 1 más · +1 Aliento'**
+  String get flowMaxSub;
+
   /// No description provided for @termRetain.
   ///
   /// In es, this message translates to:

@@ -22,6 +22,7 @@ void main() {
       expect(terms('Si lo desequilibra, robás 1'), [Term.staggered]);
       expect(terms('Si la retuviste, +2 Aliento'), [Term.retain, Term.breath]);
       expect(terms('+2 Guardia. Agotar'), [Term.guard, Term.exhaust]);
+      expect(terms('Sube el Flujo'), [Term.flow]);
     });
 
     test('«Paso en T» gana a «postura» y no hay falsos positivos', () {
