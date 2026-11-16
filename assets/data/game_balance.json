@@ -9,7 +9,8 @@
     "breatheChargeAt": 3,
     "breatheMax": 2,
     "breatheBreath": 2,
-    "breatheStructure": 5
+    "breatheStructure": 5,
+    "counterDraw": 2
   },
   "novice": { "hanzi": "徒", "pinyin": "Tú", "draw": 5, "breath": 3, "retain": 0 },
   "styles": {

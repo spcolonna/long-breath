@@ -1210,6 +1210,84 @@ abstract class AppLocalizations {
   /// **'Respirar cargado'**
   String get breatheReady;
 
+  /// No description provided for @invalidNoCounter.
+  ///
+  /// In es, this message translates to:
+  /// **'No tenés un Contragolpe listo'**
+  String get invalidNoCounter;
+
+  /// No description provided for @invalidFlowFull.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu Flujo ya está al máximo'**
+  String get invalidFlowFull;
+
+  /// No description provided for @counter.
+  ///
+  /// In es, this message translates to:
+  /// **'Contragolpe'**
+  String get counter;
+
+  /// No description provided for @counterTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Contragolpe'**
+  String get counterTitle;
+
+  /// No description provided for @counterSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Desviaste: elegí tu respuesta. Si no la usás, se pierde al terminar el turno.'**
+  String get counterSub;
+
+  /// No description provided for @counterFree.
+  ///
+  /// In es, this message translates to:
+  /// **'Golpe libre'**
+  String get counterFree;
+
+  /// No description provided for @counterFreeSub.
+  ///
+  /// In es, this message translates to:
+  /// **'La próxima carta que juegues no cuesta Aliento'**
+  String get counterFreeSub;
+
+  /// No description provided for @counterDraw.
+  ///
+  /// In es, this message translates to:
+  /// **'Leer al rival'**
+  String get counterDraw;
+
+  /// No description provided for @counterDrawSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {n} cartas'**
+  String counterDrawSub(int n);
+
+  /// No description provided for @counterFlow.
+  ///
+  /// In es, this message translates to:
+  /// **'Tomar el ritmo'**
+  String get counterFlow;
+
+  /// No description provided for @counterFlowSub.
+  ///
+  /// In es, this message translates to:
+  /// **'+1 Flujo'**
+  String get counterFlowSub;
+
+  /// No description provided for @counterReady.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Contragolpe!'**
+  String get counterReady;
+
+  /// No description provided for @counterFreeActive.
+  ///
+  /// In es, this message translates to:
+  /// **'Próxima carta gratis'**
+  String get counterFreeActive;
+
   /// No description provided for @invalidRetainTooMany.
   ///
   /// In es, this message translates to:
@@ -4969,7 +5047,7 @@ abstract class AppLocalizations {
   /// No description provided for @glossDeflect.
   ///
   /// In es, this message translates to:
-  /// **'Si tu Guardia está a la altura del golpe y alcanza para cubrirlo, lo desviás (化): no recibís nada, el rival pierde Estructura y ganás Aliento para tu próximo turno.'**
+  /// **'Si tu Guardia está a la altura del golpe y alcanza para cubrirlo, lo desviás (化): no recibís nada, el rival pierde Estructura y ganás Aliento para tu próximo turno. Además te deja un Contragolpe: en tu turno elegís una carta gratis, robar o +1 Flujo.'**
   String get glossDeflect;
 
   /// No description provided for @glossStructure.

@@ -304,7 +304,9 @@ class _GlossarySheetState extends ConsumerState<_GlossarySheet> {
         child: PaperPanel(
           opacity: 0.98,
           padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-          child: AnimatedSize(
+          // En pantallas bajas la explicación larga se desplaza.
+          child: SingleChildScrollView(
+            child: AnimatedSize(
             duration: const Duration(milliseconds: 200),
             curve: Curves.easeOut,
             alignment: Alignment.topCenter,
@@ -365,6 +367,7 @@ class _GlossarySheetState extends ConsumerState<_GlossarySheet> {
                 ],
               ),
             ),
+          ),
           ),
         ),
       ),

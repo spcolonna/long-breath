@@ -39,6 +39,24 @@ class Breathe extends CombatAction {
   final BreatheMode mode;
 }
 
+/// Qué se hace con el Contragolpe que dejó un desvío.
+enum CounterMode {
+  /// La próxima carta que juegues este turno no cuesta Aliento.
+  free,
+
+  /// Robás cartas.
+  draw,
+
+  /// +1 Flujo.
+  flow,
+}
+
+/// Contragolpe: se usa una vez después de desviar en el turno del rival.
+class Counter extends CombatAction {
+  const Counter(this.mode);
+  final CounterMode mode;
+}
+
 /// Terminar turno reteniendo las cartas indicadas (hasta el máximo por edad).
 class EndTurn extends CombatAction {
   const EndTurn({this.retain = const []});

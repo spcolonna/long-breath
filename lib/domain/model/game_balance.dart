@@ -649,6 +649,7 @@ class GameBalance {
     this.breatheMax = 2,
     this.breatheBreath = 2,
     this.breatheStructure = 5,
+    this.counterDraw = 2,
     required this.novice,
     required this.styles,
     required this.pathChoices,
@@ -719,6 +720,9 @@ class GameBalance {
 
   /// Estructura que devuelve Respirar en modo Estructura.
   final int breatheStructure;
+
+  /// Cartas que roba el Contragolpe en modo robar.
+  final int counterDraw;
   final StyleStats novice;
   final Map<Style, StyleStats> styles;
 
@@ -891,6 +895,7 @@ class GameBalance {
       breatheMax: player['breatheMax'] as int? ?? 2,
       breatheBreath: player['breatheBreath'] as int? ?? 2,
       breatheStructure: player['breatheStructure'] as int? ?? 5,
+      counterDraw: player['counterDraw'] as int? ?? 2,
       novice: StyleStats.fromJson(j['novice'] as Map<String, dynamic>),
       styles: {
         for (final e in styles.entries)

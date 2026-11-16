@@ -83,6 +83,21 @@ class _ActionBar extends ConsumerWidget {
                   : null,
             ),
           ),
+          // Contragolpe: aparece solo cuando un desvío lo dejó listo.
+          AnimatedSize(
+            duration: const Duration(milliseconds: 260),
+            curve: Curves.easeOutBack,
+            child: s.counterReady
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: _CounterButton(
+                      onPressed: busy
+                          ? null
+                          : () => _pickCounter(context, ref, engine, s),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: TutorialAnchor(
@@ -657,6 +672,175 @@ void _pickBreathe(
                       onTap: () {
                         Navigator.pop(ctx);
                         ctl.breathe(mode);
+                      },
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+/// Sello dorado del Contragolpe (反) que late mientras está listo.
+class _CounterButton extends StatefulWidget {
+  const _CounterButton({required this.onPressed});
+
+  final VoidCallback? onPressed;
+
+  @override
+  State<_CounterButton> createState() => _CounterButtonState();
+}
+
+class _CounterButtonState extends State<_CounterButton>
+    with SingleTickerProviderStateMixin {
+  late final _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1100),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _pulse.value = 0.5;
+    } else if (!_pulse.isAnimating) {
+      _pulse.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final on = widget.onPressed != null;
+    return Semantics(
+      button: true,
+      label: t.counter,
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: widget.onPressed,
+        child: AnimatedBuilder(
+          animation: _pulse,
+          builder: (_, child) {
+            final v = Curves.easeInOut.transform(_pulse.value);
+            return Container(
+              width: 46,
+              height: 46,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Palette.surface,
+                border: Border.all(
+                  color: Palette.gold.withValues(alpha: on ? 0.95 : 0.35),
+                  width: 2,
+                ),
+                boxShadow: on
+                    ? [
+                        BoxShadow(
+                          color: Palette.gold.withValues(alpha: 0.25 + 0.3 * v),
+                          blurRadius: 6 + 8 * v,
+                          spreadRadius: 1 * v,
+                        ),
+                      ]
+                    : null,
+              ),
+              child: child,
+            );
+          },
+          child: Text(
+            '反',
+            style: TextStyle(
+              fontFamily: Fonts.brush,
+              fontSize: 26,
+              height: 1,
+              color: on ? Palette.lacquer : Palette.textDim,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Hoja para elegir el Contragolpe.
+void _pickCounter(
+  BuildContext context,
+  WidgetRef ref,
+  CombatEngine engine,
+  CombatState s,
+) {
+  final t = AppLocalizations.of(context);
+  final b = engine.data.balance;
+  final ctl = ref.read(combatControllerProvider.notifier);
+  Haptics.selectionClick();
+  final modes = [
+    (CounterMode.free, '免', t.counterFree, t.counterFreeSub),
+    (CounterMode.draw, '读', t.counterDraw, t.counterDrawSub(b.counterDraw)),
+    (CounterMode.flow, '流', t.counterFlow, t.counterFlowSub),
+  ];
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    barrierColor: Palette.text.withValues(alpha: 0.22),
+    builder: (ctx) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: PaperPanel(
+          opacity: 0.98,
+          padding: const EdgeInsets.fromLTRB(8, 14, 8, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                t.counterTitle,
+                style: const TextStyle(
+                  fontFamily: Fonts.display,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 6),
+                child: Text(
+                  t.counterSub,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Palette.textDim, fontSize: 13),
+                ),
+              ),
+              for (final (mode, hanzi, title, sub) in modes)
+                Builder(
+                  builder: (_) {
+                    final invalid = engine.validate(s, Counter(mode));
+                    final ok = invalid == null;
+                    return ListTile(
+                      enabled: ok,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      leading: Text(
+                        hanzi,
+                        style: TextStyle(
+                          fontFamily: Fonts.brush,
+                          fontSize: 26,
+                          color: ok ? Palette.lacquer : Palette.textDim,
+                        ),
+                      ),
+                      title: Text(
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      subtitle: Text(ok ? sub : t.invalidLabel(invalid)),
+                      onTap: () {
+                        Navigator.pop(ctx);
+                        ctl.counter(mode);
                       },
                     );
                   },

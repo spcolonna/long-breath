@@ -236,3 +236,11 @@ macOS no tiene `timeout`.
 - Bots: `breatheMode` (Estructura si está por romperse, mano si no hay ataque pagable, Aliento si le falta poco para atacar; con el tope gasta).
 - Simulación Normal, 150 runs: promedio 3% → 7%, experto 27% → 35%. La ganancia viene casi toda de los modos sobre la carga inicial: con peleas de 2–3 turnos los bots casi no completan una recarga (con `breatheChargeAt` 3, 4 o 99 da igual). En jefes y élites sí pesa. Ajuste con la fase C.
 - Tests: grupo `Respirar recargable` en `combat_engine_test.dart` (modos, sin carga, carga por Aliento contenido y desvío, tope); `lessons_flow_test` pasa por la hoja de modos.
+
+### Fase B (3/n): Contragolpe (2026-11-16)
+- Motor: cada desvío en el turno del rival deja `CombatState.counterReady` (uno por turno del rival, evento `CounterReady`). En el turno propio se usa con `Counter(mode)`: `free` (la próxima carta no cuesta Aliento: `counterFree`, `costOf` da 0 y se consume al jugarla), `draw` (roba `balance.player.counterDraw` 2), `flow` (+1 Flujo, `FlowCause.counter`; `Invalid.flowFull` al máximo). Sin desvío, `Invalid.noCounter`. Lo que no se usa se pierde al terminar el turno. Evento `Countered`.
+- Sin timing ni pausa en el turno del rival: la elección queda para el turno siguiente, así el motor sigue siendo un reductor puro.
+- Vista: sello dorado 反 que aparece en la barra (entre Respirar y Terminar turno) y late mientras está listo; al tocarlo, hoja con Golpe libre (免), Leer al rival (读) y Tomar el ritmo (流). Cinta «¡Contragolpe!» al desviar y «Próxima carta gratis» al elegirla. Glosario de Desvío lo menciona; la hoja del glosario ahora se desplaza si el texto no entra.
+- Bots planificadores: `counterMode` (Flujo si le falta uno para 3, carta gratis si hay una de costo ≥ 2, si no robar); la búsqueda no explora `Counter`.
+- Simulación Normal, 150 runs: promedio 7% → 11%, experto 35% → 41%. Se suma a lo de Respirar; el ajuste fino queda para la fase C.
+- Tests: grupo `Contragolpe` en `combat_engine_test.dart` (desvío lo deja listo, sin desvío no hay, golpe libre, robar y Flujo, se pierde al terminar).

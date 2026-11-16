@@ -703,6 +703,48 @@ class AppLocalizationsEs extends AppLocalizations {
   String get breatheReady => 'Respirar cargado';
 
   @override
+  String get invalidNoCounter => 'No tenés un Contragolpe listo';
+
+  @override
+  String get invalidFlowFull => 'Tu Flujo ya está al máximo';
+
+  @override
+  String get counter => 'Contragolpe';
+
+  @override
+  String get counterTitle => 'Contragolpe';
+
+  @override
+  String get counterSub =>
+      'Desviaste: elegí tu respuesta. Si no la usás, se pierde al terminar el turno.';
+
+  @override
+  String get counterFree => 'Golpe libre';
+
+  @override
+  String get counterFreeSub => 'La próxima carta que juegues no cuesta Aliento';
+
+  @override
+  String get counterDraw => 'Leer al rival';
+
+  @override
+  String counterDrawSub(int n) {
+    return 'Robás $n cartas';
+  }
+
+  @override
+  String get counterFlow => 'Tomar el ritmo';
+
+  @override
+  String get counterFlowSub => '+1 Flujo';
+
+  @override
+  String get counterReady => '¡Contragolpe!';
+
+  @override
+  String get counterFreeActive => 'Próxima carta gratis';
+
+  @override
   String get invalidRetainTooMany => 'Retenés demasiadas cartas';
 
   @override
@@ -3146,7 +3188,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get glossDeflect =>
-      'Si tu Guardia está a la altura del golpe y alcanza para cubrirlo, lo desviás (化): no recibís nada, el rival pierde Estructura y ganás Aliento para tu próximo turno.';
+      'Si tu Guardia está a la altura del golpe y alcanza para cubrirlo, lo desviás (化): no recibís nada, el rival pierde Estructura y ganás Aliento para tu próximo turno. Además te deja un Contragolpe: en tu turno elegís una carta gratis, robar o +1 Flujo.';
 
   @override
   String get glossStructure =>

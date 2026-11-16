@@ -36,6 +36,8 @@ enum Invalid {
   mustBreathe,
   noBreather,
   structureFull,
+  noCounter,
+  flowFull,
 }
 
 /// Valores finales de una carta en el estado actual (lo que muestra la UI).
@@ -322,6 +324,18 @@ class CombatEngine {
             d.structure += n;
             events.add(StructureRecovered(n));
         }
+      case Counter(:final mode):
+        final b = data.balance;
+        d.counterReady = false;
+        events.add(Countered(mode));
+        switch (mode) {
+          case CounterMode.free:
+            d.counterFree = true;
+          case CounterMode.draw:
+            _draw(d, b.counterDraw, events);
+          case CounterMode.flow:
+            _flow(d, 1, FlowCause.counter, events);
+        }
       case EndTurn(:final retain):
         _endTurn(d, retain.toSet(), events);
       case ChooseDiscard(:final uid):
@@ -451,6 +465,11 @@ class CombatEngine {
             s.player.structure >= s.player.maxStructure) {
           return Invalid.structureFull;
         }
+      case Counter(:final mode):
+        if (!s.counterReady) return Invalid.noCounter;
+        if (mode == CounterMode.flow && s.flow >= flowMax) {
+          return Invalid.flowFull;
+        }
       case EndTurn(:final retain):
         if (retain.length > s.retainMax) return Invalid.retainTooMany;
         if (retain.any((u) => s.handCard(u) == null)) return Invalid.notInHand;
@@ -493,6 +512,10 @@ class CombatEngine {
       final a = Breathe(m);
       if (validate(s, a) == null) out.add(a);
     }
+    for (final m in CounterMode.values) {
+      final a = Counter(m);
+      if (validate(s, a) == null) out.add(a);
+    }
     out.add(const EndTurn());
     return out;
   }
@@ -504,7 +527,8 @@ class CombatEngine {
       data.forms.where((f) => s.formProgress.containsKey(f.id));
 
   /// Costo de la carta en mano; con [uid], cuenta si viene retenida.
-  int costOf(CombatState s, CardDef def, [int? uid]) => _cost(
+  int costOf(CombatState s, CardDef def, [int? uid]) =>
+      s.counterFree ? 0 : _cost(
     def,
     s.player.stance,
     (uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0) +
@@ -848,13 +872,18 @@ class CombatEngine {
     final def = data.card(card.cardId);
     final wasRetained = d.retained.remove(uid);
     final combo = d.attacksThisTurn >= CardDef.comboAt;
-    d.breath -= _cost(
-      def,
-      d.stance,
-      (wasRetained ? d.retainedDiscount : 0) +
-          _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened) +
-          _firstCardDiscount(d.talismans, d.cardsThisTurn, d.weaponEffect),
-    );
+    if (d.counterFree) {
+      // Contragolpe: esta carta sale gratis.
+      d.counterFree = false;
+    } else {
+      d.breath -= _cost(
+        def,
+        d.stance,
+        (wasRetained ? d.retainedDiscount : 0) +
+            _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened) +
+            _firstCardDiscount(d.talismans, d.cardsThisTurn, d.weaponEffect),
+      );
+    }
     if (d.cardsThisTurn == 0) {
       for (final id in _slots(d.talismans, d.weaponEffect)) {
         if (_fx(id, d.weaponEffect).firstCardDiscount > 0) {
@@ -1192,6 +1221,9 @@ class CombatEngine {
     if (d.cardsThisTurn == 0) _flow(d, -1, FlowCause.idle, events);
     // Aliento contenido: terminar con Aliento sin gastar carga Respirar.
     if (d.breath > 0) _charge(d, ChargeCause.held, events);
+    // El contragolpe que no se usó se pierde.
+    d.counterReady = false;
+    d.counterFree = false;
     final kept = d.hand.where((c) => retain.contains(c.uid)).toList();
     d.discard.addAll(d.hand.where((c) => !retain.contains(c.uid)));
     d.hand
@@ -1326,6 +1358,11 @@ class CombatEngine {
     events.add(const Deflected());
     _flow(d, 1, FlowCause.deflect, events);
     _charge(d, ChargeCause.deflect, events);
+    // Contragolpe: uno por turno del rival, se elige en el turno propio.
+    if (!d.counterReady) {
+      d.counterReady = true;
+      events.add(const CounterReady());
+    }
     d.nextTurnBreathMod += data.balance.deflectBreathBonus +
         stance.deflectBreathBonus +
         d.awakened.deflectBreath;
@@ -1632,6 +1669,8 @@ class _Draft {
     this.wave = 0,
     this.flow = 0,
     this.breathCharge = 0,
+    this.counterReady = false,
+    this.counterFree = false,
     this.nextTurnBreathMod = 0,
     this.dingbuUsed = false,
     this.turnStructureBonus = 0,
@@ -1689,6 +1728,8 @@ class _Draft {
     wave: s.wave,
     flow: s.flow,
     breathCharge: s.breathCharge,
+    counterReady: s.counterReady,
+    counterFree: s.counterFree,
     nextTurnBreathMod: s.nextTurnBreathMod,
     dingbuUsed: s.dingbuUsed,
     turnStructureBonus: s.turnStructureBonus,
@@ -1742,6 +1783,8 @@ class _Draft {
   int wave;
   int flow;
   int breathCharge;
+  bool counterReady;
+  bool counterFree;
 
   /// El enemigo cayó en esta acción y queda otro esperando.
   bool enemyDown = false;
@@ -1839,5 +1882,7 @@ class _Draft {
     wave: wave,
     flow: flow,
     breathCharge: breathCharge,
+    counterReady: counterReady,
+    counterFree: counterFree,
   );
 }

@@ -155,6 +155,10 @@ class PlannerBot extends Bot {
       final uid = _retainOrder(engine, s).last;
       return ChooseDiscard(uid);
     }
+    if (s.counterReady) {
+      final m = counterMode(engine, s);
+      if (m != null) return Counter(m);
+    }
     if (breathes) {
       final m = breatheMode(engine, s);
       if (m != null) return Breathe(m);
@@ -359,7 +363,7 @@ class _Search {
     }
     if (s.isOver) return;
     for (final a in engine.legalActions(s)) {
-      if (a is EndTurn || a is Breathe) continue;
+      if (a is EndTurn || a is Breathe || a is Counter) continue;
       // Apuntar dos veces seguidas no sirve de nada.
       if (a is Target && targeted) continue;
       _visit(engine.reduce(s, a).state, first ?? a, a is Target);
@@ -403,6 +407,22 @@ BreatheMode? breatheMode(CombatEngine engine, CombatState s) {
     }
     if (attacks.isNotEmpty) return BreatheMode.breath;
   }
+  return null;
+}
+
+/// Qué hacer con el Contragolpe: Flujo si le falta uno para el máximo,
+/// carta gratis si hay una cara en la mano, si no robar.
+CounterMode? counterMode(CombatEngine engine, CombatState s) {
+  bool ok(CounterMode m) => engine.validate(s, Counter(m)) == null;
+  if (s.flow == CombatEngine.flowMax - 1 && ok(CounterMode.flow)) {
+    return CounterMode.flow;
+  }
+  final costly = s.hand.any((c) {
+    final def = engine.data.card(c.cardId);
+    return engine.costOf(s, def, c.uid) >= 2;
+  });
+  if (costly && ok(CounterMode.free)) return CounterMode.free;
+  if (ok(CounterMode.draw)) return CounterMode.draw;
   return null;
 }
 

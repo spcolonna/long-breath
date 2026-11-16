@@ -214,6 +214,8 @@ class CombatController extends Notifier<CombatView?> {
   void debugReplace(CombatState s) => state = state!.copyWith(state: s);
 
   /// Respiro elegido entre una oleada y la siguiente.
+  void counter(CounterMode mode) => _dispatch(Counter(mode));
+
   void breather(Breather b) => _dispatch(ChooseBreather(b));
 
   /// Si se puede retener, entra en modo retener; si no, termina el turno.

@@ -1206,6 +1206,17 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
         case Breathed():
           Haptics.mediumImpact();
           _audio.play(Sfx.breathSpend);
+        case CounterReady():
+          // El desvío abre la respuesta: cinta dorada y el sello 反 late.
+          Haptics.heavyImpact();
+          _after(110, Haptics.lightImpact);
+          _queue.add(_Fx(t.counterReady, null, Palette.gold));
+        case Countered(:final mode):
+          Haptics.mediumImpact();
+          _audio.play(Sfx.talismanTrigger);
+          if (mode == CounterMode.free) {
+            _queue.add(_Fx(t.counterFreeActive, null, Palette.gold));
+          }
         case FlowChanged(:final level, :final delta):
           // El medidor ya se anima; la cinta solo al llegar al máximo.
           if (delta < 0) {

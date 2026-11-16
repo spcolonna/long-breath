@@ -47,7 +47,7 @@ class StanceCircle extends CombatEvent {
 }
 
 /// Por qué cambió el Flujo.
-enum FlowCause { chain, deflect, form, hit, idle }
+enum FlowCause { chain, deflect, form, hit, idle, counter }
 
 /// El Flujo cambió a [level] (ya acotado) por [cause].
 class FlowChanged extends CombatEvent {
@@ -309,4 +309,15 @@ class BreatherOffered extends CombatEvent {
 class BreatherTaken extends CombatEvent {
   const BreatherTaken(this.breather);
   final Breather breather;
+}
+
+/// Un desvío dejó listo el Contragolpe para el próximo turno propio.
+class CounterReady extends CombatEvent {
+  const CounterReady();
+}
+
+/// Se usó el Contragolpe en el modo [mode].
+class Countered extends CombatEvent {
+  const Countered(this.mode);
+  final CounterMode mode;
 }

@@ -123,6 +123,8 @@ extension Labels on AppLocalizations {
     Invalid.mustBreathe => invalidMustBreathe,
     Invalid.noBreather => invalidNoBreather,
     Invalid.structureFull => invalidStructureFull,
+    Invalid.noCounter => invalidNoCounter,
+    Invalid.flowFull => invalidFlowFull,
   };
 
   /// Texto corto con el efecto especial de la carta (lo que no se ve en íconos).

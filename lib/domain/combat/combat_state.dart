@@ -206,6 +206,8 @@ class CombatState {
     this.wave = 0,
     this.flow = 0,
     this.breathCharge = 0,
+    this.counterReady = false,
+    this.counterFree = false,
   });
 
   final int turn;
@@ -310,6 +312,13 @@ class CombatState {
   /// `balance.breatheChargeAt` − 1); las cargas listas son [breathesLeft].
   final int breathCharge;
 
+  /// Contragolpe: un desvío en el turno del rival deja una elección para
+  /// este turno (carta gratis, robar o Flujo). Se pierde al terminarlo.
+  final bool counterReady;
+
+  /// Contragolpe elegido como carta gratis: la próxima carta no cuesta.
+  final bool counterFree;
+
   /// Enemigos del grupo: los caídos, el actual y los que esperan.
   int get waveCount => wave + 1 + reserve.length;
 
@@ -322,6 +331,8 @@ class CombatState {
     int? flow,
     int? breathesLeft,
     int? breathCharge,
+    bool? counterReady,
+    bool? counterFree,
   }) =>
       CombatState(
         turn: turn,
@@ -372,6 +383,8 @@ class CombatState {
         wave: wave,
         flow: flow ?? this.flow,
         breathCharge: breathCharge ?? this.breathCharge,
+        counterReady: counterReady ?? this.counterReady,
+        counterFree: counterFree ?? this.counterFree,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

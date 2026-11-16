@@ -1665,4 +1665,66 @@ void main() {
       expect(r.state.breathCharge, 0);
     });
   });
+
+  group('Contragolpe', () {
+    CombatState deflected() {
+      var s = setup(['an_zhang', 'ti_xi', ...filler, ...filler]);
+      s = play(s, 'an_zhang').state;
+      return play(s, 'ti_xi').state;
+    }
+
+    test('desviar en el turno del rival deja un contragolpe (uno solo)', () {
+      final r = endTurn(deflected());
+      expect(r.events.whereType<Deflected>(), isNotEmpty);
+      expect(r.events.whereType<CounterReady>(), hasLength(1));
+      expect(r.state.counterReady, isTrue);
+      expect(
+        engine.legalActions(r.state).whereType<Counter>(),
+        isNotEmpty,
+      );
+    });
+
+    test('sin desvío no hay contragolpe', () {
+      final s = setup(filler);
+      expect(s.counterReady, isFalse);
+      expect(engine.validate(s, const Counter(CounterMode.draw)),
+          Invalid.noCounter);
+      expect(engine.legalActions(s).whereType<Counter>(), isEmpty);
+    });
+
+    test('golpe libre: la próxima carta no cuesta, la siguiente sí', () {
+      final s0 = setup(['gongbu_chongquan', 'gongbu_chongquan', ...filler])
+          .copyWith(counterReady: true);
+      final r = engine.reduce(s0, const Counter(CounterMode.free));
+      expect(r.events.whereType<Countered>().single.mode, CounterMode.free);
+      var s = r.state;
+      expect(s.counterReady, isFalse);
+      final def = data.card('gongbu_chongquan');
+      expect(engine.costOf(s, def), 0);
+      final breath = s.player.breath;
+      s = play(s, 'gongbu_chongquan').state;
+      expect(s.player.breath, breath);
+      expect(s.counterFree, isFalse);
+      expect(engine.costOf(s, def), greaterThan(0));
+    });
+
+    test('leer al rival roba y tomar el ritmo sube el Flujo', () {
+      final s0 = setup([...filler, ...filler]).copyWith(counterReady: true);
+      final r = engine.reduce(s0, const Counter(CounterMode.draw));
+      expect(r.state.hand.length, s0.hand.length + data.balance.counterDraw);
+      final r2 = engine.reduce(s0, const Counter(CounterMode.flow));
+      expect(r2.state.flow, s0.flow + 1);
+      final full = s0.copyWith(flow: CombatEngine.flowMax);
+      expect(engine.validate(full, const Counter(CounterMode.flow)),
+          Invalid.flowFull);
+    });
+
+    test('si no se usa, se pierde al terminar el turno', () {
+      final s = setup(filler).copyWith(counterReady: true, counterFree: true);
+      final r = endTurn(s);
+      expect(r.events.whereType<Deflected>(), isEmpty);
+      expect(r.state.counterReady, isFalse);
+      expect(r.state.counterFree, isFalse);
+    });
+  });
 }
