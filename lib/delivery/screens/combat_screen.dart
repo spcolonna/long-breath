@@ -210,6 +210,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Destello dorado (desequilibrio, forma, remate) y sello del remate.
   int _goldFlashKey = 0, _finishKey = 0;
+  String _finishHanzi = '破';
+  Color _finishColor = Palette.lacquer;
 
   /// Forma recién completada: sus pasos quedan dorados un momento en el
   /// panel antes de volver a cero.
@@ -988,7 +990,11 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _foe(slot).burst++;
       _goldFlashKey++;
       _shake(grand ? 14 : 10);
-      if (grand) _finishKey++;
+      if (grand) {
+        _finishHanzi = '破';
+        _finishColor = Palette.lacquer;
+        _finishKey++;
+      }
     });
     // El último golpe se ve en cámara lenta.
     _dilate(grand ? [(10, 160), (4, 650)] : [(8, 110), (3, 300)]);
@@ -1217,6 +1223,32 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           if (mode == CounterMode.free) {
             _queue.add(_Fx(t.counterFreeActive, null, Palette.gold));
           }
+        case TechniqueUsed(:final style):
+          // Remate del camino: trazo y sello del camino, golpe fuerte.
+          final b = ref.read(dataProvider).balance;
+          Haptics.heavyImpact();
+          _after(120, Haptics.heavyImpact);
+          _audio.play(Sfx.broken);
+          setState(() {
+            _finishHanzi = b.statsOf(style).hanzi;
+            _finishColor = styleColor(style);
+            _finishKey++;
+            _goldFlashKey++;
+            _shake(12);
+          });
+          _queue.add(
+            _Fx(
+              switch (style) {
+                Style.tiger => t.techTiger,
+                Style.snake => t.techSnake,
+                Style.crane => t.techCrane,
+              },
+              null,
+              styleColor(style),
+              big: true,
+              header: t.technique,
+            ),
+          );
         case FlowChanged(:final level, :final delta):
           // El medidor ya se anima; la cinta solo al llegar al máximo.
           if (delta < 0) {
@@ -1539,7 +1571,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             Positioned.fill(
               child: ScreenFlash(trigger: _goldFlashKey, color: Palette.gold),
             ),
-            Positioned.fill(child: FinisherSeal(trigger: _finishKey)),
+            Positioned.fill(
+              child: FinisherSeal(
+                trigger: _finishKey,
+                hanzi: _finishHanzi,
+                color: _finishColor,
+              ),
+            ),
             Align(
               alignment: const Alignment(0, -0.62),
               child: ComboCounter(

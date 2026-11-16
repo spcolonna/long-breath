@@ -10,7 +10,15 @@
     "breatheMax": 2,
     "breatheBreath": 2,
     "breatheStructure": 5,
-    "counterDraw": 2
+    "counterDraw": 2,
+    "techTigerDamage": 12,
+    "techTigerStructure": 5,
+    "techSnakeHits": 3,
+    "techSnakeDamage": 4,
+    "techSnakeStructure": 2,
+    "techCraneDamage": 6,
+    "techCraneGuard": 8,
+    "techCraneDraw": 2
   },
   "novice": { "hanzi": "徒", "pinyin": "Tú", "draw": 5, "breath": 3, "retain": 0 },
   "styles": {

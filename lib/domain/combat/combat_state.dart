@@ -208,6 +208,7 @@ class CombatState {
     this.breathCharge = 0,
     this.counterReady = false,
     this.counterFree = false,
+    this.style,
   });
 
   final int turn;
@@ -319,6 +320,9 @@ class CombatState {
   /// Contragolpe elegido como carta gratis: la próxima carta no cuesta.
   final bool counterFree;
 
+  /// Camino del héroe (define la Técnica del Camino); null en lecciones.
+  final Style? style;
+
   /// Enemigos del grupo: los caídos, el actual y los que esperan.
   int get waveCount => wave + 1 + reserve.length;
 
@@ -333,6 +337,7 @@ class CombatState {
     int? breathCharge,
     bool? counterReady,
     bool? counterFree,
+    Style? style,
   }) =>
       CombatState(
         turn: turn,
@@ -385,6 +390,7 @@ class CombatState {
         breathCharge: breathCharge ?? this.breathCharge,
         counterReady: counterReady ?? this.counterReady,
         counterFree: counterFree ?? this.counterFree,
+        style: style ?? this.style,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

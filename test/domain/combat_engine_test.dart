@@ -1727,4 +1727,46 @@ void main() {
       expect(r.state.counterFree, isFalse);
     });
   });
+
+  group('Técnica del Camino', () {
+    CombatState full(Style style) => setup([...filler, ...filler],
+        style: style).copyWith(flow: CombatEngine.flowMax);
+
+    test('pide el Flujo lleno', () {
+      final s = setup(filler, style: Style.tiger);
+      expect(s.style, Style.tiger);
+      expect(engine.validate(s, const Technique()), Invalid.noTechnique);
+      expect(engine.legalActions(s).whereType<Technique>(), isEmpty);
+      expect(engine.validate(full(Style.tiger), const Technique()), isNull);
+      expect(engine.legalActions(full(Style.tiger)).whereType<Technique>(),
+          hasLength(1));
+    });
+
+    test('Tigre: un golpe grande y el Flujo baja a 0', () {
+      final s0 = full(Style.tiger);
+      final r = engine.reduce(s0, const Technique());
+      expect(r.state.flow, 0);
+      expect(r.events.whereType<TechniqueUsed>().single.style, Style.tiger);
+      expect(r.events.whereType<FlowChanged>().single.cause,
+          FlowCause.technique);
+      expect(r.events.whereType<EnemyDamaged>(), hasLength(1));
+      expect(r.state.enemy.hp, lessThan(s0.enemy.hp));
+    });
+
+    test('Serpiente: varios golpes', () {
+      final r = engine.reduce(full(Style.snake), const Technique());
+      expect(r.events.whereType<EnemyDamaged>(),
+          hasLength(data.balance.techSnakeHits));
+      expect(r.state.flow, 0);
+    });
+
+    test('Grulla: golpe, Guardia y cartas', () {
+      final s0 = full(Style.crane);
+      final r = engine.reduce(s0, const Technique());
+      expect(r.state.player.guard,
+          s0.player.guard + data.balance.techCraneGuard);
+      expect(r.state.hand.length, s0.hand.length + data.balance.techCraneDraw);
+      expect(r.events.whereType<EnemyDamaged>(), hasLength(1));
+    });
+  });
 }

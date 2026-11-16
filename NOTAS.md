@@ -244,3 +244,11 @@ macOS no tiene `timeout`.
 - Bots planificadores: `counterMode` (Flujo si le falta uno para 3, carta gratis si hay una de costo ≥ 2, si no robar); la búsqueda no explora `Counter`.
 - Simulación Normal, 150 runs: promedio 7% → 11%, experto 35% → 41%. Se suma a lo de Respirar; el ajuste fino queda para la fase C.
 - Tests: grupo `Contragolpe` en `combat_engine_test.dart` (desvío lo deja listo, sin desvío no hay, golpe libre, robar y Flujo, se pierde al terminar).
+
+### Fase B (4/n): Técnica del Camino (2026-11-16)
+- Motor: `CombatState.style` (camino de la subida; null en lecciones y muñecos). Con Flujo 3 se habilita `Technique()`: baja el Flujo a 0 (`FlowCause.technique`), evento `TechniqueUsed(style)` y el remate del camino. Sin Flujo lleno o sin camino, `Invalid.noTechnique`. Gratis (no cuesta Aliento).
+- Remates (`balance.player.tech*`): Tigre «Zarpazo del Tigre» 12 de daño + 5 Estructura; Serpiente «Mordida en cadena» 3 golpes de 4 + 2 Estructura; Grulla «Vuelo de la Grulla» golpe de 6, +8 Guardia a la altura actual y roba 2.
+- Vista: el sello del camino (虎 蛇 鹤, con su color) aparece y late en la barra mientras el Flujo está lleno; al tocarlo, hoja con qué hace y «Usar la técnica». Al usarla: cinta grande con el nombre, `FinisherSeal` con el hanzi y el color del camino, destello, sacudida y hápticos. La cinta de Flujo 3 ahora dice «Técnica del Camino lista»; el glosario de Flujo la menciona. `_CounterButton` pasó a `_SealButton` (sirve para los dos sellos).
+- Bots planificadores: la Grulla la usa al empezar (roba); Tigre y Serpiente al final del turno, después de aprovechar el +1 del Flujo.
+- Simulación Normal, 150 runs: promedio 11% → 9%, experto 41% → 42% (ruido). Falta medir % de peleas que llegan a Flujo 3 (meta 30–50%).
+- Tests: grupo `Técnica del Camino` en `combat_engine_test.dart` (pide Flujo lleno, Tigre, Serpiente, Grulla).

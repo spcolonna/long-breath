@@ -650,6 +650,14 @@ class GameBalance {
     this.breatheBreath = 2,
     this.breatheStructure = 5,
     this.counterDraw = 2,
+    this.techTigerDamage = 12,
+    this.techTigerStructure = 5,
+    this.techSnakeHits = 3,
+    this.techSnakeDamage = 4,
+    this.techSnakeStructure = 2,
+    this.techCraneDamage = 6,
+    this.techCraneGuard = 8,
+    this.techCraneDraw = 2,
     required this.novice,
     required this.styles,
     required this.pathChoices,
@@ -723,6 +731,20 @@ class GameBalance {
 
   /// Cartas que roba el Contragolpe en modo robar.
   final int counterDraw;
+
+  /// Técnica del Camino. Tigre: un golpe grande.
+  final int techTigerDamage;
+  final int techTigerStructure;
+
+  /// Serpiente: varios golpes seguidos.
+  final int techSnakeHits;
+  final int techSnakeDamage;
+  final int techSnakeStructure;
+
+  /// Grulla: golpe, Guardia a la altura actual y cartas.
+  final int techCraneDamage;
+  final int techCraneGuard;
+  final int techCraneDraw;
   final StyleStats novice;
   final Map<Style, StyleStats> styles;
 
@@ -896,6 +918,14 @@ class GameBalance {
       breatheBreath: player['breatheBreath'] as int? ?? 2,
       breatheStructure: player['breatheStructure'] as int? ?? 5,
       counterDraw: player['counterDraw'] as int? ?? 2,
+      techTigerDamage: player['techTigerDamage'] as int? ?? 12,
+      techTigerStructure: player['techTigerStructure'] as int? ?? 5,
+      techSnakeHits: player['techSnakeHits'] as int? ?? 3,
+      techSnakeDamage: player['techSnakeDamage'] as int? ?? 4,
+      techSnakeStructure: player['techSnakeStructure'] as int? ?? 2,
+      techCraneDamage: player['techCraneDamage'] as int? ?? 6,
+      techCraneGuard: player['techCraneGuard'] as int? ?? 8,
+      techCraneDraw: player['techCraneDraw'] as int? ?? 2,
       novice: StyleStats.fromJson(j['novice'] as Map<String, dynamic>),
       styles: {
         for (final e in styles.entries)

@@ -1288,6 +1288,66 @@ abstract class AppLocalizations {
   /// **'Próxima carta gratis'**
   String get counterFreeActive;
 
+  /// No description provided for @invalidNoTechnique.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesitás el Flujo lleno'**
+  String get invalidNoTechnique;
+
+  /// No description provided for @technique.
+  ///
+  /// In es, this message translates to:
+  /// **'Técnica del Camino'**
+  String get technique;
+
+  /// No description provided for @techniqueSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Gasta todo tu Flujo en el remate de tu camino.'**
+  String get techniqueSub;
+
+  /// No description provided for @techniqueUse.
+  ///
+  /// In es, this message translates to:
+  /// **'Usar la técnica'**
+  String get techniqueUse;
+
+  /// No description provided for @techTiger.
+  ///
+  /// In es, this message translates to:
+  /// **'Zarpazo del Tigre'**
+  String get techTiger;
+
+  /// No description provided for @techTigerSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Un golpe de {d} de daño y {s} de Estructura'**
+  String techTigerSub(int d, int s);
+
+  /// No description provided for @techSnake.
+  ///
+  /// In es, this message translates to:
+  /// **'Mordida en cadena'**
+  String get techSnake;
+
+  /// No description provided for @techSnakeSub.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} golpes de {d} de daño y {s} de Estructura cada uno'**
+  String techSnakeSub(int n, int d, int s);
+
+  /// No description provided for @techCrane.
+  ///
+  /// In es, this message translates to:
+  /// **'Vuelo de la Grulla'**
+  String get techCrane;
+
+  /// No description provided for @techCraneSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Golpe de {d}, +{g} Guardia y robás {n} cartas'**
+  String techCraneSub(int d, int g, int n);
+
   /// No description provided for @invalidRetainTooMany.
   ///
   /// In es, this message translates to:
@@ -5197,7 +5257,7 @@ abstract class AppLocalizations {
   /// No description provided for @glossFlow.
   ///
   /// In es, this message translates to:
-  /// **'Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más.'**
+  /// **'Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más y podés gastarlo entero en la Técnica del Camino.'**
   String get glossFlow;
 
   /// No description provided for @flowLevel.
@@ -5215,7 +5275,7 @@ abstract class AppLocalizations {
   /// No description provided for @flowMaxSub.
   ///
   /// In es, this message translates to:
-  /// **'Ataques +1 · robás 1 más · +1 Aliento'**
+  /// **'Técnica del Camino lista'**
   String get flowMaxSub;
 
   /// No description provided for @termRetain.

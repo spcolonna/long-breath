@@ -47,7 +47,7 @@ class StanceCircle extends CombatEvent {
 }
 
 /// Por qué cambió el Flujo.
-enum FlowCause { chain, deflect, form, hit, idle, counter }
+enum FlowCause { chain, deflect, form, hit, idle, counter, technique }
 
 /// El Flujo cambió a [level] (ya acotado) por [cause].
 class FlowChanged extends CombatEvent {
@@ -320,4 +320,10 @@ class CounterReady extends CombatEvent {
 class Countered extends CombatEvent {
   const Countered(this.mode);
   final CounterMode mode;
+}
+
+/// Se usó la Técnica del Camino de [style] (el Flujo ya bajó a 0).
+class TechniqueUsed extends CombatEvent {
+  const TechniqueUsed(this.style);
+  final Style style;
 }

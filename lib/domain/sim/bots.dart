@@ -163,10 +163,15 @@ class PlannerBot extends Bot {
       final m = breatheMode(engine, s);
       if (m != null) return Breathe(m);
     }
+    // Técnica del Camino: la Grulla roba, así que va primero; Tigre y
+    // Serpiente la guardan para el final y aprovechan el +1 del Flujo.
+    final tech = engine.validate(s, const Technique()) == null;
+    if (tech && s.style == Style.crane) return const Technique();
     final search = _Search(engine, this);
     final best = search.run(s, targeted: _targeted);
     // Después de apuntar, juega o termina: así no va y viene entre los dos.
     _targeted = best is Target;
+    if (tech && (best == null || best is EndTurn)) return const Technique();
     return best ?? EndTurn(retain: _retain(engine, s));
   }
 
@@ -363,7 +368,9 @@ class _Search {
     }
     if (s.isOver) return;
     for (final a in engine.legalActions(s)) {
-      if (a is EndTurn || a is Breathe || a is Counter) continue;
+      if (a is EndTurn || a is Breathe || a is Counter || a is Technique) {
+        continue;
+      }
       // Apuntar dos veces seguidas no sirve de nada.
       if (a is Target && targeted) continue;
       _visit(engine.reduce(s, a).state, first ?? a, a is Target);

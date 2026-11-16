@@ -38,6 +38,7 @@ enum Invalid {
   structureFull,
   noCounter,
   flowFull,
+  noTechnique,
 }
 
 /// Valores finales de una carta en el estado actual (lo que muestra la UI).
@@ -275,6 +276,7 @@ class CombatEngine {
       chain: styleStats.chain + aw.chain,
       retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,
       awakened: aw,
+      style: style,
     );
     final events = <CombatEvent>[
       for (final id in talismans)
@@ -336,6 +338,8 @@ class CombatEngine {
           case CounterMode.flow:
             _flow(d, 1, FlowCause.counter, events);
         }
+      case Technique():
+        _technique(d, events);
       case EndTurn(:final retain):
         _endTurn(d, retain.toSet(), events);
       case ChooseDiscard(:final uid):
@@ -470,6 +474,8 @@ class CombatEngine {
         if (mode == CounterMode.flow && s.flow >= flowMax) {
           return Invalid.flowFull;
         }
+      case Technique():
+        if (s.style == null || s.flow < flowMax) return Invalid.noTechnique;
       case EndTurn(:final retain):
         if (retain.length > s.retainMax) return Invalid.retainTooMany;
         if (retain.any((u) => s.handCard(u) == null)) return Invalid.notInHand;
@@ -516,6 +522,7 @@ class CombatEngine {
       final a = Counter(m);
       if (validate(s, a) == null) out.add(a);
     }
+    if (validate(s, const Technique()) == null) out.add(const Technique());
     out.add(const EndTurn());
     return out;
   }
@@ -1079,6 +1086,28 @@ class CombatEngine {
         d.hp += healed;
         events.add(PlayerHealed(healed));
       }
+    }
+  }
+
+  /// Técnica del Camino: gasta todo el Flujo en el remate del camino.
+  void _technique(_Draft d, List<CombatEvent> events) {
+    final b = data.balance;
+    final style = d.style!;
+    _flow(d, -flowMax, FlowCause.technique, events);
+    events.add(TechniqueUsed(style));
+    switch (style) {
+      case Style.tiger:
+        _hitEnemy(d, b.techTigerDamage, b.techTigerStructure, events);
+      case Style.snake:
+        for (var i = 0; i < b.techSnakeHits; i++) {
+          if (d.enemyDown || d.phase == CombatPhase.won) break;
+          _hitEnemy(d, b.techSnakeDamage, b.techSnakeStructure, events);
+        }
+      case Style.crane:
+        _hitEnemy(d, b.techCraneDamage, 0, events);
+        d.guard += b.techCraneGuard;
+        events.add(GuardGained(b.techCraneGuard, d.guardHeight));
+        _draw(d, b.techCraneDraw, events);
     }
   }
 
@@ -1671,6 +1700,7 @@ class _Draft {
     this.breathCharge = 0,
     this.counterReady = false,
     this.counterFree = false,
+    this.style,
     this.nextTurnBreathMod = 0,
     this.dingbuUsed = false,
     this.turnStructureBonus = 0,
@@ -1730,6 +1760,7 @@ class _Draft {
     breathCharge: s.breathCharge,
     counterReady: s.counterReady,
     counterFree: s.counterFree,
+    style: s.style,
     nextTurnBreathMod: s.nextTurnBreathMod,
     dingbuUsed: s.dingbuUsed,
     turnStructureBonus: s.turnStructureBonus,
@@ -1785,6 +1816,7 @@ class _Draft {
   int breathCharge;
   bool counterReady;
   bool counterFree;
+  final Style? style;
 
   /// El enemigo cayó en esta acción y queda otro esperando.
   bool enemyDown = false;
@@ -1884,5 +1916,6 @@ class _Draft {
     breathCharge: breathCharge,
     counterReady: counterReady,
     counterFree: counterFree,
+    style: style,
   );
 }

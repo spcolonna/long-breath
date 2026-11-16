@@ -151,6 +151,7 @@ String actionLine(CombatAction a, CombatState s) => switch (a) {
   Dingbu(:final stance) => 'dingbu a ${stance.name}',
   Breathe(:final mode) => 'respira (${mode.name})',
   Counter(:final mode) => 'contragolpe (${mode.name})',
+  Technique() => 'técnica del camino',
   EndTurn(:final retain) => retain.isEmpty
       ? 'termina el turno'
       : 'termina el turno reteniendo ${_cards(s.hand.where((c) => retain.contains(c.uid)))}',
@@ -179,6 +180,7 @@ String eventsLine(List<CombatEvent> events) {
       Breathed() => null,
       CounterReady() => 'contragolpe listo',
       Countered() => null,
+      TechniqueUsed(:final style) => 'técnica (${style.name})',
       StructureRecovered(:final amount) => '+$amount E',
       FlowChanged(:final level, :final delta, :final cause) =>
         'flujo ${delta > 0 ? '+' : ''}$delta → $level (${cause.name})',

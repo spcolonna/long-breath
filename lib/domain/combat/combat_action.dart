@@ -57,6 +57,12 @@ class Counter extends CombatAction {
   final CounterMode mode;
 }
 
+/// Técnica del Camino: con el Flujo lleno se gasta entero en el remate
+/// propio del camino (Tigre, Serpiente o Grulla).
+class Technique extends CombatAction {
+  const Technique();
+}
+
 /// Terminar turno reteniendo las cartas indicadas (hasta el máximo por edad).
 class EndTurn extends CombatAction {
   const EndTurn({this.retain = const []});

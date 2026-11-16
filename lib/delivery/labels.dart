@@ -125,6 +125,7 @@ extension Labels on AppLocalizations {
     Invalid.structureFull => invalidStructureFull,
     Invalid.noCounter => invalidNoCounter,
     Invalid.flowFull => invalidFlowFull,
+    Invalid.noTechnique => invalidNoTechnique,
   };
 
   /// Texto corto con el efecto especial de la carta (lo que no se ve en íconos).

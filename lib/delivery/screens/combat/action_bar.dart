@@ -90,10 +90,32 @@ class _ActionBar extends ConsumerWidget {
             child: s.counterReady
                 ? Padding(
                     padding: const EdgeInsets.only(left: 8),
-                    child: _CounterButton(
+                    child: _SealButton(
+                      hanzi: '反',
+                      label: t.counter,
+                      color: Palette.gold,
                       onPressed: busy
                           ? null
                           : () => _pickCounter(context, ref, engine, s),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+          // Técnica del Camino: con el Flujo lleno, el sello del camino late.
+          AnimatedSize(
+            duration: const Duration(milliseconds: 260),
+            curve: Curves.easeOutBack,
+            child: s.style != null && s.flow >= CombatEngine.flowMax
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: _SealButton(
+                      hanzi: engine.data.balance.statsOf(s.style).hanzi,
+                      label: t.technique,
+                      color: styleColor(s.style),
+                      onPressed: busy ||
+                              engine.validate(s, const Technique()) != null
+                          ? null
+                          : () => _pickTechnique(context, ref, engine, s),
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -685,16 +707,27 @@ void _pickBreathe(
 }
 
 /// Sello dorado del Contragolpe (反) que late mientras está listo.
-class _CounterButton extends StatefulWidget {
-  const _CounterButton({required this.onPressed});
+/// Sello redondo que late: Contragolpe (反) y Técnica del Camino (虎 蛇 鹤).
+class _SealButton extends StatefulWidget {
+  const _SealButton({
+    required this.hanzi,
+    required this.label,
+    required this.color,
+    required this.onPressed,
+  });
 
+  final String hanzi;
+  final String label;
+
+  /// Borde y brillo.
+  final Color color;
   final VoidCallback? onPressed;
 
   @override
-  State<_CounterButton> createState() => _CounterButtonState();
+  State<_SealButton> createState() => _SealButtonState();
 }
 
-class _CounterButtonState extends State<_CounterButton>
+class _SealButtonState extends State<_SealButton>
     with SingleTickerProviderStateMixin {
   late final _pulse = AnimationController(
     vsync: this,
@@ -719,11 +752,11 @@ class _CounterButtonState extends State<_CounterButton>
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
     final on = widget.onPressed != null;
+    final c = widget.color;
     return Semantics(
       button: true,
-      label: t.counter,
+      label: widget.label,
       excludeSemantics: true,
       child: GestureDetector(
         onTap: widget.onPressed,
@@ -739,13 +772,13 @@ class _CounterButtonState extends State<_CounterButton>
                 shape: BoxShape.circle,
                 color: Palette.surface,
                 border: Border.all(
-                  color: Palette.gold.withValues(alpha: on ? 0.95 : 0.35),
+                  color: c.withValues(alpha: on ? 0.95 : 0.35),
                   width: 2,
                 ),
                 boxShadow: on
                     ? [
                         BoxShadow(
-                          color: Palette.gold.withValues(alpha: 0.25 + 0.3 * v),
+                          color: c.withValues(alpha: 0.25 + 0.3 * v),
                           blurRadius: 6 + 8 * v,
                           spreadRadius: 1 * v,
                         ),
@@ -756,7 +789,7 @@ class _CounterButtonState extends State<_CounterButton>
             );
           },
           child: Text(
-            '反',
+            widget.hanzi,
             style: TextStyle(
               fontFamily: Fonts.brush,
               fontSize: 26,
@@ -845,6 +878,100 @@ void _pickCounter(
                     );
                   },
                 ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+/// Hoja de la Técnica del Camino: qué hace y el botón para usarla.
+void _pickTechnique(
+  BuildContext context,
+  WidgetRef ref,
+  CombatEngine engine,
+  CombatState s,
+) {
+  final t = AppLocalizations.of(context);
+  final b = engine.data.balance;
+  final ctl = ref.read(combatControllerProvider.notifier);
+  final style = s.style!;
+  final color = styleColor(style);
+  final (name, sub) = switch (style) {
+    Style.tiger => (
+      t.techTiger,
+      t.techTigerSub(b.techTigerDamage, b.techTigerStructure),
+    ),
+    Style.snake => (
+      t.techSnake,
+      t.techSnakeSub(b.techSnakeHits, b.techSnakeDamage, b.techSnakeStructure),
+    ),
+    Style.crane => (
+      t.techCrane,
+      t.techCraneSub(b.techCraneDamage, b.techCraneGuard, b.techCraneDraw),
+    ),
+  };
+  Haptics.selectionClick();
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    barrierColor: Palette.text.withValues(alpha: 0.22),
+    builder: (ctx) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: PaperPanel(
+          opacity: 0.98,
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                t.technique,
+                style: const TextStyle(color: Palette.textDim, fontSize: 13),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                b.statsOf(style).hanzi,
+                style: TextStyle(
+                  fontFamily: Fonts.brush,
+                  fontSize: 54,
+                  height: 1.1,
+                  color: color,
+                ),
+              ),
+              Text(
+                name,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontFamily: Fonts.display,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(sub, textAlign: TextAlign.center),
+              const SizedBox(height: 4),
+              Text(
+                t.techniqueSub,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Palette.textDim, fontSize: 13),
+              ),
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(0, 50),
+                    backgroundColor: color,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(ctx);
+                    ctl.technique();
+                  },
+                  child: Text(t.techniqueUse),
+                ),
+              ),
             ],
           ),
         ),

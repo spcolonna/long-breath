@@ -745,6 +745,42 @@ class AppLocalizationsEs extends AppLocalizations {
   String get counterFreeActive => 'Próxima carta gratis';
 
   @override
+  String get invalidNoTechnique => 'Necesitás el Flujo lleno';
+
+  @override
+  String get technique => 'Técnica del Camino';
+
+  @override
+  String get techniqueSub => 'Gasta todo tu Flujo en el remate de tu camino.';
+
+  @override
+  String get techniqueUse => 'Usar la técnica';
+
+  @override
+  String get techTiger => 'Zarpazo del Tigre';
+
+  @override
+  String techTigerSub(int d, int s) {
+    return 'Un golpe de $d de daño y $s de Estructura';
+  }
+
+  @override
+  String get techSnake => 'Mordida en cadena';
+
+  @override
+  String techSnakeSub(int n, int d, int s) {
+    return '$n golpes de $d de daño y $s de Estructura cada uno';
+  }
+
+  @override
+  String get techCrane => 'Vuelo de la Grulla';
+
+  @override
+  String techCraneSub(int d, int g, int n) {
+    return 'Golpe de $d, +$g Guardia y robás $n cartas';
+  }
+
+  @override
   String get invalidRetainTooMany => 'Retenés demasiadas cartas';
 
   @override
@@ -3281,7 +3317,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get glossFlow =>
-      'Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más.';
+      'Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más y podés gastarlo entero en la Técnica del Camino.';
 
   @override
   String flowLevel(int level, int max) {
@@ -3294,7 +3330,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get flowMaxSub => 'Ataques +1 · robás 1 más · +1 Aliento';
+  String get flowMaxSub => 'Técnica del Camino lista';
 
   @override
   String get termRetain => 'Retener';

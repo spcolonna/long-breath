@@ -215,6 +215,7 @@ class CombatController extends Notifier<CombatView?> {
 
   /// Respiro elegido entre una oleada y la siguiente.
   void counter(CounterMode mode) => _dispatch(Counter(mode));
+  void technique() => _dispatch(const Technique());
 
   void breather(Breather b) => _dispatch(ChooseBreather(b));
 
