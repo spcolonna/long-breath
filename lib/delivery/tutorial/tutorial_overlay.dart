@@ -117,9 +117,7 @@ class _TutorialOverlayState extends ConsumerState<TutorialOverlay>
         (step.waitTurn != null && s.turn >= step.waitTurn!) ||
         (step.waitStance != null &&
             ev.any((e) => e is StanceChanged && e.stance == step.waitStance)) ||
-        (step.waitBreathe &&
-            prev != null &&
-            s.breathesLeft < prev.state.breathesLeft);
+        (step.waitBreathe && ev.any((e) => e is Breathed));
   }
 
   @override

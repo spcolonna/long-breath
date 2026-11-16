@@ -206,7 +206,8 @@ class CombatController extends Notifier<CombatView?> {
     );
   }
 
-  void breathe() => _dispatch(const Breathe());
+  void breathe([BreatheMode mode = BreatheMode.hand]) =>
+      _dispatch(Breathe(mode));
 
   /// Cambia el estado del combate a mano (solo tests).
   @visibleForTesting

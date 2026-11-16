@@ -392,7 +392,7 @@ void main() {
       expect(s.hand.any((c) => c.uid == keep), isTrue);
     });
 
-    test('respirar una vez por combate', () {
+    test('respirar gasta la carga', () {
       var s = setup([...filler, ...filler]);
       final before = s.player.breath;
       s = engine.reduce(s, const Breathe()).state;
@@ -1603,6 +1603,66 @@ void main() {
       expect(f2.hand.length, f1.hand.length + 1);
       expect(f2.player.breath, f1.player.breath);
       expect(f3.player.breath, f1.player.breath + 1);
+    });
+  });
+
+  group('Respirar recargable', () {
+    test('modo Aliento: +Aliento sin tocar la mano', () {
+      final s = setup([...filler, ...filler]);
+      final r = engine.reduce(s, const Breathe(BreatheMode.breath));
+      expect(r.state.player.breath, s.player.breath + data.balance.breatheBreath);
+      expect(r.state.hand.map((c) => c.uid), s.hand.map((c) => c.uid));
+      expect(r.state.breathesLeft, s.breathesLeft - 1);
+      expect(r.events.whereType<Breathed>().single.mode, BreatheMode.breath);
+    });
+
+    test('modo Estructura: solo si falta, y hasta el máximo', () {
+      final s = setup(filler);
+      expect(
+        engine.validate(s, const Breathe(BreatheMode.structure)),
+        Invalid.structureFull,
+      );
+      final hurt = s.copyWith(
+        player: s.player.copyWith(structure: s.player.maxStructure - 2),
+      );
+      final r = engine.reduce(hurt, const Breathe(BreatheMode.structure));
+      expect(r.state.player.structure, s.player.maxStructure);
+      expect(r.events.whereType<StructureRecovered>().single.amount, 2);
+    });
+
+    test('sin carga no se respira en ningún modo', () {
+      final s = setup(filler).copyWith(breathesLeft: 0);
+      for (final m in BreatheMode.values) {
+        expect(engine.validate(s, Breathe(m)), isNotNull);
+      }
+      expect(engine.legalActions(s).whereType<Breathe>(), isEmpty);
+    });
+
+    test('se carga al guardar Aliento y al desviar; al completarse suma una', () {
+      final at = data.balance.breatheChargeAt;
+      // Aliento contenido: terminar sin gastar todo.
+      final s0 = setup(filler).copyWith(breathesLeft: 0);
+      final r = endTurn(s0);
+      final c = r.events.whereType<BreatheCharged>().single;
+      expect((c.cause, c.progress, c.ready), (ChargeCause.held, 1, false));
+      // Desvío: un paso más en la misma vuelta.
+      var s = setup(['an_zhang', 'ti_xi', ...filler, ...filler])
+          .copyWith(breathesLeft: 0, breathCharge: at - 2);
+      s = play(s, 'an_zhang').state;
+      s = play(s, 'ti_xi').state;
+      final r2 = endTurn(s);
+      final causes = r2.events.whereType<BreatheCharged>().map((e) => e.cause);
+      expect(causes, contains(ChargeCause.deflect));
+      expect(r2.events.whereType<BreatheCharged>().last.ready, isTrue);
+      expect(r2.state.breathesLeft, 1);
+      expect(r2.state.breathCharge, causes.length - 2);
+    });
+
+    test('con las cargas al tope no avanza', () {
+      final s = setup(filler).copyWith(breathesLeft: data.balance.breatheMax);
+      final r = endTurn(s);
+      expect(r.events.whereType<BreatheCharged>(), isEmpty);
+      expect(r.state.breathCharge, 0);
     });
   });
 }

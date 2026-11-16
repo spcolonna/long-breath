@@ -66,19 +66,21 @@ class _ActionBar extends ConsumerWidget {
           const SizedBox(width: 8),
           TutorialAnchor(
             id: 'breathe',
-            child: OutlinedButton(
-              onPressed: !busy && engine.validate(s, const Breathe()) == null
-                  ? ctl.breathe
+            child: _BreatheButton(
+              state: s,
+              chargeAt: data.balance.breatheChargeAt,
+              onPressed: !busy &&
+                      BreatheMode.values.any(
+                        (m) => engine.validate(s, Breathe(m)) == null,
+                      )
+                  ? () => _pickBreathe(
+                      context,
+                      ref,
+                      engine,
+                      s,
+                      lesson: view.lessonId != null,
+                    )
                   : null,
-              style: OutlinedButton.styleFrom(
-                shape: const StadiumBorder(),
-                minimumSize: const Size(0, 44),
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-              ),
-              child: _CostLabel(
-                label: t.breathe,
-                cost: data.balance.breatheCost,
-              ),
             ),
           ),
           const SizedBox(width: 10),
@@ -433,6 +435,236 @@ class _Chip extends StatelessWidget {
           ),
         ),
       ],
+    ),
+  );
+}
+
+
+/// Respirar en píldora: el anillo de carga a la izquierda (un arco por paso,
+/// el número de cargas listas al centro) y el nombre. Al cargarse rebota.
+class _BreatheButton extends StatelessWidget {
+  const _BreatheButton({
+    required this.state,
+    required this.chargeAt,
+    required this.onPressed,
+  });
+
+  final CombatState state;
+  final int chargeAt;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final charges = state.breathesLeft;
+    final ready = charges > 0;
+    return Semantics(
+      button: true,
+      label: t.breatheCharges(charges, state.breathCharge, chargeAt),
+      excludeSemantics: true,
+      child: Bounce(
+        trigger: charges,
+        scale: 1.12,
+        child: OutlinedButton(
+          onPressed: onPressed,
+          style: OutlinedButton.styleFrom(
+            shape: const StadiumBorder(),
+            minimumSize: const Size(0, 44),
+            padding: const EdgeInsets.fromLTRB(6, 0, 14, 0),
+            side: BorderSide(
+              color: ready ? Palette.sky : Palette.line,
+              width: ready ? 1.8 : 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _ChargeRing(
+                charges: charges,
+                progress: state.breathCharge,
+                steps: chargeAt,
+              ),
+              const SizedBox(width: 6),
+              Text(t.breathe, maxLines: 1),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Aro de carga de Respirar: [steps] arcos que se llenan de celeste y, al
+/// centro, las cargas listas.
+class _ChargeRing extends StatelessWidget {
+  const _ChargeRing({
+    required this.charges,
+    required this.progress,
+    required this.steps,
+  });
+
+  final int charges;
+  final int progress;
+  final int steps;
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = MediaQuery.disableAnimationsOf(context);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(end: progress.toDouble()),
+      duration: reduce ? Duration.zero : const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+      builder: (context, p, _) => SizedBox(
+        width: 32,
+        height: 32,
+        child: CustomPaint(
+          painter: _ChargePainter(progress: p, steps: steps, full: charges > 0),
+          child: Center(
+            child: Text(
+              '$charges',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                color: charges > 0 ? Palette.sky : Palette.textDim,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ChargePainter extends CustomPainter {
+  _ChargePainter({
+    required this.progress,
+    required this.steps,
+    required this.full,
+  });
+
+  final double progress;
+  final int steps;
+  final bool full;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    final r = rect.deflate(3);
+    const gap = 0.32;
+    final seg = 2 * math.pi / steps;
+    final base = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.2
+      ..strokeCap = StrokeCap.round;
+    canvas.drawCircle(
+      rect.center,
+      r.width / 2 + 1,
+      Paint()..color = (full ? Palette.sky : Palette.line).withValues(alpha: 0.14),
+    );
+    for (var i = 0; i < steps; i++) {
+      final start = -math.pi / 2 + i * seg + gap / 2;
+      final sweep = seg - gap;
+      canvas.drawArc(
+        r,
+        start,
+        sweep,
+        false,
+        base..color = Palette.line.withValues(alpha: 0.6),
+      );
+      final f = (progress - i).clamp(0.0, 1.0);
+      if (f > 0) {
+        canvas.drawArc(r, start, sweep * f, false, base..color = Palette.sky);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_ChargePainter old) =>
+      old.progress != progress || old.steps != steps || old.full != full;
+}
+
+/// Hoja para elegir cómo gastar la carga de Respirar. En las lecciones solo
+/// se puede cambiar la mano (los otros modos se ven, apagados).
+void _pickBreathe(
+  BuildContext context,
+  WidgetRef ref,
+  CombatEngine engine,
+  CombatState s, {
+  bool lesson = false,
+}) {
+  final t = AppLocalizations.of(context);
+  final b = engine.data.balance;
+  final ctl = ref.read(combatControllerProvider.notifier);
+  Haptics.selectionClick();
+  final modes = [
+    (BreatheMode.hand, '换', t.breatheModeHand, t.breatheModeHandSub(b.breatheMinDraw), b.breatheCost),
+    (BreatheMode.breath, '气', t.breatheModeBreath, t.breatheModeBreathSub(b.breatheBreath), 0),
+    (BreatheMode.structure, '稳', t.breatheModeStructure, t.breatheModeStructureSub(b.breatheStructure), 0),
+  ];
+  showModalBottomSheet<void>(
+    context: context,
+    backgroundColor: Colors.transparent,
+    barrierColor: Palette.text.withValues(alpha: 0.22),
+    builder: (ctx) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: PaperPanel(
+          opacity: 0.98,
+          padding: const EdgeInsets.fromLTRB(8, 14, 8, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                t.breatheModeTitle,
+                style: const TextStyle(
+                  fontFamily: Fonts.display,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 6),
+              for (final (mode, hanzi, title, sub, cost) in modes)
+                Builder(
+                  builder: (_) {
+                    final invalid = engine.validate(s, Breathe(mode));
+                    final ok =
+                        invalid == null && (!lesson || mode == BreatheMode.hand);
+                    return ListTile(
+                      enabled: ok,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      leading: Text(
+                        hanzi,
+                        style: TextStyle(
+                          fontFamily: Fonts.brush,
+                          fontSize: 26,
+                          color: ok ? Palette.sky : Palette.textDim,
+                        ),
+                      ),
+                      title: cost > 0
+                          ? Align(
+                              alignment: Alignment.centerLeft,
+                              child: _CostLabel(label: title, cost: cost),
+                            )
+                          : Text(
+                              title,
+                              style: const TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                      subtitle: Text(
+                        invalid != null ? t.invalidLabel(invalid) : sub,
+                      ),
+                      onTap: () {
+                        Navigator.pop(ctx);
+                        ctl.breathe(mode);
+                      },
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
+      ),
     ),
   );
 }

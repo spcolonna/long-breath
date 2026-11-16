@@ -1147,8 +1147,68 @@ abstract class AppLocalizations {
   /// No description provided for @invalidBreatheUsed.
   ///
   /// In es, this message translates to:
-  /// **'Ya respiraste en este combate'**
+  /// **'Respirar no está cargado'**
   String get invalidBreatheUsed;
+
+  /// No description provided for @invalidStructureFull.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu Estructura ya está completa'**
+  String get invalidStructureFull;
+
+  /// No description provided for @breatheModeTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Cómo respirás?'**
+  String get breatheModeTitle;
+
+  /// No description provided for @breatheModeHand.
+  ///
+  /// In es, this message translates to:
+  /// **'Cambiar la mano'**
+  String get breatheModeHand;
+
+  /// No description provided for @breatheModeHandSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Descartás todo y robás {n} o más'**
+  String breatheModeHandSub(int n);
+
+  /// No description provided for @breatheModeBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Recuperar Aliento'**
+  String get breatheModeBreath;
+
+  /// No description provided for @breatheModeBreathSub.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Aliento ahora'**
+  String breatheModeBreathSub(int n);
+
+  /// No description provided for @breatheModeStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Recuperar Estructura'**
+  String get breatheModeStructure;
+
+  /// No description provided for @breatheModeStructureSub.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} Estructura'**
+  String breatheModeStructureSub(int n);
+
+  /// No description provided for @breatheCharges.
+  ///
+  /// In es, this message translates to:
+  /// **'Respirar: {charges} cargas, {progress} de {at} hacia la próxima'**
+  String breatheCharges(int charges, int progress, int at);
+
+  /// No description provided for @breatheReady.
+  ///
+  /// In es, this message translates to:
+  /// **'Respirar cargado'**
+  String get breatheReady;
 
   /// No description provided for @invalidRetainTooMany.
   ///
@@ -1363,7 +1423,7 @@ abstract class AppLocalizations {
   /// No description provided for @tutActions.
   ///
   /// In es, this message translates to:
-  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate; aunque no te queden cartas, roba 3.'**
+  /// **'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar se carga al desviar, al cerrar una forma o al terminar el turno con Aliento sin gastar; al usarlo elegís: cambiar la mano, recuperar Aliento o recuperar Estructura.'**
   String get tutActions;
 
   /// No description provided for @tutFree.
@@ -2437,7 +2497,7 @@ abstract class AppLocalizations {
   /// No description provided for @lesForms9.
   ///
   /// In es, this message translates to:
-  /// **'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas (al menos 3). Cuesta 1 de Aliento y se usa una vez por combate. Usalo.'**
+  /// **'Falta Paso atrás y no está en tu mano. Tocá Respirar y elegí «Cambiar la mano»: descarta tu mano y roba la misma cantidad de cartas (al menos 3) por 1 de Aliento. Gasta una carga; se vuelve a cargar al desviar, cerrar formas o guardar Aliento. Usalo.'**
   String get lesForms9;
 
   /// No description provided for @lesForms10.
@@ -3847,7 +3907,7 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule9.
   ///
   /// In es, this message translates to:
-  /// **'Un Respiro menos por combate'**
+  /// **'Empezás sin Respirar cargado'**
   String get picoRule9;
 
   /// No description provided for @picoRule10.
@@ -4531,7 +4591,7 @@ abstract class AppLocalizations {
   /// No description provided for @bonusBreathes.
   ///
   /// In es, this message translates to:
-  /// **'+{n} Respirar por combate'**
+  /// **'+{n} carga de Respirar al empezar'**
   String bonusBreathes(int n);
 
   /// No description provided for @resultLotus.
@@ -4933,7 +4993,7 @@ abstract class AppLocalizations {
   /// No description provided for @glossBreathe.
   ///
   /// In es, this message translates to:
-  /// **'Cambiás toda la mano por cartas nuevas a cambio de Aliento. Tiene usos contados por combate.'**
+  /// **'Gastás una carga para cambiar la mano, recuperar Aliento o recuperar Estructura. Se carga al desviar, al cerrar una forma y al terminar el turno con Aliento sin gastar (tres pasos por carga, hasta dos guardadas).'**
   String get glossBreathe;
 
   /// No description provided for @glossStance.

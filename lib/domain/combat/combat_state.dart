@@ -205,6 +205,7 @@ class CombatState {
     this.reserve = const [],
     this.wave = 0,
     this.flow = 0,
+    this.breathCharge = 0,
   });
 
   final int turn;
@@ -305,6 +306,10 @@ class CombatState {
   /// jugar. Cada nivel suma algo (ver [CombatEngine.flowDamage]).
   final int flow;
 
+  /// Pasos hacia la próxima carga de Respirar (0 a
+  /// `balance.breatheChargeAt` − 1); las cargas listas son [breathesLeft].
+  final int breathCharge;
+
   /// Enemigos del grupo: los caídos, el actual y los que esperan.
   int get waveCount => wave + 1 + reserve.length;
 
@@ -315,6 +320,8 @@ class CombatState {
     EnemyCombat? enemy,
     List<EnemyCombat>? enemies,
     int? flow,
+    int? breathesLeft,
+    int? breathCharge,
   }) =>
       CombatState(
         turn: turn,
@@ -334,7 +341,7 @@ class CombatState {
         exhausted: exhausted,
         nextTurnBreathMod: nextTurnBreathMod,
         dingbuUsed: dingbuUsed,
-        breathesLeft: breathesLeft,
+        breathesLeft: breathesLeft ?? this.breathesLeft,
         turnStructureBonus: turnStructureBonus,
         deflectBonusDamage: deflectBonusDamage,
         deflectBonusStructure: deflectBonusStructure,
@@ -364,6 +371,7 @@ class CombatState {
         reserve: reserve,
         wave: wave,
         flow: flow ?? this.flow,
+        breathCharge: breathCharge ?? this.breathCharge,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

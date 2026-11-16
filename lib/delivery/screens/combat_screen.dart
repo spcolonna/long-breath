@@ -28,6 +28,7 @@ import '../providers.dart';
 import '../theme.dart';
 import '../tutorial/illustrations.dart';
 import '../widgets/glossary.dart';
+import '../widgets/paper_panel.dart';
 import '../tutorial/lessons.dart';
 import '../tutorial/tutorial_anchor.dart';
 import '../tutorial/tutorial_overlay.dart';
@@ -697,6 +698,17 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               dx: 20,
               dy: -40,
             );
+          case StructureRecovered(:final amount) when amount > 0:
+            _audio.play(Sfx.guardUp);
+            _pop(
+              _heroPops,
+              '+$amount ${t.structure}',
+              Palette.structure,
+              size: 20,
+              icon: Icons.foundation,
+              dx: -20,
+              dy: -40,
+            );
           default:
         }
       }
@@ -1182,6 +1194,18 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
               big: true,
             ),
           );
+        case BreatheCharged(:final ready):
+          // El aro se llena solo; al completarse, una cinta celeste.
+          if (ready) {
+            Haptics.mediumImpact();
+            _audio.play(Sfx.breathGain);
+            _queue.add(_Fx(t.breatheReady, null, Palette.sky));
+          } else {
+            Haptics.selectionClick();
+          }
+        case Breathed():
+          Haptics.mediumImpact();
+          _audio.play(Sfx.breathSpend);
         case FlowChanged(:final level, :final delta):
           // El medidor ya se anima; la cinta solo al llegar al máximo.
           if (delta < 0) {

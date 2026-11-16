@@ -228,3 +228,11 @@ macOS no tiene `timeout`.
 - Vista: medidor 流 con tres tramos (jade, jade, oro) a la izquierda de la placa del héroe; con el máximo se dora. Vibra en cada cambio; cinta «Flujo 3» al llegar al tope. Tocarlo abre el término nuevo del glosario (`Term.flow`). Entra en 375 pt.
 - Simulación Normal, 150 runs: promedio 2% → 3%, experto 23% → 27%. Sube algo; el ajuste fino va con la fase C (bot prudente).
 - Tests: grupo `Flujo` en `combat_engine_test.dart` (desvío, golpe y turno quieto, tope, beneficios por nivel), medidor en `stance_chain_test.dart`. 323 pasan. No probado en el simulador.
+
+### Fase B (2/n): Respirar recargable con modos (2026-11-16)
+- Motor: `breathesLeft` ahora son cargas listas y `CombatState.breathCharge` los pasos hacia la próxima. Un paso al desviar, al cerrar una forma y al terminar el turno con Aliento sin gastar («aliento contenido»). `balance.player`: `breatheChargeAt` 3 pasos por carga, `breatheMax` 2 guardadas (con el tope no avanza). Se empieza con `breathesPerCombat` (1) + 百会 + picos; el Pico 9 ahora es «Empezás sin Respirar cargado» (se puede cargar).
+- `Breathe(mode)`: `hand` (como antes: cambia la mano, cuesta `breatheCost`), `breath` (+`breatheBreath` 2 Aliento, gratis), `structure` (+`breatheStructure` 5 E hasta el máximo; `Invalid.structureFull` si está completa). Eventos `BreatheCharged`, `Breathed`, `StructureRecovered`.
+- Vista: píldora de Respirar con aro de carga (un arco por paso, cargas al centro, rebota al cargarse); al tocarla, hoja con los tres modos (换 气 稳). En las lecciones solo se habilita cambiar la mano. Cinta «Respirar cargado» al completarse una carga. Textos de «una vez por combate» reescritos (tutorial, lección de formas, glosario, meridiano, pico).
+- Bots: `breatheMode` (Estructura si está por romperse, mano si no hay ataque pagable, Aliento si le falta poco para atacar; con el tope gasta).
+- Simulación Normal, 150 runs: promedio 3% → 7%, experto 27% → 35%. La ganancia viene casi toda de los modos sobre la carga inicial: con peleas de 2–3 turnos los bots casi no completan una recarga (con `breatheChargeAt` 3, 4 o 99 da igual). En jefes y élites sí pesa. Ajuste con la fase C.
+- Tests: grupo `Respirar recargable` en `combat_engine_test.dart` (modos, sin carga, carga por Aliento contenido y desvío, tope); `lessons_flow_test` pasa por la hoja de modos.

@@ -155,7 +155,10 @@ class PlannerBot extends Bot {
       final uid = _retainOrder(engine, s).last;
       return ChooseDiscard(uid);
     }
-    if (breathes && shouldBreathe(engine, s)) return const Breathe();
+    if (breathes) {
+      final m = breatheMode(engine, s);
+      if (m != null) return Breathe(m);
+    }
     final search = _Search(engine, this);
     final best = search.run(s, targeted: _targeted);
     // Después de apuntar, juega o termina: así no va y viene entre los dos.
@@ -365,17 +368,42 @@ class _Search {
 }
 
 
-/// Respirar conviene si la mano no tiene ningún ataque que se pueda pagar.
-bool shouldBreathe(CombatEngine engine, CombatState s) {
-  // Respirar cuesta: solo si después queda Aliento para jugar algo.
-  if (s.breathesLeft <= 0 || s.hand.isEmpty) return false;
-  if (s.player.breath <= engine.data.balance.breatheCost) return false;
-  if (engine.validate(s, const Breathe()) != null) return false;
-  for (final c in s.hand) {
-    final def = engine.data.card(c.cardId);
-    if (def.type.isAttack && engine.costOf(s, def) <= s.player.breath) return false;
+/// Cómo conviene gastar una carga de Respirar ahora, o null si no conviene:
+/// cambiar la mano si no tiene ningún ataque pagable, recuperar Estructura si
+/// está por romperse, o recuperar Aliento si falta para el mejor ataque.
+BreatheMode? breatheMode(CombatEngine engine, CombatState s) {
+  if (s.breathesLeft <= 0) return null;
+  bool ok(BreatheMode m) => engine.validate(s, Breathe(m)) == null;
+  final p = s.player;
+  if (p.structure * 10 <= p.maxStructure * 3 && ok(BreatheMode.structure)) {
+    return BreatheMode.structure;
   }
-  return true;
+  final attacks = [
+    for (final c in s.hand)
+      if (engine.data.card(c.cardId).type.isAttack)
+        engine.costOf(s, engine.data.card(c.cardId)),
+  ];
+  // Cambiar la mano cuesta: solo si después queda Aliento para jugar algo.
+  if (s.hand.isNotEmpty &&
+      p.breath > engine.data.balance.breatheCost &&
+      ok(BreatheMode.hand) &&
+      !attacks.any((c) => c <= p.breath)) {
+    return BreatheMode.hand;
+  }
+  if (attacks.isNotEmpty &&
+      attacks.every((c) => c > p.breath) &&
+      attacks.any((c) => c <= p.breath + engine.data.balance.breatheBreath) &&
+      ok(BreatheMode.breath)) {
+    return BreatheMode.breath;
+  }
+  // Con las cargas al tope, mejor gastarla que perder los pasos.
+  if (s.breathesLeft >= engine.data.balance.breatheMax) {
+    if (ok(BreatheMode.structure) && p.structure * 2 <= p.maxStructure) {
+      return BreatheMode.structure;
+    }
+    if (attacks.isNotEmpty) return BreatheMode.breath;
+  }
+  return null;
 }
 
 /// Valor de lo que da una forma al completarse, en "daño equivalente".

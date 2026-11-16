@@ -122,6 +122,7 @@ extension Labels on AppLocalizations {
     Invalid.badTarget => invalidBadTarget,
     Invalid.mustBreathe => invalidMustBreathe,
     Invalid.noBreather => invalidNoBreather,
+    Invalid.structureFull => invalidStructureFull,
   };
 
   /// Texto corto con el efecto especial de la carta (lo que no se ve en íconos).

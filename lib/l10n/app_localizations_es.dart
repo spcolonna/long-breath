@@ -662,7 +662,45 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invalidSameStance => 'Ya estás en esa postura';
 
   @override
-  String get invalidBreatheUsed => 'Ya respiraste en este combate';
+  String get invalidBreatheUsed => 'Respirar no está cargado';
+
+  @override
+  String get invalidStructureFull => 'Tu Estructura ya está completa';
+
+  @override
+  String get breatheModeTitle => '¿Cómo respirás?';
+
+  @override
+  String get breatheModeHand => 'Cambiar la mano';
+
+  @override
+  String breatheModeHandSub(int n) {
+    return 'Descartás todo y robás $n o más';
+  }
+
+  @override
+  String get breatheModeBreath => 'Recuperar Aliento';
+
+  @override
+  String breatheModeBreathSub(int n) {
+    return '+$n Aliento ahora';
+  }
+
+  @override
+  String get breatheModeStructure => 'Recuperar Estructura';
+
+  @override
+  String breatheModeStructureSub(int n) {
+    return '+$n Estructura';
+  }
+
+  @override
+  String breatheCharges(int charges, int progress, int at) {
+    return 'Respirar: $charges cargas, $progress de $at hacia la próxima';
+  }
+
+  @override
+  String get breatheReady => 'Respirar cargado';
 
   @override
   String get invalidRetainTooMany => 'Retenés demasiadas cartas';
@@ -790,7 +828,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutActions =>
-      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar cambia toda tu mano por 1 de Aliento, una vez por combate; aunque no te queden cartas, roba 3.';
+      'Dos ayudas: Paso en T te cambia de postura por 1 de Aliento, una vez por turno. Respirar se carga al desviar, al cerrar una forma o al terminar el turno con Aliento sin gastar; al usarlo elegís: cambiar la mano, recuperar Aliento o recuperar Estructura.';
 
   @override
   String get tutFree =>
@@ -1439,7 +1477,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lesForms9 =>
-      'Falta Paso atrás y no está en tu mano. Respirar descarta tu mano y roba la misma cantidad de cartas (al menos 3). Cuesta 1 de Aliento y se usa una vez por combate. Usalo.';
+      'Falta Paso atrás y no está en tu mano. Tocá Respirar y elegí «Cambiar la mano»: descarta tu mano y roba la misma cantidad de cartas (al menos 3) por 1 de Aliento. Gasta una carga; se vuelve a cargar al desviar, cerrar formas o guardar Aliento. Usalo.';
 
   @override
   String get lesForms10 => '¡Ahí está! Último paso: Paso atrás.';
@@ -2382,7 +2420,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get picoRule8 => 'Élites y jefe +10% de Vida';
 
   @override
-  String get picoRule9 => 'Un Respiro menos por combate';
+  String get picoRule9 => 'Empezás sin Respirar cargado';
 
   @override
   String get picoRule10 =>
@@ -2846,7 +2884,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String bonusBreathes(int n) {
-    return '+$n Respirar por combate';
+    return '+$n carga de Respirar al empezar';
   }
 
   @override
@@ -3124,7 +3162,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get glossBreathe =>
-      'Cambiás toda la mano por cartas nuevas a cambio de Aliento. Tiene usos contados por combate.';
+      'Gastás una carga para cambiar la mano, recuperar Aliento o recuperar Estructura. Se carga al desviar, al cerrar una forma y al terminar el turno con Aliento sin gastar (tres pasos por carga, hasta dos guardadas).';
 
   @override
   String get glossStance =>

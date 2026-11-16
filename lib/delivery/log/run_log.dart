@@ -149,7 +149,7 @@ String actionLine(CombatAction a, CombatState s) => switch (a) {
   }(),
   Target(:final index) => 'apunta a ${s.enemies[index].id}',
   Dingbu(:final stance) => 'dingbu a ${stance.name}',
-  Breathe() => 'respira (cambia la mano)',
+  Breathe(:final mode) => 'respira (${mode.name})',
   EndTurn(:final retain) => retain.isEmpty
       ? 'termina el turno'
       : 'termina el turno reteniendo ${_cards(s.hand.where((c) => retain.contains(c.uid)))}',
@@ -171,6 +171,12 @@ String eventsLine(List<CombatEvent> events) {
         'encadena $cardId desde ${from.name}',
       StanceCircle(:final breath, :final draw) =>
         'CÍRCULO +$breath aliento +$draw cartas',
+      BreatheCharged(:final progress, :final charges, :final cause, :final ready) =>
+        ready
+            ? 'Respirar cargado → $charges (${cause.name})'
+            : 'carga de Respirar $progress (${cause.name})',
+      Breathed() => null,
+      StructureRecovered(:final amount) => '+$amount E',
       FlowChanged(:final level, :final delta, :final cause) =>
         'flujo ${delta > 0 ? '+' : ''}$delta → $level (${cause.name})',
       GuardGained(:final amount, :final height) =>

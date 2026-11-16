@@ -142,6 +142,9 @@ void main() {
     sees('no alcanza para Respirar');
     await endTurn();
     await tap('Respirar');
+    // La hoja ofrece los tres modos; en la lección solo cambiar la mano.
+    sees('Recuperar Aliento');
+    await tap('Cambiar la mano');
     await settle();
     await play('Paso atrás');
     await settle();

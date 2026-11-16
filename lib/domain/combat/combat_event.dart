@@ -1,4 +1,5 @@
 import '../model/enums.dart';
+import 'combat_action.dart';
 import 'combat_state.dart';
 
 /// Eventos que produce el motor para que la interfaz anime.
@@ -54,6 +55,32 @@ class FlowChanged extends CombatEvent {
   final int level;
   final int delta;
   final FlowCause cause;
+}
+
+enum ChargeCause { deflect, form, held }
+
+/// Respirar avanzó un paso de carga por [cause]: [progress] pasos hacia la
+/// próxima y [charges] cargas listas ([ready] si se completó una).
+class BreatheCharged extends CombatEvent {
+  const BreatheCharged(this.progress, this.charges, this.cause, {this.ready = false});
+  final int progress;
+  final int charges;
+  final ChargeCause cause;
+
+  /// Se completó una carga nueva.
+  final bool ready;
+}
+
+/// Se gastó una carga de Respirar en [mode].
+class Breathed extends CombatEvent {
+  const Breathed(this.mode);
+  final BreatheMode mode;
+}
+
+/// El jugador recuperó [amount] de Estructura (Respirar).
+class StructureRecovered extends CombatEvent {
+  const StructureRecovered(this.amount);
+  final int amount;
 }
 
 class GuardGained extends CombatEvent {

@@ -645,6 +645,10 @@ class GameBalance {
     required this.breathesPerCombat,
     this.breatheCost = 1,
     this.breatheMinDraw = 3,
+    this.breatheChargeAt = 3,
+    this.breatheMax = 2,
+    this.breatheBreath = 2,
+    this.breatheStructure = 5,
     required this.novice,
     required this.styles,
     required this.pathChoices,
@@ -703,6 +707,18 @@ class GameBalance {
 
   /// Cartas que roba Respirar como mínimo (aunque la mano esté vacía).
   final int breatheMinDraw;
+
+  /// Pasos de carga (desvío, forma, aliento contenido) por cada Respirar.
+  final int breatheChargeAt;
+
+  /// Cargas de Respirar que se pueden guardar a la vez.
+  final int breatheMax;
+
+  /// Aliento que devuelve Respirar en modo Aliento.
+  final int breatheBreath;
+
+  /// Estructura que devuelve Respirar en modo Estructura.
+  final int breatheStructure;
   final StyleStats novice;
   final Map<Style, StyleStats> styles;
 
@@ -871,6 +887,10 @@ class GameBalance {
       breathesPerCombat: player['breathesPerCombat'] as int,
       breatheCost: player['breatheCost'] as int? ?? 1,
       breatheMinDraw: player['breatheMinDraw'] as int? ?? 3,
+      breatheChargeAt: player['breatheChargeAt'] as int? ?? 3,
+      breatheMax: player['breatheMax'] as int? ?? 2,
+      breatheBreath: player['breatheBreath'] as int? ?? 2,
+      breatheStructure: player['breatheStructure'] as int? ?? 5,
       novice: StyleStats.fromJson(j['novice'] as Map<String, dynamic>),
       styles: {
         for (final e in styles.entries)

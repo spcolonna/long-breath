@@ -35,6 +35,7 @@ enum Invalid {
   badTarget,
   mustBreathe,
   noBreather,
+  structureFull,
 }
 
 /// Valores finales de una carta en el estado actual (lo que muestra la UI).
@@ -300,15 +301,27 @@ class CombatEngine {
         d.dingbuUsed = true;
         d.stance = stance;
         _stanceChanged(d, events);
-      case Breathe():
-        // Con la mano vacía (o casi) igual trae cartas nuevas.
-        final n = math.max(d.hand.length, data.balance.breatheMinDraw);
-        d.discard.addAll(d.hand);
-        d.hand.clear();
-        d.retained.clear();
+      case Breathe(:final mode):
+        final b = data.balance;
         d.breathesLeft--;
-        d.breath -= data.balance.breatheCost;
-        _draw(d, n, events);
+        events.add(Breathed(mode));
+        switch (mode) {
+          case BreatheMode.hand:
+            // Con la mano vacía (o casi) igual trae cartas nuevas.
+            final n = math.max(d.hand.length, b.breatheMinDraw);
+            d.discard.addAll(d.hand);
+            d.hand.clear();
+            d.retained.clear();
+            d.breath -= b.breatheCost;
+            _draw(d, n, events);
+          case BreatheMode.breath:
+            d.breath += b.breatheBreath;
+            events.add(BreathGained(b.breatheBreath));
+          case BreatheMode.structure:
+            final n = math.min(b.breatheStructure, d.maxStructure - d.structure);
+            d.structure += n;
+            events.add(StructureRecovered(n));
+        }
       case EndTurn(:final retain):
         _endTurn(d, retain.toSet(), events);
       case ChooseDiscard(:final uid):
@@ -428,9 +441,16 @@ class CombatEngine {
         if (s.dingbuUsed) return Invalid.dingbuUsed;
         if (s.player.breath < dingbuCost(s)) return Invalid.noBreath;
         if (stance == s.player.stance) return Invalid.sameStance;
-      case Breathe():
+      case Breathe(:final mode):
         if (s.breathesLeft <= 0) return Invalid.breatheUsed;
-        if (s.player.breath < data.balance.breatheCost) return Invalid.noBreath;
+        if (mode == BreatheMode.hand &&
+            s.player.breath < data.balance.breatheCost) {
+          return Invalid.noBreath;
+        }
+        if (mode == BreatheMode.structure &&
+            s.player.structure >= s.player.maxStructure) {
+          return Invalid.structureFull;
+        }
       case EndTurn(:final retain):
         if (retain.length > s.retainMax) return Invalid.retainTooMany;
         if (retain.any((u) => s.handCard(u) == null)) return Invalid.notInHand;
@@ -469,8 +489,9 @@ class CombatEngine {
       final a = Dingbu(st);
       if (validate(s, a) == null) out.add(a);
     }
-    if (validate(s, const Breathe()) == null) {
-      out.add(const Breathe());
+    for (final m in BreatheMode.values) {
+      final a = Breathe(m);
+      if (validate(s, a) == null) out.add(a);
     }
     out.add(const EndTurn());
     return out;
@@ -802,6 +823,19 @@ class CombatEngine {
     events.add(FlowChanged(next, real, cause));
   }
 
+  /// Un paso de carga de Respirar. Con las cargas al tope no avanza.
+  void _charge(_Draft d, ChargeCause cause, List<CombatEvent> events) {
+    final b = data.balance;
+    if (d.breathesLeft >= b.breatheMax) return;
+    d.breathCharge++;
+    final ready = d.breathCharge >= b.breatheChargeAt;
+    if (ready) {
+      d.breathCharge = 0;
+      d.breathesLeft++;
+    }
+    events.add(BreatheCharged(d.breathCharge, d.breathesLeft, cause, ready: ready));
+  }
+
   /// Encadenar desde [from] completa las tres posturas (y antes faltaba esa).
   static bool _closes(int mask, Stance from) {
     final all = (1 << Stance.values.length) - 1;
@@ -964,6 +998,7 @@ class CombatEngine {
           d.formsCompleted[f.id] = (d.formsCompleted[f.id] ?? 0) + 1;
           events.add(FormCompleted(f.id));
           _flow(d, 1, FlowCause.form, events);
+          _charge(d, ChargeCause.form, events);
           _applyForm(d, f.effect, events);
           if (d.isOver) return;
           _talismansOnForm(d, events);
@@ -1155,6 +1190,8 @@ class CombatEngine {
 
   void _endTurn(_Draft d, Set<int> retain, List<CombatEvent> events) {
     if (d.cardsThisTurn == 0) _flow(d, -1, FlowCause.idle, events);
+    // Aliento contenido: terminar con Aliento sin gastar carga Respirar.
+    if (d.breath > 0) _charge(d, ChargeCause.held, events);
     final kept = d.hand.where((c) => retain.contains(c.uid)).toList();
     d.discard.addAll(d.hand.where((c) => !retain.contains(c.uid)));
     d.hand
@@ -1288,6 +1325,7 @@ class CombatEngine {
     d.deflects++;
     events.add(const Deflected());
     _flow(d, 1, FlowCause.deflect, events);
+    _charge(d, ChargeCause.deflect, events);
     d.nextTurnBreathMod += data.balance.deflectBreathBonus +
         stance.deflectBreathBonus +
         d.awakened.deflectBreath;
@@ -1593,6 +1631,7 @@ class _Draft {
     List<EnemyCombat>? reserve,
     this.wave = 0,
     this.flow = 0,
+    this.breathCharge = 0,
     this.nextTurnBreathMod = 0,
     this.dingbuUsed = false,
     this.turnStructureBonus = 0,
@@ -1649,6 +1688,7 @@ class _Draft {
     reserve: [...s.reserve],
     wave: s.wave,
     flow: s.flow,
+    breathCharge: s.breathCharge,
     nextTurnBreathMod: s.nextTurnBreathMod,
     dingbuUsed: s.dingbuUsed,
     turnStructureBonus: s.turnStructureBonus,
@@ -1701,6 +1741,7 @@ class _Draft {
   final List<EnemyCombat> reserve;
   int wave;
   int flow;
+  int breathCharge;
 
   /// El enemigo cayó en esta acción y queda otro esperando.
   bool enemyDown = false;
@@ -1797,5 +1838,6 @@ class _Draft {
     reserve: List.unmodifiable(reserve),
     wave: wave,
     flow: flow,
+    breathCharge: breathCharge,
   );
 }

@@ -21,9 +21,22 @@ class Dingbu extends CombatAction {
   final Stance stance;
 }
 
-/// Respirar: descartás la mano y robás la misma cantidad.
+/// Cómo se gasta una carga de Respirar.
+enum BreatheMode {
+  /// Descartás la mano y robás la misma cantidad (mínimo 3). Cuesta Aliento.
+  hand,
+
+  /// Recuperás Aliento.
+  breath,
+
+  /// Recuperás Estructura.
+  structure,
+}
+
+/// Respirar: gasta una carga y hace lo que dice [mode].
 class Breathe extends CombatAction {
-  const Breathe();
+  const Breathe([this.mode = BreatheMode.hand]);
+  final BreatheMode mode;
 }
 
 /// Terminar turno reteniendo las cartas indicadas (hasta el máximo por edad).
