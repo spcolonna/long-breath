@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -931,4 +932,158 @@ class _ComboCounterState extends State<ComboCounter>
       ),
     );
   }
+}
+
+/// Cámara que se acerca un instante cada vez que cambia [trigger]: entra
+/// rápido, sostiene y vuelve despacio. El foco ([focus]) suele ser el rival.
+/// Con "reducir movimiento" no se mueve.
+class PunchZoom extends StatefulWidget {
+  const PunchZoom({
+    super.key,
+    required this.trigger,
+    required this.child,
+    this.amount = 0.07,
+    this.focus = const Alignment(0, -0.4),
+  });
+
+  final int trigger;
+  final double amount;
+  final Alignment focus;
+  final Widget child;
+
+  @override
+  State<PunchZoom> createState() => _PunchZoomState();
+}
+
+class _PunchZoomState extends State<PunchZoom>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  );
+
+  @override
+  void didUpdateWidget(PunchZoom old) {
+    super.didUpdateWidget(old);
+    if (widget.trigger != old.trigger) _c.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  /// 0 → 1 en el primer 18 %, quieto hasta el 45 % y de vuelta a 0.
+  static double zoomAt(double t) {
+    if (t <= 0 || t >= 1) return 0;
+    if (t < 0.18) return Curves.easeOutCubic.transform(t / 0.18);
+    if (t < 0.45) return 1;
+    return 1 - Curves.easeInOutSine.transform((t - 0.45) / 0.55);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (context, child) {
+        // Siempre el mismo Transform, como en [Shake].
+        final z = _c.isAnimating && !calm(context) ? zoomAt(_c.value) : 0.0;
+        return Transform.scale(
+          scale: 1 + widget.amount * z,
+          alignment: widget.focus,
+          child: child,
+        );
+      },
+      child: widget.child,
+    );
+  }
+}
+
+/// Estela de pincel detrás de una figura que embiste: un trazo que se afina
+/// hacia la cola. [progress] 0..1 la hace aparecer, estirarse y secarse;
+/// [direction] es hacia dónde va la figura (la estela queda del lado
+/// contrario).
+class InkTrail extends StatelessWidget {
+  const InkTrail({
+    super.key,
+    required this.progress,
+    required this.color,
+    required this.direction,
+    required this.length,
+    this.thickness = 18,
+  });
+
+  final double progress;
+  final Color color;
+  final Offset direction;
+  final double length;
+  final double thickness;
+
+  @override
+  Widget build(BuildContext context) {
+    if (progress <= 0 || progress >= 1) return const SizedBox.shrink();
+    return IgnorePointer(
+      child: CustomPaint(
+        size: Size.square(length * 2),
+        painter: _TrailPainter(progress, color, direction, thickness),
+      ),
+    );
+  }
+}
+
+class _TrailPainter extends CustomPainter {
+  _TrailPainter(this.t, this.color, this.dir, this.thickness);
+
+  final double t;
+  final Color color;
+  final Offset dir;
+  final double thickness;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    final d = dir / dir.distance;
+    final n = Offset(-d.dy, d.dx);
+    // Se estira rápido y se seca más despacio (la cola se acorta y aclara).
+    final grow = Curves.easeOutCubic.transform(math.min(1, t / 0.35));
+    final dry = t < 0.35 ? 0.0 : Curves.easeIn.transform((t - 0.35) / 0.65);
+    final len = size.width / 2 * grow * (1 - 0.6 * dry);
+    final alpha = 0.55 * (1 - dry);
+    final head = c;
+    final tail = c - d * len;
+    final w = thickness * (1 - 0.4 * dry);
+    // Un trazo principal y dos hebras secas a los costados.
+    for (final (off, k) in [(0.0, 1.0), (0.55, 0.35), (-0.5, 0.3)]) {
+      final h = head + n * w * off;
+      final tl = tail + n * w * off * 0.4;
+      final ww = w * k;
+      final path = Path()
+        ..moveTo(h.dx + n.dx * ww / 2, h.dy + n.dy * ww / 2)
+        ..quadraticBezierTo(
+          (h.dx + tl.dx) / 2 + n.dx * ww * 0.3,
+          (h.dy + tl.dy) / 2 + n.dy * ww * 0.3,
+          tl.dx,
+          tl.dy,
+        )
+        ..quadraticBezierTo(
+          (h.dx + tl.dx) / 2 - n.dx * ww * 0.3,
+          (h.dy + tl.dy) / 2 - n.dy * ww * 0.3,
+          h.dx - n.dx * ww / 2,
+          h.dy - n.dy * ww / 2,
+        )
+        ..close();
+      canvas.drawPath(
+        path,
+        Paint()
+          ..shader = ui.Gradient.linear(h, tl, [
+            color.withValues(alpha: alpha * k.clamp(0.5, 1)),
+            color.withValues(alpha: 0),
+          ]),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_TrailPainter old) => old.t != t || old.color != color;
 }

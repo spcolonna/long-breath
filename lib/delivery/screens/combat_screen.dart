@@ -39,6 +39,7 @@ import '../widgets/deck_sheet.dart';
 import '../widgets/enemy_scroll.dart';
 import '../widgets/altitude_bar.dart';
 import '../widgets/enemy_sprite.dart';
+import '../widgets/flow_wind.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
@@ -210,6 +211,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
 
   /// Destello dorado (desequilibrio, forma, remate) y sello del remate.
   int _goldFlashKey = 0, _finishKey = 0;
+
+  /// Cámara que se acerca al rival en el remate (y cuánto).
+  int _zoomKey = 0;
+  double _zoomAmount = 0.06;
   String _finishHanzi = '破';
   Color _finishColor = Palette.lacquer;
 
@@ -990,6 +995,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       _foe(slot).burst++;
       _goldFlashKey++;
       _shake(grand ? 14 : 10);
+      _zoomAmount = grand ? 0.1 : 0.05;
+      _zoomKey++;
       if (grand) {
         _finishHanzi = '破';
         _finishColor = Palette.lacquer;
@@ -1235,6 +1242,8 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             _finishKey++;
             _goldFlashKey++;
             _shake(12);
+            _zoomAmount = 0.08;
+            _zoomKey++;
           });
           _queue.add(
             _Fx(
@@ -1416,7 +1425,12 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     final column = Column(
       children: [
         Expanded(
-          child: _Arena(
+          child: PunchZoom(
+            trigger: _zoomKey,
+            amount: _zoomAmount,
+            focus: const Alignment(0.25, -0.3),
+            child: _Arena(
+            flow: s.flow,
             stageId: stageId,
             scene: node?.scene,
             light: node?.light,
@@ -1454,6 +1468,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                   },
                 ),
             ],
+          ),
           ),
         ),
         TutorialAnchor(

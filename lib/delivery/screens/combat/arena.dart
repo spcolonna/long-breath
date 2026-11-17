@@ -61,7 +61,11 @@ class _Arena extends StatelessWidget {
     required this.introTitle,
     required this.slots,
     this.room,
+    this.flow = 0,
   });
+
+  /// Flujo del héroe: pétalos y viento que crecen en la escena.
+  final int flow;
 
   final String stageId;
 
@@ -131,6 +135,8 @@ class _Arena extends StatelessWidget {
                 ],
               ),
             ),
+          // Pétalos y viento del Flujo, detrás de los luchadores.
+          Positioned.fill(child: FlowWind(level: flow)),
           // Suelo.
           Align(
             alignment: const Alignment(0, 0.62),

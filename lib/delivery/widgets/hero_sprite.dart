@@ -120,6 +120,11 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
             (st < 0.3
                 ? Curves.easeOutCubic.transform(st / 0.3)
                 : 1 - Curves.easeInOutSine.transform((st - 0.3) / 0.7));
+        // Estiramiento mientras sale (0–0.25) y aplaste al chocar (0.25–0.5).
+        final stretch = _strike.isAnimating && st < 0.25 ? math.sin(math.pi * st / 0.25) : 0.0;
+        final squash = _strike.isAnimating && st >= 0.25 && st < 0.5
+            ? math.sin(math.pi * (st - 0.25) / 0.25)
+            : 0.0;
         final hv = _hurt.value;
         final hurting = _hurt.isAnimating;
         const stop = 0.15;
@@ -221,6 +226,18 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
                         height: 1,
                         fontWeight: FontWeight.w900,
                         color: accent.withValues(alpha: 0.22))),
+              // Estela de tinta del camino al embestir.
+              if (_strike.isAnimating && !calm(context))
+                Transform.translate(
+                  offset: Offset(26 * s, -16 * s - h * 0.05),
+                  child: InkTrail(
+                    progress: st / 0.7,
+                    color: accent,
+                    direction: const Offset(0.85, -1),
+                    length: h * 0.32,
+                    thickness: w * 0.16,
+                  ),
+                ),
               Transform.translate(
                 offset: Offset(shake + 26 * s - 14 * knock - 10 * fall,
                     -16 * s + 6 * knock + hop + h * 0.08 * fall),
@@ -228,7 +245,12 @@ class _HeroSpriteState extends State<HeroSprite> with TickerProviderStateMixin {
                   angle: -0.18 * fall,
                   alignment: Alignment.bottomCenter,
                   child: Transform.scale(
-                    scale: 1 + 0.015 * idle + 0.07 * s.clamp(0, 1),
+                    // Squash & stretch: se estira al salir y se aplasta al
+                    // llegar al contacto.
+                    scaleX: 1 + 0.015 * idle + 0.07 * s.clamp(0, 1) -
+                        0.05 * stretch + 0.07 * squash,
+                    scaleY: 1 + 0.015 * idle + 0.07 * s.clamp(0, 1) +
+                        0.08 * stretch - 0.06 * squash,
                     alignment: Alignment.bottomCenter,
                     // Los filtros cuestan una capa por cuadro: solo cuando
                     // hacen algo (al caer o al recibir un golpe).

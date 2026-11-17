@@ -49,6 +49,7 @@ flutter:
     - assets/art/player/hero_crane.webp
   shaders:
     - shaders/paper.frag
+    - shaders/ink_dissolve.frag
   # Tipografías libres (OFL), recortadas a los caracteres del juego (docs/arte/fuentes.md).
   fonts:
     - family: Alegreya

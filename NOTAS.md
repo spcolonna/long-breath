@@ -252,3 +252,12 @@ macOS no tiene `timeout`.
 - Bots planificadores: la Grulla la usa al empezar (roba); Tigre y Serpiente al final del turno, después de aprovechar el +1 del Flujo.
 - Simulación Normal, 150 runs: promedio 11% → 9%, experto 41% → 42% (ruido). Falta medir % de peleas que llegan a Flujo 3 (meta 30–50%).
 - Tests: grupo `Técnica del Camino` en `combat_engine_test.dart` (pide Flujo lleno, Tigre, Serpiente, Grulla).
+
+### Fase B (5/n): presentación del golpe (2026-11-17)
+- Squash & stretch: el héroe se estira al salir y se aplasta al contacto (`hero_sprite.dart`); el rival se encoge en el amague, se estira al lanzarse y se aplasta al chocar (`_attackPose` devuelve también `stretch`).
+- Estela de tinta (`InkTrail` en `juice.dart`): trazo de pincel con dos hebras secas detrás del héroe (color del camino) y del rival (color del rango) mientras embisten.
+- Cámara: `PunchZoom` envuelve la arena; se acerca al rival en el remate (último rival 5 %, élite/jefe 10 %, Técnica del Camino 8 %) y vuelve.
+- Muerte: `InkDissolve` + `shaders/ink_dissolve.frag` (máscara de ruido con `ShaderMask`, se deshace de arriba hacia abajo); sin shader o con movimiento reducido, fundido con opacidad. El tinte blanco al morir bajó a 60 %.
+- Flujo en la escena: `FlowWind` (pétalos 0/7/15/26 por nivel, ráfagas desde el 2, destellos dorados en el 3), con fundido entre niveles; el reloj se apaga en Flujo 0 y con movimiento reducido no corre.
+- Sin arte nuevo. Pendiente: capas de música por Flujo (necesita stems reales, va con la fase G) y las 5 poses (golpe/guardia del héroe y ataque por jefe). No probado en el simulador; el shader compila con impellerc.
+- Tests: `strike_presentation_test.dart` (zoom, estela, disolución sin shader, pétalos por nivel, reloj que se apaga, movimiento reducido).

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../../domain/model/enemy_def.dart';
 import '../theme.dart';
 import '../feel.dart';
+import 'ink_dissolve.dart';
+import 'juice.dart';
 
 /// Figura del enemigo en la arena.
 ///
@@ -70,6 +72,12 @@ class _EnemySpriteState extends State<EnemySprite>
   );
 
   @override
+  void initState() {
+    super.initState();
+    InkDissolve.load();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     loopUnlessCalm(context, _idle, reverse: true);
@@ -102,19 +110,25 @@ class _EnemySpriteState extends State<EnemySprite>
   }
 
   /// Amague hacia atrás, embestida rápida hacia el jugador y regreso.
-  (double dy, double scale) _attackPose(double t) {
-    if (t == 0 || t == 1) return (0, 0);
+  /// Además del avance y la escala devuelve el squash & stretch: se encoge
+  /// en el amague, se estira al lanzarse (positivo) y se aplasta al chocar
+  /// (negativo).
+  (double dy, double scale, double stretch) _attackPose(double t) {
+    if (t == 0 || t == 1) return (0, 0, 0);
     if (t < 0.4) {
       final k = Curves.easeOut.transform(t / 0.4);
-      return (-10 * k, -0.05 * k);
+      return (-10 * k, -0.05 * k, -0.06 * k);
     }
     if (t < 0.53) {
       final k = Curves.easeIn.transform((t - 0.4) / 0.13);
-      return (-10 + 40 * k, -0.05 + 0.25 * k);
+      return (-10 + 40 * k, -0.05 + 0.25 * k, -0.06 + 0.16 * k);
     }
-    if (t < 0.62) return (30, 0.2);
+    if (t < 0.62) {
+      final k = math.sin(math.pi * (t - 0.53) / 0.09);
+      return (30, 0.2, 0.1 - 0.18 * k);
+    }
     final k = Curves.easeOutCubic.transform((t - 0.62) / 0.38);
-    return (30 * (1 - k), 0.2 * (1 - k));
+    return (30 * (1 - k), 0.2 * (1 - k), 0.1 * (1 - k));
   }
 
   @override
@@ -141,7 +155,7 @@ class _EnemySpriteState extends State<EnemySprite>
             : 0.0;
         final flash = hitting ? (h < stop ? 0.9 : 0.9 * (1 - after)) : 0.0;
         final squash = hitting ? 0.06 * knock : 0.0;
-        final (atkDy, atkScale) = _attackPose(_attack.value);
+        final (atkDy, atkScale, atkStretch) = _attackPose(_attack.value);
         final pulse = math.sin(math.pi * _pulse.value);
         final dying = widget.dying;
         final d = dying ? _death.value : 0.0;
@@ -175,10 +189,21 @@ class _EnemySpriteState extends State<EnemySprite>
                   ),
                 ),
               ),
-              Opacity(
-                opacity: dying
-                    ? (1 - Curves.easeIn.transform(d)).clamp(0, 1)
-                    : 1,
+              // Estela de tinta al lanzarse hacia el jugador.
+              if (_attack.value > 0.4 && _attack.value < 0.85 && !calm(context))
+                Transform.translate(
+                  offset: Offset(0, atkDy + size * 0.1),
+                  child: InkTrail(
+                    progress: (_attack.value - 0.4) / 0.45,
+                    color: accent,
+                    direction: const Offset(0, 1),
+                    length: size * 0.3,
+                    thickness: size * 0.22,
+                  ),
+                ),
+              // Al caer se deshace en manchas de tinta.
+              InkDissolve(
+                progress: d,
                 child: Transform.translate(
                   offset: Offset(
                     shake,
@@ -190,18 +215,18 @@ class _EnemySpriteState extends State<EnemySprite>
                         (dying ? 0.12 * Curves.easeOut.transform(d) : 0),
                     child: Transform.scale(
                       scaleX:
-                          breathe + atkScale + 0.08 * pulse + squash + 0.25 * d,
+                          breathe + atkScale + 0.08 * pulse + squash - 0.6 * atkStretch + 0.25 * d,
                       scaleY:
-                          breathe + atkScale + 0.08 * pulse - squash + 0.25 * d,
+                          breathe + atkScale + 0.08 * pulse - squash + atkStretch + 0.25 * d,
                       alignment: Alignment.bottomCenter,
                       // El tinte cuesta una capa por cuadro: solo al
                       // recibir un golpe o al caer.
-                      child: (dying ? math.max(flash, d) : flash) <= 0
+                      child: (dying ? math.max(flash, 0.6 * d) : flash) <= 0
                           ? KeyedSubtree(key: _body, child: child!)
                           : ColorFiltered(
                               colorFilter: ColorFilter.mode(
                                 Colors.white.withValues(
-                                  alpha: dying ? math.max(flash, d) : flash,
+                                  alpha: dying ? math.max(flash, 0.6 * d) : flash,
                                 ),
                                 BlendMode.srcATop,
                               ),
