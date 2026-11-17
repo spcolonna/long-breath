@@ -284,6 +284,7 @@ final profiles = <String, BotFactory>{
   'novato': NoviceBot.new,
   'promedio': (seed) => AverageBot(seed, sloppiness: sloppiness),
   'experto': ExpertBot.new,
+  'prudente': (seed) => PrudentBot(seed, sloppiness: sloppiness),
   'aleatorio': RandomBot.new,
   'codicioso': GreedyBot.new,
 };
@@ -542,8 +543,18 @@ String _route(RunEngine run, Bot bot, RunState r) {
     return bot.pickPath(options);
   }
   final ratio = r.hp / r.maxHp;
+  // El prudente toma siempre lo que cura y esquiva la élite si no está lleno.
+  final prudent = bot is PrudentBot;
   double score(String id) {
     final n = r.node(id);
+    if (prudent) {
+      if (n.type == NodeType.fountain) return ratio < 1 ? 4 : 0.5;
+      if (n.reward == RewardKind.tea && ratio < 1) return 5;
+      if (n.type == NodeType.combat &&
+          run.data.enemy(n.enemy!).rank == EnemyRank.elite) {
+        return ratio > 0.9 ? 1 : -1;
+      }
+    }
     if (n.type == NodeType.fountain) return ratio < 0.6 ? 3 : 0.5;
     if (n.type == NodeType.merchant) {
       return r.jade >= run.merchantOf(r).card ? 1.5 : 0.5;

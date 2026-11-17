@@ -11,7 +11,7 @@
 //   dart run tool/simulate.dart --section cards          # poder de cada carta
 //   dart run tool/simulate.dart --data otra/carpeta      # comparar con otros datos
 //
-// Perfiles: novato, promedio, experto (y de referencia aleatorio, codicioso).
+// Perfiles: novato, promedio, prudente, experto (y de referencia aleatorio, codicioso).
 // Secciones: runs (defecto), picos, talismans, cards, difficulty.
 //   --difficulty easy|normal|hard|shifu  (sección runs)
 import 'dart:io';

@@ -261,3 +261,10 @@ macOS no tiene `timeout`.
 - Flujo en la escena: `FlowWind` (pétalos 0/7/15/26 por nivel, ráfagas desde el 2, destellos dorados en el 3), con fundido entre niveles; el reloj se apaga en Flujo 0 y con movimiento reducido no corre.
 - Sin arte nuevo. Pendiente: capas de música por Flujo (necesita stems reales, va con la fase G) y las 5 poses (golpe/guardia del héroe y ataque por jefe). No probado en el simulador; el shader compila con impellerc.
 - Tests: `strike_presentation_test.dart` (zoom, estela, disolución sin shader, pétalos por nivel, reloj que se apaga, movimiento reducido).
+
+### Fase C (1/n): bot prudente (2026-11-17)
+- `PrudentBot` en `lib/domain/sim/bots.dart` (perfil `prudente` del simulador): pelea como el promedio, pero elige siempre lo que cura (puerta del té, fuente que cura, opción de evento con más Vida, té de Tío Bao, talismán de Vida) y esquiva élites salvo con más del 90% de Vida. En la ruta (`_route` de `tool/sim/lab.dart`) se cura 83 veces contra 55 del promedio en 30 subidas.
+- **Normal, sin árbol, 200 subidas:** promedio 8%, prudente 12%, experto 39%. Llegan a la etapa 3: 16%, 23% y 53%.
+- **Con la escuela creciendo** (`--section meta`, 30 escuelas × 30 subidas): prudente 21% → 35% → 46% → 59% → 65% → 71% por tramo de 5 subidas; promedio 20% → 68%; experto 55% → 91%.
+- **Lectura:** curarse siempre ayuda (+4 a +10 puntos según el tramo), pero el simulador no lo muestra como estrategia dominante; lo que más pesa es el árbol de meridianos (de 21% a 71%). Los `run_logs` del simulador de iOS son de pruebas, no del teléfono: hace falta pasar los del teléfono para calibrar el prudente contra el usuario.
+- Siguiente: sacar Vida de las puertas que compiten con poder y rehacer la fuente con tres opciones parejas, medido con el prudente.

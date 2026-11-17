@@ -680,3 +680,58 @@ int bestUpgrade(RunEngine run, RunState r) {
   }
   return (best ?? r.deck.firstWhere(run.canUpgrade)).uid;
 }
+
+/// Jugador prudente («siempre Vida»): juega las peleas como el promedio,
+/// pero ante cada decisión elige curarse: la puerta del té, la fuente que
+/// cura, la opción de evento que da Vida, el té de Tío Bao y el talismán de
+/// Vida. Esquiva las élites salvo que esté casi lleno. Es como juega una
+/// persona cuidadosa, y mide si aguantar alcanza para ganar.
+class PrudentBot extends AverageBot {
+  PrudentBot(super.seed, {super.sloppiness});
+
+  @override
+  String get name => 'prudente';
+
+  @override
+  RunState useFountain(RunEngine run, RunState r) =>
+      r.hp < r.maxHp ? run.fountainHeal(r) : run.fountainUpgrade(r, bestUpgrade(run, r));
+
+  @override
+  String pickTalisman(RunEngine run, RunState r) =>
+      r.talismanOptions.contains('vida') ? 'vida' : super.pickTalisman(run, r);
+
+  @override
+  String pickEventOption(RunEngine run, RunState r) {
+    final options = [
+      for (final o in run.eventOptions(r, run.data.event(r.eventId!)))
+        if (run.canChoose(r, o)) o,
+    ];
+    double life(EventOptionDef o) {
+      if (o.duel != null) return -10;
+      double of(EventOutcome e) =>
+          math.min(e.heal, r.maxHp - r.hp) + e.maxHp * 1.5 - e.hp * 2.0;
+      final c = o.chance;
+      return c == null
+          ? of(o.outcome)
+          : of(o.outcome) * c / 100 + of(o.failure!) * (100 - c) / 100;
+    }
+
+    // Primero lo que más Vida deja; a igual Vida, el criterio de siempre.
+    return options
+        .reduce((a, b) {
+          final la = life(a), lb = life(b);
+          if (lb != la) return lb > la ? b : a;
+          return eventOptionValue(run, r, b) > eventOptionValue(run, r, a) ? b : a;
+        })
+        .id;
+  }
+
+  @override
+  RunState shop(RunEngine run, RunState r) {
+    final m = run.merchantOf(r);
+    if (!r.shopTea && r.hp < r.maxHp && run.canAfford(r, m.tea)) {
+      r = run.buyTea(r);
+    }
+    return super.shop(run, r);
+  }
+}
