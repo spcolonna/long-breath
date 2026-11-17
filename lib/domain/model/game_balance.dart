@@ -672,6 +672,8 @@ class GameBalance {
     this.talismanChoices = 3,
     required this.fountainHeal,
     required this.fountainUpgrade,
+    this.fountainTemper = 1,
+    this.fountainRemoveMaxHp = 0,
     required this.stages,
     this.fixedMap,
     this.stageHeal = 100,
@@ -770,6 +772,10 @@ class GameBalance {
   final int talismanChoices;
   final int fountainHeal;
   final int fountainUpgrade;
+  /// Cartas que templa la fuente de una vez (cada una +[fountainUpgrade]).
+  final int fountainTemper;
+  /// Vida máxima que suma la fuente al purificar (quitar una carta).
+  final int fountainRemoveMaxHp;
   /// Etapas de la subida, de abajo hacia arriba. Vencer al jefe de una
   /// lleva a la siguiente; vencer al de la última es la cumbre.
   final List<StageDef> stages;
@@ -955,6 +961,8 @@ class GameBalance {
       talismanChoices: rewards['talismanChoices'] as int? ?? 3,
       fountainHeal: fountain['heal'] as int,
       fountainUpgrade: fountain['upgrade'] as int,
+      fountainTemper: fountain['temper'] as int? ?? 1,
+      fountainRemoveMaxHp: fountain['removeMaxHp'] as int? ?? 0,
       stages: switch (run['stages']) {
         final List stages => [
             for (final st in stages) StageDef.fromJson(st as Map<String, dynamic>),

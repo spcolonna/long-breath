@@ -361,14 +361,32 @@ abstract class AppLocalizations {
   /// No description provided for @fountainRemove.
   ///
   /// In es, this message translates to:
-  /// **'Eliminar 1 carta del mazo'**
-  String get fountainRemove;
+  /// **'Purificar: quitar 1 carta y +{maxHp} de Vida máxima'**
+  String fountainRemove(int maxHp);
+
+  /// No description provided for @fountainNoUpgrade.
+  ///
+  /// In es, this message translates to:
+  /// **'No tenés cartas para templar.'**
+  String get fountainNoUpgrade;
+
+  /// No description provided for @fountainRemovePick.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí la carta que se lleva el agua'**
+  String get fountainRemovePick;
+
+  /// No description provided for @fountainUpgradePick.
+  ///
+  /// In es, this message translates to:
+  /// **'Templar: elegí la carta {n} de {count}'**
+  String fountainUpgradePick(int n, int count);
 
   /// No description provided for @fountainUpgrade.
   ///
   /// In es, this message translates to:
-  /// **'Mejorar 1 carta (+{amount})'**
-  String fountainUpgrade(int amount);
+  /// **'Templar: mejorar {count, plural, =1{1 carta} other{{count} cartas}} (+{amount})'**
+  String fountainUpgrade(int count, int amount);
 
   /// No description provided for @chooseCard.
   ///
@@ -2809,7 +2827,7 @@ abstract class AppLocalizations {
   /// No description provided for @nodeHintFountain.
   ///
   /// In es, this message translates to:
-  /// **'Agua clara: curás Vida, mejorás o quitás una carta.'**
+  /// **'Agua clara: curás Vida, templás dos cartas o purificás el mazo.'**
   String get nodeHintFountain;
 
   /// No description provided for @nodeHintShrine.

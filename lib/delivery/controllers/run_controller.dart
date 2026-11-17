@@ -321,7 +321,7 @@ class RunController extends Notifier<RunState?> {
 
   void removeCard(int uid) => _set(_engine.fountainRemove(state!, uid), what: 'fuente: quita carta');
 
-  void upgradeCard(int uid) => _set(_engine.fountainUpgrade(state!, uid), what: 'fuente: mejora carta');
+  void upgradeCards(List<int> uids) => _set(_engine.fountainUpgrade(state!, uids), what: 'fuente: templa ${uids.length} cartas');
 }
 
 final runControllerProvider =

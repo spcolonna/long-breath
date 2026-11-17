@@ -181,10 +181,33 @@
       }
     }
   },
-  "fountainRemove": "Eliminar 1 carta del mazo",
-  "fountainUpgrade": "Mejorar 1 carta (+{amount})",
+  "fountainRemove": "Purificar: quitar 1 carta y +{maxHp} de Vida máxima",
+  "@fountainRemove": {
+    "placeholders": {
+      "maxHp": {
+        "type": "int"
+      }
+    }
+  },
+  "fountainNoUpgrade": "No tenés cartas para templar.",
+  "fountainRemovePick": "Elegí la carta que se lleva el agua",
+  "fountainUpgradePick": "Templar: elegí la carta {n} de {count}",
+  "@fountainUpgradePick": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fountainUpgrade": "Templar: mejorar {count, plural, =1{1 carta} other{{count} cartas}} (+{amount})",
   "@fountainUpgrade": {
     "placeholders": {
+      "count": {
+        "type": "int"
+      },
       "amount": {
         "type": "int"
       }
@@ -818,7 +841,7 @@
   "nodeHintBoss": "El guardián de la cumbre.",
   "nodeHintPack": "Vienen {count} rivales.",
   "@nodeHintPack": { "placeholders": { "count": { "type": "int" } } },
-  "nodeHintFountain": "Agua clara: curás Vida, mejorás o quitás una carta.",
+  "nodeHintFountain": "Agua clara: curás Vida, templás dos cartas o purificás el mazo.",
   "nodeHintShrine": "Un animal sagrado te ofrece su bendición.",
   "nodeHintEvent": "Un encuentro en el sendero. Puede ayudarte o costarte algo.",
   "nodeHintMerchant": "Cartas, objetos y servicios a cambio de jade.",

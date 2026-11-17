@@ -268,3 +268,10 @@ macOS no tiene `timeout`.
 - **Con la escuela creciendo** (`--section meta`, 30 escuelas × 30 subidas): prudente 21% → 35% → 46% → 59% → 65% → 71% por tramo de 5 subidas; promedio 20% → 68%; experto 55% → 91%.
 - **Lectura:** curarse siempre ayuda (+4 a +10 puntos según el tramo), pero el simulador no lo muestra como estrategia dominante; lo que más pesa es el árbol de meridianos (de 21% a 71%). Los `run_logs` del simulador de iOS son de pruebas, no del teléfono: hace falta pasar los del teléfono para calibrar el prudente contra el usuario.
 - Siguiente: sacar Vida de las puertas que compiten con poder y rehacer la fuente con tres opciones parejas, medido con el prudente.
+
+### Fase C (2/n): fuente pareja y puertas sin té (2026-11-17)
+- **Puertas:** el té sale de `combatRewards.weights` (peso 0 en las tres etapas); su peso pasa a temple (12/14/17) y talismán (6/8/9). Las puertas ofrecen poder contra poder; la Vida queda en la fuente, el té de Tío Bao, los eventos, el talismán de Vida y la cura entre etapas. `RewardKind.tea` sigue existiendo (pantalla y swap a jade intactos).
+- **Fuente, tres opciones:** curar (igual, por dificultad: 20 en Normal), **templar 2 cartas distintas** (+3 cada una; `fountain.temper`), **purificar** = quitar 1 carta **y +4 de Vida máxima y Vida** (`fountain.removeMaxHp`). `fountainUpgrade(r, uids)` toma una lista; `fountainTemperOf` da el tope real; la pantalla elige las cartas de a una («carta 1 de 2»). Bots templan con `bestUpgrades`.
+- **Normal, sin árbol, 200 subidas:** promedio 9% (antes 8), prudente 11% (antes 12), experto 41% (antes 39).
+- **Escuela creciendo (30×30):** prudente 17/28/35/47/65/71% contra promedio 17/27/31/51/65/70%; experto 54 → 92%. Antes el prudente le sacaba hasta 9 puntos al promedio (subidas 11–15); ahora van parejos: «siempre Vida» dejó de ser ventaja.
+- Siguiente: eventos con dos opciones buenas y distintas y un sumidero de jade (sobran ~170 de jade sin gastar en el simulador).

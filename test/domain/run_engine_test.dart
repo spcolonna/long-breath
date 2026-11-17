@@ -206,7 +206,7 @@ void main() {
   test('fuente: mejorar y eliminar', () {
     var r = fresh(1)
         .copyWith(phase: RunPhase.fountain);
-    final up = run.fountainUpgrade(r, 0);
+    final up = run.fountainUpgrade(r, [0]);
     expect(up.deck.first.upgrades, 3);
     final rm = run.fountainRemove(r, 0);
     expect(rm.deck.length, 11);
@@ -1180,10 +1180,11 @@ void main() {
     });
 
     RunState kindAt(RewardKind kind, {MetaBonus meta = MetaBonus.none}) {
-      for (var seed = 0;; seed++) {
+      for (var seed = 0; seed < 2000; seed++) {
         final r = won(at(seed, meta: meta), 'n1');
         if (r.rewardKind == kind) return r;
       }
+      fail('ninguna semilla dio ${kind.name}');
     }
 
     test('jade, loto y té se cobran al tomarlos', () {
@@ -1197,7 +1198,8 @@ void main() {
       expect(l.lotus,
           lotus.lotus + real.data.balance.meridians.lotus.rewardAt(0));
       expect(l.stageLotus, l.lotus);
-      final tea = kindAt(RewardKind.tea);
+      // El té ya no sale en las puertas (peso 0); se cobra igual si llega.
+      final tea = jade.copyWith(rewardKind: RewardKind.tea, rewardAmount: 8);
       final t = real.collectReward(tea);
       expect(t.hp, math.min(tea.maxHp, tea.hp + tea.rewardAmount));
       expect(() => real.chooseRewardUpgrade(tea, 0), throwsStateError);

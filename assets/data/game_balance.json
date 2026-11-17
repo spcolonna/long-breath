@@ -50,7 +50,7 @@
   "paths": { "choices": 2 },
   "rewards": { "choices": 3, "pools": ["reward", "tiger", "snake", "crane"], "talismanChoices": 3,
     "rarityWeights": { "common": 4, "rare": 3, "legendary": 1 }, "raritySurcharge": { "rare": 5, "legendary": 15 } },
-  "fountain": { "heal": 20, "upgrade": 3 },
+  "fountain": { "heal": 20, "upgrade": 3, "temper": 2, "removeMaxHp": 4 },
   "jade": { "common": 14, "elite": 0, "spread": 6 },
   "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25, "weapon": 50, "weaponForge": 60 },
   "master": { "forms": 2 },
@@ -68,9 +68,9 @@
   },
   "combatRewards": {
     "weights": [
-      { "cards": 55, "jade": 15, "lotus": 12, "upgrade": 8, "tea": 8, "talisman": 2, "weapon": 1 },
-      { "cards": 50, "jade": 14, "lotus": 14, "upgrade": 10, "tea": 9, "talisman": 3, "weapon": 1 },
-      { "cards": 45, "jade": 14, "lotus": 15, "upgrade": 12, "tea": 10, "talisman": 4, "weapon": 1 }
+      { "cards": 55, "jade": 15, "lotus": 12, "upgrade": 12, "tea": 0, "talisman": 6, "weapon": 1 },
+      { "cards": 50, "jade": 14, "lotus": 14, "upgrade": 14, "tea": 0, "talisman": 8, "weapon": 1 },
+      { "cards": 45, "jade": 14, "lotus": 15, "upgrade": 17, "tea": 0, "talisman": 9, "weapon": 1 }
     ],
     "jade": [20, 30, 40], "teaPct": [15, 20, 25], "talismanChoices": 2, "maxWithoutCards": 2
   },

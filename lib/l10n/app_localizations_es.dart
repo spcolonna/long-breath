@@ -181,11 +181,30 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get fountainRemove => 'Eliminar 1 carta del mazo';
+  String fountainRemove(int maxHp) {
+    return 'Purificar: quitar 1 carta y +$maxHp de Vida máxima';
+  }
 
   @override
-  String fountainUpgrade(int amount) {
-    return 'Mejorar 1 carta (+$amount)';
+  String get fountainNoUpgrade => 'No tenés cartas para templar.';
+
+  @override
+  String get fountainRemovePick => 'Elegí la carta que se lleva el agua';
+
+  @override
+  String fountainUpgradePick(int n, int count) {
+    return 'Templar: elegí la carta $n de $count';
+  }
+
+  @override
+  String fountainUpgrade(int count, int amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count cartas',
+      one: '1 carta',
+    );
+    return 'Templar: mejorar $_temp0 (+$amount)';
   }
 
   @override
@@ -1660,7 +1679,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nodeHintFountain =>
-      'Agua clara: curás Vida, mejorás o quitás una carta.';
+      'Agua clara: curás Vida, templás dos cartas o purificás el mazo.';
 
   @override
   String get nodeHintShrine => 'Un animal sagrado te ofrece su bendición.';

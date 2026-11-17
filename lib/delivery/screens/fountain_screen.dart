@@ -31,6 +31,9 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
   int? _healedFrom;
   int _burst = 0;
 
+  /// Cartas ya elegidas para templar (la fuente templa varias de una vez).
+  final List<int> _tempered = [];
+
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
@@ -42,19 +45,38 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
 
     void done() => context.go('/map');
 
+    final temper = engine.fountainTemperOf(run);
+    final removeMaxHp = data.balance.fountainRemoveMaxHp;
+
     if (_mode != _Mode.choose) {
+      final upgrading = _mode == _Mode.upgrade;
       return DeckPickScreen(
-        title: _mode == _Mode.remove
-            ? t.fountainRemove
-            : t.fountainUpgrade(data.balance.fountainUpgrade),
+        key: ValueKey('pick-${_tempered.length}'),
+        title: upgrading
+            ? t.fountainUpgradePick(_tempered.length + 1, temper)
+            : t.fountainRemove(removeMaxHp),
+        hint: upgrading ? null : t.fountainRemovePick,
         cards: run.deck,
-        enabled: _mode == _Mode.upgrade ? engine.canUpgrade : null,
-        fx: _mode == _Mode.remove ? DeckPick.remove : DeckPick.upgrade,
-        onBack: () => setState(() => _mode = _Mode.choose),
+        enabled: upgrading
+            ? (c) => engine.canUpgrade(c) && !_tempered.contains(c.uid)
+            : null,
+        fx: upgrading ? DeckPick.upgrade : DeckPick.remove,
+        onBack: () => setState(() {
+          _tempered.clear();
+          _mode = _Mode.choose;
+        }),
         onPick: (c) {
-          _mode == _Mode.remove
-              ? ctl.removeCard(c.uid)
-              : ctl.upgradeCard(c.uid);
+          if (!upgrading) {
+            ctl.removeCard(c.uid);
+            done();
+            return;
+          }
+          _tempered.add(c.uid);
+          if (_tempered.length < temper) {
+            setState(() {});
+            return;
+          }
+          ctl.upgradeCards(List.of(_tempered));
           done();
         },
       );
@@ -202,13 +224,14 @@ class _FountainScreenState extends ConsumerState<FountainScreen> {
                 option(
                   1,
                   Icons.delete_outline,
-                  t.fountainRemove,
+                  t.fountainRemove(removeMaxHp),
                   () => pickMode(_Mode.remove),
                 ),
                 option(
                   2,
                   Icons.upgrade,
-                  t.fountainUpgrade(data.balance.fountainUpgrade),
+                  t.fountainUpgrade(temper, data.balance.fountainUpgrade),
+                  blocked: temper == 0 ? t.fountainNoUpgrade : null,
                   () => pickMode(_Mode.upgrade),
                 ),
                 const Spacer(),

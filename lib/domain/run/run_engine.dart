@@ -1382,10 +1382,15 @@ class RunEngine {
     );
   }
 
+  /// Purificar: quita una carta y la fuente suma Vida máxima (y esa
+  /// misma Vida), así quien cuida la Vida también tiene por qué elegirla.
   RunState fountainRemove(RunState r, int uid) {
     _checkFountain(r);
+    final extra = data.balance.fountainRemoveMaxHp;
     return r.copyWith(
       deck: [for (final c in r.deck) if (c.uid != uid) c],
+      maxHp: r.maxHp + extra,
+      hp: r.hp + extra,
       phase: RunPhase.map,
     );
   }
@@ -1396,10 +1401,22 @@ class RunEngine {
     return def.damage > 0 || def.guard > 0;
   }
 
-  RunState fountainUpgrade(RunState r, int uid) {
+  /// Templar: mejora hasta [GameBalance.fountainTemper] cartas distintas.
+  RunState fountainUpgrade(RunState r, List<int> uids) {
     _checkFountain(r);
-    return _upgrade(r, uid).copyWith(phase: RunPhase.map);
+    final picked = uids.toSet().take(data.balance.fountainTemper);
+    var next = r;
+    for (final uid in picked) {
+      next = _upgrade(next, uid);
+    }
+    return next.copyWith(phase: RunPhase.map);
   }
+
+  /// Hasta cuántas cartas mejorar en la fuente: las que se pueden, con tope.
+  int fountainTemperOf(RunState r) => math.min(
+        data.balance.fountainTemper,
+        r.deck.where(canUpgrade).length,
+      );
 
   RunState _upgrade(RunState r, int uid) => r.copyWith(
         deck: [

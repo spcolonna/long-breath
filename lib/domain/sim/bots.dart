@@ -322,7 +322,7 @@ class PlannerBot extends Bot {
   RunState useFountain(RunEngine run, RunState r) {
     if (r.hp <= r.maxHp - 15) return run.fountainHeal(r);
     final target = r.deck.firstWhere((c) => c.cardId == 'gongbu_chongquan');
-    return run.fountainUpgrade(r, target.uid);
+    return run.fountainUpgrade(r, [target.uid]);
   }
 }
 
@@ -628,7 +628,7 @@ class AverageBot extends PlannerBot {
   @override
   RunState useFountain(RunEngine run, RunState r) {
     if (r.hp <= r.maxHp - 12) return run.fountainHeal(r);
-    return run.fountainUpgrade(r, bestUpgrade(run, r));
+    return run.fountainUpgrade(r, bestUpgrades(run, r));
   }
 }
 
@@ -657,12 +657,12 @@ class ExpertBot extends PlannerBot {
   @override
   RunState useFountain(RunEngine run, RunState r) {
     if (r.hp <= r.maxHp - 15) return run.fountainHeal(r);
-    return run.fountainUpgrade(r, bestUpgrade(run, r));
+    return run.fountainUpgrade(r, bestUpgrades(run, r));
   }
 }
 
 /// El ataque más barato y frecuente del mazo es el que más rinde mejorado.
-int bestUpgrade(RunEngine run, RunState r) {
+int bestUpgrade(RunEngine run, RunState r, {Set<int> skip = const {}}) {
   final counts = <String, int>{};
   for (final c in r.deck) {
     counts[c.cardId] = (counts[c.cardId] ?? 0) + 1;
@@ -670,6 +670,7 @@ int bestUpgrade(RunEngine run, RunState r) {
   CombatCard? best;
   var bestV = -1.0;
   for (final c in r.deck.where(run.canUpgrade)) {
+    if (skip.contains(c.uid)) continue;
     final d = run.data.card(c.cardId);
     if (!d.type.isAttack) continue;
     final v = counts[c.cardId]! * 2 + d.damage / math.max(1, d.cost) - c.upgrades;
@@ -678,7 +679,18 @@ int bestUpgrade(RunEngine run, RunState r) {
       best = c;
     }
   }
-  return (best ?? r.deck.firstWhere(run.canUpgrade)).uid;
+  return (best ??
+          r.deck.firstWhere((c) => run.canUpgrade(c) && !skip.contains(c.uid)))
+      .uid;
+}
+
+/// Las mejores cartas para templar en la fuente, distintas entre sí.
+List<int> bestUpgrades(RunEngine run, RunState r) {
+  final picked = <int>{};
+  for (var i = 0; i < run.fountainTemperOf(r); i++) {
+    picked.add(bestUpgrade(run, r, skip: picked));
+  }
+  return picked.toList();
 }
 
 /// Jugador prudente («siempre Vida»): juega las peleas como el promedio,
@@ -694,7 +706,7 @@ class PrudentBot extends AverageBot {
 
   @override
   RunState useFountain(RunEngine run, RunState r) =>
-      r.hp < r.maxHp ? run.fountainHeal(r) : run.fountainUpgrade(r, bestUpgrade(run, r));
+      r.hp < r.maxHp ? run.fountainHeal(r) : run.fountainUpgrade(r, bestUpgrades(run, r));
 
   @override
   String pickTalisman(RunEngine run, RunState r) =>
