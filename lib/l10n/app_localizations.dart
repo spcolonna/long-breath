@@ -2809,7 +2809,7 @@ abstract class AppLocalizations {
   /// No description provided for @nodeHintDetour.
   ///
   /// In es, this message translates to:
-  /// **'Un desvío con un rival fuerte. Podés esquivarlo, pero el botín es mejor.'**
+  /// **'Un desvío con un rival fuerte. Podés esquivarlo, pero paga como ninguno: talismán raro, cartas raras y jade.'**
   String get nodeHintDetour;
 
   /// No description provided for @nodeHintBoss.
@@ -3175,8 +3175,8 @@ abstract class AppLocalizations {
   /// No description provided for @campVowHint.
   ///
   /// In es, this message translates to:
-  /// **'Una ventaja con un costo, hasta la próxima fogata. Podés no votar.'**
-  String get campVowHint;
+  /// **'Una ventaja con un costo, hasta la próxima fogata. Si vencés al jefe de la etapa con el voto, lo cumplís: +{lotus} de loto. Podés no votar.'**
+  String campVowHint(int lotus);
 
   /// No description provided for @campClimbVow.
   ///
@@ -3381,6 +3381,18 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Los ataques que cuestan 2 o más de Aliento pegan +{n}.'**
   String talEffHeavyDamage(int n);
+
+  /// No description provided for @talEffEdgeDamage.
+  ///
+  /// In es, this message translates to:
+  /// **'Al filo (con el 70% de la Vida o menos), tus ataques pegan +{n}.'**
+  String talEffEdgeDamage(int n);
+
+  /// No description provided for @talEffEdgeBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Al filo (con el 70% de la Vida o menos), empezás cada turno con +{n} de Aliento.'**
+  String talEffEdgeBreath(int n);
 
   /// No description provided for @weaponPickTitle.
   ///

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../providers.dart';
 import '../theme.dart';
 import 'lore_scroll.dart';
 import 'node_kit.dart';
@@ -95,7 +96,9 @@ class CampPanel extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      t.campVowHint,
+                      t.campVowHint(
+                        ref.watch(dataProvider).balance.meridians.lotus.vow,
+                      ),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 13,

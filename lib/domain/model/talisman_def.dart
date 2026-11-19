@@ -30,6 +30,8 @@ class TalismanEffect {
     this.guardPierce = 0,
     this.heavyDamage = 0,
     this.chainBreath = 0,
+    this.edgeDamage = 0,
+    this.edgeBreath = 0,
   });
 
   static const none = TalismanEffect();
@@ -110,6 +112,14 @@ class TalismanEffect {
   /// Aliento por cada cadena de postura.
   final int chainBreath;
 
+  // Los de filo: solo con el 70% de la Vida o menos.
+
+  /// Daño extra de cada ataque al filo.
+  final int edgeDamage;
+
+  /// Aliento extra al empezar cada turno al filo.
+  final int edgeBreath;
+
   // Los de las armas.
 
   /// Estructura extra que quita cada ataque con daño (Palo).
@@ -149,6 +159,8 @@ class TalismanEffect {
     guardPierce: guardPierce + o.guardPierce,
     heavyDamage: heavyDamage + o.heavyDamage,
     chainBreath: chainBreath + o.chainBreath,
+    edgeDamage: edgeDamage + o.edgeDamage,
+    edgeBreath: edgeBreath + o.edgeBreath,
   );
 
   /// Se aplica al empezar el combate (para la animación de aviso).
@@ -189,6 +201,8 @@ class TalismanEffect {
     guardPierce: j['guardPierce'] as int? ?? 0,
     heavyDamage: j['heavyDamage'] as int? ?? 0,
     chainBreath: j['chainBreath'] as int? ?? 0,
+    edgeDamage: j['edgeDamage'] as int? ?? 0,
+    edgeBreath: j['edgeBreath'] as int? ?? 0,
   );
 }
 

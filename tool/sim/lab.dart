@@ -518,7 +518,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.stageClear:
         final aw = r.awakeningOptions;
         r = runEngine.advanceStage(r,
-            awakening: aw.isEmpty ? null : aw[tRng.nextInt(aw.length)]);
+            awakening: aw.isEmpty ? null : aw[tRng.nextInt(aw.length)],
+            vow: bot.pickVow(runEngine, r));
       case RunPhase.victory || RunPhase.defeat:
         break;
     }

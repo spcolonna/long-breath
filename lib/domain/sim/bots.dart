@@ -37,6 +37,9 @@ abstract class Bot {
   String pickTalisman(RunEngine run, RunState r) =>
       r.talismanOptions[random.nextInt(r.talismanOptions.length)];
 
+  /// Voto del campamento (null = no votar). Por defecto no vota.
+  String? pickVow(RunEngine run, RunState r) => null;
+
   /// Arma elegida en el botín: la primera (la afín al camino va primero).
   String pickWeapon(RunEngine run, RunState r) => r.weaponOptions.first;
 
@@ -294,6 +297,15 @@ class PlannerBot extends Bot {
   String pickTalisman(RunEngine run, RunState r) => r.talismanOptions
       .reduce((a, b) => talismanValue(b) > talismanValue(a) ? b : a);
 
+  /// Vota el mejor de los ofrecidos si vale la pena.
+  @override
+  String? pickVow(RunEngine run, RunState r) {
+    if (r.vowOptions.isEmpty) return null;
+    final best = r.vowOptions
+        .reduce((a, b) => vowValue(b) > vowValue(a) ? b : a);
+    return vowValue(best) > 0 ? best : null;
+  }
+
   @override
   String pickEventOption(RunEngine run, RunState r) {
     final options = [
@@ -460,9 +472,18 @@ double talismanValue(String id) => const {
       'primer': 7.0, 'fuente': 7.0, 'roca': 5.0, 'arco': 3.0,
       'desvio': 3.0, 'formas': 2.0, 'montana': 20.0, 'cambio': 15.0,
       'vacio': 15.0, 'quiebre': 14.0, 'luna': 12.0, 'espejo': 10.0,
-      'paso': 5.0, 'bolsa': 4.0,
+      'paso': 5.0, 'bolsa': 4.0, 'filo': 5.0, 'brasa': 5.0, 'abismo': 6.0,
     }[id] ??
     4.0;
+
+/// Valor de un voto para el que planifica (negativo: no lo toma). Los que
+/// cobran Vida máxima valen menos cuanto más pesa la Vida.
+double vowValue(String id) => const {
+      'voto_tigre': 3.0, 'voto_silencio': 2.5, 'voto_filo': 2.5,
+      'voto_firmeza': 1.5, 'voto_ayuno': 1.0, 'voto_penitencia': 0.5,
+      'voto_loto': 0.5,
+    }[id] ??
+    0.0;
 
 /// Lo que vale 1 de jade frente a 1 punto de las otras ganancias (un
 /// talismán, 7 puntos, cuesta 50 de jade). Cuando sobra (más de 100), vale
@@ -713,6 +734,20 @@ class PrudentBot extends AverageBot {
   @override
   String pickTalisman(RunEngine run, RunState r) =>
       r.talismanOptions.contains('vida') ? 'vida' : super.pickTalisman(run, r);
+
+  /// Solo vota si el voto no le cuesta Vida (ni máxima ni de la fuente).
+  @override
+  String? pickVow(RunEngine run, RunState r) {
+    final safe = [
+      for (final id in r.vowOptions)
+        if (run.data.talisman(id).effect.maxHp >= 0 &&
+            run.data.talisman(id).effect.fountainHeal >= 0)
+          id,
+    ];
+    if (safe.isEmpty) return null;
+    final best = safe.reduce((a, b) => vowValue(b) > vowValue(a) ? b : a);
+    return vowValue(best) > 0 ? best : null;
+  }
 
   @override
   String pickEventOption(RunEngine run, RunState r) {

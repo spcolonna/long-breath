@@ -116,7 +116,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    **Reglas de las puertas:** donde puede haber pelea hay al menos una puerta de pelea. **Las peleas no se esquivan:** como mucho 2 salas seguidas sin pelear y al menos 8 peleas por etapa contando guardián y jefe; si el sendero se queda sin margen, todas las puertas son de pelea. El **maestro** se ofrece al menos una vez por etapa, a más tardar en la sala 8. El **mercader** aparece como puerta cada 4 peleas más o menos (3 a 5) y, si en la etapa no apareció, en la sala 10. Las puertas de un mismo momento no repiten premio, y si llevás 2 peleas sin pergaminos, una de las puertas los trae.
 
-   **Desvío:** en las salas 5 y 8, 4 de cada 10 veces una de las peleas es un élite (el sello dorado 精 con anillo punteado y la placa «Desvío»), como mucho uno por etapa. Siempre hay otra puerta. Quien lo vence se lleva su talismán (y el arma, si todavía no tiene). El guardián no repite a uno ya cruzado mientras queden otros.
+   **Desvío:** en las salas 5 y 8, 4 de cada 10 veces una de las peleas es un élite (el sello dorado 精 con anillo punteado y la placa «Desvío»), como mucho uno por etapa. Siempre hay otra puerta. Es el mejor botín de la etapa: quien lo vence elige entre **talismanes raros**, se lleva **30 de jade** extra y elige **1 de 3 cartas raras o legendarias** (o el arma, si todavía no tiene). El guardián no repite a uno ya cruzado mientras queden otros.
 
    **Sin curarse entre salas:** la Vida que perdés en una sala la llevás a la siguiente. Curan la fuente, el té (premio de algunas puertas o del mercader), algunos talismanes, la fogata del ermitaño en la nieve (pagando jade) y respirar hondo al superar la etapa.
 
@@ -223,8 +223,25 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
    | Garra del Tigre 爪 | Desequilibrar a un rival le pega un golpe de 5, que entra doble | raro, solo Tigre |
    | Escama de la Serpiente 鳞 | El tercer ataque de cada turno roba 1 carta | raro, solo Serpiente |
    | Pluma de la Grulla 羽 | Al empezar tu turno, +3 de Guardia por cada carta retenida | raro, solo Grulla |
+   | Filo Mellado 锋 | Al filo, tus ataques pegan +3 | raro |
+   | Brasa Escondida 烬 | Al filo, empezás cada turno con +1 de Aliento | raro |
+   | Borde del Abismo 渊 | Al filo, tus ataques pegan +4 y empezás cada turno con +1 de Aliento, pero −6 de Vida máxima | de jefe |
    | Ábaco del Mercader 算 | El mercader te cobra un 20% menos | del mercader |
    | Manga Ancha 袖 | +1 carta en cada mano, pero −10 de Vida máxima | del mercader |
+
+   **Al filo 锋:** con el 70% de la Vida o menos se activan los efectos de filo (talismanes de arriba y el Voto del filo). Premian jugar con poca Vida en vez de curarse siempre; cuando actúan, su ficha rebota.
+
+   **Votos 誓** (en la fogata entre etapas): podés hacer uno para la etapa que viene, una ventaja con un costo, o no votar. Si vencés al jefe de esa etapa con el voto puesto, lo **cumplís: +15 de loto**. Los votos no salen como premio ni cuentan para los hitos.
+
+   | Voto | Ventaja | Costo |
+   |---|---|---|
+   | Silencio 静 | +2 de Aliento en el primer turno | −4 de Estructura |
+   | Ayuno 斋 | El mercader cobra un 35% menos | −8 de Vida máxima |
+   | Penitencia 苦 | +15 de jade por victoria | La fuente cura 10 menos |
+   | Firmeza 坚 | Conservás el 40% de la Guardia | −6 de Vida máxima |
+   | Fiereza 猛 | Los ataques de 2+ de Aliento pegan +3 | −4 de Estructura |
+   | Loto 莲 | Cada forma cura 10 | El mercader cobra un 20% más |
+   | Filo 险 | Al filo, +4 de daño y +1 de Aliento por turno | −6 de Vida máxima |
 
    Los **de jefe** (borde de laca) solo los ofrece el jefe de cada etapa, que los pone primero entre sus 3 opciones; no salen en el élite, los eventos ni el mercader. Los **de camino** solo le salen al discípulo de ese camino (en el élite, los eventos de talismán raro y la vitrina del mercader). Los **del mercader** solo los vende él: la mitad de las veces trae uno de esos en lugar del talismán de siempre, al mismo precio.
 

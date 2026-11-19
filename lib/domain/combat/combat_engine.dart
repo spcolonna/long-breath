@@ -566,6 +566,14 @@ class CombatEngine {
       ids.fold(0, (a, id) => a + of(data.talisman(id).effect)) +
       (weapon == null ? 0 : of(weapon));
 
+  /// Al filo: con el 70% de la Vida o menos se activan los efectos de
+  /// filo (más daño y Aliento).
+  static bool onEdge(int hp, int maxHp) => hp > 0 && hp * 10 <= maxHp * 7;
+
+  /// Daño extra de filo de los ataques, si el discípulo está al filo.
+  int _edgeDamage(List<String> ids, TalismanEffect? weapon, int hp, int maxHp) =>
+      onEdge(hp, maxHp) ? _tal(ids, (e) => e.edgeDamage, weapon) : 0;
+
   /// Talismán Vacío: la primera carta del turno cuesta menos.
   int _firstCardDiscount(
     List<String> talismans,
@@ -613,9 +621,11 @@ class CombatEngine {
     AwakeningEffect awakened = AwakeningEffect.none,
     int heavy = 0,
     int flow = 0,
+    int edge = 0,
   }) {
     if (!def.type.isAttack || def.damage == 0) return 0;
     return flowDamageOf(flow) +
+        edge +
         (def.cost >= 2 ? heavy : 0) +
         (attacks == 0 ? firstStrike : 0) +
         (chain + def.chainDamage) * attacks +
@@ -725,6 +735,8 @@ class CombatEngine {
       awakened: s.awakened,
       heavy: _tal(s.talismans, (e) => e.heavyDamage, s.weaponEffect),
       flow: s.flow,
+      edge: _edgeDamage(
+          s.talismans, s.weaponEffect, s.player.hp, s.player.maxHp),
     );
     final (dmg, str) = _cardHit(
       def,
@@ -929,6 +941,7 @@ class CombatEngine {
         awakened: d.awakened,
         heavy: _tal(d.talismans, (e) => e.heavyDamage, d.weaponEffect),
         flow: d.flow,
+        edge: _edgeDamage(d.talismans, d.weaponEffect, d.hp, d.maxHp),
       ),
       _styleStructure(
         def,
@@ -939,6 +952,12 @@ class CombatEngine {
       ),
     );
     if (def.type.isAttack) {
+      // Filo: el talismán que suma daño se enciende.
+      if (def.damage > 0 && onEdge(d.hp, d.maxHp)) {
+        for (final id in _slots(d.talismans, d.weaponEffect)) {
+          if (_fx(id, d.weaponEffect).edgeDamage > 0) events.add(_trig(id));
+        }
+      }
       d.attacksThisTurn++;
       d.lastAttackType = def.type;
       // Despertar de la Serpiente: el tercer ataque del turno roba.
@@ -1548,6 +1567,15 @@ class CombatEngine {
     d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod) +
         (d.flow >= flowBreathAt ? 1 : 0);
     d.nextTurnBreathMod = 0;
+    // Filo: al filo, algunos talismanes dan Aliento al empezar el turno.
+    if (onEdge(d.hp, d.maxHp)) {
+      for (final id in _slots(d.talismans, d.weaponEffect)) {
+        final n = _fx(id, d.weaponEffect).edgeBreath;
+        if (n <= 0) continue;
+        events.add(_trig(id));
+        d.breath += n;
+      }
+    }
     events.add(TurnStarted(d.turn, d.breath));
     // Las cartas retenidas son extra: siempre se roba la mano completa
     // (menos la escarcha, pero nunca menos de una carta). El Flujo alto

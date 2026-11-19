@@ -177,12 +177,16 @@ class LotusDef {
     this.victory = 0,
     this.reward = const [],
     this.jadePer = 0,
+    this.vow = 0,
   });
 
   final int perCombat;
   final int elite;
   final int boss;
   final int victory;
+
+  /// Loto extra por cumplir un voto: vencer al jefe de la etapa con él.
+  final int vow;
 
   /// Lo que da el premio de loto en cada etapa.
   final List<int> reward;
@@ -201,6 +205,7 @@ class LotusDef {
         victory: j['victory'] as int? ?? 0,
         reward: ((j['reward'] as List?) ?? const []).cast<int>(),
         jadePer: j['jadePer'] as int? ?? 0,
+        vow: j['vow'] as int? ?? 0,
       );
 }
 

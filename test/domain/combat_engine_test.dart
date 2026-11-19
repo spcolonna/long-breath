@@ -1117,6 +1117,29 @@ void main() {
           greaterThanOrEqualTo(engine.intentView(s2).damage + 4));
     });
 
+    test('filo: con el 70% de la Vida o menos, los ataques pegan más', () {
+      final deck = ['gongbu_chongquan', ...filler];
+      final full = setup(deck, hp: 36, talismans: ['filo']);
+      final edge = setup(deck, hp: 35, talismans: ['filo']);
+      final plain = setup(deck, hp: 35);
+      int dmg(CombatState s) =>
+          engine.preview(s, uidOf(s, 'gongbu_chongquan')).damage;
+      expect(dmg(edge), dmg(full) + 3);
+      expect(dmg(plain), dmg(full), reason: 'sin talismán de filo no cambia');
+      final r = play(edge, 'gongbu_chongquan');
+      expect(r.events.whereType<TalismanTriggered>().map((e) => e.talismanId),
+          contains('filo'));
+      expect(play(full, 'gongbu_chongquan').events
+          .whereType<TalismanTriggered>(), isEmpty);
+    });
+
+    test('filo: la brasa da Aliento al empezar el turno al filo', () {
+      final deck = [...filler, ...filler, ...filler];
+      final full = setup(deck, hp: 36, talismans: ['brasa']);
+      final edge = setup(deck, hp: 35, talismans: ['brasa']);
+      expect(edge.player.breath, full.player.breath + 1);
+    });
+
     test('Bandido: tantea y al turno siguiente avisa el bastonazo', () {
       var s = setup([...filler, ...filler, ...filler], enemy: 'bandit');
       var iv = engine.intentView(s);

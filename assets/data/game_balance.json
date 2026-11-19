@@ -51,7 +51,7 @@
   "rewards": { "choices": 3, "pools": ["reward", "tiger", "snake", "crane"], "talismanChoices": 3,
     "rarityWeights": { "common": 4, "rare": 3, "legendary": 1 }, "raritySurcharge": { "rare": 5, "legendary": 15 } },
   "fountain": { "heal": 20, "upgrade": 3, "temper": 2, "removeMaxHp": 4 },
-  "jade": { "common": 14, "elite": 0, "spread": 6 },
+  "jade": { "common": 14, "elite": 0, "detour": 30, "spread": 6 },
   "merchant": { "cards": 3, "card": 20, "talisman": 50, "remove": 30, "upgrade": 25, "weapon": 50, "weaponForge": 60 },
   "master": { "forms": 2 },
   "cultivation": {
@@ -76,7 +76,7 @@
   },
   "legacy": { "upgradePct": 50, "maxHp": 3, "jade": 15, "hpStage": 1 },
   "meridians": {
-    "lotus": { "perCombat": 2, "elite": 5, "boss": 10, "victory": 20, "reward": [6, 8, 10], "jadePer": 5 },
+    "lotus": { "perCombat": 2, "elite": 5, "boss": 10, "victory": 20, "vow": 15, "reward": [6, 8, 10], "jadePer": 5 },
     "realmPerks": {
       "zhuji": { "maxHp": 2 },
       "kaimai": { "startJade": 10 },

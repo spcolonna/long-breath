@@ -60,12 +60,15 @@ Son talismanes de rareza `vow` en `talismans.json`: duran una etapa, no salen co
 
 | Voto | Hanzi | Ventaja | Costo |
 |---|---|---|---|
-| Silencio | 静 | +1 Aliento en el primer turno | −4 Estructura |
-| Ayuno | 斋 | Mercader 25% más barato | −8 Vida máxima |
-| Penitencia | 苦 | +10 de jade por victoria | La fuente cura 10 menos |
-| Firmeza | 坚 | Conservás el 25% de la Guardia | −6 Vida máxima |
-| Fiereza | 猛 | +2 de daño en los golpes pesados | −4 Estructura |
-| Loto | 莲 | Las formas curan 8 | Mercader 20% más caro |
+| Silencio | 静 | +2 Aliento en el primer turno | −4 Estructura |
+| Ayuno | 斋 | Mercader 35% más barato | −8 Vida máxima |
+| Penitencia | 苦 | +15 de jade por victoria | La fuente cura 10 menos |
+| Firmeza | 坚 | Conservás el 40% de la Guardia | −6 Vida máxima |
+| Fiereza | 猛 | +3 de daño en los golpes pesados | −4 Estructura |
+| Loto | 莲 | Las formas curan 10 | Mercader 20% más caro |
+| Filo | 险 | Al filo (70% de Vida o menos): +4 de daño y +1 Aliento por turno | −6 Vida máxima |
+
+Cumplir el voto (vencer al jefe de la etapa con él) da +15 de loto (`meridians.lotus.vow`).
 
 ## Hilos (12/11)
 Reglas en `lib/domain/run/threads.dart`. Las marcas se guardan por partida (`ProgressStorage.threads`) apenas pasan, y cada capítulo abre su pergamino en el registro.

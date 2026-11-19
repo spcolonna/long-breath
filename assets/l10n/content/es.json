@@ -586,12 +586,16 @@
     "pluma": "Pluma de la Grulla",
     "abaco": "Ábaco del Mercader",
     "manga": "Manga Ancha",
+    "filo": "Filo Mellado",
+    "brasa": "Brasa Escondida",
+    "abismo": "Borde del Abismo",
     "voto_silencio": "Voto de silencio",
     "voto_ayuno": "Voto de ayuno",
     "voto_penitencia": "Voto de penitencia",
     "voto_firmeza": "Voto de firmeza",
     "voto_tigre": "Voto de fiereza",
-    "voto_loto": "Voto del loto"
+    "voto_loto": "Voto del loto",
+    "voto_filo": "Voto del filo"
   },
   "weapons": {
     "gun": {

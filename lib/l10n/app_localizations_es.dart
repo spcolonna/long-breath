@@ -1667,7 +1667,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nodeHintDetour =>
-      'Un desvío con un rival fuerte. Podés esquivarlo, pero el botín es mejor.';
+      'Un desvío con un rival fuerte. Podés esquivarlo, pero paga como ninguno: talismán raro, cartas raras y jade.';
 
   @override
   String get nodeHintBoss => 'El guardián de la cumbre.';
@@ -1898,8 +1898,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get campVowTitle => '¿Hacés un voto para la etapa que viene?';
 
   @override
-  String get campVowHint =>
-      'Una ventaja con un costo, hasta la próxima fogata. Podés no votar.';
+  String campVowHint(int lotus) {
+    return 'Una ventaja con un costo, hasta la próxima fogata. Si vencés al jefe de la etapa con el voto, lo cumplís: +$lotus de loto. Podés no votar.';
+  }
 
   @override
   String get campClimbVow => 'Subir con el voto';
@@ -2059,6 +2060,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String talEffHeavyDamage(int n) {
     return 'Los ataques que cuestan 2 o más de Aliento pegan +$n.';
+  }
+
+  @override
+  String talEffEdgeDamage(int n) {
+    return 'Al filo (con el 70% de la Vida o menos), tus ataques pegan +$n.';
+  }
+
+  @override
+  String talEffEdgeBreath(int n) {
+    return 'Al filo (con el 70% de la Vida o menos), empezás cada turno con +$n de Aliento.';
   }
 
   @override

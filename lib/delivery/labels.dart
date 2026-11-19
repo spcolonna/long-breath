@@ -231,6 +231,8 @@ extension Labels on AppLocalizations {
     if (e.attackStructure > 0) talEffAttackStructure(e.attackStructure),
     if (e.guardPierce > 0) talEffGuardPierce(e.guardPierce),
     if (e.heavyDamage > 0) talEffHeavyDamage(e.heavyDamage),
+    if (e.edgeDamage > 0) talEffEdgeDamage(e.edgeDamage),
+    if (e.edgeBreath > 0) talEffEdgeBreath(e.edgeBreath),
     // Los costos van al final («…, pero …»).
     if (costs) talismanCost(e),
   ].where((s) => s.isNotEmpty).join(' ');

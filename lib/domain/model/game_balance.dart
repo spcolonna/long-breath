@@ -688,6 +688,7 @@ class GameBalance {
     this.stageJade = 0,
     this.jadeCommon = 0,
     this.jadeElite = 0,
+    this.jadeDetour = 0,
     this.jadeSpread = 0,
     this.merchant = const MerchantDef(),
     this.stageMerchants = const [],
@@ -810,6 +811,9 @@ class GameBalance {
   /// Jade que se gana al vencer a un común o a un élite (más 0..spread).
   final int jadeCommon;
   final int jadeElite;
+
+  /// Jade extra del élite opcional (el desvío), además del suyo.
+  final int jadeDetour;
   final int jadeSpread;
   final MerchantDef merchant;
 
@@ -987,6 +991,7 @@ class GameBalance {
       },
       jadeCommon: jade['common'] as int? ?? 0,
       jadeElite: jade['elite'] as int? ?? 0,
+      jadeDetour: jade['detour'] as int? ?? 0,
       jadeSpread: jade['spread'] as int? ?? 0,
       merchant: MerchantDef.fromJson(
         (j['merchant'] as Map<String, dynamic>?) ?? const {},

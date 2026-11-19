@@ -747,6 +747,7 @@ void main() {
         'perla',
         'hoja',
         'horno',
+        'abismo',
       ]);
       for (final id in run.missingTalismans(r, boss: true)) {
         expect(normal, isNot(contains(id)));
@@ -1215,6 +1216,54 @@ void main() {
         expect(elite.phase, RunPhase.talisman);
         expect(elite.rewardKind, isNot(RewardKind.talisman));
       }
+    });
+
+    test('el élite del desvío paga mejor: talismán raro, cartas raras y '
+        'jade', () {
+      const map = [
+        MapNodeDef(id: 'f5a', type: NodeType.combat, enemy: 'monk', next: []),
+        MapNodeDef(id: 'f5b', type: NodeType.combat, enemy: 'golem', next: []),
+      ];
+      for (var seed = 0; seed < 50; seed++) {
+        final base = at(seed).copyWith(
+          map: map,
+          weapon: real.data.weapons.keys.first,
+          currentNode: 'f5a',
+          visited: ['f5a'],
+          phase: RunPhase.combat,
+        );
+        expect(real.atDetour(base), isTrue);
+        final r = real.finishCombat(base, won: true, hp: base.hp - 10);
+        expect(r.phase, RunPhase.talisman);
+        for (final t in r.talismanOptions) {
+          expect(real.data.talisman(t).rare, isTrue, reason: t);
+        }
+        expect(r.rewardKind, RewardKind.cards);
+        for (final c in r.rewardOptions) {
+          expect(real.data.card(c).rarity, isNot(CardRarity.common));
+        }
+        expect(r.jadeGained,
+            greaterThanOrEqualTo(real.data.balance.jadeDetour));
+      }
+      // El guardián de la sala 11 no es un desvío.
+      final guard = at(1).copyWith(
+        map: const [
+          MapNodeDef(id: 'f11a', type: NodeType.combat, enemy: 'monk', next: []),
+        ],
+        currentNode: 'f11a',
+        visited: ['f11a'],
+        phase: RunPhase.combat,
+      );
+      expect(real.atDetour(guard), isFalse);
+    });
+
+    test('cumplir el voto (vencer al jefe de la etapa con él) paga loto', () {
+      final boss = at(3).copyWith(currentNode: 'n5', visited: ['n5']);
+      final plain = won(boss, 'n6');
+      final vowed = won(boss.copyWith(vow: 'voto_silencio'), 'n6');
+      expect(vowed.lotusGained - plain.lotusGained,
+          real.data.balance.meridians.lotus.vow);
+      expect(real.data.balance.meridians.lotus.vow, greaterThan(0));
     });
 
     test('con la Vida llena no sale té, y nunca más de 2 sin cartas', () {

@@ -289,6 +289,19 @@ class RunEngine {
   /// Etapa que recorre la run.
   StageDef stageOf(RunState r) => data.balance.stages[r.stage];
 
+  /// El combate actual es el élite opcional de la etapa (el desvío): un
+  /// piso que puede ofrecer élite, fuera de los duelos de evento.
+  bool atDetour(RunState r) {
+    if (r.duel != null || r.currentNode == null) return false;
+    final n = r.node(r.currentNode!);
+    final floors = stageOf(r).floors;
+    return n.type == NodeType.combat &&
+        n.depth >= 0 &&
+        n.depth < floors.length &&
+        floors[n.depth].elite > 0 &&
+        data.enemy(n.enemy!).rank == EnemyRank.elite;
+  }
+
   /// La run está en la última etapa: su jefe es la cumbre.
   bool isLastStage(RunState r) => r.stage >= data.balance.stages.length - 1;
 
@@ -565,11 +578,14 @@ class RunEngine {
     if (!won) return r.copyWith(hp: 0, phase: RunPhase.defeat);
     final b = data.balance;
     final lotus = b.meridians.lotus;
+    final detour = elite && atDetour(r);
+    // Cumplir el voto (vencer al jefe con él) también paga loto.
     final lotusBase = fled
         ? 0
         : lotus.perCombat +
             (elite ? lotus.elite : 0) +
-            (boss ? lotus.boss : 0);
+            (boss ? lotus.boss : 0) +
+            (boss && r.vow != null ? lotus.vow : 0);
     if (boss && isLastStage(r)) {
       final gained = lotusOf(r, lotusBase + lotus.victory);
       return r.copyWith(
@@ -590,7 +606,8 @@ class RunEngine {
       // Cada enemigo de más en el grupo suma jade.
       final jade = rolled +
           b.packJade * (packOf(r).length - 1) +
-          talismanSum(r, (e) => e.winJade);
+          talismanSum(r, (e) => e.winJade) +
+          (detour ? b.jadeDetour : 0);
       r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
     }
     final gained = lotusOf(r, lotusBase);
@@ -621,6 +638,7 @@ class RunEngine {
             b.talismanChoices + r.meta.talismanChoices,
             boss: boss,
             path: duel,
+            rare: detour,
           )
         : (const <String>[], r.rng);
     r = r.copyWith(rng: rngT, clearDuel: true);
@@ -633,11 +651,17 @@ class RunEngine {
         ? (RewardKind.cards, r.rng)
         : elite && r.weapon == null && data.weapons.isNotEmpty
         ? (RewardKind.weapon, r.rng)
+        : detour
+        ? (RewardKind.cards, r.rng)
         : door != null
         ? (_usable(r, door), r.rng)
         : _rollRewardKind(r, allowTalisman: !elite && !duel);
     if (!fled) r = _page(r);
-    return _offer(r.copyWith(rng: rngK), kind).copyWith(
+    // El desvío paga con la vitrina: cartas raras o legendarias.
+    final offered = detour && kind == RewardKind.cards
+        ? _offerRareCards(r.copyWith(rng: rngK))
+        : _offer(r.copyWith(rng: rngK), kind);
+    return offered.copyWith(
       phase: talismans.isEmpty ? RunPhase.reward : RunPhase.talisman,
       talismanOptions: kind == RewardKind.talisman ? null : talismans,
       cardlessStreak: kind == RewardKind.cards ? 0 : r.cardlessStreak + 1,
@@ -793,7 +817,19 @@ class RunEngine {
     }
   }
 
-  RunState _rollCardReward(RunState r) {
+  /// Premio de cartas raras o legendarias (el desvío del élite).
+  RunState _offerRareCards(RunState r) {
+    final (options, rng) = _rollRareCards(r.rng, r);
+    return r.copyWith(
+      rewardKind: RewardKind.cards,
+      rewardOptions: options,
+      clearRewardForm: true,
+      rewardAmount: 0,
+      rng: rng,
+    );
+  }
+
+    RunState _rollCardReward(RunState r) {
     final (options, rng) = _rollRewards(
       r.rng,
       r,
@@ -966,6 +1002,7 @@ class RunEngine {
     int n, {
     bool boss = false,
     bool path = false,
+    bool rare = false,
   }) {
     final (own, rng2) = rng.shuffle(
       boss
@@ -975,7 +1012,9 @@ class RunEngine {
                   for (final id in missingTalismans(r))
                     if (data.talisman(id).pool != null) id,
                 ]
-              : <String>[],
+              : rare
+                  ? missingTalismans(r, rare: true)
+                  : <String>[],
     );
     final (rest, next) = rng2.shuffle(missingTalismans(r));
     return ([...own, ...rest].take(n).toList(), next);
