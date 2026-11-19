@@ -232,6 +232,16 @@ class RunLog {
   int nodes = 0, fountains = 0, shrines = 0, events = 0;
   int merchants = 0, masters = 0, jadeSpent = 0, jadeLeft = 0;
 
+  /// Vida recuperada fuera de pelea (fuente, mercader y eventos) y cuántas
+  /// veces se curó.
+  int healed = 0, heals = 0;
+
+  void heal(int hp) {
+    if (hp <= 0) return;
+    healed += hp;
+    heals++;
+  }
+
   /// Etapa a la que llegó (0 = la primera) y piso dentro de ella.
   int stage = 0;
   int floor = 0;
@@ -450,7 +460,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.event:
         log.events++;
         final before = r.jade;
+        final hp0 = r.hp;
         r = runEngine.resolveEvent(r, bot.pickEventOption(runEngine, r));
+        log.heal(r.hp - hp0);
         if (r.jade < before) log.jadeSpent += before - r.jade;
       case RunPhase.reward when r.rewardKind == RewardKind.upgrade:
         log.kinds.add(r.rewardKind);
@@ -480,14 +492,18 @@ RunLog playRun(GameData data, Bot bot, int seed,
       case RunPhase.merchant:
         log.merchants++;
         final before = r.jade;
+        final hp0 = r.hp;
         r = bot.shop(runEngine, r);
+        log.heal(r.hp - hp0);
         log.jadeSpent += before - r.jade;
       case RunPhase.master:
         log.masters++;
         r = bot.master(runEngine, r);
       case RunPhase.fountain:
         log.fountains++;
+        final hp0 = r.hp;
         r = bot.useFountain(runEngine, r);
+        log.heal(r.hp - hp0);
       case RunPhase.shrine:
         log.shrines++;
         r = runEngine.choosePath(
@@ -557,9 +573,14 @@ String _route(RunEngine run, Bot bot, RunState r) {
     }
     if (n.type == NodeType.fountain) return ratio < 0.6 ? 3 : 0.5;
     if (n.type == NodeType.merchant) {
-      return r.jade >= run.merchantOf(r).card ? 1.5 : 0.5;
+      // Con jade de sobra se busca al mercader (como una persona).
+      final card = run.merchantOf(r).card;
+      return r.jade < card ? 0.5 : math.min(3.5, 1.5 + (r.jade - card) / 40);
     }
     if (n.type == NodeType.master) return avoidFights ? 1.6 : 1.2;
+    // Un evento es un premio sin pelea: vale como una puerta común y más
+    // cuanto menos Vida queda (como lo juega una persona).
+    if (n.type == NodeType.event) return avoidFights ? 3 : 1.8 + (1 - ratio) * 1.5;
     if (n.type != NodeType.combat) return avoidFights ? 1.5 : 1;
     final rank = run.data.enemy(n.enemy!).rank;
     if (rank == EnemyRank.elite) return ratio > 0.7 ? 2 : -1;

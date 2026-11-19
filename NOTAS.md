@@ -283,3 +283,10 @@ macOS no tiene `timeout`.
 - **Normal, 200 subidas:** sin cambios (9/11/41%), porque **los bots nunca entran a un evento**: en `_route` (`tool/sim/lab.dart`) un evento puntúa 1 y una pelea 1 + premio. Con `SIM_AVOID=1` (prefieren eventos): antes 8/8/37%, ahora 8/8/36%; el jade sin gastar sigue en ~200, porque el bot valora el jade a 0,15 por punto y no compra la vitrina (60 × 0,15 = 9 > 8).
 - Pendiente: que la ruta de los bots pise eventos como una persona y que el valor del jade baje cuando sobra; rehacer metas con eso. Siguiente: desgaste/enfurecimiento en las etapas 2 y 3, filo, votos y élites opcionales.
 
+
+### Fase C (4/n): simulador que juega como una persona (2026-11-19)
+- **Ruta (`_route` en `tool/sim/lab.dart`):** un evento puntúa 1,8 + 1,5 × Vida que falta (antes 1, nunca le ganaba a una pelea); el mercader puntúa 1,5 + (jade − precio de carta)/40, hasta 3,5 (antes 1,5 fijo: lo pisaban 0,7 veces por subida con ~190 de jade sin gastar).
+- **Jade (`jadeWorth(r)` en `bots.dart`):** con más de 100 vale la mitad (0,075), para que los bots gasten en la vitrina y los dados. Pesa poco: el cambio grande es ir al mercader.
+- `RunLog.healed` y `heals` (Vida curada fuera de pelea y veces). El test del prudente compara veces que se cura, porque las puertas de té ya no existen.
+- **Normal, sin árbol, 200 subidas** (promedio/prudente/experto): antes **9/11/41%**; solo con eventos 21/19/52%; con eventos y mercader **46/47/79%**. Mercader 3,4 veces por subida, ~290 de jade gastado y ~85 sin gastar; talismanes 8,4 por subida (antes 2,9).
+- **Lectura:** jugado como una persona (entra a eventos y gasta el jade), Normal es fácil, como dice el usuario. Las metas viejas (promedio ~24%, experto ~56%) eran de bots que nunca entraban a eventos ni gastaban jade. Siguiente: desgaste/enfurecimiento en las etapas 2 y 3, filo, votos y élites opcionales, medidos con este simulador, para volver a ~25% del promedio y ~60% del experto. Mirar si el mercader da demasiado (3 visitas con talismán, arma y vitrina).

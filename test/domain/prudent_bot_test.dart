@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
 import 'package:long_breath/domain/sim/bots.dart';
@@ -25,16 +24,15 @@ void main() {
     expect(PrudentBot(1).pickEventOption(run, r), 'drink');
   });
 
-  test('juega subidas enteras y pasa por más curas que el promedio', () {
+  test('juega subidas enteras y se cura más veces que el promedio', () {
     var prudentHeal = 0, averageHeal = 0;
     for (var seed = 1; seed <= 30; seed++) {
       final p = playRun(data, profiles['prudente']!(seed), seed);
       final a = playRun(data, profiles['promedio']!(seed), seed);
       expect(p.fights, isNotEmpty);
-      prudentHeal += p.fountains + p.kinds.where((k) => k == RewardKind.tea).length;
-      averageHeal += a.fountains + a.kinds.where((k) => k == RewardKind.tea).length;
+      prudentHeal += p.heals;
+      averageHeal += a.heals;
     }
-    // Medido: 83 contra 55 en estas 30 semillas.
     expect(prudentHeal, greaterThan(averageHeal));
   });
 }

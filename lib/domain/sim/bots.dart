@@ -465,8 +465,9 @@ double talismanValue(String id) => const {
     4.0;
 
 /// Lo que vale 1 de jade frente a 1 punto de las otras ganancias (un
-/// talismán, 7 puntos, cuesta 50 de jade).
-const jadeWorth = 0.15;
+/// talismán, 7 puntos, cuesta 50 de jade). Cuando sobra (más de 100), vale
+/// la mitad: una persona lo gasta en vez de juntarlo.
+double jadeWorth(RunState r) => r.jade > 100 ? 0.075 : 0.15;
 
 /// Valor esperado de una opción de evento: la Vida pesa más cuanto menos
 /// queda.
@@ -475,7 +476,7 @@ double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
   final hpWeight = 0.4 + (1 - r.hp / r.maxHp);
   double value(EventOutcome e) {
     var v = -e.hp * hpWeight + math.min(e.heal, missing) * hpWeight + e.maxHp * 1.5 +
-        e.jade * jadeWorth;
+        e.jade * jadeWorth(r);
     v += switch (e.gain) {
       null => 0.0,
       EventGain.form => run.learnableForms(r).isEmpty ? 3.0 : 6.0,
@@ -498,7 +499,7 @@ double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
   // Un duelo es un combate más con talismán: vale si sobra Vida.
   if (o.duel != null) return r.hp / r.maxHp > 0.6 ? 8.0 : -5.0;
   final chance = o.chance;
-  final price = o.price * jadeWorth;
+  final price = o.price * jadeWorth(r);
   if (chance == null) return value(o.outcome) - price;
   return value(o.outcome) * chance / 100 +
       value(o.failure!) * (100 - chance) / 100 -
