@@ -1735,6 +1735,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventGainPathCards => 'elegís 1 de 3 cartas de tu camino';
 
   @override
+  String get eventGainRareCards => 'elegís 1 de 3 cartas raras o legendarias';
+
+  @override
   String get eventGainPickUpgrade => 'elegís qué carta mejorar';
 
   @override

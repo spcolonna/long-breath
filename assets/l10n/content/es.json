@@ -781,6 +781,16 @@
       "yield": "Dejarla pasar primero",
       "yieldResult": "Te mira mucho rato. «...Gracias». Sube primero. Al pasar te deja una mano en el hombro, y el aliento te vuelve entero."
     },
+    "curio": {
+      "name": "La vitrina del anticuario",
+      "text": "Bajo un alero colgado del abismo, un anticuario sacude el polvo de una vitrina laqueada. Adentro, rollos sellados con lacre rojo y dorado. «Técnicas raras, novicio. Raras y caras.»",
+      "buy": "Comprar un rollo sellado",
+      "buyResult": "El anticuario rompe tres lacres frente a vos y despliega los rollos. Elegí uno.",
+      "haggle": "Pagar por una lección",
+      "haggleResult": "Por menos jade te deja leer un rollo sin llevártelo. Alcanza para afinar una técnica.",
+      "leave": "Seguir de largo",
+      "leaveResult": "El anticuario vuelve a cerrar la vitrina con una sonrisa paciente."
+    },
     "smith": {
       "name": "La fragua del monasterio",
       "text": "Un herrero viejo martilla bajo el alero. El monasterio le encarga campanas, pero lo suyo son las armas: «Pagame ahora y te mando algo a la cumbre».",
@@ -803,11 +813,11 @@
       "name": "El ermitaño del pino",
       "text": "Bajo un pino torcido medita un anciano. Abre un ojo y sonríe: «Te enseño una forma, si aguantás entrenar conmigo hasta el atardecer».",
       "show": "Mostrarle una forma que sabés",
-      "showResult": "Hacés la forma entera bajo el pino. El anciano asiente, te corrige un pie y te enseña la que sigue, como quien devuelve un saludo.",
+      "showResult": "Hacés la forma entera bajo el pino. El anciano te corrige un pie con un bastonazo y te enseña la que sigue.",
       "pay": "Entrenar con él",
       "payResult": "Entrenás hasta que el sol toca las nubes. Te duele todo, pero aprendiste algo nuevo.",
       "gift": "Dejarle jade para el templo",
-      "giftResult": "Guarda el jade en la manga sin mirarlo y te enseña la forma con calma, sin hacerte sudar.",
+      "giftResult": "Guarda el jade en la manga sin mirarlo y te corrige la postura con calma. Elegí qué técnica se vuelve más firme.",
       "leave": "Agradecer y seguir",
       "leaveResult": "Le hacés una reverencia y seguís el sendero."
     },
@@ -822,13 +832,13 @@
       "crossResult": "Llegás de un salto y encontrás un talismán entre las rocas.",
       "crossFail": "Una tabla se suelta: te agarrás de la cuerda y subís a los tirones.",
       "around": "Rodear por la ladera",
-      "aroundResult": "El rodeo es largo y empinado, pero llegás sin sorpresas."
+      "aroundResult": "El rodeo es largo y empinado. Llegás con las piernas duras y un golpe más firme que antes."
     },
     "spring": {
       "name": "El manantial de jade",
       "text": "Entre las piedras brota un agua verde y clara. Dicen que le da fuerza a quien la respeta.",
       "drink": "Beber del manantial",
-      "drinkResult": "El agua fresca te devuelve el aliento.",
+      "drinkResult": "El agua fresca te llena el pecho. Respirás más hondo que antes.",
       "bathe": "Templar los puños en el agua",
       "batheResult": "Golpeás el agua mil veces, hasta que el movimiento sale solo."
     },
@@ -848,7 +858,7 @@
       "drink": "Tomar el té con calma",
       "drinkResult": "El té te calienta el cuerpo y el espíritu.",
       "spar": "Practicar con él",
-      "sparResult": "Entre sorbo y sorbo te muestra un movimiento nuevo."
+      "sparResult": "Entre sorbo y sorbo te muestra tres movimientos de tu camino. Elegí uno."
     },
     "altar": {
       "name": "El altar de los maestros",
@@ -857,25 +867,30 @@
       "burnResult": "Las brasas del Horno de Cinabrio prenden el incienso viejo. El humo dibuja un sello en el aire y deja un talismán antiguo sobre la piedra.",
       "offer": "Hacer cien reverencias",
       "offerResult": "Terminás sin aire. Sobre el altar aparece un talismán antiguo.",
-      "pray": "Meditar en silencio",
-      "prayResult": "La calma del lugar te alivia los golpes."
+      "pray": "Ofrecer jade y meditar",
+      "prayResult": "Dejás el jade en el cuenco. En la calma del lugar ves con claridad qué técnica pulir.",
+      "leave": "Seguir de largo",
+      "leaveResult": "Inclinás la cabeza ante el santuario y seguís el sendero."
     },
     "dice": {
       "name": "Los dados del arriero",
-      "text": "En un recodo, dos arrieros juegan a los dados sobre una piedra plana. «¿Te animás, novicio? Si sale par, te llevás más del doble.»",
+      "text": "En un recodo, dos arrieros juegan a los dados sobre una piedra plana. «¿Te animás, novicio? Si sale par, te llevás más del doble. Y si apostás fuerte, jugamos por lo que trajimos del valle.»",
       "bet": "Apostar",
       "betResult": "¡Par! Los arrieros se ríen y te llenan la mano de jade.",
       "betFail": "Impar. Los arrieros se guardan tu jade y te convidan un trago de consuelo.",
       "leave": "Seguir de largo",
-      "leaveResult": "Los dejás con su juego y seguís subiendo."
+      "leaveResult": "Los dejás con su juego y seguís subiendo.",
+      "high": "Apostar fuerte",
+      "highResult": "¡Par! El arriero más viejo refunfuña y te entrega un talismán envuelto en seda.",
+      "highFail": "Impar. Los arrieros se guardan tu jade entre risas: «La montaña da y la montaña quita»."
     },
     "pilgrim": {
       "name": "El peregrino perdido",
       "text": "Un peregrino con el farol apagado busca el sendero del templo entre la niebla. Te ofrece su bolsa si lo acompañás por la ladera.",
       "guide": "Acompañarlo por la ladera",
       "guideResult": "El camino es empinado y resbaloso, pero llegan. Te da su bolsa con una reverencia larga.",
-      "point": "Señalarle el camino",
-      "pointResult": "Le mostrás el rumbo con la mano. Te agradece y se pierde entre la niebla."
+      "point": "Compartir tu fogata",
+      "pointResult": "Le indicás el rumbo y comparten el fuego un rato. Antes de irse te dibuja en la tierra un movimiento de su aldea."
     },
     "nest": {
       "name": "El nido en el bambú",
@@ -883,7 +898,7 @@
       "climb": "Subirlo al nido",
       "climbResult": "El bambú se dobla y te raspás las manos, pero llegás. La madre se posa a tu lado y estira el ala: copiás su postura y un golpe te sale más limpio.",
       "watch": "Quedarte a mirar",
-      "watchResult": "La madre baja por fin y lo cubre con el ala. Respirás despacio mirándolas y el cansancio se afloja."
+      "watchResult": "La madre baja por fin y lo cubre con el ala. Imitás el gesto despacio y descubrís una forma nueva."
     },
     "woodcutter": {
       "name": "El leñador viejo",
@@ -899,7 +914,7 @@
       "name": "El monje de la campana",
       "text": "En el patio colgado, un monje empuja el tronco de la campana del alba. Antes de golpear, te invita a sentarte con él.",
       "meditate": "Meditar con él",
-      "meditateResult": "El bronce vibra largo sobre el abismo. Cuando se apaga, tu respiración es más honda y el cuerpo pesa menos.",
+      "meditateResult": "El bronce vibra largo sobre el abismo. Cuando se apaga, soltás un hábito viejo que ya no te servía. El mazo pesa menos.",
       "strike": "Pedirle golpear la campana",
       "strikeResult": "El tronco rebota y te sacude hasta los hombros. El monje sonríe: así se encadena un golpe al siguiente. Aprendés una forma."
     },
@@ -912,7 +927,7 @@
       "jumpResult": "Caés del otro lado con los pies justos. La caja guarda el jade de muchos peregrinos.",
       "jumpFail": "La viga cede bajo tu talón. Te agarrás de una cuerda y volvés a subir, golpeado.",
       "plank": "Buscar otra tabla",
-      "plankResult": "Arrastrás una tabla de un andamio y cruzás despacio. La caja ya estaba vacía."
+      "plankResult": "Arrastrás una tabla de un andamio y cruzás despacio. La caja ya estaba vacía, pero el equilibrio te afinó un golpe."
     },
     "library": {
       "name": "La biblioteca colgada",
@@ -947,7 +962,7 @@
       "pryResult": "La escama se suelta con un crujido. Al tenerla, tu pecho se ensancha como si respiraras con ella.",
       "pryFail": "El hielo se quiebra y te arrastra pendiente abajo. Volvés a subir con la escama todavía en su lugar.",
       "listen": "Escuchar la respiración",
-      "listenResult": "Respirás al ritmo de lo que duerme en la montaña. Cuando te separás, el frío ya no te muerde."
+      "listenResult": "Respirás al ritmo de lo que duerme en la montaña. Cuando te separás, sabés qué técnica afinar."
     },
     "prayer_flags": {
       "name": "Las banderas del viento",
@@ -975,19 +990,19 @@
       "slip": "Deslizarte detrás del papel",
       "slipResult": "Con la Escama de la Serpiente pasás detrás del telón sin mover una sombra. El viejo se ríe al verte y te regala el títere que mejor guardaba.",
       "watch": "Mirar la función",
-      "watchResult": "El títere del discípulo llega a la cumbre, se inclina ante un dragón dormido y baja con un cuaderno bajo el brazo. Te reís sin saber por qué y respirás mejor.",
+      "watchResult": "El títere del discípulo llega a la cumbre, se inclina ante un dragón dormido y baja con un cuaderno bajo el brazo. Te quedás con uno de sus movimientos.",
       "tip": "Dejarle una propina",
       "tipResult": "El viejo te regala uno de sus títeres viejos. Tiene tu túnica y tu cinta. Lo guardás como amuleto."
     },
     "ice_sage": {
       "name": "El sabio en el hielo",
       "text": "En una cornisa, un monje medita cubierto por una capa fina de hielo transparente. Sonríe. Respira tan despacio que el hielo apenas se empaña.",
-      "forge": "Mostrarle tu arma",
+      "forge": "Pagarle por templar tu arma",
       "forgeResult": "El monje sopla sobre el filo y el hielo lo templa como una fragua al revés. Tu arma sale más fina, más tuya.",
       "share": "Respirar con él",
       "shareResult": "Te sentás a su lado y acompasás tu aliento al suyo. El frío te muerde, pero al rato tus golpes salen más limpios, como si él te hubiera corregido sin hablar.",
       "bow": "Inclinarte y seguir",
-      "bowResult": "Al inclinarte, el monje abre un ojo, te guiña y vuelve a meditar. Seguís subiendo con el pecho caliente."
+      "bowResult": "Al inclinarte, el monje abre un ojo y dibuja una forma en la escarcha antes de volver a meditar."
     },
     "cloud_spring": {
       "name": "Donde nacen las nubes",
@@ -1009,8 +1024,8 @@
       "smashResult": "Golpe tras golpe, la roca se raja y se parte en dos. Te sangran los nudillos, pero ahora entendés las marcas: adentro hay tres técnicas del Tigre.",
       "challenge": "Desafiar al bandido",
       "challengeResult": "El bandido salta de la roca y escupe al costado. «A ver ese Tigre.»",
-      "rest": "Sentarte frente a ella",
-      "restResult": "Respirás como respira la montaña. Cuando te levantás, el bandido se fue y el cuerpo pesa menos."
+      "rest": "Pagar a un cantero para estudiarla",
+      "restResult": "El cantero te muestra dónde se quiebra la piedra. Elegí qué técnica se vuelve más firme."
     },
     "tiger_drums": {
       "name": "Los tambores de guerra",
@@ -1020,7 +1035,7 @@
       "spar": "Pedirle un combate al guardián",
       "sparResult": "El guardián deja el palo del tambor y se calza los guantes. Los monjes cambian el ritmo: ahora tocan para ustedes.",
       "listen": "Escuchar el ritmo",
-      "listenResult": "Te sentás en un rincón y dejás que el ritmo te acomode el pulso. Las heridas dejan de latir."
+      "listenResult": "Te sentás en un rincón y dejás que el ritmo te acomode el pulso. Sin darte cuenta, tus manos aprenden una forma."
     },
     "tiger_marks": {
       "name": "Las marcas del tigre blanco",
@@ -1040,8 +1055,8 @@
       "imitateResult": "Te metés al agua y vas despacio, torciéndote como ella. Al tercer intento no se mueve ni un junco. Elegí qué técnica afinás.",
       "challenge": "Retar al discípulo",
       "challengeResult": "El discípulo sale del agua, empapado y ofendido. «La Serpiente no se aprende mirando.»",
-      "rest": "Descansar en la orilla",
-      "restResult": "La mirás hasta que desaparece entre los juncos. El agua tibia te afloja los golpes."
+      "rest": "Mudar como ella",
+      "restResult": "La mirás hasta que desaparece entre los juncos. Dejás en la orilla un hábito viejo, como una piel. El mazo pesa menos."
     },
     "snake_scroll": {
       "name": "El rollo enroscado",
@@ -1083,7 +1098,7 @@
       "spar": "Medirte con el hombre de bronce",
       "sparResult": "La maestra golpea la taza con la uña. El hombre de bronce da un paso al frente.",
       "tea": "Tomar el té con la maestra",
-      "teaResult": "El té es amargo y caliente. Mientras lo tomás, el vacío deja de dar miedo y el cuerpo descansa."
+      "teaResult": "El té es amargo y caliente. Mientras lo tomás, el vacío deja de dar miedo y respirás más hondo que antes."
     },
     "crane_dance": {
       "name": "La danza sobre la nieve",

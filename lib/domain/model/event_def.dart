@@ -30,7 +30,10 @@ enum EventGain {
   pathTalisman,
 
   /// Templa el arma (sin arma o al máximo, mejora una carta al azar).
-  temper;
+  temper,
+
+  /// Elegir una de tres cartas raras o legendarias (la vitrina).
+  rareCards;
 
   static EventGain? parse(String? s) =>
       s == null ? null : EventGain.values.byName(s);

@@ -275,3 +275,11 @@ macOS no tiene `timeout`.
 - **Normal, sin árbol, 200 subidas:** promedio 9% (antes 8), prudente 11% (antes 12), experto 41% (antes 39).
 - **Escuela creciendo (30×30):** prudente 17/28/35/47/65/71% contra promedio 17/27/31/51/65/70%; experto 54 → 92%. Antes el prudente le sacaba hasta 9 puntos al promedio (subidas 11–15); ahora van parejos: «siempre Vida» dejó de ser ventaja.
 - Siguiente: eventos con dos opciones buenas y distintas y un sumidero de jade (sobran ~170 de jade sin gastar en el simulador).
+
+### Fase C (3/n): eventos con dos opciones buenas y la vitrina (2026-11-19)
+- **Eventos sin cura gratis:** fuera de los hilos, ninguna opción cura sin pagar jade (test `ningún evento común cura gratis`). Las curas se cambiaron por poder distinto: forma (nido, sabio en el hielo, tambores), carta (peregrino, títeres), elegir qué mejorar (altar y ermitaño por 20 de jade, escama, cantero de la roca por 20), perder una carta inicial (monje de la campana, banderas, juncos) o un poco de Vida máxima (manantial +3, balcón +4). El té practica: elegís 1 de 3 cartas del camino. Rodear el puente y la otra tabla mejoran una carta.
+- **Requisitos con costo:** las opciones que abre lo que llevás cobran 2–3 de Vida o 10–20 de jade (templar con el sabio, 20).
+- **Sumidero de jade:** la vitrina del anticuario 珍 (monasterio y cumbre): 60 de jade → elegís 1 de 3 cartas raras o legendarias (`EventGain.rareCards`), 25 → elegís qué mejorar, o seguir. Dados fuertes: 40 de jade, 45% un talismán raro.
+- **Normal, 200 subidas:** sin cambios (9/11/41%), porque **los bots nunca entran a un evento**: en `_route` (`tool/sim/lab.dart`) un evento puntúa 1 y una pelea 1 + premio. Con `SIM_AVOID=1` (prefieren eventos): antes 8/8/37%, ahora 8/8/36%; el jade sin gastar sigue en ~200, porque el bot valora el jade a 0,15 por punto y no compra la vitrina (60 × 0,15 = 9 > 8).
+- Pendiente: que la ruta de los bots pise eventos como una persona y que el valor del jade baje cuando sobra; rehacer metas con eso. Siguiente: desgaste/enfurecimiento en las etapas 2 y 3, filo, votos y élites opcionales.
+

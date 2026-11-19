@@ -419,12 +419,12 @@ void main() {
 
     test('ermitaño: pagás Vida y aprendés una forma', () {
       final r = run.resolveEvent(at('hermit'), 'pay');
-      expect(r.hp, 32);
+      expect(r.hp, 34);
       expect(r.knownForms, hasLength(1));
       expect(r.lastEvent!.form, r.knownForms.single);
-      expect(r.lastEvent!.hp, -8);
+      expect(r.lastEvent!.hp, -6);
       // Sin Vida suficiente no se puede pagar.
-      final weak = at('hermit', hp: 8);
+      final weak = at('hermit', hp: 6);
       expect(run.canChoose(weak, run.data.event('hermit').option('pay')), isFalse);
       expect(() => run.resolveEvent(weak, 'pay'), throwsStateError);
     });
@@ -460,10 +460,11 @@ void main() {
       expect(run.canChoose(at('hermit'), hermit), isFalse, reason: 'sin jade');
       final rich = at('hermit').copyWith(jade: 40);
       final r = run.resolveEvent(rich, 'gift');
-      expect(r.jade, 15);
+      expect(r.jade, 20);
       expect(r.hp, 40, reason: 'no cuesta Vida');
-      expect(r.knownForms, hasLength(1));
-      expect(r.lastEvent!.jade, -25);
+      expect(r.phase, RunPhase.reward, reason: 'elegís qué carta mejorar');
+      expect(r.rewardKind, RewardKind.upgrade);
+      expect(r.lastEvent!.jade, -20);
 
       final outcomes = <bool>{};
       for (var seed = 1; seed < 30; seed++) {
@@ -480,6 +481,45 @@ void main() {
       expect(p.jade, 30);
       expect(p.hp, 34);
       expect(p.lastEvent!.jade, 30);
+    });
+
+    test('vitrina: 60 de jade por 1 de 3 cartas raras o legendarias', () {
+      final curio = run.data.event('curio').option('buy');
+      expect(run.canChoose(at('curio'), curio), isFalse, reason: 'sin jade');
+      final r = run.resolveEvent(at('curio').copyWith(jade: 70), 'buy');
+      expect(r.jade, 10);
+      expect(r.phase, RunPhase.reward);
+      expect(r.rewardOptions, hasLength(3));
+      for (final id in r.rewardOptions) {
+        expect(run.data.card(id).rarity, isNot(CardRarity.common));
+      }
+    });
+
+    test('dados fuertes: 40 de jade por un talismán raro o nada', () {
+      final outcomes = <bool>{};
+      for (var seed = 1; seed < 30; seed++) {
+        final d = run.resolveEvent(
+          at('dice', seed: seed).copyWith(jade: 40),
+          'high',
+        );
+        final ok = d.lastEvent!.success!;
+        outcomes.add(ok);
+        expect(d.jade, 0);
+        expect(d.talismans, hasLength(ok ? 1 : 0));
+      }
+      expect(outcomes, {true, false});
+    });
+
+    test('ningún evento común cura gratis: la cura es de la fuente y el té',
+        () {
+      for (final e in run.data.events) {
+        if (e.thread != null) continue;
+        for (final o in e.options) {
+          if (o.outcome.heal > 0) {
+            expect(o.price, greaterThan(0), reason: '${e.id}.${o.id}');
+          }
+        }
+      }
     });
 
     test('altar: talismán raro; manantial: mejora una carta', () {
@@ -529,8 +569,16 @@ void main() {
     });
 
     test('templar sube el arma; sin arma, mejora una carta', () {
-      final armed = run.equipWeapon(at('ice_sage'), 'gun');
+      final armed =
+          run.equipWeapon(at('ice_sage'), 'gun').copyWith(jade: 20);
+      expect(
+        run.canChoose(run.equipWeapon(at('ice_sage'), 'gun'),
+            run.data.event('ice_sage').option('forge')),
+        isFalse,
+        reason: 'templar cuesta jade',
+      );
       final r = run.resolveEvent(armed, 'forge');
+      expect(r.jade, 0);
       expect(r.weaponLevel, 2);
       expect(r.lastEvent!.tempered, 'gun');
       final delivery = run.resolveEvent(at('smith_delivery'), 'take');

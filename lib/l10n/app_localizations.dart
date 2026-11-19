@@ -2920,6 +2920,12 @@ abstract class AppLocalizations {
   /// **'elegís 1 de 3 cartas de tu camino'**
   String get eventGainPathCards;
 
+  /// No description provided for @eventGainRareCards.
+  ///
+  /// In es, this message translates to:
+  /// **'elegís 1 de 3 cartas raras o legendarias'**
+  String get eventGainRareCards;
+
   /// No description provided for @eventGainPickUpgrade.
   ///
   /// In es, this message translates to:

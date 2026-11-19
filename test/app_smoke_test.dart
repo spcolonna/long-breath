@@ -201,7 +201,7 @@ void main() {
     await settle();
     expect(find.text('El maestro de té'), findsOneWidget);
     expect(find.text('+4 Vida máxima'), findsOneWidget);
-    expect(find.text('una carta nueva al azar'), findsOneWidget);
+    expect(find.text('elegís 1 de 3 cartas de tu camino'), findsOneWidget);
     await tester.tap(find.text('Tomar el té con calma'));
     await settle();
     expect(find.textContaining('El té te calienta'), findsOneWidget);

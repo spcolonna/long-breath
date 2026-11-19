@@ -488,6 +488,7 @@ double eventOptionValue(RunEngine run, RunState r, EventOptionDef o) {
       EventGain.pickUpgrade => 5.0,
       EventGain.pathTalisman => 10.0,
       EventGain.temper => run.canForge(r) ? 8.0 : 4.0,
+      EventGain.rareCards => 8.0,
     };
     // Lo que se deja marcado vuelve más arriba con premio.
     if (e.mark != null) v += 6.0;

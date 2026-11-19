@@ -1166,6 +1166,17 @@ class RunEngine {
           lotusGained: 0,
           rng: rng2,
         );
+      case EventGain.rareCards:
+        final (options, rng2) = _rollRareCards(next.rng, next);
+        offer = next.copyWith(
+          rewardKind: RewardKind.cards,
+          rewardOptions: options,
+          clearRewardForm: true,
+          rewardAmount: 0,
+          jadeGained: 0,
+          lotusGained: 0,
+          rng: rng2,
+        );
       case EventGain.pickUpgrade:
         if (next.deck.any(canUpgrade)) {
           offer = next.copyWith(
@@ -1263,6 +1274,19 @@ class RunEngine {
         if (style == null || c.pool == style.name) c.id,
     ];
     final (shuffled, next) = rng.shuffle(pool);
+    return (shuffled.take(data.balance.rewardChoices).toList(), next);
+  }
+
+  /// Tres cartas raras o legendarias para elegir (si no quedan, de las
+  /// comunes).
+  (List<String>, Rng) _rollRareCards(Rng rng, RunState r) {
+    final all = _pool(r);
+    final rare = [
+      for (final c in all)
+        if (c.rarity != CardRarity.common) c.id,
+    ];
+    final (shuffled, next) =
+        rng.shuffle(rare.isNotEmpty ? rare : [for (final c in all) c.id]);
     return (shuffled.take(data.balance.rewardChoices).toList(), next);
   }
 

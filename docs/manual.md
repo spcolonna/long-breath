@@ -118,7 +118,7 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    **Desvío:** en las salas 5 y 8, 4 de cada 10 veces una de las peleas es un élite (el sello dorado 精 con anillo punteado y la placa «Desvío»), como mucho uno por etapa. Siempre hay otra puerta. Quien lo vence se lleva su talismán (y el arma, si todavía no tiene). El guardián no repite a uno ya cruzado mientras queden otros.
 
-   **Sin curarse entre salas:** la Vida que perdés en una sala la llevás a la siguiente. Curan la fuente, el té (premio de algunas puertas o del mercader), algunos talismanes, algunos eventos y respirar hondo al superar la etapa.
+   **Sin curarse entre salas:** la Vida que perdés en una sala la llevás a la siguiente. Curan la fuente, el té (premio de algunas puertas o del mercader), algunos talismanes, la fogata del ermitaño en la nieve (pagando jade) y respirar hondo al superar la etapa.
 
    **Grupos:** muchas peleas comunes traen 2 enemigos (en la etapa 2 y 3, hasta 3). Se pelean de a uno: cuando cae uno, entra el siguiente y vos seguís con tu Vida, tu mano, tu postura y tus formas a medio hacer; antes de que entre elegís la **tregua**: concentrarte (robás 2 cartas y +1 de aliento) o afilar los puños (+2 a los puños hasta el final del combate). Cada uno trae menos Vida (70% si son 2, 58% si son 3) y cada enemigo de más suma 5 de jade. En la puerta, el sello lleva un punto por enemigo; en el combate, unos puntos bajo el nombre marcan cuál va.
 
@@ -135,15 +135,15 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 3. **Santuario de los animales:** se ofrecen **2 de los 3 caminos, al azar**. Tocar uno muestra cómo te queda la túnica y sus números; **Tomar este camino** lo confirma para el resto de la run. No se puede saltear ni cambiar.
 
 4. **Después de cada combate** elegís 1 de 3 cartas para sumar al mazo, o salteás. Saltear está bien: un mazo chico es más predecible.
-5. **Eventos** (ícono rosa ?): una escena con dos o tres opciones. Algunas se pagan con jade o lo dan. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida, o que cuesta más jade del que tenés, aparece apagada y dice por qué. En una subida no se repite ningún evento. Detrás de la escena se ve el paisaje de la etapa.
+5. **Eventos** (ícono rosa ?): una escena con dos o tres opciones. Las opciones compiten poder contra poder (una forma, un talismán, cartas, mejoras, jade o achicar el mazo); ninguna escena cura gratis, porque la Vida es de la fuente y el té. Algunas se pagan con jade o lo dan. Cada opción muestra antes qué cuesta y qué da (por ejemplo "−8 Vida · aprendés una forma"). Las que tienen riesgo dicen el porcentaje y las dos salidas. Una opción que te dejaría sin Vida, o que cuesta más jade del que tenés, aparece apagada y dice por qué. En una subida no se repite ningún evento. Detrás de la escena se ve el paisaje de la etapa.
 
    Cada etapa tiene **eventos propios**, que salen antes que los generales (el ermitaño, el puente, la fuente, el mono, el té, el altar, los dados y el peregrino pueden salir en cualquiera):
 
    | Etapa | Eventos propios |
    |---|---|
-   | Montaña de las Mil Nubes | El nido en el bambú 巢 (subir el pichón: −6 Vida, mejorás una carta; o mirar: +8 Vida) · El leñador viejo 樵 (cargarle la leña: −5 Vida, +25 jade; o escucharlo: una carta) |
-   | Monasterio Colgado | El monje de la campana 钟 (meditar: +14 Vida; o golpear la campana: −6 Vida, una forma) · La viga quebrada 梁 (saltar: 60%, +40 jade o −12 Vida; o buscar otra tabla: −3 Vida) · La biblioteca colgada 经 (estudiar: −4 Vida, mejorás una carta; donar 40 jade: talismán raro; o seguir) |
-   | Cumbre del Dragón Dormido | El ermitaño en la nieve 雪 (desenterrarlo: −8 Vida, talismán raro; compartir tu fuego: 15 jade, +16 Vida; o llamar a un pastor: nada) · La escama en el hielo 鳞 (arrancarla: 50%, +8 Vida máxima o −10 Vida; o escuchar: +10 Vida) · Las banderas del viento 幡 (coserlas: −5 Vida, mejorás una carta; soltar una técnica vieja: +6 Vida y perdés una carta inicial; o seguir) |
+   | Montaña de las Mil Nubes | El nido en el bambú 巢 (subir el pichón: −6 Vida, mejorás una carta; o mirar: una forma) · El leñador viejo 樵 (cargarle la leña: −5 Vida, +25 jade; o escucharlo: una carta) |
+   | Monasterio Colgado | La vitrina del anticuario 珍 (también en la cumbre: un rollo sellado por 60 jade, elegís 1 de 3 cartas raras o legendarias; una lección por 25 jade, elegís qué mejorar; o seguir) · El monje de la campana 钟 (meditar: perdés una carta inicial; o golpear la campana: −6 Vida, una forma) · La viga quebrada 梁 (saltar: 60%, +40 jade o −12 Vida; o buscar otra tabla: −3 Vida, mejorás una carta) · La biblioteca colgada 经 (estudiar: −4 Vida, mejorás una carta; donar 40 jade: talismán raro; o seguir) |
+   | Cumbre del Dragón Dormido | El ermitaño en la nieve 雪 (desenterrarlo: −8 Vida, talismán raro; compartir tu fuego: 15 jade, +16 Vida; o llamar a un pastor: nada) · La escama en el hielo 鳞 (arrancarla: 50%, +8 Vida máxima o −10 Vida; o escuchar: elegís qué mejorar) · Las banderas del viento 幡 (coserlas: −5 Vida, mejorás una carta; soltar una técnica vieja: perdés una carta inicial; o seguir) |
 
    Cada camino tiene además **una prueba por etapa** (cartel «Prueba del Tigre/de la Serpiente/de la Grulla», sello del color del camino). Es el primer evento que sale después del santuario en cada etapa, y nunca le sale a otro camino. Sus opciones son elecciones de verdad:
    - **Cartas del camino:** elegís 1 de 3 cartas de tu camino en la pantalla del botín (volver a tirar también tira del camino).
@@ -153,36 +153,36 @@ Se puede **saltear** en cualquier momento. Después aparece **Repetir entrenamie
 
    | Camino | Mil Nubes | Monasterio | Cumbre |
    |---|---|---|---|
-   | Tigre | La roca de los puños 岩 (partirla: −10 Vida, cartas del camino · duelo con el Bandido del Paso · sentarte: +6 Vida) | Los tambores de guerra 鼓 (golpear: −8 Vida, elegís qué mejorar · duelo con el guardián del templo · escuchar: +10 Vida) | Las marcas del tigre blanco 痕 (apoyar la mano: −14 Vida, talismán del camino · duelo con el simio de las nieves · seguir el rastro: 60% cartas del camino, si no −8 Vida) |
-   | Serpiente | El estanque de los juncos 苇 (imitar: −6 Vida, elegís qué mejorar · duelo con el Discípulo Perdido · descansar: +8 Vida) | El rollo enroscado 卷 (sacarlo: 55% talismán del camino, si no −12 Vida · copia por 35 jade: cartas del camino · duelo con la sombra) | La piel mudada 蜕 (atarla: −12 Vida, talismán del camino · estudiarla: −8 Vida, cartas del camino · duelo con el músico del guqin) |
-   | Grulla | La grulla en una pata 鹤 (quedarte quieto: +6 Vida y elegís qué mejorar · seguirla: −8 Vida, cartas del camino · duelo con el gólem) | El balcón sin baranda 台 (caminar el borde: 60% talismán del camino, si no −10 Vida · duelo con el hombre de bronce · té: +12 Vida) | La danza sobre la nieve 舞 (bailar: −10 Vida, cartas del camino · duelo con el discípulo del viento · mirar: +5 Vida máxima) |
+   | Tigre | La roca de los puños 岩 (partirla: −10 Vida, cartas del camino · duelo con el Bandido del Paso · pagar 20 jade a un cantero: elegís qué mejorar) | Los tambores de guerra 鼓 (golpear: −8 Vida, elegís qué mejorar · duelo con el guardián del templo · escuchar: una forma) | Las marcas del tigre blanco 痕 (apoyar la mano: −14 Vida, talismán del camino · duelo con el simio de las nieves · seguir el rastro: 60% cartas del camino, si no −8 Vida) |
+   | Serpiente | El estanque de los juncos 苇 (imitar: −6 Vida, elegís qué mejorar · duelo con el Discípulo Perdido · mudar como ella: perdés una carta inicial) | El rollo enroscado 卷 (sacarlo: 55% talismán del camino, si no −12 Vida · copia por 35 jade: cartas del camino · duelo con la sombra) | La piel mudada 蜕 (atarla: −12 Vida, talismán del camino · estudiarla: −8 Vida, cartas del camino · duelo con el músico del guqin) |
+   | Grulla | La grulla en una pata 鹤 (quedarte quieto: elegís qué mejorar · seguirla: −8 Vida, cartas del camino · duelo con el gólem) | El balcón sin baranda 台 (caminar el borde: 60% talismán del camino, si no −10 Vida · duelo con el hombre de bronce · té: +4 Vida máxima) | La danza sobre la nieve 舞 (bailar: −10 Vida, cartas del camino · duelo con el discípulo del viento · mirar: +5 Vida máxima) |
 
    | Evento | Opciones |
    |---|---|
-   | El ermitaño del pino 隐 | Entrenar con él: −8 Vida, aprendés una forma · Dejarle jade: pagás 25, aprendés una forma · Agradecer y seguir: nada |
-   | El puente colgante 桥 | Cruzar corriendo: 50% un talismán, si no −10 Vida · Rodear: −3 Vida |
-   | El manantial de jade 泉 | Beber: +12 Vida · Templar los puños: mejora una carta al azar |
+   | El ermitaño del pino 隐 | Entrenar con él: −6 Vida, aprendés una forma · Dejarle jade: pagás 20, elegís qué mejorar · Agradecer y seguir: nada |
+   | El puente colgante 桥 | Cruzar corriendo: 50% un talismán, si no −10 Vida · Rodear: −3 Vida, mejorás una carta |
+   | El manantial de jade 泉 | Beber: +3 Vida máxima · Templar los puños: mejora una carta al azar |
    | El mono ladrón 猴 | Perseguirlo: −6 Vida, un talismán · Dejarlo ir: perdés una carta inicial al azar |
-   | El maestro de té 茶 | Tomar el té: +4 Vida máxima · Practicar: una carta al azar |
-   | El altar de los maestros 祠 | Cien reverencias: −7 Vida, un talismán raro · Meditar: +8 Vida |
-   | Los dados del arriero 骰 | Apostar: pagás 15, 50% +35 jade · Seguir de largo: nada |
-   | El peregrino perdido 旅 | Acompañarlo: −6 Vida, +30 jade · Señalarle el camino: nada |
+   | El maestro de té 茶 | Tomar el té: +4 Vida máxima · Practicar: elegís 1 de 3 cartas de tu camino |
+   | El altar de los maestros 祠 | Cien reverencias: −7 Vida, un talismán raro · Ofrecer 20 jade y meditar: elegís qué mejorar |
+   | Los dados del arriero 骰 | Apostar: pagás 15, 50% +35 jade · Apostar fuerte: pagás 40, 45% un talismán raro · Seguir de largo: nada |
+   | El peregrino perdido 旅 | Acompañarlo: −6 Vida, +30 jade · Compartir tu fogata: una carta |
 
-   **Opciones que abre lo que llevás.** Algunas escenas suman una opción si tenés cierto talismán, arma o forma. Si no lo tenés, la opción no aparece. Si lo tenés, va primero, con borde de jade y el ícono ✦. Entra como un sello, con una vibración suave y una campanada, y su detalle dice qué la abrió (por ejemplo «Con Pluma de la Grulla · un talismán»). Siempre es mejor que las otras opciones y no tiene riesgo:
+   **Opciones que abre lo que llevás.** Algunas escenas suman una opción si tenés cierto talismán, arma o forma. Si no lo tenés, la opción no aparece. Si lo tenés, va primero, con borde de jade y el ícono ✦. Entra como un sello, con una vibración suave y una campanada, y su detalle dice qué la abrió (por ejemplo «Con Pluma de la Grulla · un talismán»). No tiene riesgo, pero cobra algo chico (2–3 de Vida o 10–20 de jade):
 
    | Evento | Pide | Opción |
    |---|---|---|
-   | El ermitaño del pino 隐 | cualquier forma | Mostrarle una forma: aprendés otra, gratis |
-   | El puente colgante 桥 | Pluma de la Grulla / palo | Planear o saltar con la pértiga: un talismán |
-   | El mono ladrón 猴 | Garra del Tigre | Rugirle: un talismán, sin perder Vida |
-   | El altar de los maestros 祠 | Horno de Cinabrio | Encender el horno: un talismán raro |
-   | El leñador viejo 樵 | pudao | Partirle la leña: +35 jade |
-   | La viga quebrada 梁 | espada | Cortar una cuerda y columpiarte: +40 jade |
-   | La biblioteca colgada 经 | una forma de camino | Recitarla: elegís qué carta mejorar |
-   | Los títeres de linterna 影 | Escama de la Serpiente | Deslizarte detrás del papel: un talismán |
-   | El ermitaño en la nieve 雪 | Tambor de Bronce | Hacerlo sonar: un talismán raro |
-   | La escama en el hielo 鳞 | Perla del Dragón | Acercarla: +10 Vida máxima |
-   | El sabio en el hielo 冰 | cualquier arma | Mostrársela: **templás el arma** (sin arma o al máximo, mejora una carta) |
+   | El ermitaño del pino 隐 | cualquier forma | Mostrarle una forma: −2 Vida, aprendés otra |
+   | El puente colgante 桥 | Pluma de la Grulla / palo | Planear o saltar con la pértiga: −2 Vida, un talismán |
+   | El mono ladrón 猴 | Garra del Tigre | Rugirle: −2 Vida, un talismán |
+   | El altar de los maestros 祠 | Horno de Cinabrio | Encender el horno: −3 Vida, un talismán raro |
+   | El leñador viejo 樵 | pudao | Partirle la leña: −2 Vida, +35 jade |
+   | La viga quebrada 梁 | espada | Cortar una cuerda y columpiarte: −2 Vida, +40 jade |
+   | La biblioteca colgada 经 | una forma de camino | Recitarla: 10 jade, elegís qué carta mejorar |
+   | Los títeres de linterna 影 | Escama de la Serpiente | Deslizarte detrás del papel: −2 Vida, un talismán |
+   | El ermitaño en la nieve 雪 | Tambor de Bronce | Hacerlo sonar: −3 Vida, un talismán raro |
+   | La escama en el hielo 鳞 | Perla del Dragón | Acercarla: 15 jade, +10 Vida máxima |
+   | El sabio en el hielo 冰 | cualquier arma | Pagarle 20 jade: **templás el arma** (sin arma o al máximo, mejora una carta) |
    | Donde nacen las nubes 云 | Perla del Aliento o Luna Llena | Respirar con ella: +10 Vida máxima |
 
    **Eventos en dos partes.** Algunas decisiones dejan una marca: el resultado lo avisa con «Esto sigue más arriba». En una etapa posterior, la segunda parte sale después de la prueba del camino y antes que los demás eventos. Entra con el cartel dorado «Un viejo conocido», con sello, golpe y sonido. Sin la marca, nunca sale.

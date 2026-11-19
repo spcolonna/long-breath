@@ -11,7 +11,8 @@ Murciélago → [Discípulo | Evento] → Santuario → bifurcación [Gólem | S
 - Cada opción tiene un resultado (`hp` = Vida que se pierde, `heal`, `maxHp`, `gain`) o, si tiene `chance`, un `success` y un `failure`.
 - La Vida perdida en un evento nunca baja de 1. Una opción con costo de Vida solo se puede elegir si `hp > costo`. El riesgo no cuenta como costo.
 - `maxHp` sube la Vida máxima y cura lo mismo.
-- Ganancias: `form` (una forma aprendible; si no queda ninguna, una carta), `talisman` / `rareTalisman` (uno que no se tenga de esa rareza; si no queda, cualquiera), `card` (del pool de recompensas del camino), `upgrade` (+3 a una carta mejorable al azar), `loseStarter` (se va una carta inicial al azar).
+- Ganancias: `form` (una forma aprendible; si no queda ninguna, una carta), `talisman` / `rareTalisman` (uno que no se tenga de esa rareza; si no queda, cualquiera), `card` (del pool de recompensas del camino), `upgrade` (+3 a una carta mejorable al azar), `loseStarter` (se va una carta inicial al azar), `rareCards` (elegir 1 de 3 cartas raras o legendarias del pool del camino; si no quedan, de las comunes).
+- Fuera de los hilos, ninguna opción cura sin precio en jade (lo vigila un test): la Vida es de la fuente y el té. Las opciones con requisito cobran algo chico (2–3 de Vida o 10–20 de jade).
 - Al resolver se vuelve al mapa y queda `lastEvent` con lo que pasó, para mostrarlo.
 
 ## Talismanes

@@ -263,6 +263,7 @@ extension Labels on AppLocalizations {
           EventGain.pickUpgrade => eventGainPickUpgrade,
           EventGain.pathTalisman => eventGainPathTalisman,
           EventGain.temper => eventGainTemper,
+          EventGain.rareCards => eventGainRareCards,
         },
       if (o.mark != null) eventGainMark,
       if (o.duel != null) eventGainFight,
