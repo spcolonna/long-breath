@@ -86,6 +86,8 @@ class EnemyCombat {
     this.fled = false,
     this.guardBlocks,
     this.thorns = 0,
+    this.fury = 0,
+    this.furyStep = 0,
   });
 
   final String id;
@@ -128,6 +130,11 @@ class EnemyCombat {
   /// Espinas que suma a las suyas (élites en los Picos).
   final int thorns;
 
+  /// Furia de la montaña acumulada (suma a cada golpe) y cuánto crece
+  /// después de cada acción (0 = en esta etapa no hay furia).
+  final int fury;
+  final int furyStep;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -155,6 +162,8 @@ class EnemyCombat {
         fled: fled,
         guardBlocks: guardBlocks,
         thorns: thorns,
+        fury: fury,
+        furyStep: furyStep,
       );
 }
 

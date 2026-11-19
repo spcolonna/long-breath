@@ -1091,6 +1091,14 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             size: 22,
             icon: Icons.local_fire_department,
           );
+        case EnemyFurious(:final total):
+          _pop(
+            enemyPops,
+            '+$total',
+            Palette.lacquer,
+            size: 22,
+            icon: Icons.whatshot,
+          );
         case ThornsHurt(:final damage):
           Haptics.mediumImpact();
           _audio.play(Sfx.playerHurt);

@@ -218,6 +218,12 @@ class EnemyEnraged extends CombatEvent {
   final int total;
 }
 
+/// Furia de la montaña: sus golpes suman [total] (no se calma).
+class EnemyFurious extends CombatEvent {
+  const EnemyFurious(this.total);
+  final int total;
+}
+
 /// Al desequilibrarlo, se le pasó el enojo.
 class WrathCalmed extends CombatEvent {
   const WrathCalmed();

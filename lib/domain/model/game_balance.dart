@@ -478,6 +478,7 @@ class PicoDef {
     this.eliteThorns = 0,
     this.breathes = 0,
     this.merchantPct = 0,
+    this.fury = 0,
   });
 
   final int enemyHp;
@@ -501,6 +502,11 @@ class PicoDef {
   /// Recargo (%) en los precios del mercader.
   final int merchantPct;
 
+  /// Furia de la montaña: después de cada acción, los golpes del rival
+  /// suman esto (se acumula y no se calma al desequilibrarlo, pero un
+  /// rival desequilibrado que pierde la acción tampoco se enfurece).
+  final int fury;
+
   PicoDef operator +(PicoDef o) => PicoDef(
         enemyHp: enemyHp + o.enemyHp,
         commonHp: commonHp + o.commonHp,
@@ -514,6 +520,7 @@ class PicoDef {
         eliteThorns: eliteThorns + o.eliteThorns,
         breathes: breathes + o.breathes,
         merchantPct: merchantPct + o.merchantPct,
+        fury: fury + o.fury,
       );
 
   factory PicoDef.fromJson(Map<String, dynamic> j) => PicoDef(
@@ -529,6 +536,7 @@ class PicoDef {
         eliteThorns: j['eliteThorns'] as int? ?? 0,
         breathes: j['breathes'] as int? ?? 0,
         merchantPct: j['merchantPct'] as int? ?? 0,
+        fury: j['fury'] as int? ?? 0,
       );
 }
 

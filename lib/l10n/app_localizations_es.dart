@@ -2532,6 +2532,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String furyChip(int n) {
+    return 'Furia de la montaña · +$n';
+  }
+
+  @override
   String get wrathCalmed => 'Se vuelve a dormir';
 
   @override
@@ -3301,6 +3306,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Antes de cada acción recupera esa Vida. Si está Desequilibrado y pierde la acción, tampoco se cura.';
 
   @override
+  String get glossFury =>
+      'Más arriba la montaña enfurece a los rivales: después de cada acción sus golpes suman un poco más, y no se calma. Aguantar no alcanza: hay que vencerlos rápido. Desequilibrado, el rival pierde la acción y ese turno no se enfurece.';
+
+  @override
   String get glossWrath =>
       'Después de cada acción sus golpes suman ese daño, y se acumula. Desequilibrarlo lo vuelve a dormir.';
 
@@ -3368,6 +3377,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get termRegen => 'Curación';
+
+  @override
+  String get termFury => 'Furia de la montaña';
 
   @override
   String get termWrath => 'Despierto';

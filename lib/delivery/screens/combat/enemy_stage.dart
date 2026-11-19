@@ -371,6 +371,18 @@ class _EnemyStage extends ConsumerWidget {
                           ),
                         ),
                         ),
+                      if (e.fury > 0)
+                        GlossaryTap(
+                          term: Term.fury,
+                          child: Bounce(
+                            trigger: e.fury,
+                            child: _Chip(
+                              icon: Icons.whatshot,
+                              text: t.furyChip(e.fury),
+                              color: Palette.lacquer,
+                            ),
+                          ),
+                        ),
                       if (e.parryReady && !e.staggered)
                         GlossaryTap(
                           term: Term.parry,
@@ -734,6 +746,7 @@ bool _hasChips(EnemyCombat e, EnemyDef def) =>
     e.staggered ||
     e.scales > 0 ||
     e.wrath > 0 ||
+    e.fury > 0 ||
     e.parryReady ||
     e.stolen > 0 ||
     def.thorns + e.thorns > 0 ||

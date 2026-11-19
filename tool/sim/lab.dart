@@ -224,6 +224,9 @@ class FightLog {
 
   /// Enemigos del combate (1 = solo; más = grupo que entra de a uno).
   int pack = 1;
+
+  /// Etapa donde fue la pelea (0 = la primera).
+  int stage = 0;
   final stanceUse = <Stance, int>{};
 }
 
@@ -313,7 +316,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     String? weapon,
     int weaponLevel = 1}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
-    ..pack = 1 + waves.length;
+    ..pack = 1 + waves.length
+    ..stage = stage;
   var s = engine
       .start(
           deck: deck,

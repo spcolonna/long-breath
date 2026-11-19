@@ -290,3 +290,11 @@ macOS no tiene `timeout`.
 - `RunLog.healed` y `heals` (Vida curada fuera de pelea y veces). El test del prudente compara veces que se cura, porque las puertas de té ya no existen.
 - **Normal, sin árbol, 200 subidas** (promedio/prudente/experto): antes **9/11/41%**; solo con eventos 21/19/52%; con eventos y mercader **46/47/79%**. Mercader 3,4 veces por subida, ~290 de jade gastado y ~85 sin gastar; talismanes 8,4 por subida (antes 2,9).
 - **Lectura:** jugado como una persona (entra a eventos y gasta el jade), Normal es fácil, como dice el usuario. Las metas viejas (promedio ~24%, experto ~56%) eran de bots que nunca entraban a eventos ni gastaban jade. Siguiente: desgaste/enfurecimiento en las etapas 2 y 3, filo, votos y élites opcionales, medidos con este simulador, para volver a ~25% del promedio y ~60% del experto. Mirar si el mercader da demasiado (3 visitas con talismán, arma y vitrina).
+
+### Fase C (5/n): furia de la montaña en las etapas 2 y 3 (2026-11-19)
+- **Medición previa:** en las etapas 2 y 3 las peleas eran *más cortas* que en la 1 (comunes 2,1 turnos y jefe 3,6 en la etapa 3, contra 3,0 y 4,6 en la 1): el mazo crece más que los rivales y casi todas las muertes del promedio eran en la etapa 1. Un enfurecimiento por turno solo no pesaba (furia 1/2 con la Vida de antes: 43/43/77%).
+- **Regla:** `fury` en `enemyMods` de la etapa (`PicoDef.fury`, suma con los Picos). Cada rival guarda `fury` y `furyStep`; después de cada acción `fury += furyStep` y se suma a sus golpes. No se calma al desequilibrarlo; si pierde la acción por Desequilibrio, ese turno no crece. Evento `EnemyFurious`, ficha «Furia de la montaña · +N» y término 狂 en el glosario.
+- **Valores:** Monasterio `enemyHp` 14 → 40 y furia 3; Cumbre 22 → 62 y furia 4 (el daño no cambió: 9 y 16).
+- **Normal, sin árbol** (promedio/prudente/experto): antes 46/47/79%; ahora **22/26/64%** (300 subidas). Sin furia y con la misma Vida daría 30/39/71%: la furia sola saca ~10 puntos, y más al prudente, que es lo que se buscaba (aguantar no alcanza). Fácil 47/58/83%, Difícil 12/17/44%.
+- `FightLog.stage` (etapa de cada pelea) para medir por etapa. Siguiente: filo, votos y élites opcionales; revisar si el mercader da demasiado.
+

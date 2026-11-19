@@ -216,6 +216,7 @@ String eventsLine(List<CombatEvent> events) {
       DiscardRequired(:final count) => 'debe descartar $count',
       Parried(:final damage) => 'enemigo contraataca $damage',
       EnemyEnraged(:final total) => 'ira $total',
+      EnemyFurious(:final total) => 'furia $total',
       WrathCalmed() => 'ira calmada',
       JadeStolen(:final amount, :final total) => 'roba jade $amount ($total)',
       EnemyFled(:final stolen) => 'enemigo huye con $stolen jade',

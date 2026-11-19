@@ -25,6 +25,7 @@ CombatState setup(
   String? weapon,
   int weaponLevel = 1,
   int pico = 0,
+  int stage = 0,
 }) => engine
     .start(
       deck: [
@@ -41,6 +42,7 @@ CombatState setup(
       weapon: weapon,
       weaponLevel: weaponLevel,
       pico: pico,
+      stage: stage,
     )
     .state;
 
@@ -1084,6 +1086,35 @@ void main() {
       final iv = engine.intentView(s);
       expect(iv.intent.labelKey, 'pounce');
       expect(iv.damage, greaterThan(base));
+    });
+
+    test('furia de la montaña: en la etapa 1 no hay; en la 2 crece y no se calma', () {
+      var s = setup([...filler, ...filler, ...filler], hp: 200);
+      expect(s.enemy.furyStep, 0);
+      s = endTurn(s).state;
+      expect(s.enemy.fury, 0);
+
+      s = setup([...filler, ...filler, ...filler], hp: 200, stage: 1);
+      expect(s.enemy.furyStep, 3);
+      final r = endTurn(s);
+      expect(r.events.whereType<EnemyFurious>().single.total, 3);
+      s = endTurn(r.state).state;
+      expect(s.enemy.fury, 6, reason: 'se acumula');
+      expect(s.enemy.wrath, 0, reason: 'la furia es aparte del despertar');
+    });
+
+    test('la furia suma a cada golpe anunciado', () {
+      final a = setup([...filler, ...filler, ...filler],
+          enemy: 'bat', hp: 200, stage: 2);
+      final b = engine.reduce(a, const EndTurn()).state;
+      final s1 =
+          setup([...filler, ...filler, ...filler], enemy: 'bat', hp: 200);
+      final s2 = endTurn(s1).state;
+      // Mismo paso del patrón en la etapa 1: la diferencia es la furia
+      // (más el recargo de daño de la etapa 3).
+      expect(b.enemy.fury, 4);
+      expect(engine.intentView(b).damage,
+          greaterThanOrEqualTo(engine.intentView(s2).damage + 4));
     });
 
     test('Bandido: tantea y al turno siguiente avisa el bastonazo', () {

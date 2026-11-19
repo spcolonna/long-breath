@@ -457,7 +457,9 @@ Al superar la Montaña y el Monasterio, el espíritu de tu camino te ofrece **3 
 | | 平 Equilibrio | Tus defensas dan +3 de Guardia y cada desvío da +1 de Aliento. |
 | | 展 Alas abiertas | Robás 1 carta más por turno. |
 
-En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista tus despertares. Para compensar, los rivales del Monasterio tienen +14% de Vida y +9% de daño, y los de la Cumbre +22% y +16%.
+En combate, el chip del camino muestra la pasiva ya sumada y, al tocarlo, lista tus despertares. Para compensar, los rivales del Monasterio tienen +40% de Vida y +9% de daño, y los de la Cumbre +62% y +16%.
+
+**Furia de la montaña** 狂: en el Monasterio y la Cumbre, después de cada acción los golpes del rival suman 3 (Monasterio) o 4 (Cumbre), y se acumula. No se calma al desequilibrarlo (a diferencia del Despierto del León), pero un rival desequilibrado que pierde la acción ese turno no se enfurece. Aguantar no alcanza: hay que vencerlos rápido. Lo muestra una ficha bajo el rival, «Furia de la montaña · +N», que se puede tocar para leer la regla.
 
 ## Valores del jugador
 

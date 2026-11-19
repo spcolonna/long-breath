@@ -4084,6 +4084,12 @@ abstract class AppLocalizations {
   /// **'Despierto · +{n} por golpe'**
   String wrathChip(int n);
 
+  /// No description provided for @furyChip.
+  ///
+  /// In es, this message translates to:
+  /// **'Furia de la montaña · +{n}'**
+  String furyChip(int n);
+
   /// No description provided for @wrathCalmed.
   ///
   /// In es, this message translates to:
@@ -5212,6 +5218,12 @@ abstract class AppLocalizations {
   /// **'Antes de cada acción recupera esa Vida. Si está Desequilibrado y pierde la acción, tampoco se cura.'**
   String get glossRegen;
 
+  /// No description provided for @glossFury.
+  ///
+  /// In es, this message translates to:
+  /// **'Más arriba la montaña enfurece a los rivales: después de cada acción sus golpes suman un poco más, y no se calma. Aguantar no alcanza: hay que vencerlos rápido. Desequilibrado, el rival pierde la acción y ese turno no se enfurece.'**
+  String get glossFury;
+
   /// No description provided for @glossWrath.
   ///
   /// In es, this message translates to:
@@ -5331,6 +5343,12 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Curación'**
   String get termRegen;
+
+  /// No description provided for @termFury.
+  ///
+  /// In es, this message translates to:
+  /// **'Furia de la montaña'**
+  String get termFury;
 
   /// No description provided for @termWrath.
   ///

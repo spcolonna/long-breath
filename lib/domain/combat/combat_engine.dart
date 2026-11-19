@@ -217,6 +217,7 @@ class CombatEngine {
         // Picos: arranca cubierto y, si es élite, con espinas.
         guard: pm.enemyGuard,
         thorns: enemy.rank == EnemyRank.elite ? pm.eliteThorns : 0,
+        furyStep: pm.fury,
       );
     }
     final extraStructure = sum((e) => e.structure) + meta.structure;
@@ -808,6 +809,7 @@ class CombatEngine {
               intent.damage +
                   e.chargeBonus +
                   e.wrath +
+                  e.fury +
                   punish * def.sameStancePunishDamage,
               s.enemyDamagePct,
             )
@@ -1335,6 +1337,10 @@ class CombatEngine {
         e.wrath += def.wrath;
         events.add(EnemyEnraged(e.wrath));
       }
+      if (e.furyStep > 0 && !d.halted) {
+        e.fury += e.furyStep;
+        events.add(EnemyFurious(e.fury));
+      }
     }
     if (d.isOver) return;
     // Si cambió de fase durante su acción, la nueva fase arranca en el paso 0.
@@ -1350,7 +1356,7 @@ class CombatEngine {
     List<CombatEvent> events,
   ) {
     final e = d.enemy;
-    var damage = intent.damage + e.chargeBonus + e.wrath;
+    var damage = intent.damage + e.chargeBonus + e.wrath + e.fury;
     var structure = intent.structure;
     e.chargeBonus = 0;
     if (d.punishPending && def.sameStancePunishDamage > 0) {
@@ -1603,6 +1609,8 @@ class _EnemyDraft {
     this.fled = false,
     this.guardBlocks,
     this.thorns = 0,
+    this.fury = 0,
+    this.furyStep = 0,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -1625,6 +1633,8 @@ class _EnemyDraft {
     fled: e.fled,
     guardBlocks: e.guardBlocks,
     thorns: e.thorns,
+    fury: e.fury,
+    furyStep: e.furyStep,
   );
 
   final String id;
@@ -1646,6 +1656,8 @@ class _EnemyDraft {
   bool fled;
   CardType? guardBlocks;
   final int thorns;
+  int fury;
+  final int furyStep;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -1667,6 +1679,8 @@ class _EnemyDraft {
     fled: fled,
     guardBlocks: guardBlocks,
     thorns: thorns,
+    fury: fury,
+    furyStep: furyStep,
   );
 }
 

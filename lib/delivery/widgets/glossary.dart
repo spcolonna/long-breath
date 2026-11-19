@@ -31,6 +31,7 @@ enum Term {
   thorns('刺'),
   regen('愈'),
   wrath('怒'),
+  fury('狂'),
   parry('扇'),
   steal('盗'),
   scales('鳞');
@@ -56,6 +57,7 @@ enum Term {
     exhaust => const [],
     form => const [flow],
     thorns || regen || wrath || parry || scales => const [staggered],
+    fury => const [wrath, staggered],
     steal => const [],
   };
 }
@@ -80,6 +82,7 @@ extension GlossaryLabels on AppLocalizations {
     Term.thorns => termThorns,
     Term.regen => termRegen,
     Term.wrath => termWrath,
+    Term.fury => termFury,
     Term.parry => termParry,
     Term.steal => termSteal,
     Term.scales => termScales,
@@ -104,6 +107,7 @@ extension GlossaryLabels on AppLocalizations {
     Term.thorns => glossThorns,
     Term.regen => glossRegen,
     Term.wrath => glossWrath,
+    Term.fury => glossFury,
     Term.parry => glossParry,
     Term.steal => glossSteal,
     Term.scales => glossScales,
