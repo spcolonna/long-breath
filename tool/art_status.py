@@ -134,6 +134,13 @@ def main():
     add("npc", "npc/tie.webp", "maestro Tie (herrero)", "sello del evento")
     for p in ("novice", "tiger", "snake", "crane"):
         add("héroe", f"player/hero_{p}.webp", f"héroe ({p})", "vacío")
+    add("héroe", "player/hero_strike.webp",
+        "corte del héroe de frente en la Técnica del Camino", "sin corte")
+    add("héroe", "player/hero_guard.webp",
+        "corte del héroe de frente al abrir el Contragolpe", "sin corte")
+    for a in ("dragon", "dragon_azure", "monk_gold"):
+        add("jefes", f"enemies/{a}_attack.webp", f"pose de ataque de {a}",
+            f"enemies/{a}.webp")
 
     by_art = {}
     for e in enemies:

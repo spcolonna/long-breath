@@ -45,7 +45,7 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Nada: las 169 imágenes están integradas y ya no queda ningún recoloreo de enemigo. Los prompts nuevos van acá, sueltos, uno por imagen.
+Nada: las 174 imágenes están integradas (incluidas las 5 poses del 20/11) y ya no queda ningún recoloreo de enemigo. Los prompts nuevos van acá, sueltos, uno por imagen.
 
 ### Retrato: Shuang (`npc/shuang`) ✅ integrado
 

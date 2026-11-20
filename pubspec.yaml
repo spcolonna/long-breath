@@ -47,6 +47,8 @@ flutter:
     - assets/art/player/hero_tiger.webp
     - assets/art/player/hero_snake.webp
     - assets/art/player/hero_crane.webp
+    - assets/art/player/hero_strike.webp
+    - assets/art/player/hero_guard.webp
   shaders:
     - shaders/paper.frag
     - shaders/ink_dissolve.frag

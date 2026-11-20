@@ -135,10 +135,9 @@ class _EnemySpriteState extends State<EnemySprite>
   Widget build(BuildContext context) {
     final size = widget.size;
     final accent = rankColor(widget.def.rank);
-    final figure = _Figure(def: widget.def, size: size, accent: accent);
     return AnimatedBuilder(
       animation: Listenable.merge([_idle, _hit, _attack, _pulse, _death]),
-      builder: (context, child) {
+      builder: (context, _) {
         final idle = Curves.easeInOut.transform(_idle.value);
         final h = _hit.value;
         final hitting = _hit.isAnimating;
@@ -156,6 +155,14 @@ class _EnemySpriteState extends State<EnemySprite>
         final flash = hitting ? (h < stop ? 0.9 : 0.9 * (1 - after)) : 0.0;
         final squash = hitting ? 0.06 * knock : 0.0;
         final (atkDy, atkScale, atkStretch) = _attackPose(_attack.value);
+        // Los jefes cambian a su pose de ataque durante la embestida.
+        final lunging = _attack.value > 0.3 && _attack.value < 0.9;
+        final figure = _Figure(
+          def: widget.def,
+          size: size,
+          accent: accent,
+          attacking: lunging,
+        );
         final pulse = math.sin(math.pi * _pulse.value);
         final dying = widget.dying;
         final d = dying ? _death.value : 0.0;
@@ -222,7 +229,7 @@ class _EnemySpriteState extends State<EnemySprite>
                       // El tinte cuesta una capa por cuadro: solo al
                       // recibir un golpe o al caer.
                       child: (dying ? math.max(flash, 0.6 * d) : flash) <= 0
-                          ? KeyedSubtree(key: _body, child: child!)
+                          ? KeyedSubtree(key: _body, child: figure)
                           : ColorFiltered(
                               colorFilter: ColorFilter.mode(
                                 Colors.white.withValues(
@@ -230,7 +237,7 @@ class _EnemySpriteState extends State<EnemySprite>
                                 ),
                                 BlendMode.srcATop,
                               ),
-                              child: KeyedSubtree(key: _body, child: child!),
+                              child: KeyedSubtree(key: _body, child: figure),
                             ),
                     ),
                   ),
@@ -245,20 +252,50 @@ class _EnemySpriteState extends State<EnemySprite>
           ),
         );
       },
-      child: figure,
     );
   }
 }
 
+/// Arte con pose de ataque propia (`<art>_attack.webp`).
+const attackPoseArt = {'dragon', 'dragon_azure', 'monk_gold'};
+
 class _Figure extends StatelessWidget {
-  const _Figure({required this.def, required this.size, required this.accent});
+  const _Figure({
+    required this.def,
+    required this.size,
+    required this.accent,
+    this.attacking = false,
+  });
 
   final EnemyDef def;
   final double size;
   final Color accent;
+  final bool attacking;
 
   @override
   Widget build(BuildContext context) {
+    final base = _base();
+    if (!attackPoseArt.contains(def.art)) return base;
+    // Las dos imágenes quedan montadas: el cambio no espera a decodificar.
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Opacity(opacity: attacking ? 0 : 1, child: base),
+        Opacity(
+          opacity: attacking ? 1 : 0,
+          child: Image.asset(
+            'assets/art/enemies/${def.art}_attack.webp',
+            width: size,
+            height: size,
+            fit: BoxFit.contain,
+            errorBuilder: (_, _, _) => const SizedBox.shrink(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _base() {
     final silhouette = _Silhouette(def: def, size: size, accent: accent);
     return Image.asset(
       'assets/art/enemies/${def.art}.webp',

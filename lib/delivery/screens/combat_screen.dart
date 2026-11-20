@@ -44,6 +44,7 @@ import '../widgets/game_icon.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/juice.dart';
 import '../widgets/press.dart';
+import '../widgets/hero_cut_in.dart';
 import '../widgets/stage_scene.dart';
 import '../widgets/talisman_widgets.dart';
 import '../widgets/weapon_art.dart';
@@ -217,6 +218,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
   double _zoomAmount = 0.06;
   String _finishHanzi = '破';
   Color _finishColor = Palette.lacquer;
+  // Corte rápido del héroe de frente (Técnica y Contragolpe).
+  int _cutInKey = 0;
+  CutInPose _cutInPose = CutInPose.strike;
+  Color _cutInColor = Palette.gold;
 
   /// Forma recién completada: sus pasos quedan dorados un momento en el
   /// panel antes de volver a cero.
@@ -1234,6 +1239,12 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           // El desvío abre la respuesta: cinta dorada y el sello 反 late.
           Haptics.heavyImpact();
           _after(110, Haptics.lightImpact);
+          final st = ref.read(combatControllerProvider)?.state.style;
+          setState(() {
+            _cutInPose = CutInPose.guard;
+            _cutInColor = st == null ? Palette.gold : styleColor(st);
+            _cutInKey++;
+          });
           _queue.add(_Fx(t.counterReady, null, Palette.gold));
         case Countered(:final mode):
           Haptics.mediumImpact();
@@ -1252,6 +1263,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             _finishColor = styleColor(style);
             _finishKey++;
             _goldFlashKey++;
+            _cutInPose = CutInPose.strike;
+            _cutInColor = styleColor(style);
+            _cutInKey++;
             _shake(12);
             _zoomAmount = 0.08;
             _zoomKey++;
@@ -1596,6 +1610,13 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             ),
             Positioned.fill(
               child: ScreenFlash(trigger: _goldFlashKey, color: Palette.gold),
+            ),
+            Positioned.fill(
+              child: HeroCutIn(
+                trigger: _cutInKey,
+                pose: _cutInPose,
+                color: _cutInColor,
+              ),
             ),
             Positioned.fill(
               child: FinisherSeal(

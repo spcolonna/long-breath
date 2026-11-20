@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 169 · ✅ 169 · 🎨 0 · ❌ 0
+Total: 174 · ✅ 174 · 🎨 0 · ❌ 0
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -186,6 +186,16 @@ Total: 169 · ✅ 169 · 🎨 0 · ❌ 0
 | ✅ propio | `assets/art/player/hero_tiger.webp` | héroe (tiger) | vacío | — |
 | ✅ propio | `assets/art/player/hero_snake.webp` | héroe (snake) | vacío | — |
 | ✅ propio | `assets/art/player/hero_crane.webp` | héroe (crane) | vacío | — |
+| ✅ propio | `assets/art/player/hero_strike.webp` | corte del héroe de frente en la Técnica del Camino | sin corte | — |
+| ✅ propio | `assets/art/player/hero_guard.webp` | corte del héroe de frente al abrir el Contragolpe | sin corte | — |
+
+## jefes
+
+| Estado | Archivo | Para qué | Si falta se ve | Prompt |
+|---|---|---|---|---|
+| ✅ propio | `assets/art/enemies/dragon_attack.webp` | pose de ataque de dragon | enemies/dragon.webp | — |
+| ✅ propio | `assets/art/enemies/dragon_azure_attack.webp` | pose de ataque de dragon_azure | enemies/dragon_azure.webp | — |
+| ✅ propio | `assets/art/enemies/monk_gold_attack.webp` | pose de ataque de monk_gold | enemies/monk_gold.webp | — |
 
 ## enemigos
 

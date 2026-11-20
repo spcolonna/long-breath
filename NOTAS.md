@@ -259,7 +259,7 @@ macOS no tiene `timeout`.
 - Cámara: `PunchZoom` envuelve la arena; se acerca al rival en el remate (último rival 5 %, élite/jefe 10 %, Técnica del Camino 8 %) y vuelve.
 - Muerte: `InkDissolve` + `shaders/ink_dissolve.frag` (máscara de ruido con `ShaderMask`, se deshace de arriba hacia abajo); sin shader o con movimiento reducido, fundido con opacidad. El tinte blanco al morir bajó a 60 %.
 - Flujo en la escena: `FlowWind` (pétalos 0/7/15/26 por nivel, ráfagas desde el 2, destellos dorados en el 3), con fundido entre niveles; el reloj se apaga en Flujo 0 y con movimiento reducido no corre.
-- Sin arte nuevo. Pendiente: capas de música por Flujo (necesita stems reales, va con la fase G) y las 5 poses (golpe/guardia del héroe y ataque por jefe). No probado en el simulador; el shader compila con impellerc.
+- Sin arte nuevo. Pendiente: capas de música por Flujo (necesita stems reales, va con la fase G) — las 5 poses llegaron el 20/11 (ver abajo). No probado en el simulador; el shader compila con impellerc.
 - Tests: `strike_presentation_test.dart` (zoom, estela, disolución sin shader, pétalos por nivel, reloj que se apaga, movimiento reducido).
 
 ### Fase C (1/n): bot prudente (2026-11-17)
@@ -306,3 +306,8 @@ macOS no tiene `timeout`.
 - **Normal, sin árbol, 300 subidas (semilla 1):** promedio **24%**, prudente **22%**, experto **53%** (semillas 2–3: experto 58–59%). Fácil 57/57/84%, Difícil 17/22/44%. Meta ~25/60 cumplida en el promedio; el experto queda ~57%.
 - Siguiente: revisar si el mercader da demasiado (8,4 talismanes por subida); presentar la furia al llegar al Monasterio.
 
+
+## Poses (20/11)
+- Integradas `player/hero_strike`, `player/hero_guard` y `enemies/{dragon,dragon_azure,monk_gold}_attack` (`art_status.py`: 174 ✅).
+- Los jefes cambian a la pose de ataque durante la embestida (`attackPoseArt` en `enemy_sprite.dart`; ambas imágenes quedan montadas).
+- El héroe en combate se ve de espaldas y las poses nuevas son de frente (con otra ropa: pantalón azul), así que van como **corte rápido** (`widgets/hero_cut_in.dart`): golpe en la Técnica del Camino, guardia al abrir el Contragolpe, sobre una franja del color del camino. No se vio todavía en el teléfono.
