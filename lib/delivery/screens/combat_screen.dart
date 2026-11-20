@@ -449,7 +449,10 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
           e is EnemyFled,
     );
     if (enemyTurn) return _enemyTurn(prev, next);
-    if (!ev.any((e) => e is CardPlayed)) {
+    // La Técnica del Camino también golpea: puede voltear al rival o ganar
+    // la pelea, así que se resuelve como una carta (sin carta que vuele).
+    final played = ev.any((e) => e is CardPlayed);
+    if (!played && !ev.any((e) => e is TechniqueUsed)) {
       for (final e in ev) {
         switch (e) {
           case TargetChanged():
@@ -472,11 +475,11 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     // La carta vuela hacia su blanco; el golpe se ve cuando llega.
     final hits = ev.whereType<EnemyDamaged>().toList();
     setState(() {
-      _playedUid = prev.selected;
+      _playedUid = played ? prev.selected : null;
       _busy = true;
       if (hits.isNotEmpty) _strikeKey++;
     });
-    _audio.play(Sfx.cardPlay);
+    if (played) _audio.play(Sfx.cardPlay);
     final wave = ev.whereType<WaveStarted>().firstOrNull;
     final rest = ev.any((e) => e is BreatherOffered);
     // La carta le pega al que estaba apuntado (si cae, ya se apunta al otro).
