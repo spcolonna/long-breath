@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** nada.
+- **Falta:** 14 íconos de la fase G (alturas, furia, espinas, escamas, talismán, élite, jefe, mejora, té, mazo, mercader, candado), en «Para generar ahora».
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 10 íconos (con la página suelta), 5 marcos de carta y
@@ -177,6 +177,258 @@ cream tones (#F6EEDC) on the figure only, fully transparent background, saturate
 confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
 high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
 backgrounds, no photorealism, no text, no watermark.
+```
+
+### Ícono: Altura alta (`icons/height_high`)
+
+**Destino:** `assets/art/icons/height_high.png`, cuadrado 256×256, fondo transparente. Se usa para: golpes y desvíos a la altura alta (reemplaza la flecha ↑). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: Part of a set of three height icons that share the same brush arrow; only the direction, color and tip change. a single bold cobalt (#3E7BE0) brush-stroke arrow pointing straight UP, with a small cream cloud wisp at its tip.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Altura media (`icons/height_mid`)
+
+**Destino:** `assets/art/icons/height_mid.png`, cuadrado 256×256, fondo transparente. Se usa para: golpes y desvíos a la altura media (reemplaza la flecha →). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: Part of a set of three height icons that share the same brush arrow; only the direction, color and tip change. a single bold jade (#1FA38A) brush-stroke arrow pointing straight RIGHT, perfectly horizontal, with a short bamboo segment behind it.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Altura baja (`icons/height_low`)
+
+**Destino:** `assets/art/icons/height_low.png`, cuadrado 256×256, fondo transparente. Se usa para: golpes y desvíos a la altura baja (reemplaza la flecha ↓). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: Part of a set of three height icons that share the same brush arrow; only the direction, color and tip change. a single bold gold (#E59A12) brush-stroke arrow pointing straight DOWN, with a small round river stone at its tip.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Furia (`icons/fury`)
+
+**Destino:** `assets/art/icons/fury.png`, cuadrado 256×256, fondo transparente. Se usa para: furia de la montaña (狂) y rival enfurecido: el número que sube sobre el rival. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a fierce vermilion (#E8453C) flame with a bright gold (#E59A12) core, its top curling like a tiger's tail, with two short speed strokes beside it.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Espinas (`icons/thorns`)
+
+**Destino:** `assets/art/icons/thorns.png`, cuadrado 256×256, fondo transparente. Se usa para: te lastimás al golpear a un rival con espinas. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a curved jade (#1FA38A) bramble stem with four sharp cream-tipped thorns and one small round vermilion (#E8453C) berry.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Escamas (`icons/scales`)
+
+**Destino:** `assets/art/icons/scales.png`, cuadrado 256×256, fondo transparente. Se usa para: escamas del Dragón y de otros rivales (cada una baja el daño). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: three overlapping jade (#1FA38A) dragon scales stacked like roof tiles, each with a thin gold (#E59A12) rim and a soft white highlight.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Talismán (`icons/talisman`)
+
+**Destino:** `assets/art/icons/talisman.png`, cuadrado 256×256, fondo transparente. Se usa para: talismanes ganados en premios, eventos y el mercader. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a vertical cream paper charm strip with a vermilion (#E8453C) swirl-and-cloud seal pattern (no writing), hanging from a small gold (#E59A12) knot with a short jade tassel, slightly fluttering.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Élite (`icons/elite`)
+
+**Destino:** `assets/art/icons/elite.png`, cuadrado 256×256, fondo transparente. Se usa para: rivales élite en el mapa y en las lecciones. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: two short crossed Chinese sabers (dao) with gold (#E59A12) hilts in front of a round vermilion (#E8453C) medallion with a small flame on top.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Jefe (`icons/boss`)
+
+**Destino:** `assets/art/icons/boss.png`, cuadrado 256×256, fondo transparente. Se usa para: jefes de etapa en el mapa y en las lecciones. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a fierce but friendly dragon head in profile, jade (#1FA38A) with gold (#E59A12) horns and whiskers, inside a round vermilion (#E8453C) seal ring.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Mejora de carta (`icons/upgrade`)
+
+**Destino:** `assets/art/icons/upgrade.png`, cuadrado 256×256, fondo transparente. Se usa para: mejorar una carta (maestro, fuente, mercader). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a small cream card seen from the front with a bold gold (#E59A12) upward double chevron on it and three tiny sparkles around it.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Té (`icons/tea`)
+
+**Destino:** `assets/art/icons/tea.png`, cuadrado 256×256, fondo transparente. Se usa para: té que cura, en el mercader y los premios. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a small round celadon (#1FA38A) teacup with no handle, warm golden tea inside and one soft cream curl of steam rising.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Mazo (`icons/deck`)
+
+**Destino:** `assets/art/icons/deck.png`, cuadrado 256×256, fondo transparente. Se usa para: ver tu mazo en el mapa; ganar una carta en un evento. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a fanned stack of three cream cards, their borders vermilion (#E8453C), jade (#1FA38A) and cobalt (#3E7BE0), slightly tilted like a hand of cards.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Mercader (`icons/shop`)
+
+**Destino:** `assets/art/icons/shop.png`, cuadrado 256×256, fondo transparente. Se usa para: el puesto del mercader. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a tiny market stall with a cobalt (#3E7BE0) cloth awning with scalloped edges and one round jade coin with a square hole hanging from it by a gold string.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
+```
+
+### Ícono: Candado (`icons/lock`)
+
+**Destino:** `assets/art/icons/lock.png`, cuadrado 256×256, fondo transparente. Se usa para: lecciones, dificultades y nodos todavía bloqueados. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image (1:1 aspect ratio, 1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The game shrinks it to 256×256 and shows it at about 20–32 pixels.
+
+Game UI icon, transparent background, bold simple shape, readable at 20 pixels: a traditional long horizontal Chinese padlock in gold (#E59A12) brass with a curved shackle and a small jade (#1FA38A) tassel hanging below.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, playful and energetic mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
 ### Ícono de la app (para TestFlight / App Store) ✅ integrado (fuente: `docs/arte/app_icon.webp`)
