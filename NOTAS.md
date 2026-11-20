@@ -304,10 +304,21 @@ macOS no tiene `timeout`.
 - **Votos más tentadores:** Silencio +2 Aliento (antes +1), Ayuno 35% (25), Penitencia +15 jade (10), Firmeza 40% (25), Fiereza +3 (2), Loto cura 10 (8), Filo nuevo. **Cumplir el voto** (vencer al jefe de la etapa con él) da +15 de loto (`meridians.lotus.vow`); la fogata lo dice. Los bots ya votan (`Bot.pickVow`: el que planifica, por `vowValue`; el prudente, solo votos que no cuesten Vida). En la simulación los votos pesan poco (sin votos: 23/18/52%).
 - **Desvío con el mejor botín** (`RunEngine.atDetour`: élite en un piso con `elite` > 0, no el guardián): talismanes **raros** primero, **+30 de jade** (`jade.detour`) y la vitrina de **cartas raras o legendarias** en vez del premio común (el arma sigue primero si no hay). La puerta lo anuncia (`nodeHintDetour`).
 - **Normal, sin árbol, 300 subidas (semilla 1):** promedio **24%**, prudente **22%**, experto **53%** (semillas 2–3: experto 58–59%). Fácil 57/57/84%, Difícil 17/22/44%. Meta ~25/60 cumplida en el promedio; el experto queda ~57%.
-- Siguiente: revisar si el mercader da demasiado (8,4 talismanes por subida); presentar la furia al llegar al Monasterio.
+- Siguiente: presentar la furia al llegar al Monasterio (el mercader se revisó el 20/11, ver abajo).
 
 
 ## Poses (20/11)
 - Integradas `player/hero_strike`, `player/hero_guard` y `enemies/{dragon,dragon_azure,monk_gold}_attack` (`art_status.py`: 174 ✅).
 - Los jefes cambian a la pose de ataque durante la embestida (`attackPoseArt` en `enemy_sprite.dart`; ambas imágenes quedan montadas).
 - El héroe en combate se ve de espaldas y las poses nuevas son de frente (con otra ropa: pantalón azul), así que van como **corte rápido** (`widgets/hero_cut_in.dart`): golpe en la Técnica del Camino, guardia al abrir el Contragolpe, sobre una franja del color del camino. No se vio todavía en el teléfono.
+
+## Mercader revisado (20/11) — sin cambios de datos
+- **La cifra de «8,4 talismanes por subida» no era del mercader.** El simulador solo contaba los talismanes de premio. Ahora separa premio, comprados y los que quedan al final. En Normal, sin árbol (promedio/prudente/experto): premio 7,0/6,2/9,9, comprados **0,6/0,5/1,1**, al final 8,7/7,7/12,2. Los talismanes salen de premios, élites, jefes y eventos.
+- **Qué aporta cada cosa** (precio 9999 a ese ítem, 200–300 subidas; base 23/25/56%; ruido ±4 pp):
+  - sin talismanes ni vitrina: 22/25/56;
+  - sin quitar ni mejorar cartas: 23/26/57;
+  - sin arma: 25/30/59;
+  - sin templar: 20/30/56;
+  - sin té: **16/15/46** (el té es lo que más pesa, como se quería: la Vida está en la fuente y el té).
+  - Sin cartas el bot deja de ir al mercader (la ruta lo puntúa por el precio de la carta) y cae a 2/1/18%: ahí lo que se mide es que la sala sin pelea vale mucho, no lo que se compra.
+- Lectura: el mercader no da de más. Los talismanes en venta casi no mueven la aguja (si se quiere que tienten, bajarles el precio). Sobran ~88 de jade por subida, que se convierten en loto.

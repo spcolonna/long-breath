@@ -235,6 +235,9 @@ class RunLog {
   int nodes = 0, fountains = 0, shrines = 0, events = 0;
   int merchants = 0, masters = 0, jadeSpent = 0, jadeLeft = 0;
 
+  /// Talismanes comprados al mercader y los que tenía al terminar.
+  int shopTalismans = 0, talismansHeld = 0;
+
   /// Vida recuperada fuera de pelea (fuente, mercader y eventos) y cuántas
   /// veces se curó.
   int healed = 0, heals = 0;
@@ -497,7 +500,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
         log.merchants++;
         final before = r.jade;
         final hp0 = r.hp;
+        final t0 = r.talismans.length;
         r = bot.shop(runEngine, r);
+        log.shopTalismans += r.talismans.length - t0;
         log.heal(r.hp - hp0);
         log.jadeSpent += before - r.jade;
       case RunPhase.master:
@@ -529,6 +534,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
   log.awakenings.addAll(r.awakenings);
   log.deckSize = r.deck.length;
   log.jadeLeft = r.jade;
+  log.talismansHeld = r.talismans.length;
   log.stage = r.stage;
   log.lotus = r.lotus;
   log.floor = r.visited.length;

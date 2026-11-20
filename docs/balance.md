@@ -776,3 +776,19 @@ Sin mapa: 13 salas por etapa, una pelea por sala con el premio en la puerta, sin
 Escuelas (`--section meta --schools 40 --ascents 30`): primera cumbre del promedio en la subida 9 (6–12), árbol completo hacia la 26; experto 3 y 18.
 
 Palancas: enemigos Normal 115/114 → 105/106 (las salas ya no traen 75% de Vida), árbol rehecho (cura al ganar, Vida +8, Aliento del primer turno, Respirar), loto 2 por pelea, reinos ×1,5. Base sin balancear (solo el sendero): promedio 1%, experto 11%.
+
+## 3z. Mercader revisado (20/11/2026)
+
+El simulador separa ahora los talismanes de premio, los comprados y los que quedan al final (antes solo contaba los de premio, y los «8,4 por subida» se le atribuían al mercader). Normal, sin árbol, promedio/prudente/experto: premio 7,0/6,2/9,9 · comprados 0,6/0,5/1,1 · al final 8,7/7,7/12,2.
+
+Aporte de cada cosa del mercader (ese ítem a 9999 de jade; base 23/25/56%; ruido ±4 pp):
+
+| sin… | promedio | prudente | experto |
+|---|---|---|---|
+| talismanes y vitrina | 22% | 25% | 56% |
+| quitar y mejorar | 23% | 26% | 57% |
+| arma | 25% | 30% | 59% |
+| templar | 20% | 30% | 56% |
+| té | 16% | 15% | 46% |
+
+El té es lo que más pesa. El resto está dentro del ruido. No se cambiaron datos. Para medirlo: copiar `assets/data`, poner el precio en 9999 solo dentro de `"merchant"` (los pesos de `combatRewards` usan las mismas claves) y correr con `--data`.
