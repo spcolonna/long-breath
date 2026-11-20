@@ -274,7 +274,7 @@ class _Heights extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             for (final h in Height.values) ...[
-              Icon(heightIcon(h), size: 16, color: Palette.lacquer),
+              GameIcon(heightIcon(h), size: 16, color: Palette.lacquer),
               Text(
                 ' ${switch (h) {
                   Height.high => t.illHigh,

@@ -272,7 +272,7 @@ class _NodeLegend extends StatelessWidget {
     final t = AppLocalizations.of(context);
     final rows = [
       (Icons.sports_martial_arts, Palette.jade, t.nodeCombat),
-      (Icons.whatshot, Palette.structure, t.rankElite),
+      (eliteIcon, Palette.structure, t.rankElite),
       (Icons.military_tech, Palette.lacquer, t.rankBoss),
       (Icons.water_drop, Palette.sky, t.fountainNode),
       (Icons.temple_buddhist, Palette.gold, t.shrineNode),

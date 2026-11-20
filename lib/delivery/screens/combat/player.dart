@@ -231,7 +231,7 @@ class _GuardBadge extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: Palette.sky),
                   ),
-                  child: Icon(heightIcon(height), size: 11, color: Palette.sky),
+                  child: GameIcon(heightIcon(height), size: 11, color: Palette.sky),
                 ),
               ),
           ],

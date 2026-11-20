@@ -11,6 +11,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/glossary.dart';
 import '../widgets/deck_sheet.dart';
@@ -478,7 +479,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                               selected: _selected == item,
                               child: Row(
                                 children: [
-                                  Icon(icon, color: Palette.jade),
+                                  GameIcon(icon, size: 24, color: Palette.jade),
                                   const SizedBox(width: 10),
                                   Expanded(
                                     child: Text(

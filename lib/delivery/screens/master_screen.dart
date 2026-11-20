@@ -10,6 +10,7 @@ import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/game_icon.dart';
 import '../widgets/paper_panel.dart';
 import '../widgets/scroll_panel.dart';
 import '../widgets/deck_sheet.dart';
@@ -286,7 +287,7 @@ class _MasterScreenState extends ConsumerState<MasterScreen> {
                                 ref.read(audioProvider).play(Sfx.uiButton);
                                 setState(() => _picking = true);
                               },
-                        icon: const Icon(Icons.upgrade),
+                        icon: const GameIcon(Icons.upgrade, size: 22),
                         label: Text(
                           t.masterUpgrade(upgrade),
                           style: const TextStyle(fontSize: 16),

@@ -340,6 +340,7 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
       '${def.hanzi} ${ref.read(textProvider).talisman(id)}',
       talismanColor(def),
       size: 16,
+      icon: talismanIcon,
       dx: 70,
       dy: -70,
     );

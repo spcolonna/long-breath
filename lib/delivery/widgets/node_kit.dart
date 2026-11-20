@@ -8,6 +8,7 @@ import '../feel.dart';
 import '../providers.dart';
 import '../theme.dart';
 import 'deck_sheet.dart';
+import 'game_icon.dart';
 import 'press.dart';
 import 'scene_backdrop.dart';
 
@@ -100,9 +101,13 @@ class ChoiceTile extends StatelessWidget {
           child: Row(
             children: [
               if (leading != null) ...[
-                Icon(
-                  leading,
-                  color: dim ? Palette.textDim : accent ?? Palette.lacquer,
+                Opacity(
+                  opacity: dim ? 0.45 : 1,
+                  child: GameIcon(
+                    leading,
+                    size: 24,
+                    color: dim ? Palette.textDim : accent ?? Palette.lacquer,
+                  ),
                 ),
                 const SizedBox(width: 12),
               ],
@@ -131,9 +136,13 @@ class ChoiceTile extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(
-                trailing,
-                color: dim ? Palette.line : accent ?? Palette.textDim,
+              Opacity(
+                opacity: dim ? 0.45 : 1,
+                child: GameIcon(
+                  trailing,
+                  size: 24,
+                  color: dim ? Palette.line : accent ?? Palette.textDim,
+                ),
               ),
             ],
           ),

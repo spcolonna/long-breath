@@ -22,10 +22,10 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** 14 íconos de la fase G (alturas, furia, espinas, escamas, talismán, élite, jefe, mejora, té, mazo, mercader, candado), en «Para generar ahora».
+- **Falta:** 3 íconos de la fase G (mazo, mercader y candado), en «Para generar ahora».
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
-  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 10 íconos (con la página suelta), 5 marcos de carta y
+  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 21 íconos (con la página suelta y 11 de la fase G), 5 marcos de carta y
   las 3 armas y 64 ilustraciones de cartas (Tigre, Serpiente, Grulla, las 6 de cadena y las 12 de arma). El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
@@ -179,7 +179,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no watermark.
 ```
 
-### Ícono: Altura alta (`icons/height_high`)
+### Ícono: Altura alta (`icons/height_high`) ✅ integrado
 
 **Destino:** `assets/art/icons/height_high.png`, cuadrado 256×256, fondo transparente. Se usa para: golpes y desvíos a la altura alta (reemplaza la flecha ↑). **No es recoloreo.**
 
@@ -197,7 +197,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Altura media (`icons/height_mid`)
+### Ícono: Altura media (`icons/height_mid`) ✅ integrado
 
 **Destino:** `assets/art/icons/height_mid.png`, cuadrado 256×256, fondo transparente. Se usa para: golpes y desvíos a la altura media (reemplaza la flecha →). **No es recoloreo.**
 
@@ -215,7 +215,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Altura baja (`icons/height_low`)
+### Ícono: Altura baja (`icons/height_low`) ✅ integrado
 
 **Destino:** `assets/art/icons/height_low.png`, cuadrado 256×256, fondo transparente. Se usa para: golpes y desvíos a la altura baja (reemplaza la flecha ↓). **No es recoloreo.**
 
@@ -233,7 +233,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Furia (`icons/fury`)
+### Ícono: Furia (`icons/fury`) ✅ integrado
 
 **Destino:** `assets/art/icons/fury.png`, cuadrado 256×256, fondo transparente. Se usa para: furia de la montaña (狂) y rival enfurecido: el número que sube sobre el rival. **No es recoloreo.**
 
@@ -251,7 +251,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Espinas (`icons/thorns`)
+### Ícono: Espinas (`icons/thorns`) ✅ integrado
 
 **Destino:** `assets/art/icons/thorns.png`, cuadrado 256×256, fondo transparente. Se usa para: te lastimás al golpear a un rival con espinas. **No es recoloreo.**
 
@@ -269,7 +269,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Escamas (`icons/scales`)
+### Ícono: Escamas (`icons/scales`) ✅ integrado
 
 **Destino:** `assets/art/icons/scales.png`, cuadrado 256×256, fondo transparente. Se usa para: escamas del Dragón y de otros rivales (cada una baja el daño). **No es recoloreo.**
 
@@ -287,7 +287,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Talismán (`icons/talisman`)
+### Ícono: Talismán (`icons/talisman`) ✅ integrado
 
 **Destino:** `assets/art/icons/talisman.png`, cuadrado 256×256, fondo transparente. Se usa para: talismanes ganados en premios, eventos y el mercader. **No es recoloreo.**
 
@@ -305,7 +305,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Élite (`icons/elite`)
+### Ícono: Élite (`icons/elite`) ✅ integrado
 
 **Destino:** `assets/art/icons/elite.png`, cuadrado 256×256, fondo transparente. Se usa para: rivales élite en el mapa y en las lecciones. **No es recoloreo.**
 
@@ -323,7 +323,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Jefe (`icons/boss`)
+### Ícono: Jefe (`icons/boss`) ✅ integrado
 
 **Destino:** `assets/art/icons/boss.png`, cuadrado 256×256, fondo transparente. Se usa para: jefes de etapa en el mapa y en las lecciones. **No es recoloreo.**
 
@@ -341,7 +341,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Mejora de carta (`icons/upgrade`)
+### Ícono: Mejora de carta (`icons/upgrade`) ✅ integrado
 
 **Destino:** `assets/art/icons/upgrade.png`, cuadrado 256×256, fondo transparente. Se usa para: mejorar una carta (maestro, fuente, mercader). **No es recoloreo.**
 
@@ -359,7 +359,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Té (`icons/tea`)
+### Ícono: Té (`icons/tea`) ✅ integrado
 
 **Destino:** `assets/art/icons/tea.png`, cuadrado 256×256, fondo transparente. Se usa para: té que cura, en el mercader y los premios. **No es recoloreo.**
 

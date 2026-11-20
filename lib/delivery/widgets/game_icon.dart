@@ -14,7 +14,25 @@ final _painted = {
   Icons.bolt: 'charge',
   Icons.savings_outlined: 'stolen',
   Icons.history_edu: 'page',
+  Icons.north: 'height_high',
+  Icons.east: 'height_mid',
+  Icons.south: 'height_low',
+  Icons.whatshot: 'fury',
+  Icons.local_fire_department: 'fury',
+  Icons.grass: 'thorns',
+  Icons.texture: 'scales',
+  Icons.layers: 'scales',
+  Icons.upgrade: 'upgrade',
+  Icons.emoji_food_beverage_outlined: 'tea',
+  Icons.military_tech: 'boss',
+  eliteIcon: 'elite',
+  talismanIcon: 'talisman',
 };
+
+/// Íconos de Material que solo existen para llevar una pintura propia (no
+/// se usan con otro sentido en el juego).
+const eliteIcon = Icons.stars_rounded;
+const talismanIcon = Icons.bookmark_rounded;
 
 class GameIcon extends StatelessWidget {
   const GameIcon(this.icon, {super.key, this.size, this.color});

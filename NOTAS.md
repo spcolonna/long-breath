@@ -327,3 +327,10 @@ macOS no tiene `timeout`.
 - Al superar el Bosque, la pantalla de etapa superada muestra bajo la presentación del Monasterio «狂 Furia de la montaña · +3 por acción» y explica la regla (aguantar no alcanza). Al pasar a la Cumbre avisa que sube: «+4 por acción, en vez de 3». Cuenta la furia de los Picos, si la hubiera. Test: `test/fury_warning_test.dart`.
 - En combate sigue la ficha 狂 con su entrada en el glosario.
 - Pendiente: build +8 (arreglo de la Técnica, poses, este aviso); fases D y G.
+
+## Íconos pintados, tanda 1 (20/11)
+- 11 de 14 integrados en `assets/art/icons/` vía `GameIcon` (`lib/delivery/widgets/game_icon.dart`): alturas (↑→↓ en intenciones, cartas, guardia del héroe y leyenda del tutorial), furia (狂 y enfurecido), espinas, escamas, talismán (aviso en combate y opción de evento que pide talismán), élite y jefe (leyenda de la lección del mapa), mejora (maestro, fuente, mercader, evento) y té (mercader).
+- `eliteIcon` y `talismanIcon` son íconos de Material de relleno que solo existen para llevar su pintura.
+- Los íconos de `node_kit` (fuente, eventos) pasan por `GameIcon`; cuando la opción está apagada se atenúan con opacidad, porque la pintura no toma color.
+- Las alturas pintadas tienen color fijo (azul/jade/oro): ya no se tiñen de rojo para ataque o de celeste para guardia. Mirarlo en el teléfono. La ilustración «ataque vs guardia» del tutorial sigue con flechas de sistema porque usa el color para marcar acierto.
+- Faltan: mazo, mercader y candado (prompts en «Para generar ahora»).

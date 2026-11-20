@@ -306,7 +306,9 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                                             : null,
                                 trailing: o.duel != null
                                     ? Icons.sports_martial_arts
-                                    : o.needs != null
+                                    : o.needs?.kind == EventNeedKind.talisman
+                                        ? talismanIcon
+                                        : o.needs != null
                                         ? Icons.auto_awesome
                                         : o.chance != null
                                             ? Icons.casino_outlined
@@ -454,7 +456,7 @@ class _ResultCard extends ConsumerWidget {
         _chip(
           t.eventResultUpgrade(text.card(r.upgraded!)),
           Palette.gold,
-          Icons.arrow_upward,
+          Icons.upgrade,
         ),
       if (r.lost != null)
         _chip(
