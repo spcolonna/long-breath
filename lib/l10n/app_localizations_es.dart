@@ -2548,6 +2548,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String stageFuryTitle(int n) {
+    return '狂 Furia de la montaña · +$n por acción';
+  }
+
+  @override
+  String stageFuryNew(int n) {
+    return 'Desde acá la montaña enfurece a los rivales: después de cada acción sus golpes suman $n más, y no se calma. Aguantar no alcanza: vencelos rápido.';
+  }
+
+  @override
+  String stageFuryMore(int n, int prev) {
+    return 'Más arriba enfurece más: cada acción suma $n a sus golpes, en vez de $prev. Vencelos rápido.';
+  }
+
+  @override
   String get wrathCalmed => 'Se vuelve a dormir';
 
   @override

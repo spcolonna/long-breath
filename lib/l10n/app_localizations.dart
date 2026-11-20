@@ -4102,6 +4102,24 @@ abstract class AppLocalizations {
   /// **'Furia de la montaña · +{n}'**
   String furyChip(int n);
 
+  /// No description provided for @stageFuryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'狂 Furia de la montaña · +{n} por acción'**
+  String stageFuryTitle(int n);
+
+  /// No description provided for @stageFuryNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Desde acá la montaña enfurece a los rivales: después de cada acción sus golpes suman {n} más, y no se calma. Aguantar no alcanza: vencelos rápido.'**
+  String stageFuryNew(int n);
+
+  /// No description provided for @stageFuryMore.
+  ///
+  /// In es, this message translates to:
+  /// **'Más arriba enfurece más: cada acción suma {n} a sus golpes, en vez de {prev}. Vencelos rápido.'**
+  String stageFuryMore(int n, int prev);
+
   /// No description provided for @wrathCalmed.
   ///
   /// In es, this message translates to:

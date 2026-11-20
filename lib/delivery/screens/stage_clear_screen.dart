@@ -152,6 +152,15 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
     final done = stages[run.stage];
     final next = stages[math.min(run.stage + 1, stages.length - 1)];
     final heal = engine.stageHealOf(run);
+    // La furia de la montaña se presenta al llegar a la etapa que la trae
+    // (o que la sube): antes aparecía sin aviso en el primer combate.
+    final picoFury = data.balance.picoMods(run.pico).fury;
+    final doneFury = run.stage + 1 < stages.length
+        ? done.enemyMods.fury + picoFury
+        : 0;
+    final nextFury = run.stage + 1 < stages.length
+        ? next.enemyMods.fury + picoFury
+        : 0;
 
     return Scaffold(
       body: SceneBackdrop(
@@ -365,6 +374,11 @@ class _StageClearScreenState extends ConsumerState<StageClearScreen>
                                             height: 1.4,
                                           ),
                                         ),
+                                        if (nextFury > doneFury)
+                                          _FuryWarning(
+                                            fury: nextFury,
+                                            prev: doneFury,
+                                          ),
                                       ],
                                     ),
                                     ),
@@ -854,6 +868,47 @@ class _StageLoot extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Aviso de la furia de la montaña en la etapa que viene: la primera vez
+/// explica la regla; si solo sube, dice cuánto.
+class _FuryWarning extends StatelessWidget {
+  const _FuryWarning({required this.fury, required this.prev});
+
+  final int fury;
+  final int prev;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    return Padding(
+      key: const ValueKey('fury_warning'),
+      padding: const EdgeInsets.only(top: 12),
+      child: Column(
+        children: [
+          Text(
+            t.stageFuryTitle(fury),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: Palette.lacquer,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            prev == 0 ? t.stageFuryNew(fury) : t.stageFuryMore(fury, prev),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 13,
+              height: 1.35,
+              color: Palette.textDim,
+            ),
+          ),
+        ],
       ),
     );
   }

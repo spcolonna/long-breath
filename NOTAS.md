@@ -304,7 +304,7 @@ macOS no tiene `timeout`.
 - **Votos más tentadores:** Silencio +2 Aliento (antes +1), Ayuno 35% (25), Penitencia +15 jade (10), Firmeza 40% (25), Fiereza +3 (2), Loto cura 10 (8), Filo nuevo. **Cumplir el voto** (vencer al jefe de la etapa con él) da +15 de loto (`meridians.lotus.vow`); la fogata lo dice. Los bots ya votan (`Bot.pickVow`: el que planifica, por `vowValue`; el prudente, solo votos que no cuesten Vida). En la simulación los votos pesan poco (sin votos: 23/18/52%).
 - **Desvío con el mejor botín** (`RunEngine.atDetour`: élite en un piso con `elite` > 0, no el guardián): talismanes **raros** primero, **+30 de jade** (`jade.detour`) y la vitrina de **cartas raras o legendarias** en vez del premio común (el arma sigue primero si no hay). La puerta lo anuncia (`nodeHintDetour`).
 - **Normal, sin árbol, 300 subidas (semilla 1):** promedio **24%**, prudente **22%**, experto **53%** (semillas 2–3: experto 58–59%). Fácil 57/57/84%, Difícil 17/22/44%. Meta ~25/60 cumplida en el promedio; el experto queda ~57%.
-- Siguiente: presentar la furia al llegar al Monasterio (el mercader se revisó el 20/11, ver abajo).
+- La furia se presenta al superar la etapa (20/11, ver abajo); el mercader se revisó el 20/11.
 
 
 ## Poses (20/11)
@@ -322,3 +322,8 @@ macOS no tiene `timeout`.
   - sin té: **16/15/46** (el té es lo que más pesa, como se quería: la Vida está en la fuente y el té).
   - Sin cartas el bot deja de ir al mercader (la ruta lo puntúa por el precio de la carta) y cae a 2/1/18%: ahí lo que se mide es que la sala sin pelea vale mucho, no lo que se compra.
 - Lectura: el mercader no da de más. Los talismanes en venta casi no mueven la aguja (si se quiere que tienten, bajarles el precio). Sobran ~88 de jade por subida, que se convierten en loto.
+
+## Furia presentada (20/11)
+- Al superar el Bosque, la pantalla de etapa superada muestra bajo la presentación del Monasterio «狂 Furia de la montaña · +3 por acción» y explica la regla (aguantar no alcanza). Al pasar a la Cumbre avisa que sube: «+4 por acción, en vez de 3». Cuenta la furia de los Picos, si la hubiera. Test: `test/fury_warning_test.dart`.
+- En combate sigue la ficha 狂 con su entrada en el glosario.
+- Pendiente: build +8 (arreglo de la Técnica, poses, este aviso); fases D y G.
