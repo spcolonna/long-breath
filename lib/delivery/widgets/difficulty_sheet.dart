@@ -10,6 +10,7 @@ import '../providers.dart';
 import '../theme.dart';
 import 'juice.dart';
 import '../feel.dart';
+import 'game_icon.dart';
 
 /// Color de cada dificultad: de jade (tranquila) a laca (maestro).
 Color difficultyColor(Difficulty d) => switch (d) {
@@ -349,7 +350,7 @@ class _LockedOption extends StatelessWidget {
                     ),
                     Bounce(
                       trigger: taps,
-                      child: const Icon(
+                      child: const GameIcon(
                         Icons.lock_rounded,
                         color: Palette.textDim,
                       ),

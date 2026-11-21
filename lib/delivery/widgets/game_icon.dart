@@ -25,6 +25,11 @@ final _painted = {
   Icons.upgrade: 'upgrade',
   Icons.emoji_food_beverage_outlined: 'tea',
   Icons.military_tech: 'boss',
+  Icons.style: 'deck',
+  Icons.storefront_rounded: 'shop',
+  Icons.lock: 'lock',
+  Icons.lock_rounded: 'lock',
+  Icons.lock_outline: 'lock',
   eliteIcon: 'elite',
   talismanIcon: 'talisman',
 };

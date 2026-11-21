@@ -17,6 +17,7 @@ import '../widgets/juice.dart';
 import '../widgets/scroll_panel.dart';
 import '../widgets/lotus.dart';
 import '../feel.dart';
+import '../widgets/game_icon.dart';
 
 /// 经络: el árbol de meridianos. Tres canales (Cuerpo, Espíritu, Técnica)
 /// de cinco puntos cada uno; se abren con semillas de loto cuando la
@@ -552,7 +553,7 @@ class _PointState extends ConsumerState<_Point>
                 const Positioned(
                   right: -2,
                   bottom: -2,
-                  child: Icon(Icons.lock, size: 16, color: Palette.textDim),
+                  child: GameIcon(Icons.lock, size: 16, color: Palette.textDim),
                 ),
             ],
           ),

@@ -333,4 +333,4 @@ macOS no tiene `timeout`.
 - `eliteIcon` y `talismanIcon` son íconos de Material de relleno que solo existen para llevar su pintura.
 - Los íconos de `node_kit` (fuente, eventos) pasan por `GameIcon`; cuando la opción está apagada se atenúan con opacidad, porque la pintura no toma color.
 - Las alturas pintadas tienen color fijo (azul/jade/oro): ya no se tiñen de rojo para ataque o de celeste para guardia. Mirarlo en el teléfono. La ilustración «ataque vs guardia» del tutorial sigue con flechas de sistema porque usa el color para marcar acierto.
-- Faltan: mazo, mercader y candado (prompts en «Para generar ahora»).
+- 21/11: mazo (botón del mazo en el mapa y carta ganada en evento), mercader (leyenda y lección del mapa) y candado (lecciones, dificultades, meridianos y forma bloqueada en combate) integrados: 14/14. El candado pintado es dorado y ya no se apaga a gris: mirar en el teléfono si «bloqueado» se sigue leyendo, sobre todo el de 9 px en combate.

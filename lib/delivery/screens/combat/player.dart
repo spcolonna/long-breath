@@ -555,7 +555,7 @@ class _FormStep extends StatelessWidget {
             if (!owned)
               const Padding(
                 padding: EdgeInsets.only(right: 1),
-                child: Icon(
+                child: GameIcon(
                   Icons.lock_outline,
                   size: 9,
                   color: Palette.textDim,

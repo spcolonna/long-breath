@@ -11,6 +11,7 @@ import '../tutorial/lessons.dart';
 import '../widgets/juice.dart';
 import '../widgets/scroll_panel.dart';
 import '../feel.dart';
+import '../widgets/game_icon.dart';
 
 /// Lista de lecciones: en orden, cada una se habilita al completar la
 /// anterior y todas se pueden repetir.
@@ -158,7 +159,7 @@ class _LessonTile extends StatelessWidget {
                                 color: Palette.onColor,
                               )
                             : locked
-                            ? const Icon(
+                            ? const GameIcon(
                                 Icons.lock_rounded,
                                 size: 18,
                                 color: Palette.textDim,

@@ -22,10 +22,10 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** 3 íconos de la fase G (mazo, mercader y candado), en «Para generar ahora».
+- **Falta:** nada para el contenido actual. Los 14 íconos de la fase G están integrados.
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
-  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 21 íconos (con la página suelta y 11 de la fase G), 5 marcos de carta y
+  de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 24 íconos (con la página suelta y los 14 de la fase G), 5 marcos de carta y
   las 3 armas y 64 ilustraciones de cartas (Tigre, Serpiente, Grulla, las 6 de cadena y las 12 de arma). El detalle está en «Estado», más abajo.
 
 ## Paleta de referencia
@@ -45,7 +45,7 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Nada: las 174 imágenes están integradas (incluidas las 5 poses del 20/11) y ya no queda ningún recoloreo de enemigo. Los prompts nuevos van acá, sueltos, uno por imagen.
+Nada: las 174 imágenes están integradas (incluidas las 5 poses del 20/11) y los 14 íconos de la fase G (21/11) y ya no queda ningún recoloreo de enemigo. Los prompts nuevos van acá, sueltos, uno por imagen.
 
 ### Retrato: Shuang (`npc/shuang`) ✅ integrado
 
@@ -377,7 +377,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Mazo (`icons/deck`)
+### Ícono: Mazo (`icons/deck`) ✅ integrado
 
 **Destino:** `assets/art/icons/deck.png`, cuadrado 256×256, fondo transparente. Se usa para: ver tu mazo en el mapa; ganar una carta en un evento. **No es recoloreo.**
 
@@ -395,7 +395,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Mercader (`icons/shop`)
+### Ícono: Mercader (`icons/shop`) ✅ integrado
 
 **Destino:** `assets/art/icons/shop.png`, cuadrado 256×256, fondo transparente. Se usa para: el puesto del mercader. **No es recoloreo.**
 
@@ -413,7 +413,7 @@ high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no bla
 backgrounds, no photorealism, no text, no letters, no Chinese characters, no watermark.
 ```
 
-### Ícono: Candado (`icons/lock`)
+### Ícono: Candado (`icons/lock`) ✅ integrado
 
 **Destino:** `assets/art/icons/lock.png`, cuadrado 256×256, fondo transparente. Se usa para: lecciones, dificultades y nodos todavía bloqueados. **No es recoloreo.**
 

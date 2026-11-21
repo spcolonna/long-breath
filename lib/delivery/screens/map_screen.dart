@@ -30,6 +30,7 @@ import '../widgets/hp_count.dart';
 import '../widgets/altitude_bar.dart';
 import 'map/map_node.dart';
 import '../feel.dart';
+import '../widgets/game_icon.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -640,7 +641,7 @@ class _RunHeader extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
               ),
               onPressed: () => showDeckSheet(context, run.deck),
-              icon: const Icon(Icons.style, size: 18),
+              icon: const GameIcon(Icons.style, size: 18),
               label: Text('${run.deck.length}'),
             ),
           ),
