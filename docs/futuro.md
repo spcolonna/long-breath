@@ -306,3 +306,5 @@ Restricción que guía todo: **pocos assets**. Cada punto indica cuánto arte nu
 | D · Mundo | Árboles de camino, cartas de Serpiente y Grulla, formas nuevas, historia y legado | La experiencia completa |
 
 **Modelo pago:** la versión gratis o demo incluye el tutorial y la etapa 1. La compra desbloquea las otras etapas, los Picos y el cultivo. La fase B es lo mínimo para que la compra valga la pena.
+
+- **Rediseño de desafío (23/11):** ver `docs/rediseno-desafio.md`.

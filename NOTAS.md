@@ -334,3 +334,7 @@ macOS no tiene `timeout`.
 - Los íconos de `node_kit` (fuente, eventos) pasan por `GameIcon`; cuando la opción está apagada se atenúan con opacidad, porque la pintura no toma color.
 - Las alturas pintadas tienen color fijo (azul/jade/oro): ya no se tiñen de rojo para ataque o de celeste para guardia. Mirarlo en el teléfono. La ilustración «ataque vs guardia» del tutorial sigue con flechas de sistema porque usa el color para marcar acierto.
 - 21/11: mazo (botón del mazo en el mapa y carta ganada en evento), mercader (leyenda y lección del mapa) y candado (lecciones, dificultades, meridianos y forma bloqueada en combate) integrados: 14/14. El candado pintado es dorado y ya no se apaga a gris: mirar en el teléfono si «bloqueado» se sigue leyendo, sobre todo el de 9 px en combate.
+
+## Rediseño de desafío (23/11)
+- Registro real de la +8: ganó Normal en la primera subida sin esfuerzo (~40 min, Dragón dormido muerto en 2 turnos con 316 de daño en uno, 278 de jade y 166 de loto sobrantes). El simulador subestima a una persona.
+- Decisión: juego de pago único; ganar debe exigir desarrollar varios árboles (meridianos ampliados, maestría por camino, escuela con jade). Plan completo en `docs/rediseno-desafio.md` (fases 1–4). Nueva meta: bot experto sin árbol ≤10% en Normal.
