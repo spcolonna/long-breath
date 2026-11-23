@@ -792,3 +792,31 @@ Aporte de cada cosa del mercader (ese ítem a 9999 de jade; base 23/25/56%; ruid
 | té | 16% | 15% | 46% |
 
 El té es lo que más pesa. El resto está dentro del ruido. No se cambiaron datos. Para medirlo: copiar `assets/data`, poner el precio en 9999 solo dentro de `"merchant"` (los pesos de `combatRewards` usan las mismas claves) y correr con `--data`.
+
+## 4a. Rediseño fase 1: techo de combate y Normal duro (23/11/2026)
+**Motivo:** el usuario ganó Normal en su primera subida sin esfuerzo con la build +8. Mató al Dragón dormido en 2 turnos, con 316 de daño en uno solo. Plan general en `docs/rediseno-desafio.md`.
+
+**Combate:**
+- **Fases como barreras.** Un golpe no pasa del próximo umbral: lo que sobra se pierde.
+  - Al cambiar de fase el enemigo sale del Desequilibrado, recupera la Estructura y gana 8 de Guardia (`enemyBreak.phaseGuard`).
+  - Ese turno no puede cruzar otra fase ni caer (`phaseTurn`).
+  - El Abad de la Campana suma una tercera fase al 25%.
+- **Filo** (filo +6; abismo y voto_filo +8) suma solo al primer ataque del turno, no a cada golpe.
+- **Desequilibrado sigue en ×2.** Lo enseñan las lecciones y muchos textos; queda configurable con `enemyBreak.damagePct`.
+- La cura entre etapas baja del 40% al 25% de lo que falta.
+
+**Dificultades** (Vida y daño de los enemigos, en %):
+
+| | Fácil | Normal | Difícil | Shifu |
+|---|---|---|---|---|
+| Antes | 97/98 | 105/106 | 108/110 | 112/113 |
+| Ahora | 105/106 | 122/128 | 128/134 | 134/140 |
+
+Por etapa (`enemyMods`): etapa 2 pasa de +40/+9 a **+55/+30**, etapa 3 de +62/+16 a **+85/+48**.
+
+**Resultado:**
+- **Subida suelta** (experto, Normal, sin árbol, 150 runs): llega a la etapa 2 el 49%, a la etapa 3 el 8% y gana el **2%**. Antes ganaba el 49%.
+- **Jefes:** 6–7 turnos y 25 de Vida perdida.
+- **Progresión** (`--section meta`, 20 escuelas × 30 subidas, experto): gana el 2% en las subidas 1–5, el 11% en las 11–15 y el 29% en las 26–30. El árbol queda completo hacia la subida 27.
+- Una persona juega mejor que el bot, así que se espera la primera victoria hacia la subida 8. Lo confirma el registro de la build +9.
+- La fase 2 (árboles ampliados, maestría y escuela) va a recalibrar esto.

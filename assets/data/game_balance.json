@@ -46,7 +46,7 @@
   },
   "deflect": { "enemyStructureLoss": 3, "breathBonus": 1 },
   "playerBreak": { "breathPenalty": 2 },
-  "enemyBreak": { "damageMultiplier": 2 },
+  "enemyBreak": { "damagePct": 200, "phaseGuard": 8 },
   "paths": { "choices": 2 },
   "rewards": { "choices": 3, "pools": ["reward", "tiger", "snake", "crane"], "talismanChoices": 3,
     "rarityWeights": { "common": 4, "rare": 3, "legendary": 1 }, "raritySurcharge": { "rare": 5, "legendary": 15 } },
@@ -103,10 +103,10 @@
     ]
   },
   "difficulties": {
-    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 97, "enemyDamage": 98 },
-    "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20, "enemyHp": 105, "enemyDamage": 106 },
-    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 108, "enemyDamage": 110 },
-    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 112, "enemyDamage": 113, "enemyStructure": 108 }
+    "easy":   { "hanzi": "易", "playerHp": 60, "fountainHeal": 25, "enemyHp": 105, "enemyDamage": 106 },
+    "normal": { "hanzi": "常", "playerHp": 50, "fountainHeal": 20, "enemyHp": 122, "enemyDamage": 128 },
+    "hard":   { "hanzi": "难", "playerHp": 50, "fountainHeal": 15, "enemyHp": 128, "enemyDamage": 134 },
+    "shifu":  { "hanzi": "师", "playerHp": 45, "fountainHeal": 15, "enemyHp": 134, "enemyDamage": 140, "enemyStructure": 108 }
   },
   "picos": [
     { "eliteHp": 15 },
@@ -121,7 +121,7 @@
     { "enemyDamage": 5, "enemyHp": 8, "enemyStructure": 5 }
   ],
   "run": {
-    "stageClear": { "heal": 40, "jade": 25 },
+    "stageClear": { "heal": 25, "jade": 25 },
     "packs": { "hpPct": [100, 70, 58], "togetherHpPct": 55, "togetherDamagePct": 80, "jadePerExtra": 5, "breather": { "healPct": 0, "draw": 2, "breath": 1, "fist": 2 }, "escort": { "eliteHpPct": 80, "hpPct": 45, "damagePct": 85 } },
     "wanderingMerchant": { "every": 4, "spread": 1 },
     "path": { "minFights": 8, "maxRest": 2, "masterBy": 8, "merchantBy": 10 },
@@ -170,7 +170,7 @@
         ],
         "scenes": ["pasarela", "escalera", "patio_colgado"],
         "lights": ["alba", "niebla", "ocaso"],
-        "enemyMods": { "enemyHp": 40, "enemyDamage": 9, "fury": 3 },
+        "enemyMods": { "enemyHp": 55, "enemyDamage": 30, "fury": 3 },
         "merchant": { "cards": 4, "card": 25, "talisman": 60, "remove": 35, "upgrade": 30, "tea": 20, "teaHeal": 20, "weapon": 60, "weaponForge": 75, "rare": 140 }
       },
       {
@@ -193,7 +193,7 @@
         ],
         "scenes": ["ventisquero", "glaciar", "paso_nevado"],
         "lights": ["alba", "niebla", "ocaso"],
-        "enemyMods": { "enemyHp": 62, "enemyDamage": 16, "fury": 4 },
+        "enemyMods": { "enemyHp": 85, "enemyDamage": 48, "fury": 4 },
         "merchant": { "cards": 4, "card": 30, "talisman": 85, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25, "weapon": 75, "weaponForge": 90, "rare": 160 }
       }
     ]

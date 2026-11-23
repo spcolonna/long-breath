@@ -88,6 +88,7 @@ class EnemyCombat {
     this.thorns = 0,
     this.fury = 0,
     this.furyStep = 0,
+    this.phaseTurn = -1,
   });
 
   final String id;
@@ -135,12 +136,17 @@ class EnemyCombat {
   final int fury;
   final int furyStep;
 
+  /// Turno en que cambió de fase por última vez (una fase por turno; ese
+  /// turno no puede caer).
+  final int phaseTurn;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
     int? phaseIndex,
     int? patternIndex,
     int? scales,
+    int? guard,
   }) =>
       EnemyCombat(
         id: id,
@@ -148,7 +154,7 @@ class EnemyCombat {
         maxHp: maxHp,
         structure: structure ?? this.structure,
         maxStructure: maxStructure,
-        guard: guard,
+        guard: guard ?? this.guard,
         phaseIndex: phaseIndex ?? this.phaseIndex,
         patternIndex: patternIndex ?? this.patternIndex,
         staggered: staggered,
@@ -164,6 +170,7 @@ class EnemyCombat {
         thorns: thorns,
         fury: fury,
         furyStep: furyStep,
+        phaseTurn: phaseTurn,
       );
 }
 

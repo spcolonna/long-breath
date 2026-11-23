@@ -338,3 +338,4 @@ macOS no tiene `timeout`.
 ## Rediseño de desafío (23/11)
 - Registro real de la +8: ganó Normal en la primera subida sin esfuerzo (~40 min, Dragón dormido muerto en 2 turnos con 316 de daño en uno, 278 de jade y 166 de loto sobrantes). El simulador subestima a una persona.
 - Decisión: juego de pago único; ganar debe exigir desarrollar varios árboles (meridianos ampliados, maestría por camino, escuela con jade). Plan completo en `docs/rediseno-desafio.md` (fases 1–4). Nueva meta: bot experto sin árbol ≤10% en Normal.
+- **Fase 1 hecha (23/11):** fases de jefe como barreras, filo solo al primer ataque, cura entre etapas 25%, Normal 122/128 con etapas +55/+30 y +85/+48 (ver `balance.md` §4a). Experto sin árbol: 2% (antes 49%); primera victoria del experto hacia la subida ~12. Desequilibrado sigue ×2 (lo enseñan las lecciones). Siguiente: build +9 para probar, después fase 2.

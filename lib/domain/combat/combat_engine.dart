@@ -625,7 +625,7 @@ class CombatEngine {
   }) {
     if (!def.type.isAttack || def.damage == 0) return 0;
     return flowDamageOf(flow) +
-        edge +
+        (attacks == 0 ? edge : 0) +
         (def.cost >= 2 ? heavy : 0) +
         (attacks == 0 ? firstStrike : 0) +
         (chain + def.chainDamage) * attacks +
@@ -708,10 +708,10 @@ class CombatEngine {
     );
   }
 
-  /// Daño efectivo sobre el enemigo: ×2 desequilibrado; si no, ½ inamovible
+  /// Daño efectivo sobre el enemigo: ×2 desequilibrado (`enemyBreak`); si no, ½ inamovible
   /// y menos sus escamas.
   int _enemyDamageTaken(EnemyDef def, bool staggered, int scales, int dmg) {
-    if (staggered) return dmg * data.balance.enemyBreakDamageMultiplier;
+    if (staggered) return (dmg * data.balance.enemyBreakDamagePct / 100).round();
     if (def.immovable) dmg ~/= 2;
     return math.max(0, dmg - scales);
   }
@@ -952,8 +952,8 @@ class CombatEngine {
       ),
     );
     if (def.type.isAttack) {
-      // Filo: el talismán que suma daño se enciende.
-      if (def.damage > 0 && onEdge(d.hp, d.maxHp)) {
+      // Filo: el talismán suma daño al primer ataque del turno.
+      if (def.damage > 0 && d.attacksThisTurn == 0 && onEdge(d.hp, d.maxHp)) {
         for (final id in _slots(d.talismans, d.weaponEffect)) {
           if (_fx(id, d.weaponEffect).edgeDamage > 0) events.add(_trig(id));
         }
@@ -1163,6 +1163,10 @@ class CombatEngine {
     final absorbed = covers ? math.min(math.max(0, e.guard - pierce), taken) : 0;
     e.guard -= absorbed;
     taken -= absorbed;
+    // Fases como barreras: el golpe no pasa del próximo umbral (lo que
+    // sobra se pierde) y el turno en que cambió de fase no puede caer.
+    final floor = _phaseFloor(d, e, def);
+    if (e.hp - taken < floor) taken = math.max(0, e.hp - floor);
     e.hp = math.max(0, e.hp - taken);
     final strTaken = e.staggered ? 0 : math.min(str, e.structure);
     e.structure -= strTaken;
@@ -1247,6 +1251,21 @@ class CombatEngine {
     }
   }
 
+  /// Vida mínima que puede dejarle un golpe: el próximo umbral de fase; si
+  /// ya cambió de fase en este turno, uno más que el siguiente (o 1 si era
+  /// la última), así no saltea fases ni cae el mismo turno.
+  int _phaseFloor(_Draft d, _EnemyDraft e, EnemyDef def) {
+    final phases = def.phases;
+    final changed = e.phaseTurn == d.turn;
+    for (var i = e.phaseIndex + 1; i < phases.length; i++) {
+      final t = phases[i].hpThreshold;
+      if (t == null) continue;
+      final at = (e.maxHp * t).floor();
+      return changed ? at + 1 : at;
+    }
+    return changed ? 1 : 0;
+  }
+
   void _checkEnemyPhase(_Draft d, List<CombatEvent> events) {
     final e = d.enemy;
     final phases = data.enemy(e.id).phases;
@@ -1255,7 +1274,18 @@ class CombatEngine {
       if (t != null && e.hp <= e.maxHp * t) {
         e.phaseIndex = i;
         e.patternIndex = 0;
+        e.phaseTurn = d.turn;
         events.add(EnemyPhaseChanged(i));
+        // Se recompone: sale del desequilibrio, recupera la Estructura y
+        // se cubre.
+        if (e.staggered) {
+          e.staggered = false;
+          e.skipNextAction = false;
+          events.add(const EnemyRecovered());
+        }
+        e.structure = e.maxStructure;
+        final g = data.balance.phaseGuard;
+        if (g > 0) e.guard += g;
         final regrow = phases[i].scales;
         if (regrow != null && e.scales < regrow) {
           e.scales = regrow;
@@ -1639,6 +1669,7 @@ class _EnemyDraft {
     this.thorns = 0,
     this.fury = 0,
     this.furyStep = 0,
+    this.phaseTurn = -1,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -1663,6 +1694,7 @@ class _EnemyDraft {
     thorns: e.thorns,
     fury: e.fury,
     furyStep: e.furyStep,
+    phaseTurn: e.phaseTurn,
   );
 
   final String id;
@@ -1686,6 +1718,7 @@ class _EnemyDraft {
   final int thorns;
   int fury;
   final int furyStep;
+  int phaseTurn;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -1709,6 +1742,7 @@ class _EnemyDraft {
     thorns: thorns,
     fury: fury,
     furyStep: furyStep,
+    phaseTurn: phaseTurn,
   );
 }
 

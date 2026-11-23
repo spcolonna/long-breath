@@ -612,6 +612,41 @@ void main() {
       expect(s.hand.length, 3);
     });
 
+    test('fases como barreras: el daño sobrante se pierde y no saltea fases', () {
+      var s = setup(
+          ['gongbu_chongquan', 'gongbu_chongquan', 'gongbu_chongquan', ...filler],
+          enemy: 'dragon');
+      final max = s.enemy.maxHp;
+      final half = (max * 0.5).floor();
+      // Apenas arriba del 50% y desequilibrado (el golpe entra doble).
+      s = s.copyWith(enemy: s.enemy.copyWith(hp: half + 2));
+      var r = play(s, 'gongbu_chongquan');
+      expect(r.state.enemy.hp, half, reason: 'se frena en el umbral');
+      expect(r.state.enemy.phaseIndex, 1);
+      // Mismo turno: el siguiente golpe no puede cruzar el 30%.
+      // Sin la Guardia del cambio de fase, para medir solo la barrera.
+      s = r.state.copyWith(
+          enemy: r.state.enemy.copyWith(hp: (max * 0.3).floor() + 3, guard: 0));
+      r = play(s, 'gongbu_chongquan');
+      expect(r.state.enemy.phaseIndex, 1);
+      expect(r.state.enemy.hp, (max * 0.3).floor() + 1);
+    });
+
+    test('fases como barreras: el jefe no cae el turno en que cambia de fase', () {
+      var s = setup(['gongbu_chongquan', 'gongbu_chongquan', ...filler],
+          enemy: 'dragon');
+      final max = s.enemy.maxHp;
+      s = s.copyWith(
+          enemy: s.enemy.copyWith(hp: (max * 0.3).floor() + 1, phaseIndex: 1, scales: 0));
+      var r = play(s, 'gongbu_chongquan');
+      expect(r.state.enemy.phaseIndex, 2);
+      s = r.state.copyWith(
+          enemy: r.state.enemy.copyWith(hp: 3, scales: 0, guard: 0));
+      r = play(s, 'gongbu_chongquan');
+      expect(r.state.enemy.hp, 1);
+      expect(r.state.phase, isNot(CombatPhase.won));
+    });
+
     test('Eco del Dragón: fase 2 al 50% con cuenta regresiva', () {
       var s = setup(['gongbu_chongquan', ...filler], enemy: 'dragon');
       s = s.copyWith(enemy: s.enemy.copyWith(hp: 78));
@@ -1117,19 +1152,25 @@ void main() {
           greaterThanOrEqualTo(engine.intentView(s2).damage + 4));
     });
 
-    test('filo: con el 70% de la Vida o menos, los ataques pegan más', () {
+    test('filo: con el 70% de la Vida o menos, el primer ataque del turno pega más', () {
       final deck = ['gongbu_chongquan', ...filler];
       final full = setup(deck, hp: 36, talismans: ['filo']);
       final edge = setup(deck, hp: 35, talismans: ['filo']);
       final plain = setup(deck, hp: 35);
       int dmg(CombatState s) =>
           engine.preview(s, uidOf(s, 'gongbu_chongquan')).damage;
-      expect(dmg(edge), dmg(full) + 3);
+      expect(dmg(edge), dmg(full) + 6);
       expect(dmg(plain), dmg(full), reason: 'sin talismán de filo no cambia');
       final r = play(edge, 'gongbu_chongquan');
       expect(r.events.whereType<TalismanTriggered>().map((e) => e.talismanId),
           contains('filo'));
       expect(play(full, 'gongbu_chongquan').events
+          .whereType<TalismanTriggered>(), isEmpty);
+      // Solo el primer ataque: el segundo ya no suma ni enciende el filo.
+      final two = setup(['gongbu_chongquan', 'gongbu_chongquan', ...filler],
+          hp: 35, talismans: ['filo']);
+      final first = play(two, 'gongbu_chongquan').state;
+      expect(play(first, 'gongbu_chongquan').events
           .whereType<TalismanTriggered>(), isEmpty);
     });
 

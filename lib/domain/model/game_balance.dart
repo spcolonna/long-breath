@@ -672,7 +672,8 @@ class GameBalance {
     required this.deflectEnemyStructureLoss,
     required this.deflectBreathBonus,
     required this.playerBreakBreathPenalty,
-    required this.enemyBreakDamageMultiplier,
+    required this.enemyBreakDamagePct,
+    this.phaseGuard = 0,
     required this.rewardChoices,
     required this.rewardPools,
     this.rarityWeights = const {},
@@ -764,7 +765,11 @@ class GameBalance {
   final int deflectEnemyStructureLoss;
   final int deflectBreathBonus;
   final int playerBreakBreathPenalty;
-  final int enemyBreakDamageMultiplier;
+  /// Daño que recibe un enemigo desequilibrado, en % (150 = ×1,5).
+  final int enemyBreakDamagePct;
+
+  /// Guardia que gana un enemigo al cambiar de fase.
+  final int phaseGuard;
   final int rewardChoices;
   final List<String> rewardPools;
 
@@ -954,8 +959,11 @@ class GameBalance {
       deflectBreathBonus: deflect['breathBonus'] as int,
       playerBreakBreathPenalty:
           (j['playerBreak'] as Map<String, dynamic>)['breathPenalty'] as int,
-      enemyBreakDamageMultiplier:
-          (j['enemyBreak'] as Map<String, dynamic>)['damageMultiplier'] as int,
+      enemyBreakDamagePct: switch (j['enemyBreak'] as Map<String, dynamic>) {
+        {'damagePct': final int pct} => pct,
+        final m => (m['damageMultiplier'] as int) * 100,
+      },
+      phaseGuard: (j['enemyBreak'] as Map<String, dynamic>)['phaseGuard'] as int? ?? 0,
       rewardChoices: rewards['choices'] as int,
       rewardPools: (rewards['pools'] as List).cast<String>(),
       rarityWeights: {

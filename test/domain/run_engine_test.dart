@@ -229,7 +229,7 @@ void main() {
     r = run.chooseReward(r, null);
     expect(r.phase, RunPhase.stageClear);
     // Respira hondo: recupera el 40% de lo que le falta, no todo.
-    final heal = ((r.maxHp - r.hp) * 0.4).round();
+    final heal = ((r.maxHp - r.hp) * 0.25).round();
     expect(run.stageHealOf(r), heal);
     final before = r.hp;
     final up = run.advanceStage(r);

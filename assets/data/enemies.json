@@ -242,6 +242,10 @@
           { "kind": "guard", "labelKey": "kick_gate", "blocks": "kick", "value": 14 },
           { "kind": "attack", "height": "high", "damage": 13, "structure": 3 },
           { "kind": "attack", "labelKey": "great_bell", "height": "mid", "damage": 30, "structure": 8, "drain": 2, "countdown": true }
+        ] },
+        { "hpThreshold": 0.25, "pattern": [
+          { "kind": "attack", "labelKey": "toll", "height": "high", "damage": 8, "structure": 3, "hits": 2, "drain": 1 },
+          { "kind": "attack", "labelKey": "great_bell", "height": "mid", "damage": 28, "structure": 8, "drain": 2, "countdown": true }
         ] }
       ] },
     { "id": "snow_ape", "art": "monkey_snow", "rank": "common", "hp": 86, "structure": 15, "wrath": 2,
