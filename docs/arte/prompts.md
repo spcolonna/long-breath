@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** nada para el contenido actual. Los 14 íconos de la fase G están integrados.
+- **Falta:** las 6 imágenes de la escuela (fase 2 del rediseño): `school_ruins` y 5 edificios. Lo demás está completo.
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 24 íconos (con la página suelta y los 14 de la fase G), 5 marcos de carta y
@@ -45,7 +45,86 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Nada: las 174 imágenes están integradas (incluidas las 5 poses del 20/11) y los 14 íconos de la fase G (21/11) y ya no queda ningún recoloreo de enemigo. Los prompts nuevos van acá, sueltos, uno por imagen.
+Las 6 de la escuela (fase 2 del rediseño, 23/11). El resto del juego está completo. Los prompts van acá, sueltos, uno por imagen.
+
+### Escuela en ruinas (`school/school_ruins`)
+
+**Destino:** `assets/art/school/school_ruins.png`, 9:16, opaco. Fondo de la pantalla de la escuela (fase 2 del rediseño): el monasterio que se restaura con jade. Los edificios van encima, como imágenes sueltas. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 9:16 aspect ratio (1080×1920), fully opaque (no transparency).
+
+Vertical background of the grounds of the Sleeping Dragon school, an old mountain monastery seen from slightly above, half in ruins but full of life: a wide stone courtyard with cracked flagstones and grass growing between them, five empty building terraces spread around it (stone foundations, a few fallen roof tiles and broken wooden beams, no complete buildings), a big old pine tree and plum trees in blossom, a small stream with a wooden bridge, mountain peaks and soft clouds in the background with the summit far above, morning light, lots of open space in the middle and the lower third for interface elements.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
+```
+
+### Forja de Tie (`school/forge`)
+
+**Destino:** `assets/art/school/forge.png`, 1:1, transparente. Edificio de la escuela: la forja del maestro Tie (armas). En ruinas se muestra apagado por código; los niveles se marcan por código. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image with a 1:1 aspect ratio (1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole building is visible and centered, nothing cropped, with empty margins around it, seen from the front at a slight three-quarter angle from above, sitting on a small patch of stone ground.
+
+Game building illustration: a small mountain blacksmith forge of a martial-arts monastery, open wooden pavilion with a curved vermilion tiled roof, a stone furnace glowing with warm orange fire, an anvil with a hammer, racks with a staff, a jian sword and a pudao blade, a bronze bell hanging from the eave, sparks and a thin line of smoke rising, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
+```
+
+### Casa de té de Bao (`school/tea_house`)
+
+**Destino:** `assets/art/school/tea_house.png`, 1:1, transparente. Edificio de la escuela: la casa de té de Bao (té y curación). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image with a 1:1 aspect ratio (1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole building is visible and centered, nothing cropped, with empty margins around it, seen from the front at a slight three-quarter angle from above, sitting on a small patch of stone ground.
+
+Game building illustration: a cozy little tea house of a mountain monastery, two-tier wooden building with a jade green tiled roof and round lattice windows, paper lanterns in gold and vermilion hanging from the eaves, a low table with a clay teapot and cups on the porch, steam rising from a kettle, potted bamboo and a small plum tree beside it, welcoming and warm, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
+```
+
+### Enfermería de Ming (`school/infirmary`)
+
+**Destino:** `assets/art/school/infirmary.png`, 1:1, transparente. Edificio de la escuela: la enfermería del hermano Ming (fuente y curación entre etapas). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image with a 1:1 aspect ratio (1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole building is visible and centered, nothing cropped, with empty margins around it, seen from the front at a slight three-quarter angle from above, sitting on a small patch of stone ground.
+
+Game building illustration: a calm herbal infirmary of a mountain monastery, white plastered walls and a cobalt blue tiled roof, a small spring fountain in a stone basin in front with clear water, bundles of drying herbs and lingzhi mushrooms hanging under the eave, wooden shelves with medicine jars, lotus flowers in a little pond, peaceful and fresh, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
+```
+
+### Biblioteca (`school/library`)
+
+**Destino:** `assets/art/school/library.png`, 1:1, transparente. Edificio de la escuela: la biblioteca (más opciones de carta y de evento). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image with a 1:1 aspect ratio (1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole building is visible and centered, nothing cropped, with empty margins around it, seen from the front at a slight three-quarter angle from above, sitting on a small patch of stone ground.
+
+Game building illustration: a tall slender scripture library pagoda of a mountain monastery, three stories with violet and gold tiled roofs, open windows showing shelves full of scrolls and bamboo books, a few scrolls tied with red cords on a stand at the entrance, wind chimes, an ink stone and brushes on a small table, scholarly and bright, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
+```
+
+### Patio de práctica de Shuang (`school/courtyard`)
+
+**Destino:** `assets/art/school/courtyard.png`, 1:1, transparente. Edificio de la escuela: el patio de práctica de Shuang (práctica y desafíos). **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a SQUARE image with a 1:1 aspect ratio (1024×1024), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole building is visible and centered, nothing cropped, with empty margins around it, seen from the front at a slight three-quarter angle from above, sitting on a small patch of stone ground.
+
+Game building illustration: an open martial-arts training yard of a mountain monastery, a raised square wooden platform with a low railing, a small gate with a cobalt and white banner, wooden training dummies, a weapon rack with staffs, plum-blossom training posts of different heights, a drum on a stand, cobalt ribbons fluttering in the wind, energetic and competitive, clear silhouette at small size.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
+```
+
 
 ### Retrato: Shuang (`npc/shuang`) ✅ integrado
 

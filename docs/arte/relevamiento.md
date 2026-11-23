@@ -55,6 +55,10 @@ Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda 
 
 ## Pendiente, por prioridad
 
+### 0. Escuela (fase 2 del rediseño, 23/11)
+
+Faltan 6: `school/school_ruins` (fondo 9:16) y 5 edificios sueltos 1:1 con transparencia (`forge`, `tea_house`, `infirmary`, `library`, `courtyard`). En ruinas se muestran apagados por código y los 3 niveles también se marcan por código. Prompts en `prompts.md`, «Para generar ahora».
+
 ### 1. Enemigos y fondos
 
 Ya no falta ninguno: todos los enemigos tienen arte propio (ya no queda ningún recoloreo), y existen todos los fondos que busca el juego.
