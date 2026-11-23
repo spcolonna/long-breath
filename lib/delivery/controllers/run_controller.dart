@@ -239,7 +239,12 @@ class RunController extends Notifier<RunState?> {
     ref.read(lastAscentProvider.notifier).set(null);
     ref
         .read(progressStorageProvider)
-        .recordAscent(ascent, migrate: (a) => ascentBreath(cultivation, a))
+        .recordAscent(
+          ascent,
+          migrate: (a) => ascentBreath(cultivation, a),
+          // Con la escuela, el jade que sobra va a restaurarla.
+          schoolJade: _engine.schoolJadeOf(run),
+        )
         .then((done) {
       ref.read(lastAscentProvider.notifier).set(done);
       ref
@@ -249,6 +254,7 @@ class RunController extends Notifier<RunState?> {
         ..invalidate(hitosProvider)
         ..invalidate(cultivationProvider)
         ..invalidate(meridianProvider)
+        ..invalidate(schoolProvider)
         ..invalidate(metaBonusProvider);
     });
   }

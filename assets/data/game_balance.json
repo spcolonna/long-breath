@@ -76,7 +76,7 @@
   },
   "legacy": { "upgradePct": 50, "maxHp": 3, "jade": 15, "hpStage": 1 },
   "meridians": {
-    "lotus": { "perCombat": 2, "elite": 5, "boss": 10, "victory": 20, "vow": 15, "reward": [6, 8, 10], "jadePer": 5 },
+    "lotus": { "perCombat": 2, "elite": 5, "boss": 10, "victory": 20, "vow": 15, "reward": [6, 8, 10], "jadePer": 0 },
     "realmPerks": {
       "zhuji": { "maxHp": 2 },
       "kaimai": { "startJade": 10 },
@@ -196,6 +196,35 @@
         "enemyMods": { "enemyHp": 85, "enemyDamage": 48, "fury": 4 },
         "merchant": { "cards": 4, "card": 30, "talisman": 85, "remove": 40, "upgrade": 35, "tea": 25, "teaHeal": 25, "weapon": 75, "weaponForge": 90, "rare": 160 }
       }
+    ]
+  },
+  "school": {
+    "buildings": [
+      {"id": "infirmary", "levels": [
+        {"cost": 90, "effect": {"fountainHeal": 5}},
+        {"cost": 200, "effect": {"stageHealPct": 10}},
+        {"cost": 350, "effect": {"winHeal": 2}}
+      ]},
+      {"id": "tea_house", "levels": [
+        {"cost": 90, "effect": {"teaHeal": 6}},
+        {"cost": 200, "effect": {"merchantDiscountPct": 10}},
+        {"cost": 350, "effect": {"startJade": 25, "teaHeal": 6}}
+      ]},
+      {"id": "forge", "levels": [
+        {"cost": 90, "effect": {"structure": 2}},
+        {"cost": 200, "effect": {"weaponLevel": 1}},
+        {"cost": 350, "effect": {"weaponLevel": 1}}
+      ]},
+      {"id": "library", "levels": [
+        {"cost": 90, "effect": {"rerolls": 1}},
+        {"cost": 200, "effect": {"talismanChoices": 1}},
+        {"cost": 350, "effect": {"rewardChoices": 1}}
+      ]},
+      {"id": "courtyard", "levels": [
+        {"cost": 90, "effect": {"maxHp": 3}},
+        {"cost": 200, "effect": {"firstTurnBreath": 1}},
+        {"cost": 350, "effect": {"breathes": 1}}
+      ]}
     ]
   }
 }

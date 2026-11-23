@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'delivery/feel.dart';
 import 'delivery/providers.dart';
 import 'delivery/screens/meridian_screen.dart';
+import 'delivery/screens/monastery_screen.dart';
 import 'delivery/screens/climb_lesson_screen.dart';
 import 'delivery/screens/combat_screen.dart';
 import 'delivery/screens/event_screen.dart';
@@ -113,6 +114,7 @@ final _router = GoRouter(
     _route('/result', const ResultScreen()),
     _route('/registry', const RegistryScreen()),
     _route('/meridians', const MeridianScreen()),
+    _route('/monastery', const MonasteryScreen()),
   ],
 );
 

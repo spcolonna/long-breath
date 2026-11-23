@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../domain/model/enums.dart';
 import '../domain/model/meta_bonus.dart';
+import '../domain/model/school_def.dart';
 import '../domain/run/ascent.dart';
 import '../domain/run/chronicle.dart';
 import '../domain/run/feats.dart';
@@ -32,6 +33,8 @@ class ProgressStorage {
     'hitos',
     'threads',
     'bestiary',
+    'school',
+    'schoolJade',
   ];
 
   String get _key => '${prefix}winsByDifficulty';
@@ -46,6 +49,8 @@ class ProgressStorage {
   String get _hitosKey => '${prefix}hitos';
   String get _threadsKey => '${prefix}threads';
   String get _bestiaryKey => '${prefix}bestiary';
+  String get _schoolKey => '${prefix}school';
+  String get _schoolJadeKey => '${prefix}schoolJade';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -218,6 +223,7 @@ extension SchoolRecord on ProgressStorage {
   Future<Ascent> recordAscent(
     Ascent a, {
     int Function(Ascent)? migrate,
+    int schoolJade = 0,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     final n = await discipleNumber();
@@ -255,6 +261,9 @@ extension SchoolRecord on ProgressStorage {
     await prefs.setInt(_discipleKey, n + 1);
     await prefs.setInt(_breathKey, had + done.breath);
     await prefs.setInt(_lotusKey, seeds + done.lotus);
+    if (schoolJade > 0) {
+      await prefs.setInt(_schoolJadeKey, await schoolJadeTotal() + schoolJade);
+    }
     return done;
   }
 
@@ -268,6 +277,43 @@ extension SchoolRecord on ProgressStorage {
   Future<void> addLotus(int n) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_lotusKey, await lotus() + n);
+  }
+
+  /// Jade guardado para restaurar la escuela (el que sobró de las subidas).
+  Future<int> schoolJadeTotal() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_schoolJadeKey) ?? 0;
+  }
+
+  /// Suma jade de la escuela a mano (menú de pruebas).
+  Future<void> addSchoolJade(int n) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_schoolJadeKey, await schoolJadeTotal() + n);
+  }
+
+  /// Nivel de cada edificio restaurado (los que faltan están en 0).
+  Future<Map<String, int>> schoolLevels() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      for (final e in prefs.getStringList(_schoolKey) ?? const <String>[])
+        if (e.split(':') case [final id, final n] when int.tryParse(n) != null)
+          id: int.parse(n),
+    };
+  }
+
+  /// Restaura el próximo nivel de [id] si alcanza el jade.
+  Future<bool> restoreBuilding(SchoolDef def, String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final levels = await schoolLevels();
+    final next = def.nextLevel(id, levels);
+    final jade = await schoolJadeTotal();
+    if (next == null || jade < next.cost) return false;
+    final at = def.levelOf(id, levels) + 1;
+    await prefs.setInt(_schoolJadeKey, jade - next.cost);
+    await prefs.setStringList(_schoolKey, [
+      for (final e in {...levels, id: at}.entries) '${e.key}:${e.value}',
+    ]);
+    return true;
   }
 
   /// Puntos del árbol de meridianos ya abiertos.

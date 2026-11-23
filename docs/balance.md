@@ -820,3 +820,34 @@ Por etapa (`enemyMods`): etapa 2 pasa de +40/+9 a **+55/+30**, etapa 3 de +62/+1
 - **Progresión** (`--section meta`, 20 escuelas × 30 subidas, experto): gana el 2% en las subidas 1–5, el 11% en las 11–15 y el 29% en las 26–30. El árbol queda completo hacia la subida 27.
 - Una persona juega mejor que el bot, así que se espera la primera victoria hacia la subida 8. Lo confirma el registro de la build +9.
 - La fase 2 (árboles ampliados, maestría y escuela) va a recalibrar esto.
+
+## 4b. Rediseño fase 2: la escuela con jade (23/11/2026)
+
+El jade que sobra al terminar una subida, ganada o perdida, ya no se ofrenda como loto (`jadePer: 0`). Va al tesoro de la escuela y restaura 5 edificios de 3 niveles.
+
+| Edificio | Nivel 1 (90) | Nivel 2 (200) | Nivel 3 (350) |
+|---|---|---|---|
+| Enfermería (Ming) | fuente +5 | +10% de cura entre etapas | +2 al ganar cada combate |
+| Casa de té (Bao) | té +6 | mercader −10% | 25 de jade al empezar y té +6 |
+| Forja (Tie) | +2 de Estructura | armas +1 de temple | armas +1 de temple |
+| Biblioteca | 1 tirada de pergaminos | +1 talismán en el élite | +1 carta en los pergaminos |
+| Patio (Shuang) | +3 de Vida máxima | +1 de Aliento en el turno 1 | +1 carga de Respirar |
+
+Lo más fuerte quedó en los niveles 2 y 3. Una primera versión más barata (60/150/300), con las cartas extra y el temple en el nivel 1, adelantaba la primera victoria del experto a la subida 8 y lo llevaba al 55% al final.
+
+Simulación de progreso (experto, Normal, 20 escuelas × 30 subidas; el bot restaura siempre el nivel más barato):
+
+| Subidas | victoria | puntos de meridiano | niveles de escuela | jade sobrante por subida |
+|---|---|---|---|---|
+| 1–5 | 3% | 3,1 | 1,9 | 71 |
+| 6–10 | 11% | 7,6 | 5,0 | 74 |
+| 11–15 | 19% | 10,8 | 7,0 | 78 |
+| 16–20 | 40% | 12,1 | 9,1 | 91 |
+| 21–25 | 44% | 13,4 | 10,5 | 84 |
+| 26–30 | 43% | 14,8 | 11,8 | 96 |
+
+- Primera victoria: mediana en la subida 9 (p25 8, p75 14).
+- Árbol de meridianos completo: hacia la subida 24.
+- Escuela completa: hacia la subida 35.
+- Una persona gana más y guarda jade a propósito, así que debería completarla antes. Hay que confirmarlo con los registros.
+

@@ -3019,6 +3019,27 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String bonusWeaponLevel(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Las armas llegan con $n niveles de temple más',
+      one: 'Las armas llegan con un nivel de temple más',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bonusTeaHeal(int n) {
+    return 'El té cura $n más';
+  }
+
+  @override
+  String bonusStageHealPct(int n) {
+    return 'Al pasar de etapa curás $n% más de lo que falta';
+  }
+
+  @override
   String resultLotus(int n, int total) {
     return '+$n semillas de loto · la escuela tiene $total';
   }
@@ -3030,6 +3051,53 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get resultToMeridians => 'Abrir meridianos';
+
+  @override
+  String get schoolButton => 'Restaurar la escuela';
+
+  @override
+  String get schoolTitle => 'La escuela';
+
+  @override
+  String get schoolHint =>
+      'El jade que sobra de cada subida, ganes o caigas, queda en la escuela. Con él se restauran los edificios, y cada nivel ayuda a todos los discípulos que vienen.';
+
+  @override
+  String schoolLevel(int n, int max) {
+    return 'Nivel $n de $max';
+  }
+
+  @override
+  String get schoolRuined => 'En ruinas';
+
+  @override
+  String schoolRestore(int n) {
+    return 'Restaurar · $n';
+  }
+
+  @override
+  String schoolNeedsJade(int n) {
+    return 'Faltan $n de jade';
+  }
+
+  @override
+  String get schoolDone => 'Restaurado del todo';
+
+  @override
+  String get schoolNext => 'Próximo nivel';
+
+  @override
+  String get schoolGives => 'Ya da';
+
+  @override
+  String schoolProgress(int n, int max) {
+    return '$n de $max niveles restaurados';
+  }
+
+  @override
+  String resultSchoolJade(int jade) {
+    return '$jade de jade sobrante queda en la escuela para restaurarla';
+  }
 
   @override
   String get cinematicSkip => 'Tocá para saltar';

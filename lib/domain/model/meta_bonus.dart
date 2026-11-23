@@ -19,6 +19,9 @@ class MetaBonus {
     this.lotusPct = 0,
     this.firstTurnBreath = 0,
     this.breathes = 0,
+    this.weaponLevel = 0,
+    this.teaHeal = 0,
+    this.stageHealPct = 0,
   });
 
   static const none = MetaBonus();
@@ -65,6 +68,15 @@ class MetaBonus {
   /// Respirar extra por combate.
   final int breathes;
 
+  /// Niveles extra del arma al conseguirla (hasta su máximo).
+  final int weaponLevel;
+
+  /// Vida extra que cura el té del mercader.
+  final int teaHeal;
+
+  /// Cura extra (% de lo que falta) al pasar de etapa.
+  final int stageHealPct;
+
   bool get isNone => toJson().isEmpty;
 
   MetaBonus operator +(MetaBonus o) => MetaBonus(
@@ -82,6 +94,9 @@ class MetaBonus {
         lotusPct: lotusPct + o.lotusPct,
         firstTurnBreath: firstTurnBreath + o.firstTurnBreath,
         breathes: breathes + o.breathes,
+        weaponLevel: weaponLevel + o.weaponLevel,
+        teaHeal: teaHeal + o.teaHeal,
+        stageHealPct: stageHealPct + o.stageHealPct,
       );
 
   /// Solo los campos que hacen algo (el árbol los muestra así).
@@ -101,6 +116,9 @@ class MetaBonus {
           'lotusPct': lotusPct,
           'firstTurnBreath': firstTurnBreath,
           'breathes': breathes,
+          'weaponLevel': weaponLevel,
+          'teaHeal': teaHeal,
+          'stageHealPct': stageHealPct,
         }.entries)
           if (e.value != 0) e.key: e.value,
       };
@@ -120,6 +138,9 @@ class MetaBonus {
         lotusPct: j['lotusPct'] as int? ?? 0,
         firstTurnBreath: j['firstTurnBreath'] as int? ?? 0,
         breathes: j['breathes'] as int? ?? 0,
+        weaponLevel: j['weaponLevel'] as int? ?? 0,
+        teaHeal: j['teaHeal'] as int? ?? 0,
+        stageHealPct: j['stageHealPct'] as int? ?? 0,
       );
 }
 

@@ -74,6 +74,12 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
     if (mounted) Navigator.pop(context);
   }
 
+  Future<void> _schoolJade() async {
+    await ref.read(progressStorageProvider).addSchoolJade(100);
+    ref.invalidate(schoolProvider);
+    if (mounted) Navigator.pop(context);
+  }
+
   Future<void> _picos() async {
     await ref.read(progressStorageProvider).markPicoWin(
       Difficulty.normal,
@@ -149,6 +155,11 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
             FilledButton(onPressed: _start, child: const Text('Subir acá')),
             const SizedBox(height: 8),
             OutlinedButton(onPressed: _lotus, child: const Text('+20 loto')),
+            const SizedBox(height: 8),
+            OutlinedButton(
+              onPressed: _schoolJade,
+              child: const Text('+100 jade de la escuela'),
+            ),
             const SizedBox(height: 8),
             OutlinedButton(
               onPressed: _picos,

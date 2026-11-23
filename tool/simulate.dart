@@ -327,11 +327,12 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
           final data = base.build();
           final b = data.balance;
           final c = b.cultivation;
-          final out = <List<(bool, int, int, int)>>[];
+          final out = <List<(bool, int, int, int, int, int)>>[];
           for (var sc = w; sc < schools; sc += workers) {
-            var breath = 0, bank = 0;
+            var breath = 0, bank = 0, jadeBank = 0;
             final owned = <String>[];
-            final hist = <(bool, int, int, int)>[];
+            final levels = <String, int>{};
+            final hist = <(bool, int, int, int, int, int)>[];
             for (var i = 0; i < ascents; i++) {
               final realm = c.realmOf(breath);
               final s = seed * 1000003 + sc * 997 + i;
@@ -339,7 +340,8 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
                   wanted: Style.values[(sc + i) % 3],
                   difficulty: diff,
                   locked: c.lockedAt(realm),
-                  meta: b.meridians.bonusOf(c, realm, owned));
+                  meta: b.meridians.bonusOf(c, realm, owned) +
+                      b.school.bonusOf(levels));
               breath += c.breathFor(
                   fell: !log.won,
                   floor: log.nodes,
@@ -358,7 +360,21 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
                 bank -= open.first.cost;
                 owned.add(open.first.id);
               }
-              hist.add((log.won, c.realmOf(breath), owned.length, log.lotus));
+              // El jade que sobra va a la escuela: restaura el nivel más barato.
+              if (!b.school.isEmpty) jadeBank += log.jadeLeft;
+              while (true) {
+                final next = [
+                  for (final bd in b.school.buildings)
+                    if (b.school.nextLevel(bd.id, levels) case final l?
+                        when l.cost <= jadeBank)
+                      (bd.id, l.cost),
+                ]..sort((x, y) => x.$2.compareTo(y.$2));
+                if (next.isEmpty) break;
+                jadeBank -= next.first.$2;
+                levels[next.first.$1] = (levels[next.first.$1] ?? 0) + 1;
+              }
+              hist.add((log.won, c.realmOf(breath), owned.length, log.lotus,
+                  b.school.restored(levels), log.jadeLeft));
             }
             out.add(hist);
           }
@@ -384,6 +400,15 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
         'subida p25/mediana/p75 = ${q(wins, .25)}/${q(wins, .5)}/${q(wins, .75)}');
     print('- Árbol completo ($total puntos): ${pct(full.length, hist.length)}; '
         'mediana en la subida ${q(full, .5)}');
+    final maxLv = data0(raw).balance.school.maxLevels;
+    final schoolFull = [
+      for (final h in hist)
+        h.indexWhere((e) => e.$5 >= maxLv) + 1,
+    ].where((x) => x > 0).toList()
+      ..sort();
+    print('- Escuela restaurada ($maxLv niveles): '
+        '${pct(schoolFull.length, hist.length)}; mediana en la subida '
+        '${q(schoolFull, .5)}');
     final rows = <List<String>>[];
     for (var from = 0; from < ascents; from += 5) {
       final slice = [
@@ -395,9 +420,12 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
         f1(mean([for (final e in slice) e.$2 + 1])),
         f1(mean([for (final e in slice) e.$3])),
         f1(mean([for (final e in slice) e.$4])),
+        f1(mean([for (final e in slice) e.$5])),
+        f1(mean([for (final e in slice) e.$6])),
       ]);
     }
-    table(['Subidas', 'victoria', 'reino', 'puntos', 'loto/subida'], rows);
+    table(['Subidas', 'victoria', 'reino', 'puntos', 'loto/subida',
+        'escuela', 'jade/subida'], rows);
   }
 }
 

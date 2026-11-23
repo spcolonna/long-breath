@@ -24,6 +24,7 @@ import '../widgets/cloud_drift.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/school_life.dart';
 import '../widgets/lotus.dart';
+import '../widgets/jade.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../infrastructure/slot_storage.dart';
 import '../controllers/climb.dart';
@@ -164,6 +165,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
               const SizedBox(height: 4),
               const StaggerIn(index: 2, child: RealmLine()),
               const StaggerIn(index: 3, child: _MeridianLine()),
+              const StaggerIn(index: 3, child: _MonasteryLine()),
               if (info != null && info.difficulty == Difficulty.normal)
                 StaggerIn(index: 3, child: _PicoLine(info: info)),
               const SizedBox(height: 10),
@@ -280,6 +282,70 @@ class _PicoLineState extends ConsumerState<_PicoLine> {
             icon: const Icon(Icons.add_circle_outline_rounded),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Jade guardado para la escuela y el acceso a sus edificios; un punto late
+/// si alcanza para restaurar alguno.
+class _MonasteryLine extends ConsumerWidget {
+  const _MonasteryLine();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final s = ref.watch(schoolProvider).value;
+    final def = ref.watch(dataProvider).balance.school;
+    final seen = (ref.watch(ascentsProvider).value ?? const []).isNotEmpty;
+    if (s == null || def.isEmpty || !seen) return const SizedBox.shrink();
+    final ready = def.buildings.any((b) {
+      final next = def.nextLevel(b.id, s.levels);
+      return next != null && s.jade >= next.cost;
+    });
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          Haptics.selectionClick();
+          ref.read(audioProvider).play(Sfx.uiButton);
+          context.go('/monastery');
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          decoration: BoxDecoration(
+            color: Palette.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Palette.jade.withValues(alpha: ready ? 0.9 : 0.5),
+              width: ready ? 2 : 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              JadeCount(jade: s.jade, size: 18),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  '${t.schoolButton} · ${def.restored(s.levels)}/${def.maxLevels}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              if (ready) ...[
+                const SizedBox(width: 6),
+                const _Dot(),
+              ],
+              const Icon(Icons.chevron_right, size: 18, color: Palette.textDim),
+            ],
+          ),
+        ),
       ),
     );
   }

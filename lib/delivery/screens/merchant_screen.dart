@@ -228,7 +228,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
             '${t.talismanEffect(data.weapon(_weapon!).levels[(_forging ? run.weaponLevel + 1 : 1) - 1].effect, text)}',
       _RemoveItem() => t.merchantRemove,
       _UpgradeItem() => t.merchantUpgrade(data.balance.fountainUpgrade),
-      _TeaItem() => t.merchantTeaDetail(m.teaHeal),
+      _TeaItem() => t.merchantTeaDetail(engine.shopTeaHealOf(run)),
     };
 
     return Scaffold(
@@ -460,7 +460,7 @@ class _MerchantScreenState extends ConsumerState<MerchantScreen> {
                       (
                         const _TeaItem() as _Item,
                         Icons.emoji_food_beverage_outlined,
-                        t.merchantTea(m.teaHeal),
+                        t.merchantTea(engine.shopTeaHealOf(run)),
                       ),
                     ].indexed)
                       Padding(

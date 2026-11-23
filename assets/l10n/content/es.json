@@ -1595,5 +1595,52 @@
       "name": "Diez discípulos",
       "text": "Mandá a la montaña al décimo discípulo de la escuela."
     }
+  },
+  "school": {
+    "infirmary": {
+      "name": "Enfermería",
+      "hanzi": "醫",
+      "who": "Hermano Ming",
+      "text": "Ming volvió con hierbas de la montaña. Donde estaba el techo caído hay camas limpias y un cuenco de agua clara.",
+      "l1": "La fuente de la montaña se llena con el agua del manantial de la escuela.",
+      "l2": "Ming arma bolsas de hierbas para el camino entre etapas.",
+      "l3": "Cada pelea ganada, un trago de su caldo amargo."
+    },
+    "tea_house": {
+      "name": "Casa de té",
+      "hanzi": "茶",
+      "who": "Tío Bao",
+      "text": "Tío Bao dice que sin té no hay escuela. Ahora tiene dónde hervir el agua y dónde contar sus deudas.",
+      "l1": "Bao comparte sus hojas buenas: el té cura más.",
+      "l2": "Bao les avisa a los mercaderes que vas de parte de la escuela.",
+      "l3": "Bao te despide con una bolsa de jade y el mejor té de la casa."
+    },
+    "forge": {
+      "name": "Forja",
+      "hanzi": "鐵",
+      "who": "Maestro Tie",
+      "text": "El maestro Tie prendió el horno otra vez. Dice que el martillo se acuerda solo.",
+      "l1": "Tie revisa cada arma que encontrás: llega ya templada.",
+      "l2": "Tie forja brazales para los discípulos: más Estructura.",
+      "l3": "El horno arde al rojo: las armas llegan con otro temple más."
+    },
+    "library": {
+      "name": "Biblioteca",
+      "hanzi": "書",
+      "who": "La escuela",
+      "text": "Los rollos que se salvaron del derrumbe vuelven a los estantes. Algunos todavía huelen a humo.",
+      "l1": "Más rollos ordenados: una carta más para elegir en los pergaminos.",
+      "l2": "El índice está completo: podés volver a tirar los pergaminos.",
+      "l3": "Los tratados de talismanes: uno más para elegir en el élite."
+    },
+    "courtyard": {
+      "name": "Patio de práctica",
+      "hanzi": "院",
+      "who": "Shuang",
+      "text": "Shuang barrió el patio y colgó sus cintas. Dice que acá nadie le gana, pero igual te espera.",
+      "l1": "Las mañanas de práctica con Shuang: más Vida máxima.",
+      "l2": "Shuang te enseña a entrar respirando: más Aliento en el primer turno.",
+      "l3": "Los postes de flor de ciruelo: una carga más de Respirar."
+    }
   }
 }

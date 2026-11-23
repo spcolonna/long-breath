@@ -1330,15 +1330,13 @@ void main() {
       expect(more.lotus, lotus.perCombat * 2);
     });
 
-    test('el jade que sobra se ofrenda como loto', () {
-      final per = real.data.balance.meridians.lotus.jadePer;
-      expect(per, greaterThan(0));
+    test('el jade que sobra va a la escuela, no al loto', () {
+      expect(real.data.balance.meridians.lotus.jadePer, 0);
+      expect(real.data.balance.school.isEmpty, isFalse);
       final r = at(1);
-      expect(real.offeringOf(r.copyWith(jade: 0)), 0);
-      expect(real.offeringOf(r.copyWith(jade: per - 1)), 0);
-      expect(real.offeringOf(r.copyWith(jade: per * 7 + 2)), 7);
-      final more = at(1, meta: const MetaBonus(lotusPct: 100));
-      expect(real.offeringOf(more.copyWith(jade: per * 7)), 14);
+      expect(real.offeringOf(r.copyWith(jade: 37)), 0);
+      expect(real.schoolJadeOf(r.copyWith(jade: 37)), 37);
+      expect(real.schoolJadeOf(r.copyWith(jade: 0)), 0);
     });
 
     test('legado: la carta con la mitad de mejoras o los números', () {

@@ -79,7 +79,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
       }
     }
     // La ofrenda: el jade se va contando y, al volverse loto, suena el cuenco.
-    if ((a?.offering ?? 0) > 0) {
+    if ((a?.offering ?? 0) > 0 || (a?.jade ?? 0) > 0) {
       if (!_lines.contains(_offerFrom) && _c.value >= _offerFrom) {
         _lines.add(_offerFrom);
         Haptics.lightImpact();
@@ -377,8 +377,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                               ),
                             ),
                           ),
-                          // El jade que sobró no se pierde: va como ofrenda.
-                          if (ascent.offering > 0) ...[
+                          // El jade que sobró no se pierde: va a la escuela
+                          // (antes se ofrendaba como loto).
+                          if (ascent.offering > 0 || ascent.jade > 0) ...[
                             const SizedBox(height: 6),
                             _enter(
                               0.7,
@@ -816,18 +817,28 @@ class _OfferingLine extends StatelessWidget {
             Bounce(
               trigger: done ? 1 : 0,
               scale: 1.4,
-              child: const LotusSeed(size: 20),
+              child: offering > 0
+                  ? const LotusSeed(size: 20)
+                  : const Icon(
+                      Icons.temple_buddhist_rounded,
+                      size: 20,
+                      color: Palette.jade,
+                    ),
             ),
             const SizedBox(width: 6),
             Text(
-              '+${(offering * drain).round()}',
-              style: style.copyWith(color: Palette.blossom),
+              '+${((offering > 0 ? offering : jade) * drain).round()}',
+              style: style.copyWith(
+                color: offering > 0 ? Palette.blossom : Palette.jade,
+              ),
             ),
           ],
         ),
         const SizedBox(height: 2),
         Text(
-          t.resultOffering(jade, offering),
+          offering > 0
+              ? t.resultOffering(jade, offering)
+              : t.resultSchoolJade(jade),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 12,

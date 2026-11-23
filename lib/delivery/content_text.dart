@@ -72,6 +72,14 @@ class ContentText {
   String meridianHanzi(String id) => _get('meridians', id, 'hanzi');
   String meridianText(String id) => _get('meridians', id, 'text');
 
+  /// Edificio de la escuela: nombre, carácter, quién lo cuida, su historia y
+  /// una línea por nivel ([level] desde 1).
+  String building(String id) => _get('school', id, 'name');
+  String buildingHanzi(String id) => _get('school', id, 'hanzi');
+  String buildingWho(String id) => _get('school', id, 'who');
+  String buildingText(String id) => _get('school', id, 'text');
+  String buildingLevel(String id, int level) => _get('school', id, 'l$level');
+
   /// Nombre de algo que abre el cultivo: un camino, una carta, un talismán o
   /// una forma (los ids no se repiten entre sí).
   String unlockName(String id) {

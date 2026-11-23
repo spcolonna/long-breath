@@ -212,12 +212,25 @@ final meridianProvider =
   return (lotus: await storage.lotus(), owned: await storage.meridians());
 });
 
-/// Dones de la escuela para la próxima subida (reinos y meridianos).
+/// Jade guardado para la escuela y nivel de cada edificio restaurado.
+final schoolProvider =
+    FutureProvider<({int jade, Map<String, int> levels})>((ref) async {
+  final storage = ref.watch(progressStorageProvider);
+  return (
+    jade: await storage.schoolJadeTotal(),
+    levels: await storage.schoolLevels(),
+  );
+});
+
+/// Dones de la escuela para la próxima subida (reinos, meridianos y
+/// edificios restaurados).
 final metaBonusProvider = FutureProvider<MetaBonus>((ref) async {
   final balance = ref.watch(dataProvider).balance;
   final c = await ref.watch(cultivationProvider.future);
   final m = await ref.watch(meridianProvider.future);
-  return balance.meridians.bonusOf(c.def, c.realm, m.owned);
+  final s = await ref.watch(schoolProvider.future);
+  return balance.meridians.bonusOf(c.def, c.realm, m.owned) +
+      balance.school.bonusOf(s.levels);
 });
 
 /// La subida que acaba de terminar, ya anotada (con su número y sus

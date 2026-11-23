@@ -29,6 +29,9 @@ extension Labels on AppLocalizations {
     if (b.lotusPct != 0) bonusLotusPct(b.lotusPct),
     if (b.firstTurnBreath != 0) bonusFirstTurnBreath(b.firstTurnBreath),
     if (b.breathes != 0) bonusBreathes(b.breathes),
+    if (b.weaponLevel != 0) bonusWeaponLevel(b.weaponLevel),
+    if (b.teaHeal != 0) bonusTeaHeal(b.teaHeal),
+    if (b.stageHealPct != 0) bonusStageHealPct(b.stageHealPct),
   ];
 
   String branchName(MeridianBranch b) => switch (b) {

@@ -51,7 +51,7 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
 2. **Maestría por camino (experiencia del camino).** Cada camino (Tigre, Serpiente, Grulla) sube de nivel con lo que se pelea con él.
    - Desbloquea cartas raras de ese camino, su técnica mejorada, un tercer despertar y su arma nivel 3.
    - Obliga a jugar con los tres caminos.
-3. **La escuela (jade).** El jade que sobra deja de convertirse en loto y pasa a restaurar el monasterio.
+3. **La escuela (jade). ✅ Hecha el 23/11** (ver `balance.md` §4b). El jade que sobra deja de convertirse en loto y pasa a restaurar el monasterio.
    - Forja (Tie): armas mejores desde el inicio y templar en el mapa.
    - Casa de té (Bao): té y curación a la venta.
    - Enfermería (Ming): fuente mejor y curar entre etapas.

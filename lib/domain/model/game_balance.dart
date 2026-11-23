@@ -2,6 +2,7 @@ import 'awakening_def.dart';
 import 'cultivation_def.dart';
 import 'enums.dart';
 import 'meta_bonus.dart';
+import 'school_def.dart';
 
 /// Cómo se juega la mano: el del novicio o el del camino animal elegido.
 class StyleStats {
@@ -714,6 +715,7 @@ class GameBalance {
     this.vowChoices = 3,
     this.cultivation = CultivationDef.none,
     this.meridians = MeridianDef.none,
+    this.school = SchoolDef.none,
     this.combatRewards = CombatRewardsDef.none,
     this.legacy = LegacyDef.none,
   });
@@ -910,6 +912,9 @@ class GameBalance {
   /// Árbol de meridianos, dones de los reinos y semillas de loto.
   final MeridianDef meridians;
 
+  /// Edificios de la escuela que se restauran con jade.
+  final SchoolDef school;
+
   /// Premios variados de los combates.
   final CombatRewardsDef combatRewards;
 
@@ -1067,6 +1072,10 @@ class GameBalance {
       meridians: switch (j['meridians']) {
         final Map<String, dynamic> m => MeridianDef.fromJson(m),
         _ => MeridianDef.none,
+      },
+      school: switch (j['school']) {
+        final Map<String, dynamic> m => SchoolDef.fromJson(m),
+        _ => SchoolDef.none,
       },
       combatRewards: switch (j['combatRewards']) {
         final Map<String, dynamic> m => CombatRewardsDef.fromJson(m),

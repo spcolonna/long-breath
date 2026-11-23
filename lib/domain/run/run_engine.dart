@@ -376,7 +376,10 @@ class RunEngine {
 
   /// Vida que se recupera al pasar a la etapa siguiente.
   int stageHealOf(RunState r) =>
-      ((r.maxHp - r.hp) * data.balance.stageHeal / 100).round();
+      ((r.maxHp - r.hp) *
+              math.min(100, data.balance.stageHeal + r.meta.stageHealPct) /
+              100)
+          .round();
 
   /// Subir a la etapa siguiente: cura, mapa nuevo y se empieza desde abajo.
   /// Si el camino ofreció despertares, hay que elegir uno ([awakening]).
@@ -742,6 +745,11 @@ class RunEngine {
 
   /// Semillas que deja el jade que sobró al terminar la subida: se ofrenda
   /// a la escuela en vez de perderse.
+  /// Jade que va al tesoro de la escuela al terminar la subida: todo el que
+  /// sobró, si hay edificios para restaurar.
+  int schoolJadeOf(RunState r) =>
+      data.balance.school.isEmpty ? 0 : math.max(0, r.jade);
+
   int offeringOf(RunState r) {
     final per = data.balance.meridians.lotus.jadePer;
     return per <= 0 || r.jade <= 0 ? 0 : lotusOf(r, r.jade ~/ per);
@@ -806,7 +814,7 @@ class RunEngine {
         return cleared.copyWith(
           rewardAmount: math.max(
             1,
-            (r.maxHp * def.teaPctAt(r.stage) / 100).round(),
+            (r.maxHp * def.teaPctAt(r.stage) / 100).round() + r.meta.teaHeal,
           ),
         );
       case RewardKind.upgrade:
@@ -939,9 +947,14 @@ class RunEngine {
   bool canGainWeapon(RunState r) =>
       data.weapons.isNotEmpty && (r.weapon == null || canForge(r));
 
+  /// Equipa [id]; la forja de la escuela lo da ya templado
+  /// ([MetaBonus.weaponLevel]), sin pasar del máximo.
   RunState equipWeapon(RunState r, String id, {int level = 1}) {
-    data.weapon(id);
-    return r.copyWith(weapon: id, weaponLevel: level);
+    final max = data.weapon(id).maxLevel;
+    return r.copyWith(
+      weapon: id,
+      weaponLevel: math.min(max, level + r.meta.weaponLevel),
+    );
   }
 
   RunState forgeWeapon(RunState r) {
@@ -1660,6 +1673,9 @@ class RunEngine {
     return _trust(_upgrade(r, uid).copyWith(jade: r.jade - price, shopUpgraded: true));
   }
 
+  /// Lo que cura el té del mercader (con la casa de té de la escuela).
+  int shopTeaHealOf(RunState r) => merchantOf(r).teaHeal + r.meta.teaHeal;
+
   /// Té de jengibre: cura un poco, una vez por tienda.
   RunState buyTea(RunState r) {
     final m = merchantOf(r);
@@ -1667,7 +1683,7 @@ class RunEngine {
     if (r.shopTea) throw StateError('Ya se usó');
     return _trust(r.copyWith(
       jade: r.jade - m.tea,
-      hp: math.min(r.maxHp, r.hp + m.teaHeal),
+      hp: math.min(r.maxHp, r.hp + shopTeaHealOf(r)),
       shopTea: true,
     ));
   }

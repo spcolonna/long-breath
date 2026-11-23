@@ -4792,6 +4792,24 @@ abstract class AppLocalizations {
   /// **'+{n} carga de Respirar al empezar'**
   String bonusBreathes(int n);
 
+  /// No description provided for @bonusWeaponLevel.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{Las armas llegan con un nivel de temple más} other{Las armas llegan con {n} niveles de temple más}}'**
+  String bonusWeaponLevel(int n);
+
+  /// No description provided for @bonusTeaHeal.
+  ///
+  /// In es, this message translates to:
+  /// **'El té cura {n} más'**
+  String bonusTeaHeal(int n);
+
+  /// No description provided for @bonusStageHealPct.
+  ///
+  /// In es, this message translates to:
+  /// **'Al pasar de etapa curás {n}% más de lo que falta'**
+  String bonusStageHealPct(int n);
+
   /// No description provided for @resultLotus.
   ///
   /// In es, this message translates to:
@@ -4809,6 +4827,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Abrir meridianos'**
   String get resultToMeridians;
+
+  /// No description provided for @schoolButton.
+  ///
+  /// In es, this message translates to:
+  /// **'Restaurar la escuela'**
+  String get schoolButton;
+
+  /// No description provided for @schoolTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'La escuela'**
+  String get schoolTitle;
+
+  /// No description provided for @schoolHint.
+  ///
+  /// In es, this message translates to:
+  /// **'El jade que sobra de cada subida, ganes o caigas, queda en la escuela. Con él se restauran los edificios, y cada nivel ayuda a todos los discípulos que vienen.'**
+  String get schoolHint;
+
+  /// No description provided for @schoolLevel.
+  ///
+  /// In es, this message translates to:
+  /// **'Nivel {n} de {max}'**
+  String schoolLevel(int n, int max);
+
+  /// No description provided for @schoolRuined.
+  ///
+  /// In es, this message translates to:
+  /// **'En ruinas'**
+  String get schoolRuined;
+
+  /// No description provided for @schoolRestore.
+  ///
+  /// In es, this message translates to:
+  /// **'Restaurar · {n}'**
+  String schoolRestore(int n);
+
+  /// No description provided for @schoolNeedsJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Faltan {n} de jade'**
+  String schoolNeedsJade(int n);
+
+  /// No description provided for @schoolDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Restaurado del todo'**
+  String get schoolDone;
+
+  /// No description provided for @schoolNext.
+  ///
+  /// In es, this message translates to:
+  /// **'Próximo nivel'**
+  String get schoolNext;
+
+  /// No description provided for @schoolGives.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya da'**
+  String get schoolGives;
+
+  /// No description provided for @schoolProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de {max} niveles restaurados'**
+  String schoolProgress(int n, int max);
+
+  /// No description provided for @resultSchoolJade.
+  ///
+  /// In es, this message translates to:
+  /// **'{jade} de jade sobrante queda en la escuela para restaurarla'**
+  String resultSchoolJade(int jade);
 
   /// No description provided for @cinematicSkip.
   ///
