@@ -45,6 +45,7 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
   - élites nuevos: `bell_keeper` (Guardián de la Campana, etapa 2) y `dragon_dream` (Sueño del Dragón, etapa 3);
   - etapas 2 y 3, reemplazando el recoloreo: `monk_gold` (Abad de la Gran Campana), `monk_iron` (Abad de Hierro), `lion_jade` (León de Jade), `dragon_azure` (Dragón Dormido), `fan_wind` (Dama del Viento), `lion_snow` (León de las Nieves) `golem_bronze` (Hombre de Bronce), `disciple_saffron` (Guardián del Pasadizo), `bat_bronze` (Murciélago del Campanario) y `salamander_ash` (Salamandra de Ceniza), `disciple_wind` (Discípulo del Viento), `golem_ice` (Gólem de Escarcha), `monkey_snow` (Simio de las Nieves), `bat_frost` (Murciélago de Escarcha), y los élites `dragon_reflection` (Reflejo del Dragón) y `lion_celadon` (León de Celadón), con arte propio desde el 13/11;
   - de concepto nuevo: `paper_crane` (Grulla de Papel), `opera_mask` (Ópera de las Mil Caras), `pixiu` (Pixiu), `flying_sword` (Espada Voladora), `wooden_ox` (Buey de Madera), `qilin` (Qilin) y `guqin_player` (Músico del Guqin).
+- **Escuela (23/11, para la fase 2):** `school/school_ruins` (fondo) y los edificios `forge`, `tea_house`, `infirmary`, `library` y `courtyard`, sueltos con transparencia.
 - **Mapa:** `map_node_stone` (textura de los sellos).
 - **UI:** `ui/logo` (menú), los íconos de `icons/`, incluido `page` (página suelta: cofre y pergaminos `page_*`), (Aliento, Guardia, Estructura, desvío, desequilibrio, fuente, alturas, furia, espinas, escamas, talismán, élite, jefe, mejora, té, mazo, mercader y candado, vía `GameIcon`) y los 5 marcos de `cards/` (uno por tipo de carta).
 - **Ilustraciones de cartas:** `gongbu_chongquan`, `mabu_chongquan`, `tan_tui`, `tui_zhang`, `mabu_jiada`, `xubu_liangzhang`, `ge_dang`, `an_zhang`, `deng_tui`, `ce_chuai`, `gongbu_tuizhang`, `pi_quan`, `shang_jia`, `ti_xi`, `tiao_xi`, `baoquan_li`, `hu_zhao`, `hu_pu`, `hu_bao_tou`, `hu_xiao`, `hu_wei`, `xia_shan_hu`, `hu_ya`, `hu_ben`, `e_hu_pu_shi`, `hu_dun`, `she_xing_shou`, `she_tu_xin`, `she_chan_shen`, `jin_she`, `she_wei`, `she_shan`, `she_hui_tou`, `ling_she`, `she_jiao`, `she_pan`, las 6 de cadena (`ma_zhuan_gong`, `gong_zhuan_xu`, `xu_zhuan_ma`, `hu_hui_shen`, `she_zhuan_shen`, `he_luo_di`) las 11 de la Grulla y las 12 de arma (`gun_sao`, `gun_ge`, `gun_tiao`, `gun_wuhua`, `jian_ci`, `jian_dian`, `jian_jie`, `jian_chuanxin`, `pudao_pi`, `pudao_lan`, `pudao_kan`, `pudao_chantou`). La carta busca `cards/<id>.webp`; si no está, muestra el hanzi de marca de agua.
@@ -54,10 +55,6 @@ Tramos (`_sceneFiles` en `widgets/stage_scene.dart`):
 Cuando un recoloreo recibe arte propio, su versión teñida no se pierde: queda en `VARIANTS` con otro nombre para usarla en un enemigo secundario. Hoy está vacía: `dragon_reflection` y `lion_celadon` recibieron arte propio el 13/11 y salieron de `VARIANTS`. `monk_amber` (Monje del Incienso) y `monk_slate` (Ermitaño de Pizarra) ya tienen arte propio.
 
 ## Pendiente, por prioridad
-
-### 0. Escuela (fase 2 del rediseño, 23/11)
-
-Faltan 6: `school/school_ruins` (fondo 9:16) y 5 edificios sueltos 1:1 con transparencia (`forge`, `tea_house`, `infirmary`, `library`, `courtyard`). En ruinas se muestran apagados por código y los 3 niveles también se marcan por código. Prompts en `prompts.md`, «Para generar ahora».
 
 ### 1. Enemigos y fondos
 

@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** las 6 imágenes de la escuela (fase 2 del rediseño): `school_ruins` y 5 edificios. Lo demás está completo.
+- **Falta:** nada. Las 6 de la escuela (`school_ruins` y 5 edificios) están integradas desde el 23/11 para la fase 2.
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 24 íconos (con la página suelta y los 14 de la fase G), 5 marcos de carta y
@@ -45,9 +45,9 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Las 6 de la escuela (fase 2 del rediseño, 23/11). El resto del juego está completo. Los prompts van acá, sueltos, uno por imagen.
+Nada: las 6 de la escuela llegaron el 23/11 (se usan en la fase 2). El juego está completo. Los prompts van acá, sueltos, uno por imagen.
 
-### Escuela en ruinas (`school/school_ruins`)
+### Escuela en ruinas (`school/school_ruins`) ✅ integrado
 
 **Destino:** `assets/art/school/school_ruins.png`, 9:16, opaco. Fondo de la pantalla de la escuela (fase 2 del rediseño): el monasterio que se restaura con jade. Los edificios van encima, como imágenes sueltas. **No es recoloreo.**
 
@@ -60,7 +60,7 @@ Vertical background of the grounds of the Sleeping Dragon school, an old mountai
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
 ```
 
-### Forja de Tie (`school/forge`)
+### Forja de Tie (`school/forge`) ✅ integrado
 
 **Destino:** `assets/art/school/forge.png`, 1:1, transparente. Edificio de la escuela: la forja del maestro Tie (armas). En ruinas se muestra apagado por código; los niveles se marcan por código. **No es recoloreo.**
 
@@ -73,7 +73,7 @@ Game building illustration: a small mountain blacksmith forge of a martial-arts 
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
 ```
 
-### Casa de té de Bao (`school/tea_house`)
+### Casa de té de Bao (`school/tea_house`) ✅ integrado
 
 **Destino:** `assets/art/school/tea_house.png`, 1:1, transparente. Edificio de la escuela: la casa de té de Bao (té y curación). **No es recoloreo.**
 
@@ -86,7 +86,7 @@ Game building illustration: a cozy little tea house of a mountain monastery, two
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
 ```
 
-### Enfermería de Ming (`school/infirmary`)
+### Enfermería de Ming (`school/infirmary`) ✅ integrado
 
 **Destino:** `assets/art/school/infirmary.png`, 1:1, transparente. Edificio de la escuela: la enfermería del hermano Ming (fuente y curación entre etapas). **No es recoloreo.**
 
@@ -99,7 +99,7 @@ Game building illustration: a calm herbal infirmary of a mountain monastery, whi
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
 ```
 
-### Biblioteca (`school/library`)
+### Biblioteca (`school/library`) ✅ integrado
 
 **Destino:** `assets/art/school/library.png`, 1:1, transparente. Edificio de la escuela: la biblioteca (más opciones de carta y de evento). **No es recoloreo.**
 
@@ -112,7 +112,7 @@ Game building illustration: a tall slender scripture library pagoda of a mountai
 Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper cream tones (#F6EEDC), saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue (#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean confident brush strokes, flat shading with watercolor bleeds, hopeful and warm mood, high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown backgrounds, no photorealism, no people, no text, no watermark.
 ```
 
-### Patio de práctica de Shuang (`school/courtyard`)
+### Patio de práctica de Shuang (`school/courtyard`) ✅ integrado
 
 **Destino:** `assets/art/school/courtyard.png`, 1:1, transparente. Edificio de la escuela: el patio de práctica de Shuang (práctica y desafíos). **No es recoloreo.**
 

@@ -1,7 +1,7 @@
 name: long_breath
 description: "Long Breath — roguelike de cartas de kung fu (MVP de combate)."
 publish_to: 'none'
-version: 0.1.0+8
+version: 0.1.0+9
 
 environment:
   sdk: ^3.11.4
@@ -42,6 +42,7 @@ flutter:
     - assets/art/icons/
     - assets/art/weapons/
     - assets/art/cards/
+    - assets/art/school/
     # hero.webp es la fuente de tool/recolor_hero.py; el juego usa las variantes.
     - assets/art/player/hero_novice.webp
     - assets/art/player/hero_tiger.webp

@@ -39,6 +39,8 @@ LIMITS = {
     "ui/logo.png": 512,
     "icons": 256,
     "cards": 768,
+    "school": 768,
+    "school/school_ruins.png": None,
 }
 SPRITE_QUALITY = 85
 BACKGROUND_QUALITY = 82
