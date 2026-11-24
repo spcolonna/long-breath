@@ -344,7 +344,7 @@ class RunEngine {
   /// Despertares del camino que la run todavía no aprendió.
   List<String> missingAwakenings(RunState r) => [
         for (final a in data.balance.statsOf(r.style).awakenings)
-          if (!r.awakenings.contains(a.id)) a.id,
+          if (!r.awakenings.contains(a.id) && !r.locked.contains(a.id)) a.id,
       ];
 
   (List<String>, Rng) _rollAwakenings(RunState r) {
@@ -589,6 +589,7 @@ class RunEngine {
             (elite ? lotus.elite : 0) +
             (boss ? lotus.boss : 0) +
             (boss && r.vow != null ? lotus.vow : 0);
+    final mastery = b.mastery;
     if (boss && isLastStage(r)) {
       final gained = lotusOf(r, lotusBase + lotus.victory);
       return r.copyWith(
@@ -596,6 +597,8 @@ class RunEngine {
         phase: RunPhase.victory,
         lotus: r.lotus + gained,
         lotusGained: gained,
+        masteryXp: r.masteryXp +
+            mastery.xpFor(elite: elite, boss: true, victory: true),
       );
     }
     if (boss) {
@@ -618,6 +621,8 @@ class RunEngine {
       combatsSinceMerchant: r.combatsSinceMerchant + 1,
       lotus: r.lotus + gained,
       lotusGained: gained,
+      masteryXp: r.masteryXp +
+          (fled ? 0 : mastery.xpFor(elite: elite, boss: boss)),
       stageWins: r.stageWins + 1,
       stageJade: r.stageJade + math.max(0, r.jadeGained),
       stageLotus: r.stageLotus + gained,
@@ -939,9 +944,21 @@ class RunEngine {
       ? TalismanEffect.none
       : data.weapon(r.weapon!).effectAt(r.weaponLevel, r.style);
 
+  /// Nivel más alto de [id] que se puede alcanzar: un nivel cuyas cartas
+  /// siguen cerradas (la maestría del camino) corta ahí.
+  int weaponMaxOf(RunState r, String id) {
+    final levels = data.weapon(id).levels;
+    var max = 0;
+    while (max < levels.length &&
+        !levels[max].cards.any(r.locked.contains)) {
+      max++;
+    }
+    return math.max(1, max);
+  }
+
   /// Si el arma equipada todavía se puede templar.
   bool canForge(RunState r) =>
-      r.weapon != null && r.weaponLevel < data.weapon(r.weapon!).maxLevel;
+      r.weapon != null && r.weaponLevel < weaponMaxOf(r, r.weapon!);
 
   /// Si un premio de arma sirve: conseguir la primera o templar la propia.
   bool canGainWeapon(RunState r) =>
@@ -950,7 +967,7 @@ class RunEngine {
   /// Equipa [id]; la forja de la escuela lo da ya templado
   /// ([MetaBonus.weaponLevel]), sin pasar del máximo.
   RunState equipWeapon(RunState r, String id, {int level = 1}) {
-    final max = data.weapon(id).maxLevel;
+    final max = weaponMaxOf(r, id);
     return r.copyWith(
       weapon: id,
       weaponLevel: math.min(max, level + r.meta.weaponLevel),

@@ -224,6 +224,19 @@ final schoolProvider =
 
 /// Dones de la escuela para la próxima subida (reinos, meridianos y
 /// edificios restaurados).
+/// Experiencia de maestría de cada camino.
+final masteryProvider = FutureProvider<Map<Style, int>>(
+  (ref) => ref.watch(progressStorageProvider).mastery(),
+);
+
+/// Lo que sigue cerrado para la próxima subida: lo del cultivo y lo que la
+/// maestría de cada camino todavía no abrió.
+final lockedProvider = FutureProvider<List<String>>((ref) async {
+  final c = await ref.watch(cultivationProvider.future);
+  final xp = await ref.watch(masteryProvider.future);
+  return [...c.locked, ...ref.watch(dataProvider).balance.mastery.lockedFor(xp)];
+});
+
 final metaBonusProvider = FutureProvider<MetaBonus>((ref) async {
   final balance = ref.watch(dataProvider).balance;
   final c = await ref.watch(cultivationProvider.future);

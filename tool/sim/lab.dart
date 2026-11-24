@@ -254,6 +254,9 @@ class RunLog {
 
   /// Semillas de loto ganadas y premios que salieron.
   int lotus = 0;
+
+  /// Experiencia de maestría que ganó su camino.
+  int masteryXp = 0;
   final kinds = <RewardKind>[];
   int? hpAtBoss;
   Style? style;
@@ -537,6 +540,7 @@ RunLog playRun(GameData data, Bot bot, int seed,
   log.talismansHeld = r.talismans.length;
   log.stage = r.stage;
   log.lotus = r.lotus;
+  log.masteryXp = r.style == null ? 0 : r.masteryXp;
   log.floor = r.visited.length;
   log.weapon = r.weapon;
   log.weaponLevel = r.weaponLevel;

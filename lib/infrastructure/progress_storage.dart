@@ -36,6 +36,7 @@ class ProgressStorage {
     'bestiary',
     'school',
     'schoolJade',
+    'mastery',
   ];
 
   String get _key => '${prefix}winsByDifficulty';
@@ -53,6 +54,7 @@ class ProgressStorage {
   String get _bestiaryKey => '${prefix}bestiary';
   String get _schoolKey => '${prefix}school';
   String get _schoolJadeKey => '${prefix}schoolJade';
+  String get _masteryKey => '${prefix}mastery';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -266,6 +268,9 @@ extension SchoolRecord on ProgressStorage {
     if (schoolJade > 0) {
       await prefs.setInt(_schoolJadeKey, await schoolJadeTotal() + schoolJade);
     }
+    if (done.style case final s? when done.mastery > 0) {
+      await addMastery(s, done.mastery);
+    }
     return done;
   }
 
@@ -279,6 +284,28 @@ extension SchoolRecord on ProgressStorage {
   Future<void> addLotus(int n) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_lotusKey, await lotus() + n);
+  }
+
+  /// Experiencia de maestría de cada camino (los que faltan están en 0).
+  Future<Map<Style, int>> mastery() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      for (final e in prefs.getStringList(_masteryKey) ?? const <String>[])
+        if (e.split(':') case [final id, final xp]
+            when Style.values.any((s) => s.name == id))
+          Style.values.byName(id): int.tryParse(xp) ?? 0,
+    };
+  }
+
+  /// Suma experiencia al camino [s] (al terminar una subida, o a mano en el
+  /// menú de pruebas).
+  Future<void> addMastery(Style s, int xp) async {
+    final prefs = await SharedPreferences.getInstance();
+    final all = await mastery();
+    all[s] = (all[s] ?? 0) + xp;
+    await prefs.setStringList(_masteryKey, [
+      for (final e in all.entries) '${e.key.name}:${e.value}',
+    ]);
   }
 
   /// Jade guardado para restaurar la escuela (el que sobró de las subidas).

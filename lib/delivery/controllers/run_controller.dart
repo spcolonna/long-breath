@@ -84,7 +84,7 @@ class RunController extends Notifier<RunState?> {
         difficulty: difficulty,
         pico: pico,
         locked:
-            locked ?? ref.read(cultivationProvider).value?.locked ?? const [],
+            locked ?? ref.read(lockedProvider).value ?? const [],
         meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
         legacy: legacy,
@@ -234,6 +234,7 @@ class RunController extends Notifier<RunState?> {
       'lotus': run.lotus + offering,
       'jade': run.jade,
       'offering': offering,
+      'mastery': run.style == null ? 0 : run.masteryXp,
       'feats': _engine.finalFeats(run),
     });
     ref.read(lastAscentProvider.notifier).set(null);
@@ -255,7 +256,8 @@ class RunController extends Notifier<RunState?> {
         ..invalidate(cultivationProvider)
         ..invalidate(meridianProvider)
         ..invalidate(schoolProvider)
-        ..invalidate(metaBonusProvider);
+        ..invalidate(metaBonusProvider)
+        ..invalidate(masteryProvider);
     });
   }
 

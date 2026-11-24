@@ -26,6 +26,7 @@ import '../widgets/paper_panel.dart';
 import '../widgets/scroll_panel.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/lotus.dart';
+import '../widgets/mastery_view.dart';
 import '../widgets/more_below.dart';
 import '../feel.dart';
 
@@ -394,6 +395,19 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                               ),
                             ),
                           ],
+                        ],
+                        if (ascent != null &&
+                            ascent.style != null &&
+                            ascent.mastery > 0) ...[
+                          const SizedBox(height: 8),
+                          _enter(
+                            0.7,
+                            0.78,
+                            MasteryResultLine(
+                              style: ascent.style!,
+                              xp: ascent.mastery,
+                            ),
+                          ),
                         ],
                         // Hitos 功 que se cumplieron (su aliento ya está arriba).
                         if (ascent?.hitos.isNotEmpty ?? false) ...[

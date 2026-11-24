@@ -23,6 +23,7 @@ class Ascent {
     this.breathBefore = 0,
     this.lotus = 0,
     this.lotusBefore = 0,
+    this.mastery = 0,
     this.jade = 0,
     this.offering = 0,
     this.feats = const {},
@@ -64,6 +65,9 @@ class Ascent {
   final int lotus;
   final int lotusBefore;
 
+  /// Experiencia de maestría que ganó su camino ([style]).
+  final int mastery;
+
   /// Jade que sobró y las semillas que dio como ofrenda (ya están en
   /// [lotus]).
   final int jade;
@@ -102,6 +106,7 @@ class Ascent {
     breathBefore: breathBefore,
     lotus: lotus,
     lotusBefore: lotusBefore,
+    mastery: mastery,
     jade: jade,
     offering: offering,
     feats: feats,
@@ -130,6 +135,7 @@ class Ascent {
     'breathBefore': breathBefore,
     'lotus': lotus,
     'lotusBefore': lotusBefore,
+    'mastery': mastery,
     'jade': jade,
     'offering': offering,
     'feats': feats,
@@ -161,6 +167,7 @@ class Ascent {
     breathBefore: j['breathBefore'] as int? ?? 0,
     lotus: j['lotus'] as int? ?? 0,
     lotusBefore: j['lotusBefore'] as int? ?? 0,
+    mastery: j['mastery'] as int? ?? 0,
     jade: j['jade'] as int? ?? 0,
     offering: j['offering'] as int? ?? 0,
     feats: {

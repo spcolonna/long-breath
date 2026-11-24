@@ -62,7 +62,7 @@
       { "id": "zhuji", "hanzi": "筑基", "breath": 135, "unlocks": ["crane"] },
       { "id": "kaimai", "hanzi": "开脉", "breath": 375, "unlocks": ["hu_wei", "she_wei", "he_xi", "fu_hu_quan", "jin_she_chan_si", "bai_he_quan"] },
       { "id": "ningshen", "hanzi": "凝神", "breath": 690, "unlocks": ["hu_quan", "she_quan", "he_quan"] },
-      { "id": "tongxuan", "hanzi": "通玄", "breath": 1080, "unlocks": ["xia_shan_hu", "she_shan", "he_ming"] },
+      { "id": "tongxuan", "hanzi": "通玄", "breath": 1080, "unlocks": ["xia_shan_hu", "she_shan"] },
       { "id": "guizhen", "hanzi": "归真", "breath": 1575, "unlocks": ["da_hong_quan"] }
     ]
   },
@@ -246,6 +246,16 @@
         {"cost": 200, "effect": {"firstTurnBreath": 1}},
         {"cost": 350, "effect": {"breathes": 1}}
       ]}
+    ]
+  },
+  "mastery": {
+    "xp": {"perCombat": 1, "elite": 2, "boss": 4, "victory": 10},
+    "levels": [
+      {"xp": 25, "tiger": ["hu_ya", "hu_ben"], "snake": ["she_hui_tou", "ling_she"], "crane": ["he_zhuo", "he_luo_di"]},
+      {"xp": 60, "tiger": ["hu_shi"], "snake": ["she_tui"], "crane": ["he_zhan"]},
+      {"xp": 110, "tiger": ["e_hu_pu_shi", "hu_hui_shen"], "snake": ["she_jiao", "she_pan"], "crane": ["bai_he_liang_chi", "he_mian"]},
+      {"xp": 170, "tiger": ["pudao_chantou"], "snake": ["jian_chuanxin"], "crane": ["gun_wuhua"]},
+      {"xp": 240, "tiger": ["hu_pu"], "snake": ["jin_she"], "crane": ["he_ming"]}
     ]
   }
 }

@@ -69,7 +69,7 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
   }
 
   Future<void> _lotus() async {
-    await ref.read(progressStorageProvider).addLotus(20);
+    await ref.read(progressStorageProvider).addLotus(200);
     ref.invalidate(meridianProvider);
     if (mounted) Navigator.pop(context);
   }
@@ -77,6 +77,15 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
   Future<void> _schoolJade() async {
     await ref.read(progressStorageProvider).addSchoolJade(100);
     ref.invalidate(schoolProvider);
+    if (mounted) Navigator.pop(context);
+  }
+
+  Future<void> _mastery() async {
+    final storage = ref.read(progressStorageProvider);
+    for (final s in Style.values) {
+      await storage.addMastery(s, 50);
+    }
+    ref.invalidate(masteryProvider);
     if (mounted) Navigator.pop(context);
   }
 
@@ -154,11 +163,16 @@ class _DebugSheetState extends ConsumerState<_DebugSheet> {
             const SizedBox(height: 8),
             FilledButton(onPressed: _start, child: const Text('Subir acá')),
             const SizedBox(height: 8),
-            OutlinedButton(onPressed: _lotus, child: const Text('+20 loto')),
+            OutlinedButton(onPressed: _lotus, child: const Text('+200 loto')),
             const SizedBox(height: 8),
             OutlinedButton(
               onPressed: _schoolJade,
               child: const Text('+100 jade de la escuela'),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton(
+              onPressed: _mastery,
+              child: const Text('+50 maestría en cada camino'),
             ),
             const SizedBox(height: 8),
             OutlinedButton(

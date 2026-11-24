@@ -327,19 +327,23 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
           final data = base.build();
           final b = data.balance;
           final c = b.cultivation;
-          final out = <List<(bool, int, int, int, int, int)>>[];
+          final out = <List<(bool, int, int, int, int, int, int)>>[];
           for (var sc = w; sc < schools; sc += workers) {
             var breath = 0, bank = 0, jadeBank = 0;
             final owned = <String>[];
             final levels = <String, int>{};
-            final hist = <(bool, int, int, int, int, int)>[];
+            final xp = <Style, int>{};
+            final hist = <(bool, int, int, int, int, int, int)>[];
             for (var i = 0; i < ascents; i++) {
               final realm = c.realmOf(breath);
               final s = seed * 1000003 + sc * 997 + i;
               final log = playRun(data, profiles[p]!(s * 31), s,
                   wanted: Style.values[(sc + i) % 3],
                   difficulty: diff,
-                  locked: c.lockedAt(realm),
+                  locked: [
+                    ...c.lockedAt(realm),
+                    ...b.mastery.lockedFor(xp),
+                  ],
                   meta: b.meridians.bonusOf(c, realm, owned) +
                       b.school.bonusOf(levels));
               breath += c.breathFor(
@@ -348,6 +352,9 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
                   stage: log.stage,
                   diff: diff);
               bank += log.lotus;
+              if (log.style case final st?) {
+                xp[st] = (xp[st] ?? 0) + log.masteryXp;
+              }
               // Abre los puntos más baratos que pueda.
               while (true) {
                 final open = [
@@ -377,7 +384,9 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
                 levels[next.first.$1] = (levels[next.first.$1] ?? 0) + 1;
               }
               hist.add((log.won, c.realmOf(breath), owned.length, log.lotus,
-                  b.school.restored(levels), log.jadeLeft));
+                  b.school.restored(levels), log.jadeLeft, [
+                    for (final st in Style.values) b.mastery.levelOf(xp[st] ?? 0)
+                  ].reduce(math.min)));
             }
             out.add(hist);
           }
@@ -412,6 +421,15 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
     print('- Escuela restaurada ($maxLv niveles): '
         '${pct(schoolFull.length, hist.length)}; mediana en la subida '
         '${q(schoolFull, .5)}');
+    final mMax = data0(raw).balance.mastery.maxLevel;
+    for (final lv in [1, 3, mMax]) {
+      final at = [
+        for (final h in hist) h.indexWhere((e) => e.$7 >= lv) + 1,
+      ].where((x) => x > 0).toList()
+        ..sort();
+      print('- Maestría $lv en los tres caminos: '
+          '${pct(at.length, hist.length)}; mediana en la subida ${q(at, .5)}');
+    }
     final rows = <List<String>>[];
     for (var from = 0; from < ascents; from += 5) {
       final slice = [

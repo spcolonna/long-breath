@@ -43,6 +43,7 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
     final text = ref.watch(textProvider);
     final picked = _picked;
     final stats = data.balance.statsOf(picked);
+    final mastery = ref.watch(masteryProvider).value ?? const {};
 
     return Scaffold(
       body: SceneBackdrop(
@@ -130,6 +131,13 @@ class _ShrineScreenState extends ConsumerState<ShrineScreen> {
                                   data.balance.styles[s]!.draw,
                                   data.balance.styles[s]!.retain,
                                 ),
+                                mastery: data.balance.mastery.isEmpty
+                                    ? null
+                                    : t.masteryShrine(
+                                        data.balance.mastery
+                                            .levelOf(mastery[s] ?? 0),
+                                        data.balance.mastery.maxLevel,
+                                      ),
                                 color: styleColor(s),
                                 selected: s == picked,
                                 onTap: () {
@@ -271,7 +279,11 @@ class _PathTile extends StatelessWidget {
     required this.color,
     required this.selected,
     required this.onTap,
+    this.mastery,
   });
+
+  /// Nivel de maestría del camino (null sin maestría).
+  final String? mastery;
 
   final String name;
   final String hanzi;
@@ -341,6 +353,17 @@ class _PathTile extends StatelessWidget {
                 color: selected ? Palette.onColor : Palette.text,
               ),
             ),
+            if (mastery case final m?) ...[
+              const SizedBox(height: 4),
+              Text(
+                m,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: selected ? Palette.onColor : color,
+                ),
+              ),
+            ],
           ],
         ),
       ),

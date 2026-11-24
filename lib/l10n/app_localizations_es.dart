@@ -3531,4 +3531,52 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get termScales => 'Escamas';
+
+  @override
+  String get masteryButton => 'Maestría de los caminos';
+
+  @override
+  String get masteryTitle => 'Maestría de los caminos';
+
+  @override
+  String get masteryHint =>
+      'Cada camino sube de nivel con las peleas que ganás con él: las élites, los jefes y la cumbre dan más. Cada nivel abre algo de ese camino para las próximas subidas.';
+
+  @override
+  String masteryLevel(int n, int max) {
+    return 'Nivel $n de $max';
+  }
+
+  @override
+  String masteryXp(int xp, int next) {
+    return '$xp de $next de experiencia';
+  }
+
+  @override
+  String get masteryFull => 'Maestría completa';
+
+  @override
+  String masteryAwakening(String name) {
+    return 'Despertar $name';
+  }
+
+  @override
+  String masteryWeapon(String name) {
+    return '$name nivel 3';
+  }
+
+  @override
+  String masteryShrine(int n, int max) {
+    return 'Maestría $n/$max';
+  }
+
+  @override
+  String masteryGained(String path, int xp, int n) {
+    return '$path: +$xp de maestría · nivel $n';
+  }
+
+  @override
+  String masteryUp(String list) {
+    return 'Se abre: $list';
+  }
 }

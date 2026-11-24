@@ -897,3 +897,38 @@ El árbol pasa de 15 a 36 puntos: 3 ramas de 10 filas. En las filas 5 y 10 de ca
 - Árbol completo: mediana en la subida 29 (meta: 25–35).
 - Con todo casi completo gana ~80%, algo por encima del ~70% buscado. Lo que falta medir es la maestría por camino, que todavía no existe. Si la maestría suma poder, hay que bajar algo de acá.
 
+
+## 4d. Rediseño fase 2: maestría por camino (24/11/2026)
+
+Cada camino (Tigre, Serpiente, Grulla) sube de nivel con las peleas que se ganan con él. La experiencia de la subida va al camino que se tenía al terminarla. Por pelea ganada 1, élite +2, jefe +4 y cumbre +10; escapar no da nada (`game_balance.json` → `mastery`).
+
+Lo que el nivel todavía no abrió queda cerrado igual que lo del cultivo: el motor recibe la lista `locked` (cultivo + maestría, `lockedProvider`).
+
+| Nivel (experiencia) | Tigre | Serpiente | Grulla |
+|---|---|---|---|
+| 1 (25) | Colmillo de tigre, Embestida del tigre | La serpiente vuelve la cabeza, Serpiente ágil | Picotazo de la grulla, La grulla se posa |
+| 2 (60) | despertar 噬 | despertar 蜕 | despertar 展 |
+| 3 (110) | Tigre hambriento, El tigre se da vuelta | Abrazo de la serpiente, Serpiente al acecho | La grulla blanca abre las alas, La grulla duerme |
+| 4 (170) | pudao nivel 3 | jian nivel 3 | gun nivel 3 |
+| 5 (240) | Salto del tigre (legendaria) | Serpiente dorada (legendaria) | Canto de la grulla (legendaria) |
+
+- **Sin maestría** cada camino tiene sus 5 comunes y 1 rara (la del Tigre la abre el cultivo), 3 despertares de 4, y su arma llega hasta el nivel 2. La forja de la escuela tampoco la pasa de ahí (`RunEngine.weaponMaxOf`).
+- **Canto de la grulla** pasó del cultivo (reino 通玄) a la maestría de la Grulla.
+
+**Progreso** (experto, Normal, 20 escuelas × 40 subidas, con meridianos, escuela y maestría; el bot alterna el camino que busca):
+
+| Subidas | victoria | puntos | escuela |
+|---|---|---|---|
+| 1–5 | 7% | 4,5 | 1,9 |
+| 6–10 | 16% | 11,2 | 5,5 |
+| 11–15 | 32% | 16,1 | 7,7 |
+| 16–20 | 51% | 20,7 | 9,8 |
+| 21–25 | 69% | 24,8 | 11,3 |
+| 26–30 | 78% | 28,4 | 12,7 |
+| 31–35 | 87% | 29,9 | 14,1 |
+| 36–40 | 80% | 30,0 | 15,0 |
+
+- Primera victoria: mediana en la subida 8 (p25 5, p75 13). Con 20 escuelas hay ruido: en §4c daba 10.
+- Maestría 1 en los tres caminos hacia la subida 10, nivel 3 hacia la 19 y completa hacia la 29, a la par del árbol (30) y antes que la escuela (35).
+- Cerrar las raras al principio no le baja la victoria al bot: el bot elige cartas casi al azar. Con una persona, que sí busca las raras, el principio debería sentirse más duro. Hay que confirmarlo con los `run_logs` del teléfono.
+- Al final gana ~80–87%, por encima del ~70% buscado. Si con personas también queda alto, se recorta el árbol (las filas 8–10).

@@ -11,6 +11,7 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/mastery_view.dart';
 import '../widgets/confirm_dialog.dart';
 import '../widgets/debug_menu.dart';
 import '../widgets/hero_sprite.dart';
@@ -166,6 +167,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
               const StaggerIn(index: 2, child: RealmLine()),
               const StaggerIn(index: 3, child: _MeridianLine()),
               const StaggerIn(index: 3, child: _MonasteryLine()),
+              const StaggerIn(index: 3, child: _MasteryLine()),
               if (info != null && info.difficulty == Difficulty.normal)
                 StaggerIn(index: 3, child: _PicoLine(info: info)),
               const SizedBox(height: 10),
@@ -342,6 +344,74 @@ class _MonasteryLine extends ConsumerWidget {
                 const SizedBox(width: 6),
                 const _Dot(),
               ],
+              const Icon(Icons.chevron_right, size: 18, color: Palette.textDim),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Nivel de maestría de cada camino; abre la hoja con lo que abre cada uno.
+class _MasteryLine extends ConsumerWidget {
+  const _MasteryLine();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final xp = ref.watch(masteryProvider).value;
+    final balance = ref.watch(dataProvider).balance;
+    final def = balance.mastery;
+    final seen = (ref.watch(ascentsProvider).value ?? const []).isNotEmpty;
+    if (xp == null || def.isEmpty || !seen) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          Haptics.selectionClick();
+          ref.read(audioProvider).play(Sfx.uiButton);
+          showMasterySheet(context);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          decoration: BoxDecoration(
+            color: Palette.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Palette.gold.withValues(alpha: 0.5)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final s in Style.values) ...[
+                Text(
+                  balance.statsOf(s).hanzi,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: Fonts.display,
+                    color: styleColor(s),
+                  ),
+                ),
+                Text(
+                  ' ${def.levelOf(xp[s] ?? 0)}  ',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+              Flexible(
+                child: Text(
+                  t.masteryButton,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
               const Icon(Icons.chevron_right, size: 18, color: Palette.textDim),
             ],
           ),

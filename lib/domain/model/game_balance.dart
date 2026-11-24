@@ -2,6 +2,7 @@ import 'awakening_def.dart';
 import 'cultivation_def.dart';
 import 'enums.dart';
 import 'meta_bonus.dart';
+import 'mastery_def.dart';
 import 'school_def.dart';
 
 /// Cómo se juega la mano: el del novicio o el del camino animal elegido.
@@ -716,6 +717,7 @@ class GameBalance {
     this.cultivation = CultivationDef.none,
     this.meridians = MeridianDef.none,
     this.school = SchoolDef.none,
+    this.mastery = MasteryDef.none,
     this.combatRewards = CombatRewardsDef.none,
     this.legacy = LegacyDef.none,
   });
@@ -915,6 +917,9 @@ class GameBalance {
   /// Edificios de la escuela que se restauran con jade.
   final SchoolDef school;
 
+  /// Maestría por camino: experiencia y lo que abre cada nivel.
+  final MasteryDef mastery;
+
   /// Premios variados de los combates.
   final CombatRewardsDef combatRewards;
 
@@ -1077,6 +1082,7 @@ class GameBalance {
         final Map<String, dynamic> m => SchoolDef.fromJson(m),
         _ => SchoolDef.none,
       },
+      mastery: MasteryDef.fromJson(j['mastery'] as Map<String, dynamic>?),
       combatRewards: switch (j['combatRewards']) {
         final Map<String, dynamic> m => CombatRewardsDef.fromJson(m),
         _ => CombatRewardsDef.none,

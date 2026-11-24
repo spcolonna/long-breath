@@ -5553,6 +5553,72 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Escamas'**
   String get termScales;
+
+  /// No description provided for @masteryButton.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestría de los caminos'**
+  String get masteryButton;
+
+  /// No description provided for @masteryTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestría de los caminos'**
+  String get masteryTitle;
+
+  /// No description provided for @masteryHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada camino sube de nivel con las peleas que ganás con él: las élites, los jefes y la cumbre dan más. Cada nivel abre algo de ese camino para las próximas subidas.'**
+  String get masteryHint;
+
+  /// No description provided for @masteryLevel.
+  ///
+  /// In es, this message translates to:
+  /// **'Nivel {n} de {max}'**
+  String masteryLevel(int n, int max);
+
+  /// No description provided for @masteryXp.
+  ///
+  /// In es, this message translates to:
+  /// **'{xp} de {next} de experiencia'**
+  String masteryXp(int xp, int next);
+
+  /// No description provided for @masteryFull.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestría completa'**
+  String get masteryFull;
+
+  /// No description provided for @masteryAwakening.
+  ///
+  /// In es, this message translates to:
+  /// **'Despertar {name}'**
+  String masteryAwakening(String name);
+
+  /// No description provided for @masteryWeapon.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} nivel 3'**
+  String masteryWeapon(String name);
+
+  /// No description provided for @masteryShrine.
+  ///
+  /// In es, this message translates to:
+  /// **'Maestría {n}/{max}'**
+  String masteryShrine(int n, int max);
+
+  /// No description provided for @masteryGained.
+  ///
+  /// In es, this message translates to:
+  /// **'{path}: +{xp} de maestría · nivel {n}'**
+  String masteryGained(String path, int xp, int n);
+
+  /// No description provided for @masteryUp.
+  ///
+  /// In es, this message translates to:
+  /// **'Se abre: {list}'**
+  String masteryUp(String list);
 }
 
 class _AppLocalizationsDelegate

@@ -12,7 +12,7 @@ import 'run_controller.dart';
 /// juego, y va a la primera pantalla de la subida.
 Future<void> startClimb(BuildContext context, WidgetRef ref) async {
   final info = await ref.read(slotInfoProvider.future);
-  final locked = (await ref.read(cultivationProvider.future)).locked;
+  final locked = await ref.read(lockedProvider.future);
   final meta = await ref.read(metaBonusProvider.future);
   final ascents = await ref.read(ascentsProvider.future);
   final threads = await ref.read(threadsProvider.future);

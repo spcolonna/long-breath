@@ -49,7 +49,7 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
    - Nodos con decisiones: elegir 1 de 2 en ciertos puntos.
    - Nodos que cambian cómo se juega: segundo Respirar, contragolpe mejorado, técnica más barata.
    - La rama Cuerpo es la que hace «posible» ganar en Normal.
-2. **Maestría por camino (experiencia del camino).** Cada camino (Tigre, Serpiente, Grulla) sube de nivel con lo que se pelea con él.
+2. **Maestría por camino (experiencia del camino). ✅ Hecha el 24/11** (ver `balance.md` §4d). Cada camino (Tigre, Serpiente, Grulla) sube de nivel con lo que se pelea con él.
    - Desbloquea cartas raras de ese camino, su técnica mejorada, un tercer despertar y su arma nivel 3.
    - Obliga a jugar con los tres caminos.
 3. **La escuela (jade). ✅ Hecha el 23/11** (ver `balance.md` §4b). El jade que sobra deja de convertirse en loto y pasa a restaurar el monasterio.
