@@ -28,6 +28,7 @@ class ProgressStorage {
     'breath',
     'lotus',
     'meridians',
+    'meridianTree',
     'cinematics',
     'run',
     'hitos',
@@ -45,6 +46,7 @@ class ProgressStorage {
   String get _breathKey => '${prefix}breath';
   String get _lotusKey => '${prefix}lotus';
   String get _meridiansKey => '${prefix}meridians';
+  String get _meridianTreeKey => '${prefix}meridianTree';
   String get _cinematicsKey => '${prefix}cinematics';
   String get _hitosKey => '${prefix}hitos';
   String get _threadsKey => '${prefix}threads';
@@ -316,10 +318,29 @@ extension SchoolRecord on ProgressStorage {
     return true;
   }
 
-  /// Puntos del árbol de meridianos ya abiertos.
+  /// Versión del árbol de meridianos: la 2 es el árbol de 36 puntos (24/11).
+  static const meridianTree = 2;
+
+  /// Lo que costaba cada punto del árbol viejo de 15 (rama_1 … rama_5).
+  static const _oldTreeCost = [25, 50, 75, 110, 160];
+
+  /// Puntos del árbol de meridianos ya abiertos. Una partida con el árbol
+  /// viejo recupera todo el loto que gastó y vuelve a elegir.
   Future<List<String>> meridians() async {
     final prefs = await SharedPreferences.getInstance();
-    return [...?prefs.getStringList(_meridiansKey)];
+    final owned = [...?prefs.getStringList(_meridiansKey)];
+    if ((prefs.getInt(_meridianTreeKey) ?? 1) >= meridianTree) return owned;
+    var refund = 0;
+    for (final id in owned) {
+      final m = RegExp(r'^(body|spirit|tech)_([1-5])$').firstMatch(id);
+      if (m != null) refund += _oldTreeCost[int.parse(m.group(2)!) - 1];
+    }
+    if (refund > 0) {
+      await prefs.setInt(_lotusKey, (prefs.getInt(_lotusKey) ?? 0) + refund);
+    }
+    await prefs.setStringList(_meridiansKey, const []);
+    await prefs.setInt(_meridianTreeKey, meridianTree);
+    return const [];
   }
 
   /// Abre un punto del árbol si se puede y alcanza el loto.

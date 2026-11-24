@@ -4810,6 +4810,66 @@ abstract class AppLocalizations {
   /// **'Al pasar de etapa curás {n}% más de lo que falta'**
   String bonusStageHealPct(int n);
 
+  /// No description provided for @bonusHandSize.
+  ///
+  /// In es, this message translates to:
+  /// **'Robás {n} carta más cada turno'**
+  String bonusHandSize(int n);
+
+  /// No description provided for @bonusTurnBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} de Aliento en cada turno'**
+  String bonusTurnBreath(int n);
+
+  /// No description provided for @bonusRetain.
+  ///
+  /// In es, this message translates to:
+  /// **'Podés guardar {n} carta más al terminar el turno'**
+  String bonusRetain(int n);
+
+  /// No description provided for @bonusFirstStrike.
+  ///
+  /// In es, this message translates to:
+  /// **'El primer ataque de cada turno hace +{n} de daño'**
+  String bonusFirstStrike(int n);
+
+  /// No description provided for @bonusChain.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada ataque hace +{n} de daño por cada ataque anterior del turno'**
+  String bonusChain(int n);
+
+  /// No description provided for @bonusEnemyHp.
+  ///
+  /// In es, this message translates to:
+  /// **'Los rivales empiezan con {n} de Vida menos'**
+  String bonusEnemyHp(int n);
+
+  /// No description provided for @bonusEnemyStructure.
+  ///
+  /// In es, this message translates to:
+  /// **'Los rivales empiezan con {n} de Estructura menos'**
+  String bonusEnemyStructure(int n);
+
+  /// No description provided for @meridianChoice.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegí uno de los dos: el otro se cierra para siempre'**
+  String get meridianChoice;
+
+  /// No description provided for @meridianChosenOther.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegiste el otro punto'**
+  String get meridianChosenOther;
+
+  /// No description provided for @meridianOr.
+  ///
+  /// In es, this message translates to:
+  /// **'o'**
+  String get meridianOr;
+
   /// No description provided for @resultLotus.
   ///
   /// In es, this message translates to:

@@ -32,6 +32,13 @@ extension Labels on AppLocalizations {
     if (b.weaponLevel != 0) bonusWeaponLevel(b.weaponLevel),
     if (b.teaHeal != 0) bonusTeaHeal(b.teaHeal),
     if (b.stageHealPct != 0) bonusStageHealPct(b.stageHealPct),
+    if (b.handSize != 0) bonusHandSize(b.handSize),
+    if (b.turnBreath != 0) bonusTurnBreath(b.turnBreath),
+    if (b.retain != 0) bonusRetain(b.retain),
+    if (b.firstStrike != 0) bonusFirstStrike(b.firstStrike),
+    if (b.chain != 0) bonusChain(b.chain),
+    if (b.enemyHp != 0) bonusEnemyHp(b.enemyHp),
+    if (b.enemyStructure != 0) bonusEnemyStructure(b.enemyStructure),
   ];
 
   String branchName(MeridianBranch b) => switch (b) {

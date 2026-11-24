@@ -58,6 +58,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
       context: context,
       backgroundColor: Palette.surface,
       showDragHandle: true,
+      isScrollControlled: true,
       builder: (sheet) => _NodeSheet(
         node: n,
         cultivation: c,
@@ -99,28 +100,28 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
                 margin: const EdgeInsets.fromLTRB(10, 0, 10, 12),
                 hug: true,
                 child: ListView(
-                shrinkWrap: true,
-                padding: const EdgeInsets.fromLTRB(14, 14, 14, 20),
-                children: [
-                  Text(
-                    t.meridiansHint,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Palette.textDim),
-                  ),
-                  const SizedBox(height: 18),
-                  _Tree(
-                    def: def,
-                    cultivation: c,
-                    lotus: m.lotus,
-                    owned: m.owned,
-                    opened: _opened,
-                    burst: _burst,
-                    onTap: (n) => _details(n, c, m.lotus, m.owned),
-                  ),
-                  const SizedBox(height: 18),
-                  _RealmGifts(cultivation: c),
-                ],
-              ),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.fromLTRB(14, 14, 14, 20),
+                  children: [
+                    Text(
+                      t.meridiansHint,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Palette.textDim),
+                    ),
+                    const SizedBox(height: 18),
+                    _Tree(
+                      def: def,
+                      cultivation: c,
+                      lotus: m.lotus,
+                      owned: m.owned,
+                      opened: _opened,
+                      burst: _burst,
+                      onTap: (n) => _details(n, c, m.lotus, m.owned),
+                    ),
+                    const SizedBox(height: 18),
+                    _RealmGifts(cultivation: c),
+                  ],
+                ),
               ),
             ),
     );
@@ -214,13 +215,7 @@ class _Tree extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final branches = MeridianBranch.values;
-    final byBranch = {
-      for (final b in branches)
-        b: [
-          for (final n in def.nodes)
-            if (n.branch == b) n,
-        ],
-    };
+    final byBranch = {for (final b in branches) b: def.rows(b)};
     final rows = byBranch.values.fold(0, (a, l) => math.max(a, l.length));
     const rowH = 104.0;
     const gutter = 34.0;
@@ -264,9 +259,9 @@ class _Tree extends StatelessWidget {
                         height: rowH,
                         child: Center(
                           child: () {
-                            final n = byBranch[branches.first]!.elementAtOrNull(
-                              i,
-                            );
+                            final n = byBranch[branches.first]!
+                                .elementAtOrNull(i)
+                                ?.first;
                             if (n == null) return const SizedBox();
                             final r = cultivation.def.realms[n.realm];
                             return RealmSeal(
@@ -283,7 +278,7 @@ class _Tree extends StatelessWidget {
               for (final b in branches)
                 Expanded(
                   child: _Channel(
-                    nodes: byBranch[b]!,
+                    rows: byBranch[b]!,
                     color: branchLook(b).$2,
                     rowH: rowH,
                     cultivation: cultivation,
@@ -303,11 +298,11 @@ class _Tree extends StatelessWidget {
   }
 }
 
-/// Un canal: la línea de tinta (llena hasta el último punto abierto) y sus
-/// puntos.
+/// Un canal: la línea de tinta (llena hasta la última fila abierta) y sus
+/// puntos. Una fila de elección muestra sus dos puntos lado a lado.
 class _Channel extends StatelessWidget {
   const _Channel({
-    required this.nodes,
+    required this.rows,
     required this.color,
     required this.rowH,
     required this.cultivation,
@@ -319,7 +314,7 @@ class _Channel extends StatelessWidget {
     required this.onTap,
   });
 
-  final List<MeridianNode> nodes;
+  final List<List<MeridianNode>> rows;
   final Color color;
   final double rowH;
   final Cultivation cultivation;
@@ -332,7 +327,7 @@ class _Channel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final done = nodes.where((n) => owned.contains(n.id)).length;
+    final done = rows.where((r) => r.any((n) => owned.contains(n.id))).length;
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -343,7 +338,7 @@ class _Channel extends StatelessWidget {
             curve: Curves.easeOutCubic,
             builder: (_, v, _) => CustomPaint(
               painter: _ChannelPainter(
-                count: nodes.length,
+                count: rows.length,
                 filled: v,
                 rowH: rowH,
                 color: color,
@@ -353,19 +348,30 @@ class _Channel extends StatelessWidget {
         ),
         Column(
           children: [
-            for (final n in nodes)
+            for (final row in rows)
               SizedBox(
                 height: rowH,
-                child: Center(
-                  child: _Point(
-                    node: n,
-                    color: color,
-                    owned: owned.contains(n.id),
-                    open: def.canOpen(n, cultivation.realm, owned),
-                    affordable: lotus >= n.cost,
-                    burst: opened == n.id ? burst : 0,
-                    onTap: () => onTap(n),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (final n in row)
+                      Flexible(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: _Point(
+                            node: n,
+                            color: color,
+                            size: row.length > 1 ? 42 : 58,
+                            owned: owned.contains(n.id),
+                            open: def.canOpen(n, cultivation.realm, owned),
+                            closed: def.chosenOther(n, owned),
+                            affordable: lotus >= n.cost,
+                            burst: opened == n.id ? burst : 0,
+                            onTap: () => onTap(n),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
           ],
@@ -419,8 +425,10 @@ class _Point extends ConsumerStatefulWidget {
   const _Point({
     required this.node,
     required this.color,
+    required this.size,
     required this.owned,
     required this.open,
+    required this.closed,
     required this.affordable,
     required this.burst,
     required this.onTap,
@@ -428,8 +436,12 @@ class _Point extends ConsumerStatefulWidget {
 
   final MeridianNode node;
   final Color color;
+  final double size;
   final bool owned;
   final bool open;
+
+  /// Se eligió el otro punto de la elección: queda cerrado para siempre.
+  final bool closed;
   final bool affordable;
   final int burst;
   final VoidCallback onTap;
@@ -462,140 +474,149 @@ class _PointState extends ConsumerState<_Point>
     final text = ref.watch(textProvider);
     final ready = widget.open && widget.affordable;
     final locked = !widget.owned && !widget.open;
-    const size = 58.0;
+    final size = widget.size;
     return GestureDetector(
       onTap: widget.onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              AnimatedBuilder(
-                animation: _pulse,
-                builder: (_, child) => Container(
-                  width: size,
-                  height: size,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      if (ready)
-                        BoxShadow(
-                          color: Palette.jade.withValues(
-                            alpha: 0.25 + 0.35 * _pulse.value,
-                          ),
-                          blurRadius: 10 + 10 * _pulse.value,
-                          spreadRadius: 2 * _pulse.value,
-                        ),
-                      if (widget.owned)
-                        BoxShadow(
-                          color: Palette.gold.withValues(alpha: 0.45),
-                          blurRadius: 12,
-                        ),
-                    ],
-                  ),
-                  child: child,
-                ),
-                child: Bounce(
-                  trigger: widget.burst,
-                  scale: 1.3,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 400),
+      child: Opacity(
+        opacity: widget.closed ? 0.4 : 1,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                AnimatedBuilder(
+                  animation: _pulse,
+                  builder: (_, child) => Container(
                     width: size,
                     height: size,
-                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: widget.owned ? Palette.gold : Palette.surface,
-                      border: Border.all(
-                        color: widget.owned
-                            ? Palette.surface
-                            : ready
-                            ? Palette.jade
-                            : locked
-                            ? Palette.line
-                            : widget.color.withValues(alpha: 0.6),
-                        width: 3,
-                      ),
+                      boxShadow: [
+                        if (ready)
+                          BoxShadow(
+                            color: Palette.jade.withValues(
+                              alpha: 0.25 + 0.35 * _pulse.value,
+                            ),
+                            blurRadius: 10 + 10 * _pulse.value,
+                            spreadRadius: 2 * _pulse.value,
+                          ),
+                        if (widget.owned)
+                          BoxShadow(
+                            color: Palette.gold.withValues(alpha: 0.45),
+                            blurRadius: 12,
+                          ),
+                      ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: FittedBox(
-                        child: Text(
-                          text.meridianHanzi(widget.node.id),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w800,
-                            color: widget.owned
-                                ? Palette.onColor
-                                : locked
-                                ? Palette.textDim
-                                : Palette.text,
+                    child: child,
+                  ),
+                  child: Bounce(
+                    trigger: widget.burst,
+                    scale: 1.3,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      width: size,
+                      height: size,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: widget.owned ? Palette.gold : Palette.surface,
+                        border: Border.all(
+                          color: widget.owned
+                              ? Palette.surface
+                              : ready
+                              ? Palette.jade
+                              : locked
+                              ? Palette.line
+                              : widget.color.withValues(alpha: 0.6),
+                          width: 3,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text(
+                            text.meridianHanzi(widget.node.id),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: widget.owned
+                                  ? Palette.onColor
+                                  : locked
+                                  ? Palette.textDim
+                                  : Palette.text,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  child: InkBurst(
-                    trigger: widget.burst,
-                    colors: [widget.color, Palette.gold, Colors.white],
-                    count: 34,
-                    radius: 110,
-                  ),
-                ),
-              ),
-              if (locked)
-                const Positioned(
-                  right: -2,
-                  bottom: -2,
-                  child: GameIcon(Icons.lock, size: 16, color: Palette.textDim),
-                ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          widget.owned
-              ? Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  color: Palette.surface,
-                  child: Text(
-                    text.meridian(widget.node.id),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      color: Palette.gold,
+                Positioned.fill(
+                  child: IgnorePointer(
+                    child: InkBurst(
+                      trigger: widget.burst,
+                      colors: [widget.color, Palette.gold, Colors.white],
+                      count: 34,
+                      radius: 110,
                     ),
                   ),
-                )
-              : Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    color: Palette.surface,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const LotusSeed(size: 13),
-                      const SizedBox(width: 3),
-                      Text(
-                        '${widget.node.cost}',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: widget.affordable
-                              ? Palette.blossom
-                              : Palette.textDim,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-        ],
+                if (locked)
+                  Positioned(
+                    right: -2,
+                    bottom: -2,
+                    child: GameIcon(
+                      widget.closed ? Icons.close : Icons.lock,
+                      size: 16,
+                      color: Palette.textDim,
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            widget.owned
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    color: Palette.surface,
+                    child: Text(
+                      text.meridian(widget.node.id),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: Palette.gold,
+                      ),
+                    ),
+                  )
+                : Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    decoration: BoxDecoration(
+                      color: Palette.surface,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const LotusSeed(size: 13),
+                        const SizedBox(width: 3),
+                        Text(
+                          '${widget.node.cost}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: widget.affordable
+                                ? Palette.blossom
+                                : Palette.textDim,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+          ],
+        ),
       ),
     );
   }
@@ -629,7 +650,9 @@ class _NodeSheet extends ConsumerWidget {
         ? null
         : cultivation.realm < node.realm
         ? t.meridianNeedsRealm('${realm.hanzi} ${text.realm(realm.id)}')
-        : node.requires != null && !owned.contains(node.requires)
+        : def.chosenOther(node, owned)
+        ? t.meridianChosenOther
+        : !def.prevOpen(node, owned)
         ? t.meridianNeedsPrev
         : lotus < node.cost
         ? t.meridianNeedsLotus(node.cost - lotus)
@@ -637,7 +660,7 @@ class _NodeSheet extends ConsumerWidget {
     final can =
         !isOwned && why == null && def.canOpen(node, cultivation.realm, owned);
     return SafeArea(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -646,7 +669,11 @@ class _NodeSheet extends ConsumerWidget {
             const SizedBox(height: 10),
             Text(
               text.meridian(node.id),
-              style: const TextStyle(fontSize: 22, fontFamily: Fonts.display, fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                fontSize: 22,
+                fontFamily: Fonts.display,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             Text(
               '${t.branchName(node.branch)} · ${text.meridianText(node.id)}',
@@ -663,6 +690,18 @@ class _NodeSheet extends ConsumerWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
+            if (node.choice != null && !isOwned) ...[
+              const SizedBox(height: 6),
+              Text(
+                t.meridianChoice,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: Palette.lacquer,
+                ),
+              ),
+            ],
             const SizedBox(height: 6),
             Text(
               t.meridianNextRun,

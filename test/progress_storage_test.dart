@@ -242,7 +242,7 @@ void main() {
           realm: 1,
           cost: 5,
           effect: MetaBonus(maxHp: 2),
-          requires: 'a',
+          requires: ['a'],
         ),
       ],
     );
@@ -257,6 +257,61 @@ void main() {
         reason: 'ya está abierto');
     expect(await storage.meridians(), ['a', 'b']);
     expect(await storage.lotus(), 5);
+  });
+
+  test('las elecciones del árbol cierran el otro punto', () async {
+    SharedPreferences.setMockInitialValues({'long_breath.lotus': 500});
+    final storage = ProgressStorage();
+    const def = MeridianDef(
+      nodes: [
+        MeridianNode(
+          id: 'x',
+          branch: MeridianBranch.body,
+          realm: 0,
+          cost: 10,
+          choice: 'c',
+          effect: MetaBonus(maxHp: 2),
+        ),
+        MeridianNode(
+          id: 'y',
+          branch: MeridianBranch.body,
+          realm: 0,
+          cost: 10,
+          choice: 'c',
+          effect: MetaBonus(structure: 2),
+        ),
+        MeridianNode(
+          id: 'z',
+          branch: MeridianBranch.body,
+          realm: 0,
+          cost: 10,
+          requires: ['x', 'y'],
+          effect: MetaBonus(winHeal: 1),
+        ),
+      ],
+    );
+    expect(def.rows(MeridianBranch.body).map((r) => r.length), [2, 1]);
+    expect(def.maxOwned, 2);
+    expect(await storage.openMeridian(def, def.node('z'), 0), isFalse);
+    expect(await storage.openMeridian(def, def.node('y'), 0), isTrue);
+    expect(await storage.openMeridian(def, def.node('x'), 0), isFalse,
+        reason: 'ya eligió el otro');
+    expect(await storage.openMeridian(def, def.node('z'), 0), isTrue,
+        reason: 'basta con uno de la elección');
+    expect(await storage.meridians(), ['y', 'z']);
+  });
+
+  test('el árbol viejo de 15 devuelve el loto gastado', () async {
+    SharedPreferences.setMockInitialValues({
+      'long_breath.lotus': 7,
+      'long_breath.meridians': ['body_1', 'body_2', 'spirit_1', 'tech_5'],
+    });
+    final storage = ProgressStorage();
+    expect(await storage.meridians(), isEmpty);
+    expect(await storage.lotus(), 7 + 25 + 50 + 25 + 160);
+    // Una sola vez.
+    expect(await storage.meridians(), isEmpty);
+    expect(await storage.lotus(), 267);
   });
 
   test('la crónica suma victorias y caídas por partida', () async {

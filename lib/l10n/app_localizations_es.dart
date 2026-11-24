@@ -3040,6 +3040,51 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String bonusHandSize(int n) {
+    return 'Robás $n carta más cada turno';
+  }
+
+  @override
+  String bonusTurnBreath(int n) {
+    return '+$n de Aliento en cada turno';
+  }
+
+  @override
+  String bonusRetain(int n) {
+    return 'Podés guardar $n carta más al terminar el turno';
+  }
+
+  @override
+  String bonusFirstStrike(int n) {
+    return 'El primer ataque de cada turno hace +$n de daño';
+  }
+
+  @override
+  String bonusChain(int n) {
+    return 'Cada ataque hace +$n de daño por cada ataque anterior del turno';
+  }
+
+  @override
+  String bonusEnemyHp(int n) {
+    return 'Los rivales empiezan con $n de Vida menos';
+  }
+
+  @override
+  String bonusEnemyStructure(int n) {
+    return 'Los rivales empiezan con $n de Estructura menos';
+  }
+
+  @override
+  String get meridianChoice =>
+      'Elegí uno de los dos: el otro se cierra para siempre';
+
+  @override
+  String get meridianChosenOther => 'Elegiste el otro punto';
+
+  @override
+  String get meridianOr => 'o';
+
+  @override
   String resultLotus(int n, int total) {
     return '+$n semillas de loto · la escuela tiene $total';
   }

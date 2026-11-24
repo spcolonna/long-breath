@@ -22,6 +22,13 @@ class MetaBonus {
     this.weaponLevel = 0,
     this.teaHeal = 0,
     this.stageHealPct = 0,
+    this.handSize = 0,
+    this.turnBreath = 0,
+    this.retain = 0,
+    this.firstStrike = 0,
+    this.chain = 0,
+    this.enemyHp = 0,
+    this.enemyStructure = 0,
   });
 
   static const none = MetaBonus();
@@ -77,6 +84,27 @@ class MetaBonus {
   /// Cura extra (% de lo que falta) al pasar de etapa.
   final int stageHealPct;
 
+  /// Cartas extra que se roban cada turno.
+  final int handSize;
+
+  /// Aliento extra en cada turno.
+  final int turnBreath;
+
+  /// Cartas extra que se pueden guardar al terminar el turno.
+  final int retain;
+
+  /// Daño extra del primer ataque de cada turno.
+  final int firstStrike;
+
+  /// Daño extra de cada ataque por cada ataque anterior del turno.
+  final int chain;
+
+  /// Vida que le falta a cada rival al empezar.
+  final int enemyHp;
+
+  /// Estructura que le falta a cada rival al empezar.
+  final int enemyStructure;
+
   bool get isNone => toJson().isEmpty;
 
   MetaBonus operator +(MetaBonus o) => MetaBonus(
@@ -97,6 +125,13 @@ class MetaBonus {
         weaponLevel: weaponLevel + o.weaponLevel,
         teaHeal: teaHeal + o.teaHeal,
         stageHealPct: stageHealPct + o.stageHealPct,
+        handSize: handSize + o.handSize,
+        turnBreath: turnBreath + o.turnBreath,
+        retain: retain + o.retain,
+        firstStrike: firstStrike + o.firstStrike,
+        chain: chain + o.chain,
+        enemyHp: enemyHp + o.enemyHp,
+        enemyStructure: enemyStructure + o.enemyStructure,
       );
 
   /// Solo los campos que hacen algo (el árbol los muestra así).
@@ -119,6 +154,13 @@ class MetaBonus {
           'weaponLevel': weaponLevel,
           'teaHeal': teaHeal,
           'stageHealPct': stageHealPct,
+          'handSize': handSize,
+          'turnBreath': turnBreath,
+          'retain': retain,
+          'firstStrike': firstStrike,
+          'chain': chain,
+          'enemyHp': enemyHp,
+          'enemyStructure': enemyStructure,
         }.entries)
           if (e.value != 0) e.key: e.value,
       };
@@ -141,6 +183,13 @@ class MetaBonus {
         weaponLevel: j['weaponLevel'] as int? ?? 0,
         teaHeal: j['teaHeal'] as int? ?? 0,
         stageHealPct: j['stageHealPct'] as int? ?? 0,
+        handSize: j['handSize'] as int? ?? 0,
+        turnBreath: j['turnBreath'] as int? ?? 0,
+        retain: j['retain'] as int? ?? 0,
+        firstStrike: j['firstStrike'] as int? ?? 0,
+        chain: j['chain'] as int? ?? 0,
+        enemyHp: j['enemyHp'] as int? ?? 0,
+        enemyStructure: j['enemyStructure'] as int? ?? 0,
       );
 }
 
@@ -159,7 +208,10 @@ enum MeridianBranch {
 }
 
 /// Un punto (穴 xué) del árbol: se abre con semillas de loto, cuando la
-/// escuela llegó al reino [realm] y está abierto el anterior de su rama.
+/// escuela llegó al reino [realm] y está abierto alguno de [requires] (el
+/// punto anterior de su rama, o cualquiera de los dos de una elección).
+/// Los puntos con el mismo [choice] son una elección: abrir uno cierra el
+/// otro para siempre.
 class MeridianNode {
   const MeridianNode({
     required this.id,
@@ -167,7 +219,8 @@ class MeridianNode {
     required this.realm,
     required this.cost,
     required this.effect,
-    this.requires,
+    this.requires = const [],
+    this.choice,
   });
 
   final String id;
@@ -177,7 +230,12 @@ class MeridianNode {
   final int realm;
   final int cost;
   final MetaBonus effect;
-  final String? requires;
+
+  /// Basta con tener abierto uno de estos (vacío = no pide nada).
+  final List<String> requires;
+
+  /// Grupo de elección (null = punto suelto).
+  final String? choice;
 
   factory MeridianNode.fromJson(Map<String, dynamic> j) => MeridianNode(
         id: j['id'] as String,
@@ -185,7 +243,12 @@ class MeridianNode {
         realm: j['realm'] as int? ?? 0,
         cost: j['cost'] as int,
         effect: MetaBonus.fromJson(j['effect'] as Map<String, dynamic>),
-        requires: j['requires'] as String?,
+        requires: switch (j['requires']) {
+          final String s => [s],
+          final List l => l.cast<String>(),
+          _ => const [],
+        },
+        choice: j['choice'] as String?,
       );
 }
 
@@ -255,7 +318,48 @@ class MeridianDef {
   bool canOpen(MeridianNode n, int realm, Iterable<String> owned) =>
       !owned.contains(n.id) &&
       realm >= n.realm &&
-      (n.requires == null || owned.contains(n.requires));
+      prevOpen(n, owned) &&
+      !chosenOther(n, owned);
+
+  /// Está abierto alguno de los que pide [n].
+  bool prevOpen(MeridianNode n, Iterable<String> owned) =>
+      n.requires.isEmpty || n.requires.any(owned.contains);
+
+  /// Ya se eligió el otro punto de la elección de [n].
+  bool chosenOther(MeridianNode n, Iterable<String> owned) =>
+      n.choice != null &&
+      nodes.any((x) =>
+          x.id != n.id && x.choice == n.choice && owned.contains(x.id));
+
+  /// Las filas de una rama, de arriba abajo: un punto suelto o los de una
+  /// elección (consecutivos con el mismo [MeridianNode.choice]).
+  List<List<MeridianNode>> rows(MeridianBranch b) {
+    final out = <List<MeridianNode>>[];
+    for (final n in nodes.where((n) => n.branch == b)) {
+      final last = out.lastOrNull;
+      if (last != null && n.choice != null && last.first.choice == n.choice) {
+        last.add(n);
+      } else {
+        out.add([n]);
+      }
+    }
+    return out;
+  }
+
+  /// Puntos que se pueden llegar a abrir (uno por fila): el árbol completo.
+  int get maxOwned =>
+      MeridianBranch.values.fold(0, (a, b) => a + rows(b).length);
+
+  /// Filas abiertas (cuenta una por elección).
+  int ownedCount(Iterable<String> owned) =>
+      nodes.where((n) => owned.contains(n.id)).length;
+
+  /// Loto que cuesta el árbol completo (eligiendo lo más caro de cada fila).
+  int get totalCost => [
+        for (final b in MeridianBranch.values)
+          for (final r in rows(b))
+            r.map((n) => n.cost).reduce((a, c) => a > c ? a : c),
+      ].fold(0, (a, c) => a + c);
 
   /// Dones de los reinos hasta [realm] más los puntos abiertos.
   MetaBonus bonusOf(CultivationDef c, int realm, Iterable<String> owned) {

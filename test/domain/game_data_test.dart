@@ -251,23 +251,30 @@ void main() {
     }
   });
 
-  test('árbol de meridianos: 3 ramas de 5, cada punto pide el anterior', () {
+  test('árbol de meridianos: 3 ramas de 10 filas, con dos elecciones', () {
     final m = data.balance.meridians;
     final c = data.balance.cultivation;
     final content = jsonDecode(
       File('assets/l10n/content/es.json').readAsStringSync(),
     ) as Map<String, dynamic>;
     final names = content['meridians'] as Map<String, dynamic>;
-    expect(m.nodes, hasLength(15));
-    expect({for (final n in m.nodes) n.id}, hasLength(15));
+    expect(m.nodes, hasLength(36));
+    expect({for (final n in m.nodes) n.id}, hasLength(36));
+    expect(m.maxOwned, 30);
+    expect(m.totalCost, inInclusiveRange(5000, 7000));
     for (final b in MeridianBranch.values) {
-      final branch = [for (final n in m.nodes) if (n.branch == b) n];
-      expect(branch, hasLength(5), reason: b.name);
-      expect(branch.first.requires, isNull);
-      for (var i = 1; i < branch.length; i++) {
-        expect(branch[i].requires, branch[i - 1].id);
-        expect(branch[i].realm, greaterThanOrEqualTo(branch[i - 1].realm));
-        expect(branch[i].cost, greaterThan(branch[i - 1].cost));
+      final rows = m.rows(b);
+      expect(rows, hasLength(10), reason: b.name);
+      expect(rows.where((r) => r.length == 2), hasLength(2), reason: b.name);
+      expect(rows.first.single.requires, isEmpty);
+      for (var i = 1; i < rows.length; i++) {
+        for (final n in rows[i]) {
+          // Pide la fila anterior entera (cualquiera de los de la elección).
+          expect(n.requires.toSet(), {for (final p in rows[i - 1]) p.id},
+              reason: n.id);
+          expect(n.realm, greaterThanOrEqualTo(rows[i - 1].first.realm));
+          expect(n.cost, greaterThan(rows[i - 1].first.cost));
+        }
       }
     }
     for (final n in m.nodes) {

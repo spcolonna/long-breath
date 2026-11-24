@@ -851,3 +851,49 @@ Simulación de progreso (experto, Normal, 20 escuelas × 30 subidas; el bot rest
 - Escuela completa: hacia la subida 35.
 - Una persona gana más y guarda jade a propósito, así que debería completarla antes. Hay que confirmarlo con los registros.
 
+## 4c. Rediseño fase 2: meridianos ampliados (24/11/2026)
+
+El árbol pasa de 15 a 36 puntos: 3 ramas de 10 filas. En las filas 5 y 10 de cada rama hay que elegir uno de dos puntos, y el otro se cierra para siempre. Completo son 30 puntos y ~6950 de loto. Cada fila pide el reino 0, 0, 1, 1, 2, 2, 3, 3, 4 y 5.
+
+| Fila (costo) | Cuerpo | Espíritu | Técnica |
+|---|---|---|---|
+| 1 (40) | +3 Vida máx. | +15 jade inicial | 1 carta inicial mejorada |
+| 2 (65) | +1 al ganar | +15% loto | 1 tirada de pergaminos |
+| 3 (95) | +2 Estructura | mercader −10% | primer golpe +2 |
+| 4 (130) | fuente +6 | +1 Aliento en el turno 1 | +1 carta en los pergaminos |
+| 5 (175) | **+8 Vida máx.** o **+15% cura entre etapas** | **+20% loto** o **+40 jade inicial** | **+1 talismán y 1 carta mejorada** o **rivales −1 Estructura** |
+| 6 (225) | +1 al ganar | mercader −10% | encadenar +1 |
+| 7 (285) | +3 Estructura | +1 Aliento en el turno 1 | 2 cartas mejoradas |
+| 8 (350) | +6 Vida máx. | guardar 1 carta más | rivales −2 Vida |
+| 9 (430) | +1 al ganar | +15% loto | +1 talismán en el élite |
+| 10 (520) | **+1 Respirar** o **+4 Estructura y +1 al ganar** | **+1 Aliento por turno** o **+2 Aliento en el turno 1 y guardar 1 más** | **talismán inicial** o **primer golpe +4** |
+
+**Efectos nuevos de combate** (`MetaBonus`): `handSize`, `turnBreath`, `retain`, `firstStrike`, `chain`, `enemyHp` y `enemyStructure`. Se suman en `CombatEngine.start`, igual que los de talismanes, despertares y estilo.
+
+**Loto por subida:** por combate 4, élite 10, jefe 20, victoria 35, voto 25 y premio 12/16/20 (antes 2/5/10/20/15 y 6/8/10). Los puntos de «más loto» suman 50% en total.
+
+**Partidas viejas:** quien tenía puntos del árbol de 15 recupera todo el loto gastado y vuelve a elegir (`ProgressStorage.meridians`, clave `meridianTree`).
+
+**Victoria con un solo punto** (`--section nodes`, experto, 200 subidas, sin nada = 4%): casi todos dan entre 3% y 7%. Hubo que cambiar 3 elecciones:
+
+| Punto | Antes | Cambio |
+|---|---|---|
+| +1 carta por turno | 28% | sacado: rompía la elección; pasó a ser «+2 Aliento en el turno 1 y guardar 1 más» |
+| primer golpe +4 y encadenar +1 | 12% | queda primer golpe +4 |
+| rivales −2 Estructura | 9% | −1 |
+
+**Progreso** (experto, Normal, 20 escuelas × 30 subidas; el bot abre el punto más barato y, en las elecciones, la mitad de las escuelas toma cada lado):
+
+| Subidas | victoria | reino | puntos | loto por subida | niveles de escuela |
+|---|---|---|---|---|---|
+| 1–5 | 3% | 1,5 | 4,0 | 88 | 1,9 |
+| 6–10 | 16% | 2,7 | 10,7 | 165 | 5,3 |
+| 11–15 | 29% | 3,8 | 15,7 | 200 | 7,5 |
+| 16–20 | 53% | 4,9 | 20,3 | 264 | 9,7 |
+| 21–25 | 75% | 5,7 | 24,4 | 331 | 11,2 |
+| 26–30 | 82% | 6,0 | 27,9 | 372 | 12,6 |
+
+- Primera victoria: mediana en la subida 10 (p25 9, p75 13).
+- Árbol completo: mediana en la subida 29 (meta: 25–35).
+- Con todo casi completo gana ~80%, algo por encima del ~70% buscado. Lo que falta medir es la maestría por camino, que todavía no existe. Si la maestría suma poder, hay que bajar algo de acá.
+

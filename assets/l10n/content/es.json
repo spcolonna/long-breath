@@ -1430,10 +1430,45 @@
       "hanzi": "命门",
       "text": "La puerta de la vida, en la espalda."
     },
-    "body_5": {
+    "body_5a": {
+      "name": "Shènshū",
+      "hanzi": "肾俞",
+      "text": "Piel de hierro: el cuerpo aguanta más."
+    },
+    "body_5b": {
+      "name": "Xuèhǎi",
+      "hanzi": "血海",
+      "text": "El mar de la sangre: lo que se pierde vuelve."
+    },
+    "body_6": {
+      "name": "Sānyīnjiāo",
+      "hanzi": "三阴交",
+      "text": "Donde se cruzan tres caminos del cuerpo."
+    },
+    "body_7": {
+      "name": "Wěizhōng",
+      "hanzi": "委中",
+      "text": "El centro de la rodilla doblada: firme como raíz."
+    },
+    "body_8": {
+      "name": "Huántiào",
+      "hanzi": "环跳",
+      "text": "El salto en círculo, en la cadera."
+    },
+    "body_9": {
+      "name": "Guānyuán",
+      "hanzi": "关元",
+      "text": "La puerta del origen: cada victoria repone."
+    },
+    "body_10a": {
       "name": "Dāntián",
       "hanzi": "丹田",
-      "text": "El centro: de ahí sale cada golpe."
+      "text": "El centro: de ahí sale cada golpe y cada respiro."
+    },
+    "body_10b": {
+      "name": "Dàzhuī",
+      "hanzi": "大椎",
+      "text": "La gran vértebra: una espalda que no se quiebra."
     },
     "spirit_1": {
       "name": "Hégǔ",
@@ -1455,10 +1490,45 @@
       "hanzi": "膻中",
       "text": "El centro del pecho, donde se guarda la alegría."
     },
-    "spirit_5": {
+    "spirit_5a": {
+      "name": "Zhōngwǎn",
+      "hanzi": "中脘",
+      "text": "El centro del estómago: la cosecha alimenta a la escuela."
+    },
+    "spirit_5b": {
+      "name": "Qīmén",
+      "hanzi": "期门",
+      "text": "La puerta de la espera: se sale con la bolsa llena."
+    },
+    "spirit_6": {
+      "name": "Tiānshū",
+      "hanzi": "天枢",
+      "text": "El eje del cielo: Bao te reconoce."
+    },
+    "spirit_7": {
+      "name": "Fēngfǔ",
+      "hanzi": "风府",
+      "text": "El palacio del viento: el primer aire entra fácil."
+    },
+    "spirit_8": {
+      "name": "Yìfēng",
+      "hanzi": "翳风",
+      "text": "El biombo del viento: lo que se guarda no se pierde."
+    },
+    "spirit_9": {
+      "name": "Sìshéncōng",
+      "hanzi": "四神聪",
+      "text": "Las cuatro inteligencias, alrededor de la coronilla."
+    },
+    "spirit_10a": {
       "name": "Bǎihuì",
       "hanzi": "百会",
-      "text": "Las cien reuniones, en la coronilla."
+      "text": "Las cien reuniones: el aliento no se acaba."
+    },
+    "spirit_10b": {
+      "name": "Shéntíng",
+      "hanzi": "神庭",
+      "text": "El patio del espíritu: el primer aire llena el pecho."
     },
     "tech_1": {
       "name": "Láogōng",
@@ -1473,17 +1543,52 @@
     "tech_3": {
       "name": "Fēngchí",
       "hanzi": "风池",
-      "text": "El estanque del viento, en la nuca."
+      "text": "El estanque del viento, en la nuca: el primer golpe pesa."
     },
     "tech_4": {
       "name": "Tàichōng",
       "hanzi": "太冲",
       "text": "El gran paso del pie."
     },
-    "tech_5": {
+    "tech_5a": {
+      "name": "Hòuxī",
+      "hanzi": "后溪",
+      "text": "El arroyo de atrás: más para elegir."
+    },
+    "tech_5b": {
+      "name": "Wàiguān",
+      "hanzi": "外关",
+      "text": "El paso exterior: ves por dónde se rompe el rival."
+    },
+    "tech_6": {
+      "name": "Jiānjǐng",
+      "hanzi": "肩井",
+      "text": "El pozo del hombro: un golpe trae otro."
+    },
+    "tech_7": {
+      "name": "Shǒusānlǐ",
+      "hanzi": "手三里",
+      "text": "El brazo que repite la forma hasta dominarla."
+    },
+    "tech_8": {
+      "name": "Yánglíngquán",
+      "hanzi": "阳陵泉",
+      "text": "La fuente de la colina: el rival llega cansado."
+    },
+    "tech_9": {
+      "name": "Kūnlún",
+      "hanzi": "昆仑",
+      "text": "La montaña sagrada: los élites guardan más."
+    },
+    "tech_10a": {
       "name": "Yìntáng",
       "hanzi": "印堂",
-      "text": "El sello entre las cejas."
+      "text": "El sello entre las cejas: un talismán desde el inicio."
+    },
+    "tech_10b": {
+      "name": "Tàiyáng",
+      "hanzi": "太阳",
+      "text": "El sol de la sien: el puño del maestro."
     }
   },
   "hitos": {

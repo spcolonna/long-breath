@@ -357,8 +357,11 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
                       n,
                 ]..sort((a, b) => a.cost.compareTo(b.cost));
                 if (open.isEmpty) break;
-                bank -= open.first.cost;
-                owned.add(open.first.id);
+                // En una elección, la mitad de las escuelas toma cada lado.
+                final same = open.where((n) => n.cost == open.first.cost);
+                final pick = sc.isEven ? same.first : same.last;
+                bank -= pick.cost;
+                owned.add(pick.id);
               }
               // El jade que sobra va a la escuela: restaura el nivel más barato.
               if (!b.school.isEmpty) jadeBank += log.jadeLeft;
@@ -382,7 +385,7 @@ Future<void> _meta(RawData raw, int stages, int schools, int ascents, int seed,
         }),
     ]);
     final hist = [for (final part in parts) ...part];
-    final total = data0(raw).balance.meridians.nodes.length;
+    final total = data0(raw).balance.meridians.maxOwned;
     final firstWin = [
       for (final h in hist)
         h.indexWhere((e) => e.$1) + 1,

@@ -44,7 +44,8 @@ El daño crece sin límite y los jefes no frenan nada.
 ## Fase 2 — Árboles que hay que desarrollar (el centro del rediseño)
 Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árboles con monedas distintas:
 
-1. **Meridianos ampliados (loto).** Pasan de 15 a ~36 nodos: 3 ramas × 12, con costos crecientes y ~6000 de loto en total.
+1. **Meridianos ampliados (loto). ✅ Hechos el 24/11** (ver `balance.md` §4c): 36 puntos, 3 ramas de 10 filas con 2 elecciones cada una, ~6950 de loto. Lo de abajo era el plan.
+   - Pasan de 15 a ~36 nodos: 3 ramas × 12, con costos crecientes y ~6000 de loto en total.
    - Nodos con decisiones: elegir 1 de 2 en ciertos puntos.
    - Nodos que cambian cómo se juega: segundo Respirar, contragolpe mejorado, técnica más barata.
    - La rama Cuerpo es la que hace «posible» ganar en Normal.

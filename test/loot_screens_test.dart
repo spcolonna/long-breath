@@ -108,7 +108,7 @@ void main() {
 
     // El árbol de meridianos abre un punto con loto.
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('long_breath.lotus', 40);
+    await prefs.setInt('long_breath.lotus', 60);
     container.invalidate(meridianProvider);
     router.go('/meridians');
     await settle(tester);
@@ -121,7 +121,7 @@ void main() {
     await settle(tester);
     final m = await container.read(meridianProvider.future);
     expect(m.owned, ['body_1']);
-    expect(m.lotus, 40 - 25);
+    expect(m.lotus, 60 - 40);
     // Un cofre con página suelta: se lee antes del botín.
     runs.newRun(Difficulty.normal);
     final pr = container.read(runControllerProvider)!;

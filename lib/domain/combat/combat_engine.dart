@@ -209,9 +209,10 @@ class CombatEngine {
           pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
       return _EnemyDraft(
         id: enemy.id,
-        hp: math.max(1, hp - sum((e) => e.enemyHp)),
+        hp: math.max(1, hp - sum((e) => e.enemyHp) - meta.enemyHp),
         maxHp: hp,
-        structure: math.max(1, structure - sum((e) => e.enemyStructure)),
+        structure: math.max(
+            1, structure - sum((e) => e.enemyStructure) - meta.enemyStructure),
         maxStructure: structure,
         scales: enemy.scales,
         // Picos: arranca cubierto y, si es élite, con espinas.
@@ -232,9 +233,10 @@ class CombatEngine {
     final d = _Draft(
       turn: 0,
       phase: CombatPhase.playerTurn,
-      handSize: math.max(1, styleStats.draw + aw.draw + sum((e) => e.handSize)),
-      breathPerTurn: styleStats.breath + sum((e) => e.turnBreath),
-      retainMax: styleStats.retain + aw.retain,
+      handSize: math.max(
+          1, styleStats.draw + aw.draw + sum((e) => e.handSize) + meta.handSize),
+      breathPerTurn: styleStats.breath + sum((e) => e.turnBreath) + meta.turnBreath,
+      retainMax: styleStats.retain + aw.retain + meta.retain,
       hp: playerHp,
       maxHp: maxHp ?? b.playerHp,
       structure: b.playerStructure + extraStructure,
@@ -273,8 +275,8 @@ class CombatEngine {
       weaponLevel: weaponLevel,
       weaponEffect: wfx,
       nextTurnBreathMod: sum((e) => e.firstTurnBreath) + meta.firstTurnBreath,
-      firstStrike: styleStats.firstStrike + aw.firstStrike,
-      chain: styleStats.chain + aw.chain,
+      firstStrike: styleStats.firstStrike + aw.firstStrike + meta.firstStrike,
+      chain: styleStats.chain + aw.chain + meta.chain,
       retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,
       awakened: aw,
       style: style,
