@@ -37,6 +37,7 @@ class ProgressStorage {
     'school',
     'schoolJade',
     'mastery',
+    'schoolStory',
   ];
 
   String get _key => '${prefix}winsByDifficulty';
@@ -55,6 +56,7 @@ class ProgressStorage {
   String get _schoolKey => '${prefix}school';
   String get _schoolJadeKey => '${prefix}schoolJade';
   String get _masteryKey => '${prefix}mastery';
+  String get _schoolStoryKey => '${prefix}schoolStory';
 
   /// Subidas que guarda el registro (las más viejas se borran).
   static const maxAscents = 50;
@@ -401,6 +403,28 @@ extension SchoolRecord on ProgressStorage {
     final seen = prefs.getStringList(_cinematicsKey) ?? [];
     if (seen.contains(id)) return;
     await prefs.setStringList(_cinematicsKey, [...seen, id]);
+  }
+
+  /// Por cada hilo de la escuela, el número del último discípulo que había
+  /// bajado cuando se leyó su capítulo anterior (ver `school_story.dart`).
+  Future<Map<String, int>> schoolStoryReadAt() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {
+      for (final e in prefs.getStringList(_schoolStoryKey) ?? const <String>[])
+        if (e.split(':') case [final id, final n] when int.tryParse(n) != null)
+          id: int.parse(n),
+    };
+  }
+
+  /// Lee el capítulo [id] del hilo [thread]: queda como pergamino y anota
+  /// que se leyó con [disciple] como último discípulo bajado.
+  Future<void> readSchoolChapter(String thread, String id, int disciple) async {
+    final prefs = await SharedPreferences.getInstance();
+    await unlockLore(id);
+    final at = await schoolStoryReadAt();
+    await prefs.setStringList(_schoolStoryKey, [
+      for (final e in {...at, thread: disciple}.entries) '${e.key}:${e.value}',
+    ]);
   }
 }
 

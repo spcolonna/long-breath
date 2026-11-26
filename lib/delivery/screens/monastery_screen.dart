@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/model/school_def.dart';
+import '../../domain/run/school_story.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
@@ -13,6 +14,7 @@ import '../theme.dart';
 import '../widgets/system_intro.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
+import '../widgets/lore_scroll.dart';
 import '../widgets/press.dart';
 import '../widgets/scroll_panel.dart';
 
@@ -60,6 +62,26 @@ class _MonasteryScreenState extends ConsumerState<MonasteryScreen> {
     });
   }
 
+  /// Lee el próximo capítulo del hilo [thread] y lo desenrolla.
+  Future<void> _listen(String thread) async {
+    final storage = ref.read(progressStorageProvider);
+    final lore = await ref.read(loreProvider.future);
+    final ascents = await ref.read(ascentsProvider.future);
+    final id = '${thread}_${schoolChapterOf(lore, thread) + 1}';
+    await storage.readSchoolChapter(
+      thread,
+      id,
+      ascents.isEmpty ? 0 : ascents.last.n,
+    );
+    ref
+      ..invalidate(loreProvider)
+      ..invalidate(schoolStoryProvider);
+    if (!mounted) return;
+    Haptics.lightImpact();
+    ref.read(audioProvider).play(Sfx.scrollOpen);
+    await showStoryChapter(context, id);
+  }
+
   void _details(SchoolBuilding b) {
     Haptics.selectionClick();
     ref.read(audioProvider).play(Sfx.cardSelect);
@@ -73,6 +95,10 @@ class _MonasteryScreenState extends ConsumerState<MonasteryScreen> {
         onRestore: () {
           Navigator.of(sheet).pop();
           _restore(b.id);
+        },
+        onListen: (thread) {
+          Navigator.of(sheet).pop();
+          _listen(thread);
         },
       ),
     );
@@ -272,6 +298,10 @@ class _BuildingCard extends ConsumerWidget {
     final color = buildingColor(b.id);
     final next = level < b.maxLevel ? b.levels[level] : null;
     final ready = next != null && jade >= next.cost;
+    final thread = threadOfBuilding(b.id);
+    final story =
+        thread != null &&
+        ref.watch(schoolStoryProvider).value?[thread] == StoryWait.none;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Press(
@@ -319,6 +349,7 @@ class _BuildingCard extends ConsumerWidget {
                           ),
                           const SizedBox(width: 8),
                           _Pips(level: level, max: b.maxLevel, color: color),
+                          if (story) const _StoryTag(),
                         ],
                       ),
                       Text(
@@ -371,10 +402,15 @@ class _BuildingCard extends ConsumerWidget {
 /// Detalle de un edificio: su historia, qué da cada nivel y el botón para
 /// restaurar el próximo.
 class _BuildingSheet extends ConsumerWidget {
-  const _BuildingSheet({required this.building, required this.onRestore});
+  const _BuildingSheet({
+    required this.building,
+    required this.onRestore,
+    required this.onListen,
+  });
 
   final SchoolBuilding building;
   final VoidCallback onRestore;
+  final void Function(String thread) onListen;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -418,6 +454,13 @@ class _BuildingSheet extends ConsumerWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(color: Palette.textDim),
             ),
+            if (threadOfBuilding(b.id) case final thread?)
+              _StoryPanel(
+                thread: thread,
+                who: text.buildingWho(b.id),
+                color: color,
+                onListen: () => onListen(thread),
+              ),
             const SizedBox(height: 14),
             for (final (i, l) in b.levels.indexed)
               _LevelRow(
@@ -531,3 +574,150 @@ class _LevelRow extends StatelessWidget {
     ),
   );
 }
+
+/// Cartelito «Historia» en un edificio con un capítulo nuevo para contar.
+class _StoryTag extends StatelessWidget {
+  const _StoryTag();
+
+  @override
+  Widget build(BuildContext context) => Container(
+    margin: const EdgeInsets.only(left: 2),
+    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+    decoration: BoxDecoration(
+      color: Palette.gold,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.auto_stories_rounded, size: 12, color: Palette.onColor),
+        const SizedBox(width: 3),
+        Text(
+          AppLocalizations.of(context).storyNew,
+          style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w800,
+            color: Palette.onColor,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/// La historia de quien cuida el edificio: cuántos capítulos contó y el
+/// botón para escuchar el próximo (o qué le falta).
+class _StoryPanel extends ConsumerWidget {
+  const _StoryPanel({
+    required this.thread,
+    required this.who,
+    required this.color,
+    required this.onListen,
+  });
+
+  final String thread;
+  final String who;
+  final Color color;
+  final VoidCallback onListen;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final lore = ref.watch(loreProvider).value ?? const <String>{};
+    final wait = ref.watch(schoolStoryProvider).value?[thread];
+    if (wait == null) return const SizedBox.shrink();
+    final n = schoolChapterOf(lore, thread);
+    final status = switch (wait) {
+      StoryWait.none => null,
+      StoryWait.done => t.storyDone,
+      StoryWait.ascent => t.storyWaitAscent,
+      StoryWait.level => t.storyWaitLevel(schoolChapterLevel[n]),
+      StoryWait.summit => t.storyWaitSummit,
+    };
+    return Container(
+      margin: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withValues(alpha: 0.4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.auto_stories_rounded, size: 18, color: color),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  t.storyTitle(who),
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+              Text(
+                t.storyCount(n, schoolChapters),
+                style: const TextStyle(fontSize: 12, color: Palette.textDim),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          if (status == null)
+            FilledButton.icon(
+              onPressed: onListen,
+              icon: const Icon(Icons.record_voice_over_rounded),
+              label: Text(t.storyListen(who)),
+            )
+          else
+            Text(
+              status,
+              style: const TextStyle(fontSize: 13, color: Palette.textDim),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Desenrolla el capítulo [id] de un hilo de la escuela.
+Future<void> showStoryChapter(BuildContext context, String id) =>
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Palette.bg,
+      isScrollControlled: true,
+      builder: (ctx) => ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(ctx).height * 0.92,
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                  child: TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: 1),
+                    duration: const Duration(milliseconds: 900),
+                    curve: Curves.easeOutCubic,
+                    builder: (_, v, _) =>
+                        LoreScroll(id: id, fresh: true, open: v),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: FilledButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: Text(AppLocalizations.of(ctx).introOk),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );

@@ -15,6 +15,7 @@ import '../domain/run/ascent.dart';
 import '../domain/run/chronicle.dart';
 import '../domain/run/cultivation.dart';
 import '../domain/run/run_state.dart';
+import '../domain/run/school_story.dart';
 import '../infrastructure/progress_storage.dart';
 import '../infrastructure/run_log_storage.dart';
 import '../infrastructure/run_storage.dart';
@@ -222,14 +223,35 @@ final schoolProvider =
   );
 });
 
-/// Dones de la escuela para la próxima subida (reinos, meridianos y
-/// edificios restaurados).
-/// Experiencia de maestría de cada camino.
 /// Presentaciones ya vistas en la partida (las `intro_*` de los sistemas).
 final seenProvider = FutureProvider<Set<String>>(
   (ref) => ref.watch(progressStorageProvider).cinematics(),
 );
 
+/// Qué le falta al próximo capítulo de cada hilo de la escuela (Ming en la
+/// enfermería, Tie en la forja).
+final schoolStoryProvider = FutureProvider<Map<String, StoryWait>>((
+  ref,
+) async {
+  final storage = ref.watch(progressStorageProvider);
+  final lore = await ref.watch(loreProvider.future);
+  final school = await ref.watch(schoolProvider.future);
+  final ascents = await ref.watch(ascentsProvider.future);
+  final readAt = await storage.schoolStoryReadAt();
+  final last = ascents.isEmpty ? 0 : ascents.last.n;
+  return {
+    for (final MapEntry(key: thread, value: building) in schoolThreads.entries)
+      thread: schoolStoryWait(
+        thread: thread,
+        lore: lore,
+        level: school.levels[building] ?? 0,
+        lastDisciple: last,
+        readAt: readAt[thread] ?? 0,
+      ),
+  };
+});
+
+/// Experiencia de maestría de cada camino.
 final masteryProvider = FutureProvider<Map<Style, int>>(
   (ref) => ref.watch(progressStorageProvider).mastery(),
 );
@@ -242,6 +264,8 @@ final lockedProvider = FutureProvider<List<String>>((ref) async {
   return [...c.locked, ...ref.watch(dataProvider).balance.mastery.lockedFor(xp)];
 });
 
+/// Dones de la escuela para la próxima subida (reinos, meridianos y
+/// edificios restaurados).
 final metaBonusProvider = FutureProvider<MetaBonus>((ref) async {
   final balance = ref.watch(dataProvider).balance;
   final c = await ref.watch(cultivationProvider.future);

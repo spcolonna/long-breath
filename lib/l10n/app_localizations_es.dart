@@ -3716,4 +3716,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String progressStorySub(int n, int max) {
     return '$n de $max pergaminos';
   }
+
+  @override
+  String get storyNew => 'Historia';
+
+  @override
+  String storyTitle(String who) {
+    return 'Historia de $who';
+  }
+
+  @override
+  String storyCount(int n, int max) {
+    return '$n de $max';
+  }
+
+  @override
+  String storyListen(String who) {
+    return 'Escuchar a $who';
+  }
+
+  @override
+  String get storyDone => 'Ya te contó todo.';
+
+  @override
+  String get storyWaitAscent => 'Sigue contando después de tu próxima subida.';
+
+  @override
+  String storyWaitLevel(int level) {
+    return 'Sigue contando con el edificio en nivel $level.';
+  }
+
+  @override
+  String get storyWaitSummit =>
+      'El último capítulo lo cuenta después de que hagas cumbre.';
+
+  @override
+  String get recapWho => 'El maestro Song';
 }

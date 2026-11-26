@@ -122,6 +122,38 @@ Style? _endingStyle(String id) {
   return null;
 }
 
+/// La cara de quien cuenta un capítulo de hilo; [always] si se muestra
+/// también al leerlo por primera vez.
+({String asset, Color color, String hanzi, bool always})? _threadFace(
+  String id,
+) => switch (id.split('_').first) {
+  'bao' => (
+    asset: 'assets/art/npc/merchant.webp',
+    color: Palette.jade,
+    hanzi: '包',
+    always: false,
+  ),
+  'shuang' => (
+    asset: 'assets/art/npc/shuang.webp',
+    color: Palette.sky,
+    hanzi: '霜',
+    always: false,
+  ),
+  'ming' => (
+    asset: 'assets/art/npc/ming.webp',
+    color: Palette.sky,
+    hanzi: '醫',
+    always: true,
+  ),
+  'tie' => (
+    asset: 'assets/art/npc/tie.webp',
+    color: Palette.lacquer,
+    hanzi: '鐵',
+    always: true,
+  ),
+  _ => null,
+};
+
 /// Un pergamino de la escuela: papel entre dos varillas. Lacrado (con el
 /// sello rojo y la pista de cómo se abre) si todavía no se ganó.
 class LoreScroll extends ConsumerWidget {
@@ -240,34 +272,17 @@ class LoreScroll extends ConsumerWidget {
                   ),
                   const SizedBox(height: 12),
                 ],
-                // Los capítulos de Tío Bao, con su cara (en el registro).
-                if (id.startsWith('bao_') && !fresh) ...[
+                // Los capítulos de los hilos llevan la cara de quien los
+                // cuenta (Bao y Shuang solo en el registro: al vivirlos ya
+                // se la ve en su pantalla).
+                if (_threadFace(id) case final f?
+                    when !fresh || f.always) ...[
                   Center(
                     child: NpcPortrait(
-                      asset: 'assets/art/npc/merchant.webp',
-                      color: Palette.jade,
+                      asset: f.asset,
+                      color: f.color,
                       height: 110,
-                      badge: const InkSeal(
-                        hanzi: '包',
-                        color: Palette.jade,
-                        size: 40,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                ],
-                // Los capítulos de Shuang, con su cara (en el registro).
-                if (id.startsWith('shuang_') && !fresh) ...[
-                  Center(
-                    child: NpcPortrait(
-                      asset: 'assets/art/npc/shuang.webp',
-                      color: Palette.sky,
-                      height: 110,
-                      badge: const InkSeal(
-                        hanzi: '霜',
-                        color: Palette.sky,
-                        size: 40,
-                      ),
+                      badge: InkSeal(hanzi: f.hanzi, color: f.color, size: 40),
                     ),
                   ),
                   const SizedBox(height: 12),

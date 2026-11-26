@@ -5835,6 +5835,60 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{n} de {max} pergaminos'**
   String progressStorySub(int n, int max);
+
+  /// No description provided for @storyNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Historia'**
+  String get storyNew;
+
+  /// No description provided for @storyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Historia de {who}'**
+  String storyTitle(String who);
+
+  /// No description provided for @storyCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de {max}'**
+  String storyCount(int n, int max);
+
+  /// No description provided for @storyListen.
+  ///
+  /// In es, this message translates to:
+  /// **'Escuchar a {who}'**
+  String storyListen(String who);
+
+  /// No description provided for @storyDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Ya te contó todo.'**
+  String get storyDone;
+
+  /// No description provided for @storyWaitAscent.
+  ///
+  /// In es, this message translates to:
+  /// **'Sigue contando después de tu próxima subida.'**
+  String get storyWaitAscent;
+
+  /// No description provided for @storyWaitLevel.
+  ///
+  /// In es, this message translates to:
+  /// **'Sigue contando con el edificio en nivel {level}.'**
+  String storyWaitLevel(int level);
+
+  /// No description provided for @storyWaitSummit.
+  ///
+  /// In es, this message translates to:
+  /// **'El último capítulo lo cuenta después de que hagas cumbre.'**
+  String get storyWaitSummit;
+
+  /// No description provided for @recapWho.
+  ///
+  /// In es, this message translates to:
+  /// **'El maestro Song'**
+  String get recapWho;
 }
 
 class _AppLocalizationsDelegate

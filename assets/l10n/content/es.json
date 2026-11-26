@@ -1390,6 +1390,56 @@
       "title": "Nota del abad",
       "text": "«Si alguien encuentra estas hojas, que las devuelva a la escuela. No por las hojas: por el que las lleva.»",
       "hint": "Una página suelta. A veces aparece en un cofre."
+    },
+    "ming_1": {
+      "title": "Hierbas de la montaña",
+      "text": "Hermano Ming bajó del monasterio con un canasto de hierbas y lo apoyó entre las piedras del techo caído. «Las mejores crecen donde alguien se detuvo a descansar», dijo, y empezó a barrer como si la enfermería ya existiera.",
+      "hint": "Lo cuenta Hermano Ming en la enfermería, después de tu primera subida."
+    },
+    "ming_2": {
+      "title": "El cuaderno de hierbas",
+      "text": "Ming dibuja cada hierba que junta y anota en qué piso la encontró. Te muestra las páginas: forman una línea que sube por la montaña, la misma que siguen los discípulos. «Donde alguien respiró fuerte, la tierra se acuerda», dice. El maestro tiene un cuaderno parecido.",
+      "hint": "Lo cuenta Hermano Ming en la enfermería, con la enfermería en nivel 1, después de otra subida."
+    },
+    "ming_3": {
+      "title": "El que se quedó a mitad",
+      "text": "Ming fue discípulo de esta escuela. En el monasterio resbaló de una cornisa y otro discípulo lo cargó hasta el refugio. Se quedó con los monjes y aprendió a curar. «No es que no llegué», te dice mientras muele raíces. «Es que alguien tiene que estar abajo cuando bajan».",
+      "hint": "Lo cuenta Hermano Ming en la enfermería, con la enfermería en nivel 2, después de otra subida."
+    },
+    "ming_4": {
+      "title": "Las nubes flacas",
+      "text": "Ming mide el agua del manantial todas las mañanas. Cada año hay un poco menos. «Las nubes vienen más flacas», dice, sin alarma, como quien nota que un amigo durmió mal. «El que respira por el valle está cansado. Y a los cansados también hay que curarlos».",
+      "hint": "Lo cuenta Hermano Ming en la enfermería, con la enfermería en nivel 3, después de otra subida."
+    },
+    "ming_5": {
+      "title": "Un remedio para el que duerme",
+      "text": "Con todas las hierbas del cuaderno, Ming hierve un caldo que no huele a nada. «No es para vos», te dice. «Es para él». Lo guarda en una calabaza sellada. «Cuando la escuela esté entera y vuelvas a subir, llevalo. Que alguien le dé de beber al que nos da de respirar».",
+      "hint": "Lo cuenta Hermano Ming en la enfermería, con la enfermería completa, después de hacer cumbre."
+    },
+    "tie_1": {
+      "title": "El horno frío",
+      "text": "El maestro Tie bajó de la fragua del monasterio con el martillo al hombro. «Allá arriba me piden campanas», gruñó. «Las campanas me aburren: suenan siempre igual». Pateó las cenizas del horno viejo de la escuela y sonrió. «El martillo se acuerda solo».",
+      "hint": "Lo cuenta Maestro Tie en la forja, después de tu primera subida."
+    },
+    "tie_2": {
+      "title": "Las marcas del metal",
+      "text": "Cada hoja que forja Tie lleva una marca chiquita: 鐵 y el número del discípulo. Cuando le mostrás un arma que encontraste en la montaña, la da vuelta y lee la marca. «El cuarenta y dos», dice. «Pegaba torcido». La afila igual, con cuidado, para que vuelva a subir.",
+      "hint": "Lo cuenta Maestro Tie en la forja, con la forja en nivel 1, después de otra subida."
+    },
+    "tie_3": {
+      "title": "La campana rajada",
+      "text": "Tie forjó la campana del abad. «La rajó un muchacho que bajó de la nieve con hielo en el pelo», te cuenta. «Le pegó con la frente, de rabia contra sí mismo. Usaba unas sandalias gastadas». Nunca la arregló. «Hay cosas que conviene seguir escuchando rotas».",
+      "hint": "Lo cuenta Maestro Tie en la forja, con la forja en nivel 2, después de otra subida."
+    },
+    "tie_4": {
+      "title": "El aprendiz",
+      "text": "El aprendiz de Tie, el chico que corría con los encargos, le pidió una cinta de la escuela. Tie dijo que no y después pasó tres noches en el horno. «No es que no quiera que suba», te confiesa. «Es que no sé forjar la hoja que llegue más alto que yo. Ninguna de las mías volvió de la cumbre».",
+      "hint": "Lo cuenta Maestro Tie en la forja, con la forja en nivel 3, después de otra subida."
+    },
+    "tie_5": {
+      "title": "Escama y hierro",
+      "text": "Entre tus cosas, al volver de la cumbre, Tie encontró una escama fría como la nieve. La forjó sin decir nada. Te muestra una hoja sin filo, liviana, que zumba cuando respirás cerca. «No corta», dice. «Respira. Es para el que suba con la escuela entera a darle descanso al dragón».",
+      "hint": "Lo cuenta Maestro Tie en la forja, con la forja completa, después de hacer cumbre."
     }
   },
   "masterLines": {
@@ -1747,5 +1797,17 @@
       "l2": "Shuang te enseña a entrar respirando: más Aliento en el primer turno.",
       "l3": "Los postes de flor de ciruelo: una carga más de Respirar."
     }
+  },
+  "masterRecap": {
+    "won_a": "Llegaste arriba. Escribí «cumbre» al lado de tu número y me tembló la mano.",
+    "won_b": "Otra cumbre. El dragón respira más tranquilo cuando bajás vos.",
+    "ghost": "Te cruzaste con el que cayó antes que vos. Ahora descansa mejor.",
+    "fell_boss": "Llegaste hasta {enemy}. Eso ya es más de lo que muchos pueden contar.",
+    "fell_0_a": "Piso {floor}. La montaña recién empieza a conocerte.",
+    "fell_0_b": "{enemy} te frenó en el piso {floor}. No te apures: la montaña tampoco se apura.",
+    "fell_1_a": "Llegaste al monasterio, piso {floor}. Más arriba que la mitad de los nombres de mi cuaderno.",
+    "fell_1_b": "{enemy} te detuvo en el monasterio. Los monjes van a acordarse de tu cara.",
+    "fell_2_a": "Llegaste a la nieve, piso {floor}. Yo me quedé ahí; vos vas a pasar.",
+    "fell_2_b": "{enemy} te cortó el paso en la nieve. Respirá hondo y no le pidas permiso."
   }
 }

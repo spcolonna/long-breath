@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/run/run_state.dart';
+import '../../domain/run/school_story.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
@@ -151,6 +152,12 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                           height: math.min(box.maxHeight, box.maxWidth * 1.3),
                           glyph: stats.hanzi,
                           aura: aura,
+                        ),
+                        const Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          child: Center(child: MasterRecap()),
                         ),
                       ],
                     ),
@@ -303,7 +310,9 @@ class _MonasteryLine extends ConsumerWidget {
     final def = ref.watch(dataProvider).balance.school;
     final seen = (ref.watch(ascentsProvider).value ?? const []).isNotEmpty;
     if (s == null || def.isEmpty || !seen) return const SizedBox.shrink();
-    final ready = def.buildings.any((b) {
+    final story = (ref.watch(schoolStoryProvider).value ?? const {}).values
+        .contains(StoryWait.none);
+    final ready = story || def.buildings.any((b) {
       final next = def.nextLevel(b.id, s.levels);
       return next != null && s.jade >= next.cost;
     });

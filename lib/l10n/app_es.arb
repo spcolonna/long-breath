@@ -222,9 +222,21 @@
   "confirm": "Confirmar",
   "cancel": "Cancelar",
   "drawPile": "Por robar: {count}",
-  "@drawPile": {"placeholders": {"count": {"type": "int"}}},
+  "@drawPile": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "discardPile": "Descarte: {count}",
-  "@discardPile": {"placeholders": {"count": {"type": "int"}}},
+  "@discardPile": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "retainHint": "Tocá hasta {count} carta(s) para retener",
   "@retainHint": {
     "placeholders": {
@@ -239,31 +251,103 @@
   "defeat": "Derrota",
   "continueLabel": "Continuar",
   "discipleN": "Discípulo nº {n}",
-  "@discipleN": {"placeholders": {"n": {"type": "int"}}},
+  "@discipleN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "resultFellAt": "El aliento se te escapa en {place}.",
-  "@resultFellAt": {"placeholders": {"place": {"type": "String"}}},
+  "@resultFellAt": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
   "resultFellTo": "{enemy} queda de pie entre la niebla.",
-  "@resultFellTo": {"placeholders": {"enemy": {"type": "String"}}},
+  "@resultFellTo": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      }
+    }
+  },
   "resultFellNo": "El Discípulo nº {n} no volvió a la escuela.",
-  "@resultFellNo": {"placeholders": {"n": {"type": "int"}}},
+  "@resultFellNo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "resultSummitAt": "Subiste entre las nubes hasta {place}.",
-  "@resultSummitAt": {"placeholders": {"place": {"type": "String"}}},
+  "@resultSummitAt": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
   "resultSummitTo": "{enemy} se deshace en aliento dorado.",
-  "@resultSummitTo": {"placeholders": {"enemy": {"type": "String"}}},
+  "@resultSummitTo": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      }
+    }
+  },
   "resultSummitNo": "El Discípulo nº {n} llegó a la cumbre.",
-  "@resultSummitNo": {"placeholders": {"n": {"type": "int"}}},
+  "@resultSummitNo": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "tabletNovice": "Novicio sin camino",
   "tabletPath": "Camino de {style}",
-  "@tabletPath": {"placeholders": {"style": {"type": "String"}}},
+  "@tabletPath": {
+    "placeholders": {
+      "style": {
+        "type": "String"
+      }
+    }
+  },
   "tabletFloor": "Sala {floor} de {floors}",
-  "@tabletFloor": {"placeholders": {"floor": {"type": "int"}, "floors": {"type": "int"}}},
+  "@tabletFloor": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      },
+      "floors": {
+        "type": "int"
+      }
+    }
+  },
   "tabletStats": "Vida máx. {hp} · Mazo {deck}",
-  "@tabletStats": {"placeholders": {"hp": {"type": "int"}, "deck": {"type": "int"}}},
+  "@tabletStats": {
+    "placeholders": {
+      "hp": {
+        "type": "int"
+      },
+      "deck": {
+        "type": "int"
+      }
+    }
+  },
   "loreNew": "Pergamino nuevo",
   "relayLine": "La escuela envía a otro novicio.",
   "relaySummit": "La escuela pide que suba el siguiente.",
   "relayButton": "Subir como Discípulo nº {n}",
-  "@relayButton": {"placeholders": {"n": {"type": "int"}}},
+  "@relayButton": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "backSchool": "Volver a la escuela",
   "tapToSkip": "Tocá para seguir",
   "registryTitle": "Registro de la escuela",
@@ -271,11 +355,26 @@
   "registryScrolls": "Pergaminos",
   "registryEmpty": "Todavía no terminó ninguna subida.",
   "registryFell": "Cayó ante {enemy}",
-  "@registryFell": {"placeholders": {"enemy": {"type": "String"}}},
+  "@registryFell": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      }
+    }
+  },
   "registryFellEarly": "Cayó en la montaña",
   "registrySummit": "Llegó a la cumbre",
   "registrySummary": "{fallen} caídos · {summits} en la cumbre",
-  "@registrySummary": {"placeholders": {"fallen": {"type": "int"}, "summits": {"type": "int"}}},
+  "@registrySummary": {
+    "placeholders": {
+      "fallen": {
+        "type": "int"
+      },
+      "summits": {
+        "type": "int"
+      }
+    }
+  },
   "scrollSealed": "Lacrado",
   "prologueClimb": "Subir",
   "runWon": "Llegaste a la cumbre",
@@ -316,20 +415,47 @@
   "intentTagSameStance": "Castiga repetir",
   "intentTagWear": "Gasta Guardia",
   "intentTagDrain": "−{n} Aliento",
-  "@intentTagDrain": {"placeholders": {"n": {"type": "int"}}},
+  "@intentTagDrain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "intentTagFreeze": "−{n} robo",
-  "@intentTagFreeze": {"placeholders": {"n": {"type": "int"}}},
+  "@intentTagFreeze": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "rankBoss": "Guardián",
   "waveOf": "{index} de {total}",
   "waveGroupTitle": "Grupo de {n}",
-  "@waveGroupTitle": { "placeholders": { "n": { "type": "int" } } },
+  "@waveGroupTitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "waveGroupSub": "Vienen uno tras otro: cuando cae uno, entra el siguiente",
   "waveNext": "Después:",
   "merchantMore": "Hay más abajo",
   "resultCopyLog": "Copiar registro",
   "resultLogCopied": "Registro de la subida copiado",
   "lootTotal": "Llevás {before} → {after}",
-  "@lootTotal": { "placeholders": { "before": { "type": "int" }, "after": { "type": "int" } } },
+  "@lootTotal": {
+    "placeholders": {
+      "before": {
+        "type": "int"
+      },
+      "after": {
+        "type": "int"
+      }
+    }
+  },
   "comboHits": "golpes",
   "@waveOf": {
     "placeholders": {
@@ -385,7 +511,13 @@
   "countdown": "turnos",
   "staggeredDouble": "Desequilibrado · daño ×2",
   "previewThen": "después {stance}",
-  "@previewThen": { "placeholders": { "stance": { "type": "String" } } },
+  "@previewThen": {
+    "placeholders": {
+      "stance": {
+        "type": "String"
+      }
+    }
+  },
   "previewDamage": "{n} daño",
   "@previewDamage": {
     "placeholders": {
@@ -523,15 +655,45 @@
   "breatheModeTitle": "¿Cómo respirás?",
   "breatheModeHand": "Cambiar la mano",
   "breatheModeHandSub": "Descartás todo y robás {n} o más",
-  "@breatheModeHandSub": { "placeholders": { "n": { "type": "int" } } },
+  "@breatheModeHandSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "breatheModeBreath": "Recuperar Aliento",
   "breatheModeBreathSub": "+{n} Aliento ahora",
-  "@breatheModeBreathSub": { "placeholders": { "n": { "type": "int" } } },
+  "@breatheModeBreathSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "breatheModeStructure": "Recuperar Estructura",
   "breatheModeStructureSub": "+{n} Estructura",
-  "@breatheModeStructureSub": { "placeholders": { "n": { "type": "int" } } },
+  "@breatheModeStructureSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "breatheCharges": "Respirar: {charges} cargas, {progress} de {at} hacia la próxima",
-  "@breatheCharges": { "placeholders": { "charges": { "type": "int" }, "progress": { "type": "int" }, "at": { "type": "int" } } },
+  "@breatheCharges": {
+    "placeholders": {
+      "charges": {
+        "type": "int"
+      },
+      "progress": {
+        "type": "int"
+      },
+      "at": {
+        "type": "int"
+      }
+    }
+  },
   "breatheReady": "Respirar cargado",
   "invalidNoCounter": "No tenés un Contragolpe listo",
   "invalidFlowFull": "Tu Flujo ya está al máximo",
@@ -542,7 +704,13 @@
   "counterFreeSub": "La próxima carta que juegues no cuesta Aliento",
   "counterDraw": "Leer al rival",
   "counterDrawSub": "Robás {n} cartas",
-  "@counterDrawSub": { "placeholders": { "n": { "type": "int" } } },
+  "@counterDrawSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "counterFlow": "Tomar el ritmo",
   "counterFlowSub": "+1 Flujo",
   "counterReady": "¡Contragolpe!",
@@ -553,13 +721,46 @@
   "techniqueUse": "Usar la técnica",
   "techTiger": "Zarpazo del Tigre",
   "techTigerSub": "Un golpe de {d} de daño y {s} de Estructura",
-  "@techTigerSub": { "placeholders": { "d": { "type": "int" }, "s": { "type": "int" } } },
+  "@techTigerSub": {
+    "placeholders": {
+      "d": {
+        "type": "int"
+      },
+      "s": {
+        "type": "int"
+      }
+    }
+  },
   "techSnake": "Mordida en cadena",
   "techSnakeSub": "{n} golpes de {d} de daño y {s} de Estructura cada uno",
-  "@techSnakeSub": { "placeholders": { "n": { "type": "int" }, "d": { "type": "int" }, "s": { "type": "int" } } },
+  "@techSnakeSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "d": {
+        "type": "int"
+      },
+      "s": {
+        "type": "int"
+      }
+    }
+  },
   "techCrane": "Vuelo de la Grulla",
   "techCraneSub": "Golpe de {d}, +{g} Guardia y robás {n} cartas",
-  "@techCraneSub": { "placeholders": { "d": { "type": "int" }, "g": { "type": "int" }, "n": { "type": "int" } } },
+  "@techCraneSub": {
+    "placeholders": {
+      "d": {
+        "type": "int"
+      },
+      "g": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "invalidRetainTooMany": "Retenés demasiadas cartas",
   "invalidNoDiscard": "No hay que descartar",
   "invalidBadTarget": "A ese no se le puede apuntar",
@@ -568,16 +769,43 @@
   "invalidNoBreather": "Ahora no hay tregua",
   "breatherTitle": "Tregua",
   "breatherSub": "Antes de que llegue {name}",
-  "@breatherSub": { "placeholders": { "name": { "type": "String" } } },
+  "@breatherSub": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "breatherRest": "Reponerte",
   "breatherRestHint": "Recuperás {count} de Vida.",
-  "@breatherRestHint": { "placeholders": { "count": { "type": "int" } } },
+  "@breatherRestHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "breatherFocus": "Concentrarte",
   "breatherFocusHint": "Robás {draw} cartas y sumás {breath} de aliento.",
-  "@breatherFocusHint": { "placeholders": { "draw": { "type": "int" }, "breath": { "type": "int" } } },
+  "@breatherFocusHint": {
+    "placeholders": {
+      "draw": {
+        "type": "int"
+      },
+      "breath": {
+        "type": "int"
+      }
+    }
+  },
   "breatherFist": "Afilar los puños",
   "breatherFistHint": "+{count} al daño de tus puños en este combate.",
-  "@breatherFistHint": { "placeholders": { "count": { "type": "int" } } },
+  "@breatherFistHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "partOfForm": "Parte de una forma",
   "tutStart": "Empezar entrenamiento",
   "tutSkipToRun": "Ya sé jugar: nueva run",
@@ -641,7 +869,16 @@
   "motionHint": "Reducido quita sacudidas, partículas, transiciones especiales y animaciones en bucle.",
   "menuLearn": "Aprender a jugar",
   "menuLearnProgress": "{done} de {total} lecciones",
-  "@menuLearnProgress": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "@menuLearnProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "menuStartHere": "Empezá acá",
   "difficultyTitle": "¿Cómo querés subir?",
   "difficultySubtitle": "Queda fija para esta partida. Para jugar otra, usá otra partida.",
@@ -656,15 +893,45 @@
   "difficultyLocked": "Bloqueada",
   "difficultyShifuLocked": "Se desbloquea al ganar una subida en Difícil.",
   "difficultyStats": "Vida {hp} · Fuente +{heal} · Rivales {enemy}%",
-  "@difficultyStats": { "placeholders": { "hp": { "type": "int" }, "heal": { "type": "int" }, "enemy": { "type": "int" } } },
+  "@difficultyStats": {
+    "placeholders": {
+      "hp": {
+        "type": "int"
+      },
+      "heal": {
+        "type": "int"
+      },
+      "enemy": {
+        "type": "int"
+      }
+    }
+  },
   "scales": "Escamas {count} · −{count} por golpe",
-  "@scales": { "placeholders": { "count": { "type": "int" } } },
+  "@scales": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scaleShed": "¡Escama arrancada!",
   "scalesRegrown": "¡Le crecen escamas!",
   "scalesNow": "Ahora tiene {count}",
-  "@scalesNow": { "placeholders": { "count": { "type": "int" } } },
+  "@scalesNow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scalesLeft": "Le quedan {count}",
-  "@scalesLeft": { "placeholders": { "count": { "type": "int" } } },
+  "@scalesLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "menuClimb": "La subida",
   "menuClimbSubtitle": "Montaña de las Mil Nubes",
   "menuReplaceRunTitle": "¿Empezar una subida nueva?",
@@ -675,9 +942,21 @@
   "lessonsIntro": "Lecciones cortas con el maestro. Cada una se habilita al terminar la anterior y podés repetirlas cuando quieras.",
   "lessonLocked": "Completá la lección anterior",
   "lessonMinutes": "{n} min",
-  "@lessonMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "@lessonMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lessonNumber": "Lección {n}",
-  "@lessonNumber": {"placeholders": {"n": {"type": "int"}}},
+  "@lessonNumber": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lessonDoneTitle": "Lección completa",
   "lessonNext": "Siguiente lección",
   "lessonBackToList": "Volver a las lecciones",
@@ -829,18 +1108,51 @@
   "optionalEliteTag": "Desvío",
   "mapPickHint": "Elegí por dónde seguir subiendo",
   "pathTitle": "Sala {n} de {total}",
-  "@pathTitle": { "placeholders": { "n": { "type": "int" }, "total": { "type": "int" } } },
+  "@pathTitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "pathReward": "Del otro lado: {kind}.",
-  "@pathReward": { "placeholders": { "kind": { "type": "String" } } },
+  "@pathReward": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
   "combatAltitude": "{meters} · {n}/{total}",
-  "@combatAltitude": { "placeholders": { "meters": { "type": "String" }, "n": { "type": "int" }, "total": { "type": "int" } } },
+  "@combatAltitude": {
+    "placeholders": {
+      "meters": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "mapGo": "Ir",
   "nodeHintCommon": "Un rival del camino.",
   "nodeHintElite": "El guardián de la etapa: más riesgo, y un talismán.",
   "nodeHintDetour": "Un desvío con un rival fuerte. Podés esquivarlo, pero paga como ninguno: talismán raro, cartas raras y jade.",
   "nodeHintBoss": "El guardián de la cumbre.",
   "nodeHintPack": "Vienen {count} rivales.",
-  "@nodeHintPack": { "placeholders": { "count": { "type": "int" } } },
+  "@nodeHintPack": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "nodeHintFountain": "Agua clara: curás Vida, templás dos cartas o purificás el mazo.",
   "nodeHintShrine": "Un animal sagrado te ofrece su bendición.",
   "nodeHintEvent": "Un encuentro en el sendero. Puede ayudarte o costarte algo.",
@@ -848,11 +1160,29 @@
   "nodeHintMaster": "Un maestro te enseña una forma nueva.",
   "formMissingShort": "Faltan cartas",
   "eventCost": "−{n} Vida",
-  "@eventCost": {"placeholders": {"n": {"type": "int"}}},
+  "@eventCost": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventHeal": "+{n} Vida",
-  "@eventHeal": {"placeholders": {"n": {"type": "int"}}},
+  "@eventHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventMaxHp": "+{n} Vida máxima",
-  "@eventMaxHp": {"placeholders": {"n": {"type": "int"}}},
+  "@eventMaxHp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventGainForm": "aprendés una forma",
   "eventGainTalisman": "un talismán",
   "eventGainRareTalisman": "un talismán raro",
@@ -864,7 +1194,13 @@
   "eventGainPickUpgrade": "elegís qué carta mejorar",
   "eventGainPathTalisman": "el talismán de tu camino",
   "eventDuel": "Duelo con {enemy} · si ganás: talismán a elegir y jade",
-  "@eventDuel": {"placeholders": {"enemy": {"type": "String"}}},
+  "@eventDuel": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      }
+    }
+  },
   "eventDuelGo": "¡A pelear!",
   "eventChoose": "Elegir",
   "eventPathTiger": "Prueba del Tigre",
@@ -875,31 +1211,106 @@
   "eventGainTemper": "templar tu arma",
   "eventGainMark": "sigue más arriba",
   "eventNeedWith": "Con {name}",
-  "@eventNeedWith": {"placeholders": {"name": {"type": "String"}}},
+  "@eventNeedWith": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventBack": "Un viejo conocido",
   "eventResultTemper": "Templada: {name} (nivel {n})",
-  "@eventResultTemper": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
+  "@eventResultTemper": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventResultMark": "Esto sigue más arriba",
   "eventChance": "{pct}%: {ok} · si no: {fail}",
-  "@eventChance": {"placeholders": {"pct": {"type": "int"}, "ok": {"type": "String"}, "fail": {"type": "String"}}},
+  "@eventChance": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      },
+      "ok": {
+        "type": "String"
+      },
+      "fail": {
+        "type": "String"
+      }
+    }
+  },
   "eventCantPay": "No te alcanza la Vida",
   "eventJade": "+{n} jade",
-  "@eventJade": {"placeholders": {"n": {"type": "int"}}},
+  "@eventJade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventJadeSpent": "−{n} jade",
-  "@eventJadeSpent": {"placeholders": {"n": {"type": "int"}}},
+  "@eventJadeSpent": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventPrice": "Pagás {n} jade",
-  "@eventPrice": {"placeholders": {"n": {"type": "int"}}},
+  "@eventPrice": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "eventContinue": "Seguir subiendo",
   "eventResultTalisman": "Talismán: {name}",
-  "@eventResultTalisman": {"placeholders": {"name": {"type": "String"}}},
+  "@eventResultTalisman": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventResultCard": "Carta nueva: {name}",
-  "@eventResultCard": {"placeholders": {"name": {"type": "String"}}},
+  "@eventResultCard": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventResultForm": "Forma aprendida: {name}",
-  "@eventResultForm": {"placeholders": {"name": {"type": "String"}}},
+  "@eventResultForm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventResultUpgrade": "Mejorada: {name}",
-  "@eventResultUpgrade": {"placeholders": {"name": {"type": "String"}}},
+  "@eventResultUpgrade": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventResultLost": "Se fue del mazo: {name}",
-  "@eventResultLost": {"placeholders": {"name": {"type": "String"}}},
+  "@eventResultLost": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventLucky": "¡Salió bien!",
   "eventUnlucky": "Salió mal…",
   "talismanPickTitle": "Elegí un talismán",
@@ -908,7 +1319,13 @@
   "cardRare": "Carta rara",
   "cardLegendary": "Carta legendaria",
   "cardTypeName": "{type, select, fist{Puño} palm{Palma} kick{Patada} defense{Defensa} technique{Técnica} other{Carta}}",
-  "@cardTypeName": { "placeholders": { "type": { "type": "String" } } },
+  "@cardTypeName": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "talismanVow": "Voto · una etapa",
   "campTitle": "El campamento",
   "campLetter": "Entre tus cosas aparece una carta que no habías visto.",
@@ -916,134 +1333,494 @@
   "campQuiet": "La fogata cruje y el dragón duerme sin sueños. Mañana se sigue.",
   "campVowTitle": "¿Hacés un voto para la etapa que viene?",
   "campVowHint": "Una ventaja con un costo, hasta la próxima fogata. Si vencés al jefe de la etapa con el voto, lo cumplís: +{lotus} de loto. Podés no votar.",
-  "@campVowHint": {"placeholders": {"lotus": {"type": "int"}}},
+  "@campVowHint": {
+    "placeholders": {
+      "lotus": {
+        "type": "int"
+      }
+    }
+  },
   "campClimbVow": "Subir con el voto",
   "campClimbFree": "Seguir sin voto",
   "talismanBoss": "De jefe",
   "talismanGained": "¡{name}!",
-  "@talismanGained": {"placeholders": {"name": {"type": "String"}}},
+  "@talismanGained": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "talismansTitle": "Talismanes",
   "talismansHint": "Objetos que te acompañan toda la subida y actúan solos.",
   "talismansNone": "Todavía no tenés talismanes. Se consiguen en los eventos y al vencer al élite.",
   "talEffStance": "Empezás cada combate en {stance}.",
-  "@talEffStance": {"placeholders": {"stance": {"type": "String"}}},
+  "@talEffStance": {
+    "placeholders": {
+      "stance": {
+        "type": "String"
+      }
+    }
+  },
   "talEffFirstBreath": "+{n} de Aliento en el primer turno de cada combate.",
-  "@talEffFirstBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffFirstBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffStructure": "+{n} de Estructura en cada combate.",
-  "@talEffStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffEnemyHp": "El rival empieza cada combate con {n} de Vida menos.",
-  "@talEffEnemyHp": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffEnemyHp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffEnemyStructure": "El rival empieza cada combate con {n} de Estructura menos.",
-  "@talEffEnemyStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffEnemyStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffMaxHp": "+{n} de Vida máxima.",
-  "@talEffMaxHp": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffMaxHp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffFountain": "La fuente cura {n} más.",
-  "@talEffFountain": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffFountain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffWinHeal": "Ganar un combate cura {n}.",
-  "@talEffWinHeal": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffWinHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffDeflect": "Cada desvío da +{n} de Aliento.",
-  "@talEffDeflect": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffDeflect": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffFormHeal": "Cada forma completa cura {n}.",
-  "@talEffFormHeal": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffFormHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffStanceGuard": "Cada vez que cambiás de postura, +{n} de Guardia.",
-  "@talEffStanceGuard": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffStanceGuard": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffDingbu": "El {move} no cuesta Aliento.",
-  "@talEffDingbu": {"placeholders": {"move": {"type": "String"}}},
+  "@talEffDingbu": {
+    "placeholders": {
+      "move": {
+        "type": "String"
+      }
+    }
+  },
   "talEffWinJade": "Ganar un combate da +{n} de jade.",
-  "@talEffWinJade": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffWinJade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffFirstCard": "La primera carta de cada turno cuesta {n} menos.",
-  "@talEffFirstCard": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffFirstCard": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffBreakDraw": "Desequilibrar a un rival roba {n} cartas.",
-  "@talEffBreakDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffBreakDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffDeflectDamage": "Cada desvío le devuelve {n} de daño.",
-  "@talEffDeflectDamage": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffDeflectDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffTurnBreath": "+{n} de Aliento en cada turno,",
-  "@talEffTurnBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffTurnBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffHandLess": "pero robás {n} carta menos.",
-  "@talEffHandLess": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffHandLess": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffMaxHpLess": "pero perdés {n} de Vida máxima.",
-  "@talEffMaxHpLess": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffMaxHpLess": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffFountainLess": "pero la fuente cura {n} menos.",
-  "@talEffFountainLess": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffFountainLess": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffShopMarkup": "pero el mercader te cobra un {n}% más.",
-  "@talEffShopMarkup": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffShopMarkup": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffStructureLess": "pero tenés {n} de Estructura menos.",
-  "@talEffStructureLess": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffStructureLess": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffGuardKeep": "Al empezar tu turno conservás el {n}% de tu Guardia.",
-  "@talEffGuardKeep": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffGuardKeep": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffHandMore": "+{n} carta en cada mano.",
-  "@talEffHandMore": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffHandMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffAttackStructure": "Tus ataques quitan {n} más de Estructura.",
-  "@talEffAttackStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffAttackStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffGuardPierce": "Tus ataques atraviesan {n} de la Guardia del rival, sin gastarla.",
-  "@talEffGuardPierce": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffGuardPierce": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffHeavyDamage": "Los ataques que cuestan 2 o más de Aliento pegan +{n}.",
-  "@talEffHeavyDamage": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffHeavyDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffEdgeDamage": "Al filo (con el 70% de la Vida o menos), tus ataques pegan +{n}.",
-  "@talEffEdgeDamage": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffEdgeDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffEdgeBreath": "Al filo (con el 70% de la Vida o menos), empezás cada turno con +{n} de Aliento.",
-  "@talEffEdgeBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffEdgeBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "weaponPickTitle": "Elegí un arma",
   "weaponPickHint": "Una sola por subida: suma sus técnicas al botín y se templa hasta el nivel III.",
   "weaponForgeTitle": "Templar el arma",
   "weaponForgeHint": "Tu arma sube un nivel: más fuerte y con una técnica nueva en el botín.",
   "weaponLevel": "Nivel {n}",
-  "@weaponLevel": {"placeholders": {"n": {"type": "int"}}},
+  "@weaponLevel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "weaponLevelUp": "Nivel {from} → {to}",
-  "@weaponLevelUp": {"placeholders": {"from": {"type": "int"}, "to": {"type": "int"}}},
+  "@weaponLevelUp": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  },
   "weaponAffinity": "Afín a tu camino: {bonus}",
-  "@weaponAffinity": {"placeholders": {"bonus": {"type": "String"}}},
+  "@weaponAffinity": {
+    "placeholders": {
+      "bonus": {
+        "type": "String"
+      }
+    }
+  },
   "weaponCards": "Técnicas: {names}",
-  "@weaponCards": {"placeholders": {"names": {"type": "String"}}},
+  "@weaponCards": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
   "weaponGained": "¡{name}!",
-  "@weaponGained": {"placeholders": {"name": {"type": "String"}}},
+  "@weaponGained": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "weaponForged": "¡{name}, nivel {n}!",
-  "@weaponForged": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
+  "@weaponForged": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "weaponNone": "Sin arma. El primer élite te deja elegir una.",
   "weaponTitle": "Arma",
   "lootKindWeapon": "Arma",
   "merchantWeapon": "Armería",
   "merchantForge": "Templar {name} (nivel {n})",
-  "@merchantForge": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
+  "@merchantForge": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "masterForge": "Templar {name} (nivel {from} → {to})",
-  "@masterForge": {"placeholders": {"name": {"type": "String"}, "from": {"type": "int"}, "to": {"type": "int"}}},
+  "@masterForge": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  },
   "masterForgeMax": "El maestro templa hasta el nivel II; el III lo da el botín o el mercader.",
   "talEffBreakDamage": "Desequilibrar a un rival le pega un golpe de {n}, que entra doble.",
-  "@talEffBreakDamage": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffBreakDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffThirdAttackDraw": "El tercer ataque de cada turno roba {n} carta.",
-  "@talEffThirdAttackDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffThirdAttackDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffRetainedGuard": "Al empezar tu turno, +{n} de Guardia por cada carta retenida.",
-  "@talEffRetainedGuard": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffRetainedGuard": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "talEffShopDiscount": "El mercader te cobra un {n}% menos.",
-  "@talEffShopDiscount": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffShopDiscount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffFirstStrike": "El primer ataque del turno pega +{n}.",
-  "@awEffFirstStrike": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffFirstStrike": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffChain": "Cada ataque pega +{n} por cada ataque anterior del turno.",
-  "@awEffChain": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffChain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffRetain": "Podés retener {n} carta más.",
-  "@awEffRetain": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffRetain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffDraw": "Robás {n} carta más por turno.",
-  "@awEffDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffRetainedDiscount": "Las cartas retenidas cuestan {n} menos.",
-  "@awEffRetainedDiscount": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffRetainedDiscount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffFirstStrikeStructure": "El primer ataque del turno quita +{n} de Estructura.",
-  "@awEffFirstStrikeStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffFirstStrikeStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffFirstStrikeDiscount": "El primer ataque del turno cuesta {n} menos.",
-  "@awEffFirstStrikeDiscount": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffFirstStrikeDiscount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffBreakDraw": "Al desequilibrar al rival, robás {n}.",
-  "@awEffBreakDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffBreakDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffChainStructure": "Cada ataque quita +{n} de Estructura por cada ataque anterior del turno.",
-  "@awEffChainStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffChainStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffThirdAttackDraw": "Al jugar el tercer ataque del turno, robás {n}.",
-  "@awEffThirdAttackDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffThirdAttackDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffRetainedDamage": "Los ataques retenidos pegan +{n}.",
-  "@awEffRetainedDamage": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffRetainedDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffDeflectBreath": "Cada desvío da +{n} de Aliento.",
-  "@awEffDeflectBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffDeflectBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awEffCircle": "Al cerrar el círculo de posturas, ganás +{breath} de Aliento y robás {draw} más.",
-  "@awEffCircle": { "placeholders": { "breath": { "type": "int" }, "draw": { "type": "int" } } },
+  "@awEffCircle": {
+    "placeholders": {
+      "breath": {
+        "type": "int"
+      },
+      "draw": {
+        "type": "int"
+      }
+    }
+  },
   "awEffGuardBonus": "Tus defensas dan +{n} de Guardia.",
-  "@awEffGuardBonus": {"placeholders": {"n": {"type": "int"}}},
+  "@awEffGuardBonus": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "awakeningTitle": "DESPERTAR",
   "awakeningHint": "El espíritu de tu camino te enseña algo más. Elegí uno: te acompaña el resto de la subida.",
   "awakeningPick": "Elegí un despertar",
@@ -1055,7 +1832,13 @@
   "merchantNode": "Mercader",
   "masterNode": "Maestro errante",
   "jadeGained": "+{n} de jade",
-  "@jadeGained": {"placeholders": {"n": {"type": "int"}}},
+  "@jadeGained": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "merchantTitle": "Mercader de pergaminos",
   "merchantBao": "Tío Bao, el del fardo",
   "merchantTale": "Tío Bao deja el fardo en el suelo y se sienta un momento.",
@@ -1069,14 +1852,38 @@
   "merchantRareTag": "Selecto",
   "merchantRemove": "Quitar 1 carta del mazo",
   "merchantUpgrade": "Mejorar 1 carta (+{amount})",
-  "@merchantUpgrade": {"placeholders": {"amount": {"type": "int"}}},
+  "@merchantUpgrade": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
   "merchantUsed": "Ya usado",
   "merchantSale": "Oferta −{pct}%",
-  "@merchantSale": {"placeholders": {"pct": {"type": "int"}}},
+  "@merchantSale": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "merchantTea": "Té de jengibre (+{n} Vida)",
-  "@merchantTea": {"placeholders": {"n": {"type": "int"}}},
+  "@merchantTea": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "merchantTeaDetail": "Un tazón caliente que te devuelve {n} de Vida. Una vez por visita.",
-  "@merchantTeaDetail": {"placeholders": {"n": {"type": "int"}}},
+  "@merchantTeaDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "merchantNoJade": "Te falta jade",
   "merchantBought": "¡Comprado!",
   "merchantPickRemove": "Elegí la carta que querés quitar",
@@ -1087,59 +1894,203 @@
   "masterTeach": "Aprender una forma",
   "masterTeachHint": "Tocá la que quieras aprender.",
   "masterUpgrade": "Mejorar 1 carta (+{amount})",
-  "@masterUpgrade": {"placeholders": {"amount": {"type": "int"}}},
+  "@masterUpgrade": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
   "masterUpgradeHint": "Elegí la carta que el maestro va a pulir.",
   "masterNoForms": "Ya sabés todas las formas que te puede enseñar.",
   "masterOr": "o",
   "masterUpgraded": "¡{name} +{n}!",
-  "@masterUpgraded": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
+  "@masterUpgraded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lesClimbSlideShopTitle": "Jade, mercader y maestro",
   "lesClimbSlideShop": "Cada combate ganado te da jade (玉); el élite, más. Cada tantos combates se cruza un mercader ambulante: ahí lo cambiás por cartas, un talismán, quitar una carta o mejorar una. El maestro errante no cobra: te enseña una forma o te mejora una carta, pero solo una de las dos.",
   "effChain": "+{n} de daño por cada ataque que ya jugaste en el turno",
-  "@effChain": {"placeholders": {"n": {"type": "int"}}},
+  "@effChain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effRetained": "Si la retuviste, +{n} de daño",
-  "@effRetained": {"placeholders": {"n": {"type": "int"}}},
+  "@effRetained": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effChainStructure": "+{n} de Estructura por cada ataque que ya jugaste en el turno",
-  "@effChainStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@effChainStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effRetainedStructure": "Si la retuviste, +{n} de Estructura",
-  "@effRetainedStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@effRetainedStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effComboDraw": "Si ya jugaste {at} ataques en el turno, robás {n}",
-  "@effComboDraw": {"placeholders": {"at": {"type": "int"}, "n": {"type": "int"}}},
+  "@effComboDraw": {
+    "placeholders": {
+      "at": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effComboBreath": "Si ya jugaste {at} ataques en el turno, +{n} Aliento",
-  "@effComboBreath": {"placeholders": {"at": {"type": "int"}, "n": {"type": "int"}}},
+  "@effComboBreath": {
+    "placeholders": {
+      "at": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effRetainedDraw": "Si la retuviste, robás {n}",
-  "@effRetainedDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@effRetainedDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effRetainedBreath": "Si la retuviste, +{n} Aliento",
-  "@effRetainedBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@effRetainedBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effBreakDraw": "Si lo desequilibra, robás {n}",
-  "@effBreakDraw": {"placeholders": {"n": {"type": "int"}}},
+  "@effBreakDraw": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "effBreakBreath": "Si lo desequilibra, +{n} Aliento",
-  "@effBreakBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@effBreakBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "styleChipFirstStrike": "{hanzi} Primer golpe +{n}",
-  "@styleChipFirstStrike": {"placeholders": {"hanzi": {"type": "String"}, "n": {"type": "int"}}},
+  "@styleChipFirstStrike": {
+    "placeholders": {
+      "hanzi": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "styleChipChain": "{hanzi} Cadena +{n}",
-  "@styleChipChain": {"placeholders": {"hanzi": {"type": "String"}, "n": {"type": "int"}}},
+  "@styleChipChain": {
+    "placeholders": {
+      "hanzi": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "styleChipRetained": "{hanzi} Retenidas −{n}",
-  "@styleChipRetained": {"placeholders": {"hanzi": {"type": "String"}, "n": {"type": "int"}}},
+  "@styleChipRetained": {
+    "placeholders": {
+      "hanzi": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "retainedTag": "Retenida",
   "styleDeltaDamage": "+{n} daño por tu camino",
-  "@styleDeltaDamage": {"placeholders": {"n": {"type": "int"}}},
+  "@styleDeltaDamage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "retainedCheaper": "−{n} costo por retenida",
-  "@retainedCheaper": {"placeholders": {"n": {"type": "int"}}},
+  "@retainedCheaper": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "picosTitle": "Picos",
   "picosDesc": "Normal con reglas extra. Cada Pico suma una más a las anteriores.",
   "picosLocked": "Ganá una subida en Normal para abrir el Pico 1.",
   "picoName": "Pico {n}",
-  "@picoName": {"placeholders": {"n": {"type": "int"}}},
+  "@picoName": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "picoNew": "Nueva: {rule}",
-  "@picoNew": {"placeholders": {"rule": {"type": "String"}}},
+  "@picoNew": {
+    "placeholders": {
+      "rule": {
+        "type": "String"
+      }
+    }
+  },
   "picoStackedOne": "Más la regla del Pico 1.",
   "picoStacked": "Más las reglas de los Picos 1 a {n}.",
-  "@picoStacked": {"placeholders": {"n": {"type": "int"}}},
+  "@picoStacked": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "picoLower": "Bajar de Pico",
   "picoHigher": "Subir de Pico",
   "picoOpened": "¡Se abrió el Pico {n}!",
-  "@picoOpened": {"placeholders": {"n": {"type": "int"}}},
+  "@picoOpened": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "picoTop": "Coronaste el último Pico.",
   "picoRule1": "Élites +15% de Vida",
   "picoRule2": "El mercader cobra 20% más",
@@ -1152,88 +2103,274 @@
   "picoRule9": "Empezás sin Respirar cargado",
   "picoRule10": "Rivales +5% de daño, +8% de Vida y +5% de Estructura",
   "wrathChip": "Despierto · +{n} por golpe",
-  "@wrathChip": {"placeholders": {"n": {"type": "int"}}},
+  "@wrathChip": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "furyChip": "Furia de la montaña · +{n}",
-  "@furyChip": {"placeholders": {"n": {"type": "int"}}},
+  "@furyChip": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stageFuryTitle": "狂 Furia de la montaña · +{n} por acción",
-  "@stageFuryTitle": {"placeholders": {"n": {"type": "int"}}},
+  "@stageFuryTitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stageFuryNew": "Desde acá la montaña enfurece a los rivales: después de cada acción sus golpes suman {n} más, y no se calma. Aguantar no alcanza: vencelos rápido.",
-  "@stageFuryNew": {"placeholders": {"n": {"type": "int"}}},
+  "@stageFuryNew": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stageFuryMore": "Más arriba enfurece más: cada acción suma {n} a sus golpes, en vez de {prev}. Vencelos rápido.",
-  "@stageFuryMore": {"placeholders": {"n": {"type": "int"}, "prev": {"type": "int"}}},
+  "@stageFuryMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "prev": {
+        "type": "int"
+      }
+    }
+  },
   "wrathCalmed": "Se vuelve a dormir",
   "parryChip": "Abanico listo",
   "parried": "¡Abanico!",
   "previewParried": "Abanico: 0 daño, te devuelve {n}",
-  "@previewParried": {"placeholders": {"n": {"type": "int"}}},
+  "@previewParried": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "parriedDetail": "Desvía tu golpe y te devuelve {n}",
-  "@parriedDetail": {"placeholders": {"n": {"type": "int"}}},
+  "@parriedDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stolenChip": "Te robó {n} de jade",
-  "@stolenChip": {"placeholders": {"n": {"type": "int"}}},
+  "@stolenChip": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "intentFlee": "Se escapa",
   "intentFleeDetail": "con {n} de jade",
-  "@intentFleeDetail": {"placeholders": {"n": {"type": "int"}}},
+  "@intentFleeDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "fledTitle": "Se escapó",
   "endSummaryFled": "{name} se escapó con {n} de jade",
-  "@endSummaryFled": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}}},
+  "@endSummaryFled": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "jadeLost": "−{n} de jade · se lo llevó",
-  "@jadeLost": {"placeholders": {"n": {"type": "int"}}},
+  "@jadeLost": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "stageCleared": "ETAPA SUPERADA",
   "stageBreath": "Respirás hondo antes de seguir",
   "stageClimb": "Seguir subiendo",
   "mapStage": "Etapa {n} de {total}",
-  "@mapStage": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
+  "@mapStage": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "thornsChip": "Espinas · −{n} por carta",
-  "@thornsChip": {"placeholders": {"n": {"type": "int"}}},
+  "@thornsChip": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "thornsHurt": "Espinas",
   "regenChip": "Se cura {n} al actuar",
-  "@regenChip": {"placeholders": {"n": {"type": "int"}}},
+  "@regenChip": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "guardOnly": "Guardia {n} · solo frena {type}",
-  "@guardOnly": {"placeholders": {"type": {"type": "String"}, "n": {"type": "int"}}},
+  "@guardOnly": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "guardOnlyChip": "Guardia {n} · solo {type}",
-  "@guardOnlyChip": {"placeholders": {"n": {"type": "int"}, "type": {"type": "String"}}},
+  "@guardOnlyChip": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "guardBypassed": "¡Esquivaste su guardia!",
   "guardBypassedDetail": "Era otro tipo de golpe",
   "intentDrain": "Si no lo desviás: −{n} Aliento",
-  "@intentDrain": {"placeholders": {"n": {"type": "int"}}},
+  "@intentDrain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "intentFreeze": "Si no lo desviás: robás {n} menos",
-  "@intentFreeze": {"placeholders": {"n": {"type": "int"}}},
+  "@intentFreeze": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "intentWear": "Cada golpe gasta tu Guardia",
   "previewWear": "⚠ cada golpe gasta tu Guardia: cubre {n} de {hits}",
-  "@previewWear": {"placeholders": {"n": {"type": "int"}, "hits": {"type": "int"}}},
+  "@previewWear": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "hits": {
+        "type": "int"
+      }
+    }
+  },
   "breathDrained": "Repique",
   "breathDrainedDetail": "−{n} Aliento el próximo turno",
-  "@breathDrainedDetail": {"placeholders": {"n": {"type": "int"}}},
+  "@breathDrainedDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "handFrozen": "Escarcha",
   "handFrozenDetail": "Robás {n} carta menos",
-  "@handFrozenDetail": {"placeholders": {"n": {"type": "int"}}},
+  "@handFrozenDetail": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "previewThorns": "Espinas: te quita {n}",
-  "@previewThorns": {"placeholders": {"n": {"type": "int"}}},
+  "@previewThorns": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "previewGuardMiss": "Esquiva su guardia",
   "previewGuardHit": "Su guardia lo frena",
   "previewCovers": "✓ cubre su golpe",
   "previewHalfCover": "⚠ su golpe es {height}: cubre la mitad",
-  "@previewHalfCover": { "placeholders": { "height": { "type": "String" } } },
+  "@previewHalfCover": {
+    "placeholders": {
+      "height": {
+        "type": "String"
+      }
+    }
+  },
   "realmLabel": "Reino",
   "breathTotal": "{n} de aliento",
-  "@breathTotal": {"placeholders": {"n": {"type": "int"}}},
+  "@breathTotal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "breathToNext": "{n} para el próximo reino",
-  "@breathToNext": {"placeholders": {"n": {"type": "int"}}},
+  "@breathToNext": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "breathMax": "Reino más alto",
   "breathEarned": "+{n} de aliento para la escuela",
-  "@breathEarned": {"placeholders": {"n": {"type": "int"}}},
+  "@breathEarned": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "breathEarnedHint": "Gane o caiga, cada discípulo deja su aliento.",
   "realmUp": "La escuela sube de reino",
   "realmOpened": "Se abrió",
   "realmLocked": "Cerrado",
   "realmNeeds": "Con {n} de aliento",
-  "@realmNeeds": {"placeholders": {"n": {"type": "int"}}},
+  "@realmNeeds": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "registryTabCultivation": "Cultivo",
   "registryHitos": "Hitos",
   "hitosSummary": "Cada hito se cumple una vez por partida y deja aliento a la escuela.",
   "hitoNew": "NUEVO",
   "hitoBreath": "+{n} 气",
-  "@hitoBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@hitoBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lootTitle": "Botín",
   "lootOpenHint": "Tocá el cofre para abrirlo",
   "lootKindCards": "Pergaminos",
@@ -1244,34 +2381,103 @@
   "lootKindTalisman": "Talismán",
   "lootHintCards": "Sumá una técnica a tu mazo o aprendé la forma. Un mazo chico es más predecible.",
   "lootHintJade": "{n} de jade para el mercader del camino.",
-  "@lootHintJade": {"placeholders": {"n": {"type": "int"}}},
+  "@lootHintJade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lootHintLotus": "{n} semillas que vuelven con vos a la escuela, aunque caigas. Abren puntos del árbol de meridianos.",
-  "@lootHintLotus": {"placeholders": {"n": {"type": "int"}}},
+  "@lootHintLotus": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lootHintUpgrade": "Elegí una carta: gana +{n} para toda la subida.",
-  "@lootHintUpgrade": {"placeholders": {"n": {"type": "int"}}},
+  "@lootHintUpgrade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lootHintTea": "Recuperás {n} de Vida.",
-  "@lootHintTea": {"placeholders": {"n": {"type": "int"}}},
+  "@lootHintTea": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lootHintTalisman": "Elegí uno: vale para toda la subida.",
   "lootTake": "Tomar",
   "lootDrink": "Beber",
   "lootTemper": "Templar",
   "lootReroll": "Volver a tirar ({n})",
-  "@lootReroll": {"placeholders": {"n": {"type": "int"}}},
+  "@lootReroll": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "lotusGained": "+{n} de loto",
-  "@lotusGained": {"placeholders": {"n": {"type": "int"}}},
+  "@lotusGained": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "legacyTitle": "Legado",
   "legacyHint": "El discípulo nº {n} te dejó algo para el camino. Elegí una herencia.",
-  "@legacyHint": { "placeholders": { "n": { "type": "int" } } },
+  "@legacyHint": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "legacyCard": "Su carta",
   "legacyCardUp": "{card} +{n}",
-  "@legacyCardUp": { "placeholders": { "card": { "type": "String" }, "n": { "type": "int" } } },
+  "@legacyCardUp": {
+    "placeholders": {
+      "card": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "legacyStat": "Lo que alcanzó",
   "legacyHp": "+{n} de Vida máxima",
-  "@legacyHp": { "placeholders": { "n": { "type": "int" } } },
+  "@legacyHp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "legacyJade": "+{n} de jade",
-  "@legacyJade": { "placeholders": { "n": { "type": "int" } } },
+  "@legacyJade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "legacyGained": "Heredado: {what}",
-  "@legacyGained": { "placeholders": { "what": { "type": "String" } } },
+  "@legacyGained": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      }
+    }
+  },
   "talismanStartTitle": "Don de la escuela",
   "talismanStartHint": "Los meridianos te acompañan: elegí un talismán para esta subida.",
   "stageLootTitle": "Botín de la etapa",
@@ -1282,159 +2488,519 @@
   "meridiansButton": "Meridianos",
   "meridiansHint": "Cada subida trae semillas de loto, ganes o caigas. Con ellas la escuela abre puntos que ayudan a todos los discípulos que vienen.",
   "meridiansBalance": "{n} semillas",
-  "@meridiansBalance": {"placeholders": {"n": {"type": "int"}}},
+  "@meridiansBalance": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "meridiansRealmGifts": "Dones del reino",
   "meridiansRealmGiftsHint": "Cada reino del cultivo regala un don, sin gastar loto.",
   "meridianBranchBody": "Cuerpo",
   "meridianBranchSpirit": "Espíritu",
   "meridianBranchTechnique": "Técnica",
   "meridianOpen": "Abrir punto · {n}",
-  "@meridianOpen": {"placeholders": {"n": {"type": "int"}}},
+  "@meridianOpen": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "meridianOpened": "Abierto",
   "meridianNeedsRealm": "Requiere {realm}",
-  "@meridianNeedsRealm": {"placeholders": {"realm": {"type": "String"}}},
+  "@meridianNeedsRealm": {
+    "placeholders": {
+      "realm": {
+        "type": "String"
+      }
+    }
+  },
   "meridianNeedsPrev": "Primero abrí el punto anterior",
   "meridianNeedsLotus": "Faltan {n} semillas",
-  "@meridianNeedsLotus": {"placeholders": {"n": {"type": "int"}}},
+  "@meridianNeedsLotus": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "meridianNextRun": "Vale desde la próxima subida.",
   "bonusMaxHp": "+{n} de Vida máxima",
-  "@bonusMaxHp": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusMaxHp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusFountainHeal": "La fuente cura {n} más",
-  "@bonusFountainHeal": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusFountainHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusWinHeal": "Curás {n} al ganar cada combate",
-  "@bonusWinHeal": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusWinHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusStructure": "+{n} de Estructura en cada combate",
-  "@bonusStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusStartJade": "Empezás con {n} de jade",
-  "@bonusStartJade": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusStartJade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusUpgradedStarters": "{n, plural, =1{Una carta inicial empieza templada} other{{n} cartas iniciales empiezan templadas}}",
-  "@bonusUpgradedStarters": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusUpgradedStarters": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusStartTalisman": "Elegís un talismán al empezar",
   "bonusMerchantDiscount": "El mercader cobra {n}% menos",
-  "@bonusMerchantDiscount": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusMerchantDiscount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusRewardChoices": "+{n} carta para elegir en los pergaminos",
-  "@bonusRewardChoices": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusRewardChoices": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusTalismanChoices": "+{n} talismán para elegir en el élite",
-  "@bonusTalismanChoices": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusTalismanChoices": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusRerolls": "{n, plural, =1{Podés volver a tirar los pergaminos una vez por subida} other{Podés volver a tirar los pergaminos {n} veces por subida}}",
-  "@bonusRerolls": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusRerolls": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusLotusPct": "+{n}% de semillas de loto",
-  "@bonusLotusPct": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusLotusPct": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusFirstTurnBreath": "+{n} de Aliento en el primer turno",
-  "@bonusFirstTurnBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusFirstTurnBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusBreathes": "+{n} carga de Respirar al empezar",
-  "@bonusBreathes": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusBreathes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusWeaponLevel": "{n, plural, =1{Las armas llegan con un nivel de temple más} other{Las armas llegan con {n} niveles de temple más}}",
-  "@bonusWeaponLevel": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusWeaponLevel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusTeaHeal": "El té cura {n} más",
-  "@bonusTeaHeal": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusTeaHeal": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusStageHealPct": "Al pasar de etapa curás {n}% más de lo que falta",
-  "@bonusStageHealPct": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusStageHealPct": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusHandSize": "Robás {n} carta más cada turno",
-  "@bonusHandSize": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusHandSize": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusTurnBreath": "+{n} de Aliento en cada turno",
-  "@bonusTurnBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusTurnBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusRetain": "Podés guardar {n} carta más al terminar el turno",
-  "@bonusRetain": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusRetain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusFirstStrike": "El primer ataque de cada turno hace +{n} de daño",
-  "@bonusFirstStrike": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusFirstStrike": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusChain": "Cada ataque hace +{n} de daño por cada ataque anterior del turno",
-  "@bonusChain": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusChain": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusEnemyHp": "Los rivales empiezan con {n} de Vida menos",
-  "@bonusEnemyHp": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusEnemyHp": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "bonusEnemyStructure": "Los rivales empiezan con {n} de Estructura menos",
-  "@bonusEnemyStructure": {"placeholders": {"n": {"type": "int"}}},
+  "@bonusEnemyStructure": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "meridianChoice": "Elegí uno de los dos: el otro se cierra para siempre",
   "meridianChosenOther": "Elegiste el otro punto",
   "meridianOr": "o",
   "resultLotus": "+{n} semillas de loto · la escuela tiene {total}",
-  "@resultLotus": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
+  "@resultLotus": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "resultOffering": "{jade} de jade sobrante, ofrendado a la escuela: +{n}",
-  "@resultOffering": {"placeholders": {"jade": {"type": "int"}, "n": {"type": "int"}}},
+  "@resultOffering": {
+    "placeholders": {
+      "jade": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "resultToMeridians": "Abrir meridianos",
   "schoolButton": "Restaurar la escuela",
   "schoolTitle": "La escuela",
   "schoolHint": "El jade que sobra de cada subida, ganes o caigas, queda en la escuela. Con él se restauran los edificios, y cada nivel ayuda a todos los discípulos que vienen.",
   "schoolLevel": "Nivel {n} de {max}",
-  "@schoolLevel": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@schoolLevel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "schoolRuined": "En ruinas",
   "schoolRestore": "Restaurar · {n}",
-  "@schoolRestore": {"placeholders": {"n": {"type": "int"}}},
+  "@schoolRestore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "schoolNeedsJade": "Faltan {n} de jade",
-  "@schoolNeedsJade": {"placeholders": {"n": {"type": "int"}}},
+  "@schoolNeedsJade": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "schoolDone": "Restaurado del todo",
   "schoolNext": "Próximo nivel",
   "schoolGives": "Ya da",
   "schoolProgress": "{n} de {max} niveles restaurados",
-  "@schoolProgress": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@schoolProgress": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "resultSchoolJade": "{jade} de jade sobrante queda en la escuela para restaurarla",
-  "@resultSchoolJade": {"placeholders": {"jade": {"type": "int"}}},
+  "@resultSchoolJade": {
+    "placeholders": {
+      "jade": {
+        "type": "int"
+      }
+    }
+  },
   "cinematicSkip": "Tocá para saltar",
   "introBoss": "Guardián de la etapa",
   "introElite": "Élite del camino",
   "introEscort": "Élite con escolta: {name}",
-  "@introEscort": { "placeholders": { "name": { "type": "String" } } },
+  "@introEscort": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "menuPlay": "Jugar",
   "menuPlaySubtitle": "{n, plural, =0{Tres partidas, cada una con su dificultad} =1{1 partida guardada} other{{n} partidas guardadas}}",
-  "@menuPlaySubtitle": {"placeholders": {"n": {"type": "int"}}},
+  "@menuPlaySubtitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "slotsTitle": "Partidas",
   "slotsSubtitle": "Cada partida tiene su escuela, su registro y una dificultad fija.",
   "slotsChange": "Cambiar de partida",
   "slotName": "Partida {n}",
-  "@slotName": {"placeholders": {"n": {"type": "int"}}},
+  "@slotName": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "slotNew": "Nueva partida",
   "slotNewHint": "Elegís la dificultad una vez y queda para toda la partida.",
   "slotAscents": "{n, plural, =0{sin subidas} =1{1 subida} other{{n} subidas}}{wins, plural, =0{} =1{ · 1 cumbre} other{ · {wins} cumbres}}",
-  "@slotAscents": {"placeholders": {"n": {"type": "int"}, "wins": {"type": "int"}}},
+  "@slotAscents": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "wins": {
+        "type": "int"
+      }
+    }
+  },
   "slotClimbing": "Subiendo: {stage}, sala {floor}",
-  "@slotClimbing": {"placeholders": {"stage": {"type": "String"}, "floor": {"type": "int"}}},
+  "@slotClimbing": {
+    "placeholders": {
+      "stage": {
+        "type": "String"
+      },
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
   "slotResting": "En la escuela, sin subida en curso",
   "slotOptions": "Opciones de la partida",
   "slotRestart": "Empezar de cero",
   "slotDelete": "Borrar partida",
   "slotDeleteTitle": "¿Borrar la Partida {n}?",
-  "@slotDeleteTitle": {"placeholders": {"n": {"type": "int"}}},
+  "@slotDeleteTitle": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "slotDeleteBody": "Se pierde todo lo de esta partida: discípulos, registro, lotos, meridianos y la subida en curso. Las lecciones y el sonido no se tocan.",
   "slotDeleteOk": "Borrar",
   "slotDeleteSureTitle": "¿Seguro?",
   "slotDeleteSureBody": "La Partida {n} desaparece para siempre. No se puede deshacer.",
-  "@slotDeleteSureBody": {"placeholders": {"n": {"type": "int"}}},
+  "@slotDeleteSureBody": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "slotDeleteSureOk": "Sí, borrar para siempre",
   "picoNone": "Sin Pico",
   "ghostName": "Discípulo Perdido nº {n}",
-  "@ghostName": {"placeholders": {"n": {"type": "int"}}},
+  "@ghostName": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "ghostIntro": "Fui el nº {n}. Caí en la sala {floor} y la niebla no me deja bajar.",
-  "@ghostIntro": {"placeholders": {"n": {"type": "int"}, "floor": {"type": "int"}}},
+  "@ghostIntro": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
   "ghostIntroPath": "Fui el nº {n}, mi camino era {path}. Caí en la sala {floor} y la niebla no me deja bajar.",
-  "@ghostIntroPath": {"placeholders": {"n": {"type": "int"}, "path": {"type": "String"}, "floor": {"type": "int"}}},
+  "@ghostIntroPath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "path": {
+        "type": "String"
+      },
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
   "ghostRank": "Caído de la escuela",
   "ghostReply": "Vine a llevarte de vuelta a la escuela.",
   "ghostDrop": "El nº {n} te deja su carta",
-  "@ghostDrop": {"placeholders": {"n": {"type": "int"}}},
+  "@ghostDrop": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "schoolLastFallen": "Último caído: nº {n}",
-  "@schoolLastFallen": {"placeholders": {"n": {"type": "int"}}},
+  "@schoolLastFallen": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "schoolFellTo": "{enemy} · sala {floor}",
-  "@schoolFellTo": {"placeholders": {"enemy": {"type": "String"}, "floor": {"type": "int"}}},
+  "@schoolFellTo": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      },
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
   "schoolFellAt": "Cayó en la sala {floor}",
-  "@schoolFellAt": {"placeholders": {"floor": {"type": "int"}}},
+  "@schoolFellAt": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
   "schoolGhostWaits": "Su cinta te espera",
   "schoolNoFallen": "Nadie cayó todavía",
   "schoolNoFallenSub": "La escuela entera te mira subir",
   "schoolNextHito": "Hito · +{breath} aliento",
-  "@schoolNextHito": {"placeholders": {"breath": {"type": "int"}}},
+  "@schoolNextHito": {
+    "placeholders": {
+      "breath": {
+        "type": "int"
+      }
+    }
+  },
   "schoolAllHitos": "Todos los hitos cumplidos",
   "schoolHitoBest": "{name} · mejor {have}/{need}",
-  "@schoolHitoBest": {"placeholders": {"name": {"type": "String"}, "have": {"type": "int"}, "need": {"type": "int"}}},
+  "@schoolHitoBest": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "have": {
+        "type": "int"
+      },
+      "need": {
+        "type": "int"
+      }
+    }
+  },
   "effFrom": "Desde {name}: {bonus}",
-  "@effFrom": {"placeholders": {"name": {"type": "String"}, "bonus": {"type": "String"}}},
+  "@effFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "bonus": {
+        "type": "String"
+      }
+    }
+  },
   "chainedTag": "Encadena",
   "chainedFloat": "¡Cadena!",
   "talEffChainBreath": "Cada carta que encadena desde su postura da +{n} de Aliento.",
-  "@talEffChainBreath": {"placeholders": {"n": {"type": "int"}}},
+  "@talEffChainBreath": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "circleTag": "Cierra el círculo",
   "circleFloat": "¡Círculo cerrado!",
   "circleSub": "+{breath} de Aliento · robás {draw}",
-  "@circleSub": {"placeholders": {"breath": {"type": "int"}, "draw": {"type": "int"}}},
+  "@circleSub": {
+    "placeholders": {
+      "breath": {
+        "type": "int"
+      },
+      "draw": {
+        "type": "int"
+      }
+    }
+  },
   "chestPage": "Entre el botín, una página suelta.",
   "chestPageGo": "Guardarla y ver el botín",
   "registryChronicle": "Crónica",
@@ -1442,7 +3008,16 @@
   "chronicleSealed": "Todavía no lo cruzaste.",
   "chronicleLost": "Sin etapa",
   "chronicleCount": "Vencido {wins} · Te venció {falls}",
-  "@chronicleCount": {"placeholders": {"wins": {"type": "int"}, "falls": {"type": "int"}}},
+  "@chronicleCount": {
+    "placeholders": {
+      "wins": {
+        "type": "int"
+      },
+      "falls": {
+        "type": "int"
+      }
+    }
+  },
   "glossTitle": "Glosario",
   "glossRelated": "Ver también",
   "glossCardHint": "Mantené apretada una carta para leerla",
@@ -1476,10 +3051,25 @@
   "termFlow": "Flujo",
   "glossFlow": "Tu ritmo en la pelea, de 0 a 3. Sube al encadenar, desviar y cerrar formas; baja si un golpe te entra sin Guardia o terminás el turno sin jugar. Con 1, tus ataques pegan +1; con 2, robás una carta más; con 3, también un Aliento más y podés gastarlo entero en la Técnica del Camino.",
   "flowLevel": "Flujo {level} de {max}",
-  "@flowLevel": {"placeholders": {"level": {"type": "int"}, "max": {"type": "int"}}},
+  "@flowLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "flowUp": "Flujo {level}",
   "flowMaxSub": "Técnica del Camino lista",
-  "@flowUp": {"placeholders": {"level": {"type": "int"}}},
+  "@flowUp": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
   "termRetain": "Retener",
   "termExhaust": "Agotar",
   "termForm": "Forma",
@@ -1494,20 +3084,77 @@
   "masteryTitle": "Maestría de los caminos",
   "masteryHint": "Cada camino sube de nivel con las peleas que ganás con él: las élites, los jefes y la cumbre dan más. Cada nivel abre algo de ese camino para las próximas subidas.",
   "masteryLevel": "Nivel {n} de {max}",
-  "@masteryLevel": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@masteryLevel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "masteryXp": "{xp} de {next} de experiencia",
-  "@masteryXp": {"placeholders": {"xp": {"type": "int"}, "next": {"type": "int"}}},
+  "@masteryXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
   "masteryFull": "Maestría completa",
   "masteryAwakening": "Despertar {name}",
-  "@masteryAwakening": {"placeholders": {"name": {"type": "String"}}},
+  "@masteryAwakening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "masteryWeapon": "{name} nivel 3",
-  "@masteryWeapon": {"placeholders": {"name": {"type": "String"}}},
+  "@masteryWeapon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "masteryShrine": "Maestría {n}/{max}",
-  "@masteryShrine": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@masteryShrine": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "masteryGained": "{path}: +{xp} de maestría · nivel {n}",
-  "@masteryGained": {"placeholders": {"path": {"type": "String"}, "xp": {"type": "int"}, "n": {"type": "int"}}},
+  "@masteryGained": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "xp": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "masteryUp": "Se abre: {list}",
-  "@masteryUp": {"placeholders": {"list": {"type": "String"}}},
+  "@masteryUp": {
+    "placeholders": {
+      "list": {
+        "type": "String"
+      }
+    }
+  },
   "introOk": "Entendido",
   "introNew": "Nuevo",
   "introHelp": "Cómo funciona",
@@ -1533,22 +3180,125 @@
   "introProgress3": "Ganar con cada camino cuenta su propio final.",
   "progressTitle": "Camino recorrido",
   "progressTotal": "{pct}% del camino",
-  "@progressTotal": {"placeholders": {"pct": {"type": "int"}}},
+  "@progressTotal": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "progressRealm": "Cultivo",
   "progressRealmSub": "{name} · reino {n} de {max}",
-  "@progressRealmSub": {"placeholders": {"name": {"type": "String"}, "n": {"type": "int"}, "max": {"type": "int"}}},
+  "@progressRealmSub": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "progressMeridiansSub": "{n} de {max} puntos abiertos",
-  "@progressMeridiansSub": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@progressMeridiansSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "progressMasterySub": "{n} de {max} niveles entre los tres caminos",
-  "@progressMasterySub": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@progressMasterySub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "progressSummits": "Cumbres",
   "progressSummitsSub": "{n} de {max} caminos llegaron a la cumbre",
-  "@progressSummitsSub": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@progressSummitsSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "progressPicos": "Picos",
   "progressPicosSub": "Pico {n} de {max} abierto",
-  "@progressPicosSub": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}},
+  "@progressPicosSub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "progressPicosNone": "Se abren al ganar en Normal",
   "progressStory": "Historia",
   "progressStorySub": "{n} de {max} pergaminos",
-  "@progressStorySub": {"placeholders": {"n": {"type": "int"}, "max": {"type": "int"}}}
+  "@progressStorySub": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "storyNew": "Historia",
+  "storyTitle": "Historia de {who}",
+  "@storyTitle": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "storyCount": "{n} de {max}",
+  "@storyCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "storyListen": "Escuchar a {who}",
+  "@storyListen": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "storyDone": "Ya te contó todo.",
+  "storyWaitAscent": "Sigue contando después de tu próxima subida.",
+  "storyWaitLevel": "Sigue contando con el edificio en nivel {level}.",
+  "@storyWaitLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "storyWaitSummit": "El último capítulo lo cuenta después de que hagas cumbre.",
+  "recapWho": "El maestro Song"
 }

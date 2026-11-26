@@ -65,11 +65,11 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
 1. **Un misterio central:** por qué duerme el dragón y quién fue el primer discípulo.
    - Se revela con los sueños (10), las páginas (12) y los capítulos de la escuela.
    - Cada revelación cambia algo de la montaña: un enemigo, un evento, el diálogo del jefe.
-2. **Hilos de Ming y Tie** (ya tienen retrato): 5 capítulos cada uno, ligados a su edificio.
+2. **Hilos de Ming y Tie** (ya tienen retrato): 5 capítulos cada uno, ligados a su edificio. ✅ 26/11.
 3. **Finales escalonados:**
    - Final de camino al ganar con cada uno.
    - **Final verdadero**: los 3 finales + Pico 5 + la escuela restaurada, con un jefe extra.
-4. **Voces:** el maestro comenta la subida anterior y cada jefe tiene una línea al empezar y otra al caer.
+4. **Voces:** el maestro comenta la subida anterior y cada jefe tiene una línea al empezar y otra al caer. ✅ 26/11 (las de los jefes ya existían).
 
 ## Fase 4 — Picos con reglas y retención
 1. **Picos (1–10) con reglas, no solo números:** niebla, aire fino, campanas, élites con dos preguntas, jefe con una fase extra.

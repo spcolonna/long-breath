@@ -47,6 +47,12 @@ class ContentText {
   String? enemyLine(String id, String field) =>
       has('enemies', id, field) ? _get('enemies', id, field) : null;
 
+  /// Lo que dice el maestro de la última subida (ver `masterRecapKey`).
+  String masterRecap(String key, {int floor = 0, String enemy = ''}) =>
+      _get('masterRecap', key)
+          .replaceAll('{floor}', '$floor')
+          .replaceAll('{enemy}', enemy);
+
   String intent(String key) => _get('intents', key);
   String stage(String id) => _get('stages', id);
 

@@ -1,4 +1,5 @@
 import 'threads.dart';
+import 'school_story.dart';
 import '../model/enums.dart';
 
 /// Una subida terminada, tal como queda en el registro de la escuela: quién
@@ -209,6 +210,7 @@ const loreOrder = [
   ...dreamOrder,
   'master_name',
   ...threadLore,
+  ...schoolStoryLore,
   ...pageLore,
 ];
 

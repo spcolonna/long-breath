@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/run/ascent.dart';
 import '../../domain/run/feats.dart';
+import '../../domain/run/school_story.dart';
 import '../../l10n/app_localizations.dart';
 import '../feel.dart';
 import '../providers.dart';
@@ -99,6 +100,89 @@ double auraLevel(WidgetRef ref) {
   final steps = c.def.realms.length - 1;
   if (steps <= 0) return 0;
   return math.min(1, (c.realm + (c.isMax ? 0 : c.progress)) / steps);
+}
+
+/// El maestro comenta la última subida: un globo chico arriba del
+/// discípulo (se cierra al tocarlo hasta la próxima vez que se entra).
+class MasterRecap extends ConsumerStatefulWidget {
+  const MasterRecap({super.key});
+
+  @override
+  ConsumerState<MasterRecap> createState() => _MasterRecapState();
+}
+
+class _MasterRecapState extends ConsumerState<MasterRecap> {
+  bool _closed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final ascents = ref.watch(ascentsProvider).value;
+    final a = ascents == null || ascents.isEmpty ? null : ascents.last;
+    final text = ref.watch(textProvider);
+    final data = ref.watch(dataProvider);
+    final line = a == null
+        ? null
+        : text.masterRecap(
+            masterRecapKey(
+              fell: a.fell,
+              stage: a.stage,
+              n: a.n,
+              enemy: a.enemy,
+              ghost: a.ghost != null,
+              boss: data.enemies[a.enemy]?.rank == EnemyRank.boss,
+            ),
+            floor: a.floor,
+            enemy: a.enemy == null ? '' : text.enemy(a.enemy!),
+          );
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 400),
+      child: line == null || _closed
+          ? const SizedBox.shrink()
+          : Semantics(
+              button: true,
+              label: '${t.recapWho}: $line',
+              child: GestureDetector(
+                key: ValueKey(a!.n),
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  Haptics.selectionClick();
+                  setState(() => _closed = true);
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.fromLTRB(6, 5, 10, 5),
+                  decoration: BoxDecoration(
+                    color: Palette.surface.withValues(alpha: 0.94),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Palette.gold.withValues(alpha: 0.5),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const InkSeal(hanzi: '师', color: Palette.gold, size: 28),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          line,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12.5,
+                            height: 1.2,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
 }
 
 /// La memoria de la escuela, debajo del discípulo: el último que cayó
