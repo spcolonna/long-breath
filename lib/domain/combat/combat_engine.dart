@@ -4,6 +4,7 @@ import '../model/awakening_def.dart';
 import '../model/card_def.dart';
 import '../model/enemy_def.dart';
 import '../model/enums.dart';
+import '../model/room.dart';
 import '../model/form_def.dart';
 import '../model/game_balance.dart';
 import '../model/game_data.dart';
@@ -111,9 +112,17 @@ class IntentView {
     required this.punishIfSameStance,
     this.stolen = 0,
     this.guardBlocks,
+    this.hidden = false,
+    this.reaction,
   });
 
   final IntentDef intent;
+
+  /// Niebla: no se sabe qué va a hacer.
+  final bool hidden;
+
+  /// Cambió de intención por una reacción (null: sigue su ciclo).
+  final Reaction? reaction;
 
   /// Tipo que frenaría la guardia (resuelve la guardia espejo).
   final CardType? guardBlocks;
@@ -166,6 +175,9 @@ class CombatEngine {
     // Rivales cuya historia ya se conoce: arrancan dudando.
     Set<String> revealed = const {},
     int revealedPct = 100,
+    // Condición de la sala y reto opcional (peleas comunes).
+    RoomRule? room,
+    Challenge? challenge,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -288,6 +300,17 @@ class CombatEngine {
       retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,
       awakened: aw,
       style: style,
+      trial: room == null && challenge == null
+          ? Trial.none
+          : Trial(
+              room: room,
+              challenge: challenge,
+              startHp: playerHp,
+              swiftTurns: b.rooms.swiftTurns,
+              bellEvery: b.rooms.bellEvery,
+              bellDamage: b.rooms.bellDamageAt(stage),
+              windDiscount: b.rooms.windDiscount,
+            ),
     );
     final events = <CombatEvent>[
       for (final id in talismans)
@@ -368,6 +391,7 @@ class CombatEngine {
         _nextWave(d, events);
     }
     _settle(d, events);
+    _watchChallenge(d, events);
     return CombatResult(d.freeze(), events);
   }
 
@@ -551,8 +575,23 @@ class CombatEngine {
     s.player.stance,
     (uid != null && s.retained.contains(uid) ? s.retainedDiscount : 0) +
         _firstStrikeDiscount(def, s.attacksThisTurn, s.awakened) +
-        _firstCardDiscount(s.talismans, s.cardsThisTurn, s.weaponEffect),
+        _firstCardDiscount(s.talismans, s.cardsThisTurn, s.weaponEffect) +
+        windDiscount(s.trial, def),
   );
+
+  /// Viento de altura: las patadas cuestan menos.
+  static int windDiscount(Trial t, CardDef def) =>
+      t.room == RoomRule.wind && def.type == CardType.kick
+      ? t.windDiscount
+      : 0;
+
+  /// Turnos que faltan para que repique la campana (0: al terminar este
+  /// turno); null si la sala no tiene campana.
+  int? bellIn(CombatState s) {
+    final t = s.trial;
+    if (t.room != RoomRule.bell || t.bellEvery <= 0) return null;
+    return (t.bellEvery - s.turn % t.bellEvery) % t.bellEvery;
+  }
 
   /// Lugar del arma entre los talismanes del combate.
   static const _weaponSlot = '#weapon';
@@ -808,8 +847,11 @@ class CombatEngine {
     );
   }
 
-  IntentDef currentIntent(EnemyCombat e) =>
-      data.enemy(e.id).phases[e.phaseIndex].pattern[e.patternIndex];
+  IntentDef currentIntent(EnemyCombat e) {
+    final def = data.enemy(e.id);
+    final r = e.reaction == null ? null : def.reactions[e.reaction];
+    return r ?? def.phases[e.phaseIndex].pattern[e.patternIndex];
+  }
 
   /// Lo que va a hacer el enemigo apuntado (o el de la posición [index]).
   IntentView intentView(CombatState s, [int? index]) {
@@ -847,6 +889,8 @@ class CombatEngine {
           s.lastTurnEndStance == s.player.stance,
       stolen: e.stolen,
       guardBlocks: intent.mirror ? s.lastAttackType : intent.blocks,
+      hidden: s.trial.room == RoomRule.fog && s.turn.isOdd,
+      reaction: e.reaction,
     );
   }
 
@@ -912,7 +956,8 @@ class CombatEngine {
         d.stance,
         (wasRetained ? d.retainedDiscount : 0) +
             _firstStrikeDiscount(def, d.attacksThisTurn, d.awakened) +
-            _firstCardDiscount(d.talismans, d.cardsThisTurn, d.weaponEffect),
+            _firstCardDiscount(d.talismans, d.cardsThisTurn, d.weaponEffect) +
+            windDiscount(d.trial, def),
       );
     }
     if (d.cardsThisTurn == 0) {
@@ -1186,9 +1231,13 @@ class CombatEngine {
       if (others || d.reserve.isNotEmpty) {
         d.enemyDown = true;
         events.add(EnemyDefeated(e.id));
+        for (var i = 0; i < d.enemies.length; i++) {
+          if (d.enemies[i].hp > 0) _react(d, i, Reaction.allyDown, events);
+        }
         return;
       }
       d.phase = CombatPhase.won;
+      _judgeChallenge(d, finishedOnBreak: e.staggered, events: events);
       events.add(const Victory());
       return;
     }
@@ -1214,6 +1263,7 @@ class CombatEngine {
     e.skipNextAction = true;
     e.staggerEndsTurn = d.turn + 1;
     events.add(const EnemyBroken());
+    _react(d, d.cur, Reaction.broken, events);
     // Despertar del Tigre: desequilibrar roba.
     if (d.awakened.breakDraw > 0) _draw(d, d.awakened.breakDraw, events);
     // Talismán Quiebre: también roba.
@@ -1326,10 +1376,11 @@ class CombatEngine {
     final punishes = d.enemies.any(
       (e) => e.hp > 0 && data.enemy(e.id).sameStancePunishDamage > 0,
     );
-    if (punishes &&
-        d.lastTurnEndStance != null &&
-        d.lastTurnEndStance == d.stance) {
-      d.punishPending = true;
+    final repeated =
+        d.lastTurnEndStance != null && d.lastTurnEndStance == d.stance;
+    if (punishes && repeated) d.punishPending = true;
+    if (repeated && d.trial.challenge == Challenge.noRepeat) {
+      _failChallenge(d, events);
     }
     d.lastTurnEndStance = d.stance;
     d.turnStructureBonus = 0;
@@ -1349,7 +1400,12 @@ class CombatEngine {
       if (d.isOver) return;
       // Con dos en escena, que caiga uno (por un desvío) no frena al otro.
       if (duo) d.enemyDown = false;
+      // Repetiste postura: lo nota para su próxima acción.
+      if (repeated && e.hp > 0) _react(d, i, Reaction.repeat, events);
     }
+    _roles(d, events);
+    _bell(d, events);
+    if (d.isOver) return;
     d.cur = d.target;
     if (duo && d.enemies[d.target].hp == 0) {
       d.target = d.cur = d.enemies.indexWhere((e) => e.hp > 0);
@@ -1358,15 +1414,123 @@ class CombatEngine {
     _startPlayerTurn(d, events);
   }
 
+  /// El rival [i] reacciona a [r] si tiene esa reacción (y no está ya
+  /// reaccionando a otra cosa).
+  void _react(_Draft d, int i, Reaction r, List<CombatEvent> events) {
+    final e = d.enemies[i];
+    if (e.hp == 0 || e.reaction != null) return;
+    if (!data.enemy(e.id).reactions.containsKey(r)) return;
+    e.reaction = r;
+    events.add(EnemyReacted(i, r));
+  }
+
+  /// Roles de grupo: al terminar el turno enemigo, el protector cubre a su
+  /// compañero y el sanador cura al más herido. Desequilibrado no hace nada.
+  void _roles(_Draft d, List<CombatEvent> events) {
+    if (d.enemies.length < 2) return;
+    for (var i = 0; i < d.enemies.length; i++) {
+      final e = d.enemies[i];
+      final def = data.enemy(e.id);
+      if (e.hp == 0 || e.staggered || def.role == null) continue;
+      final allies = [
+        for (var j = 0; j < d.enemies.length; j++)
+          if (j != i && d.enemies[j].hp > 0) j,
+      ];
+      if (allies.isEmpty) continue;
+      switch (def.role!) {
+        case EnemyRole.guardian:
+          for (final j in allies) {
+            d.enemies[j].guard += def.roleValue;
+            events.add(EnemyShielded(i, j, def.roleValue));
+          }
+        case EnemyRole.healer:
+          final pool = [i, ...allies]
+            ..sort((a, b) {
+              final x = d.enemies[a], y = d.enemies[b];
+              return (y.maxHp - y.hp).compareTo(x.maxHp - x.hp);
+            });
+          final j = pool.first;
+          final t = d.enemies[j];
+          final n = math.min(def.roleValue, t.maxHp - t.hp);
+          if (n <= 0) continue;
+          t.hp += n;
+          events.add(EnemyHealedAlly(i, j, n));
+      }
+    }
+  }
+
+  /// Campana: cada tantos turnos repica y golpea a todos. Tu Guardia
+  /// frena el golpe; a ellos no los deja por debajo de 1 de Vida.
+  void _bell(_Draft d, List<CombatEvent> events) {
+    final t = d.trial;
+    if (t.room != RoomRule.bell || t.bellEvery <= 0) return;
+    if (d.turn % t.bellEvery != 0 || t.bellDamage <= 0) return;
+    final blocked = math.min(d.guard, t.bellDamage);
+    final taken = t.bellDamage - blocked;
+    d.hp = math.max(0, d.hp - taken);
+    for (final e in d.enemies) {
+      if (e.hp > 0) e.hp = math.max(1, e.hp - t.bellDamage);
+    }
+    events.add(BellTolled(taken, t.bellDamage));
+    if (d.hp == 0) {
+      d.phase = CombatPhase.lost;
+      events.add(const Defeat());
+    }
+  }
+
+  /// Después de cada acción: los retos que se pierden por el camino.
+  void _watchChallenge(_Draft d, List<CombatEvent> events) {
+    final t = d.trial;
+    if (!t.pending || d.phase == CombatPhase.won) return;
+    final lost = switch (t.challenge!) {
+      Challenge.flawless => d.hp < t.startHp,
+      Challenge.swift => d.turn > t.swiftTurns,
+      _ => false,
+    };
+    if (lost) _failChallenge(d, events);
+  }
+
+  /// El reto ya no se puede cumplir.
+  void _failChallenge(_Draft d, List<CombatEvent> events) {
+    if (!d.trial.pending) return;
+    d.trial = d.trial.copyWith(failed: true);
+    events.add(ChallengeFailed(d.trial.challenge!));
+  }
+
+  /// Al ganar: se cumplió el reto o no.
+  void _judgeChallenge(
+    _Draft d, {
+    required bool finishedOnBreak,
+    required List<CombatEvent> events,
+  }) {
+    final t = d.trial;
+    if (!t.pending) return;
+    final ok = switch (t.challenge!) {
+      Challenge.flawless => d.hp >= t.startHp,
+      Challenge.breakFinish => finishedOnBreak,
+      Challenge.swift => d.turn <= t.swiftTurns,
+      Challenge.noRepeat => true,
+    };
+    if (ok) {
+      d.trial = t.copyWith(met: true);
+      events.add(ChallengeMet(t.challenge!));
+    } else {
+      _failChallenge(d, events);
+    }
+  }
+
   void _enemyAct(_Draft d, List<CombatEvent> events) {
     final e = d.enemy;
     final def = data.enemy(e.id);
     e.guard = 0;
     e.guardBlocks = null;
     final phaseBefore = e.phaseIndex;
+    final reacting = e.reaction != null;
     if (e.skipNextAction) {
       e.skipNextAction = false;
       events.add(const EnemyActionSkipped());
+      // La reacción espera a que se recupere; su ciclo tampoco avanza.
+      if (reacting) return;
     } else {
       final healed = math.min(def.regen, e.maxHp - e.hp);
       if (healed > 0) {
@@ -1402,6 +1566,11 @@ class CombatEngine {
       }
     }
     if (d.isOver) return;
+    // La reacción reemplazó una acción: el ciclo sigue donde estaba.
+    if (reacting) {
+      e.reaction = null;
+      return;
+    }
     // Si cambió de fase durante su acción, la nueva fase arranca en el paso 0.
     if (e.phaseIndex != phaseBefore) return;
     final pattern = def.phases[e.phaseIndex].pattern;
@@ -1680,6 +1849,7 @@ class _EnemyDraft {
     this.fury = 0,
     this.furyStep = 0,
     this.phaseTurn = -1,
+    this.reaction,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -1705,6 +1875,7 @@ class _EnemyDraft {
     fury: e.fury,
     furyStep: e.furyStep,
     phaseTurn: e.phaseTurn,
+    reaction: e.reaction,
   );
 
   final String id;
@@ -1729,6 +1900,7 @@ class _EnemyDraft {
   int fury;
   final int furyStep;
   int phaseTurn;
+  Reaction? reaction;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -1753,6 +1925,7 @@ class _EnemyDraft {
     fury: fury,
     furyStep: furyStep,
     phaseTurn: phaseTurn,
+    reaction: reaction,
   );
 }
 
@@ -1813,6 +1986,7 @@ class _Draft {
     this.drawPenalty = 0,
     this.awakened = AwakeningEffect.none,
     List<int>? retained,
+    this.trial = Trial.none,
   }) : formsCompleted = formsCompleted ?? {},
        retained = retained ?? [],
        reserve = reserve ?? [];
@@ -1873,8 +2047,10 @@ class _Draft {
     drawPenalty: s.drawPenalty,
     awakened: s.awakened,
     retained: [...s.retained],
+    trial: s.trial,
   );
 
+  Trial trial;
   int turn;
   CombatPhase phase;
   final int handSize;
@@ -2003,5 +2179,6 @@ class _Draft {
     counterReady: counterReady,
     counterFree: counterFree,
     style: style,
+    trial: trial,
   );
 }

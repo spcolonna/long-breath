@@ -18,6 +18,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math' as math;
 
+import 'package:long_breath/domain/model/room.dart';
 import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_data.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
@@ -630,6 +631,31 @@ void _report(Map<String, List<RunLog>> logs, GameData data) {
         }(),
     ]);
   }
+
+  print('## Salas y retos (peleas comunes)');
+  table(['perfil', 'con condición', 'con reto', 'retos cumplidos',
+      for (final c in Challenge.values) c.name], [
+    for (final MapEntry(key: p, value: l) in logs.entries)
+      () {
+        final fs = [
+          for (final r in l)
+            for (final f in r.fights)
+              if (f.rank == EnemyRank.common) f,
+        ];
+        final ch = fs.where((f) => f.challenge != null).toList();
+        return [
+          p,
+          pct(fs.where((f) => f.room != null).length, fs.length),
+          pct(ch.length, fs.length),
+          pct(ch.where((f) => f.challengeMet).length, ch.length),
+          for (final c in Challenge.values)
+            () {
+              final x = ch.where((f) => f.challenge == c).toList();
+              return pct(x.where((f) => f.challengeMet).length, x.length);
+            }(),
+        ];
+      }(),
+  ]);
 
   print('## Uso de posturas (cartas jugadas desde cada una)');
   table(['perfil', for (final s in Stance.values) s.name], [

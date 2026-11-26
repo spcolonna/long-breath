@@ -759,6 +759,8 @@ bool _hasChips(EnemyCombat e, EnemyDef def) =>
   IntentView iv,
 ) {
   final i = iv.intent;
+  // Niebla: no se sabe qué hará.
+  if (iv.hidden) return (Icons.cloud_rounded, t.intentHidden, '?');
   final named = i.labelKey == null ? null : text.intent(i.labelKey!);
   return switch (i.kind) {
       IntentKind.attack => (
@@ -796,6 +798,7 @@ bool _hasChips(EnemyCombat e, EnemyDef def) =>
 /// Las reglas extra del golpe: en corto para el globo y enteras para el
 /// pergamino del rival.
 List<(String, String)> _intentExtras(AppLocalizations t, IntentView iv) {
+  if (iv.hidden) return const [];
   final i = iv.intent;
   final attack = i.kind == IntentKind.attack;
   return [
@@ -859,10 +862,43 @@ class _IntentBubble extends ConsumerWidget {
     final (IconData icon, String title, String detail) =
         _intentSummary(t, text, iv);
     final extras = _intentExtras(t, iv);
-    final color = iv.skipped ? Palette.textDim : Palette.lacquer;
+    final color = iv.skipped
+        ? Palette.textDim
+        : iv.hidden
+        ? Palette.sky
+        : Palette.lacquer;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Cambió de intención: lo que hiciste lo hizo reaccionar.
+        if (iv.reaction != null && !iv.hidden && !iv.skipped)
+          Container(
+            margin: const EdgeInsets.only(bottom: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 1.5),
+            decoration: BoxDecoration(
+              color: Palette.lacquer,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.bolt_rounded,
+                  size: 12,
+                  color: Palette.onColor,
+                ),
+                const SizedBox(width: 2),
+                Text(
+                  t.reactionTag,
+                  style: const TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w800,
+                    color: Palette.onColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
         Container(
           padding: const EdgeInsets.fromLTRB(6, 5, 12, 5),
           decoration: BoxDecoration(

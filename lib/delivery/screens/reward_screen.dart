@@ -125,7 +125,11 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                     lotusKey: _lotusKey,
                   ),
                   const SizedBox(height: 8),
-                  _Spoils(jade: _run.jadeGained, lotus: _run.lotusGained),
+                  _Spoils(
+                    jade: _run.jadeGained,
+                    lotus: _run.lotusGained,
+                    challenge: _run.challengeJade,
+                  ),
                   // La sala de pelea paga con su cofre (el premio que
                   // mostraba la puerta).
                   if (_run.currentNode case final id?
@@ -347,10 +351,17 @@ class _Header extends StatelessWidget {
 
 /// Lo que dejó el combate en sí (jade y loto), antes del cofre.
 class _Spoils extends StatelessWidget {
-  const _Spoils({required this.jade, required this.lotus});
+  const _Spoils({
+    required this.jade,
+    required this.lotus,
+    this.challenge = 0,
+  });
 
   final int jade;
   final int lotus;
+
+  /// Jade del reto cumplido (ya está en [jade]).
+  final int challenge;
 
   @override
   Widget build(BuildContext context) {
@@ -397,6 +408,13 @@ class _Spoils extends StatelessWidget {
           ),
         if (lotus > 0)
           chip(1, const LotusSeed(), t.lotusGained(lotus), Palette.blossom),
+        if (challenge > 0)
+          chip(
+            2,
+            const Icon(Icons.star_rounded, size: 18, color: Palette.gold),
+            t.trialSpoils(challenge),
+            Palette.gold,
+          ),
       ],
     );
   }

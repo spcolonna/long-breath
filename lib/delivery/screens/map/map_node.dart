@@ -9,6 +9,7 @@ import '../../../domain/model/game_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../providers.dart';
 import '../../theme.dart';
+import '../../widgets/trial_widgets.dart';
 
 /// Ancho y alto de un lugar (sello + nombre); el centro del sello queda en
 /// [sealCenter].
@@ -204,6 +205,21 @@ class _MapNodeState extends ConsumerState<MapNode>
                       count: 1 + widget.node.waves.length,
                       together: widget.node.together,
                       color: look.color,
+                      dim: !available,
+                    ),
+                  ),
+                // Condición de la sala y reto: del otro lado del sello.
+                if (widget.node.rule != null || widget.node.challenge != null)
+                  Positioned(
+                    top:
+                        sealCenter.dy -
+                        look.size / 2 -
+                        4 +
+                        (available ? -3 - 3 * math.sin(phase) : 0),
+                    left: sealCenter.dx - look.size / 2 - 10,
+                    child: TrialBadges(
+                      rule: widget.node.rule,
+                      challenge: widget.node.challenge,
                       dim: !available,
                     ),
                   ),

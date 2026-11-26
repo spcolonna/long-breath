@@ -1,4 +1,6 @@
+import '../model/enemy_def.dart';
 import '../model/enums.dart';
+import '../model/room.dart';
 import 'combat_action.dart';
 import 'combat_state.dart';
 
@@ -332,4 +334,47 @@ class Countered extends CombatEvent {
 class TechniqueUsed extends CombatEvent {
   const TechniqueUsed(this.style);
   final Style style;
+}
+
+/// El rival [index] cambió de intención: reacciona a [reaction].
+class EnemyReacted extends CombatEvent {
+  const EnemyReacted(this.index, this.reaction);
+  final int index;
+  final Reaction reaction;
+}
+
+/// El protector [from] le dio [amount] de Guardia a [to].
+class EnemyShielded extends CombatEvent {
+  const EnemyShielded(this.from, this.to, this.amount);
+  final int from;
+  final int to;
+  final int amount;
+}
+
+/// El sanador [from] le curó [amount] de Vida a [to].
+class EnemyHealedAlly extends CombatEvent {
+  const EnemyHealedAlly(this.from, this.to, this.amount);
+  final int from;
+  final int to;
+  final int amount;
+}
+
+/// Repicó la campana: te quitó [taken] (tras tu Guardia) y a cada rival
+/// [damage].
+class BellTolled extends CombatEvent {
+  const BellTolled(this.taken, this.damage);
+  final int taken;
+  final int damage;
+}
+
+/// Se cumplió el reto de la pelea.
+class ChallengeMet extends CombatEvent {
+  const ChallengeMet(this.challenge);
+  final Challenge challenge;
+}
+
+/// El reto ya no se puede cumplir.
+class ChallengeFailed extends CombatEvent {
+  const ChallengeFailed(this.challenge);
+  final Challenge challenge;
 }

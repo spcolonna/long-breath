@@ -112,6 +112,27 @@ class EnemyPhase {
   );
 }
 
+/// Lo que hace cambiar de intención a un rival.
+enum Reaction {
+  /// Terminaste dos turnos seguidos en la misma postura.
+  repeat,
+
+  /// Lo desequilibraste (reacciona al recuperarse).
+  broken,
+
+  /// Cayó su compañero de escena.
+  allyDown,
+}
+
+/// Rol de un rival cuando pelea junto a otro.
+enum EnemyRole {
+  /// Al terminar el turno enemigo le da Guardia a su compañero.
+  guardian,
+
+  /// Al terminar el turno enemigo cura al compañero más herido.
+  healer,
+}
+
 class EnemyDef {
   const EnemyDef({
     required this.id,
@@ -131,7 +152,18 @@ class EnemyDef {
     this.steal = 0,
     this.thorns = 0,
     this.regen = 0,
+    this.reactions = const {},
+    this.role,
+    this.roleValue = 0,
   }) : _art = art;
+
+  /// Reacciones: lo que hace en su próxima acción, en lugar de seguir su
+  /// ciclo, cuando pasa algo (ver [Reaction]).
+  final Map<Reaction, IntentDef> reactions;
+
+  /// Rol en un grupo (con alguien más en escena) y cuánto da.
+  final EnemyRole? role;
+  final int roleValue;
 
   final String id;
   final EnemyRank rank;
@@ -195,6 +227,16 @@ class EnemyDef {
       steal: j['steal'] as int? ?? 0,
       thorns: j['thorns'] as int? ?? 0,
       regen: j['regen'] as int? ?? 0,
+      reactions: {
+        for (final e in ((j['reactions'] as Map?) ?? const {}).entries)
+          Reaction.values.byName(e.key as String):
+              IntentDef.fromJson(e.value as Map<String, dynamic>),
+      },
+      role: switch ((j['role'] as Map?)?['kind']) {
+        final String k => EnemyRole.values.byName(k),
+        _ => null,
+      },
+      roleValue: (j['role'] as Map?)?['value'] as int? ?? 0,
     );
   }
 }

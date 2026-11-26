@@ -15,6 +15,7 @@ import '../../domain/model/enemy_def.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/model/form_def.dart';
 import '../../domain/model/game_data.dart';
+import '../../domain/model/room.dart';
 import '../../domain/run/revelations.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
@@ -38,6 +39,7 @@ import '../widgets/card_widget.dart';
 import '../widgets/cinematic.dart';
 import '../widgets/deck_sheet.dart';
 import '../widgets/enemy_scroll.dart';
+import '../widgets/trial_widgets.dart';
 import '../widgets/altitude_bar.dart';
 import '../widgets/enemy_sprite.dart';
 import '../widgets/flow_wind.dart';
@@ -1101,6 +1103,60 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             size: 22,
             icon: Icons.local_fire_department,
           );
+        case EnemyReacted(:final index):
+          Haptics.mediumImpact();
+          _audio.play(Sfx.enemyWindup);
+          _pop(
+            _foe(index).pops,
+            t.reactionTag,
+            Palette.lacquer,
+            size: 18,
+            icon: Icons.bolt_rounded,
+            dy: -40,
+          );
+        case EnemyShielded(:final to, :final amount):
+          _audio.play(Sfx.enemyGuard);
+          _pop(
+            _foe(to).pops,
+            '+$amount',
+            Palette.sky,
+            size: 22,
+            icon: Icons.shield_rounded,
+            dx: -30,
+            dy: -20,
+          );
+        case EnemyHealedAlly(:final to, :final amount):
+          _audio.play(Sfx.heal);
+          _pop(
+            _foe(to).pops,
+            '+$amount',
+            Palette.jade,
+            size: 22,
+            icon: Icons.favorite,
+            dx: -30,
+            dy: -20,
+          );
+        case BellTolled(:final taken, :final damage):
+          Haptics.heavyImpact();
+          _audio.play(Sfx.bellToll);
+          _shake(10);
+          if (taken > 0) {
+            _flashKey++;
+            _pop(_heroPops, '−$taken', Palette.lacquer, size: 28);
+          }
+          for (var i = 0; i < _foes.length; i++) {
+            _pop(_foe(i).pops, '−$damage', Palette.lacquer, size: 24, dy: -10);
+          }
+          _queue.add(
+            _Fx(t.bellTolled, t.bellTolledDetail(taken, damage), Palette.sky),
+          );
+        case ChallengeMet():
+          Haptics.mediumImpact();
+          _audio.play(Sfx.challengeMet);
+          _queue.add(_Fx(t.trialMet, null, Palette.gold));
+        case ChallengeFailed():
+          Haptics.lightImpact();
+          _queue.add(_Fx(t.trialFailed, null, Palette.textDim));
         case EnemyFurious(:final total):
           _pop(
             enemyPops,
@@ -1363,6 +1419,17 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     );
   }
 
+  /// La condición y el reto, en una línea para el cartel del inicio.
+  String? _trialLine(Trial trial) {
+    if (trial.room == null && trial.challenge == null) return null;
+    final text = ref.read(textProvider);
+    return [
+      if (trial.room case final r?)
+        '${text.room(r, 'hanzi')} ${text.room(r, 'name')}',
+      if (trial.challenge case final c?) '★ ${text.challenge(c, 'name')}',
+    ].join('  ·  ');
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen(combatControllerProvider, (prev, next) {
@@ -1474,6 +1541,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
             scene: node?.scene,
             light: node?.light,
             room: _room(live),
+            trial: s.trial,
+            bellIn: engine.bellIn(s),
+            trialLine: _trialLine(s.trial),
             turn: s.turn,
             style: live.tutorial
                 ? null

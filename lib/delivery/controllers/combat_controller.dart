@@ -76,6 +76,7 @@ class CombatController extends Notifier<CombatView?> {
     final runCtl = ref.read(runControllerProvider.notifier);
     final (seed, pack) = runCtl.beginCombat();
     final run = ref.read(runControllerProvider)!;
+    final room = ref.read(runEngineProvider).fightNodeOf(run);
     // El Discípulo Perdido pelea con el camino del caído que lleva.
     final foes = [
       for (final id in pack) id == ghostEnemy ? ghostFoe(run.ghost) : id,
@@ -100,6 +101,8 @@ class CombatController extends Notifier<CombatView?> {
       meta: run.meta,
       revealed: revealedOf(run.known),
       revealedPct: revealedStructurePct,
+      room: room?.rule,
+      challenge: room?.challenge,
     );
     state = CombatView(
       state: r.state,
@@ -254,6 +257,7 @@ class CombatController extends Notifier<CombatView?> {
             Feat.forms: s.formsCompleted.values.fold(0, (a, n) => a + n),
             Feat.deflects: s.deflects,
           },
+          challengeMet: s.trial.met,
         );
     state = null;
   }

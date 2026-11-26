@@ -145,6 +145,7 @@ class RunController extends Notifier<RunState?> {
     int? fledWith,
     String? foe,
     Map<String, int> tally = const {},
+    bool challengeMet = false,
   }) {
     // Quién quedó en pie: en una estancia o un grupo no es el enemigo del
     // nodo (ese es el guardián de la última sala).
@@ -157,6 +158,7 @@ class RunController extends Notifier<RunState?> {
         hp: hp,
         fledWith: fledWith,
         tally: tally,
+        challengeMet: challengeMet,
       ),
       what: won
           ? 'gana el combate'

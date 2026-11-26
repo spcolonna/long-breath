@@ -49,7 +49,9 @@ enum Sfx {
   achievement('achievement', volume: 0.9),
   heal('heal', volume: 0.7),
   talismanTrigger('talisman_trigger', volume: 0.6),
-  weaponTrigger('weapon_trigger', volume: 0.7);
+  weaponTrigger('weapon_trigger', volume: 0.7),
+  bellToll('bell_toll', volume: 0.8),
+  challengeMet('challenge_met', volume: 0.8);
 
   const Sfx(this.id, {this.variants = 1, this.volume = 1});
 

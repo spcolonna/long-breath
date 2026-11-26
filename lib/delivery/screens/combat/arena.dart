@@ -62,7 +62,17 @@ class _Arena extends StatelessWidget {
     required this.slots,
     this.room,
     this.flow = 0,
+    this.trial = Trial.none,
+    this.bellIn,
+    this.trialLine,
   });
+
+  /// Condición de la sala y reto, con la cuenta de la campana.
+  final Trial trial;
+  final int? bellIn;
+
+  /// La condición y el reto en una línea, para el cartel del inicio.
+  final String? trialLine;
 
   /// Flujo del héroe: pétalos y viento que crecen en la escena.
   final int flow;
@@ -265,6 +275,10 @@ class _Arena extends StatelessWidget {
                     color: Palette.text,
                   ),
                 ],
+                if (trial.room != null || trial.challenge != null) ...[
+                  const SizedBox(height: 6),
+                  TrialChip(trial: trial, bellIn: bellIn),
+                ],
                 if (style != null) ...[
                   const SizedBox(height: 6),
                   _StyleChip(style: style!),
@@ -298,7 +312,7 @@ class _Arena extends StatelessWidget {
               child: fx.turnKey == 0
                   ? _Ribbon(
                       title: introTitle,
-                      subtitle: room ?? t.fightStart,
+                      subtitle: trialLine ?? room ?? t.fightStart,
                       delayMs: 250,
                     )
                   : _Ribbon(

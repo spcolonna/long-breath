@@ -3318,5 +3318,51 @@
     }
   },
   "progressTrueReady": "Todo listo: en la próxima subida, algo más espera en la cumbre.",
-  "progressTrueDone": "Lo viste: el dragón duerme sin soñar."
+  "progressTrueDone": "Lo viste: el dragón duerme sin soñar.",
+  "trialChallenge": "Reto: {text} (+{jade} jade)",
+  "@trialChallenge": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      },
+      "jade": {
+        "type": "int"
+      }
+    }
+  },
+  "trialMet": "¡Reto cumplido!",
+  "trialFailed": "Reto perdido",
+  "trialSpoils": "Reto cumplido: +{jade} jade",
+  "@trialSpoils": {
+    "placeholders": {
+      "jade": {
+        "type": "int"
+      }
+    }
+  },
+  "intentHidden": "Oculto en la niebla",
+  "reactionTag": "¡Reacciona!",
+  "bellIn": "Campana en {n}",
+  "@bellIn": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "bellNow": "Repica al terminar",
+  "bellTolled": "¡Campana!",
+  "bellTolledDetail": "−{taken} a vos, −{damage} a cada rival",
+  "@bellTolledDetail": {
+    "placeholders": {
+      "taken": {
+        "type": "int"
+      },
+      "damage": {
+        "type": "int"
+      }
+    }
+  },
+  "allyShielded": "Cubre a su compañero",
+  "allyHealed": "Cura a su compañero"
 }

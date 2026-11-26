@@ -1,4 +1,5 @@
 import '../domain/model/enums.dart';
+import '../domain/model/room.dart';
 
 /// Textos del contenido del juego (cartas, enemigos, etapas…) en un idioma.
 ///
@@ -68,6 +69,13 @@ class ContentText {
           .replaceAll('{enemy}', enemy);
 
   String intent(String key) => _get('intents', key);
+
+  /// Condición de sala ([field]: `name`, `hanzi` o `text`).
+  String room(RoomRule r, String field) => _get('rooms', r.name, field);
+
+  /// Reto de una pelea ([field]: `name` o `text`).
+  String challenge(Challenge c, String field) =>
+      _get('challenges', c.name, field);
   String stage(String id) => _get('stages', id);
 
   /// Lo que se ve al llegar a una etapa.

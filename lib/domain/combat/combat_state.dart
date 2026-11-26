@@ -1,5 +1,7 @@
 import '../model/awakening_def.dart';
+import '../model/enemy_def.dart';
 import '../model/enums.dart';
+import '../model/room.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
 
@@ -89,6 +91,7 @@ class EnemyCombat {
     this.fury = 0,
     this.furyStep = 0,
     this.phaseTurn = -1,
+    this.reaction,
   });
 
   final String id;
@@ -140,6 +143,9 @@ class EnemyCombat {
   /// turno no puede caer).
   final int phaseTurn;
 
+  /// Reacción que reemplaza su próxima acción (null: sigue su ciclo).
+  final Reaction? reaction;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -171,6 +177,7 @@ class EnemyCombat {
         fury: fury,
         furyStep: furyStep,
         phaseTurn: phaseTurn,
+        reaction: reaction,
       );
 }
 
@@ -225,7 +232,11 @@ class CombatState {
     this.counterReady = false,
     this.counterFree = false,
     this.style,
+    this.trial = Trial.none,
   });
+
+  /// Condición de la sala y reto de la pelea (ver `room.dart`).
+  final Trial trial;
 
   final int turn;
   final CombatPhase phase;
@@ -407,6 +418,7 @@ class CombatState {
         counterReady: counterReady ?? this.counterReady,
         counterFree: counterFree ?? this.counterFree,
         style: style ?? this.style,
+        trial: trial,
       );
 
   bool get isOver => phase == CombatPhase.won || phase == CombatPhase.lost;

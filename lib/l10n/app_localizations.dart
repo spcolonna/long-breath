@@ -5955,6 +5955,78 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Lo viste: el dragón duerme sin soñar.'**
   String get progressTrueDone;
+
+  /// No description provided for @trialChallenge.
+  ///
+  /// In es, this message translates to:
+  /// **'Reto: {text} (+{jade} jade)'**
+  String trialChallenge(String text, int jade);
+
+  /// No description provided for @trialMet.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Reto cumplido!'**
+  String get trialMet;
+
+  /// No description provided for @trialFailed.
+  ///
+  /// In es, this message translates to:
+  /// **'Reto perdido'**
+  String get trialFailed;
+
+  /// No description provided for @trialSpoils.
+  ///
+  /// In es, this message translates to:
+  /// **'Reto cumplido: +{jade} jade'**
+  String trialSpoils(int jade);
+
+  /// No description provided for @intentHidden.
+  ///
+  /// In es, this message translates to:
+  /// **'Oculto en la niebla'**
+  String get intentHidden;
+
+  /// No description provided for @reactionTag.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Reacciona!'**
+  String get reactionTag;
+
+  /// No description provided for @bellIn.
+  ///
+  /// In es, this message translates to:
+  /// **'Campana en {n}'**
+  String bellIn(int n);
+
+  /// No description provided for @bellNow.
+  ///
+  /// In es, this message translates to:
+  /// **'Repica al terminar'**
+  String get bellNow;
+
+  /// No description provided for @bellTolled.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Campana!'**
+  String get bellTolled;
+
+  /// No description provided for @bellTolledDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'−{taken} a vos, −{damage} a cada rival'**
+  String bellTolledDetail(int taken, int damage);
+
+  /// No description provided for @allyShielded.
+  ///
+  /// In es, this message translates to:
+  /// **'Cubre a su compañero'**
+  String get allyShielded;
+
+  /// No description provided for @allyHealed.
+  ///
+  /// In es, this message translates to:
+  /// **'Cura a su compañero'**
+  String get allyHealed;
 }
 
 class _AppLocalizationsDelegate

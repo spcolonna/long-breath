@@ -31,6 +31,7 @@ import '../widgets/altitude_bar.dart';
 import 'map/map_node.dart';
 import '../feel.dart';
 import '../widgets/game_icon.dart';
+import '../widgets/trial_widgets.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -795,6 +796,13 @@ class _PickCard extends ConsumerWidget {
                       fontSize: 14,
                       height: 1.25,
                       color: Palette.text,
+                    ),
+                  ),
+                  TrialLines(
+                    rule: n.rule,
+                    challenge: n.challenge,
+                    jade: data.balance.rooms.challengeJadeAt(
+                      ref.watch(runControllerProvider)?.stage ?? 0,
                     ),
                   ),
                 ],

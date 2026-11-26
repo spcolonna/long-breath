@@ -185,6 +185,7 @@ class RunState {
     this.meta = MetaBonus.none,
     this.lotus = 0,
     this.lotusGained = 0,
+    this.challengeJade = 0,
     this.masteryXp = 0,
     this.rewardKind = RewardKind.cards,
     this.rewardAmount = 0,
@@ -343,6 +344,9 @@ class RunState {
   /// Loto ganado en el último combate (para mostrarlo en el botín).
   final int lotusGained;
 
+  /// Jade del reto cumplido en el último combate (ya está en [jadeGained]).
+  final int challengeJade;
+
   /// Experiencia de maestría ganada en la subida (va al camino que tenga al
   /// terminarla).
   final int masteryXp;
@@ -440,6 +444,7 @@ class RunState {
     int? stage,
     int? lotus,
     int? lotusGained,
+    int? challengeJade,
     int? masteryXp,
     RewardKind? rewardKind,
     int? rewardAmount,
@@ -511,6 +516,7 @@ class RunState {
         meta: meta,
         lotus: lotus ?? this.lotus,
         lotusGained: lotusGained ?? this.lotusGained,
+        challengeJade: challengeJade ?? this.challengeJade,
         masteryXp: masteryXp ?? this.masteryXp,
         rewardKind: rewardKind ?? this.rewardKind,
         rewardAmount: rewardAmount ?? this.rewardAmount,
@@ -592,6 +598,7 @@ class RunState {
         'meta': meta.toJson(),
         'lotus': lotus,
         'lotusGained': lotusGained,
+        'challengeJade': challengeJade,
         'masteryXp': masteryXp,
         'rewardKind': rewardKind.name,
         'rewardAmount': rewardAmount,
@@ -690,6 +697,7 @@ class RunState {
         },
         lotus: j['lotus'] as int? ?? 0,
         lotusGained: j['lotusGained'] as int? ?? 0,
+        challengeJade: j['challengeJade'] as int? ?? 0,
         masteryXp: j['masteryXp'] as int? ?? 0,
         rewardKind: switch (j['rewardKind']) {
           final String k => _enumOr(RewardKind.values, k, RewardKind.cards),

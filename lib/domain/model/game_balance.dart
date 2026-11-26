@@ -1,3 +1,4 @@
+import 'room.dart';
 import 'awakening_def.dart';
 import 'cultivation_def.dart';
 import 'enums.dart';
@@ -174,10 +175,16 @@ class MapNodeDef {
     this.scene,
     this.light,
     this.reward,
+    this.rule,
+    this.challenge,
   });
 
   final String id;
   final NodeType type;
+
+  /// Condición de la sala y reto opcional (peleas comunes); null: ninguno.
+  final RoomRule? rule;
+  final Challenge? challenge;
 
   /// Premio que la puerta muestra antes de entrar (salas de pelea comunes);
   /// null: el de siempre (élite, jefe) o mapas viejos.
@@ -202,6 +209,8 @@ class MapNodeDef {
         scene: scene,
         light: light,
         reward: reward,
+        rule: rule,
+        challenge: challenge,
       );
 
   MapNodeDef withReward(RewardKind? reward) => MapNodeDef(
@@ -214,6 +223,24 @@ class MapNodeDef {
         scene: scene,
         light: light,
         reward: reward,
+        rule: rule,
+        challenge: challenge,
+      );
+
+  /// La misma sala con [rule] y [challenge]. Con el puente angosto, los
+  /// rivales vienen de a uno.
+  MapNodeDef withTrial(RoomRule? rule, Challenge? challenge) => MapNodeDef(
+        id: id,
+        type: type,
+        next: next,
+        enemy: enemy,
+        waves: waves,
+        together: together && rule != RoomRule.bridge,
+        scene: scene,
+        light: light,
+        reward: reward,
+        rule: rule,
+        challenge: challenge,
       );
 
   /// El que espera en la sala: el común que encabeza el grupo, el élite o
@@ -263,6 +290,8 @@ class MapNodeDef {
         final String k => RewardKind.values.asNameMap()[k],
         _ => null,
       },
+      rule: RoomRule.parse(j['rule']),
+      challenge: Challenge.parse(j['challenge']),
     );
   }
 
@@ -276,6 +305,8 @@ class MapNodeDef {
         if (scene != null) 'scene': scene,
         if (light != null) 'light': light,
         if (reward != null) 'reward': reward!.name,
+        if (rule != null) 'rule': rule!.name,
+        if (challenge != null) 'challenge': challenge!.name,
       };
 }
 
@@ -704,6 +735,7 @@ class GameBalance {
     this.escortHp = 100,
     this.escortDamage = 100,
     this.breather = BreatherDef.none,
+    this.rooms = RoomsDef.none,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     this.path = const PathRules(),
@@ -850,6 +882,9 @@ class GameBalance {
 
   /// Premio chico entre una oleada y la siguiente.
   final BreatherDef breather;
+
+  /// Condiciones de sala y retos de las peleas comunes.
+  final RoomsDef rooms;
 
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
@@ -1040,6 +1075,7 @@ class GameBalance {
       escortEliteHp: _escort(run, 'eliteHpPct'),
       escortHp: _escort(run, 'hpPct'),
       escortDamage: _escort(run, 'damagePct'),
+      rooms: RoomsDef.fromJson(run['rooms'] as Map<String, dynamic>?),
       breather: switch ((run['packs'] as Map<String, dynamic>?)?['breather']) {
         final Map<String, dynamic> m => BreatherDef.fromJson(m),
         _ => BreatherDef.none,

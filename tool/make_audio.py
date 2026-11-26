@@ -511,6 +511,17 @@ def sfx_heal(v):
     return mix(bell(hz(penta(10)), 0.5, 0.45, 0.25, 2, 1.2), (bell(hz(penta(12)), 0.6, 0.45, 0.3, 2, 1.2), 0.09))
 
 
+def sfx_bell_toll(v):
+    # Campana de templo: golpe grave con eco largo.
+    return room(mix(gong(196, 1.8, 0.9, 0.9), (bell(784, 1.2, 0.35, 0.5, 2.76, 1.4), 0.0),
+                    (thump(60, 0.25, 0.5), 0.0)), 0.2, 0.25)
+
+
+def sfx_challenge_met(v):
+    return mix(arp([7, 9, 12], 0.06, 0.5, bright=1.1, decay=0.3),
+               (bell(hz(penta(14)), 0.7, 0.35, 0.35, 2.5, 1.2), 0.18))
+
+
 def sfx_talisman_trigger(v):
     return mix(bell(hz(penta(13)), 0.5, 0.6, 0.2, 3.5, 2), (woodblock(1800, 0.04, 0.2, 0.008), 0))
 
@@ -544,6 +555,7 @@ SFX = {  # id: (generador, variantes)
     'run_result': (sfx_run_result, 1),
     'tap': (sfx_tap, 1), 'scroll_open': (sfx_scroll_open, 1), 'realm_up': (sfx_realm_up, 1),
     'achievement': (sfx_achievement, 1), 'heal': (sfx_heal, 1),
+    'bell_toll': (sfx_bell_toll, 1), 'challenge_met': (sfx_challenge_met, 1),
     'talisman_trigger': (sfx_talisman_trigger, 1), 'weapon_trigger': (sfx_weapon_trigger, 1),
 }
 

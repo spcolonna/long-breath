@@ -12,6 +12,7 @@ import 'package:long_breath/domain/model/enums.dart';
 import 'package:long_breath/domain/model/game_balance.dart';
 import 'package:long_breath/domain/model/game_data.dart';
 import 'package:long_breath/domain/model/meta_bonus.dart';
+import 'package:long_breath/domain/model/room.dart';
 import 'package:long_breath/domain/run/legacy.dart';
 import 'package:long_breath/domain/run/run_engine.dart';
 import 'package:long_breath/domain/run/run_state.dart';
@@ -227,6 +228,11 @@ class FightLog {
 
   /// Etapa donde fue la pelea (0 = la primera).
   int stage = 0;
+
+  /// Condición de la sala y reto (null: ninguno) y si se cumplió.
+  RoomRule? room;
+  Challenge? challenge;
+  bool challengeMet = false;
   final stanceUse = <Stance, int>{};
 }
 
@@ -320,10 +326,14 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     bool together = false,
     MetaBonus meta = MetaBonus.none,
     String? weapon,
-    int weaponLevel = 1}) {
+    int weaponLevel = 1,
+    RoomRule? room,
+    Challenge? challenge}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length
-    ..stage = stage;
+    ..stage = stage
+    ..room = room
+    ..challenge = challenge;
   var s = engine
       .start(
           deck: deck,
@@ -342,7 +352,9 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           awakenings: awakenings,
           waves: waves,
           together: together,
-          meta: meta)
+          meta: meta,
+          room: room,
+          challenge: challenge)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
@@ -362,6 +374,7 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
   log.hpLost = hp - math.max(0, s.player.hp);
   log.forms = s.formsCompleted.values.fold(0, (a, b) => a + b);
   log.deflects = s.deflects;
+  log.challengeMet = s.trial.met;
   _lastHp = s.player.hp;
   return log;
 }
@@ -436,7 +449,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
             difficulty: r.difficulty, pico: r.pico, maxHp: r.maxHp, forms: r.knownForms,
             awakenings: r.awakenings, stage: r.stage, waves: pack.sublist(1),
             together: runEngine.togetherOf(r), meta: r.meta,
-            weapon: r.weapon, weaponLevel: r.weaponLevel);
+            weapon: r.weapon, weaponLevel: r.weaponLevel,
+            room: runEngine.fightNodeOf(r)?.rule,
+            challenge: runEngine.fightNodeOf(r)?.challenge);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán
@@ -445,7 +460,8 @@ RunLog playRun(GameData data, Bot bot, int seed,
         if (proto && f.won && f.rank == EnemyRank.boss) {
           hp = math.min(r.maxHp, hp + (r.maxHp * bossHeal).round());
         }
-        r = runEngine.finishCombat(r, won: f.won, hp: hp);
+        r = runEngine.finishCombat(r,
+            won: f.won, hp: hp, challengeMet: f.challengeMet);
         // Prototipo de 3 etapas: los jefes intermedios también dejan un
         // talismán (el élite ya lo da el motor de la run).
         if (proto && f.won && withTalismans && f.rank == EnemyRank.boss &&

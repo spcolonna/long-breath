@@ -3789,4 +3789,48 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get progressTrueDone => 'Lo viste: el dragón duerme sin soñar.';
+
+  @override
+  String trialChallenge(String text, int jade) {
+    return 'Reto: $text (+$jade jade)';
+  }
+
+  @override
+  String get trialMet => '¡Reto cumplido!';
+
+  @override
+  String get trialFailed => 'Reto perdido';
+
+  @override
+  String trialSpoils(int jade) {
+    return 'Reto cumplido: +$jade jade';
+  }
+
+  @override
+  String get intentHidden => 'Oculto en la niebla';
+
+  @override
+  String get reactionTag => '¡Reacciona!';
+
+  @override
+  String bellIn(int n) {
+    return 'Campana en $n';
+  }
+
+  @override
+  String get bellNow => 'Repica al terminar';
+
+  @override
+  String get bellTolled => '¡Campana!';
+
+  @override
+  String bellTolledDetail(int taken, int damage) {
+    return '−$taken a vos, −$damage a cada rival';
+  }
+
+  @override
+  String get allyShielded => 'Cubre a su compañero';
+
+  @override
+  String get allyHealed => 'Cura a su compañero';
 }

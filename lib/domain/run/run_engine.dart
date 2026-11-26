@@ -9,6 +9,7 @@ import '../model/event_def.dart';
 import '../model/game_balance.dart';
 import '../model/game_data.dart';
 import '../model/meta_bonus.dart';
+import '../model/room.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'ascent.dart';
@@ -207,7 +208,8 @@ class RunEngine {
       packable: packable,
     );
     r = r.copyWith(rng: rng);
-    final (rewarded, r2) = _assignRewards(r, doors, parent);
+    final (paid, r2) = _assignRewards(r, doors, parent);
+    final rewarded = _assignTrials(r2, paid, depth);
     final ids = [for (final d in rewarded) d.id];
     return r2.copyWith(
       map: [
@@ -220,6 +222,51 @@ class RunEngine {
         ...rewarded,
       ],
     );
+  }
+
+  /// La condición y el reto de cada puerta de pelea común. Usa su propio
+  /// generador (sacado del de la subida, sin avanzarlo) para no cambiar el
+  /// resto de la montaña.
+  List<MapNodeDef> _assignTrials(
+    RunState r,
+    List<MapNodeDef> doors,
+    int depth,
+  ) {
+    final def = data.balance.rooms;
+    if (depth < def.fromDepth) return doors;
+    var rng = Rng.seeded(r.rng.state ^ 0x5A1A + depth * 7919);
+    int roll(int max) {
+      final (v, next) = rng.nextInt(max);
+      rng = next;
+      return v;
+    }
+
+    return [
+      for (final d in doors)
+        if (d.type != NodeType.combat ||
+            d.enemy == null ||
+            data.enemy(d.enemy!).rank != EnemyRank.common)
+          d
+        else
+          () {
+            RoomRule? rule;
+            if (roll(100) < def.ruleChanceAt(r.stage)) {
+              final options = [
+                RoomRule.wind,
+                RoomRule.bell,
+                if (d.waves.isNotEmpty) RoomRule.bridge,
+                // La niebla solo en los caminos con niebla.
+                if (d.light == 'niebla') ...[RoomRule.fog, RoomRule.fog],
+              ];
+              rule = options[roll(options.length)];
+            }
+            Challenge? challenge;
+            if (roll(100) < def.challengeChanceAt(r.stage)) {
+              challenge = Challenge.values[roll(Challenge.values.length)];
+            }
+            return d.withTrial(rule, challenge);
+          }(),
+    ];
   }
 
   /// El premio que muestra cada puerta de pelea común: sin repetir entre
@@ -561,6 +608,12 @@ class RunEngine {
       ? [r.duel!]
       : r.node(r.currentNode!).foes;
 
+  /// La sala del combate actual (null en duelos y en el sueño).
+  MapNodeDef? fightNodeOf(RunState r) =>
+      r.dreamFight || r.duel != null || r.currentNode == null
+      ? null
+      : r.node(r.currentNode!);
+
   /// Si el grupo del combate actual pelea todo junto (no en oleadas).
   bool togetherOf(RunState r) =>
       !r.dreamFight && r.duel == null && r.node(r.currentNode!).together;
@@ -574,6 +627,7 @@ class RunEngine {
     required int hp,
     int? fledWith,
     Map<String, int> tally = const {},
+    bool challengeMet = false,
   }) {
     final boss = _atStageBoss(r);
     final elite = !boss && data.enemy(packOf(r).first).rank == EnemyRank.elite;
@@ -581,9 +635,11 @@ class RunEngine {
     final beaten = won && !fled;
     final flawless = beaten && hp >= r.hp;
     r = r.copyWith(
+      challengeJade: 0,
       feats: addFeats(r.feats, {
         ...tally,
         if (flawless) Feat.flawless: 1,
+        if (beaten && challengeMet) Feat.challenges: 1,
         if (flawless && boss) Feat.flawlessBoss: 1,
         if (beaten && (boss || elite)) Feat.beat(enemyOf(r)): 1,
       }),
@@ -631,12 +687,20 @@ class RunEngine {
       r = r.copyWith(jade: r.jade - lost, jadeGained: -lost);
     } else {
       final (rolled, rngJ) = _rollJade(r);
+      // El reto de la sala, si se cumplió.
+      final bonus = challengeMet ? b.rooms.challengeJadeAt(r.stage) : 0;
       // Cada enemigo de más en el grupo suma jade.
       final jade = rolled +
           b.packJade * (packOf(r).length - 1) +
           talismanSum(r, (e) => e.winJade) +
-          (detour ? b.jadeDetour : 0);
-      r = r.copyWith(jade: r.jade + jade, jadeGained: jade, rng: rngJ);
+          (detour ? b.jadeDetour : 0) +
+          bonus;
+      r = r.copyWith(
+        jade: r.jade + jade,
+        jadeGained: jade,
+        challengeJade: bonus,
+        rng: rngJ,
+      );
     }
     final gained = lotusOf(r, lotusBase);
     r = r.copyWith(

@@ -70,6 +70,13 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Eco del Dragón:** al cruzar el 50% de Vida cambia de fase en el acto y el ciclo empieza desde el paso 0. La intención muestra cuántas acciones faltan para el Aliento del Dragón.
 - **Fase 3 del Dragón (30%):** las escamas vuelven a 2 si tenía menos (evento `ScalesRegrown`); el ciclo pasa a barrido bajo doble y Aliento. Si un golpe cruza los dos umbrales a la vez, entra directo en la fase 3.
 
+- **Reacciones:** algunos comunes cambian su próxima acción si repetís postura, al recuperarse del desequilibrio o si cae su compañero de escena; después siguen su ciclo donde estaba. El globo muestra «¡Reacciona!».
+- **Roles:** con otro en escena, al terminar el turno enemigo el protector le da Guardia a su compañero y el sanador cura al más herido (desequilibrados no).
+
+## Salas y retos
+- **Niebla:** en los turnos impares no se ve la intención. **Viento:** las patadas cuestan 1 de Aliento menos. **Puente:** los rivales vienen de a uno. **Campana:** al terminar cada tercer turno golpea a todos (4/6/8 por etapa); tu Guardia cubre; a los rivales no los baja de 1.
+- **Retos:** sin perder Vida; rematar al último rival Desequilibrado; ganar en ≤2 turnos; no terminar dos turnos seguidos en la misma postura. Cumplirlo da +10/14/18 de jade.
+
 ## Mano
 - Al empezar el turno robás el tamaño de mano completo de tu camino; las cartas retenidas son extra y se suman. Las cartas robadas por efectos también pueden superar ese tamaño.
 - Retener se elige al terminar el turno (acción `EndTurn(retain: [...])`).

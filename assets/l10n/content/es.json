@@ -186,17 +186,17 @@
     },
     "bat": {
       "name": "Murciélago de Jade",
-      "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección.",
+      "rule": "En un ataque doble, la Guardia se aplica a cada golpe. Chillido: descartás 1 carta a tu elección. Si repetís postura, cambia de altura: su próxima acción es una picada BAJA.",
       "lore": "Nace del eco de un grito en la quebrada. Si subís cantando, te sigue un rato y se va."
     },
     "salamander": {
       "name": "Salamandra de Brasa",
-      "rule": "Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes.",
+      "rule": "Su Guardia absorbe daño, pero no daño a Estructura. Premia palmas y empujes. Al desequilibrarla, se recupera con un coletazo MEDIO.",
       "lore": "Duerme entre las brasas de los fogones que dejan los que suben. Por eso los novicios apagan bien el fuego."
     },
     "golem": {
       "name": "Gólem de Cuarzo",
-      "rule": "Inamovible: recibe la mitad del daño salvo que esté Desequilibrado.",
+      "rule": "Inamovible: recibe la mitad del daño salvo que esté Desequilibrado. Protector: si pelea junto a otro, al final de cada turno le da 5 de Guardia.",
       "lore": "El cuarzo de la ladera se cansó de que lo pisaran y se puso de pie. Todavía no decidió adónde ir."
     },
     "disciple": {
@@ -270,12 +270,12 @@
     },
     "bandit": {
       "name": "Bandido del Paso",
-      "rule": "Palo: un turno tantea con un golpe ALTO y al siguiente descarga un palazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe.",
+      "rule": "Palo: un turno tantea con un golpe ALTO y al siguiente descarga un palazo MEDIO de 15. El contador avisa cuándo viene: guardá la defensa MEDIA para ese turno, o desequilibralo justo antes y pierde el golpe. Si cae su compañero, descarga un palazo de rabia.",
       "lore": "Cobra peaje en un paso que no es suyo. Nadie le paga, pero él anota todo en una tablita."
     },
     "lingzhi": {
       "name": "Hongo Lingzhi",
-      "rule": "Antes de cada acción recupera 3 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido.",
+      "rule": "Antes de cada acción recupera 3 de Vida. Si está Desequilibrado pierde la acción y tampoco se cura: golpeá fuerte y rápido. Sanador: si pelea junto a otro, al final de cada turno cura 6 al más herido.",
       "lore": "El hongo de los mil años. Los monjes juran que sonríe más cuando lo pisan."
     },
     "lion": {
@@ -303,12 +303,12 @@
     },
     "bronze_man": {
       "name": "Hombre de Bronce",
-      "rule": "Inamovible: recibe la mitad del daño. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Desequilibrado no tiene espinas y recibe el doble.",
+      "rule": "Inamovible: recibe la mitad del daño. Espinas: cada carta que le hace daño te quita 1 de Vida (las formas no). Desequilibrado no tiene espinas y recibe el doble. Al desequilibrarlo, se recupera fundiendo su bronce: 16 de Guardia.",
       "lore": "Los monjes lo fundieron para practicar. Un día practicó solo y no paró más."
     },
     "temple_guard": {
       "name": "Guardián del Pasadizo",
-      "rule": "Su Guardia frena un solo tipo de golpe: primero los puños, después las patadas. Golpeá con otro tipo y la esquivás entera (las formas sí las frena).",
+      "rule": "Su Guardia frena un solo tipo de golpe: primero los puños, después las patadas. Golpeá con otro tipo y la esquivás entera (las formas sí las frena). Protector: si pelea junto a otro, al final de cada turno le da 7 de Guardia.",
       "lore": "Cuida un pasadizo que lleva a otro pasadizo. Se toma el trabajo muy en serio."
     },
     "ash_salamander": {
@@ -360,12 +360,12 @@
     },
     "snow_ape": {
       "name": "Simio de las Nieves",
-      "rule": "Despierta: después de cada acción sus golpes suman 2 más. Desequilibrarlo lo calma.",
+      "rule": "Despierta: después de cada acción sus golpes suman 2 más. Desequilibrarlo lo calma. Si cae su compañero, salta con toda su furia.",
       "lore": "Grande, blanco y curioso. Se enoja de a poco, como la tormenta."
     },
     "ice_golem": {
       "name": "Gólem de Escarcha",
-      "rule": "Inamovible: recibe la mitad del daño. Escarcha: si no desviás su golpe, el próximo turno robás una carta menos.",
+      "rule": "Inamovible: recibe la mitad del daño. Escarcha: si no desviás su golpe, el próximo turno robás una carta menos. Protector: si pelea junto a otro, al final de cada turno le da 9 de Guardia.",
       "lore": "Hielo viejo que se acuerda de cuando era río. Camina despacio para no derretirse."
     },
     "wind_disciple": {
@@ -375,7 +375,7 @@
     },
     "frost_bat": {
       "name": "Murciélago de Escarcha",
-      "rule": "Escarcha: si no desviás su golpe doble, robás una carta menos. Repique: si no lo desviás, tenés 1 de Aliento menos. Su chillido te hace descartar.",
+      "rule": "Escarcha: si no desviás su golpe doble, robás una carta menos. Repique: si no lo desviás, tenés 1 de Aliento menos. Su chillido te hace descartar. Si repetís postura, su próxima acción es una picada helada BAJA.",
       "lore": "El primo del campanario que se mudó a la nieve. Llegó con frío y no se le pasó."
     },
     "wind_lady": {
@@ -447,12 +447,12 @@
     },
     "pixiu": {
       "name": "Pixiu",
-      "rule": "Devora jade: cada golpe que te hace daño te roba 5. No se escapa: si lo vencés, lo devuelve todo. Escama de oro: cada golpe tuyo hace 1 menos hasta que lo desequilibres.",
+      "rule": "Devora jade: cada golpe que te hace daño te roba 5. No se escapa: si lo vencés, lo devuelve todo. Escama de oro: cada golpe tuyo hace 1 menos hasta que lo desequilibres. Si repetís postura, su próxima acción es un mordisco BAJO.",
       "lore": "Come jade y no tiene por dónde sacarlo. Por eso, si lo vencés, lo devuelve todo."
     },
     "incense_monk": {
       "name": "Monje del Incienso",
-      "rule": "Se cura 4 antes de cada acción mientras arde su incienso. Su humo, si no lo desviás, te deja con 1 de Aliento menos. Desequilibralo para cortarle la curación.",
+      "rule": "Se cura 4 antes de cada acción mientras arde su incienso. Su humo, si no lo desviás, te deja con 1 de Aliento menos. Desequilibralo para cortarle la curación. Sanador: si pelea junto a otro, al final de cada turno cura 8 al más herido.",
       "lore": "Reza mientras arde el incienso. Cuando se apaga, se acuerda de que tenía que pelear."
     },
     "celadon_lion": {
@@ -471,7 +471,7 @@
     },
     "wooden_ox": {
       "name": "Buey de Madera",
-      "rule": "Autómata de los mohistas. Se carga dos veces y después pisa abajo con todo lo acumulado; el pisotón se anuncia con cuenta regresiva.",
+      "rule": "Autómata de los mohistas. Se carga dos veces y después pisa abajo con todo lo acumulado; el pisotón se anuncia con cuenta regresiva. Al desequilibrarlo, se recupera con una embestida ciega MEDIA.",
       "lore": "Los mohistas lo hicieron para cargar arroz. Le sobra fuerza y le falta arroz."
     },
     "slate_hermit": {
@@ -481,7 +481,7 @@
     },
     "guqin_player": {
       "name": "Músico del Guqin",
-      "rule": "Un ermitaño que pelea tocando. Tres notas altas seguidas, después una disonancia que te hace descartar y un acorde que congela. Guardia alta contra las ondas.",
+      "rule": "Un ermitaño que pelea tocando. Tres notas altas seguidas, después una disonancia que te hace descartar y un acorde que congela. Guardia alta contra las ondas. Sanador: si pelea junto a otro, al final de cada turno cura 10 al más herido.",
       "lore": "Toca para el dragón dormido. Si lo interrumpís, desafina a propósito."
     },
     "qilin": {
@@ -504,7 +504,7 @@
     },
     "shadow_puppet": {
       "name": "Títere de Sombras",
-      "rule": "Guerrero de cuero pintado que cobra vida con la linterna. Copia tu último golpe: su guardia frena ese mismo tipo. Si terminás con un puño, la próxima vez golpeá con palma o patada.",
+      "rule": "Guerrero de cuero pintado que cobra vida con la linterna. Copia tu último golpe: su guardia frena ese mismo tipo. Si terminás con un puño, la próxima vez golpeá con palma o patada. Si cae su compañero, la linterna se enciende: tajo ALTO de 15.",
       "lore": "Cuero pintado que baila cuando alguien prende la linterna. Te copia porque no sabe otra cosa."
     },
     "first_disciple": {
@@ -588,7 +588,16 @@
     "nine_tails": "Nueve colas",
     "puppet_slash": "Tajo pintado",
     "lantern_mirror": "Teatro de linterna",
-    "puppet_sweep": "Barrido de varas"
+    "puppet_sweep": "Barrido de varas",
+    "bat_dive": "Picada",
+    "pixiu_lunge": "Mordisco bajo",
+    "frost_dive": "Picada helada",
+    "tail_lash": "Coletazo",
+    "bronze_reforge": "Bronce fundido",
+    "ox_rampage": "Embestida ciega",
+    "bandit_rage": "Palazo de rabia",
+    "puppet_vengeance": "Tajo de la linterna",
+    "ape_grief": "Furia del simio"
   },
   "talismans": {
     "arco": "Cuerda del Arco",
@@ -1851,5 +1860,45 @@
     "fell_1_b": "{enemy} te detuvo en el monasterio. Los monjes van a acordarse de tu cara.",
     "fell_2_a": "Llegaste a la nieve, piso {floor}. Yo me quedé ahí; vos vas a pasar.",
     "fell_2_b": "{enemy} te cortó el paso en la nieve. Respirá hondo y no le pidas permiso."
+  },
+  "rooms": {
+    "fog": {
+      "name": "Niebla",
+      "hanzi": "雾",
+      "text": "No se ve qué hará el rival en los turnos impares."
+    },
+    "wind": {
+      "name": "Viento de altura",
+      "hanzi": "风",
+      "text": "El viento empuja las piernas: las patadas cuestan 1 de Aliento menos."
+    },
+    "bridge": {
+      "name": "Puente angosto",
+      "hanzi": "桥",
+      "text": "Los rivales vienen de a uno, nunca a la vez."
+    },
+    "bell": {
+      "name": "Campana",
+      "hanzi": "钟",
+      "text": "Cada 3 turnos repica y golpea a todos. Tu Guardia te cubre."
+    }
+  },
+  "challenges": {
+    "flawless": {
+      "name": "Sin un rasguño",
+      "text": "Ganá sin perder Vida."
+    },
+    "breakFinish": {
+      "name": "Remate en quiebre",
+      "text": "Rematá al último rival mientras está Desequilibrado."
+    },
+    "swift": {
+      "name": "Dos respiros",
+      "text": "Ganá en 2 turnos o menos."
+    },
+    "noRepeat": {
+      "name": "Pies inquietos",
+      "text": "No termines dos turnos seguidos en la misma postura."
+    }
   }
 }

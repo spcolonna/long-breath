@@ -61,6 +61,8 @@ Cada propuesta lleva: **Problema** (con dato), **Propuesta**, **Cómo** (archivo
 - **Cómo medir:** % de turnos con desvío exacto (debería subir) y que la carta gratis no rompa el daño por turno en el simulador.
 
 ### 1.4 Enemigos que reaccionan
+> **Estado (26/11):** ✅ reacciones (repetir postura, quiebre, compañero caído) y roles de protector y sanador en 15 comunes. Falta: élites con «pregunta» y momento firma de jefes. Ver `NOTAS.md`.
+
 - **Problema:** las 164 intenciones van en ciclo fijo y visible; una vez aprendido el ciclo, la pelea se resuelve sola.
 - **Propuesta:**
   - Ciclos con ramas: el rival cambia de intención si repetís altura o postura, si le rompiste la Estructura, si está por debajo de cierta Vida o si cayó su compañero. La rama se anuncia en su pergamino.
@@ -71,6 +73,8 @@ Cada propuesta lleva: **Problema** (con dato), **Propuesta**, **Cómo** (archivo
 - **Cómo medir:** en la Crónica, que la relación victorias/caídas no sea plana entre comunes; en el simulador, que el bot experto gane claramente más que el prudente (hoy la diferencia viene de las decisiones de mazo, no de la pelea).
 
 ### 1.5 Salas con condiciones y retos opcionales
+> **Estado (26/11):** ✅ niebla, viento (patadas −1), puente y campana; 4 retos con jade; se ven en la puerta. Retos cumplidos 51/58% (promedio/experto). Falta: lluvia y más condiciones.
+
 - **Problema:** ~24 peleas por subida con 8–10 comunes por etapa: se repiten.
 - **Propuesta:**
   - 8–10 **condiciones de sala** que cambian las reglas de esa pelea: niebla (intención oculta un turno), viento (cartas altas cuestan −1), puente angosto (de a un rival), campana (cada tercer turno golpea a todos), lluvia (la Guardia dura dos turnos pero vale menos).

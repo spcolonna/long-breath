@@ -217,6 +217,14 @@ String eventsLine(List<CombatEvent> events) {
       Parried(:final damage) => 'enemigo contraataca $damage',
       EnemyEnraged(:final total) => 'ira $total',
       EnemyFurious(:final total) => 'furia $total',
+      EnemyReacted(:final index, :final reaction) =>
+        'rival $index reacciona (${reaction.name})',
+      EnemyShielded(:final to, :final amount) => 'cubre a $to +$amount',
+      EnemyHealedAlly(:final to, :final amount) => 'cura a $to +$amount',
+      BellTolled(:final taken, :final damage) =>
+        'CAMPANA -$taken vida (rivales -$damage)',
+      ChallengeMet(:final challenge) => 'RETO CUMPLIDO ${challenge.name}',
+      ChallengeFailed(:final challenge) => 'reto perdido ${challenge.name}',
       WrathCalmed() => 'ira calmada',
       JadeStolen(:final amount, :final total) => 'roba jade $amount ($total)',
       EnemyFled(:final stolen) => 'enemigo huye con $stolen jade',

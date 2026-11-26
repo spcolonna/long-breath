@@ -50,6 +50,7 @@ class _PreviewPanel extends ConsumerWidget {
     final coverNote =
         p.guard > 0 &&
             !incoming.skipped &&
+            !incoming.hidden &&
             incoming.intent.kind == IntentKind.attack &&
             incoming.intent.height != null
         ? (covers && incoming.intent.wear && incoming.intent.hits > 1

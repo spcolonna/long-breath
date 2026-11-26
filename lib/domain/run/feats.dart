@@ -14,6 +14,9 @@ abstract final class Feat {
   /// Combates ganados sin perder Vida.
   static const flawless = 'flawless';
 
+  /// Retos de sala cumplidos.
+  static const challenges = 'challenges';
+
   /// Jefes vencidos sin perder Vida.
   static const flawlessBoss = 'flawless_boss';
 
