@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/model/enums.dart';
 import '../../domain/run/ascent.dart';
+import '../../domain/run/true_summit.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
@@ -231,11 +232,52 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                         part: p.story,
                         onTap: () => _go(() => context.go('/registry')),
                       ),
+                      _TrueSummitCard(lore: lore),
                     ],
                   ),
                 ),
               ),
       ),
+    );
+  }
+}
+
+/// 真: el final verdadero, con lo que pide (los tres finales, el Pico 5 y
+/// la escuela entera). No suma al porcentaje: es la meta de todo lo demás.
+class _TrueSummitCard extends ConsumerWidget {
+  const _TrueSummitCard({required this.lore});
+
+  final Set<String> lore;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final pico = ref.watch(picoUnlockedProvider).value ?? 0;
+    final school = ref.watch(schoolProvider).value;
+    final def = ref.watch(dataProvider).balance.school;
+    final seen = lore.contains(trueEndingLore);
+    final p = trueSummitParts(
+      lore: lore,
+      picoUnlocked: pico,
+      schoolDone: school != null && def.isComplete(school.levels),
+    );
+    final met = [p.endings, p.pico, p.school].where((x) => x).length;
+    return _PartCard(
+      index: 7,
+      hanzi: '真',
+      color: Palette.gold,
+      title: t.progressTrue,
+      subtitle: seen
+          ? t.progressTrueDone
+          : met == 3
+          ? t.progressTrueReady
+          : t.progressTrueSub(trueSummitPico),
+      part: ProgressPart(seen ? 3 : met, 3),
+      trailing: [
+        _PathChip(hanzi: '峰', color: Palette.sky, on: seen || p.endings),
+        _PathChip(hanzi: '巅', color: picoColor, on: seen || p.pico),
+        _PathChip(hanzi: '寺', color: Palette.jade, on: seen || p.school),
+      ],
     );
   }
 }

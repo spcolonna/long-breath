@@ -322,6 +322,27 @@
         { "kind": "attack", "labelKey": "qilin_horn", "height": "high", "damage": 14, "structure": 3 },
         { "kind": "attack", "labelKey": "holy_flame", "height": "mid", "damage": 8, "hits": 2, "structure": 2 }
       ] } ] },
+    { "id": "first_disciple", "hanzi": "初徒", "pinyin": "Chū Tú", "art": "disciple", "rank": "boss", "hp": 240, "structure": 24,
+      "sameStancePunish": { "damage": 6, "structure": 2 },
+      "phases": [
+        { "pattern": [
+          { "kind": "attack", "labelKey": "g_hu_zhao", "height": "high", "damage": 11, "structure": 4 },
+          { "kind": "attack", "labelKey": "g_hu_ya", "height": "mid", "damage": 6, "structure": 1, "hits": 2 },
+          { "kind": "charge", "labelKey": "g_hu_xiao", "value": 6 },
+          { "kind": "attack", "labelKey": "g_fu_hu_quan", "height": "low", "damage": 16, "structure": 7, "countdown": true }
+        ] },
+        { "hpThreshold": 0.66, "pattern": [
+          { "kind": "attack", "labelKey": "g_she_hui_tou", "height": "low", "damage": 9, "structure": 2, "drain": 1 },
+          { "kind": "guard", "labelKey": "g_she_chan_shen", "value": 10 },
+          { "kind": "attack", "labelKey": "g_ling_she", "height": "mid", "damage": 13, "structure": 3, "interrupt": true },
+          { "kind": "attack", "labelKey": "g_jin_she_chan_si", "height": "high", "damage": 18, "structure": 5, "countdown": true }
+        ] },
+        { "hpThreshold": 0.33, "pattern": [
+          { "kind": "guard", "labelKey": "g_bai_he_liang_chi", "value": 9 },
+          { "kind": "attack", "labelKey": "g_he_zhuo", "height": "high", "damage": 6, "structure": 1, "hits": 2 },
+          { "kind": "attack", "labelKey": "dragon_breath", "height": "mid", "damage": 26, "structure": 8, "countdown": true }
+        ] }
+      ] },
     { "id": "sleeping_dragon", "hanzi": "卧龙", "pinyin": "Wò Lóng", "art": "dragon_azure", "rank": "boss", "hp": 205, "structure": 21, "scales": 4,
       "phases": [
         { "pattern": [

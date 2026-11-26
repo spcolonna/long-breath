@@ -1,3 +1,4 @@
+import 'true_summit.dart';
 import 'dart:math' as math;
 
 import '../combat/combat_state.dart';
@@ -36,6 +37,7 @@ class RunEngine {
     Ghost? ghost,
     Legacy? legacy,
     Set<String> threads = const {},
+    bool trueSummit = false,
   }) {
     final starter = data.starterDeck;
     final hp = data.balance.difficulty(difficulty).playerHp +
@@ -68,6 +70,7 @@ class RunEngine {
       rerollsLeft: meta.rerolls,
       ghost: ghost,
       threads: threads,
+      trueSummit: trueSummit,
     );
     if (fixed == null) r = _openDepth(r, 0);
     if (meta.upgradedStarters > 0) {
@@ -462,6 +465,8 @@ class RunEngine {
   /// desde el mapa, como si todavía no se hubiera entrado a ese nodo.
   RunState retreat(RunState r) {
     if (r.phase != RunPhase.combat) return r;
+    // El Primer Discípulo espera en la cumbre: la pelea se retoma ahí.
+    if (r.dreamFight) return r;
     // Un duelo a medias vuelve a la escena del evento.
     if (r.duel != null) {
       return r.copyWith(
@@ -548,12 +553,15 @@ class RunEngine {
   String enemyOf(RunState r) => r.duel ?? packOf(r).first;
 
   /// Enemigos del combate actual, en el orden en que entran.
-  List<String> packOf(RunState r) =>
-      r.duel != null ? [r.duel!] : r.node(r.currentNode!).foes;
+  List<String> packOf(RunState r) => r.dreamFight
+      ? const [trueBoss]
+      : r.duel != null
+      ? [r.duel!]
+      : r.node(r.currentNode!).foes;
 
   /// Si el grupo del combate actual pelea todo junto (no en oleadas).
   bool togetherOf(RunState r) =>
-      r.duel == null && r.node(r.currentNode!).together;
+      !r.dreamFight && r.duel == null && r.node(r.currentNode!).together;
 
   /// [fledWith]: si el enemigo se escapó, el jade que se llevó (null si
   /// lo venciste). Escapado no deja jade ni loto. [tally]: lo que pasó en
@@ -590,6 +598,18 @@ class RunEngine {
             (boss ? lotus.boss : 0) +
             (boss && r.vow != null ? lotus.vow : 0);
     final mastery = b.mastery;
+    if (boss && isLastStage(r) && r.trueSummit && !r.dreamFight) {
+      // El dragón se calma y su sueño se levanta: el caldo de Ming cura
+      // todo y la pelea sigue contra el Primer Discípulo.
+      final gained = lotusOf(r, lotusBase);
+      return r.copyWith(
+        hp: r.maxHp,
+        phase: RunPhase.combat,
+        dreamFight: true,
+        lotus: r.lotus + gained,
+        lotusGained: gained,
+      );
+    }
     if (boss && isLastStage(r)) {
       final gained = lotusOf(r, lotusBase + lotus.victory);
       return r.copyWith(

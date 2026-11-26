@@ -78,6 +78,7 @@ class RunController extends Notifier<RunState?> {
     Ghost? ghost,
     Legacy? legacy,
     Set<String>? threads,
+    bool trueSummit = false,
   }) {
     final run = _engine.newRun(
         seed: DateTime.now().microsecondsSinceEpoch,
@@ -89,6 +90,7 @@ class RunController extends Notifier<RunState?> {
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
         legacy: legacy,
         threads: threads ?? ref.read(threadsProvider).value ?? const {},
+        trueSummit: trueSummit,
       );
     _startLog(run);
     _set(run);

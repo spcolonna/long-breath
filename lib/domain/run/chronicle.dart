@@ -2,6 +2,7 @@
 /// el registro, con cuántas veces se lo venció y cuántas te venció.
 library;
 
+import 'true_summit.dart';
 import '../model/enums.dart';
 import '../model/game_data.dart';
 
@@ -42,6 +43,12 @@ List<List<String>> chronicleByStage(GameData data) {
         ...ids.where((id) => data.enemy(id).rank == rank),
     ]);
   }
+  // El Primer Discípulo espera después del último jefe.
+  if (out.isNotEmpty &&
+      data.enemies.containsKey(trueBoss) &&
+      seen.add(trueBoss)) {
+    out.last.add(trueBoss);
+  }
   out.add([
     for (final id in data.enemies.keys)
       if (!seen.contains(id) && !id.startsWith('dummy')) id,
@@ -50,5 +57,6 @@ List<List<String>> chronicleByStage(GameData data) {
 }
 
 /// Todos los enemigos de la crónica, en orden.
-List<String> chronicleOrder(GameData data) =>
-    [for (final s in chronicleByStage(data)) ...s];
+List<String> chronicleOrder(GameData data) => [
+  for (final s in chronicleByStage(data)) ...s,
+];

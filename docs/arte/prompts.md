@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** nada. Las 6 de la escuela (`school_ruins` y 5 edificios) están integradas desde el 23/11 para la fase 2.
+- **Falta:** el Primer Discípulo (`first_disciple`, jefe del final verdadero; hoy usa `disciple`). Las 6 de la escuela (`school_ruins` y 5 edificios) están integradas desde el 23/11 para la fase 2.
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 24 íconos (con la página suelta y los 14 de la fase G), 5 marcos de carta y
@@ -45,7 +45,26 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Nada: las 6 de la escuela llegaron el 23/11 (se usan en la fase 2). El juego está completo. Los prompts van acá, sueltos, uno por imagen.
+Una: el jefe del final verdadero (fase 3). Mientras no llegue, el juego usa el arte del Discípulo Perdido (`disciple`). Los prompts van acá, sueltos, uno por imagen.
+
+### El Primer Discípulo (`first_disciple`, jefe del final verdadero)
+
+**Destino:** `assets/art/enemies/first_disciple.png`, 2:3, transparente. Al integrarlo, cambiar `"art": "disciple"` por `"first_disciple"` en `enemies.json` y la imagen de `dream_screen.dart`. **No es recoloreo.**
+
+```
+Create ONE single image. Start immediately, without asking questions.
+
+Create a PORTRAIT image with a 2:3 aspect ratio (1024×1536, not square, not landscape), PNG with a fully transparent background (real alpha channel, no white, paper or checkerboard background). The whole figure is visible and centered, nothing cropped, with empty margins around it.
+
+Game boss character, full body, facing the viewer, centered, transparent background: a serene young man made of warm golden breath and soft clouds, the dragon's dream of the first disciple who climbed the mountain long ago. Simple pale cream robes with a faded vermilion headband, bare feet, calm smile, eyes half closed. Faint translucent jade-and-gold dragon scales shimmer on his forearms and shoulders, wisps of cloud curl from his sleeves and hair, a gentle golden glow behind him. Martial stance, one open palm forward, inviting rather than threatening.
+Style: vibrant modern Chinese ink-and-watercolor illustration, bright daylight, warm rice-paper
+cream tones (#F6EEDC) on the figure only, fully transparent background, saturated accents of vermilion (#E8453C), jade green (#1FA38A), cobalt blue
+(#3E7BE0), gold (#E59A12) and violet (#9B5DE5), soft color gradients and tonal shifts, clean
+confident brush strokes, flat shading with watercolor bleeds, luminous and hopeful mood,
+high readability on a small phone screen. NOT dark, NOT gloomy, NOT grim, no black or brown
+backgrounds, no photorealism, no text, no watermark.
+```
+
 
 ### Escuela en ruinas (`school/school_ruins`) ✅ integrado
 

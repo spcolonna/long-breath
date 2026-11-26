@@ -537,6 +537,7 @@ class _EndOverlayState extends ConsumerState<_EndOverlay>
       RunPhase.reward => '/reward',
       RunPhase.stageClear => '/stage',
       RunPhase.victory || RunPhase.defeat => '/result',
+      RunPhase.combat when run.dreamFight => '/dream',
       _ => '/map',
     });
   }

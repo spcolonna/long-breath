@@ -16,6 +16,7 @@ import '../domain/run/chronicle.dart';
 import '../domain/run/cultivation.dart';
 import '../domain/run/run_state.dart';
 import '../domain/run/school_story.dart';
+import '../domain/run/true_summit.dart';
 import '../infrastructure/progress_storage.dart';
 import '../infrastructure/run_log_storage.dart';
 import '../infrastructure/run_storage.dart';
@@ -249,6 +250,18 @@ final schoolStoryProvider = FutureProvider<Map<String, StoryWait>>((
         readAt: readAt[thread] ?? 0,
       ),
   };
+});
+
+/// La próxima subida va por el final verdadero (ver `true_summit.dart`).
+final trueSummitProvider = FutureProvider<bool>((ref) async {
+  final lore = await ref.watch(loreProvider.future);
+  final pico = await ref.watch(picoUnlockedProvider.future);
+  final school = await ref.watch(schoolProvider.future);
+  return trueSummitReady(
+    lore: lore,
+    picoUnlocked: pico,
+    schoolDone: ref.watch(dataProvider).balance.school.isComplete(school.levels),
+  );
 });
 
 /// Experiencia de maestría de cada camino.

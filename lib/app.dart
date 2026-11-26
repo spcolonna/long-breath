@@ -9,6 +9,7 @@ import 'delivery/screens/meridian_screen.dart';
 import 'delivery/screens/monastery_screen.dart';
 import 'delivery/screens/climb_lesson_screen.dart';
 import 'delivery/screens/combat_screen.dart';
+import 'delivery/screens/dream_screen.dart';
 import 'delivery/screens/event_screen.dart';
 import 'delivery/screens/merchant_screen.dart';
 import 'delivery/screens/master_screen.dart';
@@ -117,6 +118,7 @@ final _router = GoRouter(
     _route('/meridians', const MeridianScreen()),
     _route('/monastery', const MonasteryScreen()),
     _route('/progress', const ProgressScreen()),
+    _route('/dream', const DreamScreen(), fx: scrollUnroll, fxMs: 1100),
   ],
 );
 

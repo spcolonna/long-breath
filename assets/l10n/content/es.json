@@ -482,6 +482,15 @@
       "name": "Títere de Sombras",
       "rule": "Guerrero de cuero pintado que cobra vida con la linterna. Copia tu último golpe: su guardia frena ese mismo tipo. Si terminás con un puño, la próxima vez golpeá con palma o patada.",
       "lore": "Cuero pintado que baila cuando alguien prende la linterna. Te copia porque no sabe otra cosa."
+    },
+    "first_disciple": {
+      "name": "El Primer Discípulo",
+      "rule": "Pelea con los tres caminos: Tigre al empezar; Serpiente desde el 66 % (te drena Aliento e interrumpe); Grulla desde el 33 %, con el Aliento del Dragón en cuenta regresiva. Castiga repetir postura.",
+      "intro": "Subí antes que todos y no supe bajar. ¿Vos sabés respirar por alguien más?",
+      "reply": "Me enseñaron a respirar despacio. Dejame mostrarte.",
+      "defeat": "Dos cortas, una larga… así. Ahora puedo dormir sin soñar.",
+      "triumph": "Todavía no. Volvé cuando el aliento te alcance para dos.",
+      "lore": "El sueño que el dragón tiene de sí mismo: el muchacho que subió primero, antes de que existiera ninguna escuela."
     }
   },
   "intents": {
@@ -1440,6 +1449,11 @@
       "title": "Escama y hierro",
       "text": "Entre tus cosas, al volver de la cumbre, Tie encontró una escama fría como la nieve. La forjó sin decir nada. Te muestra una hoja sin filo, liviana, que zumba cuando respirás cerca. «No corta», dice. «Respira. Es para el que suba con la escuela entera a darle descanso al dragón».",
       "hint": "Lo cuenta Maestro Tie en la forja, con la forja completa, después de hacer cumbre."
+    },
+    "true_ending": {
+      "title": "Respirar por él",
+      "text": "El muchacho bajó la guardia y sonrió con la misma sonrisa del sueño. «Dos cortas, una larga», dijo, y respiraron juntos. Cuando abriste los ojos, el dragón dormía sin soñar y las nubes salían despacio de tu pecho. Te quedaste en la cumbre lo que dura una respiración larga: un día o un año, nadie sabe. Al bajar, Ming te esperaba con el caldo, Tie con el martillo y Shuang con una apuesta nueva. El maestro Song había tallado tu nombre en la puerta, no en el cuaderno. El dragón descansa. Por un rato, la escuela respira por él.",
+      "hint": "Con los tres finales, el Pico 5 ganado y la escuela entera restaurada, algo más espera en la cumbre."
     }
   },
   "masterLines": {

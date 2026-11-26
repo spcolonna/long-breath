@@ -3752,4 +3752,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get recapWho => 'El maestro Song';
+
+  @override
+  String get dreamTitle => 'El sueño se levanta';
+
+  @override
+  String get dreamCalm =>
+      'El Dragón Dormido cierra los ojos. Sobre la nieve, su aliento toma la forma de un muchacho con una cinta como la tuya.';
+
+  @override
+  String get dreamBroth => 'Bebés el caldo de Ming: la Vida vuelve entera.';
+
+  @override
+  String get dreamBreath => 'Respirás hondo: la Vida vuelve entera.';
+
+  @override
+  String get dreamBlade => 'La hoja de escama de Tie zumba en tu mano.';
+
+  @override
+  String get dreamGo => 'Enfrentar al Primer Discípulo';
+
+  @override
+  String get progressTrue => 'Final verdadero';
+
+  @override
+  String progressTrueSub(int pico) {
+    return 'Los tres finales, el Pico $pico ganado y la escuela entera restaurada.';
+  }
+
+  @override
+  String get progressTrueReady =>
+      'Todo listo: en la próxima subida, algo más espera en la cumbre.';
+
+  @override
+  String get progressTrueDone => 'Lo viste: el dragón duerme sin soñar.';
 }

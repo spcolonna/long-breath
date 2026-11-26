@@ -3300,5 +3300,22 @@
     }
   },
   "storyWaitSummit": "El último capítulo lo cuenta después de que hagas cumbre.",
-  "recapWho": "El maestro Song"
+  "recapWho": "El maestro Song",
+  "dreamTitle": "El sueño se levanta",
+  "dreamCalm": "El Dragón Dormido cierra los ojos. Sobre la nieve, su aliento toma la forma de un muchacho con una cinta como la tuya.",
+  "dreamBroth": "Bebés el caldo de Ming: la Vida vuelve entera.",
+  "dreamBreath": "Respirás hondo: la Vida vuelve entera.",
+  "dreamBlade": "La hoja de escama de Tie zumba en tu mano.",
+  "dreamGo": "Enfrentar al Primer Discípulo",
+  "progressTrue": "Final verdadero",
+  "progressTrueSub": "Los tres finales, el Pico {pico} ganado y la escuela entera restaurada.",
+  "@progressTrueSub": {
+    "placeholders": {
+      "pico": {
+        "type": "int"
+      }
+    }
+  },
+  "progressTrueReady": "Todo listo: en la próxima subida, algo más espera en la cumbre.",
+  "progressTrueDone": "Lo viste: el dragón duerme sin soñar."
 }

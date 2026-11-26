@@ -178,6 +178,8 @@ class RunState {
     this.weaponOptions = const [],
     this.shopWeapon,
     this.shopForged = false,
+    this.trueSummit = false,
+    this.dreamFight = false,
     this.stage = 0,
     this.meta = MetaBonus.none,
     this.lotus = 0,
@@ -321,6 +323,13 @@ class RunState {
   final String? shopWeapon;
   final bool shopForged;
 
+  /// La subida va por el final verdadero (ver `true_summit.dart`): después
+  /// del último jefe se levanta el Primer Discípulo.
+  final bool trueSummit;
+
+  /// El combate en curso es contra el Primer Discípulo.
+  final bool dreamFight;
+
   /// Dones de la escuela con los que empezó la subida (reinos y meridianos).
   final MetaBonus meta;
 
@@ -420,6 +429,8 @@ class RunState {
     String? shopWeapon,
     bool clearShopWeapon = false,
     bool? shopForged,
+    bool? trueSummit,
+    bool? dreamFight,
     List<MapNodeDef>? map,
     int? stage,
     int? lotus,
@@ -488,6 +499,8 @@ class RunState {
         weaponOptions: weaponOptions ?? this.weaponOptions,
         shopWeapon: clearShopWeapon ? null : shopWeapon ?? this.shopWeapon,
         shopForged: shopForged ?? this.shopForged,
+        trueSummit: trueSummit ?? this.trueSummit,
+        dreamFight: dreamFight ?? this.dreamFight,
         stage: stage ?? this.stage,
         meta: meta,
         lotus: lotus ?? this.lotus,
@@ -566,6 +579,8 @@ class RunState {
         'weaponOptions': weaponOptions,
         'shopWeapon': shopWeapon,
         'shopForged': shopForged,
+        if (trueSummit) 'trueSummit': true,
+        if (dreamFight) 'dreamFight': true,
         'stage': stage,
         'meta': meta.toJson(),
         'lotus': lotus,
@@ -658,6 +673,8 @@ class RunState {
             ((j['weaponOptions'] as List?) ?? const []).cast<String>(),
         shopWeapon: j['shopWeapon'] as String?,
         shopForged: j['shopForged'] as bool? ?? false,
+        trueSummit: j['trueSummit'] as bool? ?? false,
+        dreamFight: j['dreamFight'] as bool? ?? false,
         stage: j['stage'] as int? ?? 0,
         meta: switch (j['meta']) {
           final Map<String, dynamic> m => MetaBonus.fromJson(m),

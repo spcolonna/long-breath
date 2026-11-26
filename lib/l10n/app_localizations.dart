@@ -5889,6 +5889,66 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'El maestro Song'**
   String get recapWho;
+
+  /// No description provided for @dreamTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'El sueño se levanta'**
+  String get dreamTitle;
+
+  /// No description provided for @dreamCalm.
+  ///
+  /// In es, this message translates to:
+  /// **'El Dragón Dormido cierra los ojos. Sobre la nieve, su aliento toma la forma de un muchacho con una cinta como la tuya.'**
+  String get dreamCalm;
+
+  /// No description provided for @dreamBroth.
+  ///
+  /// In es, this message translates to:
+  /// **'Bebés el caldo de Ming: la Vida vuelve entera.'**
+  String get dreamBroth;
+
+  /// No description provided for @dreamBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Respirás hondo: la Vida vuelve entera.'**
+  String get dreamBreath;
+
+  /// No description provided for @dreamBlade.
+  ///
+  /// In es, this message translates to:
+  /// **'La hoja de escama de Tie zumba en tu mano.'**
+  String get dreamBlade;
+
+  /// No description provided for @dreamGo.
+  ///
+  /// In es, this message translates to:
+  /// **'Enfrentar al Primer Discípulo'**
+  String get dreamGo;
+
+  /// No description provided for @progressTrue.
+  ///
+  /// In es, this message translates to:
+  /// **'Final verdadero'**
+  String get progressTrue;
+
+  /// No description provided for @progressTrueSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Los tres finales, el Pico {pico} ganado y la escuela entera restaurada.'**
+  String progressTrueSub(int pico);
+
+  /// No description provided for @progressTrueReady.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo listo: en la próxima subida, algo más espera en la cumbre.'**
+  String get progressTrueReady;
+
+  /// No description provided for @progressTrueDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Lo viste: el dragón duerme sin soñar.'**
+  String get progressTrueDone;
 }
 
 class _AppLocalizationsDelegate

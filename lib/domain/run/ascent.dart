@@ -1,5 +1,6 @@
 import 'threads.dart';
 import 'school_story.dart';
+import 'true_summit.dart';
 import '../model/enums.dart';
 
 /// Una subida terminada, tal como queda en el registro de la escuela: quién
@@ -209,6 +210,7 @@ const loreOrder = [
   'fallen_10',
   ...dreamOrder,
   'master_name',
+  trueEndingLore,
   ...threadLore,
   ...schoolStoryLore,
   ...pageLore,
@@ -265,6 +267,7 @@ List<String> earnedLore(Ascent a, List<Ascent> before, Set<String> have) {
     if (fallen >= 5) 'fallen_5',
     if (fallen >= 10) 'fallen_10',
     if (allEndings) 'master_name',
+    if (!a.fell && a.enemy == trueBoss) trueEndingLore,
     // Al caer, el dragón sueña con vos.
     if (a.fell) ?nextDream(have),
   ].where((id) => !have.contains(id)).toList();

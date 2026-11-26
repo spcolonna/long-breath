@@ -85,6 +85,10 @@ class SchoolDef {
 
   int get maxLevels => buildings.fold(0, (s, b) => s + b.maxLevel);
 
+  /// Todos los edificios en su último nivel.
+  bool isComplete(Map<String, int> levels) =>
+      !isEmpty && restored(levels) >= maxLevels;
+
   factory SchoolDef.fromJson(Map<String, dynamic> j) => SchoolDef(
         buildings: [
           for (final b in (j['buildings'] as List?) ?? const [])
