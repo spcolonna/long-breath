@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/model/enums.dart';
 import '../../domain/run/ghost.dart';
+import '../../domain/run/revelations.dart';
 import '../providers.dart';
 import '../screens/home_screen.dart' show routeFor;
 import 'run_controller.dart';
@@ -16,6 +17,7 @@ Future<void> startClimb(BuildContext context, WidgetRef ref) async {
   final meta = await ref.read(metaBonusProvider.future);
   final ascents = await ref.read(ascentsProvider.future);
   final threads = await ref.read(threadsProvider.future);
+  final lore = await ref.read(loreProvider.future);
   final trueSummit = await ref.read(trueSummitProvider.future);
   if (!context.mounted) return;
   final difficulty = info?.difficulty ?? Difficulty.normal;
@@ -28,6 +30,7 @@ Future<void> startClimb(BuildContext context, WidgetRef ref) async {
         meta: meta,
         ghost: ghostFrom(ascents),
         threads: threads,
+        known: knownRevelations(lore),
         trueSummit: trueSummit,
         legacy: ref
             .read(runEngineProvider)

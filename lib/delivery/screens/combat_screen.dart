@@ -15,6 +15,7 @@ import '../../domain/model/enemy_def.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/model/form_def.dart';
 import '../../domain/model/game_data.dart';
+import '../../domain/run/revelations.dart';
 import '../../domain/run/run_state.dart';
 import '../../l10n/app_localizations.dart';
 import '../audio/game_audio.dart';
@@ -1405,30 +1406,42 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
     if (_intro) {
       final def = data.enemy(s.enemy.id);
       final ghost = isGhostFoe(def.id) ? run?.ghost : null;
+      // Ya se conoce su historia: otras líneas y se presenta de nuevo.
+      final known = run != null && isRevealed(def.id, run.known);
       final ghostPath = ghost?.style == null
           ? null
           : ref.watch(textProvider).style(ghost!.style!);
       return Scaffold(
         body: CinematicGate(
           // Cada caído se presenta entero la primera vez que vuelve.
-          id: ghost != null ? 'ghost_${ghost.n}' : 'foe_${def.id}',
+          id: ghost != null
+              ? 'ghost_${ghost.n}'
+              : known
+              ? 'foe_${def.id}_rev'
+              : 'foe_${def.id}',
           // Los jefes se presentan enteros la primera vez; las élites, cortas.
           fullFirstTime: def.rank == EnemyRank.boss || ghost != null,
           builder: (full) => FoeIntro(
             def: def,
             name: ref.foe(context, def.id),
             intro: ghost == null
-                ? ref.watch(textProvider).enemyLine(def.id, 'intro')
+                ? ref
+                      .watch(textProvider)
+                      .enemyLine(def.id, 'intro', revealed: known)
                 : ghostPath == null
                 ? AppLocalizations.of(context).ghostIntro(ghost.n, ghost.floor)
                 : AppLocalizations.of(context)
                       .ghostIntroPath(ghost.n, ghostPath, ghost.floor),
             reply: ghost != null
                 ? AppLocalizations.of(context).ghostReply
-                : ref.watch(textProvider).enemyLine(def.id, 'reply'),
-            rankLine: ghost == null
-                ? null
-                : AppLocalizations.of(context).ghostRank,
+                : ref
+                      .watch(textProvider)
+                      .enemyLine(def.id, 'reply', revealed: known),
+            rankLine: ghost != null
+                ? AppLocalizations.of(context).ghostRank
+                : known
+                ? AppLocalizations.of(context).foeKnown
+                : null,
             sealHanzi: ghost == null ? null : '忆',
             tint: ghost == null ? null : Palette.blossom,
             escort: s.enemies.length > 1 && def.rank == EnemyRank.elite
@@ -1683,6 +1696,9 @@ class _CombatScreenState extends ConsumerState<_CombatBody> {
                           .enemyLine(
                             live.state.enemy.id,
                             won ? 'defeat' : 'triumph',
+                            revealed:
+                                run != null &&
+                                isRevealed(live.state.enemy.id, run.known),
                           ),
                 fledWith: live.state.enemy.fled
                     ? live.state.enemy.stolen

@@ -16,6 +16,15 @@ class ContentText {
     return v as String?;
   }
 
+  /// El texto en la ruta [path] (secciones anidadas), o null.
+  String? _lookupIn(List<String> path) {
+    Object? v = _data;
+    for (final k in path) {
+      v = v is Map<String, dynamic> ? v[k] : null;
+    }
+    return v is String ? v : _fallback?._lookupIn(path);
+  }
+
   String _get(String section, String id, [String? field]) =>
       _lookup(section, id, field) ?? _fallback?._get(section, id, field) ?? id;
 
@@ -44,8 +53,13 @@ class ContentText {
   /// Lo que dice un jefe o una élite: al presentarse (`intro`), lo que le
   /// contesta el héroe (`reply`), al caer (`defeat`) y si gana (`triumph`).
   /// Null si no tiene esa línea.
-  String? enemyLine(String id, String field) =>
-      has('enemies', id, field) ? _get('enemies', id, field) : null;
+  /// Con [revealed] (ya se conoce su historia), la línea de `revealed` si
+  /// la tiene.
+  String? enemyLine(String id, String field, {bool revealed = false}) {
+    final r = revealed ? _lookupIn(['enemies', id, 'revealed', field]) : null;
+    if (r != null) return r;
+    return has('enemies', id, field) ? _get('enemies', id, field) : null;
+  }
 
   /// Lo que dice el maestro de la última subida (ver `masterRecapKey`).
   String masterRecap(String key, {int floor = 0, String enemy = ''}) =>

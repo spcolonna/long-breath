@@ -37,6 +37,7 @@ class RunEngine {
     Ghost? ghost,
     Legacy? legacy,
     Set<String> threads = const {},
+    Set<String> known = const {},
     bool trueSummit = false,
   }) {
     final starter = data.starterDeck;
@@ -70,6 +71,7 @@ class RunEngine {
       rerollsLeft: meta.rerolls,
       ghost: ghost,
       threads: threads,
+      known: known,
       trueSummit: trueSummit,
     );
     if (fixed == null) r = _openDepth(r, 0);
@@ -1157,6 +1159,7 @@ class RunEngine {
       EventNeedKind.talisman => r.talismans,
       EventNeedKind.weapon => [?r.weapon],
       EventNeedKind.form => r.knownForms,
+      EventNeedKind.lore => r.known,
     };
     for (final id in owned) {
       if (n.ids.isEmpty || n.ids.contains(id)) return id;

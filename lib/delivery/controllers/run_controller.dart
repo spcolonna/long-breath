@@ -12,6 +12,7 @@ import '../../infrastructure/progress_storage.dart';
 import '../log/run_log.dart';
 import '../providers.dart';
 import '../../domain/run/threads.dart';
+import '../../domain/run/revelations.dart';
 import '../../domain/run/map_rows.dart';
 
 /// Run en curso. Cada cambio se guarda localmente.
@@ -78,6 +79,7 @@ class RunController extends Notifier<RunState?> {
     Ghost? ghost,
     Legacy? legacy,
     Set<String>? threads,
+    Set<String>? known,
     bool trueSummit = false,
   }) {
     final run = _engine.newRun(
@@ -90,6 +92,8 @@ class RunController extends Notifier<RunState?> {
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
         legacy: legacy,
         threads: threads ?? ref.read(threadsProvider).value ?? const {},
+        known: known ??
+            knownRevelations(ref.read(loreProvider).value ?? const {}),
         trueSummit: trueSummit,
       );
     _startLog(run);

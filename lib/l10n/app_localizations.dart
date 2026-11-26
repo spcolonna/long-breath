@@ -5134,6 +5134,12 @@ abstract class AppLocalizations {
   /// **'Caído de la escuela'**
   String get ghostRank;
 
+  /// No description provided for @foeKnown.
+  ///
+  /// In es, this message translates to:
+  /// **'Conocés su historia: arranca dudando'**
+  String get foeKnown;
+
   /// No description provided for @ghostReply.
   ///
   /// In es, this message translates to:

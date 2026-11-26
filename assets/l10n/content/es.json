@@ -235,7 +235,13 @@
       "reply": "No vengo a tocarlas. Vengo a ver de dónde salen.",
       "defeat": "Solo soy el eco… lo que duerme arriba respira más hondo.",
       "triumph": "Las nubes se tragan a los que corren. Respirá más lento la próxima.",
-      "lore": "No es el dragón: es lo que queda de su voz cuando rebota en las nubes de abajo."
+      "lore": "No es el dragón: es lo que queda de su voz cuando rebota en las nubes de abajo.",
+      "revealed": {
+        "intro": "Sabés de qué está hecha mi piel. Entonces sabés por qué no te dejo pasar sin pelear.",
+        "reply": "Sé que fuiste nieve. Vengo a respirar con vos, no contra vos.",
+        "defeat": "Subí. Y decile al que duerme que su escama más chica todavía cuida el bosque.",
+        "triumph": "Volvé cuando el valle te deba algo. A mí me lo debe todo."
+      }
     },
     "dummy_basic": {
       "name": "Muñeco de madera",
@@ -344,7 +350,13 @@
       "reply": "Rezá por los de abajo. Yo sigo subiendo.",
       "defeat": "La campana está rajada… ahora entiendo quién la rajó la última vez.",
       "triumph": "Que la montaña te devuelva. Yo no puedo.",
-      "lore": "Guarda la Gran Campana. Dice que un buen golpe se oye en el valle; uno malo, solo en la cabeza."
+      "lore": "Guarda la Gran Campana. Dice que un buen golpe se oye en el valle; uno malo, solo en la cabeza.",
+      "revealed": {
+        "intro": "Leíste la nota. Sí: esta campana nunca suena para despertarlo. Suena para que nadie suba de golpe.",
+        "reply": "No vengo a despertarlo. Vengo a subir despacio.",
+        "defeat": "Despacio, entonces. La campana va a callar mientras pasás.",
+        "triumph": "Un golpe de más y la montaña tiembla. Volvé más despacio."
+      }
     },
     "snow_ape": {
       "name": "Simio de las Nieves",
@@ -373,7 +385,13 @@
       "reply": "Entonces que decida a favor de los que suben.",
       "defeat": "Pasá. El viento ya te eligió.",
       "triumph": "El viento te llevó de vuelta a casa. Agradecéselo.",
-      "lore": "La primera que llegó al templo helado. Tiene miedo de elegir mal, y por eso no deja pasar a nadie."
+      "lore": "La primera que llegó al templo helado. Tiene miedo de elegir mal, y por eso no deja pasar a nadie.",
+      "revealed": {
+        "intro": "Ya sabés quién me dio este viento. ¿Sabés también lo que pesa elegir?",
+        "reply": "Sé que tenés miedo de elegir mal. Elegime a mí, y si es un error, es mío.",
+        "defeat": "Nadie me había ofrecido cargar con el error. Pasá. Que pese en los dos.",
+        "triumph": "¿Ves? Otra vez elegí no dejar pasar. Es más fácil."
+      }
     },
     "snow_lion": {
       "name": "León de las Nieves",
@@ -409,7 +427,13 @@
       "reply": "Porque la escuela me enseñó a respirar despacio. Vine a ver para qué.",
       "defeat": "Al fin… alguien con el aliento largo. Ahora podés ver la piedra.",
       "triumph": "Dormí un poco más vos también. Abajo te espera el próximo.",
-      "lore": "El primer muchacho que subió. Prometió respirar por el valle y sigue cumpliendo."
+      "lore": "El primer muchacho que subió. Prometió respirar por el valle y sigue cumpliendo.",
+      "revealed": {
+        "intro": "Te soñé tantas veces que ya no sé si estás acá o si sigo durmiendo.",
+        "reply": "Estoy acá. Dejame respirar un rato por vos.",
+        "defeat": "Dos cortos, uno largo… Así respiraba yo. Seguí vos.",
+        "triumph": "Todavía no. Volvé a soñarme."
+      }
     },
     "paper_crane": {
       "name": "Grulla de Papel",
@@ -964,7 +988,9 @@
       "dig": "Desenterrarlo",
       "digResult": "Cavás con las manos hasta que no las sentís. Ya a salvo, te pone el amuleto en la palma: «a mí ya me cuidó bastante».",
       "fire": "Compartir tu fuego",
-      "fireResult": "Le comprás leña seca a un pastor que baja del paso. El fuego los calienta a los dos hasta que el viento cede."
+      "fireResult": "Le comprás leña seca a un pastor que baja del paso. El fuego los calienta a los dos hasta que el viento cede.",
+      "breathe": "Respirarle dos cortos, uno largo",
+      "breatheResult": "Te arrodillás y respirás junto a él como el niño del sueño: dos cortos, uno largo. A la tercera vuelta el viejo abre los ojos y te sigue el ritmo. Te pone el amuleto en la mano: «Ese aire no es tuyo. Cuidalo»."
     },
     "scale": {
       "name": "La escama en el hielo",
@@ -995,7 +1021,9 @@
       "read": "Leer los nombres",
       "readResult": "Debajo de cada nombre hay una postura dibujada con tinta. Copiás la que más se repite y la practicás en el borde del abismo. Aprendés una forma.",
       "leave": "Seguir",
-      "leaveResult": "Pasás la mano por la madera sin leer. Algunos nombres están tibios, como si los hubieran tallado esta mañana."
+      "leaveResult": "Pasás la mano por la madera sin leer. Algunos nombres están tibios, como si los hubieran tallado esta mañana.",
+      "finish": "Completar la última letra",
+      "finishResult": "Buscás tu nombre y está: empezado, sin la última letra, en una madera tan vieja como el templo. Tallás la letra que falta. Algo se acomoda en el pecho, como un hueso que vuelve a su lugar."
     },
     "shadow_puppets": {
       "name": "Los títeres de linterna",

@@ -7,6 +7,7 @@ import '../../domain/combat/combat_engine.dart';
 import '../../domain/combat/combat_event.dart';
 import '../../domain/combat/combat_state.dart';
 import '../../domain/model/enums.dart';
+import '../../domain/run/revelations.dart';
 import '../../domain/run/feats.dart';
 import '../../domain/run/ghost.dart';
 import '../tutorial/lessons.dart';
@@ -97,6 +98,8 @@ class CombatController extends Notifier<CombatView?> {
       weaponLevel: run.weaponLevel,
       awakenings: run.awakenings,
       meta: run.meta,
+      revealed: revealedOf(run.known),
+      revealedPct: revealedStructurePct,
     );
     state = CombatView(
       state: r.state,

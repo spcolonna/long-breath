@@ -82,7 +82,7 @@ class EventOutcome {
 }
 
 /// Qué pide una opción para aparecer.
-enum EventNeedKind { talisman, weapon, form }
+enum EventNeedKind { talisman, weapon, form, lore }
 
 /// Requisito de una opción: tener uno de [ids] (vacío = cualquiera).
 class EventNeed {

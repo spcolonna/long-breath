@@ -163,6 +163,9 @@ class CombatEngine {
     bool together = false,
     // Dones de la escuela (reinos y meridianos).
     MetaBonus meta = MetaBonus.none,
+    // Rivales cuya historia ya se conoce: arrancan dudando.
+    Set<String> revealed = const {},
+    int revealedPct = 100,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -212,7 +215,12 @@ class CombatEngine {
         hp: math.max(1, hp - sum((e) => e.enemyHp) - meta.enemyHp),
         maxHp: hp,
         structure: math.max(
-            1, structure - sum((e) => e.enemyStructure) - meta.enemyStructure),
+            1,
+            (revealed.contains(enemy.id)
+                    ? (structure * revealedPct / 100).round()
+                    : structure) -
+                sum((e) => e.enemyStructure) -
+                meta.enemyStructure),
         maxStructure: structure,
         scales: enemy.scales,
         // Picos: arranca cubierto y, si es élite, con espinas.

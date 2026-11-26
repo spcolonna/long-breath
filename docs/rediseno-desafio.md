@@ -64,7 +64,7 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
 ## Fase 3 — Historia que se arma en muchas subidas
 1. **Un misterio central:** por qué duerme el dragón y quién fue el primer discípulo.
    - Se revela con los sueños (10), las páginas (12) y los capítulos de la escuela.
-   - Cada revelación cambia algo de la montaña: un enemigo, un evento, el diálogo del jefe.
+   - Cada revelación cambia algo de la montaña: un enemigo, un evento, el diálogo del jefe. ✅ 26/11.
 2. **Hilos de Ming y Tie** (ya tienen retrato): 5 capítulos cada uno, ligados a su edificio. ✅ 26/11.
 3. **Finales escalonados:**
    - Final de camino al ganar con cada uno.

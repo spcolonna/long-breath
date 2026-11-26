@@ -308,6 +308,8 @@ class _EventScreenState extends ConsumerState<EventScreen> {
                                     ? Icons.sports_martial_arts
                                     : o.needs?.kind == EventNeedKind.talisman
                                         ? talismanIcon
+                                        : o.needs?.kind == EventNeedKind.lore
+                                        ? Icons.auto_stories_rounded
                                         : o.needs != null
                                         ? Icons.auto_awesome
                                         : o.chance != null
@@ -385,6 +387,7 @@ class _EventScreenState extends ConsumerState<EventScreen> {
         EventNeedKind.talisman => text.talisman(id),
         EventNeedKind.weapon => text.weapon(id),
         EventNeedKind.form => text.form(id),
+        EventNeedKind.lore => '«${text.lore(id, 'title')}»',
       };
 
   void _leave() {

@@ -155,6 +155,7 @@ class RunState {
     this.seenEvents = const [],
     this.marks = const {},
     this.threads = const {},
+    this.known = const {},
     this.threadRun = const [],
     this.threadLine,
     this.lastEvent,
@@ -263,6 +264,9 @@ class RunState {
   /// Marcas de los hilos que cruzan subidas (ver `threads.dart`): las que
   /// la partida traía al empezar más las que dejó esta subida.
   final Set<String> threads;
+
+  /// Revelaciones leídas que cambian la montaña (ver `revelations.dart`).
+  final Set<String> known;
 
   /// Hilos que ya avanzaron un capítulo en esta subida.
   final List<String> threadRun;
@@ -401,6 +405,7 @@ class RunState {
     List<String>? seenEvents,
     Map<String, int>? marks,
     Set<String>? threads,
+    Set<String>? known,
     List<String>? threadRun,
     String? threadLine,
     bool clearThreadLine = false,
@@ -475,6 +480,7 @@ class RunState {
         seenEvents: seenEvents ?? this.seenEvents,
         marks: marks ?? this.marks,
         threads: threads ?? this.threads,
+        known: known ?? this.known,
         threadRun: threadRun ?? this.threadRun,
         threadLine: clearThreadLine ? null : threadLine ?? this.threadLine,
         lastEvent: lastEvent ?? this.lastEvent,
@@ -556,6 +562,7 @@ class RunState {
         'seenEvents': seenEvents,
         'marks': marks,
         if (threads.isNotEmpty) 'threads': [...threads],
+        if (known.isNotEmpty) 'known': [...known],
         if (threadRun.isNotEmpty) 'threadRun': threadRun,
         if (threadLine != null) 'threadLine': threadLine,
         'lastEvent': lastEvent?.toJson(),
@@ -641,6 +648,7 @@ class RunState {
         seenEvents: ((j['seenEvents'] as List?) ?? const []).cast<String>(),
         marks: ((j['marks'] as Map?) ?? const {}).cast<String, int>(),
         threads: {...((j['threads'] as List?) ?? const []).cast<String>()},
+        known: {...((j['known'] as List?) ?? const []).cast<String>()},
         threadRun: ((j['threadRun'] as List?) ?? const []).cast<String>(),
         threadLine: j['threadLine'] as String?,
         lastEvent: switch (j['lastEvent']) {

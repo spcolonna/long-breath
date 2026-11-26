@@ -109,7 +109,8 @@
         { "id": "dig", "hp": 8, "gain": "rareTalisman" },
         { "id": "fire", "price": 15, "heal": 16 },
         { "id": "leave" },
-        { "id": "drum", "needs": { "talisman": ["tambor"] }, "hp": 3, "gain": "rareTalisman" }
+        { "id": "drum", "needs": { "talisman": ["tambor"] }, "hp": 3, "gain": "rareTalisman" },
+        { "id": "breathe", "needs": { "lore": ["dream_2"] }, "gain": "rareTalisman" }
       ]
     },
     {
@@ -133,7 +134,8 @@
       "options": [
         { "id": "carve", "hp": 4, "maxHp": 6 },
         { "id": "read", "gain": "form" },
-        { "id": "leave" }
+        { "id": "leave" },
+        { "id": "finish", "needs": { "lore": ["dream_9"] }, "maxHp": 8 }
       ]
     },
     {

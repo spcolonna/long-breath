@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:long_breath/domain/run/revelations.dart';
 import 'package:long_breath/domain/run/ascent.dart';
 import 'package:long_breath/domain/run/chronicle.dart';
 import 'package:long_breath/domain/run/feats.dart';
@@ -216,13 +217,15 @@ void main() {
               data.weapon(id);
             case EventNeedKind.form:
               expect(data.forms.any((f) => f.id == id), isTrue, reason: id);
+            case EventNeedKind.lore:
+              expect(revelationEventLore, contains(id));
           }
         }
       }
     }
     expect(
       data.events.expand((e) => e.options).where((o) => o.needs != null),
-      hasLength(13),
+      hasLength(15),
     );
     // Cada segunda parte tiene quien la marque en una etapa más abajo.
     final order = [for (final st in data.balance.stages) st.id];

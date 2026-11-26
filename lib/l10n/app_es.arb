@@ -2905,6 +2905,7 @@
     }
   },
   "ghostRank": "Caído de la escuela",
+  "foeKnown": "Conocés su historia: arranca dudando",
   "ghostReply": "Vine a llevarte de vuelta a la escuela.",
   "ghostDrop": "El nº {n} te deja su carta",
   "@ghostDrop": {

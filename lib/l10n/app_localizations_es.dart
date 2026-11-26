@@ -3276,6 +3276,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ghostRank => 'Caído de la escuela';
 
   @override
+  String get foeKnown => 'Conocés su historia: arranca dudando';
+
+  @override
   String get ghostReply => 'Vine a llevarte de vuelta a la escuela.';
 
   @override
