@@ -68,7 +68,7 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
 2. **Hilos de Ming y Tie** (ya tienen retrato): 5 capítulos cada uno, ligados a su edificio. ✅ 26/11.
 3. **Finales escalonados:**
    - Final de camino al ganar con cada uno.
-   - **Final verdadero**: los 3 finales + Pico 5 + la escuela restaurada, con un jefe extra. ✅ 26/11 (el Primer Discípulo; falta su arte propio).
+   - **Final verdadero**: los 3 finales + Pico 5 + la escuela restaurada, con un jefe extra. ✅ 26/11 (el Primer Discípulo, con su arte propio).
 4. **Voces:** el maestro comenta la subida anterior y cada jefe tiene una línea al empezar y otra al caer. ✅ 26/11 (las de los jefes ya existían).
 
 ## Fase 4 — Picos con reglas y retención

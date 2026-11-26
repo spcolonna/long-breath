@@ -2,7 +2,7 @@
 
 **Generado por `python3 tool/art_status.py`: no editar a mano.** Se vuelve a correr antes de pasar prompts y cada vez que llega arte.
 
-Total: 174 · ✅ 174 · 🎨 0 · ❌ 0
+Total: 175 · ✅ 175 · 🎨 0 · ❌ 0
 
 - ✅ propio: ya está, no se vuelve a pedir.
 - 🎨 recoloreo: existe, pero es otro enemigo teñido (`tool/recolor_enemies.py`). Arte propio lo reemplaza.
@@ -203,6 +203,7 @@ Total: 174 · ✅ 174 · 🎨 0 · ❌ 0
 |---|---|---|---|---|
 | ✅ propio | `assets/art/enemies/dragon.webp` | dragon (boss) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/dragon_azure.webp` | sleeping_dragon (boss) | enemies/placeholder.webp | — |
+| ✅ propio | `assets/art/enemies/first_disciple.webp` | first_disciple (boss) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/monk_gold.webp` | bell_abbot (boss) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/bell_keeper.webp` | bell_keeper (elite) | enemies/placeholder.webp | — |
 | ✅ propio | `assets/art/enemies/dragon_dream.webp` | dragon_dream (elite) | enemies/placeholder.webp | — |

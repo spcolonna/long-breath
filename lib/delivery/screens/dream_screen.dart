@@ -91,7 +91,7 @@ class DreamScreen extends ConsumerWidget {
                           Opacity(
                             opacity: 0.85,
                             child: Image.asset(
-                              'assets/art/enemies/disciple.webp',
+                              'assets/art/enemies/first_disciple.webp',
                               fit: BoxFit.contain,
                               errorBuilder: (_, _, _) => const SizedBox(),
                             ),

@@ -22,7 +22,7 @@ claro, color saturado y mucho aire.
 
 ## Resumen: qué está y qué falta
 
-- **Falta:** el Primer Discípulo (`first_disciple`, jefe del final verdadero; hoy usa `disciple`). Las 6 de la escuela (`school_ruins` y 5 edificios) están integradas desde el 23/11 para la fase 2.
+- **Falta:** nada (el Primer Discípulo se integró el 26/11). Las 6 de la escuela (`school_ruins` y 5 edificios) están integradas desde el 23/11 para la fase 2.
 - **Recoloreos de enemigos:** ninguno. El Reflejo del Dragón y el León de Celadón tienen arte propio desde el 13/11 (solo el héroe se recolorea por camino, por diseño).
 - **Está todo lo demás:** enemigos de las 3 etapas (incluidos qilin y Músico del Guqin), héroe, NPC (maestro, mercader y los retratos de Shuang, Ming y Tie), fondos y mapas
   de las 3 etapas, sellos del mapa, efectos, rollo, pantallas, logo, 24 íconos (con la página suelta y los 14 de la fase G), 5 marcos de carta y
@@ -45,11 +45,11 @@ claro, color saturado y mucho aire.
 
 # Para generar ahora
 
-Una: el jefe del final verdadero (fase 3). Mientras no llegue, el juego usa el arte del Discípulo Perdido (`disciple`). Los prompts van acá, sueltos, uno por imagen.
+Nada por ahora. Los prompts van acá, sueltos, uno por imagen.
 
-### El Primer Discípulo (`first_disciple`, jefe del final verdadero)
+### El Primer Discípulo (`first_disciple`, jefe del final verdadero) ✅ integrado 26/11
 
-**Destino:** `assets/art/enemies/first_disciple.png`, 2:3, transparente. Al integrarlo, cambiar `"art": "disciple"` por `"first_disciple"` en `enemies.json` y la imagen de `dream_screen.dart`. **No es recoloreo.**
+**Destino:** `assets/art/enemies/first_disciple.webp`, 2:3, transparente. Usado en `enemies.json` y `dream_screen.dart`.
 
 ```
 Create ONE single image. Start immediately, without asking questions.
