@@ -3579,4 +3579,141 @@ class AppLocalizationsEs extends AppLocalizations {
   String masteryUp(String list) {
     return 'Se abre: $list';
   }
+
+  @override
+  String get introOk => 'Entendido';
+
+  @override
+  String get introNew => 'Nuevo';
+
+  @override
+  String get introHelp => 'Cómo funciona';
+
+  @override
+  String get introWhoMaster => 'MAESTRO SONG';
+
+  @override
+  String get introWhoTie => 'MAESTRO TIE';
+
+  @override
+  String get introWhoShuang => 'SHUANG, DEL AVE AZUL';
+
+  @override
+  String get introMeridiansQuote =>
+      '«El aliento se ordena de a poco, punto por punto. Lo que abras acá lo hereda cada discípulo que suba después de vos.»';
+
+  @override
+  String get introMeridians1 =>
+      'Cada subida trae semillas de loto, ganes o caigas.';
+
+  @override
+  String get introMeridians2 =>
+      'Con ellas abrís puntos en tres ramas: Cuerpo, Espíritu y Técnica. Cada punto pide el anterior.';
+
+  @override
+  String get introMeridians3 =>
+      'En algunas filas hay que elegir uno de dos puntos: el otro se cierra para siempre.';
+
+  @override
+  String get introMeridians4 =>
+      'Los puntos de más arriba piden un reino del cultivo: se llega subiendo más alto.';
+
+  @override
+  String get introSchoolQuote =>
+      '«Traeme jade y la escuela vuelve a ponerse de pie. El martillo se acuerda solo.»';
+
+  @override
+  String get introSchool1 =>
+      'El jade que te sobra al terminar una subida queda en la escuela, ganes o caigas.';
+
+  @override
+  String get introSchool2 =>
+      'Con él se restauran cinco edificios de tres niveles: enfermería, casa de té, forja, biblioteca y patio.';
+
+  @override
+  String get introSchool3 =>
+      'Cada nivel le da un don a todos los discípulos que suban después.';
+
+  @override
+  String get introMasteryQuote =>
+      '«Te vi pelear. Un camino no se aprende mirando: se aprende ganando con él.»';
+
+  @override
+  String get introMastery1 =>
+      'Tigre, Serpiente y Grulla suben de nivel por separado, con las peleas que ganás con cada uno.';
+
+  @override
+  String get introMastery2 =>
+      'Las élites, los jefes y la cumbre dan más experiencia. Escapar no da nada.';
+
+  @override
+  String get introMastery3 =>
+      'Cada nivel abre algo de ese camino para las próximas subidas: cartas raras, el cuarto despertar, el arma a nivel 3 y la carta legendaria.';
+
+  @override
+  String get introProgressQuote =>
+      '«Mirá cuánto creció la escuela desde que llegaste, y cuánto falta todavía.»';
+
+  @override
+  String get introProgress1 =>
+      'Acá ves todo de un vistazo: el cultivo, los meridianos, la escuela, la maestría, las cumbres y la historia.';
+
+  @override
+  String get introProgress2 => 'Tocá cada parte para ir a verla.';
+
+  @override
+  String get introProgress3 => 'Ganar con cada camino cuenta su propio final.';
+
+  @override
+  String get progressTitle => 'Camino recorrido';
+
+  @override
+  String progressTotal(int pct) {
+    return '$pct% del camino';
+  }
+
+  @override
+  String get progressRealm => 'Cultivo';
+
+  @override
+  String progressRealmSub(String name, int n, int max) {
+    return '$name · reino $n de $max';
+  }
+
+  @override
+  String progressMeridiansSub(int n, int max) {
+    return '$n de $max puntos abiertos';
+  }
+
+  @override
+  String progressMasterySub(int n, int max) {
+    return '$n de $max niveles entre los tres caminos';
+  }
+
+  @override
+  String get progressSummits => 'Cumbres';
+
+  @override
+  String progressSummitsSub(int n, int max) {
+    return '$n de $max caminos llegaron a la cumbre';
+  }
+
+  @override
+  String get progressPicos => 'Picos';
+
+  @override
+  String progressPicosSub(int n, int max) {
+    return 'Pico $n de $max abierto';
+  }
+
+  @override
+  String get progressPicosNone => 'Se abren al ganar en Normal';
+
+  @override
+  String get progressStory => 'Historia';
+
+  @override
+  String progressStorySub(int n, int max) {
+    return '$n de $max pergaminos';
+  }
 }

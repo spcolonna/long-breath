@@ -75,7 +75,7 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
 1. **Picos (1–10) con reglas, no solo números:** niebla, aire fino, campanas, élites con dos preguntas, jefe con una fase extra.
    - Ganar en cada Pico da una marca por camino.
 2. **Desafío diario** con semilla y estadísticas por camino.
-3. **Pantalla de progreso:** árboles, escuela, finales y Picos de un vistazo, para que se vea cuánto falta.
+3. **Pantalla de progreso:** árboles, escuela, finales y Picos de un vistazo, para que se vea cuánto falta. ✅ Hecha el 26/11 (`/progress`), junto con las presentaciones de cada sistema.
 
 ## Arte necesario (poco)
 - Escuela: 1 ilustración base + 5 edificios restaurados (6 imágenes).

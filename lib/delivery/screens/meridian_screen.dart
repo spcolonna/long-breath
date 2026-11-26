@@ -12,6 +12,7 @@ import '../audio/game_audio.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/system_intro.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/juice.dart';
 import '../widgets/scroll_panel.dart';
@@ -85,6 +86,7 @@ class _MeridianScreenState extends ConsumerState<MeridianScreen> {
         leading: BackButton(onPressed: () => context.go('/school')),
         title: Text(t.meridiansTitle),
         actions: [
+          const IntroHelpButton(intro: SystemIntro.meridians),
           if (m != null)
             Padding(
               padding: const EdgeInsets.only(right: 16),

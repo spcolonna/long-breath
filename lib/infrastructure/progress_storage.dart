@@ -389,6 +389,13 @@ extension SchoolRecord on ProgressStorage {
         false;
   }
 
+  /// Todas las presentaciones ya vistas (también las de los sistemas de la
+  /// escuela: `intro_*`).
+  Future<Set<String>> cinematics() async {
+    final prefs = await SharedPreferences.getInstance();
+    return {...?prefs.getStringList(_cinematicsKey)};
+  }
+
   Future<void> markCinematicSeen(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final seen = prefs.getStringList(_cinematicsKey) ?? [];

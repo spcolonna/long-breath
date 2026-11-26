@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../content_text.dart';
 import '../providers.dart';
 import '../theme.dart';
+import 'system_intro.dart';
 
 /// Nombre de algo que abre la maestría: una carta, un despertar del camino o
 /// la carta del nivel 3 de su arma (se muestra como el arma).
@@ -54,9 +55,19 @@ class MasterySheet extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              t.masteryTitle,
-              style: const TextStyle(fontSize: 22, fontFamily: Fonts.display),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    t.masteryTitle,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontFamily: Fonts.display,
+                    ),
+                  ),
+                ),
+                const IntroHelpButton(intro: SystemIntro.mastery),
+              ],
             ),
             const SizedBox(height: 4),
             Text(

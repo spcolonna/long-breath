@@ -24,6 +24,7 @@ import '../widgets/npc_portrait.dart';
 import '../widgets/cloud_drift.dart';
 import '../widgets/cultivation_view.dart';
 import '../widgets/school_life.dart';
+import '../widgets/system_intro.dart';
 import '../widgets/lotus.dart';
 import '../widgets/jade.dart';
 import '../../infrastructure/progress_storage.dart';
@@ -131,6 +132,7 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                         : SlotBadge(slot: slot, info: info),
                   ),
                   if (kDebugMode) DebugButton(onDone: () => setState(() {})),
+                  const _ProgressButton(),
                   const OptionsButton(),
                 ],
               ),
@@ -309,10 +311,11 @@ class _MonasteryLine extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 6),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
+        onTap: () async {
           Haptics.selectionClick();
           ref.read(audioProvider).play(Sfx.uiButton);
-          context.go('/monastery');
+          await showSystemIntro(context, ref, SystemIntro.school);
+          if (context.mounted) context.go('/monastery');
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
@@ -340,7 +343,9 @@ class _MonasteryLine extends ConsumerWidget {
                   ),
                 ),
               ),
-              if (ready) ...[
+              if (isNew(ref, SystemIntro.school))
+                const NewTag()
+              else if (ready) ...[
                 const SizedBox(width: 6),
                 const _Dot(),
               ],
@@ -369,10 +374,11 @@ class _MasteryLine extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 6),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
+        onTap: () async {
           Haptics.selectionClick();
           ref.read(audioProvider).play(Sfx.uiButton);
-          showMasterySheet(context);
+          await showSystemIntro(context, ref, SystemIntro.mastery);
+          if (context.mounted) showMasterySheet(context);
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
@@ -412,6 +418,7 @@ class _MasteryLine extends ConsumerWidget {
                   ),
                 ),
               ),
+              if (isNew(ref, SystemIntro.mastery)) const NewTag(),
               const Icon(Icons.chevron_right, size: 18, color: Palette.textDim),
             ],
           ),
@@ -443,10 +450,11 @@ class _MeridianLine extends ConsumerWidget {
       padding: const EdgeInsets.only(top: 6),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
+        onTap: () async {
           Haptics.selectionClick();
           ref.read(audioProvider).play(Sfx.uiButton);
-          context.go('/meridians');
+          await showSystemIntro(context, ref, SystemIntro.meridians);
+          if (context.mounted) context.go('/meridians');
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
@@ -472,7 +480,9 @@ class _MeridianLine extends ConsumerWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              if (ready) ...[
+              if (isNew(ref, SystemIntro.meridians))
+                const NewTag()
+              else if (ready) ...[
                 const SizedBox(width: 6),
                 const _Dot(),
               ],
@@ -480,6 +490,34 @@ class _MeridianLine extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Acceso a la pantalla de progreso (después de la primera subida), con un
+/// punto mientras no se vio.
+class _ProgressButton extends ConsumerWidget {
+  const _ProgressButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final seen = (ref.watch(ascentsProvider).value ?? const []).isNotEmpty;
+    if (!seen) return const SizedBox.shrink();
+    return IconButton(
+      tooltip: AppLocalizations.of(context).progressTitle,
+      onPressed: () {
+        Haptics.selectionClick();
+        ref.read(audioProvider).play(Sfx.uiButton);
+        context.go('/progress');
+      },
+      icon: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          const Icon(Icons.insights_rounded),
+          if (isNew(ref, SystemIntro.progress))
+            const Positioned(right: -2, top: -2, child: _Dot()),
+        ],
       ),
     );
   }

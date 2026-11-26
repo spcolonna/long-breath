@@ -10,6 +10,7 @@ import '../feel.dart';
 import '../labels.dart';
 import '../providers.dart';
 import '../theme.dart';
+import '../widgets/system_intro.dart';
 import '../widgets/jade.dart';
 import '../widgets/juice.dart';
 import '../widgets/press.dart';
@@ -88,6 +89,7 @@ class _MonasteryScreenState extends ConsumerState<MonasteryScreen> {
         leading: BackButton(onPressed: () => context.go('/school')),
         title: Text(t.schoolTitle),
         actions: [
+          const IntroHelpButton(intro: SystemIntro.school),
           if (s != null)
             Padding(
               padding: const EdgeInsets.only(right: 16),

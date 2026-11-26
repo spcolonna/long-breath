@@ -5619,6 +5619,222 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Se abre: {list}'**
   String masteryUp(String list);
+
+  /// No description provided for @introOk.
+  ///
+  /// In es, this message translates to:
+  /// **'Entendido'**
+  String get introOk;
+
+  /// No description provided for @introNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo'**
+  String get introNew;
+
+  /// No description provided for @introHelp.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo funciona'**
+  String get introHelp;
+
+  /// No description provided for @introWhoMaster.
+  ///
+  /// In es, this message translates to:
+  /// **'MAESTRO SONG'**
+  String get introWhoMaster;
+
+  /// No description provided for @introWhoTie.
+  ///
+  /// In es, this message translates to:
+  /// **'MAESTRO TIE'**
+  String get introWhoTie;
+
+  /// No description provided for @introWhoShuang.
+  ///
+  /// In es, this message translates to:
+  /// **'SHUANG, DEL AVE AZUL'**
+  String get introWhoShuang;
+
+  /// No description provided for @introMeridiansQuote.
+  ///
+  /// In es, this message translates to:
+  /// **'«El aliento se ordena de a poco, punto por punto. Lo que abras acá lo hereda cada discípulo que suba después de vos.»'**
+  String get introMeridiansQuote;
+
+  /// No description provided for @introMeridians1.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada subida trae semillas de loto, ganes o caigas.'**
+  String get introMeridians1;
+
+  /// No description provided for @introMeridians2.
+  ///
+  /// In es, this message translates to:
+  /// **'Con ellas abrís puntos en tres ramas: Cuerpo, Espíritu y Técnica. Cada punto pide el anterior.'**
+  String get introMeridians2;
+
+  /// No description provided for @introMeridians3.
+  ///
+  /// In es, this message translates to:
+  /// **'En algunas filas hay que elegir uno de dos puntos: el otro se cierra para siempre.'**
+  String get introMeridians3;
+
+  /// No description provided for @introMeridians4.
+  ///
+  /// In es, this message translates to:
+  /// **'Los puntos de más arriba piden un reino del cultivo: se llega subiendo más alto.'**
+  String get introMeridians4;
+
+  /// No description provided for @introSchoolQuote.
+  ///
+  /// In es, this message translates to:
+  /// **'«Traeme jade y la escuela vuelve a ponerse de pie. El martillo se acuerda solo.»'**
+  String get introSchoolQuote;
+
+  /// No description provided for @introSchool1.
+  ///
+  /// In es, this message translates to:
+  /// **'El jade que te sobra al terminar una subida queda en la escuela, ganes o caigas.'**
+  String get introSchool1;
+
+  /// No description provided for @introSchool2.
+  ///
+  /// In es, this message translates to:
+  /// **'Con él se restauran cinco edificios de tres niveles: enfermería, casa de té, forja, biblioteca y patio.'**
+  String get introSchool2;
+
+  /// No description provided for @introSchool3.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada nivel le da un don a todos los discípulos que suban después.'**
+  String get introSchool3;
+
+  /// No description provided for @introMasteryQuote.
+  ///
+  /// In es, this message translates to:
+  /// **'«Te vi pelear. Un camino no se aprende mirando: se aprende ganando con él.»'**
+  String get introMasteryQuote;
+
+  /// No description provided for @introMastery1.
+  ///
+  /// In es, this message translates to:
+  /// **'Tigre, Serpiente y Grulla suben de nivel por separado, con las peleas que ganás con cada uno.'**
+  String get introMastery1;
+
+  /// No description provided for @introMastery2.
+  ///
+  /// In es, this message translates to:
+  /// **'Las élites, los jefes y la cumbre dan más experiencia. Escapar no da nada.'**
+  String get introMastery2;
+
+  /// No description provided for @introMastery3.
+  ///
+  /// In es, this message translates to:
+  /// **'Cada nivel abre algo de ese camino para las próximas subidas: cartas raras, el cuarto despertar, el arma a nivel 3 y la carta legendaria.'**
+  String get introMastery3;
+
+  /// No description provided for @introProgressQuote.
+  ///
+  /// In es, this message translates to:
+  /// **'«Mirá cuánto creció la escuela desde que llegaste, y cuánto falta todavía.»'**
+  String get introProgressQuote;
+
+  /// No description provided for @introProgress1.
+  ///
+  /// In es, this message translates to:
+  /// **'Acá ves todo de un vistazo: el cultivo, los meridianos, la escuela, la maestría, las cumbres y la historia.'**
+  String get introProgress1;
+
+  /// No description provided for @introProgress2.
+  ///
+  /// In es, this message translates to:
+  /// **'Tocá cada parte para ir a verla.'**
+  String get introProgress2;
+
+  /// No description provided for @introProgress3.
+  ///
+  /// In es, this message translates to:
+  /// **'Ganar con cada camino cuenta su propio final.'**
+  String get introProgress3;
+
+  /// No description provided for @progressTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Camino recorrido'**
+  String get progressTitle;
+
+  /// No description provided for @progressTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'{pct}% del camino'**
+  String progressTotal(int pct);
+
+  /// No description provided for @progressRealm.
+  ///
+  /// In es, this message translates to:
+  /// **'Cultivo'**
+  String get progressRealm;
+
+  /// No description provided for @progressRealmSub.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} · reino {n} de {max}'**
+  String progressRealmSub(String name, int n, int max);
+
+  /// No description provided for @progressMeridiansSub.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de {max} puntos abiertos'**
+  String progressMeridiansSub(int n, int max);
+
+  /// No description provided for @progressMasterySub.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de {max} niveles entre los tres caminos'**
+  String progressMasterySub(int n, int max);
+
+  /// No description provided for @progressSummits.
+  ///
+  /// In es, this message translates to:
+  /// **'Cumbres'**
+  String get progressSummits;
+
+  /// No description provided for @progressSummitsSub.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de {max} caminos llegaron a la cumbre'**
+  String progressSummitsSub(int n, int max);
+
+  /// No description provided for @progressPicos.
+  ///
+  /// In es, this message translates to:
+  /// **'Picos'**
+  String get progressPicos;
+
+  /// No description provided for @progressPicosSub.
+  ///
+  /// In es, this message translates to:
+  /// **'Pico {n} de {max} abierto'**
+  String progressPicosSub(int n, int max);
+
+  /// No description provided for @progressPicosNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Se abren al ganar en Normal'**
+  String get progressPicosNone;
+
+  /// No description provided for @progressStory.
+  ///
+  /// In es, this message translates to:
+  /// **'Historia'**
+  String get progressStory;
+
+  /// No description provided for @progressStorySub.
+  ///
+  /// In es, this message translates to:
+  /// **'{n} de {max} pergaminos'**
+  String progressStorySub(int n, int max);
 }
 
 class _AppLocalizationsDelegate

@@ -16,6 +16,7 @@ import 'delivery/screens/fountain_screen.dart';
 import 'delivery/screens/home_screen.dart';
 import 'delivery/screens/lessons_screen.dart';
 import 'delivery/screens/map_screen.dart';
+import 'delivery/screens/progress_screen.dart';
 import 'delivery/screens/registry_screen.dart';
 import 'delivery/screens/result_screen.dart';
 import 'delivery/screens/reward_screen.dart';
@@ -115,6 +116,7 @@ final _router = GoRouter(
     _route('/registry', const RegistryScreen()),
     _route('/meridians', const MeridianScreen()),
     _route('/monastery', const MonasteryScreen()),
+    _route('/progress', const ProgressScreen()),
   ],
 );
 

@@ -225,6 +225,11 @@ final schoolProvider =
 /// Dones de la escuela para la próxima subida (reinos, meridianos y
 /// edificios restaurados).
 /// Experiencia de maestría de cada camino.
+/// Presentaciones ya vistas en la partida (las `intro_*` de los sistemas).
+final seenProvider = FutureProvider<Set<String>>(
+  (ref) => ref.watch(progressStorageProvider).cinematics(),
+);
+
 final masteryProvider = FutureProvider<Map<Style, int>>(
   (ref) => ref.watch(progressStorageProvider).mastery(),
 );
