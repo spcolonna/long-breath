@@ -372,3 +372,14 @@ macOS no tiene `timeout`.
 - Ambas marcas con generador propio (no mueven la semilla). Simulador sin cambios: experto 4%, retos 51/58%.
 - Tests: `test/domain/map_memory_test.dart` (6) y `test/map_memory_screen_test.dart` (tablilla y marcas en Pro Max y SE). 433 tests. Sin ver en el teléfono.
 - Falta de §4: sendero ilustrado con varias filas a la vista (necesita arte), el puesto de Bao en el mapa, salas visibles de lejos y lluvia.
+
+## Picos con reglas (26/11) — rediseño fase 4.1
+- Los Picos suman reglas, no solo números (`PicoDef`: `fog`, `bells`, `eliteSecond`, `thinAir`, `bossPhase`; se acumulan como el resto):
+  - **2 · Niebla de altura:** en toda pelea la intención del primer turno no se ve (`Trial.fogOpening`).
+  - **4 · Campanas:** élites y jefes pelean con la campana de las salas, salvo que la sala traiga otra condición. La campana ya no le hace saltear una fase al jefe.
+  - **6 · Élites con dos preguntas** (reemplaza «1 de Espinas»): cada élite suma su `second` de `enemies.json` (espinas 1, curarse 3 o furia 2; sin dato, 1 espina). Estado nuevo `EnemyCombat.regen`.
+  - **8 · Aire fino:** 1 de Aliento menos por turno hasta que respirás en esa pelea (`Trial.thinAir`, ficha 薄 en el combate).
+  - **10 · El jefe se levanta una vez más:** `CombatEngine.phasesOf` agrega una fase a la mitad del último umbral con su primer ciclo (`EnemyCombat.extraPhase`).
+- **Marcas por camino:** `ProgressStorage.picoMarks` guarda el Pico más alto ganado con cada camino (`picoMarks`, clave de partida). Se ven en «Camino recorrido» (虎 N · 蛇 N · 鹤 N en la tarjeta de Picos) y en el resultado («Marca en el Pico N: Tigre»).
+- Simulador (`--section picos`, 150 subidas): los bots sin árbol ya están en 0–3% en todos los Picos, antes y después; no sirve para medirlos. Hay que probarlo con árbol, en el teléfono.
+- Tests: `test/domain/pico_rules_test.dart` (6). 439 tests. Sin ver en el teléfono.

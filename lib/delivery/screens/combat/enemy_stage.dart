@@ -322,12 +322,12 @@ class _EnemyStage extends ConsumerWidget {
                             color: Palette.lacquer,
                           ),
                         ),
-                      if (def.regen > 0 && e.hp < e.maxHp)
+                      if (def.regen + e.regen > 0 && e.hp < e.maxHp)
                         GlossaryTap(
                           term: Term.regen,
                           child: _Chip(
                             icon: Icons.favorite_border,
-                            text: t.regenChip(def.regen),
+                            text: t.regenChip(def.regen + e.regen),
                             color: Palette.jade,
                           ),
                         ),
@@ -750,7 +750,7 @@ bool _hasChips(EnemyCombat e, EnemyDef def) =>
     e.parryReady ||
     e.stolen > 0 ||
     def.thorns + e.thorns > 0 ||
-    def.regen > 0;
+    def.regen + e.regen > 0;
 
 /// Ícono, nombre y números de lo que prepara el rival.
 (IconData, String, String) _intentSummary(

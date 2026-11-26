@@ -163,6 +163,11 @@ final picoUnlockedProvider = FutureProvider<int>(
   (ref) => ref.watch(progressStorageProvider).picoUnlocked(),
 );
 
+/// Marcas de los Picos: el más alto ganado con cada camino.
+final picoMarksProvider = FutureProvider<Map<Style, int>>(
+  (ref) => ref.watch(progressStorageProvider).picoMarks(),
+);
+
 /// Número del discípulo que sube ahora.
 final discipleProvider = FutureProvider<int>(
   (ref) => ref.watch(progressStorageProvider).discipleNumber(),

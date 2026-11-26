@@ -190,6 +190,11 @@ class CombatEngine {
     // Los Picos se suman encima de la dificultad.
     final pm = b.picoMods(pico) +
         (stage < b.stages.length ? b.stages[stage].enemyMods : const PicoDef());
+    // Campanas de los Picos: élites y jefes pelean con la de las salas.
+    final picoRoom = room ??
+        (pm.bells > 0 && data.enemy(enemyId).rank != EnemyRank.common
+            ? RoomRule.bell
+            : null);
     int pct(int v, int p, [int extra = 0]) =>
         (v * p * (100 + extra) / 10000).round();
     final wfx = weapon == null
@@ -224,6 +229,9 @@ class CombatEngine {
       );
       final structure =
           pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
+      final elite = enemy.rank == EnemyRank.elite;
+      final second =
+          elite && pm.eliteSecond > 0 ? enemy.second : const EliteSecond(thorns: 0);
       return _EnemyDraft(
         id: enemy.id,
         hp: math.max(
@@ -240,10 +248,13 @@ class CombatEngine {
                 meta.enemyStructure),
         maxStructure: structure,
         scales: enemy.scales,
-        // Picos: arranca cubierto y, si es élite, con espinas.
+        // Picos: arranca cubierto; el élite, con espinas y su segunda
+        // pregunta; el jefe, con una fase de más.
         guard: pm.enemyGuard,
-        thorns: enemy.rank == EnemyRank.elite ? pm.eliteThorns : 0,
-        furyStep: pm.fury,
+        thorns: elite ? pm.eliteThorns + second.thorns : 0,
+        regen: elite ? second.regen : 0,
+        furyStep: pm.fury + (elite ? second.fury : 0),
+        extraPhase: enemy.rank == EnemyRank.boss && pm.bossPhase > 0,
       );
     }
     final extraStructure = sum((e) => e.structure) + meta.structure;
@@ -305,10 +316,12 @@ class CombatEngine {
       retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,
       awakened: aw,
       style: style,
-      trial: room == null && challenge == null
+      trial: picoRoom == null && challenge == null && pm.fog <= 0 && pm.thinAir <= 0
           ? Trial.none
           : Trial(
-              room: room,
+              room: picoRoom,
+              fogOpening: pm.fog > 0,
+              thinAir: math.max(0, pm.thinAir),
               challenge: challenge,
               startHp: playerHp,
               swiftTurns: b.rooms.swiftTurns,
@@ -348,6 +361,8 @@ class CombatEngine {
         final b = data.balance;
         d.breathesLeft--;
         events.add(Breathed(mode));
+        // Aire fino: respirar lo despeja por el resto de la pelea.
+        if (d.trial.thinAir > 0) d.trial = d.trial.copyWith(thinAir: 0);
         switch (mode) {
           case BreatheMode.hand:
             // Con la mano vacía (o casi) igual trae cartas nuevas.
@@ -852,10 +867,28 @@ class CombatEngine {
     );
   }
 
+  /// Las fases de un rival. Con [extra] (jefe de los Picos altos) se
+  /// levanta una vez más: a la mitad del último umbral vuelve a su primer
+  /// ciclo, recompuesto como en cualquier cambio de fase.
+  List<EnemyPhase> phasesOf(String id, bool extra) {
+    final phases = data.enemy(id).phases;
+    if (!extra) return phases;
+    return _extraPhases[id] ??= [
+      ...phases,
+      EnemyPhase(
+        pattern: phases.first.pattern,
+        hpThreshold: (phases.last.hpThreshold ?? 0.5) / 2,
+        scales: phases.last.scales,
+      ),
+    ];
+  }
+
+  final _extraPhases = <String, List<EnemyPhase>>{};
+
   IntentDef currentIntent(EnemyCombat e) {
     final def = data.enemy(e.id);
     final r = e.reaction == null ? null : def.reactions[e.reaction];
-    return r ?? def.phases[e.phaseIndex].pattern[e.patternIndex];
+    return r ?? phasesOf(e.id, e.extraPhase)[e.phaseIndex].pattern[e.patternIndex];
   }
 
   /// Lo que va a hacer el enemigo apuntado (o el de la posición [index]).
@@ -864,7 +897,7 @@ class CombatEngine {
     final def = data.enemy(e.id);
     final intent = currentIntent(e);
     final punish = s.punishPending && def.sameStancePunishDamage > 0 ? 1 : 0;
-    final pattern = def.phases[e.phaseIndex].pattern;
+    final pattern = phasesOf(e.id, e.extraPhase)[e.phaseIndex].pattern;
     final cdIndex = pattern.indexWhere((i) => i.countdown);
     int? countdown;
     if (cdIndex >= 0) {
@@ -894,7 +927,8 @@ class CombatEngine {
           s.lastTurnEndStance == s.player.stance,
       stolen: e.stolen,
       guardBlocks: intent.mirror ? s.lastAttackType : intent.blocks,
-      hidden: s.trial.room == RoomRule.fog && s.turn.isOdd,
+      hidden: (s.trial.room == RoomRule.fog && s.turn.isOdd) ||
+          (s.trial.fogOpening && s.turn == 1),
       reaction: e.reaction,
     );
   }
@@ -1320,7 +1354,7 @@ class CombatEngine {
   /// ya cambió de fase en este turno, uno más que el siguiente (o 1 si era
   /// la última), así no saltea fases ni cae el mismo turno.
   int _phaseFloor(_Draft d, _EnemyDraft e, EnemyDef def) {
-    final phases = def.phases;
+    final phases = phasesOf(def.id, e.extraPhase);
     final changed = e.phaseTurn == d.turn;
     for (var i = e.phaseIndex + 1; i < phases.length; i++) {
       final t = phases[i].hpThreshold;
@@ -1333,7 +1367,7 @@ class CombatEngine {
 
   void _checkEnemyPhase(_Draft d, List<CombatEvent> events) {
     final e = d.enemy;
-    final phases = data.enemy(e.id).phases;
+    final phases = phasesOf(e.id, e.extraPhase);
     for (var i = e.phaseIndex + 1; i < phases.length; i++) {
       final t = phases[i].hpThreshold;
       if (t != null && e.hp <= e.maxHp * t) {
@@ -1474,7 +1508,11 @@ class CombatEngine {
     final taken = t.bellDamage - blocked;
     d.hp = math.max(0, d.hp - taken);
     for (final e in d.enemies) {
-      if (e.hp > 0) e.hp = math.max(1, e.hp - t.bellDamage);
+      if (e.hp <= 0) continue;
+      // Tampoco le hace saltear una fase al jefe (Picos con campana).
+      final floor = _phaseFloor(d, e, data.enemy(e.id));
+      final hp = math.max(1, e.hp - t.bellDamage);
+      e.hp = floor > 0 && hp < floor ? math.min(e.hp, floor) : hp;
     }
     events.add(BellTolled(taken, t.bellDamage));
     if (d.hp == 0) {
@@ -1537,7 +1575,7 @@ class CombatEngine {
       // La reacción espera a que se recupere; su ciclo tampoco avanza.
       if (reacting) return;
     } else {
-      final healed = math.min(def.regen, e.maxHp - e.hp);
+      final healed = math.min(def.regen + e.regen, e.maxHp - e.hp);
       if (healed > 0) {
         e.hp += healed;
         events.add(EnemyRegenerated(healed));
@@ -1578,7 +1616,7 @@ class CombatEngine {
     }
     // Si cambió de fase durante su acción, la nueva fase arranca en el paso 0.
     if (e.phaseIndex != phaseBefore) return;
-    final pattern = def.phases[e.phaseIndex].pattern;
+    final pattern = phasesOf(e.id, e.extraPhase)[e.phaseIndex].pattern;
     e.patternIndex = (e.patternIndex + 1) % pattern.length;
   }
 
@@ -1778,7 +1816,10 @@ class CombatEngine {
     for (final e in d.enemies) {
       e.parryReady = e.hp > 0 && data.enemy(e.id).parry > 0;
     }
-    d.breath = math.max(0, d.breathPerTurn + d.nextTurnBreathMod) +
+    d.breath = math.max(
+          0,
+          d.breathPerTurn + d.nextTurnBreathMod - d.trial.thinAir,
+        ) +
         (d.flow >= flowBreathAt ? 1 : 0);
     d.nextTurnBreathMod = 0;
     // Filo: al filo, algunos talismanes dan Aliento al empezar el turno.
@@ -1855,6 +1896,8 @@ class _EnemyDraft {
     this.furyStep = 0,
     this.phaseTurn = -1,
     this.reaction,
+    this.regen = 0,
+    this.extraPhase = false,
   });
 
   factory _EnemyDraft.of(EnemyCombat e) => _EnemyDraft(
@@ -1881,6 +1924,8 @@ class _EnemyDraft {
     furyStep: e.furyStep,
     phaseTurn: e.phaseTurn,
     reaction: e.reaction,
+    regen: e.regen,
+    extraPhase: e.extraPhase,
   );
 
   final String id;
@@ -1906,6 +1951,8 @@ class _EnemyDraft {
   final int furyStep;
   int phaseTurn;
   Reaction? reaction;
+  final int regen;
+  final bool extraPhase;
 
   EnemyCombat freeze() => EnemyCombat(
     id: id,
@@ -1931,6 +1978,8 @@ class _EnemyDraft {
     furyStep: furyStep,
     phaseTurn: phaseTurn,
     reaction: reaction,
+    regen: regen,
+    extraPhase: extraPhase,
   );
 }
 

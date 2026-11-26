@@ -679,14 +679,19 @@ class _Tablet extends ConsumerWidget {
   }
 }
 
-class _PicoPill extends StatelessWidget {
+class _PicoPill extends ConsumerWidget {
   const _PicoPill({required this.run});
 
   final RunState run;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
+    final style = run.style;
+    // Ganar en un Pico deja la marca del camino.
+    final mark = run.pico > 0 && style != null
+        ? t.picoMark(ref.watch(textProvider).style(style), run.pico)
+        : null;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
@@ -694,11 +699,28 @@ class _PicoPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: picoColor, width: 1.5),
       ),
-      child: Text(
-        run.pico >= ProgressStorage.maxPico
-            ? t.picoTop
-            : t.picoOpened(run.pico + 1),
-        style: const TextStyle(fontWeight: FontWeight.w800, color: picoColor),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            run.pico >= ProgressStorage.maxPico
+                ? t.picoTop
+                : t.picoOpened(run.pico + 1),
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
+              color: picoColor,
+            ),
+          ),
+          if (mark != null)
+            Text(
+              mark,
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+                color: styleColor(style!),
+              ),
+            ),
+        ],
       ),
     );
   }

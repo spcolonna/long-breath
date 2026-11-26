@@ -118,6 +118,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
     final p = ref.watch(progressSummaryProvider).value;
     final c = ref.watch(cultivationProvider).value;
     final xp = ref.watch(masteryProvider).value ?? const {};
+    final marks = ref.watch(picoMarksProvider).value ?? const {};
     final balance = ref.watch(dataProvider).balance;
     final text = ref.watch(textProvider);
     final lore = ref.watch(loreProvider).value ?? const <String>{};
@@ -222,6 +223,15 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                             ? t.progressPicosNone
                             : t.progressPicosSub(p.picos.have, p.picos.max),
                         part: p.picos,
+                        trailing: [
+                          for (final s in Style.values)
+                            _PathChip(
+                              hanzi: balance.statsOf(s).hanzi,
+                              color: styleColor(s),
+                              on: (marks[s] ?? 0) > 0,
+                              label: '${marks[s] ?? 0}',
+                            ),
+                        ],
                       ),
                       _PartCard(
                         index: 6,

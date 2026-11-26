@@ -178,8 +178,12 @@ class RunController extends Notifier<RunState?> {
       final run = state!;
       progress.markWin(run.difficulty).then((_) => ref.invalidate(winsProvider));
       progress
-          .markPicoWin(run.difficulty, run.pico)
-          .then((_) => ref.invalidate(picoUnlockedProvider));
+          .markPicoWin(run.difficulty, run.pico, style: run.style)
+          .then((_) {
+            ref
+              ..invalidate(picoUnlockedProvider)
+              ..invalidate(picoMarksProvider);
+          });
     }
   }
 

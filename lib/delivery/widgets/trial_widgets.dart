@@ -10,6 +10,10 @@ import '../theme.dart';
 const roomColor = Palette.sky;
 const challengeColor = Palette.gold;
 
+/// Color y carácter de las reglas de los Picos que se ven en el combate.
+const picoRuleColor = Palette.structure;
+const thinAirHanzi = '薄';
+
 /// Color y carácter de las marcas de la memoria: la revancha (仇) y el
 /// atajo de Shuang (霜, su cinta celeste).
 Color markColor(NodeMark m) => switch (m) {
@@ -93,7 +97,11 @@ class TrialLines extends ConsumerWidget {
     required this.jade,
     this.mark,
     this.markLine,
+    this.thinAir = 0,
   });
+
+  /// Aire fino de los Picos (Aliento de menos por turno hasta respirar).
+  final int thinAir;
 
   final RoomRule? rule;
   final Challenge? challenge;
@@ -105,7 +113,7 @@ class TrialLines extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (rule == null && challenge == null && markLine == null) {
+    if (rule == null && challenge == null && markLine == null && thinAir <= 0) {
       return const SizedBox.shrink();
     }
     final t = AppLocalizations.of(context);
@@ -149,6 +157,8 @@ class TrialLines extends ConsumerWidget {
             Text(text.room(rule!, 'hanzi')),
             '${text.room(rule!, 'name')}: ${text.room(rule!, 'text')}',
           ),
+        if (thinAir > 0)
+          line(picoRuleColor, const Text(thinAirHanzi), t.thinAirLine(thinAir)),
         if (challenge != null)
           line(
             challengeColor,
@@ -174,7 +184,8 @@ class TrialChip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final rule = trial.room;
     final challenge = trial.challenge;
-    if (rule == null && challenge == null) return const SizedBox.shrink();
+    final thin = trial.thinAir;
+    if (!trial.shown) return const SizedBox.shrink();
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
     final cColor = trial.failed
@@ -195,7 +206,12 @@ class TrialChip extends ConsumerWidget {
         builder: (_) => SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
-            child: TrialLines(rule: rule, challenge: challenge, jade: 0),
+            child: TrialLines(
+              rule: rule,
+              challenge: challenge,
+              jade: 0,
+              thinAir: thin,
+            ),
           ),
         ),
       ),
@@ -205,7 +221,12 @@ class TrialChip extends ConsumerWidget {
           color: Palette.surface.withValues(alpha: 0.92),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: (rule != null ? roomColor : cColor).withValues(alpha: 0.7),
+            color: (rule != null
+                    ? roomColor
+                    : challenge != null
+                    ? cColor
+                    : picoRuleColor)
+                .withValues(alpha: 0.7),
           ),
         ),
         child: Row(
@@ -232,7 +253,30 @@ class TrialChip extends ConsumerWidget {
                 ),
               ),
             ],
-            if (rule != null && challenge != null) const SizedBox(width: 8),
+            if (thin > 0) ...[
+              if (rule != null) const SizedBox(width: 8),
+              const Text(
+                thinAirHanzi,
+                style: TextStyle(
+                  fontFamily: Fonts.display,
+                  fontSize: 15,
+                  height: 1,
+                  color: picoRuleColor,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                t.thinAirName,
+                style: const TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w700,
+                  color: Palette.text,
+                ),
+              ),
+            ],
+            if ((rule != null || thin > 0) && challenge != null)
+              const SizedBox(width: 8),
             if (challenge != null) ...[
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 260),

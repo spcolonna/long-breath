@@ -4039,7 +4039,7 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule2.
   ///
   /// In es, this message translates to:
-  /// **'El mercader cobra 20% más'**
+  /// **'El mercader cobra 20% más y la niebla tapa el primer turno de cada pelea'**
   String get picoRule2;
 
   /// No description provided for @picoRule3.
@@ -4051,7 +4051,7 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule4.
   ///
   /// In es, this message translates to:
-  /// **'Rivales +5% de daño'**
+  /// **'Rivales +5% de daño, y élites y jefes pelean con campana'**
   String get picoRule4;
 
   /// No description provided for @picoRule5.
@@ -4063,7 +4063,7 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule6.
   ///
   /// In es, this message translates to:
-  /// **'Los élites traen 1 de Espinas'**
+  /// **'Los élites traen una segunda pregunta: espinas, curarse o furia'**
   String get picoRule6;
 
   /// No description provided for @picoRule7.
@@ -4075,7 +4075,7 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule8.
   ///
   /// In es, this message translates to:
-  /// **'Élites y jefe +10% de Vida'**
+  /// **'Élites y jefe +10% de Vida, y aire fino: 1 de Aliento menos por turno hasta que respirás'**
   String get picoRule8;
 
   /// No description provided for @picoRule9.
@@ -4087,7 +4087,7 @@ abstract class AppLocalizations {
   /// No description provided for @picoRule10.
   ///
   /// In es, this message translates to:
-  /// **'Rivales +5% de daño, +8% de Vida y +5% de Estructura'**
+  /// **'Rivales +5% de daño, +8% de Vida y +5% de Estructura, y el jefe se levanta una vez más'**
   String get picoRule10;
 
   /// No description provided for @wrathChip.
@@ -6075,6 +6075,24 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Atardecer'**
   String get dayDusk;
+
+  /// No description provided for @thinAirName.
+  ///
+  /// In es, this message translates to:
+  /// **'Aire fino'**
+  String get thinAirName;
+
+  /// No description provided for @thinAirLine.
+  ///
+  /// In es, this message translates to:
+  /// **'Aire fino: {n} de Aliento menos por turno hasta que respires.'**
+  String thinAirLine(int n);
+
+  /// No description provided for @picoMark.
+  ///
+  /// In es, this message translates to:
+  /// **'Marca en el Pico {n}: {path}'**
+  String picoMark(String path, int n);
 }
 
 class _AppLocalizationsDelegate

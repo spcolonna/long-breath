@@ -275,7 +275,7 @@ class _Arena extends StatelessWidget {
                     color: Palette.text,
                   ),
                 ],
-                if (trial.room != null || trial.challenge != null) ...[
+                if (trial.shown) ...[
                   const SizedBox(height: 6),
                   TrialChip(trial: trial, bellIn: bellIn),
                 ],

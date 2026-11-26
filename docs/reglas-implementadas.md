@@ -107,6 +107,11 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Atajos de Shuang** (`NodeMark.shuang`): con capítulos de su hilo leídos, cada fila (desde la 2.ª y antes de las dos últimas) tiene 12% por capítulo de que una pelea común traiga su marca 霜, con tope de 2 por etapa. Sus rivales arrancan con 25% menos de Vida (`weakenPct` en `CombatEngine.start`).
 - Revancha y atajos usan un generador propio derivado del de la subida: el resto de la montaña queda igual.
 
+## Picos con reglas
+- Además de los números, algunos Picos traen una regla (se acumulan): 2, la niebla tapa la intención del primer turno de cada pelea; 4, élites y jefes pelean con campana (si la sala no trae otra condición); 6, cada élite suma su segunda pregunta (`second` en `enemies.json`: espinas, curarse antes de actuar o furia propia); 8, aire fino: 1 de Aliento menos por turno hasta respirar en esa pelea; 10, el jefe tiene una fase más, a la mitad de su último umbral, con su primer ciclo.
+- La campana no deja al jefe por debajo del umbral de su próxima fase.
+- Ganar en un Pico (Normal o más) con un camino guarda la marca de ese camino: el Pico más alto ganado con él.
+
 ## Legado
 - Al empezar una subida, si hubo otra antes, `RunEngine.legacyOf(ascents.last)` arma el legado del discípulo anterior (ganó o cayó): su `keepsake` con `upgradePct`% (50) de las mejoras, y `maxHp` (3) si llegó a la etapa `hpStage` (1 = la segunda) o `jade` (15) si no. Datos en `legacy` de `game_balance.json`.
 - `newRun(legacy:)` abre la fase `legacy` (pantalla `/legacy`); `chooseLegacy` suma la carta al mazo o los números y sigue con el talismán de los meridianos si había, o al mapa. Si solo tenía iniciales, se ofrece únicamente la opción de números.

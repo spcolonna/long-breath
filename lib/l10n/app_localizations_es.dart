@@ -2509,33 +2509,37 @@ class AppLocalizationsEs extends AppLocalizations {
   String get picoRule1 => 'Élites +15% de Vida';
 
   @override
-  String get picoRule2 => 'El mercader cobra 20% más';
+  String get picoRule2 =>
+      'El mercader cobra 20% más y la niebla tapa el primer turno de cada pelea';
 
   @override
   String get picoRule3 => 'Los rivales arrancan con 3 de Guardia';
 
   @override
-  String get picoRule4 => 'Rivales +5% de daño';
+  String get picoRule4 =>
+      'Rivales +5% de daño, y élites y jefes pelean con campana';
 
   @override
   String get picoRule5 =>
       'Empezás con 5 de Vida menos y la fuente cura 5 menos';
 
   @override
-  String get picoRule6 => 'Los élites traen 1 de Espinas';
+  String get picoRule6 =>
+      'Los élites traen una segunda pregunta: espinas, curarse o furia';
 
   @override
   String get picoRule7 => 'Rivales +5% de daño y +5% de Estructura';
 
   @override
-  String get picoRule8 => 'Élites y jefe +10% de Vida';
+  String get picoRule8 =>
+      'Élites y jefe +10% de Vida, y aire fino: 1 de Aliento menos por turno hasta que respirás';
 
   @override
   String get picoRule9 => 'Empezás sin Respirar cargado';
 
   @override
   String get picoRule10 =>
-      'Rivales +5% de daño, +8% de Vida y +5% de Estructura';
+      'Rivales +5% de daño, +8% de Vida y +5% de Estructura, y el jefe se levanta una vez más';
 
   @override
   String wrathChip(int n) {
@@ -3867,4 +3871,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dayDusk => 'Atardecer';
+
+  @override
+  String get thinAirName => 'Aire fino';
+
+  @override
+  String thinAirLine(int n) {
+    return 'Aire fino: $n de Aliento menos por turno hasta que respires.';
+  }
+
+  @override
+  String picoMark(String path, int n) {
+    return 'Marca en el Pico $n: $path';
+  }
 }

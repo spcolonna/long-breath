@@ -92,6 +92,8 @@ class EnemyCombat {
     this.furyStep = 0,
     this.phaseTurn = -1,
     this.reaction,
+    this.regen = 0,
+    this.extraPhase = false,
   });
 
   final String id;
@@ -146,6 +148,13 @@ class EnemyCombat {
   /// Reacción que reemplaza su próxima acción (null: sigue su ciclo).
   final Reaction? reaction;
 
+  /// Vida que recupera antes de cada acción, además de la suya (la segunda
+  /// pregunta de un élite en los Picos).
+  final int regen;
+
+  /// Jefe de los Picos altos: se levanta una vez más (una fase de más).
+  final bool extraPhase;
+
   EnemyCombat copyWith({
     int? hp,
     int? structure,
@@ -178,6 +187,8 @@ class EnemyCombat {
         furyStep: furyStep,
         phaseTurn: phaseTurn,
         reaction: reaction,
+        regen: regen,
+        extraPhase: extraPhase,
       );
 }
 

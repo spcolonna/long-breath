@@ -523,6 +523,11 @@ class PicoDef {
     this.breathes = 0,
     this.merchantPct = 0,
     this.fury = 0,
+    this.fog = 0,
+    this.bells = 0,
+    this.eliteSecond = 0,
+    this.thinAir = 0,
+    this.bossPhase = 0,
   });
 
   final int enemyHp;
@@ -551,6 +556,22 @@ class PicoDef {
   /// rival desequilibrado que pierde la acción tampoco se enfurece).
   final int fury;
 
+  /// Reglas de los Picos (1 = está; se acumulan como los números).
+  /// Niebla de altura: en toda pelea, el primer turno del rival no se ve.
+  final int fog;
+
+  /// Campanas: élites y jefes pelean con la campana de las salas.
+  final int bells;
+
+  /// Élites con dos preguntas: cada élite suma su segunda (`second`).
+  final int eliteSecond;
+
+  /// Aire fino: este Aliento de menos por turno hasta que respirás.
+  final int thinAir;
+
+  /// El jefe se levanta una vez más: una fase de más al final.
+  final int bossPhase;
+
   PicoDef operator +(PicoDef o) => PicoDef(
         enemyHp: enemyHp + o.enemyHp,
         commonHp: commonHp + o.commonHp,
@@ -565,6 +586,11 @@ class PicoDef {
         breathes: breathes + o.breathes,
         merchantPct: merchantPct + o.merchantPct,
         fury: fury + o.fury,
+        fog: fog + o.fog,
+        bells: bells + o.bells,
+        eliteSecond: eliteSecond + o.eliteSecond,
+        thinAir: thinAir + o.thinAir,
+        bossPhase: bossPhase + o.bossPhase,
       );
 
   factory PicoDef.fromJson(Map<String, dynamic> j) => PicoDef(
@@ -581,6 +607,11 @@ class PicoDef {
         breathes: j['breathes'] as int? ?? 0,
         merchantPct: j['merchantPct'] as int? ?? 0,
         fury: j['fury'] as int? ?? 0,
+        fog: j['fog'] as int? ?? 0,
+        bells: j['bells'] as int? ?? 0,
+        eliteSecond: j['eliteSecond'] as int? ?? 0,
+        thinAir: j['thinAir'] as int? ?? 0,
+        bossPhase: j['bossPhase'] as int? ?? 0,
       );
 }
 

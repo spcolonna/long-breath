@@ -22,6 +22,7 @@ class ProgressStorage {
   static const slotKeys = [
     'winsByDifficulty',
     'picoUnlocked',
+    'picoMarks',
     'disciple',
     'ascents',
     'lore',
@@ -42,6 +43,7 @@ class ProgressStorage {
 
   String get _key => '${prefix}winsByDifficulty';
   String get _picoKey => '${prefix}picoUnlocked';
+  String get _picoMarksKey => '${prefix}picoMarks';
   String get _discipleKey => '${prefix}disciple';
   String get _ascentsKey => '${prefix}ascents';
   String get _loreKey => '${prefix}lore';
@@ -88,13 +90,40 @@ class ProgressStorage {
     return won ? 1 : 0;
   }
 
-  /// Ganar en Normal (o más difícil) abre el Pico siguiente al jugado.
-  Future<void> markPicoWin(Difficulty d, int pico) async {
+  /// Ganar en Normal (o más difícil) abre el Pico siguiente al jugado y
+  /// deja la marca del camino con que se ganó.
+  Future<void> markPicoWin(Difficulty d, int pico, {Style? style}) async {
     if (d == Difficulty.easy) return;
     final prefs = await SharedPreferences.getInstance();
     final open = await picoUnlocked();
     final next = (pico + 1).clamp(0, maxPico);
     if (next > open) await prefs.setInt(_picoKey, next);
+    if (style != null && pico > 0) {
+      final marks = await picoMarks();
+      if (pico > (marks[style] ?? 0)) {
+        marks[style] = pico;
+        await prefs.setStringList(_picoMarksKey, [
+          for (final e in marks.entries) '${e.key.name}:${e.value}',
+        ]);
+      }
+    }
+  }
+
+  /// Marcas de los Picos: el más alto ganado con cada camino.
+  Future<Map<Style, int>> picoMarks() async {
+    final prefs = await SharedPreferences.getInstance();
+    final out = <Style, int>{};
+    for (final s in prefs.getStringList(_picoMarksKey) ?? const <String>[]) {
+      final parts = s.split(':');
+      final v = parts.length == 2 ? int.tryParse(parts[1]) : null;
+      if (v == null) continue;
+      try {
+        out[Style.parse(parts[0])] = v.clamp(0, maxPico);
+      } on ArgumentError {
+        continue;
+      }
+    }
+    return out;
   }
 }
 

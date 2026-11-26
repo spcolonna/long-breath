@@ -2093,15 +2093,15 @@
   },
   "picoTop": "Coronaste el último Pico.",
   "picoRule1": "Élites +15% de Vida",
-  "picoRule2": "El mercader cobra 20% más",
+  "picoRule2": "El mercader cobra 20% más y la niebla tapa el primer turno de cada pelea",
   "picoRule3": "Los rivales arrancan con 3 de Guardia",
-  "picoRule4": "Rivales +5% de daño",
+  "picoRule4": "Rivales +5% de daño, y élites y jefes pelean con campana",
   "picoRule5": "Empezás con 5 de Vida menos y la fuente cura 5 menos",
-  "picoRule6": "Los élites traen 1 de Espinas",
+  "picoRule6": "Los élites traen una segunda pregunta: espinas, curarse o furia",
   "picoRule7": "Rivales +5% de daño y +5% de Estructura",
-  "picoRule8": "Élites y jefe +10% de Vida",
+  "picoRule8": "Élites y jefe +10% de Vida, y aire fino: 1 de Aliento menos por turno hasta que respirás",
   "picoRule9": "Empezás sin Respirar cargado",
-  "picoRule10": "Rivales +5% de daño, +8% de Vida y +5% de Estructura",
+  "picoRule10": "Rivales +5% de daño, +8% de Vida y +5% de Estructura, y el jefe se levanta una vez más",
   "wrathChip": "Despierto · +{n} por golpe",
   "@wrathChip": {
     "placeholders": {
@@ -3413,5 +3413,25 @@
   },
   "dayMorning": "Mañana",
   "dayNoon": "Mediodía",
-  "dayDusk": "Atardecer"
+  "dayDusk": "Atardecer",
+  "thinAirName": "Aire fino",
+  "thinAirLine": "Aire fino: {n} de Aliento menos por turno hasta que respires.",
+  "@thinAirLine": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "picoMark": "Marca en el Pico {n}: {path}",
+  "@picoMark": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  }
 }

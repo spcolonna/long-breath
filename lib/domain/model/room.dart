@@ -62,6 +62,8 @@ class Trial {
     this.bellEvery = 3,
     this.bellDamage = 0,
     this.windDiscount = 1,
+    this.fogOpening = false,
+    this.thinAir = 0,
   });
 
   static const none = Trial();
@@ -83,10 +85,20 @@ class Trial {
   final int bellDamage;
   final int windDiscount;
 
+  /// Niebla de los Picos: la intención del primer turno no se ve.
+  final bool fogOpening;
+
+  /// Aire fino de los Picos: Aliento de menos por turno hasta que respirás
+  /// (0 = no hay, o ya respiraste en esta pelea).
+  final int thinAir;
+
+  /// Trae algo que mostrar en la ficha del combate.
+  bool get shown => room != null || challenge != null || thinAir > 0;
+
   /// El reto sigue en juego.
   bool get pending => challenge != null && !failed && !met;
 
-  Trial copyWith({bool? failed, bool? met}) => Trial(
+  Trial copyWith({bool? failed, bool? met, int? thinAir}) => Trial(
     room: room,
     challenge: challenge,
     startHp: startHp,
@@ -96,6 +108,8 @@ class Trial {
     bellEvery: bellEvery,
     bellDamage: bellDamage,
     windDiscount: windDiscount,
+    fogOpening: fogOpening,
+    thinAir: thinAir ?? this.thinAir,
   );
 }
 

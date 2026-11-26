@@ -133,6 +133,25 @@ enum EnemyRole {
   healer,
 }
 
+/// La segunda pregunta de un élite en los Picos: espinas, curarse antes
+/// de actuar o una furia propia que crece con cada acción. Sin dato, una
+/// espina.
+class EliteSecond {
+  const EliteSecond({this.thorns = 1, this.regen = 0, this.fury = 0});
+
+  final int thorns;
+  final int regen;
+  final int fury;
+
+  factory EliteSecond.fromJson(Map<String, dynamic>? j) => j == null
+      ? const EliteSecond()
+      : EliteSecond(
+          thorns: j['thorns'] as int? ?? 0,
+          regen: j['regen'] as int? ?? 0,
+          fury: j['fury'] as int? ?? 0,
+        );
+}
+
 class EnemyDef {
   const EnemyDef({
     required this.id,
@@ -155,7 +174,11 @@ class EnemyDef {
     this.reactions = const {},
     this.role,
     this.roleValue = 0,
+    this.second = const EliteSecond(),
   }) : _art = art;
+
+  /// Segunda pregunta del élite: lo que suma en los Picos altos.
+  final EliteSecond second;
 
   /// Reacciones: lo que hace en su próxima acción, en lugar de seguir su
   /// ciclo, cuando pasa algo (ver [Reaction]).
@@ -237,6 +260,7 @@ class EnemyDef {
         _ => null,
       },
       roleValue: (j['role'] as Map?)?['value'] as int? ?? 0,
+      second: EliteSecond.fromJson(j['second'] as Map<String, dynamic>?),
     );
   }
 }
