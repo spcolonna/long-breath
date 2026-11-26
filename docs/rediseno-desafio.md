@@ -74,7 +74,7 @@ Los recursos se ganan en cada subida y se gastan entre subidas. Son tres árbole
 ## Fase 4 — Picos con reglas y retención
 1. **Picos (1–10) con reglas, no solo números:** niebla, aire fino, campanas, élites con dos preguntas, jefe con una fase extra. ✅ Hecho el 26/11 (Picos 2, 4, 6, 8 y 10; ver `reglas-implementadas.md`).
    - Ganar en cada Pico da una marca por camino.
-2. **Desafío diario** con semilla y estadísticas por camino.
+2. **Desafío diario** con semilla y estadísticas por camino. ✅ Hecho el 26/11: semilla y camino del día, sin la partida, un intento, estadísticas por camino y racha.
 3. **Pantalla de progreso:** árboles, escuela, finales y Picos de un vistazo, para que se vea cuánto falta. ✅ Hecha el 26/11 (`/progress`), junto con las presentaciones de cada sistema.
 
 ## Arte necesario (poco)

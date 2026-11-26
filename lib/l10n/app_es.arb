@@ -3433,5 +3433,66 @@
         "type": "int"
       }
     }
+  },
+  "dailyTitle": "Desafío de hoy",
+  "dailySub": "{path} · la misma montaña para todos",
+  "@dailySub": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyGo": "Subir",
+  "dailyDone": "Hecho: piso {floor} de {floors}",
+  "@dailyDone": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      },
+      "floors": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyWon": "Hecho: llegaste a la cumbre",
+  "dailyStarted": "Empezado: hay un solo intento por día",
+  "dailyTomorrow": "Mañana, otra montaña",
+  "dailyStartTitle": "Desafío de hoy",
+  "dailyStartBody": "Subís con el {path} desde el principio, en Normal y sin nada de la escuela: ni meridianos, ni edificios, ni hilos. Hay un solo intento por día y no deja nada en la partida.",
+  "@dailyStartBody": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyStartOk": "Subir",
+  "dailyTablet": "Desafío diario",
+  "dailyRelay": "Mañana la montaña será otra.",
+  "dailyBack": "Volver a la escuela",
+  "dailyStreak": "Racha de {n} días",
+  "@dailyStreak": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "progressDaily": "Desafío diario",
+  "progressDailyNone": "Todavía no jugaste ninguno",
+  "progressDailySub": "{played} jugados · {won} cumbres · racha de {streak}",
+  "@progressDailySub": {
+    "placeholders": {
+      "played": {
+        "type": "int"
+      },
+      "won": {
+        "type": "int"
+      },
+      "streak": {
+        "type": "int"
+      }
+    }
   }
 }

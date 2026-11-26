@@ -383,3 +383,12 @@ macOS no tiene `timeout`.
 - **Marcas por camino:** `ProgressStorage.picoMarks` guarda el Pico más alto ganado con cada camino (`picoMarks`, clave de partida). Se ven en «Camino recorrido» (虎 N · 蛇 N · 鹤 N en la tarjeta de Picos) y en el resultado («Marca en el Pico N: Tigre»).
 - Simulador (`--section picos`, 150 subidas): los bots sin árbol ya están en 0–3% en todos los Picos, antes y después; no sirve para medirlos. Hay que probarlo con árbol, en el teléfono.
 - Tests: `test/domain/pico_rules_test.dart` (6). 439 tests. Sin ver en el teléfono.
+
+## Desafío diario (26/11) — rediseño fase 4.2
+- La misma montaña para todos cada día: semilla de la fecha (`dailySeed(aaaammdd)`), Normal, Pico 0 y **sin nada de la partida** (ni meridianos, escuela, hilos, cultivo, Discípulo Perdido, tablilla ni herencia). `RunEngine.newDaily(day)`, dominio en `lib/domain/run/daily.dart`.
+- **Camino del día:** los tres se turnan (`dailyStyle`); se sube con él desde el principio y el santuario solo lo confirma.
+- **Un intento por día:** se anota al empezar (como empezado) y se corrige al terminar; abandonarlo no da otro.
+- **No deja nada en la escuela:** no pasa por `recordAscent` ni abre Picos; la pantalla final va sin número de discípulo ni ofrenda y vuelve a la escuela. Solo suma a la crónica (vistos y caídas).
+- **Estadísticas** de todo el juego, no de la partida (`DailyStorage`, clave `long_breath.daily`, 400 días): por camino jugados, cumbres y piso más alto, y la racha de días seguidos. Se ven en la escuela (línea «Desafío de hoy», aparece desde la primera subida) y en «Camino recorrido» (tarjeta 日, cumbres/jugados por camino; no cuenta para el total).
+- Pendiente: compartir el resultado (semilla y piso) y una tabla entre jugadores (necesita servidor o Game Center). El piso más alto por camino se guarda pero todavía no se muestra.
+- Tests: `test/domain/daily_test.dart` (5). 444 tests. Sin ver en el teléfono.

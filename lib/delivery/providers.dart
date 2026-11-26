@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../domain/combat/combat_engine.dart';
 import '../domain/model/game_data.dart';
 import '../domain/run/run_engine.dart';
+import '../domain/run/daily.dart';
+import '../infrastructure/daily_storage.dart';
 import '../infrastructure/asset_game_data_loader.dart';
 import '../infrastructure/content_text_loader.dart';
 import 'audio/game_audio.dart';
@@ -152,6 +154,16 @@ final tutorialStorageProvider = Provider<TutorialStorage>(
 final progressStorageProvider = Provider<ProgressStorage>(
   (ref) => ProgressStorage(SlotStorage.prefixOf(ref.watch(activeSlotProvider))),
 );
+
+/// Los desafíos diarios (de todo el juego, no de la partida).
+final dailyStorageProvider = Provider<DailyStorage>((ref) => const DailyStorage());
+
+final dailyResultsProvider = FutureProvider<List<DailyResult>>(
+  (ref) => ref.watch(dailyStorageProvider).results(),
+);
+
+/// El día de hoy (aaaammdd). Los tests lo pisan.
+final todayProvider = Provider<int>((ref) => dailyDay(DateTime.now()));
 
 /// Dificultades en las que el jugador ya ganó una subida.
 final winsProvider = FutureProvider<Set<Difficulty>>(

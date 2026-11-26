@@ -18,6 +18,7 @@ import '../widgets/debug_menu.dart';
 import '../widgets/hero_sprite.dart';
 import '../widgets/difficulty_sheet.dart';
 import '../widgets/menu_button.dart';
+import '../widgets/daily_line.dart';
 import '../widgets/press.dart';
 import '../widgets/slot_badge.dart';
 import '../widgets/lore_scroll.dart';
@@ -190,6 +191,9 @@ class _SchoolScreenState extends ConsumerState<SchoolScreen> {
                 onTap: climb,
               ),
               ),
+              // El desafío de hoy, cuando ya subió algún discípulo.
+              if ((ref.watch(ascentsProvider).value ?? const []).isNotEmpty)
+                StaggerIn(index: 4, child: DailyLine(replacing: resumable)),
               if (resumable) ...[
                 const SizedBox(height: 10),
                 StaggerIn(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/run/daily.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/run/ascent.dart';
 import '../../domain/run/true_summit.dart';
@@ -243,6 +244,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
                         onTap: () => _go(() => context.go('/registry')),
                       ),
                       _TrueSummitCard(lore: lore),
+                      _DailyCard(index: 8),
                     ],
                   ),
                 ),
@@ -513,4 +515,40 @@ class _PathChip extends StatelessWidget {
       ],
     ),
   );
+}
+
+/// El desafío diario: cuántos se jugaron, la racha y, por camino, cumbres
+/// sobre intentos. No cuenta para el total: es aparte de la partida.
+class _DailyCard extends ConsumerWidget {
+  const _DailyCard({required this.index});
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = AppLocalizations.of(context);
+    final balance = ref.watch(dataProvider).balance;
+    final results = ref.watch(dailyResultsProvider).value ?? const [];
+    final stats = dailyStats(results, ref.watch(todayProvider));
+    return _PartCard(
+      index: index,
+      hanzi: '日',
+      color: Palette.gold,
+      title: t.progressDaily,
+      subtitle: stats.played == 0
+          ? t.progressDailyNone
+          : t.progressDailySub(stats.played, stats.won, stats.streak),
+      part: ProgressPart(stats.played, 0),
+      trailing: [
+        for (final s in Style.values)
+          _PathChip(
+            hanzi: balance.statsOf(s).hanzi,
+            color: styleColor(s),
+            on: (stats.paths[s]?.played ?? 0) > 0,
+            label:
+                '${stats.paths[s]?.won ?? 0}/${stats.paths[s]?.played ?? 0}',
+          ),
+      ],
+    );
+  }
 }

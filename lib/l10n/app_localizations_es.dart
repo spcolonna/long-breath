@@ -3884,4 +3884,65 @@ class AppLocalizationsEs extends AppLocalizations {
   String picoMark(String path, int n) {
     return 'Marca en el Pico $n: $path';
   }
+
+  @override
+  String get dailyTitle => 'Desafío de hoy';
+
+  @override
+  String dailySub(String path) {
+    return '$path · la misma montaña para todos';
+  }
+
+  @override
+  String get dailyGo => 'Subir';
+
+  @override
+  String dailyDone(int floor, int floors) {
+    return 'Hecho: piso $floor de $floors';
+  }
+
+  @override
+  String get dailyWon => 'Hecho: llegaste a la cumbre';
+
+  @override
+  String get dailyStarted => 'Empezado: hay un solo intento por día';
+
+  @override
+  String get dailyTomorrow => 'Mañana, otra montaña';
+
+  @override
+  String get dailyStartTitle => 'Desafío de hoy';
+
+  @override
+  String dailyStartBody(String path) {
+    return 'Subís con el $path desde el principio, en Normal y sin nada de la escuela: ni meridianos, ni edificios, ni hilos. Hay un solo intento por día y no deja nada en la partida.';
+  }
+
+  @override
+  String get dailyStartOk => 'Subir';
+
+  @override
+  String get dailyTablet => 'Desafío diario';
+
+  @override
+  String get dailyRelay => 'Mañana la montaña será otra.';
+
+  @override
+  String get dailyBack => 'Volver a la escuela';
+
+  @override
+  String dailyStreak(int n) {
+    return 'Racha de $n días';
+  }
+
+  @override
+  String get progressDaily => 'Desafío diario';
+
+  @override
+  String get progressDailyNone => 'Todavía no jugaste ninguno';
+
+  @override
+  String progressDailySub(int played, int won, int streak) {
+    return '$played jugados · $won cumbres · racha de $streak';
+  }
 }

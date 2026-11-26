@@ -159,7 +159,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
     if (run == null) return const SizedBox();
     final won = run.phase == RunPhase.victory;
     final ascent = ref.watch(lastAscentProvider);
-    final n = ascent?.n;
+    // El desafío diario no es un discípulo de la escuela: va sin número.
+    final daily = run.daily != null;
+    final n = daily ? null : ascent?.n;
     final node = run.currentNode == null ? null : run.node(run.currentNode!);
     final place = node?.scene == null
         ? null
@@ -342,7 +344,7 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         const SizedBox(height: 14),
                         _enter(0.55, 0.64, _Tablet(run: run, n: n, won: won)),
                         // Ganar en Normal o más difícil abre el Pico siguiente.
-                        if (won && run.difficulty != Difficulty.easy) ...[
+                        if (won && !daily && run.difficulty != Difficulty.easy) ...[
                           const SizedBox(height: 14),
                           _enter(0.6, 0.68, _PicoPill(run: run)),
                         ],
@@ -470,7 +472,11 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                         0.8,
                         0.88,
                         Text(
-                          won ? t.relaySummit : t.relayLine,
+                          daily
+                              ? t.dailyRelay
+                              : won
+                              ? t.relaySummit
+                              : t.relayLine,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 15,
@@ -487,9 +493,15 @@ class _ResultScreenState extends ConsumerState<ResultScreen>
                           width: double.infinity,
                           height: 52,
                           child: FilledButton(
-                            onPressed: () => _again(run),
+                            onPressed: daily
+                                ? () => context.go('/school')
+                                : () => _again(run),
                             child: Text(
-                              n == null ? t.tryAgain : t.relayButton(n + 1),
+                              daily
+                                  ? t.dailyBack
+                                  : n == null
+                                  ? t.tryAgain
+                                  : t.relayButton(n + 1),
                             ),
                           ),
                         ),
@@ -624,9 +636,9 @@ class _Tablet extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (n != null)
+                if (n != null || run.daily != null)
                   Text(
-                    t.discipleN(n!),
+                    n != null ? t.discipleN(n!) : t.dailyTablet,
                     style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w800,

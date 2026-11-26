@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/run/daily.dart';
 import '../../domain/model/enums.dart';
 import '../../domain/model/meta_bonus.dart';
 import '../../domain/run/run_engine.dart';
@@ -103,6 +104,20 @@ class RunController extends Notifier<RunState?> {
     _set(run);
   }
 
+  /// El desafío del día: la misma montaña para todos. Queda anotado al
+  /// empezar, así que abandonarlo no da otro intento.
+  void newDaily(int day) {
+    final run = _engine.newDaily(day);
+    _saveDaily(DailyResult(day: day, style: run.style!));
+    _startLog(run);
+    _set(run, what: 'desafío diario $day');
+  }
+
+  void _saveDaily(DailyResult r) => ref
+      .read(dailyStorageProvider)
+      .save(r)
+      .then((_) => ref.invalidate(dailyResultsProvider));
+
   void abandon() => _set(null);
 
   /// Menú de pruebas (solo debug): subida en la etapa y el piso elegidos.
@@ -170,6 +185,13 @@ class RunController extends Notifier<RunState?> {
           : 'pierde el combate',
     );
     final phase = state!.phase;
+    final daily = state!.daily;
+    if (daily != null) {
+      if (phase == RunPhase.victory || phase == RunPhase.defeat) {
+        _recordDaily(state!, daily);
+      }
+      return;
+    }
     if (phase == RunPhase.victory || phase == RunPhase.defeat) {
       _record(state!);
     }
@@ -202,10 +224,58 @@ class RunController extends Notifier<RunState?> {
         .then((_) => ref.invalidate(bestiaryProvider));
   }
 
+  /// Piso al que llegó, contado en toda la subida (las etapas anteriores
+  /// suman).
+  int _floorOf(RunState run) {
+    final stages = ref.read(dataProvider).balance.stages;
+    final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);
+    return below +
+        mapRows(run).indexWhere((r) => r.any((n) => n.id == run.currentNode)) +
+        1;
+  }
+
+  /// El desafío terminó: va a sus estadísticas y no a la escuela. La
+  /// pantalla final lo muestra sin número de discípulo ni ofrenda.
+  void _recordDaily(RunState run, int day) {
+    final node = run.currentNode == null ? null : run.node(run.currentNode!);
+    final alive = _lastFoe;
+    final foe = alive ?? _engine.packOf(run).firstOrNull ?? node?.enemy;
+    _lastFoe = null;
+    if (run.phase == RunPhase.defeat) _chronicle(fellTo: foe);
+    final floors = ref.read(dataProvider).balance.totalFloors;
+    final won = run.phase == RunPhase.victory;
+    final floor = won ? floors : _floorOf(run);
+    _saveDaily(
+      DailyResult(
+        day: day,
+        style: run.style ?? dailyStyle(day),
+        won: won,
+        floor: floor,
+        floors: floors,
+        done: true,
+      ),
+    );
+    ref.read(lastAscentProvider.notifier).set(
+      Ascent(
+        n: 0,
+        fell: !won,
+        floor: floor,
+        floors: floors,
+        stage: run.stage,
+        difficulty: run.difficulty,
+        enemy: foe,
+        scene: node?.scene,
+        light: node?.light,
+        style: run.style,
+        maxHp: run.maxHp,
+        deck: run.deck.length,
+      ),
+    );
+  }
+
   /// La subida terminó: queda en el registro de la escuela y el próximo
   /// en subir es otro discípulo.
   void _record(RunState run) {
-    final rows = mapRows(run);
     final node = run.currentNode == null ? null : run.node(run.currentNode!);
     final alive = _lastFoe;
     final foe = alive != null && isGhostFoe(alive)
@@ -214,17 +284,12 @@ class RunController extends Notifier<RunState?> {
         (node == null ? null : _engine.packOf(run).firstOrNull ?? node.enemy);
     _lastFoe = null;
     if (run.phase == RunPhase.defeat) _chronicle(fellTo: foe);
-    // El piso se cuenta en toda la subida: las etapas anteriores suman.
-    final stages = ref.read(dataProvider).balance.stages;
-    final below = stages.take(run.stage).fold(0, (a, s) => a + s.floors.length);
     final cultivation = ref.read(dataProvider).balance.cultivation;
     final keepsake = keepsakeOf(ref.read(dataProvider), run.deck, run.style);
     var ascent = Ascent(
       n: 0,
       fell: run.phase == RunPhase.defeat,
-      floor: below +
-          rows.indexWhere((r) => r.any((n) => n.id == run.currentNode)) +
-          1,
+      floor: _floorOf(run),
       floors: ref.read(dataProvider).balance.totalFloors,
       stage: run.stage,
       difficulty: run.difficulty,

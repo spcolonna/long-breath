@@ -127,3 +127,9 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - Ofrece hasta `master.forms` formas que todavía no sabés y que tu camino permite.
 - Se elige una sola cosa: aprender una de ellas o mejorar una carta (+`fountain.upgrade`).
 
+## Desafío diario
+- Desde la escuela (cuando ya subió algún discípulo): «Desafío de hoy».
+- Misma semilla para todos ese día, en Normal y sin Pico, con el camino del día (Tigre, Serpiente y Grulla se turnan) desde la primera sala. El santuario solo lo confirma.
+- No usa nada de la partida: ni meridianos, ni escuela, ni hilos, ni cultivo, ni Discípulo Perdido, ni herencia.
+- Un solo intento por día; abandonarlo cuenta como jugado.
+- No deja aliento, loto, jade, maestría ni Picos. Guarda jugados, cumbres y piso más alto por camino, y la racha de días seguidos.

@@ -13,6 +13,7 @@ import '../model/room.dart';
 import '../model/talisman_def.dart';
 import '../rng.dart';
 import 'ascent.dart';
+import 'daily.dart';
 import 'feats.dart';
 import 'ghost.dart';
 import 'legacy.dart';
@@ -562,6 +563,11 @@ class RunEngine {
     return _openDepth(next, 0);
   }
 
+  /// El desafío del día [day] (aaaammdd): la misma semilla y el mismo camino
+  /// para todos, en Normal y sin nada de la partida.
+  RunState newDaily(int day) =>
+      newRun(seed: dailySeed(day)).copyWith(style: dailyStyle(day), daily: day);
+
   /// Menú de pruebas: una subida nueva que arranca en la etapa [stage]
   /// (0 = la primera) con el piso [floor] (1 = el primero) por delante. El
   /// camino ya elegido ([style]) y los pisos de abajo, recorridos.
@@ -671,8 +677,12 @@ class RunEngine {
       for (final s in Style.values)
         if (!entered.locked.contains(s.name)) s,
     ]);
+    // Con el camino ya puesto (el del desafío diario), el santuario lo
+    // confirma.
     return entered.copyWith(
-      pathOptions: shuffled.take(data.balance.pathChoices).toList(),
+      pathOptions: entered.style != null
+          ? [entered.style!]
+          : shuffled.take(data.balance.pathChoices).toList(),
       rng: rng,
     );
   }

@@ -181,6 +181,7 @@ class RunState {
     this.shopWeapon,
     this.shopForged = false,
     this.trueSummit = false,
+    this.daily,
     this.dreamFight = false,
     this.stage = 0,
     this.meta = MetaBonus.none,
@@ -335,6 +336,10 @@ class RunState {
   /// del último jefe se levanta el Primer Discípulo.
   final bool trueSummit;
 
+  /// Día del desafío diario (aaaammdd) o null si es una subida de la
+  /// partida. El diario no deja nada en la escuela.
+  final int? daily;
+
   /// El combate en curso es contra el Primer Discípulo.
   final bool dreamFight;
 
@@ -449,6 +454,7 @@ class RunState {
     bool clearShopWeapon = false,
     bool? shopForged,
     bool? trueSummit,
+    int? daily,
     bool? dreamFight,
     List<MapNodeDef>? map,
     int? stage,
@@ -523,6 +529,7 @@ class RunState {
         shopWeapon: clearShopWeapon ? null : shopWeapon ?? this.shopWeapon,
         shopForged: shopForged ?? this.shopForged,
         trueSummit: trueSummit ?? this.trueSummit,
+        daily: daily ?? this.daily,
         dreamFight: dreamFight ?? this.dreamFight,
         stage: stage ?? this.stage,
         meta: meta,
@@ -607,6 +614,7 @@ class RunState {
         'shopWeapon': shopWeapon,
         'shopForged': shopForged,
         if (trueSummit) 'trueSummit': true,
+        if (daily != null) 'daily': daily,
         if (dreamFight) 'dreamFight': true,
         'stage': stage,
         'meta': meta.toJson(),
@@ -705,6 +713,7 @@ class RunState {
         shopWeapon: j['shopWeapon'] as String?,
         shopForged: j['shopForged'] as bool? ?? false,
         trueSummit: j['trueSummit'] as bool? ?? false,
+        daily: (j['daily'] as num?)?.toInt(),
         dreamFight: j['dreamFight'] as bool? ?? false,
         stage: j['stage'] as int? ?? 0,
         meta: switch (j['meta']) {

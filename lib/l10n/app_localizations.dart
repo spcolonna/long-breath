@@ -6093,6 +6093,108 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Marca en el Pico {n}: {path}'**
   String picoMark(String path, int n);
+
+  /// No description provided for @dailyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Desafío de hoy'**
+  String get dailyTitle;
+
+  /// No description provided for @dailySub.
+  ///
+  /// In es, this message translates to:
+  /// **'{path} · la misma montaña para todos'**
+  String dailySub(String path);
+
+  /// No description provided for @dailyGo.
+  ///
+  /// In es, this message translates to:
+  /// **'Subir'**
+  String get dailyGo;
+
+  /// No description provided for @dailyDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Hecho: piso {floor} de {floors}'**
+  String dailyDone(int floor, int floors);
+
+  /// No description provided for @dailyWon.
+  ///
+  /// In es, this message translates to:
+  /// **'Hecho: llegaste a la cumbre'**
+  String get dailyWon;
+
+  /// No description provided for @dailyStarted.
+  ///
+  /// In es, this message translates to:
+  /// **'Empezado: hay un solo intento por día'**
+  String get dailyStarted;
+
+  /// No description provided for @dailyTomorrow.
+  ///
+  /// In es, this message translates to:
+  /// **'Mañana, otra montaña'**
+  String get dailyTomorrow;
+
+  /// No description provided for @dailyStartTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Desafío de hoy'**
+  String get dailyStartTitle;
+
+  /// No description provided for @dailyStartBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Subís con el {path} desde el principio, en Normal y sin nada de la escuela: ni meridianos, ni edificios, ni hilos. Hay un solo intento por día y no deja nada en la partida.'**
+  String dailyStartBody(String path);
+
+  /// No description provided for @dailyStartOk.
+  ///
+  /// In es, this message translates to:
+  /// **'Subir'**
+  String get dailyStartOk;
+
+  /// No description provided for @dailyTablet.
+  ///
+  /// In es, this message translates to:
+  /// **'Desafío diario'**
+  String get dailyTablet;
+
+  /// No description provided for @dailyRelay.
+  ///
+  /// In es, this message translates to:
+  /// **'Mañana la montaña será otra.'**
+  String get dailyRelay;
+
+  /// No description provided for @dailyBack.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver a la escuela'**
+  String get dailyBack;
+
+  /// No description provided for @dailyStreak.
+  ///
+  /// In es, this message translates to:
+  /// **'Racha de {n} días'**
+  String dailyStreak(int n);
+
+  /// No description provided for @progressDaily.
+  ///
+  /// In es, this message translates to:
+  /// **'Desafío diario'**
+  String get progressDaily;
+
+  /// No description provided for @progressDailyNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Todavía no jugaste ninguno'**
+  String get progressDailyNone;
+
+  /// No description provided for @progressDailySub.
+  ///
+  /// In es, this message translates to:
+  /// **'{played} jugados · {won} cumbres · racha de {streak}'**
+  String progressDailySub(int played, int won, int streak);
 }
 
 class _AppLocalizationsDelegate
