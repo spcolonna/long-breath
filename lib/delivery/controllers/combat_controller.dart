@@ -12,6 +12,7 @@ import '../../domain/run/feats.dart';
 import '../../domain/run/ghost.dart';
 import '../tutorial/lessons.dart';
 import '../log/run_log.dart';
+import '../../domain/model/room.dart';
 import '../providers.dart';
 import 'run_controller.dart';
 
@@ -103,6 +104,9 @@ class CombatController extends Notifier<CombatView?> {
       revealedPct: revealedStructurePct,
       room: room?.rule,
       challenge: room?.challenge,
+      weakenPct: room?.mark == NodeMark.shuang
+          ? ref.read(dataProvider).balance.rooms.shuangWeaken
+          : 0,
     );
     state = CombatView(
       state: r.state,

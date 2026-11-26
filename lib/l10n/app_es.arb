@@ -3364,5 +3364,54 @@
     }
   },
   "allyShielded": "Cubre a su compañero",
-  "allyHealed": "Cura a su compañero"
+  "allyHealed": "Cura a su compañero",
+  "markRevenge": "Revancha: {enemy} venció aquí al discípulo {n}. Vencelo: +{jade} jade",
+  "@markRevenge": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      },
+      "n": {
+        "type": "int"
+      },
+      "jade": {
+        "type": "int"
+      }
+    }
+  },
+  "markShuang": "Atajo de Shuang: ella ya pasó por acá y los rivales arrancan con {pct}% menos de Vida",
+  "@markShuang": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "memorialHere": "Aquí cayó el discípulo {n}",
+  "@memorialHere": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "memorialFoe": "ante {enemy}",
+  "@memorialFoe": {
+    "placeholders": {
+      "enemy": {
+        "type": "String"
+      }
+    }
+  },
+  "revengeSpoils": "Revancha: +{jade} jade",
+  "@revengeSpoils": {
+    "placeholders": {
+      "jade": {
+        "type": "int"
+      }
+    }
+  },
+  "dayMorning": "Mañana",
+  "dayNoon": "Mediodía",
+  "dayDusk": "Atardecer"
 }

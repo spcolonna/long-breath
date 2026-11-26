@@ -363,3 +363,12 @@ macOS no tiene `timeout`.
 - **Simulador:** sección «Salas y retos». Normal, 200 subidas, retos cumplidos promedio/experto **51/58%** (meta 40–60); victorias iguales con y sin la variedad (experto 4%). Fácil 55/69%. Con «en 3 turnos» se cumplía el 84%: pasó a 2.
 - Tests: `test/domain/room_trial_test.dart` (18) y `test/room_trial_screen_test.dart` (puerta y combate en iPhone 17 Pro Max y SE). 426 tests. Sin ver en el teléfono.
 - Falta de la fase D: lluvia y más condiciones, élites con «pregunta», 3 actos por etapa, dominio y regla por etapa.
+
+## Mapa con memoria (26/11) — salto de calidad §4 (fase E, sin arte)
+- **Hora del día:** `RunEngine.timeOfDay` corrige la luz de cada puerta por altura (sin ocaso al pie, sin alba arriba; la niebla, siempre). El título del mapa dice «Sala N de 13 · Mañana/Mediodía/Atardecer» y desde el 70% se tiñe de dorado (`LightWash('ocaso')` al 75%). Como la niebla de sala depende de la luz, cambia apenas cuánto sale.
+- **Tablilla:** `lib/domain/run/memorial.dart` (`Memorial`: n, etapa, fila, rival), sacada del último del registro si cayó (`memorialFrom`, la fila sale de `floor` menos las salas de las etapas anteriores). Va en `RunState.memorial` (guardado). En el mapa, `MemorialTablet` debajo de la fila de puertas.
+- **Revancha:** `NodeMark.revenge` en `MapNodeDef.mark`. En la fila de la tablilla, la puerta con ese rival o una pelea del mismo rango que pasa a tenerlo. +12/16/20 jade (`run.rooms.revengeJade`), chip 仇 en el botín.
+- **Atajos de Shuang:** `NodeMark.shuang` (霜, celeste). 12% por fila y por capítulo leído, tope 2 por etapa, solo peleas comunes; los rivales arrancan con 25% menos de Vida (`weakenPct`). Cuentan también los capítulos leídos en la misma subida.
+- Ambas marcas con generador propio (no mueven la semilla). Simulador sin cambios: experto 4%, retos 51/58%.
+- Tests: `test/domain/map_memory_test.dart` (6) y `test/map_memory_screen_test.dart` (tablilla y marcas en Pro Max y SE). 433 tests. Sin ver en el teléfono.
+- Falta de §4: sendero ilustrado con varias filas a la vista (necesita arte), el puesto de Bao en el mapa, salas visibles de lejos y lluvia.

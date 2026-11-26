@@ -209,7 +209,9 @@ class _MapNodeState extends ConsumerState<MapNode>
                     ),
                   ),
                 // Condición de la sala y reto: del otro lado del sello.
-                if (widget.node.rule != null || widget.node.challenge != null)
+                if (widget.node.rule != null ||
+                    widget.node.challenge != null ||
+                    widget.node.mark != null)
                   Positioned(
                     top:
                         sealCenter.dy -
@@ -220,6 +222,7 @@ class _MapNodeState extends ConsumerState<MapNode>
                     child: TrialBadges(
                       rule: widget.node.rule,
                       challenge: widget.node.challenge,
+                      mark: widget.node.mark,
                       dim: !available,
                     ),
                   ),

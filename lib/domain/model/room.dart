@@ -38,6 +38,18 @@ enum Challenge {
       s is String ? Challenge.values.asNameMap()[s] : null;
 }
 
+/// Lo que la memoria de la escuela deja en una puerta del mapa.
+enum NodeMark {
+  /// Revancha: el rival que venció al último caído, en la fila donde cayó.
+  revenge,
+
+  /// Atajo de Shuang: ella ya pasó por ahí y los rivales arrancan cansados.
+  shuang;
+
+  static NodeMark? parse(Object? s) =>
+      s is String ? NodeMark.values.asNameMap()[s] : null;
+}
+
 /// La condición y el reto de la pelea en curso, y cómo va el reto.
 class Trial {
   const Trial({
@@ -99,6 +111,10 @@ class RoomsDef {
     this.bellDamage = const [],
     this.windDiscount = 1,
     this.swiftTurns = 3,
+    this.revengeJade = const [],
+    this.shuangChance = 0,
+    this.shuangMax = 0,
+    this.shuangWeaken = 0,
   });
 
   static const none = RoomsDef();
@@ -119,6 +135,19 @@ class RoomsDef {
   final int windDiscount;
   final int swiftTurns;
 
+  /// Jade extra por vencer la revancha, por etapa.
+  final List<int> revengeJade;
+
+  /// % por fila (y por capítulo de Shuang leído) de que una pelea común
+  /// traiga su atajo.
+  final int shuangChance;
+
+  /// Tope de atajos de Shuang por etapa.
+  final int shuangMax;
+
+  /// % de Vida menos con que arrancan los rivales de un atajo de Shuang.
+  final int shuangWeaken;
+
   static int _at(List<int> l, int stage) =>
       l.isEmpty ? 0 : l[stage.clamp(0, l.length - 1)];
 
@@ -126,6 +155,7 @@ class RoomsDef {
   int challengeChanceAt(int stage) => _at(challengeChance, stage);
   int challengeJadeAt(int stage) => _at(challengeJade, stage);
   int bellDamageAt(int stage) => _at(bellDamage, stage);
+  int revengeJadeAt(int stage) => _at(revengeJade, stage);
 
   static List<int> _ints(Object? v) =>
       [for (final x in (v as List?) ?? const []) x as int];
@@ -141,5 +171,9 @@ class RoomsDef {
           bellDamage: _ints(j['bellDamage']),
           windDiscount: j['windDiscount'] as int? ?? 1,
           swiftTurns: j['swiftTurns'] as int? ?? 3,
+          revengeJade: _ints(j['revengeJade']),
+          shuangChance: j['shuangChance'] as int? ?? 0,
+          shuangMax: j['shuangMax'] as int? ?? 0,
+          shuangWeaken: j['shuangWeaken'] as int? ?? 0,
         );
 }

@@ -177,10 +177,14 @@ class MapNodeDef {
     this.reward,
     this.rule,
     this.challenge,
+    this.mark,
   });
 
   final String id;
   final NodeType type;
+
+  /// Lo que dejó la memoria de la escuela (revancha, atajo de Shuang).
+  final NodeMark? mark;
 
   /// Condición de la sala y reto opcional (peleas comunes); null: ninguno.
   final RoomRule? rule;
@@ -199,49 +203,54 @@ class MapNodeDef {
 
   static final _depthRe = RegExp(r'^f(\d+)[a-z]$');
 
-  MapNodeDef withNext(List<String> next) => MapNodeDef(
+  MapNodeDef _copy({
+    List<String>? next,
+    String? enemy,
+    bool? together,
+    String? light,
+    RewardKind? reward,
+    bool clearReward = false,
+    RoomRule? rule,
+    Challenge? challenge,
+    bool trial = false,
+    NodeMark? mark,
+    bool clearMark = false,
+  }) => MapNodeDef(
         id: id,
         type: type,
-        next: next,
-        enemy: enemy,
+        next: next ?? this.next,
+        enemy: enemy ?? this.enemy,
         waves: waves,
-        together: together,
+        together: together ?? this.together,
         scene: scene,
-        light: light,
-        reward: reward,
-        rule: rule,
-        challenge: challenge,
+        light: light ?? this.light,
+        reward: clearReward ? reward : reward ?? this.reward,
+        rule: trial ? rule : this.rule,
+        challenge: trial ? challenge : this.challenge,
+        mark: clearMark ? mark : mark ?? this.mark,
       );
 
-  MapNodeDef withReward(RewardKind? reward) => MapNodeDef(
-        id: id,
-        type: type,
-        next: next,
-        enemy: enemy,
-        waves: waves,
-        together: together,
-        scene: scene,
-        light: light,
-        reward: reward,
-        rule: rule,
-        challenge: challenge,
-      );
+  MapNodeDef withNext(List<String> next) => _copy(next: next);
+
+  MapNodeDef withReward(RewardKind? reward) =>
+      _copy(reward: reward, clearReward: true);
 
   /// La misma sala con [rule] y [challenge]. Con el puente angosto, los
   /// rivales vienen de a uno.
-  MapNodeDef withTrial(RoomRule? rule, Challenge? challenge) => MapNodeDef(
-        id: id,
-        type: type,
-        next: next,
-        enemy: enemy,
-        waves: waves,
+  MapNodeDef withTrial(RoomRule? rule, Challenge? challenge) => _copy(
         together: together && rule != RoomRule.bridge,
-        scene: scene,
-        light: light,
-        reward: reward,
         rule: rule,
         challenge: challenge,
+        trial: true,
       );
+
+  /// La luz del momento (la hora del día que va con la altitud).
+  MapNodeDef withLight(String? light) => _copy(light: light);
+
+  /// La misma sala con la marca de la memoria; [enemy] cambia quién espera
+  /// (la revancha trae al que venció al caído).
+  MapNodeDef withMark(NodeMark? mark, {String? enemy}) =>
+      _copy(mark: mark, clearMark: true, enemy: enemy);
 
   /// El que espera en la sala: el común que encabeza el grupo, el élite o
   /// el jefe.
@@ -292,6 +301,7 @@ class MapNodeDef {
       },
       rule: RoomRule.parse(j['rule']),
       challenge: Challenge.parse(j['challenge']),
+      mark: NodeMark.parse(j['mark']),
     );
   }
 
@@ -307,6 +317,7 @@ class MapNodeDef {
         if (reward != null) 'reward': reward!.name,
         if (rule != null) 'rule': rule!.name,
         if (challenge != null) 'challenge': challenge!.name,
+        if (mark != null) 'mark': mark!.name,
       };
 }
 

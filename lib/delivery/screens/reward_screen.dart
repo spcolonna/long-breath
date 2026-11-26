@@ -12,6 +12,8 @@ import '../audio/game_audio.dart';
 import '../controllers/run_controller.dart';
 import '../labels.dart';
 import '../providers.dart';
+import '../../domain/model/room.dart';
+import '../widgets/trial_widgets.dart';
 import '../theme.dart';
 import '../widgets/game_icon.dart';
 import '../widgets/paper_panel.dart';
@@ -129,6 +131,7 @@ class _RewardScreenState extends ConsumerState<RewardScreen> {
                     jade: _run.jadeGained,
                     lotus: _run.lotusGained,
                     challenge: _run.challengeJade,
+                    revenge: _run.revengeJade,
                   ),
                   // La sala de pelea paga con su cofre (el premio que
                   // mostraba la puerta).
@@ -355,6 +358,7 @@ class _Spoils extends StatelessWidget {
     required this.jade,
     required this.lotus,
     this.challenge = 0,
+    this.revenge = 0,
   });
 
   final int jade;
@@ -362,6 +366,9 @@ class _Spoils extends StatelessWidget {
 
   /// Jade del reto cumplido (ya está en [jade]).
   final int challenge;
+
+  /// Jade de la revancha ganada (ya está en [jade]).
+  final int revenge;
 
   @override
   Widget build(BuildContext context) {
@@ -414,6 +421,22 @@ class _Spoils extends StatelessWidget {
             const Icon(Icons.star_rounded, size: 18, color: Palette.gold),
             t.trialSpoils(challenge),
             Palette.gold,
+          ),
+        if (revenge > 0)
+          chip(
+            3,
+            Text(
+              markHanzi(NodeMark.revenge),
+              style: TextStyle(
+                fontFamily: Fonts.display,
+                fontSize: 16,
+                height: 1,
+                fontWeight: FontWeight.w700,
+                color: markColor(NodeMark.revenge),
+              ),
+            ),
+            t.revengeSpoils(revenge),
+            markColor(NodeMark.revenge),
           ),
       ],
     );

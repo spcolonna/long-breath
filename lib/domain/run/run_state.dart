@@ -4,6 +4,7 @@ import '../model/game_balance.dart';
 import '../model/meta_bonus.dart';
 import '../rng.dart';
 import 'ghost.dart';
+import 'memorial.dart';
 import 'legacy.dart';
 
 /// Versión del formato de guardado de la subida. Subirla cuando un cambio
@@ -186,6 +187,7 @@ class RunState {
     this.lotus = 0,
     this.lotusGained = 0,
     this.challengeJade = 0,
+    this.revengeJade = 0,
     this.masteryXp = 0,
     this.rewardKind = RewardKind.cards,
     this.rewardAmount = 0,
@@ -197,6 +199,7 @@ class RunState {
     this.stageLotus = 0,
     this.feats = const {},
     this.ghost,
+    this.memorial,
     this.legacy,
   });
 
@@ -347,6 +350,10 @@ class RunState {
   /// Jade del reto cumplido en el último combate (ya está en [jadeGained]).
   final int challengeJade;
 
+  /// Jade de la revancha ganada en el último combate (ya está en
+  /// [jadeGained]).
+  final int revengeJade;
+
   /// Experiencia de maestría ganada en la subida (va al camino que tenga al
   /// terminarla).
   final int masteryXp;
@@ -377,6 +384,9 @@ class RunState {
   /// El caído que lleva el Discípulo Perdido en esta subida (null si
   /// nadie cayó todavía en la partida).
   final Ghost? ghost;
+
+  /// La tablilla del discípulo anterior, si cayó (fila y rival).
+  final Memorial? memorial;
 
   /// Lo que dejó el discípulo anterior (se elige en [RunPhase.legacy]).
   final Legacy? legacy;
@@ -445,6 +455,7 @@ class RunState {
     int? lotus,
     int? lotusGained,
     int? challengeJade,
+    int? revengeJade,
     int? masteryXp,
     RewardKind? rewardKind,
     int? rewardAmount,
@@ -456,6 +467,7 @@ class RunState {
     int? stageLotus,
     Map<String, int>? feats,
     Ghost? ghost,
+    Memorial? memorial,
     Legacy? legacy,
   }) =>
       RunState(
@@ -517,6 +529,7 @@ class RunState {
         lotus: lotus ?? this.lotus,
         lotusGained: lotusGained ?? this.lotusGained,
         challengeJade: challengeJade ?? this.challengeJade,
+        revengeJade: revengeJade ?? this.revengeJade,
         masteryXp: masteryXp ?? this.masteryXp,
         rewardKind: rewardKind ?? this.rewardKind,
         rewardAmount: rewardAmount ?? this.rewardAmount,
@@ -528,6 +541,7 @@ class RunState {
         stageLotus: stageLotus ?? this.stageLotus,
         feats: feats ?? this.feats,
         ghost: ghost ?? this.ghost,
+        memorial: memorial ?? this.memorial,
         legacy: legacy ?? this.legacy,
       );
 
@@ -599,6 +613,7 @@ class RunState {
         'lotus': lotus,
         'lotusGained': lotusGained,
         'challengeJade': challengeJade,
+        'revengeJade': revengeJade,
         'masteryXp': masteryXp,
         'rewardKind': rewardKind.name,
         'rewardAmount': rewardAmount,
@@ -610,6 +625,7 @@ class RunState {
         'stageLotus': stageLotus,
         'feats': feats,
         'ghost': ghost?.toJson(),
+        'memorial': memorial?.toJson(),
         'legacy': legacy?.toJson(),
       };
 
@@ -698,6 +714,7 @@ class RunState {
         lotus: j['lotus'] as int? ?? 0,
         lotusGained: j['lotusGained'] as int? ?? 0,
         challengeJade: j['challengeJade'] as int? ?? 0,
+        revengeJade: j['revengeJade'] as int? ?? 0,
         masteryXp: j['masteryXp'] as int? ?? 0,
         rewardKind: switch (j['rewardKind']) {
           final String k => _enumOr(RewardKind.values, k, RewardKind.cards),
@@ -716,6 +733,10 @@ class RunState {
         },
         ghost: switch (j['ghost']) {
           final Map<String, dynamic> g => Ghost.fromJson(g),
+          _ => null,
+        },
+        memorial: switch (j['memorial']) {
+          final Map<String, dynamic> m => Memorial.fromJson(m),
           _ => null,
         },
         legacy: switch (j['legacy']) {

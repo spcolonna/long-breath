@@ -3833,4 +3833,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get allyHealed => 'Cura a su compañero';
+
+  @override
+  String markRevenge(String enemy, int n, int jade) {
+    return 'Revancha: $enemy venció aquí al discípulo $n. Vencelo: +$jade jade';
+  }
+
+  @override
+  String markShuang(int pct) {
+    return 'Atajo de Shuang: ella ya pasó por acá y los rivales arrancan con $pct% menos de Vida';
+  }
+
+  @override
+  String memorialHere(int n) {
+    return 'Aquí cayó el discípulo $n';
+  }
+
+  @override
+  String memorialFoe(String enemy) {
+    return 'ante $enemy';
+  }
+
+  @override
+  String revengeSpoils(int jade) {
+    return 'Revancha: +$jade jade';
+  }
+
+  @override
+  String get dayMorning => 'Mañana';
+
+  @override
+  String get dayNoon => 'Mediodía';
+
+  @override
+  String get dayDusk => 'Atardecer';
 }

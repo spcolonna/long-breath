@@ -7,6 +7,7 @@ import '../../domain/run/run_state.dart';
 import '../../domain/run/ascent.dart';
 import '../../domain/run/cultivation.dart';
 import '../../domain/run/ghost.dart';
+import '../../domain/run/memorial.dart';
 import '../../domain/run/legacy.dart';
 import '../../infrastructure/progress_storage.dart';
 import '../log/run_log.dart';
@@ -77,6 +78,7 @@ class RunController extends Notifier<RunState?> {
     List<String>? locked,
     MetaBonus? meta,
     Ghost? ghost,
+    Memorial? memorial,
     Legacy? legacy,
     Set<String>? threads,
     Set<String>? known,
@@ -90,6 +92,7 @@ class RunController extends Notifier<RunState?> {
             locked ?? ref.read(lockedProvider).value ?? const [],
         meta: meta ?? ref.read(metaBonusProvider).value ?? MetaBonus.none,
         ghost: ghost ?? ghostFrom(ref.read(ascentsProvider).value ?? const []),
+        memorial: memorial,
         legacy: legacy,
         threads: threads ?? ref.read(threadsProvider).value ?? const {},
         known: known ??

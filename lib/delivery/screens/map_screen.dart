@@ -31,7 +31,10 @@ import '../widgets/altitude_bar.dart';
 import 'map/map_node.dart';
 import '../feel.dart';
 import '../widgets/game_icon.dart';
+import '../../domain/model/room.dart';
 import '../widgets/trial_widgets.dart';
+import '../widgets/memorial_tablet.dart';
+import '../widgets/stage_scene.dart' show LightWash;
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -257,6 +260,16 @@ class _PathViewState extends ConsumerState<_PathView>
       for (final n in run.map)
         if (widget.available.contains(n.id)) n,
     ];
+    // La hora del día va con la altitud: mañana, mediodía, atardecer.
+    final row = doors.isEmpty ? climbed : doors.first.depth;
+    final f = depths <= 1 ? 0.0 : row / (depths - 1);
+    final dusk = f >= 0.7;
+    final day = f < 0.4
+        ? t.dayMorning
+        : dusk
+        ? t.dayDusk
+        : t.dayNoon;
+    final tablet = engine.memorialAt(run, row) ? run.memorial : null;
     // Hitos de la etapa: el guardián, la fuente y el jefe.
     final milestones = <int, String>{
       for (var d = 0; d < stage.floors.length; d++)
@@ -313,6 +326,14 @@ class _PathViewState extends ConsumerState<_PathView>
                   ),
                 ),
               ),
+              // El atardecer dorado cerca del jefe.
+              Positioned.fill(
+                child: AnimatedOpacity(
+                  opacity: dusk ? 0.75 : 0,
+                  duration: const Duration(milliseconds: 1400),
+                  child: const LightWash(light: 'ocaso'),
+                ),
+              ),
               // Papel arriba: las puertas se leen sobre cualquier fondo.
               Positioned(
                 top: 0,
@@ -353,7 +374,7 @@ class _PathViewState extends ConsumerState<_PathView>
                 left: left,
                 right: 8,
                 child: Text(
-                  t.pathTitle(math.min(climbed + 1, depths), depths),
+                  '${t.pathTitle(math.min(climbed + 1, depths), depths)} · $day',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 15,
@@ -381,6 +402,18 @@ class _PathViewState extends ConsumerState<_PathView>
                         optional: isOptionalElite(doors[i], run.map, data),
                         onTap: () => _tapDoor(doors[i]),
                       ),
+                    ),
+                  ),
+                ),
+              if (tablet != null)
+                Positioned(
+                  left: left + 8,
+                  right: 16,
+                  top: doorsTop + 132,
+                  child: Center(
+                    child: MemorialTablet(
+                      key: const ValueKey('memorial'),
+                      memorial: tablet,
                     ),
                   ),
                 ),
@@ -730,6 +763,9 @@ class _PickCard extends ConsumerWidget {
       final data = ref.watch(dataProvider);
       final look = nodeLook(n, data);
       final label = nodeLabel(n, t, ref.watch(textProvider).path);
+      final runNow = ref.watch(runControllerProvider);
+      final stageNow = runNow?.stage ?? 0;
+      final memorial = runNow?.memorial;
       final rank = n.type == NodeType.combat ? data.enemy(n.enemy!).rank : null;
       final hint = switch (n.type) {
         NodeType.combat => switch (rank!) {
@@ -801,9 +837,21 @@ class _PickCard extends ConsumerWidget {
                   TrialLines(
                     rule: n.rule,
                     challenge: n.challenge,
-                    jade: data.balance.rooms.challengeJadeAt(
-                      ref.watch(runControllerProvider)?.stage ?? 0,
-                    ),
+                    jade: data.balance.rooms.challengeJadeAt(stageNow),
+                    mark: n.mark,
+                    markLine: switch (n.mark) {
+                      NodeMark.revenge => t.markRevenge(
+                        ref.watch(textProvider).enemy(
+                          memorial?.foe ?? n.enemy!,
+                        ),
+                        memorial?.n ?? 0,
+                        data.balance.rooms.revengeJadeAt(stageNow),
+                      ),
+                      NodeMark.shuang => t.markShuang(
+                        data.balance.rooms.shuangWeaken,
+                      ),
+                      null => null,
+                    },
                   ),
                 ],
               ),

@@ -178,6 +178,8 @@ class CombatEngine {
     // Condición de la sala y reto opcional (peleas comunes).
     RoomRule? room,
     Challenge? challenge,
+    // Atajo de Shuang: los rivales arrancan con este % menos de Vida.
+    int weakenPct = 0,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -224,7 +226,10 @@ class CombatEngine {
           pct(enemy.structure, dif.enemyStructure, pm.enemyStructure);
       return _EnemyDraft(
         id: enemy.id,
-        hp: math.max(1, hp - sum((e) => e.enemyHp) - meta.enemyHp),
+        hp: math.max(
+          1,
+          hp * (100 - weakenPct) ~/ 100 - sum((e) => e.enemyHp) - meta.enemyHp,
+        ),
         maxHp: hp,
         structure: math.max(
             1,

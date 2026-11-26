@@ -328,7 +328,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     String? weapon,
     int weaponLevel = 1,
     RoomRule? room,
-    Challenge? challenge}) {
+    Challenge? challenge,
+    int weakenPct = 0}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length
     ..stage = stage
@@ -354,7 +355,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           together: together,
           meta: meta,
           room: room,
-          challenge: challenge)
+          challenge: challenge,
+          weakenPct: weakenPct)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
@@ -451,7 +453,10 @@ RunLog playRun(GameData data, Bot bot, int seed,
             together: runEngine.togetherOf(r), meta: r.meta,
             weapon: r.weapon, weaponLevel: r.weaponLevel,
             room: runEngine.fightNodeOf(r)?.rule,
-            challenge: runEngine.fightNodeOf(r)?.challenge);
+            challenge: runEngine.fightNodeOf(r)?.challenge,
+            weakenPct: runEngine.fightNodeOf(r)?.mark == NodeMark.shuang
+                ? data.balance.rooms.shuangWeaken
+                : 0);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
         // Prototipo (mapa fijo de 3 etapas): el jefe cura y deja talismán

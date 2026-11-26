@@ -49,7 +49,7 @@ void main() {
     await settle();
 
     expect(find.byType(AltitudeBar), findsOneWidget);
-    expect(find.text('Sala 1 de 13'), findsOneWidget);
+    expect(find.text('Sala 1 de 13 · Mañana'), findsOneWidget);
     expect(find.text('0 m'), findsWidgets);
     // Cada puerta de pelea muestra lo que hay del otro lado.
     r = container.read(runControllerProvider)!;

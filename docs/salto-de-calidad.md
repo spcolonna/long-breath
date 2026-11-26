@@ -176,6 +176,7 @@ Cada propuesta lleva: **Problema** (con dato), **Propuesta**, **Cómo** (archivo
 - **Cómo:** `map_screen.dart` (844 líneas) se rehace sobre un `CustomPainter` con scroll; `path_gen.dart` expone más filas; `CloudDrift` y `KenBurns` se reutilizan.
 - **Arte:** 3 ilustraciones largas (una por etapa) y ~6 hitos chicos.
 - **Cómo medir:** visual, y que la elección de ruta cambie según lo que se ve dos filas adelante.
+- **Estado (26/11):** hechos la hora del día con la altitud (luz de las puertas y dorado del atardecer en el mapa), la tablilla del caído anterior con revancha (+jade) y los atajos de Shuang (rivales cansados), sin arte nuevo. Falta: sendero ilustrado con 2–3 filas a la vista, el puesto de Bao, salas visibles de lejos y clima (lluvia).
 
 ---
 

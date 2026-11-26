@@ -100,6 +100,13 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Élite opcional** (`elite` % y `elites` del piso; hoy pisos 5 y 7 al 40%): si el piso tiene más de un lugar, uno de sus combates pasa a ser uno de `elites`, sin escolta ni grupo. Los élites no se repiten en el mapa mientras queden otros (el del piso 9 también evita al opcional). Es élite por su rango, así que da talismán, arma, loto y mercader como cualquier élite.
 - Se empieza eligiendo entre los nodos del primer piso (los que no tienen ninguno antes).
 
+## Mapa con memoria
+- **Hora del día** (`RunEngine.timeOfDay`): en el primer 40% de la etapa no hay ocaso (pasa a alba) y desde el 70% no hay alba (pasa a ocaso); la niebla, a cualquier hora. No usa la suerte de la subida. El mapa dice «Mañana / Mediodía / Atardecer» junto a la sala y se tiñe de dorado al atardecer.
+- **Tablilla** (`Memorial`, `memorialFrom`): si el último discípulo del registro cayó, en la subida siguiente queda una tablilla en la fila y la etapa donde cayó («Aquí cayó el discípulo N ante X»).
+- **Revancha** (`NodeMark.revenge`): en esa fila, una pelea del mismo rango pasa a tener al rival que lo venció (si ya estaba en una puerta, esa). Vencerla da +12/16/20 de jade (`run.rooms.revengeJade`, `RunState.revengeJade`, se ve en el botín). No hay revancha contra el Discípulo Perdido.
+- **Atajos de Shuang** (`NodeMark.shuang`): con capítulos de su hilo leídos, cada fila (desde la 2.ª y antes de las dos últimas) tiene 12% por capítulo de que una pelea común traiga su marca 霜, con tope de 2 por etapa. Sus rivales arrancan con 25% menos de Vida (`weakenPct` en `CombatEngine.start`).
+- Revancha y atajos usan un generador propio derivado del de la subida: el resto de la montaña queda igual.
+
 ## Legado
 - Al empezar una subida, si hubo otra antes, `RunEngine.legacyOf(ascents.last)` arma el legado del discípulo anterior (ganó o cayó): su `keepsake` con `upgradePct`% (50) de las mejoras, y `maxHp` (3) si llegó a la etapa `hpStage` (1 = la segunda) o `jade` (15) si no. Datos en `legacy` de `game_balance.json`.
 - `newRun(legacy:)` abre la fase `legacy` (pantalla `/legacy`); `chooseLegacy` suma la carta al mazo o los números y sigue con el talismán de los meridianos si había, o al mapa. Si solo tenía iniciales, se ofrece únicamente la opción de números.

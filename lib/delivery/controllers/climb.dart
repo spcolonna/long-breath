@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/model/enums.dart';
 import '../../domain/run/ghost.dart';
+import '../../domain/run/memorial.dart';
 import '../../domain/run/revelations.dart';
 import '../providers.dart';
 import '../screens/home_screen.dart' show routeFor;
@@ -29,6 +30,10 @@ Future<void> startClimb(BuildContext context, WidgetRef ref) async {
         locked: locked,
         meta: meta,
         ghost: ghostFrom(ascents),
+        memorial: memorialFrom(ascents, [
+          for (final st in ref.read(dataProvider).balance.stages)
+            st.floors.length,
+        ]),
         threads: threads,
         known: knownRevelations(lore),
         trueSummit: trueSummit,

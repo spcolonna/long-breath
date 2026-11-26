@@ -10,6 +10,17 @@ import '../theme.dart';
 const roomColor = Palette.sky;
 const challengeColor = Palette.gold;
 
+/// Color y carácter de las marcas de la memoria: la revancha (仇) y el
+/// atajo de Shuang (霜, su cinta celeste).
+Color markColor(NodeMark m) => switch (m) {
+  NodeMark.revenge => Palette.lacquer,
+  NodeMark.shuang => Palette.sky,
+};
+String markHanzi(NodeMark m) => switch (m) {
+  NodeMark.revenge => '仇',
+  NodeMark.shuang => '霜',
+};
+
 /// Las marcas de la puerta en el mapa: el carácter de la condición de la
 /// sala (雾 风 桥 钟) y una estrella si trae reto.
 class TrialBadges extends ConsumerWidget {
@@ -17,16 +28,20 @@ class TrialBadges extends ConsumerWidget {
     super.key,
     required this.rule,
     required this.challenge,
+    this.mark,
     this.dim = false,
   });
 
   final RoomRule? rule;
   final Challenge? challenge;
+  final NodeMark? mark;
   final bool dim;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (rule == null && challenge == null) return const SizedBox.shrink();
+    if (rule == null && challenge == null && mark == null) {
+      return const SizedBox.shrink();
+    }
     final text = ref.watch(textProvider);
     Widget chip(Color c, Widget child) {
       final color = dim ? c.withValues(alpha: 0.5) : c;
@@ -57,9 +72,10 @@ class TrialBadges extends ConsumerWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      spacing: 3,
       children: [
+        if (mark != null) chip(markColor(mark!), Text(markHanzi(mark!))),
         if (rule != null) chip(roomColor, Text(text.room(rule!, 'hanzi'))),
-        if (rule != null && challenge != null) const SizedBox(height: 3),
         if (challenge != null)
           chip(challengeColor, const Icon(Icons.star_rounded)),
       ],
@@ -75,15 +91,23 @@ class TrialLines extends ConsumerWidget {
     required this.rule,
     required this.challenge,
     required this.jade,
+    this.mark,
+    this.markLine,
   });
 
   final RoomRule? rule;
   final Challenge? challenge;
   final int jade;
 
+  /// La marca de la memoria y lo que dice (revancha, atajo de Shuang).
+  final NodeMark? mark;
+  final String? markLine;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (rule == null && challenge == null) return const SizedBox.shrink();
+    if (rule == null && challenge == null && markLine == null) {
+      return const SizedBox.shrink();
+    }
     final t = AppLocalizations.of(context);
     final text = ref.watch(textProvider);
     const style = TextStyle(fontSize: 13, height: 1.25, color: Palette.text);
@@ -117,6 +141,8 @@ class TrialLines extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (mark != null && markLine != null)
+          line(markColor(mark!), Text(markHanzi(mark!)), markLine!),
         if (rule != null)
           line(
             roomColor,

@@ -16,6 +16,7 @@ import 'ascent.dart';
 import 'feats.dart';
 import 'ghost.dart';
 import 'legacy.dart';
+import 'memorial.dart';
 import 'path_gen.dart';
 import 'run_state.dart';
 import 'threads.dart';
@@ -36,6 +37,7 @@ class RunEngine {
     List<String> locked = const [],
     MetaBonus meta = MetaBonus.none,
     Ghost? ghost,
+    Memorial? memorial,
     Legacy? legacy,
     Set<String> threads = const {},
     Set<String> known = const {},
@@ -71,6 +73,7 @@ class RunEngine {
       jade: meta.startJade,
       rerollsLeft: meta.rerolls,
       ghost: ghost,
+      memorial: memorial,
       threads: threads,
       known: known,
       trueSummit: trueSummit,
@@ -209,7 +212,15 @@ class RunEngine {
     );
     r = r.copyWith(rng: rng);
     final (paid, r2) = _assignRewards(r, doors, parent);
-    final rewarded = _assignTrials(r2, paid, depth);
+    final lit = [
+      for (final d in paid) d.withLight(timeOfDay(d.light, depth, st.floors.length)),
+    ];
+    final rewarded = _assignMarks(
+      r2,
+      _assignTrials(r2, lit, depth),
+      depth,
+      kept,
+    );
     final ids = [for (final d in rewarded) d.id];
     return r2.copyWith(
       map: [
@@ -222,6 +233,88 @@ class RunEngine {
         ...rewarded,
       ],
     );
+  }
+
+  /// La luz de una puerta según la altura de la etapa: de mañana al pie
+  /// (sin ocaso), el atardecer dorado cerca del jefe (sin alba). La niebla
+  /// puede estar a cualquier hora; nunca es de noche.
+  static String? timeOfDay(String? light, int depth, int depths) {
+    if (light == null || depths <= 1) return light;
+    final f = depth / (depths - 1);
+    if (f < 0.4 && light == 'ocaso') return 'alba';
+    if (f >= 0.7 && light == 'alba') return 'ocaso';
+    return light;
+  }
+
+  /// La tablilla del caído en esta fila de esta etapa, si la hay.
+  bool memorialAt(RunState r, int depth) =>
+      r.memorial != null &&
+      r.memorial!.stage == r.stage &&
+      r.memorial!.depth == depth;
+
+  /// Lo que la memoria de la escuela deja en las puertas: la revancha en
+  /// la fila donde cayó el discípulo anterior y los atajos de Shuang (uno
+  /// cada tanto por capítulo leído de su hilo). Con su propio generador,
+  /// como las condiciones de sala.
+  List<MapNodeDef> _assignMarks(
+    RunState r,
+    List<MapNodeDef> doors,
+    int depth,
+    List<MapNodeDef> kept,
+  ) {
+    final def = data.balance.rooms;
+    var out = doors;
+    final foe = r.memorial?.foe;
+    if (memorialAt(r, depth) && foe != null && data.enemies.containsKey(foe)) {
+      final rank = data.enemy(foe).rank;
+      bool fight(MapNodeDef d) =>
+          d.type == NodeType.combat &&
+          d.enemy != null &&
+          !isGhostFoe(d.enemy!);
+      final i = [
+        out.indexWhere((d) => fight(d) && d.foes.contains(foe)),
+        out.indexWhere((d) => fight(d) && data.enemy(d.enemy!).rank == rank),
+      ].firstWhere((i) => i >= 0, orElse: () => -1);
+      if (i >= 0) {
+        final d = out[i];
+        out = [
+          for (final (j, x) in out.indexed)
+            j == i
+                ? x.withMark(
+                    NodeMark.revenge,
+                    enemy: d.foes.contains(foe) ? null : foe,
+                  )
+                : x,
+        ];
+      }
+    }
+    final chapters = chapterOf(r.threads, threadShuang);
+    final placed = kept.where((n) => n.mark == NodeMark.shuang).length;
+    final cap = math.min(def.shuangMax, chapters);
+    if (chapters > 0 &&
+        placed < cap &&
+        depth >= def.fromDepth &&
+        depth < stageOf(r).floors.length - 2) {
+      var rng = Rng.seeded(r.rng.state ^ 0x5B0A + depth * 104729);
+      final (roll, next) = rng.nextInt(100);
+      rng = next;
+      final open = [
+        for (final (j, d) in out.indexed)
+          if (d.mark == null &&
+              d.type == NodeType.combat &&
+              d.enemy != null &&
+              data.enemy(d.enemy!).rank == EnemyRank.common)
+            j,
+      ];
+      if (roll < def.shuangChance * chapters && open.isNotEmpty) {
+        final (pick, _) = rng.nextInt(open.length);
+        out = [
+          for (final (j, x) in out.indexed)
+            j == open[pick] ? x.withMark(NodeMark.shuang) : x,
+        ];
+      }
+    }
+    return out;
   }
 
   /// La condición y el reto de cada puerta de pelea común. Usa su propio
@@ -636,6 +729,7 @@ class RunEngine {
     final flawless = beaten && hp >= r.hp;
     r = r.copyWith(
       challengeJade: 0,
+      revengeJade: 0,
       feats: addFeats(r.feats, {
         ...tally,
         if (flawless) Feat.flawless: 1,
@@ -689,16 +783,22 @@ class RunEngine {
       final (rolled, rngJ) = _rollJade(r);
       // El reto de la sala, si se cumplió.
       final bonus = challengeMet ? b.rooms.challengeJadeAt(r.stage) : 0;
+      // La revancha del caído anterior.
+      final revenge = fightNodeOf(r)?.mark == NodeMark.revenge
+          ? b.rooms.revengeJadeAt(r.stage)
+          : 0;
       // Cada enemigo de más en el grupo suma jade.
       final jade = rolled +
           b.packJade * (packOf(r).length - 1) +
           talismanSum(r, (e) => e.winJade) +
           (detour ? b.jadeDetour : 0) +
-          bonus;
+          bonus +
+          revenge;
       r = r.copyWith(
         jade: r.jade + jade,
         jadeGained: jade,
         challengeJade: bonus,
+        revengeJade: revenge,
         rng: rngJ,
       );
     }

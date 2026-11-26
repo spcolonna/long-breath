@@ -6027,6 +6027,54 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Cura a su compañero'**
   String get allyHealed;
+
+  /// No description provided for @markRevenge.
+  ///
+  /// In es, this message translates to:
+  /// **'Revancha: {enemy} venció aquí al discípulo {n}. Vencelo: +{jade} jade'**
+  String markRevenge(String enemy, int n, int jade);
+
+  /// No description provided for @markShuang.
+  ///
+  /// In es, this message translates to:
+  /// **'Atajo de Shuang: ella ya pasó por acá y los rivales arrancan con {pct}% menos de Vida'**
+  String markShuang(int pct);
+
+  /// No description provided for @memorialHere.
+  ///
+  /// In es, this message translates to:
+  /// **'Aquí cayó el discípulo {n}'**
+  String memorialHere(int n);
+
+  /// No description provided for @memorialFoe.
+  ///
+  /// In es, this message translates to:
+  /// **'ante {enemy}'**
+  String memorialFoe(String enemy);
+
+  /// No description provided for @revengeSpoils.
+  ///
+  /// In es, this message translates to:
+  /// **'Revancha: +{jade} jade'**
+  String revengeSpoils(int jade);
+
+  /// No description provided for @dayMorning.
+  ///
+  /// In es, this message translates to:
+  /// **'Mañana'**
+  String get dayMorning;
+
+  /// No description provided for @dayNoon.
+  ///
+  /// In es, this message translates to:
+  /// **'Mediodía'**
+  String get dayNoon;
+
+  /// No description provided for @dayDusk.
+  ///
+  /// In es, this message translates to:
+  /// **'Atardecer'**
+  String get dayDusk;
 }
 
 class _AppLocalizationsDelegate
