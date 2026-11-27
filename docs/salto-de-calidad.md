@@ -267,7 +267,7 @@ Cada propuesta lleva: **Problema** (con dato), **Propuesta**, **Cómo** (archivo
 ---
 
 ## 9. Producto
-- Inglés (el ARB y `content/es.json` ya lo permiten), iPad (hoy solo iPhone vertical), iCloud, Game Center, tráiler y capturas de tienda.
+- ✅ Inglés (27/11). iPad (hoy solo iPhone vertical), iCloud, Game Center, tráiler y capturas de tienda.
 - Docs al día: `reglas-implementadas.md` describe el mapa viejo y `docs/arte/relevamiento.md` dice que no hay sonido.
 
 ---

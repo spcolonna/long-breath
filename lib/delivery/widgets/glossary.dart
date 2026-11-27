@@ -114,41 +114,69 @@ extension GlossaryLabels on AppLocalizations {
   };
 }
 
-/// Cómo aparece cada término dentro de un texto en castellano. El orden
+/// Cómo aparece cada término dentro de un texto, por idioma. El orden
 /// importa: «Paso en T» antes que «postura», «Desequilibrado» antes que nada.
-/// Al traducir el juego, cada idioma necesita su propia tabla.
-const _patterns = <Term, String>{
-  Term.dingbu: r'paso en t',
-  Term.staggered: r'desequilibr\p{L}*',
-  Term.deflect: r'desv[ií]\p{L}*',
-  Term.guard: r'guardia',
-  Term.structure: r'estructura',
-  Term.breathe: r'respirar',
-  Term.breath: r'aliento',
-  Term.stance: r'posturas?',
-  Term.circle: r'c[ií]rculo',
-  Term.flow: r'flujo',
-  Term.chain: r'encadena\p{L}*',
-  Term.retain: r'reten\p{L}*|retuviste',
-  Term.exhaust: r'agotar',
-  Term.form: r'formas?',
-  Term.height: r'altura',
+const _patternsByLang = <String, Map<Term, String>>{
+  'es': {
+    Term.dingbu: r'paso en t',
+    Term.staggered: r'desequilibr\p{L}*',
+    Term.deflect: r'desv[ií]\p{L}*',
+    Term.guard: r'guardia',
+    Term.structure: r'estructura',
+    Term.breathe: r'respirar',
+    Term.breath: r'aliento',
+    Term.stance: r'posturas?',
+    Term.circle: r'c[ií]rculo',
+    Term.flow: r'flujo',
+    Term.chain: r'encadena\p{L}*',
+    Term.retain: r'reten\p{L}*|retuviste',
+    Term.exhaust: r'agotar',
+    Term.form: r'formas?',
+    Term.height: r'altura',
+  },
+  'en': {
+    Term.dingbu: r't-step',
+    Term.staggered: r'stagger\p{L}*',
+    Term.deflect: r'deflect\p{L}*',
+    Term.guard: r'guard',
+    Term.structure: r'structure',
+    Term.breathe: r'breathe',
+    Term.breath: r'breath',
+    Term.stance: r'stances?',
+    Term.circle: r'circle',
+    Term.flow: r'flow',
+    Term.chain: r'chain\p{L}*',
+    Term.retain: r'retain\p{L}*',
+    Term.exhaust: r'exhaust\p{L}*',
+    Term.form: r'forms?',
+    Term.height: r'heights?',
+  },
 };
 
-final _matcher = RegExp(
-  r'(?<!\p{L})(?:' +
-      _patterns.values.map((p) => '($p)').join('|') +
-      r')(?!\p{L})',
-  caseSensitive: false,
-  unicode: true,
-);
+final _matchers = <String, RegExp>{};
+
+RegExp _matcherFor(Map<Term, String> patterns, String lang) =>
+    _matchers[lang] ??= RegExp(
+      r'(?<!\p{L})(?:' +
+          patterns.values.map((p) => '($p)').join('|') +
+          r')(?!\p{L})',
+      caseSensitive: false,
+      unicode: true,
+    );
 
 /// Parte [text] en tramos: texto suelto y términos del glosario.
-List<(String, Term?)> splitTerms(String text, {Set<Term> skip = const {}}) {
-  final terms = _patterns.keys.toList();
+/// [lang] elige la tabla de términos (respaldo: castellano).
+List<(String, Term?)> splitTerms(
+  String text, {
+  Set<Term> skip = const {},
+  String lang = 'es',
+}) {
+  if (!_patternsByLang.containsKey(lang)) lang = 'es';
+  final patterns = _patternsByLang[lang]!;
+  final terms = patterns.keys.toList();
   final out = <(String, Term?)>[];
   var at = 0;
-  for (final m in _matcher.allMatches(text)) {
+  for (final m in _matcherFor(patterns, lang).allMatches(text)) {
     var term = terms.first;
     for (var g = 1; g <= terms.length; g++) {
       if (m.group(g) != null) {
@@ -214,7 +242,11 @@ class _GlossaryTextState extends State<GlossaryText> {
     _clear();
     final open = widget.onTerm ?? (t) => showGlossary(context, t);
     final spans = [
-      for (final (s, term) in splitTerms(widget.text, skip: widget.skip))
+      for (final (s, term) in splitTerms(
+        widget.text,
+        skip: widget.skip,
+        lang: Localizations.localeOf(context).languageCode,
+      ))
         if (term == null)
           TextSpan(text: s)
         else

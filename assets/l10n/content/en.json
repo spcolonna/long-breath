@@ -1,0 +1,1904 @@
+{
+  "stages": {
+    "qianyunshan": "Mountain of a Thousand Clouds",
+    "xuankongsi": "Hanging Monastery",
+    "wolongding": "Summit of the Sleeping Dragon"
+  },
+  "paths": {
+    "terraza": {
+      "alba": "Dawn Terrace",
+      "niebla": "Terrace in the Clouds",
+      "ocaso": "Dusk Terrace"
+    },
+    "bambu": {
+      "alba": "Dewy Bamboo",
+      "niebla": "Bamboo in the Mist",
+      "ocaso": "Bamboo at Sunset"
+    },
+    "cristales": {
+      "alba": "Crystal Trail",
+      "niebla": "Crystals in the Haze",
+      "ocaso": "Dusk Crystals"
+    },
+    "campanas": {
+      "alba": "Courtyard of Bells",
+      "niebla": "Bells in the Haze",
+      "ocaso": "Dusk Bells"
+    },
+    "cumbre": {
+      "alba": "The Summit",
+      "niebla": "Summit in the Clouds",
+      "ocaso": "Dusk Summit"
+    },
+    "pasarela": {
+      "alba": "Dawn Walkway",
+      "niebla": "Walkway Above the Haze",
+      "ocaso": "Dusk Walkway"
+    },
+    "escalera": {
+      "alba": "Hanging Stairway",
+      "niebla": "Stairway in the Mist",
+      "ocaso": "Stairway at Sunset"
+    },
+    "patio_colgado": {
+      "alba": "Courtyard Over the Abyss",
+      "niebla": "Courtyard in the Clouds",
+      "ocaso": "Golden Courtyard"
+    },
+    "campanario": {
+      "alba": "Monastery Bell Tower",
+      "niebla": "Veiled Bell Tower",
+      "ocaso": "Dusk Bell Tower"
+    },
+    "gran_campana": {
+      "alba": "Hall of the Great Bell",
+      "niebla": "Hall of the Great Bell",
+      "ocaso": "Hall of the Great Bell"
+    },
+    "ventisquero": {
+      "alba": "Dawn Snowfield",
+      "niebla": "White Snowfield",
+      "ocaso": "Rose Snowfield"
+    },
+    "glaciar": {
+      "alba": "Sleeping Glacier",
+      "niebla": "Glacier in the Blizzard",
+      "ocaso": "Dusk Glacier"
+    },
+    "paso_nevado": {
+      "alba": "Snowy Pass",
+      "niebla": "Pass Through the Snow",
+      "ocaso": "Pass of the Last Sun"
+    },
+    "templo_helado": {
+      "alba": "Ice Temple",
+      "niebla": "Temple in the Blizzard",
+      "ocaso": "Frozen Temple at Dusk"
+    },
+    "lecho_dragon": {
+      "alba": "Dragon's Bed",
+      "niebla": "Dragon's Bed",
+      "ocaso": "Dragon's Bed"
+    }
+  },
+  "styles": {
+    "tiger": "Tiger",
+    "snake": "Snake",
+    "crane": "Crane"
+  },
+  "styleMottos": {
+    "tiger": "Strike first, strike hard.",
+    "snake": "Flow, and bite into the gap.",
+    "crane": "Wait. The moment comes."
+  },
+  "stances": {
+    "mabu": "Horse",
+    "gongbu": "Bow",
+    "xubu": "Empty",
+    "dingbu": "T-Step"
+  },
+  "forms": {
+    "xiao_hong_quan": "Small Red Fist",
+    "wu_bu_quan": "Five Steps Fist",
+    "she_quan": "Snake Fist",
+    "lian_huan_quan": "Chained Fist",
+    "men_hu_tui": "Door Kicks",
+    "hu_quan": "Tiger Fist",
+    "he_quan": "Crane Fist",
+    "da_hong_quan": "Great Red Fist",
+    "meng_hu_chu_shan": "Fierce Tiger Leaves the Mountain",
+    "ling_she_chu_dong": "The Snake Leaves Its Den",
+    "he_zhan_chi": "The Crane Spreads Its Wings",
+    "fu_hu_quan": "Tiger Taming Fist",
+    "jin_she_chan_si": "Golden Snake Reels Silk",
+    "bai_he_quan": "White Crane Fist"
+  },
+  "cards": {
+    "gongbu_chongquan": "Lunging Punch",
+    "mabu_chongquan": "Steady Punch",
+    "tan_tui": "Snap Kick",
+    "tui_zhang": "Palm Push",
+    "mabu_jiada": "Block and Counter",
+    "xubu_liangzhang": "Step Back",
+    "ge_dang": "Mid Block",
+    "an_zhang": "Low Block",
+    "deng_tui": "Heel Kick",
+    "ce_chuai": "Side Kick",
+    "gongbu_tuizhang": "Lunging Push",
+    "pi_quan": "Hammer Fist",
+    "shang_jia": "High Block",
+    "ti_xi": "Shield Knee",
+    "tiao_xi": "Catch Your Breath",
+    "baoquan_li": "Martial Salute",
+    "ma_zhuan_gong": "Horse to Bow",
+    "gong_zhuan_xu": "Bow to Empty Step",
+    "xu_zhuan_ma": "Empty to Horse",
+    "hu_zhao": "Tiger Claw",
+    "hu_pu": "Tiger Pounce",
+    "hu_bao_tou": "Tiger Guard",
+    "hu_xiao": "Tiger Roar",
+    "she_xing_shou": "Snake Hand",
+    "she_tu_xin": "Snake Tongue",
+    "she_chan_shen": "Coiled Snake",
+    "jin_she": "Golden Snake",
+    "he_chi": "Crane Wing",
+    "du_li": "Crane on One Leg",
+    "he_zui": "Crane Beak",
+    "he_wu": "Crane Dance",
+    "hu_wei": "Tiger Tail",
+    "xia_shan_hu": "Tiger Descends the Mountain",
+    "hu_ya": "Tiger Fang",
+    "hu_ben": "Tiger Charge",
+    "e_hu_pu_shi": "Hungry Tiger",
+    "hu_dun": "Crouching Tiger",
+    "hu_hui_shen": "The Tiger Turns",
+    "she_wei": "Snake Tail",
+    "she_shan": "Slipping Snake",
+    "she_hui_tou": "The Snake Looks Back",
+    "ling_she": "Nimble Snake",
+    "she_jiao": "Snake's Embrace",
+    "she_pan": "Lurking Snake",
+    "she_zhuan_shen": "The Snake Turns",
+    "he_xi": "Crane Knee",
+    "he_ming": "Crane's Call",
+    "he_ding": "Crane's Crown",
+    "bai_he_liang_chi": "White Crane Spreads Its Wings",
+    "he_zhuo": "Crane Peck",
+    "he_mian": "The Crane Sleeps",
+    "he_luo_di": "The Crane Lands",
+    "gun_sao": "Low Sweep",
+    "gun_ge": "Crossing Staff",
+    "gun_tiao": "Rising Staff",
+    "gun_wuhua": "Staff Whirl",
+    "jian_ci": "Thrust",
+    "jian_dian": "Pricking Point",
+    "jian_jie": "Intercepting Cut",
+    "jian_chuanxin": "Piercing Sword",
+    "pudao_pi": "Splitting Slash",
+    "pudao_lan": "Blocking Blade",
+    "pudao_kan": "Pudao Chop",
+    "pudao_chantou": "Blade Around the Head"
+  },
+  "enemies": {
+    "dummy": {
+      "name": "Wooden Dummy",
+      "rule": "The school's training dummy (木人桩). No special rules: it strikes high, mid and low, in that order."
+    },
+    "bat": {
+      "name": "Jade Bat",
+      "rule": "Against a double attack, Guard applies to each hit. Screech: you discard 1 card of your choice. If you repeat a stance, it changes height: its next action is a LOW dive.",
+      "lore": "Born from the echo of a shout in the ravine. If you climb singing, it follows you a while, then leaves."
+    },
+    "salamander": {
+      "name": "Ember Salamander",
+      "rule": "Its Guard absorbs damage, but not Structure damage. Rewards palms and pushes. When Staggered, it recovers with a MID tail lash.",
+      "lore": "It sleeps in the embers of campfires left by climbers. That's why novices put their fires out well."
+    },
+    "golem": {
+      "name": "Quartz Golem",
+      "rule": "Immovable: takes half damage unless Staggered. Protector: when fighting beside another, it gives that ally 5 Guard at the end of each turn.",
+      "lore": "The hillside quartz grew tired of being stepped on and stood up. It still hasn't decided where to go."
+    },
+    "disciple": {
+      "name": "Lost Disciple",
+      "rule": "If you end your turn in the same stance as the last one, its next attack deals +5 damage and +2 Structure.",
+      "lore": "Climbed, grew tired and forgot to come down. Repeats the stance it was taught, because that's all it remembers."
+    },
+    "disciple_tiger": {
+      "name": "Lost Disciple",
+      "rule": "Tiger Path. Awakens: each action adds +1 to its strikes. If you repeat a stance, its next attack deals +5 damage and +2 Structure.",
+      "lore": "Wears the sash of a fallen Tiger. Hits the way they did: without thinking, harder each time."
+    },
+    "disciple_snake": {
+      "name": "Lost Disciple",
+      "rule": "Snake Path. Recovers 2 Life before each action. If you repeat a stance, its next attack deals +5 damage and +2 Structure.",
+      "lore": "Wears the sash of a fallen Snake. Breathes slowly, heals slowly, and is in no hurry."
+    },
+    "disciple_crane": {
+      "name": "Lost Disciple",
+      "rule": "Crane Path. Fan: the first strike each turn deals it no damage and returns 3 to you. If you repeat a stance, its next attack deals +5 damage and +2 Structure.",
+      "lore": "Wears the sash of a fallen Crane. Spreads its arms like wings and returns whatever you give."
+    },
+    "monk": {
+      "name": "Faceless Monk",
+      "rule": "Interrupt: if you don't deflect it, your forms in progress reset to 0.",
+      "intro": "The bells don't ring for you. They ring so you'll turn back.",
+      "reply": "I came to hear them up close.",
+      "defeat": "Go on… and don't look at the face I don't have.",
+      "triumph": "Return to the school. The bells will wait for you.",
+      "lore": "He was a master before the master. He tends the stone path and lets nothing be left half done."
+    },
+    "dragon": {
+      "name": "Dragon's Echo",
+      "rule": "Scales: each strike deals 1 less damage per scale, unless it's Staggered. Each time you Stagger it, it loses a scale for good. Phase 2 at 50% Life: it announces Dragon's Breath, a huge MID strike with a countdown. Avoid it by deflecting it or by Staggering the Echo first. Phase 3 at 30%: its scales regrow up to 2 and it unleashes the Breath every two actions, with a double LOW sweep in between.",
+      "intro": "Another small breath that wants to touch the clouds?",
+      "reply": "I'm not here to touch them. I'm here to see where they come from.",
+      "defeat": "I'm only the echo… what sleeps above breathes deeper.",
+      "triumph": "The clouds swallow those who rush. Breathe slower next time.",
+      "lore": "It isn't the dragon: it's what's left of its voice as it bounces off the clouds below.",
+      "revealed": {
+        "intro": "You know what my skin is made of. Then you know why I won't let you pass without a fight.",
+        "reply": "I know you were snow. I came to breathe with you, not against you.",
+        "defeat": "Climb. And tell the sleeper that its smallest scale still guards the forest.",
+        "triumph": "Come back when the valley owes you something. It owes me everything."
+      }
+    },
+    "dummy_basic": {
+      "name": "Wooden Dummy",
+      "rule": "The first lesson's dummy. Always strikes MID, 5 damage."
+    },
+    "dummy_heights": {
+      "name": "Wooden Dummy",
+      "rule": "A dummy for practicing defenses: strikes HIGH, then MID, then LOW, and starts over."
+    },
+    "dummy_light": {
+      "name": "Wooden Dummy",
+      "rule": "A dummy for practicing stances: strikes soft and MID every turn."
+    },
+    "dummy_guard": {
+      "name": "Wooden Dummy",
+      "rule": "A dummy with little Structure: it covers up, then gathers strength, then strikes MID."
+    },
+    "dummy_forms": {
+      "name": "Wooden Dummy",
+      "rule": "A dummy for practicing forms: strikes soft and MID every turn."
+    },
+    "monkey": {
+      "name": "Thief Monkey",
+      "rule": "Thief: each hit that damages you steals 4 jade. On its third action it escapes with the loot and leaves no jade. Defeat it first and you get it all back. Staggering it makes it lose its action and buys you time.",
+      "lore": "It hoards jade because it shines. It hides it in a nest nobody has found, not even the monkey."
+    },
+    "bandit": {
+      "name": "Pass Bandit",
+      "rule": "Staff: one turn it probes with a HIGH strike, the next it brings down a MID blow of 15. The counter warns you when it's coming: save your MID defense for that turn, or Stagger it just before and it loses the blow. If its partner falls, it swings a blow of rage.",
+      "lore": "Charges a toll on a pass that isn't his. Nobody pays, but he writes it all down on a little tablet."
+    },
+    "lingzhi": {
+      "name": "Lingzhi Mushroom",
+      "rule": "Recovers 3 Life before each action. If Staggered, it loses its action and doesn't heal either: hit hard and fast. Healer: when fighting beside another, it heals the most wounded for 6 at the end of each turn.",
+      "lore": "The mushroom of a thousand years. The monks swear it smiles wider when stepped on."
+    },
+    "lion": {
+      "name": "Stone Lion",
+      "rule": "Awakens: after each action its strikes deal +3 damage, and it stacks. Staggering it puts it back to sleep: the bonus resets to 0.",
+      "intro": "Stone that wakes, stone that won't let you pass.",
+      "reply": "Then I'll be more patient than stone.",
+      "defeat": "I go back to sleep… guard the path I opened for you.",
+      "triumph": "One more stone on the stairway.",
+      "lore": "It carved the entrance arch and then stayed to guard it. It wakes slowly, like all the old ones."
+    },
+    "fan": {
+      "name": "Lady of the Fan",
+      "rule": "Fan: the first damaging strike each turn deals her no damage and returns 3 to you. Structure still gets through. Open your turn with a cheap card or a palm; while Staggered she can't use the fan.",
+      "intro": "One strike at a time, disciple. The first is always mine.",
+      "reply": "Then the second will be the one that counts.",
+      "defeat": "The wind has shifted… and not in my favor.",
+      "triumph": "You danced well. But the fan keeps the rhythm.",
+      "lore": "Her iron fan belonged to a grandmother who shooed flies with it. She uses it for something more serious."
+    },
+    "bell_bat": {
+      "name": "Bell Tower Bat",
+      "rule": "Toll: if you don't deflect its double strike, you have 1 less Breath next turn. Its screech makes you discard a card.",
+      "lore": "It lives inside the great bell. Every toll ruffles its wings, and it takes it out on whoever passes."
+    },
+    "bronze_man": {
+      "name": "Bronze Man",
+      "rule": "Immovable: takes half damage. Thorns: each card that damages it costs you 1 Life (forms don't). While Staggered it has no thorns and takes double. When Staggered, it recovers by melting its bronze: 16 Guard.",
+      "lore": "The monks cast it for practice. One day it practiced alone and never stopped."
+    },
+    "temple_guard": {
+      "name": "Passage Guardian",
+      "rule": "Its Guard stops only one type of strike: first fists, then kicks. Hit with another type and you bypass it entirely (forms are still stopped). Protector: when fighting beside another, it gives that ally 7 Guard at the end of each turn.",
+      "lore": "Guards a passage that leads to another passage. Takes the job very seriously."
+    },
+    "ash_salamander": {
+      "name": "Ash Salamander",
+      "rule": "Recovers 4 Life before each action. If Staggered, it loses its action and doesn't heal either: hit hard and fast.",
+      "lore": "Cousin of the ember one. Lives in the censers and smells of sandalwood."
+    },
+    "iron_abbot": {
+      "name": "Iron Abbot",
+      "rule": "Thorns: each card that damages him costs you 1 Life (forms don't). He interrupts your forms, and his Iron Shirt only stops fists: use palms or kicks.",
+      "intro": "My shirt is iron, and so is my patience.",
+      "reply": "Mine is linen, but it doesn't tear.",
+      "defeat": "Iron bends… the vow does not.",
+      "triumph": "Go down, and come back when your linen can take a hit.",
+      "lore": "He prayed so long without moving that his skin turned to iron. He says it was worth it."
+    },
+    "jade_lion": {
+      "name": "Jade Lion",
+      "rule": "Awakens: after each action its strikes add 3 more. Recovers 3 Life before acting. Staggering it calms it and takes away its action.",
+      "intro": "Every roar wakes me a little more.",
+      "reply": "Then let's finish before you're fully awake.",
+      "defeat": "The jade cracks… and inside there is light.",
+      "triumph": "You'll sleep in the snow below, like the others.",
+      "lore": "The lion at the gate, polished by a thousand hands that touched it for luck."
+    },
+    "bell_keeper": {
+      "name": "Bell Keeper",
+      "rule": "Its Guard only stops palms: use fists or kicks. Toll: if you don't deflect it, you have 1 less Breath. It announces Bell Strike, a strong HIGH strike with a countdown that also drains Breath.",
+      "intro": "When the bell rings three times, no one climbs further.",
+      "reply": "Then I won't let it ring a third time.",
+      "defeat": "Two tolls… and the silence lets you pass.",
+      "triumph": "Third toll. Go down with it ringing in your ears.",
+      "lore": "Has rung the bell at dawn for so many years that it no longer hears anything else."
+    },
+    "bell_abbot": {
+      "name": "Abbot of the Great Bell",
+      "rule": "His Guard stops only one type of strike (fists or kicks): use the other. His toll drains Breath if you don't deflect it. Phase 2 at 50%: he announces the Great Toll, a huge MID strike with a countdown that also drains 2 Breath.",
+      "intro": "I pray for everyone who climbs. Today I pray for you.",
+      "reply": "Pray for those below. I keep climbing.",
+      "defeat": "The bell is cracked… now I understand who cracked it last time.",
+      "triumph": "May the mountain send you back. I cannot.",
+      "lore": "Keeper of the Great Bell. He says a good strike is heard in the valley; a bad one, only in your head.",
+      "revealed": {
+        "intro": "You read the note. Yes: this bell never rings to wake it. It rings so no one climbs too fast.",
+        "reply": "I'm not here to wake it. I'm here to climb slowly.",
+        "defeat": "Slowly, then. The bell will stay silent while you pass.",
+        "triumph": "One strike too many and the mountain trembles. Come back slower."
+      }
+    },
+    "snow_ape": {
+      "name": "Snow Ape",
+      "rule": "Awakens: after each action its strikes add 2 more. Staggering it calms it. If its partner falls, it leaps with all its fury.",
+      "lore": "Big, white and curious. Its anger builds slowly, like the storm."
+    },
+    "ice_golem": {
+      "name": "Frost Golem",
+      "rule": "Immovable: takes half damage. Frost: if you don't deflect its strike, you draw one less card next turn. Protector: when fighting beside another, it gives that ally 9 Guard at the end of each turn.",
+      "lore": "Old ice that remembers being a river. It walks slowly so it won't melt."
+    },
+    "wind_disciple": {
+      "name": "Wind Disciple",
+      "rule": "If you end two turns in a row in the same stance, its next strike hits harder. Its Guard only stops palms, and its sweep brings frost (you draw one less card).",
+      "lore": "A student of the Lady of the Wind. She learned to let no one pass before she learned to fight."
+    },
+    "frost_bat": {
+      "name": "Frost Bat",
+      "rule": "Frost: if you don't deflect its double strike, you draw one less card. Toll: if you don't deflect it, you have 1 less Breath. Its screech makes you discard. If you repeat a stance, its next action is a LOW icy dive.",
+      "lore": "The bell tower cousin who moved to the snow. It arrived cold and never warmed up."
+    },
+    "wind_lady": {
+      "name": "Lady of the Wind",
+      "rule": "Deflects the first damaging strike each turn and returns 4 to you. She doesn't deflect while Staggered. Her gust brings frost.",
+      "intro": "The summit wind doesn't blow: it decides.",
+      "reply": "Then let it decide in favor of those who climb.",
+      "defeat": "Go on. The wind has already chosen you.",
+      "triumph": "The wind carried you back home. Thank it.",
+      "lore": "The first to reach the frozen temple. She is afraid of choosing wrong, so she lets no one pass.",
+      "revealed": {
+        "intro": "You know who gave me this wind. Do you also know how heavy it is to choose?",
+        "reply": "I know you're afraid of choosing wrong. Choose me, and if it's a mistake, it's mine.",
+        "defeat": "No one ever offered to carry the mistake. Go on. Let it weigh on us both.",
+        "triumph": "You see? Once again I chose not to let anyone pass. It's easier."
+      }
+    },
+    "snow_lion": {
+      "name": "Snow Lion",
+      "rule": "Awakens: after each action its strikes add 3 more; Staggering it calms it. Thorns: each card that damages it costs you 1 Life (forms don't).",
+      "intro": "Every flake that falls makes me bigger.",
+      "reply": "And every step I take makes you smaller.",
+      "defeat": "The snow melts… and becomes water again.",
+      "triumph": "Your footprint is already gone. Such is the summit.",
+      "lore": "A snow lion that comes down to the clouds to play. It plays rough."
+    },
+    "dragon_reflection": {
+      "name": "Dragon's Reflection",
+      "rule": "The Sleeping Dragon, seen in the monastery pond. Scales: each strike deals 1 less damage per scale, unless it's Staggered; each time you Stagger it, it loses one. It covers itself in mirror scales and announces Dragon's Breath with a countdown.",
+      "intro": "I am what the dragon sees when it looks into the water.",
+      "reply": "Then let's see what it sees when it looks at me.",
+      "defeat": "The water trembles… the reflection fades.",
+      "triumph": "You looked into me and didn't recognize yourself.",
+      "lore": "The summit dragon, seen in the pond. Throw a stone and half of it gets angry."
+    },
+    "dragon_dream": {
+      "name": "Dragon's Dream",
+      "rule": "What the Sleeping Dragon dreams before waking. Scales: each strike deals 1 less damage per scale, unless it's Staggered; each time you Stagger it, it loses one. Its frost makes you draw one less card and its haze makes you discard. It announces Dragon's Breath with a countdown.",
+      "intro": "You're inside the dragon's dream. Do you want to wake up?",
+      "reply": "No. I want to reach the one who dreams.",
+      "defeat": "The dream lets you go on… but remember it.",
+      "triumph": "Sleep, disciple. No one grows tired here.",
+      "lore": "What the Sleeping Dragon dreams before waking. It has the dragon's shape, but not its weight."
+    },
+    "sleeping_dragon": {
+      "name": "Sleeping Dragon",
+      "rule": "Scales: each strike deals 1 less damage per scale, unless it's Staggered; each time you Stagger it, it loses one. Its frost makes you draw one less card. Phase 2 at 50%: Dragon's Breath with a countdown. Phase 3 at 30%: its scales grow up to 3 and it alternates frost and Breath.",
+      "intro": "I have breathed for centuries so the clouds keep being born. Why do you breathe?",
+      "reply": "Because the school taught me to breathe slowly. I came to see what for.",
+      "defeat": "At last… someone with a long breath. Now you can see the stone.",
+      "triumph": "Sleep a little longer, you too. The next one waits for you below.",
+      "lore": "The first young man who climbed. He promised to breathe for the valley, and he is still keeping his word.",
+      "revealed": {
+        "intro": "I've dreamed of you so many times I no longer know if you're here or if I'm still asleep.",
+        "reply": "I'm here. Let me breathe for you a while.",
+        "defeat": "Two short, one long… That's how I used to breathe. Your turn now.",
+        "triumph": "Not yet. Dream of me again."
+      }
+    },
+    "paper_crane": {
+      "name": "Paper Crane",
+      "rule": "A folded talisman come to life: little Life and fast, high strikes. Usually comes in a flock; spread your strikes well.",
+      "lore": "A talisman folded by a novice who was afraid to climb alone. It flies ahead, just in case."
+    },
+    "opera_mask": {
+      "name": "Opera of a Thousand Faces",
+      "rule": "Changes mask with every guard: red stops fists, gold stops palms, blue stops kicks. Watch the mask and hit with another type (forms are still stopped). Attacks high, mid and low, in that order.",
+      "lore": "Changes faces faster than you change your mind. No one has seen the face beneath."
+    },
+    "pixiu": {
+      "name": "Pixiu",
+      "rule": "Devours jade: each hit that damages you steals 5. It doesn't flee: defeat it and it returns everything. Gold scale: each of your strikes deals 1 less until you Stagger it. If you repeat a stance, its next action is a LOW bite.",
+      "lore": "It eats jade and has no way to let it out. That's why, if you defeat it, it gives it all back."
+    },
+    "incense_monk": {
+      "name": "Incense Monk",
+      "rule": "Heals 4 before each action while his incense burns. His smoke, if you don't deflect it, leaves you with 1 less Breath. Stagger him to cut off the healing. Healer: when fighting beside another, he heals the most wounded for 8 at the end of each turn.",
+      "lore": "He prays while the incense burns. When it goes out, he remembers he was supposed to fight."
+    },
+    "celadon_lion": {
+      "name": "Celadon Lion",
+      "rule": "Porcelain guardian of the monastery courtyard. Awakens: each action adds 3 to its strikes, which all go low. Staggering it puts it back to sleep.",
+      "intro": "Courtyard porcelain, guardian of those who doubt.",
+      "reply": "Today I don't doubt.",
+      "defeat": "A crack… like the ones in the old cups the master won't throw away.",
+      "triumph": "Fragile things can stamp hard too.",
+      "lore": "Courtyard porcelain, green as still water. It cracked once, and they mended it with gold."
+    },
+    "flying_sword": {
+      "name": "Flying Sword",
+      "rule": "A sword that flies on its own. Little Life and three high slashes in a row; the third cuts the form you're building. Guard high or finish it fast.",
+      "lore": "A sword that lost its owner and keeps searching for them uphill."
+    },
+    "wooden_ox": {
+      "name": "Wooden Ox",
+      "rule": "A Mohist automaton. Winds up twice, then stomps low with everything it built up; the stomp is announced with a countdown. When Staggered, it recovers with a blind MID charge.",
+      "lore": "The Mohists built it to haul rice. It has strength to spare and not enough rice."
+    },
+    "slate_hermit": {
+      "name": "Slate Hermit",
+      "rule": "Stone skin: each card that damages him costs you 1 Life (not while Staggered). Punishes repeating stances: change stance between turns.",
+      "lore": "He sat down to meditate on the hillside and the stone slowly covered him. He didn't complain."
+    },
+    "guqin_player": {
+      "name": "Guqin Player",
+      "rule": "A hermit who fights by playing. Three high notes in a row, then a dissonance that makes you discard and a chord that freezes. Guard high against the waves. Healer: when fighting beside another, he heals the most wounded for 10 at the end of each turn.",
+      "lore": "He plays for the sleeping dragon. Interrupt him and he plays out of tune on purpose."
+    },
+    "qilin": {
+      "name": "Qilin",
+      "rule": "The beast of good omen. Cloud step: its guard stops kicks. Deflects the first strike each turn and returns 4 to you. While Staggered it loses both defenses.",
+      "intro": "The qilin appears when someone is born who will change things.",
+      "reply": "Then why do you block my way?",
+      "defeat": "Because I had to be sure. Now I am.",
+      "triumph": "It isn't your time yet. It will come.",
+      "lore": "Beast of good omen. It walks on clouds and crushes not a single flower, but it will crush you."
+    },
+    "nine_tail_fox": {
+      "name": "Nine-Tailed Fox",
+      "rule": "Spirit of illusions. Its guard switches sides: first it stops palms, then kicks. Mid-dance it charms you and makes you discard a card. Staggering it breaks the illusion and strips its guard.",
+      "intro": "Which of us is the real one? Choose well.",
+      "reply": "The one who doesn't tremble when I breathe.",
+      "defeat": "You saw me… No one has seen me in centuries.",
+      "triumph": "You got lost watching the wrong tails.",
+      "lore": "It has nine tails and only one answer to every question: another question."
+    },
+    "shadow_puppet": {
+      "name": "Shadow Puppet",
+      "rule": "A painted leather warrior that comes alive by lantern light. Copies your last strike: its guard stops that same type. If you end with a fist, hit with a palm or kick next time. If its partner falls, the lantern flares: HIGH slash of 15.",
+      "lore": "Painted leather that dances when someone lights the lantern. It copies you because it knows nothing else."
+    },
+    "first_disciple": {
+      "name": "The First Disciple",
+      "rule": "Fights with all three Paths: Tiger at the start; Snake from 66 % (drains your Breath and interrupts); Crane from 33 %, with Dragon's Breath on a countdown. Punishes repeating stances.",
+      "intro": "I climbed before everyone and never learned to come down. Do you know how to breathe for someone else?",
+      "reply": "I was taught to breathe slowly. Let me show you.",
+      "defeat": "Two short, one long… like that. Now I can sleep without dreaming.",
+      "triumph": "Not yet. Come back when your breath is enough for two.",
+      "lore": "The dragon's dream of itself: the young man who climbed first, before any school existed."
+    }
+  },
+  "intents": {
+    "g_hu_zhao": "Tiger Claw",
+    "g_hu_ya": "Tiger Fang",
+    "g_hu_xiao": "Tiger's Roar",
+    "g_fu_hu_quan": "Tiger-Taming Fist",
+    "g_she_hui_tou": "Snake Turns Its Head",
+    "g_she_chan_shen": "Coiled Snake",
+    "g_ling_she": "Nimble Snake",
+    "g_jin_she_chan_si": "Golden Snake Winds the Silk",
+    "g_bai_he_liang_chi": "White Crane Spreads Its Wings",
+    "g_he_zhuo": "Crane's Peck",
+    "g_du_li": "Crane on One Leg",
+    "g_bai_he_quan": "White Crane Fist",
+    "dragon_breath": "Dragon's Breath",
+    "sweep": "Sweep",
+    "charge": "Charge",
+    "screech": "Screech",
+    "interrupt": "Interrupt",
+    "burrow": "Burrows",
+    "snatch": "Snatch",
+    "flee": "Flee",
+    "stone_skin": "Stone Skin",
+    "pounce": "Pounce",
+    "fan_gust": "Fan Gust",
+    "fan_edge": "Iron Edge",
+    "staff_jab": "Probe",
+    "staff_smash": "Staff Blow",
+    "toll": "Toll",
+    "bronze_skin": "Bronze Skin",
+    "fist_gate": "Shuts out fists",
+    "kick_gate": "Shuts out kicks",
+    "palm_gate": "Shuts out palms",
+    "iron_shirt": "Iron Shirt",
+    "great_bell": "Great Toll",
+    "bell_strike": "Bell Strike",
+    "dream_haze": "Dream Haze",
+    "mirror_scale": "Mirror Scale",
+    "frost": "Frost",
+    "spores": "Spore Cloud",
+    "cap_shield": "Lacquer Cap",
+    "root_lash": "Root Lash",
+    "paper_swoop": "Paper Swoop",
+    "mask_red": "Red mask: stops fists",
+    "mask_gold": "Gold mask: stops palms",
+    "mask_blue": "Blue mask: stops kicks",
+    "devour": "Devours jade",
+    "gold_scale": "Gold Scale",
+    "incense": "Incense",
+    "incense_palm": "Incense Palm",
+    "smoke": "Smoke",
+    "celadon_crush": "Porcelain Swipe",
+    "string_ripple": "String Ripples",
+    "dissonance": "Dissonance",
+    "silk_chord": "Silk Chord",
+    "sword_slash": "Slash",
+    "sword_cut": "Form Cutter",
+    "ox_wind_up": "Gears",
+    "ox_stomp": "Stomp",
+    "ox_ram": "Ram",
+    "ape_leap": "Ape Leap",
+    "slate_skin": "Slate Skin",
+    "cloud_step": "Cloud Step",
+    "qilin_horn": "Horn",
+    "holy_flame": "Sacred Fire",
+    "fox_illusion": "Illusion: stops palms",
+    "tail_veil": "Veil of Tails: stops kicks",
+    "foxfire": "Foxfire",
+    "fox_charm": "Charm",
+    "nine_tails": "Nine Tails",
+    "puppet_slash": "Painted Slash",
+    "lantern_mirror": "Lantern Theater",
+    "puppet_sweep": "Rod Sweep",
+    "bat_dive": "Dive",
+    "pixiu_lunge": "Low Bite",
+    "frost_dive": "Icy Dive",
+    "tail_lash": "Tail Lash",
+    "bronze_reforge": "Molten Bronze",
+    "ox_rampage": "Blind Charge",
+    "bandit_rage": "Blow of Rage",
+    "puppet_vengeance": "Lantern Slash",
+    "ape_grief": "Ape's Fury"
+  },
+  "talismans": {
+    "arco": "Bowstring",
+    "primer": "First Strike",
+    "roca": "Mountain Stone",
+    "vida": "Thread of Life",
+    "fuente": "Spring Drop",
+    "desvio": "Silk Sleeve",
+    "formas": "Worn Scroll",
+    "aliento": "Pearl of Breath",
+    "grieta": "Seal of the Crack",
+    "victoria": "Victory Ribbon",
+    "cambio": "Turning Leaf",
+    "paso": "Light Sandal",
+    "bolsa": "Pilgrim's Pouch",
+    "vacio": "Empty Bowl",
+    "quiebre": "Broken Hammer",
+    "rueda": "Wheel of Stances",
+    "espejo": "Bronze Mirror",
+    "luna": "Full Moon",
+    "montana": "Mountain Root",
+    "tambor": "Bronze Drum",
+    "perla": "Dragon Pearl",
+    "hoja": "Split Leaf",
+    "horno": "Cinnabar Furnace",
+    "garra": "Tiger Claw",
+    "escama": "Snake Scale",
+    "pluma": "Crane Feather",
+    "abaco": "Merchant's Abacus",
+    "manga": "Wide Sleeve",
+    "filo": "Chipped Edge",
+    "brasa": "Hidden Ember",
+    "abismo": "Edge of the Abyss",
+    "voto_silencio": "Vow of silence",
+    "voto_ayuno": "Vow of fasting",
+    "voto_penitencia": "Vow of penance",
+    "voto_firmeza": "Vow of steadfastness",
+    "voto_tigre": "Vow of ferocity",
+    "voto_loto": "Vow of the lotus",
+    "voto_filo": "Vow of the blade"
+  },
+  "weapons": {
+    "gun": {
+      "name": "Staff",
+      "text": "Ash wood, as tall as a man. It sweeps low and leaves no firm footing."
+    },
+    "jian": {
+      "name": "Sword",
+      "text": "A straight, double-edged blade. It finds the gap in the guard and goes in."
+    },
+    "pudao": {
+      "name": "Pudao",
+      "text": "Long handle, broad blade, a peasant's weapon. Slow, but what it touches splits."
+    }
+  },
+  "realms": {
+    "lianqi": {
+      "name": "Tempered Breath",
+      "text": "The school is just learning to breathe with you."
+    },
+    "zhuji": {
+      "name": "Foundations",
+      "text": "The fallen left a firm base. The Crane comes down to teach."
+    },
+    "kaimai": {
+      "name": "Open Meridians",
+      "text": "Breath now flows through the whole school."
+    },
+    "ningshen": {
+      "name": "Serene Spirit",
+      "text": "The animal Paths share their forms."
+    },
+    "tongxuan": {
+      "name": "The Depths",
+      "text": "Techniques no one had used in ages are remembered."
+    },
+    "guizhen": {
+      "name": "Return to the True",
+      "text": "All the school knows is now yours."
+    }
+  },
+  "awakenings": {
+    "hu_nu": {
+      "name": "Fury",
+      "text": "The tiger never warns twice."
+    },
+    "hu_po": {
+      "name": "Breaking Claw",
+      "text": "What the tiger touches, cracks."
+    },
+    "hu_yue": {
+      "name": "Leap",
+      "text": "It lands on you before you see it move."
+    },
+    "hu_shi": {
+      "name": "Hunger",
+      "text": "A staggering foe wakes its hunger."
+    },
+    "she_du": {
+      "name": "Slow Venom",
+      "text": "Each bite adds to the last."
+    },
+    "she_chan": {
+      "name": "Embrace",
+      "text": "With every coil, the snake squeezes a little tighter."
+    },
+    "she_xin": {
+      "name": "Forked Tongue",
+      "text": "By the third strike, it knows where to go next."
+    },
+    "she_tui": {
+      "name": "Molt",
+      "text": "It sheds its old skin and moves lighter. Each full turn renews it."
+    },
+    "he_jing": {
+      "name": "Stillness",
+      "text": "What waits falls with more weight."
+    },
+    "he_yu": {
+      "name": "Feather",
+      "text": "What is kept weighs no more than a feather."
+    },
+    "he_ping": {
+      "name": "Balance",
+      "text": "On one leg, nothing moves her."
+    },
+    "he_zhan": {
+      "name": "Open Wings",
+      "text": "With wings spread, she sees the whole field."
+    }
+  },
+  "events": {
+    "ambush_qianyunshan": {
+      "name": "Ambush in the Pines",
+      "text": "Among the pines, a branch snaps behind you. A bandit steps onto the trail, staff raised: “Your purse or your teeth.”",
+      "fight": "Stand and fight",
+      "fightResult": "“Better this way,” he says, raising his guard.",
+      "sneak": "Slip past",
+      "sneakResult": "You hug the rocks and pass unseen. Along the way you find some dropped jade.",
+      "sneakFail": "A stone rolls under your foot. They catch you before you can hide.",
+      "pay": "Pay the toll",
+      "payResult": "You drop the jade on the trail and walk on without looking back."
+    },
+    "ambush_xuankongsi": {
+      "name": "The Mask on the Walkway",
+      "text": "On the hanging walkway, a figure in an opera mask blocks your way. The mask changes color: red, black, white.",
+      "fight": "Stand and fight",
+      "fightResult": "The mask flashes red. It means to fight.",
+      "sneak": "Slip past",
+      "sneakResult": "You hug the rocks and pass unseen. Along the way you find some dropped jade.",
+      "sneakFail": "A stone rolls under your foot. They catch you before you can hide.",
+      "pay": "Pay the toll",
+      "payResult": "You drop the jade on the trail and walk on without looking back."
+    },
+    "ambush_wolongding": {
+      "name": "The Sword in the Snow",
+      "text": "Something whistles over the snow: a sword flies on its own and sinks in at your feet. It pulls free, turns, and points at you.",
+      "fight": "Stand and fight",
+      "fightResult": "The sword hums in the air and lunges.",
+      "sneak": "Slip past",
+      "sneakResult": "You hug the rocks and pass unseen. Along the way you find some dropped jade.",
+      "sneakFail": "A stone rolls under your foot. They catch you before you can hide.",
+      "pay": "Pay the toll",
+      "payResult": "You drop the jade on the trail and walk on without looking back."
+    },
+    "wounded": {
+      "name": "The Injured Pilgrim",
+      "text": "By the trail, a young monk clutches his ankle. He fell from the ledge and no one stopped.",
+      "help": "Carry him to the shelter",
+      "helpResult": "You carry him on your back to the shelter below. Before you leave, he grabs your sleeve: “At the monastery, I won't forget you.”",
+      "leave": "Point the way down and go on",
+      "leaveResult": "You leave him your canteen and show him the way. When you look back, he's already on his feet."
+    },
+    "wounded_return": {
+      "name": "The Monk You Carried",
+      "text": "A monk blocks your way with a bow. It's the one you carried on the Mountain of a Thousand Clouds: he walks unaided now, holding something wrapped in silk.",
+      "gift": "Accept his gift",
+      "giftResult": "He unwraps a talisman from the monastery's treasury. “The abbot says a mountain debt is paid on the mountain.”",
+      "train": "Ask him to teach you",
+      "trainResult": "He shows you how the monastery's monks fight. Choose which strike to refine with what you learned."
+    },
+    "shuang_1": {
+      "name": "Frost",
+      "text": "A disciple with a sky-blue ribbon catches up on the trail and walks backward to look at you. “Shuang, of the Blue Bird school. And you? Bah, never mind: I bet I reach the summit first.”",
+      "accept": "Take the bet",
+      "acceptResult": "“Deal!” She dashes off among the stones. Stung, you train harder the rest of the day and find a new strike.",
+      "bow": "Bow without a word",
+      "bowResult": "She gives you an odd look, as if no one had ever bowed to her. “You're the calm type, huh.” She walks off slowly. You breathe deep and keep your own pace."
+    },
+    "shuang_2": {
+      "name": "The Monastery Steps",
+      "text": "On the monastery steps, Shuang sits with a swollen ankle, her sky-blue ribbon tied as a bandage. She sees you and lifts her chin. “It's nothing. Go on, the bet still stands.”",
+      "help": "Help her climb",
+      "helpResult": "You serve as her crutch for three long flights. At the top, without looking at you, she fixes your stance for a strike: “This is how the Blue Bird does it. Don't tell anyone.”",
+      "pass": "Go on: a bet is a bet",
+      "passResult": "“That's it!” she shouts, laughing through the pain. Higher up, you find her jade pouch hanging from a branch, with a note: “Just in case, so you can't say I won with an edge.”"
+    },
+    "shuang_3": {
+      "name": "The Rope Bridge",
+      "text": "Shuang waits for you halfway across a rope bridge, clouds below. “I know you can climb. Now I want to see how you hit.”",
+      "duel": "Cross fists",
+      "duelResult": "She raises her guard. The bridge sways with every step.",
+      "spar": "Spar without striking",
+      "sparResult": "You practice until sundown, correcting each other. You learn more than you thought you'd teach."
+    },
+    "shuang_4": {
+      "name": "The Blue Bird Master",
+      "text": "In the shelter of a rock, Shuang watches the snow. “My master climbed and never came down. They say the Lady of the Wind wouldn't let her pass.” She glances at you. “Did something like that happen to your master?”",
+      "share": "Tell her what your master taught you",
+      "shareResult": "You tell her about the notebook, the letters signed with an S. Shuang laughs softly and, for once, bets nothing. Sharing the fire, the cold fades.",
+      "silence": "Stay silent",
+      "silenceResult": "She nods as if you had answered. “Fine. Each school keeps its own.” She stands and leaves you the Blue Bird whetstone."
+    },
+    "shuang_5_kind": {
+      "name": "The Blue Feather",
+      "text": "At the last bend before the summit, Shuang waits for you, unhurried. “I got here first, but I waited. Winning alone is no fun.” She holds out a blue feather.",
+      "take": "Accept the feather",
+      "takeResult": "“It was my master's. She'd have wanted someone who climbs well to carry it.” The feather weighs less than air and gives you courage.",
+      "climb": "Climb the last stretch side by side",
+      "climbResult": "You climb shoulder to shoulder, without a word. No one counts who sets foot first. Your chest swells."
+    },
+    "shuang_5_proud": {
+      "name": "The Summit Is Mine",
+      "text": "Shuang blocks your way at the last bend, her sky-blue ribbon pulled tight. “You beat me at something every time. Not today.” Her guard is already up.",
+      "duel": "Fight for the summit",
+      "duelResult": "No bet, no laughter. Just two schools and a mountain.",
+      "yield": "Let her go first",
+      "yieldResult": "She looks at you for a long while. “...Thank you.” She climbs first. In passing she rests a hand on your shoulder, and your Breath returns whole."
+    },
+    "curio": {
+      "name": "The Antiquarian's Case",
+      "text": "Under eaves hanging over the abyss, an antiquarian dusts a lacquered case. Inside, scrolls sealed with red and gold wax. “Rare techniques, novice. Rare and costly.”",
+      "buy": "Buy a sealed scroll",
+      "buyResult": "The antiquarian breaks three seals before you and unrolls the scrolls. Choose one.",
+      "haggle": "Pay for a lesson",
+      "haggleResult": "For less jade he lets you read a scroll without taking it. Enough to refine a technique.",
+      "leave": "Walk on by",
+      "leaveResult": "The antiquarian closes the case again with a patient smile."
+    },
+    "smith": {
+      "name": "The Monastery Forge",
+      "text": "An old smith hammers under the eaves. The monastery orders bells from him, but weapons are his craft: “Pay me now and I'll send you something at the summit.”",
+      "order": "Commission a piece",
+      "orderResult": "He counts the jade, tucks it in his apron and returns to the anvil. “Keep climbing. My apprentice will find you.”",
+      "fix": "Help with the bellows",
+      "fixResult": "The heat leaves you breathless. In return, he shows you how to harden a strike the way iron is hardened.",
+      "leave": "Walk on by",
+      "leaveResult": "The hammering follows you a good stretch up the trail."
+    },
+    "smith_delivery": {
+      "name": "The Smith's Apprentice",
+      "text": "A boy runs up with a cloth-wrapped bundle. He arrives out of breath: “From the master smith. He said you'd know it.”",
+      "take": "Open the commission",
+      "takeResult": "Inside are tempering stones and a new grip, made to your measure. What you carry comes out stronger.",
+      "sell": "Sell it to a pilgrim",
+      "sellResult": "A wealthy pilgrim pays triple what it cost. The apprentice doesn't understand a thing, but he laughs."
+    },
+    "hermit": {
+      "name": "The Hermit of the Pine",
+      "text": "Under a twisted pine, an old man meditates. He opens one eye and smiles: “I'll teach you a form, if you can train with me until sunset.”",
+      "show": "Show him a form you know",
+      "showResult": "You perform the whole form under the pine. The old man fixes your foot with a tap of his staff and teaches you the next one.",
+      "pay": "Train with him",
+      "payResult": "You train until the sun touches the clouds. Everything aches, but you learned something new.",
+      "gift": "Leave jade for the temple",
+      "giftResult": "He tucks the jade into his sleeve without a glance and calmly corrects your stance. Choose which technique grows firmer.",
+      "leave": "Thank him and go on",
+      "leaveResult": "You bow to him and continue along the trail."
+    },
+    "bridge": {
+      "name": "The Hanging Bridge",
+      "text": "A rope bridge spans two peaks. On the far side, something glints among the rocks, and the planks creak in the wind.",
+      "glide": "Glide with the Feather",
+      "glideResult": "The Crane Feather catches the wind. You float across the void and pick up the talisman without touching a plank.",
+      "vault": "Vault with the staff",
+      "vaultResult": "You plant the staff on the first plank and leap with your whole body. You land on the far side, beside the talisman.",
+      "cross": "Run across",
+      "crossResult": "You make it in one bound and find a talisman among the rocks.",
+      "crossFail": "A plank gives way: you grab the rope and haul yourself up.",
+      "around": "Go around by the slope",
+      "aroundResult": "The detour is long and steep. You arrive with stiff legs and a firmer strike than before."
+    },
+    "spring": {
+      "name": "The Jade Spring",
+      "text": "Clear green water wells up between the stones. They say it gives strength to those who respect it.",
+      "drink": "Drink from the spring",
+      "drinkResult": "The cool water fills your chest. You breathe deeper than before.",
+      "bathe": "Temper your fists in the water",
+      "batheResult": "You strike the water a thousand times, until the movement flows on its own."
+    },
+    "monkey": {
+      "name": "The Thieving Monkey",
+      "text": "A golden monkey snatches your pouch and scrambles up a pine, howling with laughter.",
+      "roar": "Roar with the Claw",
+      "roarResult": "The Tiger Claw rises into your voice. The monkey freezes, drops your pouch and, out of sheer fright, a talisman it had hidden.",
+      "chase": "Chase it",
+      "chaseResult": "You catch it in the treetop. Frightened, it drops your pouch… and a talisman it had stolen earlier.",
+      "let": "Let it go",
+      "letResult": "The monkey keeps one of your basic scrolls. With a lighter deck, you move more freely."
+    },
+    "tea": {
+      "name": "The Tea Master",
+      "text": "On a terrace above the clouds, a master pours tea. He invites you to sit… or to practice with him.",
+      "drink": "Drink the tea slowly",
+      "drinkResult": "The tea warms your body and spirit.",
+      "spar": "Practice with him",
+      "sparResult": "Between sips he shows you three moves from your path. Choose one."
+    },
+    "altar": {
+      "name": "The Altar of the Masters",
+      "text": "A small altar, with incense and flowers, faces the valley. The ancient masters seem to watch you.",
+      "burn": "Light the Furnace at the altar",
+      "burnResult": "The embers of the Cinnabar Furnace kindle the old incense. The smoke traces a seal in the air and leaves an ancient talisman on the stone.",
+      "offer": "Bow a hundred times",
+      "offerResult": "You finish out of breath. An ancient talisman appears on the altar.",
+      "pray": "Offer jade and meditate",
+      "prayResult": "You leave the jade in the bowl. In the calm of the place, you see clearly which technique to refine.",
+      "leave": "Walk on by",
+      "leaveResult": "You bow your head before the shrine and continue along the trail."
+    },
+    "dice": {
+      "name": "The Muleteers' Dice",
+      "text": "At a bend, two muleteers play dice on a flat stone. “Feeling lucky, novice? Roll even and you win more than double. Bet big, and we'll play for what we brought up from the valley.”",
+      "bet": "Bet",
+      "betResult": "Even! The muleteers laugh and fill your hand with jade.",
+      "betFail": "Odd. The muleteers pocket your jade and offer you a consoling drink.",
+      "leave": "Walk on by",
+      "leaveResult": "You leave them to their game and keep climbing.",
+      "high": "Bet big",
+      "highResult": "Even! The older muleteer grumbles and hands you a talisman wrapped in silk.",
+      "highFail": "Odd. The muleteers pocket your jade, laughing: “The mountain gives and the mountain takes.”"
+    },
+    "pilgrim": {
+      "name": "The Lost Pilgrim",
+      "text": "A pilgrim with a dead lantern searches the mist for the temple trail. He offers you his purse if you guide him along the slope.",
+      "guide": "Guide him along the slope",
+      "guideResult": "The way is steep and slippery, but you make it. He gives you his purse with a long bow.",
+      "point": "Share your campfire",
+      "pointResult": "You point him the right way and share the fire a while. Before leaving, he draws a move from his village in the dirt."
+    },
+    "nest": {
+      "name": "The Nest in the Bamboo",
+      "text": "A crane chick has fallen from its nest and cheeps among the dry leaves. High in the bamboo, the mother circles, afraid to come down.",
+      "climb": "Return it to the nest",
+      "climbResult": "The bamboo bends and scrapes your hands, but you make it. The mother lands beside you and spreads her wing: you copy her stance and a strike comes out cleaner.",
+      "watch": "Stay and watch",
+      "watchResult": "At last the mother comes down and shelters it under her wing. You slowly mimic the gesture and discover a new form."
+    },
+    "woodcutter": {
+      "name": "The Old Woodcutter",
+      "text": "A white-bearded woodcutter climbs with a bundle of firewood bigger than he is. He stops to catch his breath and eyes your bandaged hands.",
+      "chop": "Split his wood with the pudao",
+      "chopResult": "Three pudao strokes and the bundle is even kindling. The woodcutter laughs, pays you like an axeman and asks you to come back.",
+      "carry": "Carry his wood",
+      "carryResult": "The wood is heavy and the trail doesn't help. At the top, he presses some jade coins into your hand and won't take no for an answer.",
+      "listen": "Hear his story",
+      "listenResult": "As a young man he fought on this very mountain. With his axe, he shows you the strike that never failed him."
+    },
+    "bell_monk": {
+      "name": "The Bell Monk",
+      "text": "In the hanging courtyard, a monk draws back the log of the dawn bell. Before striking, he invites you to sit with him.",
+      "meditate": "Meditate with him",
+      "meditateResult": "The bronze hums long over the abyss. When it fades, you let go of an old habit that no longer served you. The deck feels lighter.",
+      "strike": "Ask to strike the bell",
+      "strikeResult": "The log rebounds and jolts you to the shoulders. The monk smiles: that's how one strike chains into the next. You learn a form."
+    },
+    "beam": {
+      "name": "The Broken Beam",
+      "text": "The walkway ends at a split beam over the void. On the far side, a forgotten offering box glints with jade.",
+      "cut": "Cut a rope and swing across",
+      "cutResult": "With your sword you cut a rope from the scaffold and swing across on it. The offering box opens without a sound.",
+      "jump": "Jump",
+      "jumpResult": "You land on the far side, feet just right. The box holds the jade of many pilgrims.",
+      "jumpFail": "The beam gives under your heel. You grab a rope and climb back up, battered.",
+      "plank": "Look for another plank",
+      "plankResult": "You drag a plank from a scaffold and cross slowly. The box was already empty, but the balance sharpened a strike."
+    },
+    "library": {
+      "name": "The Hanging Library",
+      "text": "A librarian monk tends scrolls no one has read in centuries. Among them, an amulet wrapped in silk.",
+      "recite": "Recite the form of your path",
+      "reciteResult": "You perform the form for him under your breath, step by step. The monk finds a scroll, points to a line and lets you choose which strike to refine.",
+      "study": "Study all night",
+      "studyResult": "Your eyes burn at dawn, but you understand why your strike fell short.",
+      "donate": "Donate to the temple",
+      "donateResult": "The monk accepts the jade with a bow and ties the amulet to your wrist.",
+      "leave": "Walk on by",
+      "leaveResult": "You greet him with a nod. He doesn't look up from the scroll."
+    },
+    "snowbound": {
+      "name": "The Hermit in the Snow",
+      "text": "An arm juts from a drift of fresh snow. Beneath it, an old hermit barely breathes, clutching an amulet.",
+      "leave": "Call a herder from the pass",
+      "leaveResult": "You whistle to a herder coming down with his mule. Together you pull the hermit out, and the herder takes him to his hut for broth.",
+      "drum": "Sound the Drum",
+      "drumResult": "The Bronze Drum booms through the pass. The snow trembles and slides away on its own: the hermit crawls out coughing and presses his amulet into your hand.",
+      "dig": "Dig him out",
+      "digResult": "You dig with your hands until you can't feel them. Safe at last, he places the amulet in your palm: “It's watched over me long enough.”",
+      "fire": "Share your fire",
+      "fireResult": "You buy dry wood from a herder coming down from the pass. The fire warms you both until the wind dies down.",
+      "breathe": "Breathe for him: two short, one long",
+      "breatheResult": "You kneel and breathe beside him like the child in the dream: two short, one long. On the third round the old man opens his eyes and follows your rhythm. He presses the amulet into your hand: “That air isn't yours. Take care of it.”"
+    },
+    "scale": {
+      "name": "The Scale in the Ice",
+      "text": "In the ice wall there is an enormous scale, green and gold. If you press your ear to it, you hear something slow, like breathing.",
+      "pearl": "Bring the Dragon Pearl close",
+      "pearlResult": "The Pearl glows and the scale answers. It comes loose on its own into your hands, warm, and your chest swells with it.",
+      "pry": "Pry it loose",
+      "pryResult": "The scale breaks free with a crack. Holding it, your chest swells as if you breathed with it.",
+      "pryFail": "The ice cracks and drags you down the slope. You climb back up with the scale still in place.",
+      "listen": "Listen to the breathing",
+      "listenResult": "You breathe in rhythm with what sleeps in the mountain. When you pull away, you know which technique to refine."
+    },
+    "prayer_flags": {
+      "name": "The Wind Flags",
+      "text": "On the snowy pass, torn prayer flags beat against the stones. Those of the ones who climbed before.",
+      "mend": "Mend them",
+      "mendResult": "Your fingers go numb with every stitch. When you finish, they fly straight and you feel steadier.",
+      "let_go": "Let go of an old technique",
+      "let_goResult": "You write something you no longer need on a scrap and let the wind take it. The deck feels lighter.",
+      "leave": "Keep climbing",
+      "leaveResult": "You pass between the flags without stopping. The wind pushes at your back."
+    },
+    "beam_names": {
+      "name": "The Beams of Names",
+      "text": "On a beam in the passage, names are carved with a knife, one under another, each with the date that disciple passed through. At the end, a clean space remains.",
+      "carve": "Carve your name",
+      "carveResult": "The wood is hard and you cut your fingers. When you finish, you notice someone had already begun your name: only the last letter was missing.",
+      "read": "Read the names",
+      "readResult": "Beneath each name is a stance drawn in ink. You copy the most repeated one and practice it at the edge of the abyss. You learn a form.",
+      "leave": "Go on",
+      "leaveResult": "You run your hand over the wood without reading. Some names are warm, as if carved this morning.",
+      "finish": "Finish the last letter",
+      "finishResult": "You look for your name and there it is: begun, missing the last letter, in wood as old as the temple. You carve the missing letter. Something settles in your chest, like a bone slipping back into place."
+    },
+    "shadow_puppets": {
+      "name": "The Lantern Puppets",
+      "text": "Behind waxed paper, an old man moves leather puppets against a lantern's light. He tells of a disciple who climbed to the clouds and came back a master.",
+      "slip": "Slip behind the paper",
+      "slipResult": "With the Snake Scale you pass behind the screen without stirring a shadow. The old man laughs when he sees you and gives you his most treasured puppet.",
+      "watch": "Watch the show",
+      "watchResult": "The disciple puppet reaches the summit, bows to a sleeping dragon and comes down with a notebook under its arm. You keep one of its moves.",
+      "tip": "Leave him a tip",
+      "tipResult": "The old man gives you one of his old puppets. It wears your robe and your ribbon. You keep it as an amulet."
+    },
+    "ice_sage": {
+      "name": "The Sage in the Ice",
+      "text": "On a ledge, a monk meditates under a thin layer of clear ice. He smiles. He breathes so slowly the ice barely fogs.",
+      "forge": "Pay him to temper your weapon",
+      "forgeResult": "The monk breathes on the edge and the ice tempers it like a forge in reverse. Your weapon comes out finer, more yours.",
+      "share": "Breathe with him",
+      "shareResult": "You sit beside him and match your breath to his. The cold bites, but soon your strikes come out cleaner, as if he had corrected you without a word.",
+      "bow": "Bow and go on",
+      "bowResult": "As you bow, the monk opens one eye and draws a form in the frost before returning to meditation."
+    },
+    "cloud_spring": {
+      "name": "Where Clouds Are Born",
+      "text": "A crack in the rock exhales a warm, slow air. As it emerges, it becomes cloud. Inside, very deep, something enormous breathes.",
+      "breath": "Breathe with your Breath",
+      "breathResult": "Your Breath finds the mountain's without seeking it. You breathe together a long while. When you come to, your chest is deeper than ever.",
+      "breathe": "Breathe to its rhythm",
+      "breatheResult": "You inhale when the mountain inhales and exhale when it exhales. For a moment your breath and the dragon's are one. You feel deeper inside.",
+      "gather": "Gather cloud frost",
+      "gatherResult": "The frost the cloud leaves behind is pure jade. You fill your pouch before the air shifts.",
+      "gatherFail": "The breath shifts suddenly and throws you against the stones. The mountain doesn't want anything taken.",
+      "leave": "Leave it in peace",
+      "leaveResult": "You walk away in silence. Behind you, a new cloud rises toward the summit."
+    },
+    "tiger_boulder": {
+      "name": "The Boulder of Fists",
+      "text": "A huge boulder blocks the trail. It bears fist marks: someone of the Tiger trained here. Sitting on top, a bandit laughs: “No one's moved it in ten years.”",
+      "smash": "Smash it apart",
+      "smashResult": "Strike after strike, the boulder cracks and splits in two. Your knuckles bleed, but now you understand the marks: inside are three Tiger techniques.",
+      "challenge": "Challenge the bandit",
+      "challengeResult": "The bandit hops off the boulder and spits to the side. “Let's see this Tiger.”",
+      "rest": "Pay a stonecutter to study it",
+      "restResult": "The stonecutter shows you where the stone breaks. Choose which technique grows firmer."
+    },
+    "tiger_drums": {
+      "name": "The War Drums",
+      "text": "In a courtyard hanging over the void, monks beat war drums. The temple guardian sizes you up: “The Tiger doesn't just stand and watch, does it?”",
+      "strike": "Strike the great drum",
+      "strikeResult": "You strike the drumhead with your whole body and the thunder climbs your arms. Choose which technique keeps that power.",
+      "spar": "Ask the guardian for a bout",
+      "sparResult": "The guardian sets down the drumstick and pulls on his gloves. The monks change the rhythm: now they play for you two.",
+      "listen": "Listen to the rhythm",
+      "listenResult": "You sit in a corner and let the rhythm settle your pulse. Without noticing, your hands learn a form."
+    },
+    "tiger_marks": {
+      "name": "The White Tiger's Marks",
+      "text": "On the ice wall are three claw marks as wide as a man. They say the white tiger, first of the path, sharpened its claws here. A snow ape scratches at them jealously and growls at you.",
+      "touch": "Rest your hand on the marks",
+      "touchResult": "The ice burns and cuts, but you don't pull away. Something of the white tiger stays in your fist.",
+      "hunt": "Face the ape",
+      "huntResult": "The ape beats its chest and leaps down. The marks, it seems, are its own now.",
+      "follow": "Follow the tracks in the snow",
+      "followResult": "The tracks end at a flat stone with techniques carved by claws. Choose the one you take.",
+      "followFail": "The snow gives way and you sink to the waist. You climb out frozen, hands scraped."
+    },
+    "snake_reeds": {
+      "name": "The Reed Pond",
+      "text": "A snake crosses the pond through the reeds without moving a single one. On the far bank, a disciple of another school tries the same and knocks them all down. He glances at you.",
+      "imitate": "Imitate its glide",
+      "imitateResult": "You wade in and move slowly, twisting like the snake. On the third try, not a reed stirs. Choose which technique to refine.",
+      "challenge": "Challenge the disciple",
+      "challengeResult": "The disciple climbs out of the water, soaked and offended. “The Snake isn't learned by watching.”",
+      "rest": "Shed like the snake",
+      "restResult": "You watch until it vanishes among the reeds. On the bank you leave an old habit, like a skin. The deck feels lighter."
+    },
+    "snake_scroll": {
+      "name": "The Coiled Scroll",
+      "text": "On a shelf in the hanging library lies a scroll tied with scales. A snake sleeps coiled around it and, on the wall, a paper shadow moves with no one guiding it.",
+      "steal": "Take it without waking the snake",
+      "stealResult": "Your fingers slip between its coils without brushing them. Inside the scroll is an amulet.",
+      "stealFail": "It opens an eye and bites. The venom is mild, but your whole arm burns.",
+      "copy": "Pay the librarian for a copy",
+      "copyResult": "The librarian counts the jade and lets you copy three passages. Choose which one you learn.",
+      "shadow": "Face the shadow",
+      "shadowResult": "The shadow peels off the wall and takes shape. It raises its guard between you and the scroll."
+    },
+    "snake_skin": {
+      "name": "The Shed Skin",
+      "text": "In the snow lies a snakeskin as long as a bridge. On the other side, a musician plays the guqin and every note sounds like a question: can you move like it did?",
+      "wear": "Tie a strip to your arm",
+      "wearResult": "The skin is cold and squeezes your arm like an embrace. Something of the snake stays inside you.",
+      "study": "Study its trail",
+      "studyResult": "You follow the scale marks across the snow until you understand how it moved. Choose the technique.",
+      "answer": "Answer the musician",
+      "answerResult": "The musician sets down the guqin and stands. “Then answer with your body.”"
+    },
+    "crane_pond": {
+      "name": "The Crane on One Leg",
+      "text": "In the terrace pond, a crane sleeps on one leg. It hasn't moved all morning. Among the stones, a rock golem advances toward it, one step an hour.",
+      "wait": "Stay still with it",
+      "waitResult": "You stand on one leg beside it. The sun passes, the wind passes, and something settles. Choose which technique grows firmer.",
+      "follow": "Follow its flight",
+      "followResult": "You run across the terraces after its flight and fall twice. Up where it lands, three techniques are carved in the stone.",
+      "guard": "Protect it from the golem",
+      "guardResult": "You stand between the crane and the golem. The rock turns slowly and looks at you."
+    },
+    "crane_balcony": {
+      "name": "The Balcony Without a Railing",
+      "text": "A wooden balcony juts over the void, with no railing. An old Crane master drinks tea on the edge, on one leg. Behind her, a bronze man awaits orders.",
+      "balance": "Walk the edge",
+      "balanceResult": "You go all the way around the edge without looking down. The master nods and pulls something from her sleeve for you.",
+      "balanceFail": "The wind pushes and you cling to the edge by your nails. The master pulls you up without spilling her tea.",
+      "spar": "Test yourself against the bronze man",
+      "sparResult": "The master taps her cup with a fingernail. The bronze man steps forward.",
+      "tea": "Drink tea with the master",
+      "teaResult": "The tea is bitter and hot. As you drink, the void stops frightening you and you breathe deeper than before."
+    },
+    "crane_dance": {
+      "name": "The Dance on the Snow",
+      "text": "A flock of cranes dances on the snow without leaving tracks. A disciple of the wind mimics them perfectly and, seeing you, bows in challenge.",
+      "dance": "Join the dance",
+      "danceResult": "At first you're clumsy and the cold bites, but by the end your steps leave no tracks either. Choose the technique you take.",
+      "spar": "Accept the challenge",
+      "sparResult": "The disciple smiles and the wind rises with him.",
+      "watch": "Watch until the end",
+      "watchResult": "You don't move until the last crane lands. Something of the mountain's endurance stays in your chest."
+    }
+  },
+  "lore": {
+    "fell_bell_keeper": {
+      "title": "Three tolls",
+      "text": "The Bell Keeper did not hate you: he was counting. One toll for each disciple who passed, two for those who came back, three for those who stayed up there. This time, three was enough."
+    },
+    "monastery_beams": {
+      "title": "The beams",
+      "text": "The monks of the Hanging Monastery were once disciples of the school. They came this far, looked up, and chose to stay and guard the pass. On the beams they carve the names of everyone who kept climbing."
+    },
+    "fell_wind_lady": {
+      "title": "The wind that decides",
+      "text": "The Lady of the Wind was the first disciple to reach the frozen temple. The dragon gave her the summit wind so she could choose who goes on. They say she has yet to choose anyone gladly."
+    },
+    "snow_footprints": {
+      "title": "Footprints in the snow",
+      "text": "On the snowy pass, the footprints go up and none come down. Except one set, old and deep, that goes all the way down to the school. They are the size of the master's sandals."
+    },
+    "epilogue": {
+      "title": "The master's notebook",
+      "text": "When you came down, the master was waiting at the door. He opened the notebook he showed no one: every disciple was there, with the floor each had reached. Beside your name he wrote «summit». «The dragon was this school's first master», he told you. «He dreams of us, and we breathe for him. One day you will take my place: someone has to send the next one». And he handed you the brush."
+    },
+    "ending_tiger": {
+      "title": "The tiger at the door",
+      "text": "The tiger walked with you halfway down, then sat on a rock to watch the valley. Since then, you are the one who teaches how to plant your feet. When a novice hesitates at the door, you repeat what you learned up there: «strength is not striking first, it is never taking a step back». One morning a stone tiger appeared beside the school door. No one remembers carving it.",
+      "hint": "Reach the summit on the Tiger Path."
+    },
+    "ending_snake": {
+      "title": "The water that descends",
+      "text": "The snake showed you a path no one knew: the one that runs down inside the mountain, following the meltwater. You reached the school before the sun. Now you teach that one strike calls the next, as one wave calls another, and the novices train beside the stream in the courtyard. The master swears that stream was never there before.",
+      "hint": "Reach the summit on the Snake Path."
+    },
+    "ending_crane": {
+      "title": "One foot on a cloud",
+      "text": "The crane would not let you walk down: it carried you on the clouds the dragon breathes, slowly, in a single inhalation. From above you saw the whole school and understood why the master waits so long before sending anyone. Now you are the one who teaches stillness, how to keep a card and how to keep your breath. The novices say that when you meditate, a crane lands on the roof.",
+      "hint": "Reach the summit on the Crane Path."
+    },
+    "prologue": {
+      "title": "The School of the Sleeping Dragon",
+      "text": "At the foot of the Mountain of a Thousand Clouds stands a school that breathes slowly. They say a dragon sleeps on the summit and its breath makes the clouds. Each novice, when the master decides, climbs alone. Today it is your turn.",
+      "hint": "Unlocks when you begin your first climb."
+    },
+    "reach_shrine": {
+      "title": "The shrine of the animals",
+      "text": "No one chooses their path on the mountain: the spirits appear, and you draw near. The master says the path knew you before you arrived. Your linen robe takes on its color by itself, as if it had always been that way.",
+      "hint": "Reach the shrine."
+    },
+    "first_fall": {
+      "title": "Those who do not return",
+      "text": "At the school, no one speaks of those who do not return. A stick of incense is lit, a name is erased from the dinner list, and the next day another climbs. The mountain gives no one back: those who fall, stay.",
+      "hint": "Unlocks the first time a disciple falls."
+    },
+    "fell_disciple": {
+      "title": "The faded ribbon",
+      "text": "The Lost Disciple wore a ribbon like yours, faded by the mist. He fought with the school's forms, but with a sadness no one taught him. How many years has he been waiting on the trail?",
+      "hint": "Fall to the Lost Disciple."
+    },
+    "fell_monk": {
+      "title": "The erased face",
+      "text": "The elders say the Faceless Monk was master before the master. He climbed to see the dragon with his own eyes, and the mountain took his face. Since then he guards the stone trail so no one climbs before they are ready.",
+      "hint": "Fall to the Faceless Monk."
+    },
+    "fell_dragon": {
+      "title": "The echo",
+      "text": "What defeated you high in the Thousand Clouds was not the dragon: it was its echo, golden breath that took form. If the echo fights like that, what sleeps beneath? No one at the school wants to answer.",
+      "hint": "Fall to the Dragon's Echo."
+    },
+    "reach_monastery": {
+      "title": "The hanging monastery",
+      "text": "Above the echo, a monastery clings to the cliff like a nest. Its monks never come down: they say they guard the pass so no one wakes what sleeps above. They looked at you as if they had been expecting you.",
+      "hint": "Defeat the Dragon's Echo and keep climbing."
+    },
+    "fell_abbot": {
+      "title": "The bell that does not ring",
+      "text": "The Abbot of the Great Bell did not fight to win: he fought so you would not go on. Before you fell, you thought you heard him pray for you. The hall's bell has been cracked since the last time someone passed.",
+      "hint": "Fall to the Abbot of the Great Bell."
+    },
+    "reach_peak": {
+      "title": "Where it sleeps",
+      "text": "Past the monastery there is no trail, only snow and wind. The clouds do not come from below: they are born here, from a vast, slow breath. The Sleeping Dragon is real.",
+      "hint": "Defeat the Abbot of the Great Bell and keep climbing."
+    },
+    "fell_sleeping_dragon": {
+      "title": "One open eye",
+      "text": "The dragon opened a single eye to look at you. There was no anger in it, only weariness, like a master who has watched many climb. It fell back asleep before you touched the snow.",
+      "hint": "Fall to the Sleeping Dragon."
+    },
+    "summit": {
+      "title": "The summit",
+      "text": "When the Sleeping Dragon closed its eyes, the clouds were born from the rock again, slow as a breath. On the summit stone were the names of every disciple the school had sent up, complete, not half-carved like on the monastery beams. Yours was already there. Someone had written it before you arrived.",
+      "hint": "Reach the summit."
+    },
+    "fallen_5": {
+      "title": "Five sticks",
+      "text": "In the courtyard, five sticks of incense now burn for those who did not return. The master lights them without a word and looks at the mountain longer than he needs to.",
+      "hint": "Have 5 disciples fall."
+    },
+    "fallen_10": {
+      "title": "What the master writes down",
+      "text": "Ten fallen. One night you see the master writing in a notebook he shows no one: he does not write names, he writes how far up each one got. As if he were measuring something.",
+      "hint": "Have 10 disciples fall."
+    },
+    "master_name": {
+      "title": "The missing name",
+      "text": "When you returned from the summit by the third path, the master closed the notebook and led you to the courtyard. «I never reached the top», he told you. «I ran out of breath in the snow, before the Lady of the Wind, and the dragon dreamed that I came down. Those footprints you saw were mine». That is why he writes floors, not names: he measures how close each one gets to the place where he stopped. «You climb the three paths I could not choose. Each time one of you arrives, I breathe a little deeper». That night, on the highest beam of the monastery, he carved beside yours the last character of his name: 松, Song, the pine. The same S he signed his letters with.",
+      "hint": "Reach the summit on all three paths."
+    },
+    "letter_1": {
+      "title": "Letter from the master: the monastery",
+      "text": "If you are reading this, you got past the echo. I did not tell you below so you would not climb carrying extra weight: the monastery monks will want you to stay. It is not a trap, it is an invitation; many accepted and were happy. You decide. I will be writing it down. —S.",
+      "hint": "Clear the first stage."
+    },
+    "letter_2": {
+      "title": "Letter from the master: the snow",
+      "text": "Higher up there is no trail, and I cannot tell you what it is like: I never saw all of it. When the Lady of the Wind blocks your way, do not ask her permission. Breathe deep and go through. I asked her permission. —S.",
+      "hint": "Clear the second stage."
+    },
+    "dream_1": {
+      "title": "A dream of clouds",
+      "text": "You dreamed you were a cloud. You drifted slowly out of a vast, warm mouth and settled over a green valley. Below was a school the size of a grain of rice. Someone had breathed you out.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_2": {
+      "title": "The first to climb",
+      "text": "In the dream, a young man climbs a mountain with no trail, long before any school existed. He goes alone. He breathes just like you do when you are tired: two short, one long.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_3": {
+      "title": "The promise",
+      "text": "The young man reaches the top with no strength left to go down. He looks at the dry valley and promises the mountain he will keep breathing for those below. He lies down in the snow, smiling, and closes his eyes.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_4": {
+      "title": "Scales",
+      "text": "The dream passes years in a single breath. The snow on the young man turns to scales; his breathing, to clouds. The clouds drift down, it rains, and the valley turns green. He is still smiling.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_5": {
+      "title": "The first door",
+      "text": "People climb to see the sleeper and cannot wake him. A woman stays at the foot of the mountain and raises a wooden door: the first school. She decides to send one at a time, so no one wakes him all at once.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_6": {
+      "title": "Those who stay",
+      "text": "You see the disciples who did not return. They are not sad: they walk inside the clouds you crossed, and each one pushes a little breath toward the valley. One waves at you. He wears the same ribbon as you.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_7": {
+      "title": "The girl of the wind",
+      "text": "A girl reaches the frozen temple before anyone else. The dragon, asleep, gives her the summit wind so she can choose who goes on. She is so afraid of choosing wrong that, ever since, she lets no one pass gladly.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_8": {
+      "title": "Sandals in the snow",
+      "text": "A young man wearing your master's sandals falls to his knees before the Lady of the Wind. He asks her permission. The dragon, dreaming him, does not want him to stay there: it dreams that he goes down. The young man wakes at the school door, with snow in his hair.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_9": {
+      "title": "The unsent letters",
+      "text": "The dragon writes names in the stone as it dreams. It wrote yours long before you were born, carefully, like someone writing a letter that one day someone will come to collect.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "dream_10": {
+      "title": "To rest a while",
+      "text": "The dragon is tired. It dreams of a disciple who reaches the top and breathes for it a while, so it can sleep without dreaming. It has dreamed this many times, and each time the face was different. This time, it was yours.",
+      "hint": "A dream of the dragon: it comes when you camp between stages or when you fall."
+    },
+    "shuang_1": {
+      "title": "Frost",
+      "text": "Shuang, of the Azure Bird School (青鸾派). Her name means frost, but she laughs easily. She bets on races to the summit with anyone wearing a ribbon.",
+      "hint": "A disciple from another school walks the stone trail."
+    },
+    "shuang_2": {
+      "title": "The monastery steps",
+      "text": "Shuang twisted an ankle on the monastery steps and did not ask for help. What you did there, she will not forget: in the Azure Bird, debts and favors are counted.",
+      "hint": "Shuang keeps climbing. Look for her at the monastery."
+    },
+    "shuang_3": {
+      "title": "The rope bridge",
+      "text": "On the bridge, with the clouds below, Shuang wanted to see how you hit. Two schools that look each other in the eye learn more than two that turn their backs.",
+      "hint": "Shuang will be waiting for you higher up."
+    },
+    "shuang_4": {
+      "title": "The Azure Bird master",
+      "text": "Shuang's master also climbed and did not come down: the Lady of the Wind would not let her pass. Shuang climbs to ask her why. Just like you, she has someone who stayed in the snow.",
+      "hint": "Shuang has something to tell you near the summit."
+    },
+    "shuang_5": {
+      "title": "Two schools, one summit",
+      "text": "In the end, Shuang no longer bets: she climbs. Sometimes beside you, sometimes ahead, sometimes facing you. The Azure Bird and the Sleeping Dragon know each other better than before.",
+      "hint": "The last bend before the summit."
+    },
+    "bao_1": {
+      "title": "The one with the bundle",
+      "text": "«They call me Uncle Bao. I have been going up and down this mountain since before your master had gray hair. I do not fight: I sell. That is another way to reach the top».",
+      "hint": "Find the merchant on the trail."
+    },
+    "bao_2": {
+      "title": "The worn sandals",
+      "text": "«See these sandals? Third pair this year. You climb once; I climb every week. If anyone knows where the stone gets slippery, it is me. Buy with confidence, I sell nothing that slips».",
+      "hint": "Uncle Bao talks more with those who buy from him."
+    },
+    "bao_3": {
+      "title": "The ribbon on the bundle",
+      "text": "«I have kept this ribbon since I was your age. No, that one is not for sale. Some things you carry so you never forget where you come from».",
+      "hint": "Uncle Bao talks more with those who buy from him."
+    },
+    "bao_4": {
+      "title": "The monastery",
+      "text": "«At the monastery I ran out of breath. I did not fall, mind you: I sat down. From the rock I watched the others pass and thought someone had to bring them tea. And here I am, with the tea».",
+      "hint": "Uncle Bao talks more with those who buy from him."
+    },
+    "bao_5": {
+      "title": "A friend's price",
+      "text": "«I was a disciple of the Sleeping Dragon, like you. Your master beat me in a race to the shrine and I never forgave him... well, maybe a little. From today on, I charge you like family». Uncle Bao sells 10% cheaper.",
+      "hint": "Uncle Bao talks more with those who buy from him."
+    },
+    "page_1": {
+      "title": "Master's diary, first page",
+      "text": "«Today the first of my group climbed. I tied his ribbon wrong and did not dare tell him. He reached the shrine anyway.» —S.",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_2": {
+      "title": "Master's diary, the rice",
+      "text": "«Uncle Bao says my rice is overcooked. He is right. Tomorrow I will make it again for the one who climbs.» —S.",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_3": {
+      "title": "Master's diary, the snow",
+      "text": "«I dreamed of snow and woke up cold. Someone was near the frozen temple. I left the window open.» —S.",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_4": {
+      "title": "Master's diary, the floors",
+      "text": "«I write down floors, not names. If I write down names, I will wait for them.» —S.",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_5": {
+      "title": "Note on a stone",
+      "text": "Someone wrote in charcoal: «This is as far as I got. From up here you can see the whole valley. Tomorrow I go on.» Below, in another hand: «Me too.»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_6": {
+      "title": "A novice's list",
+      "text": "«Bring: two loaves, a blanket, the ribbon. Do not bring: fear. (Brought it anyway.)»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_7": {
+      "title": "A letter never sent",
+      "text": "«Mom: the mountain is taller than they say. The bats are smaller. I am fine.»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_8": {
+      "title": "A disciple's drawing",
+      "text": "A hastily drawn dragon, sleeping curled on a cloud. Beside it, an arrow and a word: «me».",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_9": {
+      "title": "Monastery accounts",
+      "text": "«Candles: 40. Incense: 12 bundles. Names carved on the beams this year: 9. Every one is missing its last character.»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_10": {
+      "title": "Rule of the bell tower",
+      "text": "«The bell rings at dawn for those who climb and at dusk for those who stayed. Never to wake the dragon.»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_11": {
+      "title": "The cook's complaint",
+      "text": "«Once again a monkey took the jade from the offerings. Once again the pixiu brought it back. I do not understand this mountain.»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "page_12": {
+      "title": "The abbot's note",
+      "text": "«If anyone finds these pages, return them to the school. Not for the pages: for the one who carries them.»",
+      "hint": "A loose page. Sometimes it turns up in a chest."
+    },
+    "ming_1": {
+      "title": "Mountain herbs",
+      "text": "Brother Ming came down from the monastery with a basket of herbs and set it among the stones of the fallen roof. «The best ones grow where someone stopped to rest», he said, and began to sweep as if the infirmary already existed.",
+      "hint": "Brother Ming tells it at the infirmary, after your first climb."
+    },
+    "ming_2": {
+      "title": "The herb notebook",
+      "text": "Ming draws every herb he gathers and notes the floor where he found it. He shows you the pages: they form a line that climbs the mountain, the same one the disciples follow. «Where someone breathed hard, the earth remembers», he says. The master has a notebook much like it.",
+      "hint": "Brother Ming tells it at the infirmary, with the infirmary at level 1, after another climb."
+    },
+    "ming_3": {
+      "title": "The one who stopped halfway",
+      "text": "Ming was a disciple of this school. At the monastery he slipped off a ledge, and another disciple carried him to the shelter. He stayed with the monks and learned to heal. «It is not that I did not make it», he tells you as he grinds roots. «It is that someone has to be below when they come down».",
+      "hint": "Brother Ming tells it at the infirmary, with the infirmary at level 2, after another climb."
+    },
+    "ming_4": {
+      "title": "The thin clouds",
+      "text": "Ming measures the spring water every morning. Each year there is a little less. «The clouds come thinner», he says, without alarm, like someone noticing a friend slept badly. «The one who breathes for the valley is tired. And the tired need healing too».",
+      "hint": "Brother Ming tells it at the infirmary, with the infirmary at level 3, after another climb."
+    },
+    "ming_5": {
+      "title": "A remedy for the sleeper",
+      "text": "With every herb in the notebook, Ming boils a broth that smells of nothing. «It is not for you», he says. «It is for him». He keeps it in a sealed gourd. «When the school is whole and you climb again, take it. Let someone give drink to the one who gives us breath».",
+      "hint": "Brother Ming tells it at the infirmary, with the infirmary complete, after you reach the summit."
+    },
+    "tie_1": {
+      "title": "The cold furnace",
+      "text": "Master Tie came down from the monastery forge with his hammer on his shoulder. «Up there they ask me for bells», he grumbled. «Bells bore me: they always sound the same». He kicked the ashes of the school's old furnace and smiled. «The hammer remembers on its own».",
+      "hint": "Master Tie tells it at the forge, after your first climb."
+    },
+    "tie_2": {
+      "title": "The marks on the metal",
+      "text": "Every blade Tie forges bears a tiny mark: 鐵 and the disciple's number. When you show him a weapon you found on the mountain, he turns it over and reads the mark. «Forty-two», he says. «Hit crooked». He sharpens it anyway, carefully, so it can climb again.",
+      "hint": "Master Tie tells it at the forge, with the forge at level 1, after another climb."
+    },
+    "tie_3": {
+      "title": "The cracked bell",
+      "text": "Tie forged the abbot's bell. «It was cracked by a young man who came down from the snow with ice in his hair», he tells you. «He struck it with his forehead, angry at himself. He wore a pair of worn sandals». He never fixed it. «Some things are worth hearing broken».",
+      "hint": "Master Tie tells it at the forge, with the forge at level 2, after another climb."
+    },
+    "tie_4": {
+      "title": "The apprentice",
+      "text": "Tie's apprentice, the boy who ran errands, asked him for a school ribbon. Tie said no, then spent three nights at the furnace. «It is not that I do not want him to climb», he confesses. «It is that I do not know how to forge a blade that goes higher than I did. None of mine came back from the summit».",
+      "hint": "Master Tie tells it at the forge, with the forge at level 3, after another climb."
+    },
+    "tie_5": {
+      "title": "Scale and iron",
+      "text": "Among your things, when you returned from the summit, Tie found a scale cold as snow. He forged it without a word. He shows you a blade with no edge, light, that hums when you breathe near it. «It does not cut», he says. «It breathes. It is for whoever climbs with the whole school behind them, to give the dragon rest».",
+      "hint": "Master Tie tells it at the forge, with the forge complete, after you reach the summit."
+    },
+    "true_ending": {
+      "title": "To breathe for him",
+      "text": "The young man lowered his guard and smiled the same smile as in the dream. «Two short, one long», he said, and you breathed together. When you opened your eyes, the dragon slept without dreaming and the clouds drifted slowly from your chest. You stayed on the summit for the length of one long breath: a day or a year, no one knows. When you came down, Ming was waiting with the broth, Tie with his hammer, and Shuang with a new bet. Master Song had carved your name on the door, not in the notebook. The dragon rests. For a while, the school breathes for him.",
+      "hint": "With all three endings, Peak 5 won and the whole school restored, something more awaits at the summit."
+    }
+  },
+  "masterLines": {
+    "qianyunshan_1": "Breathe slower than the mountain. It's in no hurry.",
+    "qianyunshan_2": "Every floor you climb, someone below writes it down. One day you'll know who.",
+    "qianyunshan_3": "Today's clouds are yesterday's breath. Remember that when you reach the top.",
+    "xuankongsi_1": "The monastery monks climbed like you. They chose to guard the pass instead of going on.",
+    "xuankongsi_2": "The abbot's bell is cracked. Someone who went very far cracked it… and came down to tell.",
+    "xuankongsi_3": "At the summit there's a stone with names. Don't ask me which one is mine.",
+    "wolongding_1": "From here the school looks like a grain of rice. That's where it all began: a master who climbed and wouldn't come down.",
+    "wolongding_2": "The dragon doesn't guard the summit: it guards the breath of everyone who lives below.",
+    "wolongding_3": "If you make it, don't fear what you see carved. It's a promise, not a sentence.",
+    "wolongding_4": "There are three Paths to the summit. I never managed to choose one."
+  },
+  "stageIntros": {
+    "qianyunshan": "Stone trails among low clouds. Every climb begins here.",
+    "xuankongsi": "A monastery pinned to the cliff face, held up by beams and faith. Its guardians let no one pass untested.",
+    "wolongding": "Snow, wind and silence. Above, something enormous breathes slowly among the clouds."
+  },
+  "meridians": {
+    "body_1": {
+      "name": "Zúsānlǐ",
+      "hanzi": "足三里",
+      "text": "The point of legs that never tire."
+    },
+    "body_2": {
+      "name": "Yǒngquán",
+      "hanzi": "涌泉",
+      "text": "A fountain that wells up beneath the feet."
+    },
+    "body_3": {
+      "name": "Qìhǎi",
+      "hanzi": "气海",
+      "text": "The sea of breath, below the navel."
+    },
+    "body_4": {
+      "name": "Mìngmén",
+      "hanzi": "命门",
+      "text": "The gate of life, in the back."
+    },
+    "body_5a": {
+      "name": "Shènshū",
+      "hanzi": "肾俞",
+      "text": "Iron skin: the body endures more."
+    },
+    "body_5b": {
+      "name": "Xuèhǎi",
+      "hanzi": "血海",
+      "text": "The sea of blood: what is lost returns."
+    },
+    "body_6": {
+      "name": "Sānyīnjiāo",
+      "hanzi": "三阴交",
+      "text": "Where three paths of the body cross."
+    },
+    "body_7": {
+      "name": "Wěizhōng",
+      "hanzi": "委中",
+      "text": "The center of the bent knee: firm as a root."
+    },
+    "body_8": {
+      "name": "Huántiào",
+      "hanzi": "环跳",
+      "text": "The circling leap, in the hip."
+    },
+    "body_9": {
+      "name": "Guānyuán",
+      "hanzi": "关元",
+      "text": "The gate of origin: every victory restores."
+    },
+    "body_10a": {
+      "name": "Dāntián",
+      "hanzi": "丹田",
+      "text": "The center: every strike and every breath starts here."
+    },
+    "body_10b": {
+      "name": "Dàzhuī",
+      "hanzi": "大椎",
+      "text": "The great vertebra: a back that does not break."
+    },
+    "spirit_1": {
+      "name": "Hégǔ",
+      "hanzi": "合谷",
+      "text": "The valley where the fingers meet."
+    },
+    "spirit_2": {
+      "name": "Shénmén",
+      "hanzi": "神门",
+      "text": "The gate of the spirit, at the wrist."
+    },
+    "spirit_3": {
+      "name": "Nèiguān",
+      "hanzi": "内关",
+      "text": "The inner pass: calm for bargaining."
+    },
+    "spirit_4": {
+      "name": "Dànzhōng",
+      "hanzi": "膻中",
+      "text": "The center of the chest, where joy is kept."
+    },
+    "spirit_5a": {
+      "name": "Zhōngwǎn",
+      "hanzi": "中脘",
+      "text": "The center of the stomach: the harvest feeds the school."
+    },
+    "spirit_5b": {
+      "name": "Qīmén",
+      "hanzi": "期门",
+      "text": "The gate of waiting: you leave with a full purse."
+    },
+    "spirit_6": {
+      "name": "Tiānshū",
+      "hanzi": "天枢",
+      "text": "The pivot of heaven: Bao knows you."
+    },
+    "spirit_7": {
+      "name": "Fēngfǔ",
+      "hanzi": "风府",
+      "text": "The palace of wind: the first breath comes easy."
+    },
+    "spirit_8": {
+      "name": "Yìfēng",
+      "hanzi": "翳风",
+      "text": "The wind screen: what you keep is not lost."
+    },
+    "spirit_9": {
+      "name": "Sìshéncōng",
+      "hanzi": "四神聪",
+      "text": "The four wisdoms, around the crown of the head."
+    },
+    "spirit_10a": {
+      "name": "Bǎihuì",
+      "hanzi": "百会",
+      "text": "The hundred meetings: the breath never runs out."
+    },
+    "spirit_10b": {
+      "name": "Shéntíng",
+      "hanzi": "神庭",
+      "text": "The courtyard of the spirit: the first breath fills the chest."
+    },
+    "tech_1": {
+      "name": "Láogōng",
+      "hanzi": "劳宫",
+      "text": "The palace of labor, in the palm."
+    },
+    "tech_2": {
+      "name": "Qūchí",
+      "hanzi": "曲池",
+      "text": "The pool of the bent elbow."
+    },
+    "tech_3": {
+      "name": "Fēngchí",
+      "hanzi": "风池",
+      "text": "The pool of wind, at the nape: the first strike lands heavy."
+    },
+    "tech_4": {
+      "name": "Tàichōng",
+      "hanzi": "太冲",
+      "text": "The great step of the foot."
+    },
+    "tech_5a": {
+      "name": "Hòuxī",
+      "hanzi": "后溪",
+      "text": "The back stream: more to choose from."
+    },
+    "tech_5b": {
+      "name": "Wàiguān",
+      "hanzi": "外关",
+      "text": "The outer pass: you see where the foe will break."
+    },
+    "tech_6": {
+      "name": "Jiānjǐng",
+      "hanzi": "肩井",
+      "text": "The shoulder well: one strike brings another."
+    },
+    "tech_7": {
+      "name": "Shǒusānlǐ",
+      "hanzi": "手三里",
+      "text": "The arm that repeats the form until it masters it."
+    },
+    "tech_8": {
+      "name": "Yánglíngquán",
+      "hanzi": "阳陵泉",
+      "text": "The spring on the hill: the foe arrives tired."
+    },
+    "tech_9": {
+      "name": "Kūnlún",
+      "hanzi": "昆仑",
+      "text": "The sacred mountain: elites hold more."
+    },
+    "tech_10a": {
+      "name": "Yìntáng",
+      "hanzi": "印堂",
+      "text": "The seal between the brows: a talisman from the start."
+    },
+    "tech_10b": {
+      "name": "Tàiyáng",
+      "hanzi": "太阳",
+      "text": "The sun at the temple: the master's fist."
+    }
+  },
+  "hitos": {
+    "first_climb": {
+      "name": "The first step",
+      "text": "Finish a climb, however far you get."
+    },
+    "reach_monastery": {
+      "name": "Above the clouds",
+      "text": "Reach the Hanging Monastery."
+    },
+    "reach_peak": {
+      "name": "Where the dragon sleeps",
+      "text": "Reach the Summit of the Sleeping Dragon."
+    },
+    "summit": {
+      "name": "The summit",
+      "text": "Defeat the Sleeping Dragon."
+    },
+    "elites_0": {
+      "name": "The bell keepers",
+      "text": "Defeat the Faceless Monk, the Stone Lion and the Lady of the Fan, over as many climbs as it takes."
+    },
+    "elites_1": {
+      "name": "The silent bell tower",
+      "text": "Defeat the six elites of the Hanging Monastery, over as many climbs as it takes."
+    },
+    "elites_2": {
+      "name": "Ice that yields",
+      "text": "Defeat the Lady of the Wind, the Snow Lion, the Dragon's Dream and the Qilin."
+    },
+    "flawless_boss": {
+      "name": "Not a hair out of place",
+      "text": "Defeat a boss without losing Life."
+    },
+    "win_tiger": {
+      "name": "Tiger's Claw",
+      "text": "Win a climb on the Tiger Path."
+    },
+    "win_snake": {
+      "name": "Snake's Patience",
+      "text": "Win a climb on the Snake Path."
+    },
+    "win_crane": {
+      "name": "Crane's Flight",
+      "text": "Win a climb on the Crane Path."
+    },
+    "three_paths": {
+      "name": "The three animals",
+      "text": "Win with the Tiger, the Snake and the Crane."
+    },
+    "win_hard": {
+      "name": "Rugged mountain",
+      "text": "Win a climb on Hard or higher."
+    },
+    "win_shifu": {
+      "name": "Worthy of the master",
+      "text": "Win a climb on Shifu."
+    },
+    "pico_1": {
+      "name": "The first Peak",
+      "text": "Win a climb at Peak 1 or higher."
+    },
+    "pico_5": {
+      "name": "Five Peaks",
+      "text": "Win a climb at Peak 5 or higher."
+    },
+    "pico_10": {
+      "name": "Peak of peaks",
+      "text": "Win a climb at Peak 10."
+    },
+    "forms_10": {
+      "name": "A body that remembers",
+      "text": "Complete 10 forms in a single climb."
+    },
+    "deflects_20": {
+      "name": "Water that does not break",
+      "text": "Deflect 20 strikes in a single climb."
+    },
+    "flawless_5": {
+      "name": "Not a scratch",
+      "text": "Win 5 fights without losing Life in a single climb."
+    },
+    "awaken_path": {
+      "name": "The awakened animal",
+      "text": "Discover all four awakenings of one Path, across all your climbs."
+    },
+    "awaken_all": {
+      "name": "Three awakened animals",
+      "text": "Discover all twelve awakenings of the three Paths."
+    },
+    "talismans_6": {
+      "name": "A loaded belt",
+      "text": "Finish a climb carrying 6 talismans."
+    },
+    "talisman_boss": {
+      "name": "The boss's seal",
+      "text": "Finish a climb carrying a boss talisman."
+    },
+    "talismans_all": {
+      "name": "The school's chest",
+      "text": "Carry each of the 27 talismans at least once at the end of a climb (Path talismans, on their Path)."
+    },
+    "light_deck": {
+      "name": "Just enough",
+      "text": "Win a climb with 16 cards or fewer in your deck."
+    },
+    "ten_disciples": {
+      "name": "Ten disciples",
+      "text": "Send the school's tenth disciple to the mountain."
+    }
+  },
+  "school": {
+    "infirmary": {
+      "name": "Infirmary",
+      "hanzi": "醫",
+      "who": "Brother Ming",
+      "text": "Ming came back with herbs from the mountain. Where the roof had fallen, there are clean beds and a bowl of clear water.",
+      "l1": "The mountain fountain fills with water from the school's spring.",
+      "l2": "Ming packs herb pouches for the road between stages.",
+      "l3": "Every fight won, a sip of his bitter broth."
+    },
+    "tea_house": {
+      "name": "Tea House",
+      "hanzi": "茶",
+      "who": "Uncle Bao",
+      "text": "Uncle Bao says there's no school without tea. Now he has a place to boil water and count his debts.",
+      "l1": "Bao shares his good leaves: tea heals more.",
+      "l2": "Bao tells the merchants you come on the school's behalf.",
+      "l3": "Bao sees you off with a pouch of jade and the house's finest tea."
+    },
+    "forge": {
+      "name": "Forge",
+      "hanzi": "鐵",
+      "who": "Master Tie",
+      "text": "Master Tie lit the furnace again. He says the hammer remembers on its own.",
+      "l1": "Tie checks every weapon you find: it arrives already tempered.",
+      "l2": "Tie forges bracers for the disciples: more Structure.",
+      "l3": "The furnace burns red-hot: weapons arrive tempered once more."
+    },
+    "library": {
+      "name": "Library",
+      "hanzi": "書",
+      "who": "The school",
+      "text": "The scrolls saved from the collapse return to the shelves. Some still smell of smoke.",
+      "l1": "More scrolls in order: one more card to choose from in the scrolls.",
+      "l2": "The index is complete: you can reroll the scrolls.",
+      "l3": "The talisman treatises: one more to choose from at the elite."
+    },
+    "courtyard": {
+      "name": "Practice Courtyard",
+      "hanzi": "院",
+      "who": "Shuang",
+      "text": "Shuang swept the courtyard and hung her ribbons. She says no one here can beat her, but she waits for you anyway.",
+      "l1": "Morning practice with Shuang: more max Life.",
+      "l2": "Shuang teaches you to step in breathing: more Breath on the first turn.",
+      "l3": "The plum blossom posts: one more charge of Breathe."
+    }
+  },
+  "masterRecap": {
+    "won_a": "You reached the top. I wrote «summit» beside your number and my hand shook.",
+    "won_b": "Another summit. The dragon breathes easier when you come down.",
+    "ghost": "You crossed paths with the one who fell before you. Now they rest easier.",
+    "fell_boss": "You made it to {enemy}. That's more than many can tell.",
+    "fell_0_a": "Floor {floor}. The mountain is only beginning to know you.",
+    "fell_0_b": "{enemy} stopped you on floor {floor}. Don't rush: the mountain doesn't either.",
+    "fell_1_a": "You reached the monastery, floor {floor}. Higher than half the names in my notebook.",
+    "fell_1_b": "{enemy} stopped you at the monastery. The monks will remember your face.",
+    "fell_2_a": "You reached the snow, floor {floor}. I stayed there; you will pass.",
+    "fell_2_b": "{enemy} blocked your way in the snow. Breathe deep and don't ask its permission."
+  },
+  "rooms": {
+    "fog": {
+      "name": "Mist",
+      "hanzi": "雾",
+      "text": "On odd turns, you can't see what the foe will do."
+    },
+    "wind": {
+      "name": "High Wind",
+      "hanzi": "风",
+      "text": "The wind drives your legs: kicks cost 1 less Breath."
+    },
+    "bridge": {
+      "name": "Narrow Bridge",
+      "hanzi": "桥",
+      "text": "Foes come one at a time, never together."
+    },
+    "bell": {
+      "name": "Bell",
+      "hanzi": "钟",
+      "text": "Every 3 turns it tolls and hits everyone. Your Guard covers you."
+    }
+  },
+  "challenges": {
+    "flawless": {
+      "name": "Not a Scratch",
+      "text": "Win without losing Life."
+    },
+    "breakFinish": {
+      "name": "Broken Finish",
+      "text": "Finish the last foe while it's Staggered."
+    },
+    "swift": {
+      "name": "Two Breaths",
+      "text": "Win in 2 turns or fewer."
+    },
+    "noRepeat": {
+      "name": "Restless Feet",
+      "text": "Don't end two turns in a row in the same stance."
+    }
+  }
+}

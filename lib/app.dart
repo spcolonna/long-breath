@@ -129,7 +129,7 @@ class LongBreathApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(gameDataProvider);
     final text = ref.watch(contentTextProvider);
-    const locales = [Locale('es')];
+    const locales = [Locale('es'), Locale('en')];
     const delegates = [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,

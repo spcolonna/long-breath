@@ -392,3 +392,11 @@ macOS no tiene `timeout`.
 - **Estadísticas** de todo el juego, no de la partida (`DailyStorage`, clave `long_breath.daily`, 400 días): por camino jugados, cumbres y piso más alto, y la racha de días seguidos. Se ven en la escuela (línea «Desafío de hoy», aparece desde la primera subida) y en «Camino recorrido» (tarjeta 日, cumbres/jugados por camino; no cuenta para el total).
 - Pendiente: compartir el resultado (semilla y piso) y una tabla entre jugadores (necesita servidor o Game Center). El piso más alto por camino se guarda pero todavía no se muestra.
 - Tests: `test/domain/daily_test.dart` (5). 444 tests. Sin ver en el teléfono.
+
+## Inglés (27/11) — producto
+- `assets/l10n/content/en.json` (contenido) y `lib/l10n/app_en.arb` (interfaz, 1017 claves) completos. `Locale('en')` en `app.dart`; `CFBundleLocalizations` es/en en `Info.plist`. El idioma sale del dispositivo; cualquier otro cae en español.
+- Terminología fija (guía usada): Aliento→Breath, Respirar→Breathe, Vida→Life, Estructura→Structure (abreviatura **S**, no E), Guardia→Guard, desviar→deflect, Desequilibrado→Staggered, postura→stance, Paso en T→T-Step, Flujo→Flow, Picos→Peaks, Crónica→Chronicle, discípulo→disciple, subida→climb, partida→save slot, run→run. Etapas: Mountain of a Thousand Clouds / Hanging Monastery / Summit of the Sleeping Dragon.
+- Glosario tocable con tabla por idioma (`_patternsByLang` en `glossary.dart`); al sumar un idioma hay que agregar su tabla.
+- `test/english_test.dart`: el inglés tiene las mismas claves y marcadores que el español (falla si se agrega texto solo en español). `test/flutter_test_config.dart` fija español en los tests (el entorno de prueba es inglés).
+- Al agregar textos nuevos: ARB y `es.json` **y** sus pares en inglés.
+- Pendiente: verlo en el teléfono en inglés (largos de etiquetas, cortes); nombre y descripción de la tienda en inglés.

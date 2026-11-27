@@ -34,6 +34,28 @@ void main() {
       expect(terms('Una transformación informal'), isEmpty);
     });
 
+    test('en inglés usa su propia tabla', () {
+      List<Term> en(String s) => [
+        for (final (_, t) in splitTerms(s, lang: 'en')) ?t,
+      ];
+      expect(en('If you deflect, the foe is Staggered'), [
+        Term.deflect,
+        Term.staggered,
+      ]);
+      expect(en('Breathe: +2 Breath. Exhaust'), [
+        Term.breathe,
+        Term.breath,
+        Term.exhaust,
+      ]);
+      expect(en('T-Step changes your stance'), [Term.dingbu, Term.stance]);
+      expect(en('Guardia'), isEmpty);
+      expect(terms('Guard'), isEmpty);
+      expect(
+        [for (final (_, t) in splitTerms('Guardia', lang: 'fr')) ?t],
+        [Term.guard],
+      );
+    });
+
     test('reconstruye el texto completo y respeta skip', () {
       const s = 'Tu Guardia absorbe el golpe; la Estructura no.';
       expect(splitTerms(s).map((e) => e.$1).join(), s);
