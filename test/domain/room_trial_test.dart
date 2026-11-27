@@ -192,7 +192,7 @@ void main() {
     test('el reto cumplido paga jade y cuenta para los hitos', () {
       final run = RunEngine(data);
       var r = run.newRun(seed: 5);
-      final door = run.available(r).map(r.node).firstWhere(
+      final door = run.enterable(r).map(r.node).firstWhere(
         (n) => n.type == NodeType.combat,
       );
       r = run.enter(r, door.id);
@@ -298,7 +298,7 @@ void main() {
       for (var seed = 1; seed <= 40; seed++) {
         var r = run.newRun(seed: seed);
         for (var step = 0; step < 10 && r.phase == RunPhase.map; step++) {
-          final doors = run.available(r).map(r.node).toList();
+          final doors = run.enterable(r).map(r.node).toList();
           for (final d in doors) {
             if (d.rule != null || d.challenge != null) {
               expect(d.depth, greaterThanOrEqualTo(rooms.fromDepth));

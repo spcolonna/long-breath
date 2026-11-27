@@ -3936,4 +3936,110 @@ class AppLocalizationsEn extends AppLocalizations {
   String progressDailySub(int played, int won, int streak) {
     return '$played played · $won summits · $streak streak';
   }
+
+  @override
+  String get tollFree => 'Level trail';
+
+  @override
+  String get tollFreeCost => 'Free';
+
+  @override
+  String get tollJade => 'Toll bridge';
+
+  @override
+  String get tollBreath => 'Steep slope';
+
+  @override
+  String tollBreathCost(int n) {
+    return '−$n Breath';
+  }
+
+  @override
+  String get tollKey => 'Hidden path';
+
+  @override
+  String tollKeyCost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keys',
+      one: '1 key',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tollJadeLine(int n) {
+    return 'You pay $n jade. On the other side, the fight pays a talisman.';
+  }
+
+  @override
+  String tollBreathLine(int n) {
+    return 'You arrive winded: you start with $n less Breath. A strong rival who gives a talisman and a key.';
+  }
+
+  @override
+  String get tollKeyLine =>
+      'You use a key. On the other side, a sealed chest, no fight.';
+
+  @override
+  String get tollNoJade => 'You don\'t have enough jade for the toll.';
+
+  @override
+  String get tollNoKey => 'You need a key.';
+
+  @override
+  String keysCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n keys',
+      one: '1 key',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String keyGained(int n) {
+    return '+$n key';
+  }
+
+  @override
+  String get signTracks => 'Fresh tracks';
+
+  @override
+  String get signVoices => 'Voices';
+
+  @override
+  String get signSmoke => 'Smoke';
+
+  @override
+  String get signBells => 'Little bell';
+
+  @override
+  String get signBanner => 'Torn banner';
+
+  @override
+  String get signSeal => 'Sealed door';
+
+  @override
+  String get signTracksHint => 'Footprints in the mud, recent ones.';
+
+  @override
+  String get signVoicesHint =>
+      'Voices up ahead. You can\'t make out what they say.';
+
+  @override
+  String get signSmokeHint =>
+      'Smoke rises between the trees: someone lit a fire.';
+
+  @override
+  String get signBellsHint => 'A little bell rings, like loaded mules.';
+
+  @override
+  String get signBannerHint =>
+      'A torn banner marks the passage of someone strong.';
+
+  @override
+  String get signSealHint => 'Among the rocks, a stone door with a lock.';
 }

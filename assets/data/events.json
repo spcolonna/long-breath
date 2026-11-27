@@ -1,6 +1,14 @@
 {
   "events": [
     {
+      "id": "sealed_chest", "hanzi": "锁",
+      "options": [
+        { "id": "scroll", "gain": "rareCards" },
+        { "id": "seal", "gain": "rareTalisman" },
+        { "id": "jade", "jade": 55 }
+      ]
+    },
+    {
       "id": "hermit", "hanzi": "隐",
       "options": [
         { "id": "pay", "hp": 6, "gain": "form" },

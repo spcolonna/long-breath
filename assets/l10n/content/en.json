@@ -1159,6 +1159,16 @@
       "sparResult": "The disciple smiles and the wind rises with him.",
       "watch": "Watch until the end",
       "watchResult": "You don't move until the last crane lands. Something of the mountain's endurance stays in your chest."
+    },
+    "sealed_chest": {
+      "name": "The Sealed Chest",
+      "text": "Behind a moss-covered rock sits a lacquered chest with a bronze seal. Your key fits perfectly. Inside, wrapped in silk, waits what someone kept for whoever made it this far.",
+      "scroll": "Take the technique scroll",
+      "scrollResult": "The scroll creaks open. The techniques are written in a firm, ancient hand.",
+      "seal": "Take the carved seal",
+      "sealResult": "The seal weighs more than it looks. As your hand closes around it, something inside you falls into place.",
+      "jade": "Take the jade pouch",
+      "jadeResult": "The pouch is full. Someone saved for a long time for this."
     }
   },
   "lore": {

@@ -35,7 +35,7 @@ void main() {
   /// Sube hasta que la fila [depth] esté a la vista (o se corte).
   RunState climbTo(RunState r, int depth) {
     for (var step = 0; step < 20 && r.phase == RunPhase.map; step++) {
-      final doors = run.available(r).map(r.node).toList();
+      final doors = run.enterable(r).map(r.node).toList();
       if (doors.isEmpty || doors.first.depth >= depth) break;
       r = settle(run, run.enter(r, doors.first.id));
     }
@@ -73,7 +73,7 @@ void main() {
         );
         r = climbTo(r, depth);
         if (r.phase != RunPhase.map) continue;
-        final doors = run.available(r).map(r.node).toList();
+        final doors = run.enterable(r).map(r.node).toList();
         if (doors.first.depth != depth) continue;
         expect(run.memorialAt(r, depth), isTrue);
         final revenge = doors.where((d) => d.mark == NodeMark.revenge);
@@ -110,7 +110,7 @@ void main() {
           memorial: const Memorial(n: 2, stage: 1, depth: 2, enemy: 'bat'),
         );
         for (var step = 0; step < 6 && r.phase == RunPhase.map; step++) {
-          final doors = run.available(r).map(r.node).toList();
+          final doors = run.enterable(r).map(r.node).toList();
           expect(doors.where((d) => d.mark == NodeMark.revenge), isEmpty);
           r = settle(run, run.enter(r, doors.first.id));
         }
@@ -126,7 +126,7 @@ void main() {
         var stage = 0;
         for (var step = 0; step < 14 && r.phase == RunPhase.map; step++) {
           if (r.stage != stage) break;
-          final doors = run.available(r).map(r.node).toList();
+          final doors = run.enterable(r).map(r.node).toList();
           if (doors.isEmpty) break;
           for (final d in doors.where((d) => d.mark != null)) {
             out[d.mark!] = (out[d.mark!] ?? 0) + 1;
@@ -184,7 +184,7 @@ void main() {
     for (var seed = 1; seed <= 20; seed++) {
       var r = run.newRun(seed: seed);
       for (var step = 0; step < 13 && r.phase == RunPhase.map; step++) {
-        final doors = run.available(r).map(r.node).toList();
+        final doors = run.enterable(r).map(r.node).toList();
         if (doors.isEmpty) break;
         final n = run.depthsOf(r);
         for (final d in doors) {

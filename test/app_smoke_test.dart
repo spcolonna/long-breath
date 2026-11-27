@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:long_breath/l10n/app_localizations.dart';
+import 'package:long_breath/delivery/screens/map/map_node.dart';
 import 'package:go_router/go_router.dart';
 import 'package:long_breath/app.dart';
 import 'package:long_breath/delivery/controllers/combat_controller.dart';
@@ -93,7 +95,12 @@ void main() {
     ).read(textProvider);
     final firstNode = run.node(run.starts.first);
     final firstEnemy = text.enemy(firstNode.enemy!);
-    final pathName = text.path(firstNode.scene!, firstNode.light!);
+    // La puerta muestra la pista del mundo, no qué es.
+    final pathName = nodeLabel(
+      firstNode,
+      lookupAppLocalizations(const Locale('es')),
+      text.path,
+    );
     expect(find.text(firstEnemy), findsNothing);
 
     // Primero se mira el lugar (tarjeta con qué es) y después se va.

@@ -50,6 +50,96 @@ enum NodeMark {
       s is String ? NodeMark.values.asNameMap()[s] : null;
 }
 
+/// Lo que cuesta el tramo hasta una puerta. El costo garantiza el nivel de
+/// lo que hay del otro lado: pagar nunca lleva a algo peor que el sendero
+/// gratis de la misma fila.
+enum PathToll {
+  /// Sendero llano: gratis; pelea común, evento o mercader.
+  free,
+
+  /// Puente de peaje: jade; una pelea común que paga con talismán.
+  jade,
+
+  /// Cuesta empinada: Aliento del primer turno; un élite que da talismán
+  /// y una llave.
+  breath,
+
+  /// Senda oculta: una llave; el cofre sellado.
+  key;
+
+  static PathToll parse(Object? s) =>
+      (s is String ? PathToll.values.asNameMap()[s] : null) ?? PathToll.free;
+}
+
+/// La pista del mundo que se ve desde el tramo: deja intuir qué hay sin
+/// decirlo. Huellas y voces pueden ser pelea; voces y humo, un evento;
+/// humo y campanilla, el mercader.
+enum DoorSign {
+  tracks,
+  voices,
+  smoke,
+  bells,
+  banner,
+  seal;
+
+  static DoorSign? parse(Object? s) =>
+      s is String ? DoorSign.values.asNameMap()[s] : null;
+}
+
+/// Los tramos con costo (`run.tolls`).
+class TollsDef {
+  const TollsDef({
+    this.fromDepth = 1,
+    this.jadeChance = const [],
+    this.jade = const [],
+    this.breath = 1,
+    this.secretChance = 0,
+    this.secretMax = 0,
+    this.eliteKeys = 1,
+    this.revengeKeys = 1,
+  });
+
+  static const none = TollsDef();
+
+  /// Primera fila (0 = la primera) con puente de peaje o senda oculta.
+  final int fromDepth;
+
+  /// % por fila de que una pelea común quede tras un puente de peaje.
+  final List<int> jadeChance;
+
+  /// Jade del peaje, por etapa (siempre menos que un talismán en la tienda).
+  final List<int> jade;
+
+  /// Aliento de menos en el primer turno tras la cuesta empinada.
+  final int breath;
+
+  /// % por fila de que aparezca la senda oculta (si hay llave).
+  final int secretChance;
+
+  /// Tope de sendas ocultas por etapa.
+  final int secretMax;
+
+  /// Llaves por vencer al élite de la cuesta y por la revancha.
+  final int eliteKeys;
+  final int revengeKeys;
+
+  int jadeChanceAt(int stage) => RoomsDef._at(jadeChance, stage);
+  int jadeAt(int stage) => RoomsDef._at(jade, stage);
+
+  factory TollsDef.fromJson(Map<String, dynamic>? j) => j == null
+      ? none
+      : TollsDef(
+          fromDepth: j['fromDepth'] as int? ?? 1,
+          jadeChance: RoomsDef._ints(j['jadeChance']),
+          jade: RoomsDef._ints(j['jade']),
+          breath: j['breath'] as int? ?? 1,
+          secretChance: j['secretChance'] as int? ?? 0,
+          secretMax: j['secretMax'] as int? ?? 0,
+          eliteKeys: j['eliteKeys'] as int? ?? 1,
+          revengeKeys: j['revengeKeys'] as int? ?? 1,
+        );
+}
+
 /// La condición y el reto de la pelea en curso, y cómo va el reto.
 class Trial {
   const Trial({

@@ -178,10 +178,22 @@ class MapNodeDef {
     this.rule,
     this.challenge,
     this.mark,
+    this.toll = PathToll.free,
+    this.tollCost = 0,
+    this.sign,
   });
 
   final String id;
   final NodeType type;
+
+  /// Lo que cuesta el tramo hasta esta puerta y cuánto (jade, Aliento o
+  /// llaves).
+  final PathToll toll;
+  final int tollCost;
+
+  /// La pista que se ve desde el tramo; null: un punto fijo de la etapa
+  /// (maestro, fuente, guardián, jefe), que se ve tal cual.
+  final DoorSign? sign;
 
   /// Lo que dejó la memoria de la escuela (revancha, atajo de Shuang).
   final NodeMark? mark;
@@ -215,6 +227,9 @@ class MapNodeDef {
     bool trial = false,
     NodeMark? mark,
     bool clearMark = false,
+    PathToll? toll,
+    int? tollCost,
+    DoorSign? sign,
   }) => MapNodeDef(
         id: id,
         type: type,
@@ -228,6 +243,9 @@ class MapNodeDef {
         rule: trial ? rule : this.rule,
         challenge: trial ? challenge : this.challenge,
         mark: clearMark ? mark : mark ?? this.mark,
+        toll: toll ?? this.toll,
+        tollCost: tollCost ?? this.tollCost,
+        sign: sign ?? this.sign,
       );
 
   MapNodeDef withNext(List<String> next) => _copy(next: next);
@@ -251,6 +269,13 @@ class MapNodeDef {
   /// (la revancha trae al que venció al caído).
   MapNodeDef withMark(NodeMark? mark, {String? enemy}) =>
       _copy(mark: mark, clearMark: true, enemy: enemy);
+
+  /// La misma puerta con su tramo y su pista.
+  MapNodeDef withToll(PathToll toll, int cost, DoorSign? sign) =>
+      _copy(toll: toll, tollCost: cost, sign: sign);
+
+  /// La misma puerta con otra pista.
+  MapNodeDef withSign(DoorSign? sign) => _copy(sign: sign);
 
   /// El que espera en la sala: el común que encabeza el grupo, el élite o
   /// el jefe.
@@ -302,6 +327,9 @@ class MapNodeDef {
       rule: RoomRule.parse(j['rule']),
       challenge: Challenge.parse(j['challenge']),
       mark: NodeMark.parse(j['mark']),
+      toll: PathToll.parse(j['toll']),
+      tollCost: j['tollCost'] as int? ?? 0,
+      sign: DoorSign.parse(j['sign']),
     );
   }
 
@@ -318,6 +346,9 @@ class MapNodeDef {
         if (rule != null) 'rule': rule!.name,
         if (challenge != null) 'challenge': challenge!.name,
         if (mark != null) 'mark': mark!.name,
+        if (toll != PathToll.free) 'toll': toll.name,
+        if (tollCost != 0) 'tollCost': tollCost,
+        if (sign != null) 'sign': sign!.name,
       };
 }
 
@@ -778,6 +809,7 @@ class GameBalance {
     this.escortDamage = 100,
     this.breather = BreatherDef.none,
     this.rooms = RoomsDef.none,
+    this.tolls = TollsDef.none,
     this.merchantEvery = 0,
     this.merchantSpread = 0,
     this.path = const PathRules(),
@@ -927,6 +959,9 @@ class GameBalance {
 
   /// Condiciones de sala y retos de las peleas comunes.
   final RoomsDef rooms;
+
+  /// Los tramos con costo entre puertas.
+  final TollsDef tolls;
 
   int packHpPct(int size) =>
       packHp.isEmpty ? 100 : packHp[(size - 1).clamp(0, packHp.length - 1)];
@@ -1118,6 +1153,7 @@ class GameBalance {
       escortHp: _escort(run, 'hpPct'),
       escortDamage: _escort(run, 'damagePct'),
       rooms: RoomsDef.fromJson(run['rooms'] as Map<String, dynamic>?),
+      tolls: TollsDef.fromJson(run['tolls'] as Map<String, dynamic>?),
       breather: switch ((run['packs'] as Map<String, dynamic>?)?['breather']) {
         final Map<String, dynamic> m => BreatherDef.fromJson(m),
         _ => BreatherDef.none,

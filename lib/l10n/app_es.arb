@@ -3494,5 +3494,73 @@
         "type": "int"
       }
     }
-  }
+  },
+  "tollFree": "Sendero llano",
+  "tollFreeCost": "Gratis",
+  "tollJade": "Puente de peaje",
+  "tollBreath": "Cuesta empinada",
+  "tollBreathCost": "−{n} Aliento",
+  "@tollBreathCost": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tollKey": "Senda oculta",
+  "tollKeyCost": "{n, plural, =1{1 llave} other{{n} llaves}}",
+  "@tollKeyCost": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tollJadeLine": "Pagás {n} de jade. Del otro lado, la pelea paga con talismán.",
+  "@tollJadeLine": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tollBreathLine": "Llegás sin aire: empezás con {n} de Aliento menos. Un rival fuerte que da talismán y una llave.",
+  "@tollBreathLine": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "tollKeyLine": "Usás una llave. Del otro lado, un cofre sellado, sin pelea.",
+  "tollNoJade": "Te falta jade para el peaje.",
+  "tollNoKey": "Necesitás una llave.",
+  "keysCount": "{n, plural, =1{1 llave} other{{n} llaves}}",
+  "@keysCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "keyGained": "+{n} llave",
+  "@keyGained": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "signTracks": "Huellas frescas",
+  "signVoices": "Voces",
+  "signSmoke": "Humo",
+  "signBells": "Campanilla",
+  "signBanner": "Estandarte rasgado",
+  "signSeal": "Puerta sellada",
+  "signTracksHint": "Pisadas en el barro, recientes.",
+  "signVoicesHint": "Se oyen voces más adelante. No se entiende qué dicen.",
+  "signSmokeHint": "Sube humo entre los árboles: alguien encendió un fuego.",
+  "signBellsHint": "Suena una campanilla, como de mulas cargadas.",
+  "signBannerHint": "Un estandarte rasgado marca el paso de alguien fuerte.",
+  "signSealHint": "Entre las rocas, una puerta de piedra con cerradura."
 }

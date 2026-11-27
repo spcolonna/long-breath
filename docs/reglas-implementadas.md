@@ -107,6 +107,18 @@ Si llega a 0, el próximo turno empieza con −2 de Aliento (mínimo 0) y la Est
 - **Atajos de Shuang** (`NodeMark.shuang`): con capítulos de su hilo leídos, cada fila (desde la 2.ª y antes de las dos últimas) tiene 12% por capítulo de que una pelea común traiga su marca 霜, con tope de 2 por etapa. Sus rivales arrancan con 25% menos de Vida (`weakenPct` en `CombatEngine.start`).
 - Revancha y atajos usan un generador propio derivado del de la subida: el resto de la montaña queda igual.
 
+## Tramos con costo y pistas (27/11)
+- **Las puertas no dicen qué son.** Cada puerta muestra una pista del mundo (`DoorSign`) y el tramo para llegar (`PathToll`). Pistas: huellas 迹 (pelea común, 65%) o voces 声 (pelea 35%, evento 50%); humo 烟 (evento 50%, mercader 50%); campanilla 铃 (mercader); estandarte 旗 (élite de la cuesta); puerta sellada 锁 (cofre). Con pista no se ve el premio, el grupo, la condición ni el reto (sí las marcas de la memoria 仇 霜); se ven al entrar.
+- **Puntos fijos** (pisos de una sola puerta: santuario, guardián, fuente, jefe; y el maestro): se ven tal cual, sin pista ni tramo.
+- **Tramos** (`run.tolls` en `game_balance.json`):
+  - Sendero llano: gratis. Pelea común, evento o mercader.
+  - Puente de peaje: 20/26/32 de jade por etapa. Una pelea común que paga con **talismán** (el talismán en la tienda cuesta 50/60/85). 30/35/40% por fila desde la fila 2 y antes de las tres últimas, solo si en la fila queda otra pelea común gratis.
+  - Cuesta empinada: el élite que se puede esquivar; se empieza la pelea con 1 de Aliento menos (`breathToll` en `CombatEngine.start`). Da talismán y **una llave**.
+  - Senda oculta: 1 llave. Una puerta de más (si la fila tiene menos de 3 y no es de pelea obligada), 45% por fila, una por etapa. Lleva al **cofre sellado** (`sealed_chest`, nunca sale al azar): rollo de técnicas raras, sello tallado (talismán raro) o 55 de jade, todo sin costo.
+- **Llaves** (`RunState.keys`): +1 por vencer al élite de la cuesta y +1 por la revancha. Se ven en la barra del mapa (钥).
+- **Garantía** (`test/domain/tolls_test.dart`): siempre hay un sendero llano; si la fila tiene peleas, una es gratis; cada tramo pago lleva a lo que promete. Retirarse de una pelea a medias devuelve el peaje. Sin jade o llave, la puerta se ve apagada y la tarjeta dice qué falta.
+- Usa un generador propio derivado del de la subida (como las condiciones de sala). Los bots ven el tipo real y eligen solo tramos pagables (`RunEngine.enterable`).
+
 ## Picos con reglas
 - Además de los números, algunos Picos traen una regla (se acumulan): 2, la niebla tapa la intención del primer turno de cada pelea; 4, élites y jefes pelean con campana (si la sala no trae otra condición); 6, cada élite suma su segunda pregunta (`second` en `enemies.json`: espinas, curarse antes de actuar o furia propia); 8, aire fino: 1 de Aliento menos por turno hasta respirar en esa pelea; 10, el jefe tiene una fase más, a la mitad de su último umbral, con su primer ciclo.
 - La campana no deja al jefe por debajo del umbral de su próxima fase.

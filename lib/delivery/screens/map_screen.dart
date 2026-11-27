@@ -219,6 +219,11 @@ class _PathViewState extends ConsumerState<_PathView>
 
   Future<void> _go(MapNodeDef n) async {
     if (_going != null) return;
+    // El tramo sin pagar no se toma: la tarjeta dice qué falta.
+    if (!ref.read(runEngineProvider).canPay(widget.run, n.id)) {
+      Haptics.selectionClick();
+      return;
+    }
     final data = ref.read(dataProvider);
     ref.read(audioProvider).play(Sfx.mapNode);
     Haptics.mediumImpact();
@@ -400,6 +405,7 @@ class _PathViewState extends ConsumerState<_PathView>
                         available: _going == null,
                         selected: _picked == doors[i].id,
                         optional: isOptionalElite(doors[i], run.map, data),
+                        payable: engine.canPay(run, doors[i].id),
                         onTap: () => _tapDoor(doors[i]),
                       ),
                     ),
@@ -444,6 +450,8 @@ class _PathViewState extends ConsumerState<_PathView>
                   optional:
                       _picked != null &&
                       isOptionalElite(run.node(_picked!), run.map, data),
+                  payable:
+                      _picked == null || engine.canPay(run, _picked!),
                   onGo: () => _go(run.node(_picked!)),
                 ),
               ),
@@ -519,6 +527,7 @@ class _Door extends ConsumerWidget {
     required this.available,
     required this.selected,
     required this.optional,
+    required this.payable,
     required this.onTap,
   });
 
@@ -526,6 +535,9 @@ class _Door extends ConsumerWidget {
   final bool available;
   final bool selected;
   final bool optional;
+
+  /// Si alcanza para pagar el tramo.
+  final bool payable;
   final VoidCallback onTap;
 
   @override
@@ -535,8 +547,11 @@ class _Door extends ConsumerWidget {
     final rank = node.type == NodeType.combat
         ? data.enemy(node.enemy!).rank
         : null;
-    final reward =
-        node.reward ?? (rank == EnemyRank.elite ? RewardKind.talisman : null);
+    // Con pista, el premio solo se ve si el tramo lo garantiza.
+    final hidden = node.sign != null && node.toll == PathToll.free;
+    final reward = hidden
+        ? null
+        : node.reward ?? (rank == EnemyRank.elite ? RewardKind.talisman : null);
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Column(
@@ -557,7 +572,69 @@ class _Door extends ConsumerWidget {
               child: _RewardBadge(kind: reward, label: t.lootKind(reward)),
             ),
           ],
+          if (node.sign != null) ...[
+            const SizedBox(height: 4),
+            GestureDetector(
+              onTap: available ? onTap : null,
+              child: _TollTag(node: node, payable: payable),
+            ),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+/// El tramo hasta la puerta: su nombre y lo que cuesta (apagado si no
+/// alcanza).
+class _TollTag extends StatelessWidget {
+  const _TollTag({required this.node, required this.payable});
+
+  final MapNodeDef node;
+  final bool payable;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
+    final (name, cost) = tollLabel(node, t);
+    final color = payable ? tollColor(node.toll) : Palette.textDim;
+    final style = TextStyle(
+      fontSize: 11.5,
+      fontWeight: FontWeight.w700,
+      color: payable ? Palette.text : Palette.textDim,
+    );
+    return Semantics(
+      label: '$name, $cost',
+      excludeSemantics: true,
+      child: AnimatedOpacity(
+        opacity: payable ? 1 : 0.6,
+        duration: const Duration(milliseconds: 200),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          decoration: BoxDecoration(
+            color: Palette.surface.withValues(alpha: 0.92),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: color.withValues(alpha: 0.7)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(name, style: style),
+              const SizedBox(width: 5),
+              if (node.toll == PathToll.jade) ...[
+                const JadeCoin(size: 12),
+                const SizedBox(width: 2),
+              ],
+              Text(
+                cost,
+                style: style.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -662,6 +739,10 @@ class _RunHeader extends StatelessWidget {
           HpCount(hp: run.hp, maxHp: run.maxHp),
           const SizedBox(width: 8),
           JadeCount(jade: run.jade),
+          if (run.keys > 0) ...[
+            const SizedBox(width: 6),
+            KeyCount(keys: run.keys),
+          ],
           if (run.lotus > 0) ...[
             const SizedBox(width: 6),
             LotusCount(lotus: run.lotus),
@@ -729,12 +810,14 @@ class _PickCard extends ConsumerWidget {
     required this.node,
     required this.hidden,
     required this.optional,
+    required this.payable,
     required this.onGo,
   });
 
   final MapNodeDef? node;
   final bool hidden;
   final bool optional;
+  final bool payable;
   final VoidCallback onGo;
 
   @override
@@ -767,7 +850,10 @@ class _PickCard extends ConsumerWidget {
       final stageNow = runNow?.stage ?? 0;
       final memorial = runNow?.memorial;
       final rank = n.type == NodeType.combat ? data.enemy(n.enemy!).rank : null;
-      final hint = switch (n.type) {
+      final sign = n.sign;
+      final hint = sign != null
+          ? signHint(sign, t)
+          : switch (n.type) {
         NodeType.combat => switch (rank!) {
           EnemyRank.common => t.nodeHintCommon,
           EnemyRank.elite => optional ? t.nodeHintDetour : t.nodeHintElite,
@@ -780,12 +866,21 @@ class _PickCard extends ConsumerWidget {
         NodeType.master => t.nodeHintMaster,
       };
       // El grupo, si viene más de uno, y el premio del otro lado.
-      final pack = n.waves.isEmpty
+      final pack = n.waves.isEmpty || sign != null
           ? ''
           : ' ${t.nodeHintPack(1 + n.waves.length)}';
-      final reward = n.reward == null
+      final reward = n.reward == null || sign != null
           ? ''
           : ' ${t.pathReward(t.lootKind(n.reward!))}';
+      // Lo que garantiza el tramo pagado, o lo que falta para pagarlo.
+      final tollLine = !payable
+          ? (n.toll == PathToll.key ? t.tollNoKey : t.tollNoJade)
+          : switch (n.toll) {
+              PathToll.free => null,
+              PathToll.jade => t.tollJadeLine(n.tollCost),
+              PathToll.breath => t.tollBreathLine(n.tollCost),
+              PathToll.key => t.tollKeyLine,
+            };
       body = PaperPanel(
         key: ValueKey(n.id),
         accent: look.color,
@@ -834,9 +929,24 @@ class _PickCard extends ConsumerWidget {
                       color: Palette.text,
                     ),
                   ),
+                  if (tollLine != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        tollLine,
+                        style: TextStyle(
+                          fontSize: 13,
+                          height: 1.25,
+                          fontWeight: FontWeight.w700,
+                          color: payable
+                              ? tollColor(n.toll)
+                              : Palette.lacquer,
+                        ),
+                      ),
+                    ),
                   TrialLines(
-                    rule: n.rule,
-                    challenge: n.challenge,
+                    rule: sign != null ? null : n.rule,
+                    challenge: sign != null ? null : n.challenge,
                     jade: data.balance.rooms.challengeJadeAt(stageNow),
                     mark: n.mark,
                     markLine: switch (n.mark) {
@@ -858,7 +968,7 @@ class _PickCard extends ConsumerWidget {
             ),
             const SizedBox(width: 10),
             FilledButton(
-              onPressed: onGo,
+              onPressed: payable ? onGo : null,
               style: FilledButton.styleFrom(
                 backgroundColor: look.color,
                 foregroundColor: Palette.surface,
@@ -898,4 +1008,45 @@ class _PickCard extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// Llaves de la subida: el carácter 钥 y la cifra.
+class KeyCount extends StatelessWidget {
+  const KeyCount({super.key, required this.keys});
+
+  final int keys;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    label: AppLocalizations.of(context).keysCount(keys),
+    excludeSemantics: true,
+    child: Bounce(
+      trigger: keys,
+      scale: 1.2,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            '钥',
+            style: TextStyle(
+              fontFamily: Fonts.display,
+              fontSize: 16,
+              height: 1,
+              fontWeight: FontWeight.w700,
+              color: Palette.gold,
+            ),
+          ),
+          const SizedBox(width: 3),
+          Text(
+            '$keys',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: Palette.gold,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

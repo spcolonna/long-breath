@@ -55,7 +55,7 @@ void main() {
     for (var day = 20261120; day < 20261130; day++) {
       var r = run.newDaily(day);
       for (var step = 0; step < 8 && r.phase == RunPhase.map; step++) {
-        final doors = run.available(r).map(r.node).toList();
+        final doors = run.enterable(r).map(r.node).toList();
         if (doors.isEmpty) break;
         final pick = doors
                 .where((d) => d.type == NodeType.shrine)

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/model/enums.dart';
 import '../../../domain/model/game_balance.dart';
 import '../../../domain/model/game_data.dart';
+import '../../../domain/model/room.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../providers.dart';
 import '../../theme.dart';
@@ -19,6 +20,20 @@ const sealCenter = Offset(62, 38);
 /// Cómo se ve cada tipo de lugar: el carácter tallado en la piedra y su
 /// color. El combate muestra el rango (común, élite o jefe), no quién es.
 ({String hanzi, Color color, double size}) nodeLook(
+  MapNodeDef n,
+  GameData data,
+) => switch (n.sign) {
+  // La pista del mundo: no dice qué es, deja intuirlo.
+  DoorSign.tracks => (hanzi: '迹', color: Palette.lacquer, size: 60.0),
+  DoorSign.voices => (hanzi: '声', color: Palette.sky, size: 60.0),
+  DoorSign.smoke => (hanzi: '烟', color: Palette.structure, size: 60.0),
+  DoorSign.bells => (hanzi: '铃', color: Palette.jade, size: 60.0),
+  DoorSign.banner => (hanzi: '旗', color: Palette.gold, size: 64.0),
+  DoorSign.seal => (hanzi: '锁', color: Palette.gold, size: 60.0),
+  null => _typeLook(n, data),
+};
+
+({String hanzi, Color color, double size}) _typeLook(
   MapNodeDef n,
   GameData data,
 ) => switch (n.type) {
@@ -47,6 +62,47 @@ bool isOptionalElite(MapNodeDef n, List<MapNodeDef> map, GameData data) {
 }
 
 String nodeLabel(
+  MapNodeDef n,
+  AppLocalizations t,
+  String Function(String scene, String light) path,
+) => switch (n.sign) {
+  DoorSign.tracks => t.signTracks,
+  DoorSign.voices => t.signVoices,
+  DoorSign.smoke => t.signSmoke,
+  DoorSign.bells => t.signBells,
+  DoorSign.banner => t.signBanner,
+  DoorSign.seal => t.signSeal,
+  null => _typeLabel(n, t, path),
+};
+
+/// Lo que se intuye de la pista, en una línea.
+String signHint(DoorSign s, AppLocalizations t) => switch (s) {
+  DoorSign.tracks => t.signTracksHint,
+  DoorSign.voices => t.signVoicesHint,
+  DoorSign.smoke => t.signSmokeHint,
+  DoorSign.bells => t.signBellsHint,
+  DoorSign.banner => t.signBannerHint,
+  DoorSign.seal => t.signSealHint,
+};
+
+/// El nombre del tramo y lo que cuesta.
+(String name, String cost) tollLabel(MapNodeDef n, AppLocalizations t) =>
+    switch (n.toll) {
+      PathToll.free => (t.tollFree, t.tollFreeCost),
+      PathToll.jade => (t.tollJade, '${n.tollCost}'),
+      PathToll.breath => (t.tollBreath, t.tollBreathCost(n.tollCost)),
+      PathToll.key => (t.tollKey, t.tollKeyCost(n.tollCost)),
+    };
+
+/// Color del tramo: el del recurso que pide.
+Color tollColor(PathToll toll) => switch (toll) {
+  PathToll.free => Palette.textDim,
+  PathToll.jade => Palette.jade,
+  PathToll.breath => Palette.sky,
+  PathToll.key => Palette.gold,
+};
+
+String _typeLabel(
   MapNodeDef n,
   AppLocalizations t,
   String Function(String scene, String light) path,
@@ -129,6 +185,8 @@ class _MapNodeState extends ConsumerState<MapNode>
     final look = nodeLook(widget.node, data);
     final label = nodeLabel(widget.node, t, text.path);
     final available = widget.available;
+    // Con pista, la sala se ve al llegar (la marca de la memoria, sí).
+    final hidden = widget.node.sign != null;
     final tap = available ? widget.onTap : null;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -193,7 +251,7 @@ class _MapNodeState extends ConsumerState<MapNode>
                   ),
                 // Grupo: un punto por enemigo, colgado del sello (unidos por
                 // un trazo si pelean a la vez).
-                if (widget.node.waves.isNotEmpty)
+                if (widget.node.waves.isNotEmpty && widget.node.sign == null)
                   Positioned(
                     top:
                         sealCenter.dy -
@@ -209,9 +267,11 @@ class _MapNodeState extends ConsumerState<MapNode>
                     ),
                   ),
                 // Condición de la sala y reto: del otro lado del sello.
-                if (widget.node.rule != null ||
-                    widget.node.challenge != null ||
-                    widget.node.mark != null)
+                if (hidden
+                    ? widget.node.mark != null
+                    : widget.node.rule != null ||
+                          widget.node.challenge != null ||
+                          widget.node.mark != null)
                   Positioned(
                     top:
                         sealCenter.dy -
@@ -220,8 +280,8 @@ class _MapNodeState extends ConsumerState<MapNode>
                         (available ? -3 - 3 * math.sin(phase) : 0),
                     left: sealCenter.dx - look.size / 2 - 10,
                     child: TrialBadges(
-                      rule: widget.node.rule,
-                      challenge: widget.node.challenge,
+                      rule: hidden ? null : widget.node.rule,
+                      challenge: hidden ? null : widget.node.challenge,
                       mark: widget.node.mark,
                       dim: !available,
                     ),

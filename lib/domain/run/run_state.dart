@@ -163,6 +163,7 @@ class RunState {
     this.duel,
     required this.map,
     this.jade = 0,
+    this.keys = 0,
     this.jadeGained = 0,
     this.combatsSinceMerchant = 0,
     this.nextMerchantAt = 0,
@@ -292,6 +293,10 @@ class RunState {
 
   /// Monedas de jade para el mercader.
   final int jade;
+
+  /// Llaves de la subida: abren la senda oculta (élite de la cuesta y
+  /// revancha dan una).
+  final int keys;
 
   /// Jade ganado en el último combate (para mostrarlo en la recompensa).
   final int jadeGained;
@@ -432,6 +437,7 @@ class RunState {
     String? duel,
     bool clearDuel = false,
     int? jade,
+    int? keys,
     int? jadeGained,
     int? combatsSinceMerchant,
     int? nextMerchantAt,
@@ -510,6 +516,7 @@ class RunState {
         duel: clearDuel ? null : duel ?? this.duel,
         map: map ?? this.map,
         jade: jade ?? this.jade,
+        keys: keys ?? this.keys,
         jadeGained: jadeGained ?? this.jadeGained,
         combatsSinceMerchant: combatsSinceMerchant ?? this.combatsSinceMerchant,
         nextMerchantAt: nextMerchantAt ?? this.nextMerchantAt,
@@ -596,6 +603,7 @@ class RunState {
         'duel': duel,
         'map': [for (final n in map) n.toJson()],
         'jade': jade,
+        if (keys > 0) 'keys': keys,
         'jadeGained': jadeGained,
         'combatsSinceMerchant': combatsSinceMerchant,
         'nextMerchantAt': nextMerchantAt,
@@ -694,6 +702,7 @@ class RunState {
             MapNodeDef.fromJson(n as Map<String, dynamic>),
         ],
         jade: j['jade'] as int? ?? 0,
+        keys: j['keys'] as int? ?? 0,
         jadeGained: j['jadeGained'] as int? ?? 0,
         combatsSinceMerchant: j['combatsSinceMerchant'] as int? ?? 0,
         nextMerchantAt: j['nextMerchantAt'] as int? ?? 0,

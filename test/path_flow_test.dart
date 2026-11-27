@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:long_breath/delivery/screens/map/map_node.dart';
 import 'package:long_breath/app.dart';
 import 'package:long_breath/delivery/controllers/combat_controller.dart';
 import 'package:long_breath/delivery/controllers/run_controller.dart';
@@ -51,18 +52,21 @@ void main() {
     expect(find.byType(AltitudeBar), findsOneWidget);
     expect(find.text('Sala 1 de 13 · Mañana'), findsOneWidget);
     expect(find.text('0 m'), findsWidgets);
-    // Cada puerta de pelea muestra lo que hay del otro lado.
+    // Las puertas no dicen qué hay: muestran la pista del mundo y el tramo
+    // (gratis en la primera fila); el premio se ve al ganar.
     r = container.read(runControllerProvider)!;
     final doors = container.read(runEngineProvider).available(r).map(r.node);
     final text = lookupAppLocalizations(const Locale('es'));
     for (final d in doors) {
       expect(d.reward, isNotNull);
-      expect(find.text(text.lootKind(d.reward!)), findsWidgets);
+      expect(d.sign, isNotNull);
+      expect(find.text(text.lootKind(d.reward!)), findsNothing);
     }
+    expect(find.text(text.tollFree), findsNWidgets(doors.length));
 
     // Se mira la puerta y se va: el discípulo trepa y entra a la sala.
     final door = doors.first;
-    final label = container.read(textProvider).path(door.scene!, door.light!);
+    final label = nodeLabel(door, text, container.read(textProvider).path);
     await tester.tap(find.text(label).first);
     await settle();
     await tester.tap(find.text('Ir'));

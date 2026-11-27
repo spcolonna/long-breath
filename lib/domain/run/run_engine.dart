@@ -151,6 +151,9 @@ class RunEngine {
 
   // -------------------------------------------------------------- sendero
 
+  /// El evento del cofre sellado: solo tras la senda oculta.
+  static const sealedChest = 'sealed_chest';
+
   /// Tira las puertas de la profundidad [depth] de la etapa actual y las
   /// suma al mapa (colgando de [parent], la sala recién entrada). Lo que
   /// había más arriba de una puerta abandonada (retirada) se descarta.
@@ -216,9 +219,9 @@ class RunEngine {
     final lit = [
       for (final d in paid) d.withLight(timeOfDay(d.light, depth, st.floors.length)),
     ];
-    final rewarded = _assignMarks(
+    final rewarded = _assignTolls(
       r2,
-      _assignTrials(r2, lit, depth),
+      _assignMarks(r2, _assignTrials(r2, lit, depth), depth, kept),
       depth,
       kept,
     );
@@ -246,6 +249,104 @@ class RunEngine {
     if (f >= 0.7 && light == 'alba') return 'ocaso';
     return light;
   }
+
+  /// El tramo de cada puerta y la pista que se ve desde él. El élite que se
+  /// puede esquivar queda tras la cuesta empinada; a veces una pelea común
+  /// queda tras un puente de peaje (y paga con talismán); con llave, puede
+  /// abrirse la senda oculta al cofre sellado. Siempre queda un sendero
+  /// llano. Con su propio generador, como las condiciones de sala.
+  List<MapNodeDef> _assignTolls(
+    RunState r,
+    List<MapNodeDef> doors,
+    int depth,
+    List<MapNodeDef> kept,
+  ) {
+    final def = data.balance.tolls;
+    final floors = stageOf(r).floors;
+    // Pisos de una sola puerta (santuario, guardián, fuente, jefe): puntos
+    // fijos, se ven tal cual. El maestro también (signOf da null).
+    if (depth >= floors.length || floors[depth].maxWidth < 2) return doors;
+    var rng = Rng.seeded(r.rng.state ^ 0x7011 + depth * 15485863);
+    int roll(int max) {
+      final (v, next) = rng.nextInt(max);
+      rng = next;
+      return v;
+    }
+
+    bool common(MapNodeDef d) =>
+        d.type == NodeType.combat &&
+        d.enemy != null &&
+        data.enemy(d.enemy!).rank == EnemyRank.common;
+    DoorSign? signOf(MapNodeDef d) => switch (d.type) {
+      NodeType.combat when !common(d) => DoorSign.banner,
+      NodeType.combat => roll(100) < 65 ? DoorSign.tracks : DoorSign.voices,
+      NodeType.event => roll(2) == 0 ? DoorSign.voices : DoorSign.smoke,
+      NodeType.merchant => roll(2) == 0 ? DoorSign.smoke : DoorSign.bells,
+      _ => null,
+    };
+    var out = [
+      for (final d in doors)
+        d.type == NodeType.combat && !common(d)
+            ? d.withToll(PathToll.breath, def.breath, DoorSign.banner)
+            : d.withSign(signOf(d)),
+    ];
+    if (depth < def.fromDepth || depth >= floors.length - 3) return out;
+
+    // Puente de peaje: solo si queda otra pelea común por el sendero
+    // llano (sin jade no se esquiva pelear ni se queda sin camino).
+    final commons = [
+      for (var i = 0; i < out.length; i++)
+        if (common(out[i]) && out[i].mark == null) i,
+    ];
+    final freeFights = out.where(common).length;
+    if (commons.isNotEmpty &&
+        freeFights >= 2 &&
+        roll(100) < def.jadeChanceAt(r.stage)) {
+      final i = commons[roll(commons.length)];
+      out[i] = out[i]
+          .withReward(RewardKind.talisman)
+          .withToll(PathToll.jade, def.jadeAt(r.stage), out[i].sign);
+    }
+
+    // Senda oculta: una puerta de más, si hay llave y lugar. No en las
+    // filas que obligan a pelear (todas peleas).
+    final secrets = kept.where((n) => n.toll == PathToll.key).length;
+    if (r.keys > 0 &&
+        out.length < 3 &&
+        out.any((d) => d.type != NodeType.combat) &&
+        secrets < def.secretMax &&
+        roll(100) < def.secretChance) {
+      final letter = String.fromCharCode('a'.codeUnitAt(0) + out.length);
+      out = [
+        ...out,
+        MapNodeDef(
+          id: 'f${depth + 1}$letter',
+          type: NodeType.event,
+          next: const [],
+          scene: out.first.scene,
+          light: out.first.light,
+          toll: PathToll.key,
+          tollCost: 1,
+          sign: DoorSign.seal,
+        ),
+      ];
+    }
+    return out;
+  }
+
+  /// Si alcanza para pagar el tramo hasta [id].
+  bool canPay(RunState r, String id) {
+    final n = r.node(id);
+    return switch (n.toll) {
+      PathToll.jade => r.jade >= n.tollCost,
+      PathToll.key => r.keys >= n.tollCost,
+      _ => true,
+    };
+  }
+
+  /// Puertas a las que se puede ir ahora (con el tramo pagable).
+  List<String> enterable(RunState r) =>
+      [for (final id in available(r)) if (canPay(r, id)) id];
 
   /// La tablilla del caído en esta fila de esta etapa, si la hay.
   bool memorialAt(RunState r, int depth) =>
@@ -596,8 +697,8 @@ class RunEngine {
       r = advanceStage(r.copyWith(phase: RunPhase.stageClear));
     }
     // Recorre un sendero real hasta la profundidad anterior a la pedida.
-    for (var f = 1; f < floor && available(r).isNotEmpty; f++) {
-      r = enter(r, available(r).first).copyWith(phase: RunPhase.map);
+    for (var f = 1; f < floor && enterable(r).isNotEmpty; f++) {
+      r = enter(r, enterable(r).first).copyWith(phase: RunPhase.map);
     }
     return r;
   }
@@ -624,7 +725,11 @@ class RunEngine {
       );
     }
     final visited = r.visited.sublist(0, r.visited.length - 1);
+    // El peaje vuelve: reentrar lo cobra de nuevo.
+    final left = r.node(r.visited.last);
     return r.copyWith(
+      jade: r.jade + (left.toll == PathToll.jade ? left.tollCost : 0),
+      keys: r.keys + (left.toll == PathToll.key ? left.tollCost : 0),
       phase: RunPhase.map,
       visited: visited,
       currentNode: visited.isEmpty ? null : visited.last,
@@ -637,7 +742,12 @@ class RunEngine {
       throw StateError('Nodo no disponible: $nodeId');
     }
     var n = r.node(nodeId);
+    if (!canPay(r, nodeId)) {
+      throw StateError('Tramo sin pagar: $nodeId');
+    }
     var entered = r.copyWith(
+      jade: r.jade - (n.toll == PathToll.jade ? n.tollCost : 0),
+      keys: r.keys - (n.toll == PathToll.key ? n.tollCost : 0),
       currentNode: nodeId,
       visited: [...r.visited, nodeId],
       phase: switch (n.type) {
@@ -658,6 +768,7 @@ class RunEngine {
       entered = _openDepth(entered, n.depth + 1, parent: n);
       n = entered.node(nodeId);
     }
+    if (n.toll == PathToll.key) return entered.copyWith(eventId: sealedChest);
     if (n.type == NodeType.event) return _rollEvent(entered);
     if (n.type == NodeType.merchant) {
       final b = data.balance;
@@ -794,9 +905,16 @@ class RunEngine {
       // El reto de la sala, si se cumplió.
       final bonus = challengeMet ? b.rooms.challengeJadeAt(r.stage) : 0;
       // La revancha del caído anterior.
-      final revenge = fightNodeOf(r)?.mark == NodeMark.revenge
+      final node = fightNodeOf(r);
+      final revenge = node?.mark == NodeMark.revenge
           ? b.rooms.revengeJadeAt(r.stage)
           : 0;
+      // Llaves: el élite de la cuesta y la revancha.
+      r = r.copyWith(
+        keys: r.keys +
+            (node?.toll == PathToll.breath ? b.tolls.eliteKeys : 0) +
+            (node?.mark == NodeMark.revenge ? b.tolls.revengeKeys : 0),
+      );
       // Cada enemigo de más en el grupo suma jade.
       final jade = rolled +
           b.packJade * (packOf(r).length - 1) +
@@ -1297,6 +1415,7 @@ class RunEngine {
     final here = [
       for (final e in data.events)
         if (e.thread == null &&
+            e.id != sealedChest &&
             e.fitsStage(stageId) &&
             (e.path == null || e.path == r.style) &&
             (e.after == null || (r.marks[e.after] ?? r.stage) < r.stage))

@@ -1159,6 +1159,16 @@
       "sparResult": "El discípulo sonríe y el viento se levanta con él.",
       "watch": "Mirar hasta el final",
       "watchResult": "No te movés hasta que se posa la última grulla. Algo del aguante de la montaña se te queda en el pecho."
+    },
+    "sealed_chest": {
+      "name": "El cofre sellado",
+      "text": "Detrás de una roca cubierta de musgo hay un cofre de laca con un sello de bronce. Tu llave entra justo. Adentro, envuelto en seda, espera lo que alguien guardó para quien llegara hasta acá.",
+      "scroll": "Tomar el rollo de técnicas",
+      "scrollResult": "El rollo cruje al abrirse. Las técnicas están escritas con una mano firme y antigua.",
+      "seal": "Tomar el sello tallado",
+      "sealResult": "El sello pesa más de lo que parece. Al cerrarlo en la mano, sentís que algo se ordena por dentro.",
+      "jade": "Tomar la bolsa de jade",
+      "jadeResult": "La bolsa está llena. Alguien ahorró mucho tiempo para esto."
     }
   },
   "lore": {

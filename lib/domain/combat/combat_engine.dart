@@ -180,6 +180,8 @@ class CombatEngine {
     Challenge? challenge,
     // Atajo de Shuang: los rivales arrancan con este % menos de Vida.
     int weakenPct = 0,
+    // Cuesta empinada: Aliento de menos en el primer turno.
+    int breathToll = 0,
   }) {
     final b = data.balance;
     final styleStats = b.statsOf(style);
@@ -310,7 +312,8 @@ class CombatEngine {
       weapon: weapon,
       weaponLevel: weaponLevel,
       weaponEffect: wfx,
-      nextTurnBreathMod: sum((e) => e.firstTurnBreath) + meta.firstTurnBreath,
+      nextTurnBreathMod:
+          sum((e) => e.firstTurnBreath) + meta.firstTurnBreath - breathToll,
       firstStrike: styleStats.firstStrike + aw.firstStrike + meta.firstStrike,
       chain: styleStats.chain + aw.chain + meta.chain,
       retainedDiscount: styleStats.retainedDiscount + aw.retainedDiscount,

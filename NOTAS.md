@@ -400,3 +400,11 @@ macOS no tiene `timeout`.
 - `test/english_test.dart`: el inglés tiene las mismas claves y marcadores que el español (falla si se agrega texto solo en español). `test/flutter_test_config.dart` fija español en los tests (el entorno de prueba es inglés).
 - Al agregar textos nuevos: ARB y `es.json` **y** sus pares en inglés.
 - Pendiente: verlo en el teléfono en inglés (largos de etiquetas, cortes); nombre y descripción de la tienda en inglés.
+
+## Tramos con costo y pistas (27/11) — pedido del usuario
+- Las puertas ya no dicen su tipo: muestran una pista del mundo (huellas, voces, humo, campanilla, estandarte, puerta sellada) y el tramo con su costo: sendero llano (gratis), puente de peaje (jade → pelea con talismán), cuesta empinada (−1 Aliento el primer turno → élite con talismán y llave), senda oculta (llave → cofre sellado). Reglas en `docs/reglas-implementadas.md` → «Tramos con costo y pistas».
+- **Garantía pedida por el usuario:** pagar nunca lleva a algo peor que el sendero gratis. Fijada en `test/domain/tolls_test.dart`.
+- Decisiones: el premio de las puertas gratis ya no se ve (si no, delataba qué era pelea); el maestro y los pisos de una puerta se ven tal cual. Más adelante, el usuario puede pedir que no se sepa nada hasta llegar (sin pistas).
+- Simulación Normal sin árbol, 300 subidas: experto 5% (antes 6%), promedio 0% (igual); llegan a la etapa 2 el 56/20% (antes 50/18%); talismanes +0,6 por subida. Sin cambio de balance que preocupe.
+- 455 tests. Falta verlo en el teléfono (largo de la etiqueta del tramo bajo la puerta, puerta apagada sin jade).
+

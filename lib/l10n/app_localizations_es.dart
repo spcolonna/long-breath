@@ -3945,4 +3945,111 @@ class AppLocalizationsEs extends AppLocalizations {
   String progressDailySub(int played, int won, int streak) {
     return '$played jugados · $won cumbres · racha de $streak';
   }
+
+  @override
+  String get tollFree => 'Sendero llano';
+
+  @override
+  String get tollFreeCost => 'Gratis';
+
+  @override
+  String get tollJade => 'Puente de peaje';
+
+  @override
+  String get tollBreath => 'Cuesta empinada';
+
+  @override
+  String tollBreathCost(int n) {
+    return '−$n Aliento';
+  }
+
+  @override
+  String get tollKey => 'Senda oculta';
+
+  @override
+  String tollKeyCost(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n llaves',
+      one: '1 llave',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String tollJadeLine(int n) {
+    return 'Pagás $n de jade. Del otro lado, la pelea paga con talismán.';
+  }
+
+  @override
+  String tollBreathLine(int n) {
+    return 'Llegás sin aire: empezás con $n de Aliento menos. Un rival fuerte que da talismán y una llave.';
+  }
+
+  @override
+  String get tollKeyLine =>
+      'Usás una llave. Del otro lado, un cofre sellado, sin pelea.';
+
+  @override
+  String get tollNoJade => 'Te falta jade para el peaje.';
+
+  @override
+  String get tollNoKey => 'Necesitás una llave.';
+
+  @override
+  String keysCount(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n llaves',
+      one: '1 llave',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String keyGained(int n) {
+    return '+$n llave';
+  }
+
+  @override
+  String get signTracks => 'Huellas frescas';
+
+  @override
+  String get signVoices => 'Voces';
+
+  @override
+  String get signSmoke => 'Humo';
+
+  @override
+  String get signBells => 'Campanilla';
+
+  @override
+  String get signBanner => 'Estandarte rasgado';
+
+  @override
+  String get signSeal => 'Puerta sellada';
+
+  @override
+  String get signTracksHint => 'Pisadas en el barro, recientes.';
+
+  @override
+  String get signVoicesHint =>
+      'Se oyen voces más adelante. No se entiende qué dicen.';
+
+  @override
+  String get signSmokeHint =>
+      'Sube humo entre los árboles: alguien encendió un fuego.';
+
+  @override
+  String get signBellsHint => 'Suena una campanilla, como de mulas cargadas.';
+
+  @override
+  String get signBannerHint =>
+      'Un estandarte rasgado marca el paso de alguien fuerte.';
+
+  @override
+  String get signSealHint =>
+      'Entre las rocas, una puerta de piedra con cerradura.';
 }

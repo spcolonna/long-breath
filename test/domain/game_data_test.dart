@@ -197,7 +197,7 @@ void main() {
     expect(data.talismans.values.where((t) => t.boss), hasLength(7));
     expect(data.talismans.values.map((t) => t.hanzi).toSet(), hasLength(38),
         reason: 'cada uno se reconoce por su carácter');
-    expect(data.events, hasLength(43));
+    expect(data.events, hasLength(44));
     for (final e in data.events) {
       final open = [for (final o in e.options) if (o.needs == null) o];
       expect(open.length, inInclusiveRange(2, 3), reason: e.id);

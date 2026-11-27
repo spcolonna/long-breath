@@ -107,6 +107,7 @@ class CombatController extends Notifier<CombatView?> {
       weakenPct: room?.mark == NodeMark.shuang
           ? ref.read(dataProvider).balance.rooms.shuangWeaken
           : 0,
+      breathToll: room?.toll == PathToll.breath ? room!.tollCost : 0,
     );
     state = CombatView(
       state: r.state,

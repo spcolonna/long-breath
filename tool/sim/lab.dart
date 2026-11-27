@@ -329,7 +329,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
     int weaponLevel = 1,
     RoomRule? room,
     Challenge? challenge,
-    int weakenPct = 0}) {
+    int weakenPct = 0,
+    int breathToll = 0}) {
   final log = FightLog(enemy, engine.data.enemy(enemy).rank)
     ..pack = 1 + waves.length
     ..stage = stage
@@ -356,7 +357,8 @@ FightLog playFight(CombatEngine engine, Bot bot, List<CombatCard> deck,
           meta: meta,
           room: room,
           challenge: challenge,
-          weakenPct: weakenPct)
+          weakenPct: weakenPct,
+          breathToll: breathToll)
       .state;
   var steps = 0;
   while (!s.isOver && s.turn <= 40 && steps++ < 3000) {
@@ -456,6 +458,9 @@ RunLog playRun(GameData data, Bot bot, int seed,
             challenge: runEngine.fightNodeOf(r)?.challenge,
             weakenPct: runEngine.fightNodeOf(r)?.mark == NodeMark.shuang
                 ? data.balance.rooms.shuangWeaken
+                : 0,
+            breathToll: runEngine.fightNodeOf(r)?.toll == PathToll.breath
+                ? runEngine.fightNodeOf(r)!.tollCost
                 : 0);
         log.fights.add(f);
         var hp = math.min(r.maxHp, math.max(0, _lastHp));
@@ -590,15 +595,15 @@ final avoidFights = Platform.environment['SIM_AVOID'] == '1';
 /// Elección de camino en el mapa: los perfiles que piensan van a la fuente
 /// si les falta Vida y esquivan la élite si están golpeados.
 String _route(RunEngine run, Bot bot, RunState r) {
-  final options = run.available(r);
+  // Solo los tramos que se pueden pagar.
+  final options = run.enterable(r);
   if (bot is NoviceBot || bot is RandomBot || options.length < 2) {
     return bot.pickPath(options);
   }
   final ratio = r.hp / r.maxHp;
   // El prudente toma siempre lo que cura y esquiva la élite si no está lleno.
   final prudent = bot is PrudentBot;
-  double score(String id) {
-    final n = r.node(id);
+  double base(MapNodeDef n) {
     if (prudent) {
       if (n.type == NodeType.fountain) return ratio < 1 ? 4 : 0.5;
       if (n.reward == RewardKind.tea && ratio < 1) return 5;
@@ -632,6 +637,15 @@ String _route(RunEngine run, Bot bot, RunState r) {
           RewardKind.lotus => 0.3,
           null => 0.0,
         };
+  }
+
+  double score(String id) {
+    final n = r.node(id);
+    // El cofre sellado: un premio raro sin pelea.
+    if (n.toll == PathToll.key) return 3.5;
+    // El peaje se descuenta del valor de lo que hay detrás.
+    final toll = n.toll == PathToll.jade ? n.tollCost / 40 : 0.0;
+    return base(n) - toll - (n.toll == PathToll.breath ? 0.3 : 0);
   }
 
   // Desempate al azar: entre dos combates comunes cualquiera vale.

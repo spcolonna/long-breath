@@ -6199,6 +6199,162 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{played} jugados · {won} cumbres · racha de {streak}'**
   String progressDailySub(int played, int won, int streak);
+
+  /// No description provided for @tollFree.
+  ///
+  /// In es, this message translates to:
+  /// **'Sendero llano'**
+  String get tollFree;
+
+  /// No description provided for @tollFreeCost.
+  ///
+  /// In es, this message translates to:
+  /// **'Gratis'**
+  String get tollFreeCost;
+
+  /// No description provided for @tollJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Puente de peaje'**
+  String get tollJade;
+
+  /// No description provided for @tollBreath.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuesta empinada'**
+  String get tollBreath;
+
+  /// No description provided for @tollBreathCost.
+  ///
+  /// In es, this message translates to:
+  /// **'−{n} Aliento'**
+  String tollBreathCost(int n);
+
+  /// No description provided for @tollKey.
+  ///
+  /// In es, this message translates to:
+  /// **'Senda oculta'**
+  String get tollKey;
+
+  /// No description provided for @tollKeyCost.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 llave} other{{n} llaves}}'**
+  String tollKeyCost(int n);
+
+  /// No description provided for @tollJadeLine.
+  ///
+  /// In es, this message translates to:
+  /// **'Pagás {n} de jade. Del otro lado, la pelea paga con talismán.'**
+  String tollJadeLine(int n);
+
+  /// No description provided for @tollBreathLine.
+  ///
+  /// In es, this message translates to:
+  /// **'Llegás sin aire: empezás con {n} de Aliento menos. Un rival fuerte que da talismán y una llave.'**
+  String tollBreathLine(int n);
+
+  /// No description provided for @tollKeyLine.
+  ///
+  /// In es, this message translates to:
+  /// **'Usás una llave. Del otro lado, un cofre sellado, sin pelea.'**
+  String get tollKeyLine;
+
+  /// No description provided for @tollNoJade.
+  ///
+  /// In es, this message translates to:
+  /// **'Te falta jade para el peaje.'**
+  String get tollNoJade;
+
+  /// No description provided for @tollNoKey.
+  ///
+  /// In es, this message translates to:
+  /// **'Necesitás una llave.'**
+  String get tollNoKey;
+
+  /// No description provided for @keysCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{n, plural, =1{1 llave} other{{n} llaves}}'**
+  String keysCount(int n);
+
+  /// No description provided for @keyGained.
+  ///
+  /// In es, this message translates to:
+  /// **'+{n} llave'**
+  String keyGained(int n);
+
+  /// No description provided for @signTracks.
+  ///
+  /// In es, this message translates to:
+  /// **'Huellas frescas'**
+  String get signTracks;
+
+  /// No description provided for @signVoices.
+  ///
+  /// In es, this message translates to:
+  /// **'Voces'**
+  String get signVoices;
+
+  /// No description provided for @signSmoke.
+  ///
+  /// In es, this message translates to:
+  /// **'Humo'**
+  String get signSmoke;
+
+  /// No description provided for @signBells.
+  ///
+  /// In es, this message translates to:
+  /// **'Campanilla'**
+  String get signBells;
+
+  /// No description provided for @signBanner.
+  ///
+  /// In es, this message translates to:
+  /// **'Estandarte rasgado'**
+  String get signBanner;
+
+  /// No description provided for @signSeal.
+  ///
+  /// In es, this message translates to:
+  /// **'Puerta sellada'**
+  String get signSeal;
+
+  /// No description provided for @signTracksHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Pisadas en el barro, recientes.'**
+  String get signTracksHint;
+
+  /// No description provided for @signVoicesHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Se oyen voces más adelante. No se entiende qué dicen.'**
+  String get signVoicesHint;
+
+  /// No description provided for @signSmokeHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Sube humo entre los árboles: alguien encendió un fuego.'**
+  String get signSmokeHint;
+
+  /// No description provided for @signBellsHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Suena una campanilla, como de mulas cargadas.'**
+  String get signBellsHint;
+
+  /// No description provided for @signBannerHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Un estandarte rasgado marca el paso de alguien fuerte.'**
+  String get signBannerHint;
+
+  /// No description provided for @signSealHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Entre las rocas, una puerta de piedra con cerradura.'**
+  String get signSealHint;
 }
 
 class _AppLocalizationsDelegate

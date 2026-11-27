@@ -62,7 +62,7 @@ void main() {
   ) {
     final rows = <List<MapNodeDef>>[];
     while (r.phase == RunPhase.map) {
-      final doors = run.available(r).map(r.node).toList();
+      final doors = run.enterable(r).map(r.node).toList();
       rows.add(doors);
       r = settle(run.enter(r, doors[pick(doors)].id));
     }
@@ -161,7 +161,7 @@ void main() {
 
   test('retirarse vuelve a las mismas puertas', () {
     var r = run.newRun(seed: 4);
-    r = settle(run.enter(r, run.available(r).first));
+    r = settle(run.enter(r, run.enterable(r).first));
     final doors = run.available(r);
     final fightDoor = doors.firstWhere((id) => fight(r.node(id)));
     final inside = run.enter(r, fightDoor);
@@ -181,15 +181,15 @@ void main() {
       var r = settle(
         run.enter(
           run.newRun(seed: seed),
-          run.available(run.newRun(seed: seed)).first,
+          run.enterable(run.newRun(seed: seed)).first,
         ),
       );
       final door = run
-          .available(r)
+          .enterable(r)
           .map(r.node)
           .firstWhere(
             (n) => fight(n) && n.reward != null,
-            orElse: () => r.node(run.available(r).first),
+            orElse: () => r.node(run.enterable(r).first),
           );
       if (door.reward == null) continue;
       r = run.finishCombat(run.enter(r, door.id), won: true, hp: r.hp);
